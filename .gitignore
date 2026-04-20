@@ -1,0 +1,41 @@
+# Build artifacts
+dist/
+*.skill
+*.zip
+!ciel.skill/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# Local testing / sandboxes
+.ciel/
+.cache/
+node_modules/
+
+# Backup scratch
+*.bak
+*.orig
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+
+# Environment files
+.env
+
+# Linting caches (not configs — repo configs are committed)
+.eslintcache
+.prettiercache
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+__pycache__/
