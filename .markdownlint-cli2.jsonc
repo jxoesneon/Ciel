@@ -1,0 +1,20 @@
+{
+  // Ciel markdownlint config. Strict by default; only structural exceptions
+  // that can't be auto-fixed or that conflict with intentional spec style are disabled.
+  "config": {
+    "default": true,
+    "MD013": false,                       // line length — long-form spec prose
+    "MD024": { "siblings_only": true },   // duplicate headings allowed across sections
+    "MD029": { "style": "ordered" },      // ordered list style — accept either; prefer ordered
+    "MD033": false,                       // inline HTML — anchor comments used intentionally
+    "MD041": false,                       // first line h1 — frontmatter precedes h1
+    "MD046": { "style": "fenced" },       // code blocks: fenced only
+    "MD049": { "style": "asterisk" },     // emphasis style
+    "MD050": { "style": "asterisk" }      // strong style
+  },
+  "ignores": [
+    "**/node_modules/**",
+    "LICENSE",
+    "dist/**"
+  ]
+}

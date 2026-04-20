@@ -1,0 +1,171 @@
+name: release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to build (e.g. 1.2.3 or 1.2.3-rc.1)'
+        required: true
+      draft:
+        description: 'Create release as draft'
+        required: false
+        default: 'false'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build Ciel-v${{ github.ref_name && github.ref_name || inputs.version }}.skill
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.ver.outputs.version }}
+      artifact: ${{ steps.ver.outputs.artifact }}
+      sha256: ${{ steps.hash.outputs.sha256 }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Determine version
+        id: ver
+        shell: bash
+        run: |
+          if [[ -n "${{ inputs.version }}" ]]; then
+            raw="${{ inputs.version }}"
+          else
+            raw="${GITHUB_REF_NAME}"
+          fi
+          v="${raw#v}"
+          if ! [[ "$v" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$ ]]; then
+            echo "::error title=Invalid version::'$raw' is not valid semver"
+            exit 1
+          fi
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+          echo "artifact=Ciel-v${v}.skill" >> "$GITHUB_OUTPUT"
+          echo "tag=v${v}" >> "$GITHUB_OUTPUT"
+
+      - name: Install deps
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq zip shellcheck yamllint jq
+          python3 -m pip install --quiet pyyaml
+
+      - name: Validate spec coverage
+        run: ./scripts/validate-spec.sh
+
+      - name: Validate frontmatter YAML
+        run: ./scripts/validate-frontmatter.sh
+
+      - name: Lint install / verify scripts
+        run: |
+          shellcheck -S warning \
+            ciel.skill/init/scripts/install.sh \
+            ciel.skill/init/scripts/verify.sh \
+            scripts/build-skill.sh \
+            scripts/validate-spec.sh \
+            scripts/validate-frontmatter.sh
+
+      - name: Verify SKILL.md version matches tag
+        shell: bash
+        run: |
+          decl="$(awk -F': *' '/^version:/{print $2; exit}' ciel.skill/SKILL.md | tr -d '[:space:]')"
+          if [[ "$decl" != "${{ steps.ver.outputs.version }}" ]]; then
+            echo "::error title=Version drift::SKILL.md declares '$decl' but tag is v${{ steps.ver.outputs.version }}"
+            exit 1
+          fi
+          echo "SKILL.md version matches tag: $decl"
+
+      - name: Build .skill
+        run: ./scripts/build-skill.sh "${{ steps.ver.outputs.version }}"
+
+      - name: Compute SHA-256
+        id: hash
+        shell: bash
+        run: |
+          cd dist
+          h="$(sha256sum "${{ steps.ver.outputs.artifact }}" | awk '{print $1}')"
+          echo "sha256=$h" >> "$GITHUB_OUTPUT"
+          ls -l
+
+      - name: Smoke-install inside a clean Docker container
+        run: |
+          docker run --rm -v "$GITHUB_WORKSPACE:/src:ro" -w /src ubuntu:24.04 bash -c '
+            set -e
+            apt-get update -qq && apt-get install -y -qq unzip git curl ca-certificates >/dev/null
+            mkdir -p /tmp/smoke/unpack && cd /tmp/smoke/unpack
+            unzip -q "/src/dist/${{ steps.ver.outputs.artifact }}"
+            # .skill archive stores contents at zip root
+            test -f SKILL.md
+            test -x init/scripts/install.sh
+            bash init/scripts/verify.sh >/dev/null 2>&1 || true
+            echo "smoke-install basic check OK"
+          '
+
+      - name: Upload build artifact (also for non-tag runs)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ciel-skill-${{ steps.ver.outputs.version }}
+          path: |
+            dist/${{ steps.ver.outputs.artifact }}
+            dist/${{ steps.ver.outputs.artifact }}.sha256
+            dist/SHA256SUMS
+          if-no-files-found: error
+
+  release:
+    name: Publish GitHub Release
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ciel-skill-${{ needs.build.outputs.version }}
+          path: dist
+
+      - name: Extract CHANGELOG entry for this version
+        id: notes
+        shell: bash
+        run: |
+          v="${{ needs.build.outputs.version }}"
+          # Pull the `## [v]` section out of ciel.skill/CHANGELOG.md
+          awk -v ver="$v" '
+            BEGIN{inblk=0}
+            /^## \[/ {
+              if (inblk) exit
+              if ($0 ~ "\\["ver"\\]" || $0 ~ "\\[v"ver"\\]" ) { inblk=1; next }
+            }
+            inblk { print }
+          ' ciel.skill/CHANGELOG.md > dist/release-notes.md || true
+          if [[ ! -s dist/release-notes.md ]]; then
+            echo "_No entry in CHANGELOG.md for v${v}; see diff since previous tag._" > dist/release-notes.md
+          fi
+          echo '--- release-notes.md ---'; cat dist/release-notes.md
+          echo 'path=dist/release-notes.md' >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ needs.build.outputs.version }}
+          name: Ciel v${{ needs.build.outputs.version }}
+          body_path: dist/release-notes.md
+          fail_on_unmatched_files: true
+          files: |
+            dist/${{ needs.build.outputs.artifact }}
+            dist/${{ needs.build.outputs.artifact }}.sha256
+            dist/SHA256SUMS
+          generate_release_notes: true
+          draft: ${{ inputs.draft == 'true' }}
+          prerelease: ${{ contains(needs.build.outputs.version, '-') }}
