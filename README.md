@@ -1,5 +1,7 @@
 # Ciel
 
+![Ciel Banner](ciel.skill/assets/images/banner.jpg)
+
 Ciel is a **self-improving, self-researching skill orchestration intelligence** for AI agent runtimes. She doesn't just route requests — she routes, reasons, acquires, harmonizes, and evolves capabilities on behalf of her host.
 
 ## What's in this repo

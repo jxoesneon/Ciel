@@ -9,6 +9,7 @@ dist/
 Thumbs.db
 
 # Editors
+.windsurf/
 .vscode/
 .idea/
 *.swp
@@ -39,3 +40,8 @@ node_modules/
 .mypy_cache/
 .pytest_cache/
 __pycache__/
+
+# Helper scripts (useful but not core)
+scripts/adapt-skill.sh
+scripts/analyze-skill.sh
+scripts/generate-triggers.sh

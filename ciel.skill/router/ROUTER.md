@@ -29,18 +29,30 @@ request:
 ```text
 if runtime not detected: run router/RUNTIME_DETECTION.md
 classify risk (risk/CLASSIFICATION.md)
-attempt FAST_PATH:
+
+attempt TRIGGER_MATCH:
+  load compiled triggers from TRIGGER_REGISTRY
+  match request against direct → functional → domain → intent patterns
+  if hit with confidence >= router.config.fast_path_floor:
+    route to matched skill, execute, score
+    else fallthrough
+
+attempt FAST_PATH (legacy tag-based):
   if hit with confidence >= router.config.fast_path_floor: route, execute, score
   else fallthrough
+  
 attempt REASONING_PATH:
   if composable with confidence >= reasoning_floor: route, execute, score
   else fallthrough
+  
 attempt ACQUISITION_PATH:
   gap_detection → tier_1 → tier_2 → tier_3
   Council of Five triage → register → route
+  
 after execution:
   score outcome (self_improvement/OUTCOME_SCORING.md)
   update ROUTE_REGISTRY hit rate
+  update TRIGGER_REGISTRY hit statistics
   consider growth-signal (core/AWARENESS.md)
   write activity.log entry
 ```

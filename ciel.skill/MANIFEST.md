@@ -20,6 +20,7 @@
 | --- | --- | --- |
 | Claude Code | `adapters/claude_code/` | full |
 | Gemini CLI | `adapters/gemini_cli/` | full |
+| Windsurf | `adapters/windsurf/` | full |
 | Generic | `adapters/generic/` | probe-and-adapt |
 
 ## Runtime Dependencies
