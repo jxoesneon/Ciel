@@ -29,6 +29,7 @@ gap_description  →  tier 1 (curated)  →  tier 2 (MCP)  →  tier 3 (web)
 
 ## Tier Order
 
+0. **Tier 0** — local skill discovery (`LOCAL_DISCOVERY.md`). Ingest existing skills from runtimes.
 1. **Tier 1** — curated registry (`TIER_1_REGISTRY.md`). Fastest, highest trust.
 2. **Tier 2** — MCP server discovery (`TIER_2_MCP.md`). Medium trust if server is known.
 3. **Tier 3** — web extraction + synthesis (`TIER_3_WEB.md`). Lowest trust; must pass sandbox.
@@ -64,6 +65,11 @@ Exceeded budgets degrade to the next tier or escalate to user.
 
 ## Output
 
-On successful Council pass: a new `.skill` file installed in `~/.ciel/skills/<id>/`, registry updated, MemPalace embedding computed, git committed.
+On successful Council pass: 
+- New `.skill` file installed in `~/.ciel/skills/<id>/`
+- Trigger generation via `TRIGGER_GENERATOR.md`
+- Registry updated (`ROUTE_REGISTRY.md`, `TRIGGER_REGISTRY.md`)
+- MemPalace embedding computed
+- Git committed
 
 On Council reject: the artifact is retained at `~/.ciel/.attic/acquired_rejected/<run_id>/` for audit, and `SOURCES.md` lowers the origin's trust.

@@ -7,7 +7,7 @@ Fingerprint the host runtime on every invocation. Cache the result per session.
 1. **Environment variables** (cheapest)
     - `CLAUDE_CODE_VERSION` / `CLAUDECODE=1` → **claude-code**
     - `GEMINI_CLI_VERSION` / `GEMINI_API_KEY` + CLI binary present → **gemini-cli**
-    - `CURSOR_*` / `WINDSURF_*` / `AIDER_*` → flagged as other known runtimes
+    - `WINDSURF_VERSION` / `WINDSURF_WORKSPACE_ID` → **windsurf**
 2. **Filesystem fingerprints**
     - `.claude/` directory, `~/.claude/settings.json` → claude-code
     - `.gemini/` directory, `~/.gemini/settings.json` → gemini-cli

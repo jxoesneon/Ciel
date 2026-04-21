@@ -9,10 +9,12 @@ Each route entry:
 ```yaml
 route_id: <hash>
 matcher:
-  triggers: [...]
+  triggers: [...]           # References TRIGGER_REGISTRY
+  compiled_pattern: <regex>  # Pre-compiled for fast matching
   tags: [...]
   contract: {...}
 target_skill: <skill_id>
+trigger_confidence: 0.85    # From TRIGGER_REGISTRY scoring
 path_used: fast | reasoning | acquisition
 hits: 142
 last_hit: 2026-01-15T09:24:00Z

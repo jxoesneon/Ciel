@@ -9,6 +9,7 @@ format: skill/1.0
 runtimes:
   - claude-code
   - gemini-cli
+  - windsurf
   - generic
 triggers:
   - "ciel"
@@ -17,6 +18,12 @@ triggers:
   - "find me a skill"
   - "acquire skill"
   - "self-improve"
+  - "you there"
+  - "hey you"
+  - "are you"
+  - "can you"
+  - "will you"
+  - "do you"
 ---
 
 # Ciel — Lord of Wisdom
