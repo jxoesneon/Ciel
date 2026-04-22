@@ -11,7 +11,13 @@ source: { tier: 0, origin: seed }
 
 # shell
 
-Execute shell commands.
+Execute shell commands. All commands use the universal set defined in `PLATFORM_AGNOSTIC_MAPPING.md`.
+
+## Platform Agnosticism
+
+- Internal reasoning always uses the **Universal Command Set** (`ls`, `cat`, `grep`, etc.).
+- Internal paths always use POSIX-style forward slashes `/`.
+- The active adapter's `shell()` implementation performs OS-specific translation.
 
 ## Operations
 

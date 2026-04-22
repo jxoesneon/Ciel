@@ -4,7 +4,7 @@ Generates and manages activation triggers when skills are added, updated, or rem
 
 ## Pipeline Stages
 
-```
+```text
 Skill Added
     │
     ▼

@@ -45,7 +45,7 @@ Chairman synthesizes. On pass, skill is:
 
 ---
 
-# Core Skill Ingestion (Local Sources)
+## Core Skill Ingestion (Local Sources)
 
 For skills from `~/.agents/skills/` and other local runtime directories that are candidates for core Ciel integration.
 
@@ -53,7 +53,7 @@ For skills from `~/.agents/skills/` and other local runtime directories that are
 
 Unlike batch acquisition, **each core skill requires individual Council deliberation**:
 
-```
+```text
 1. DISCOVERY
    └─→ Identify skill in ~/.agents/skills/
    └─→ Verify SKILL.md exists with basic frontmatter
@@ -94,7 +94,7 @@ Unlike batch acquisition, **each core skill requires individual Council delibera
 ## Council Evaluation Criteria for Core Skills
 
 | Member | Focus |
-|--------|-------|
+| --- | --- |
 | **Coherence** | Does it align with Ciel's orchestration philosophy? |
 | **Capability** | Does it fill a genuine gap? Is documentation sufficient? |
 | **Safety** | Any risky operations? Sandboxing requirements? |
@@ -122,12 +122,14 @@ Unlike batch acquisition, **each core skill requires individual Council delibera
 Located in `~/.agents/skills/` (~231 skills):
 
 **Priority Tier (Essential capabilities):**
+
 - `find-skills` — Skill discovery
 - `gastown` — Multi-agent orchestration
 - `orchestration` — General orchestration patterns
 - `council` — Council deliberation
 
 **Integration Tier (Important domains):**
+
 - `dev-browser` — Browser automation
 - `open-source-maintainer` — GitHub operations
 - `security-review` — Security analysis
@@ -135,6 +137,7 @@ Located in `~/.agents/skills/` (~231 skills):
 - `testing` frameworks (multiple languages)
 
 **Deferred Tier (Specialized/niche):**
+
 - Domain-specific skills (healthcare, logistics, finance)
 - Framework-specific skills (Django, Laravel, Spring)
 - Integration-specific skills (various APIs)

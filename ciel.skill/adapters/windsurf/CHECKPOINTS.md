@@ -5,6 +5,7 @@ Windsurf Cascade provides **Named Checkpoints and Reverts** — a native state m
 ## Overview
 
 Named Checkpoints provide:
+
 - **Point-in-time snapshots** of the entire codebase state
 - **Named references** for important milestones (e.g., "before-refactor", "v1.0-stable")
 - **Irreversible reverts** to previous states
@@ -35,6 +36,7 @@ Users can create named checkpoints from within the Cascade conversation:
 Ciel can recommend creating a checkpoint before high-risk operations:
 
 **Pre-flight Checklist (via `pre_run_command.sh` hook):**
+
 - Detect high-risk commands (`rm -rf`, `git reset --hard`, mass refactoring)
 - Prompt user to create a named checkpoint
 - Block operation until checkpoint confirmed or user overrides
@@ -63,6 +65,7 @@ exit 0
 For Council-gated operations, checkpoints serve as **pre-approval snapshots**:
 
 **Workflow:**
+
 1. User requests high-risk operation
 2. Ciel invokes Council of Five
 3. **Before deliberation**: Ciel suggests creating checkpoint "pre-council-[timestamp]"
@@ -75,6 +78,7 @@ For Council-gated operations, checkpoints serve as **pre-approval snapshots**:
 Ciel can use checkpoints as **recovery points** during self-improvement:
 
 **Pattern:**
+
 ```markdown
 ## Self-Improvement with Checkpoint Recovery
 

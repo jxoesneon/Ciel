@@ -12,6 +12,6 @@ LOG_ENTRY=$(echo "$INPUT" | jq -c '{
   model: .model_name
 }')
 
-echo "$LOG_ENTRY" >> ~/.ciel/logs/activity.log
+echo "$LOG_ENTRY" >>~/.ciel/logs/activity.log
 
 exit 0

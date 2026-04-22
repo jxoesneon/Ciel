@@ -5,6 +5,7 @@ Windsurf provides **Spaces** — a project-centric organization system in the Ag
 ## Overview
 
 Spaces provide:
+
 - **Project-centric organization** — All related sessions in one view
 - **Shared context inheritance** — New sessions inherit Space knowledge
 - **Multi-agent coordination** — Local Cascade + cloud Devin sessions together
@@ -16,6 +17,7 @@ Spaces provide:
 ### What Lives in a Space
 
 A Space brings together:
+
 - **Agent sessions** — Local Cascade and cloud Devin sessions
 - **Pull requests** — PRs opened by you or agents in the Space
 - **Files** — Relevant files for the task
@@ -30,6 +32,7 @@ A Space brings together:
 ### Context Inheritance
 
 When creating a new session in a Space:
+
 - Inherits everything the Space already knows
 - No need to re-explain the project
 - Agents start working immediately with full context
@@ -115,7 +118,7 @@ ciel_space_context:
 
 ### 5. Multi-Session Workflow Patterns
 
-**Pattern: Parallel Council Deliberation**
+#### Pattern: Parallel Council Deliberation
 
 ```markdown
 ## Parallel Council in Space
@@ -127,7 +130,7 @@ ciel_space_context:
 5. **Unified decision** — Outcome propagated to all Space sessions
 ```
 
-**Pattern: Skill Acquisition Pipeline**
+#### Pattern: Skill Acquisition Pipeline
 
 ```markdown
 ## Acquisition Pipeline Space
@@ -157,6 +160,7 @@ All sessions share:
 | Space | `.windsurf/spaces/` | Session group | Space lifetime |
 
 **Ciel sync strategy:**
+
 - **Global** → All Spaces (via `~/.ciel/skills/`)
 - **Local** → Spaces in same project (via `.ciel/`)
 - **Space** → Ephemeral, can promote to Local/Global

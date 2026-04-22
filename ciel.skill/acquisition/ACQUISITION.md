@@ -65,7 +65,8 @@ Exceeded budgets degrade to the next tier or escalate to user.
 
 ## Output
 
-On successful Council pass: 
+On successful Council pass:
+
 - New `.skill` file installed in `~/.ciel/skills/<id>/`
 - Trigger generation via `TRIGGER_GENERATOR.md`
 - Registry updated (`ROUTE_REGISTRY.md`, `TRIGGER_REGISTRY.md`)

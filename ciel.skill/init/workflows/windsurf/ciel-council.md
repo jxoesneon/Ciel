@@ -6,6 +6,7 @@ description: Council deliberation for high-risk decisions
 # Council Deliberation
 
 ## Context
+
 User requests high-risk operation requiring Council judgment.
 
 ## Steps
