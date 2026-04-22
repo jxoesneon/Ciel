@@ -2,6 +2,15 @@
 
 The abstract minimum a host runtime must expose for Ciel to function.
 
+## Platform Agnosticism
+
+Adapters are the primary enforcement point for Ciel's platform neutrality. Each adapter MUST conform to the standards defined in `adapters/PLATFORM_AGNOSTIC_CONTRACT.md`, specifically:
+
+1. **Path Normalization** (Internal POSIX-style `/`).
+2. **Universal Command Mapping** (POSIX coreutils ↔ native shell).
+3. **Shell Normalization** (Env vars, execution policies).
+4. **Encoding Guarantee** (UTF-8 strict).
+
 ## Required Capabilities (the Floor)
 
 A conformant runtime MUST provide:

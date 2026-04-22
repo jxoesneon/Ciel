@@ -6,6 +6,7 @@ description: Self-improvement workflow
 # Self-Improvement
 
 ## Trigger
+
 Growth signal detected from interaction outcome.
 
 ## Steps

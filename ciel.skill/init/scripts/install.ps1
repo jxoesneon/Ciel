@@ -106,7 +106,7 @@ Say "Running verification..."
 if ($LASTEXITCODE -ne 0) { Warn "verify.sh not runnable on Windows; performing inline check." }
 
 if (-not (Test-Path (Join-Path $CielHome "SKILL.md"))) {
-    Warn "SKILL.md not yet placed in CIEL_HOME — expected after ciel.skill unpack."
+    Warn "SKILL.md not yet placed in CIEL_HOME - expected after ciel.skill unpack."
 }
 
 Say "Ciel bootstrap complete."

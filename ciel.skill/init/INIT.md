@@ -4,7 +4,7 @@ Run on first load, on `/ciel-init`, and on any session that detects an integrity
 
 ## Phases
 
-1. **Cold-start check** — if `~/.ciel/` absent, invoke `BOOTSTRAP.md` + `scripts/install.sh`.
+1. **Cold-start check** — if `~/.ciel/` absent, invoke `BOOTSTRAP.md` + `scripts/setup.py`.
 2. **Integrity** — `INTEGRITY.md` verifies checksums, repairs or escalates.
 3. **Runtime detection** — `router/RUNTIME_DETECTION.md`. Load matching adapter.
 4. **Adapter install** — adapter's installation footprint (hooks, commands, context block).

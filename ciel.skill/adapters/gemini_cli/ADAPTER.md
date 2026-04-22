@@ -37,6 +37,21 @@ At init, Ciel:
 3. Ensures `GEMINI.md` exists with a Ciel-anchored block.
 4. Installs council members as subagent files.
 
+## Platform Agnosticism Implementation
+
+This adapter conforms to `adapters/PLATFORM_AGNOSTIC_CONTRACT.md` by:
+
+1. **Bidirectional Path Translation:**
+    - Incoming paths from Gemini CLI (e.g. `C:\Users\Eduardo\Ciel`) are converted to POSIX-style `/` internally.
+    - Outgoing paths (e.g. `~/.ciel/skills`) are converted to Windows native backslashes `\` before shell or FS calls.
+2. **Universal Command Mapping:**
+    - The `shell()` interface intercepts the Universal Command Set (`ls`, `cat`, `grep`, `rm -rf`, etc.) and executes the corresponding PowerShell command via `powershell.exe -ExecutionPolicy Bypass -Command`.
+    - See `seed_skills/shell/PLATFORM_AGNOSTIC_MAPPING.md` for the full mapping.
+3. **Execution Safety:**
+    - Commands are executed in a temporary scope to prevent persistent session pollution.
+4. **Encoding Guarantee:**
+    - All output is captured and normalized to UTF-8 without BOM.
+
 ## Route Map
 
 | Ciel route | Gemini CLI mechanism |

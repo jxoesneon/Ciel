@@ -4,7 +4,7 @@ Ciel's trigger system provides intelligent skill activation through pattern matc
 
 ## Architecture Overview
 
-```
+```text
 User Request
     │
     ▼
@@ -41,6 +41,7 @@ User Request
 ## Trigger Categories
 
 ### 1. Direct Triggers (Confidence: 0.95-1.0)
+
 Exact skill names and aliases.
 
 ```yaml
@@ -54,6 +55,7 @@ triggers:
 ```
 
 ### 2. Functional Triggers (Confidence: 0.7-0.9)
+
 Capability-based patterns describing what the skill does.
 
 ```yaml
@@ -67,6 +69,7 @@ triggers:
 ```
 
 ### 3. Domain Triggers (Confidence: 0.6-0.8)
+
 Subject matter patterns.
 
 ```yaml
@@ -78,6 +81,7 @@ triggers:
 ```
 
 ### 4. Intent Triggers (Confidence: 0.5-0.7)
+
 User goal patterns.
 
 ```yaml
@@ -89,6 +93,7 @@ triggers:
 ```
 
 ### 5. Composite Triggers (Confidence: 0.6-0.8)
+
 Multi-step workflow patterns.
 
 ```yaml
@@ -125,7 +130,9 @@ scoring_algorithm:
 When a skill is added, the pipeline automatically extracts and generates triggers:
 
 ### Stage 1: Extract
+
 Sources for trigger extraction:
+
 - `SKILL.md` frontmatter `triggers:`
 - `SKILL.md` description keywords
 - Skill name and variants
@@ -134,27 +141,34 @@ Sources for trigger extraction:
 - Example usage patterns
 
 ### Stage 2: Generate
+
 Additional triggers generated via:
+
 - Synonym expansion (search → find, lookup, query)
 - Verb conjugation (analyze → analyzing, analyzed)
 - Preposition variants ("search for" vs "search")
 - Domain hierarchy expansion
 
 ### Stage 3: Score
+
 Confidence assignment based on:
+
 - Source reliability (frontmatter > generated)
 - Pattern specificity (exact > regex)
 - Historical performance (if available)
 
 ### Stage 4: Validate
+
 - Conflict detection with existing triggers
 - Test case validation
 - Performance benchmarking
 
 ### Stage 5: Register
+
 Atomic update of TRIGGER_REGISTRY with compiled patterns.
 
 ### Stage 6: Deploy
+
 Runtime-specific trigger cache updates.
 
 ## Local Skill Discovery & Ingestion
@@ -261,6 +275,7 @@ routing_flow:
 ## Registry Updates on Skill Lifecycle
 
 ### On Skill Install
+
 1. Extract triggers from SKILL.md
 2. Generate additional triggers
 3. Register in TRIGGER_REGISTRY
@@ -268,12 +283,14 @@ routing_flow:
 5. Update ROUTE_REGISTRY with trigger references
 
 ### On Skill Update
+
 1. Detect changed triggers
 2. Re-generate trigger set
 3. Validate no regression in matching
 4. Atomic registry update
 
 ### On Skill Remove
+
 1. Remove all associated triggers
 2. Archive for 30 days (in case of rollback)
 3. Compact registry

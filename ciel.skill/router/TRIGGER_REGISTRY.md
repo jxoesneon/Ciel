@@ -79,6 +79,7 @@ scoring_factors:
 ## Dynamic Trigger Generation
 
 When new skill added, triggers auto-extracted from:
+
 - `SKILL.md` frontmatter `triggers:` list
 - `SKILL.md` description keywords
 - File name and directory conventions

@@ -37,6 +37,20 @@ At init (see `init/INIT.md`), Ciel:
 3. Registers her post-execution hook at `PostToolUse` for outcome scoring.
 4. Injects a compact identity block into `CLAUDE.md` (or creates it).
 
+## Platform Agnosticism Implementation
+
+This adapter conforms to `adapters/PLATFORM_AGNOSTIC_CONTRACT.md` by:
+
+1. **Internal Normalization:**
+    - Ensures all paths surfaced to Ciel's core are POSIX-standard `/`.
+    - Normalizes `~` and `$HOME` across all Claude Code environments.
+2. **Universal Command Mapping:**
+    - The `shell()` interface maps Ciel's core commands (`ls`, `grep`, etc.) directly to the POSIX shell.
+    - On non-POSIX environments running Claude Code, it handles the shim as defined in `seed_skills/shell/PLATFORM_AGNOSTIC_MAPPING.md`.
+3. **Shell Environment:**
+    - Normalizes `env` output to a consistent key-value format.
+    - Ensures all file reads use UTF-8 strict encoding.
+
 ## Route Map
 
 | Ciel route | Claude Code mechanism |
