@@ -25,7 +25,7 @@ Given environment evidence, identify the host runtime Ciel is operating inside.
 
 ```json
 {
-  "runtime": { "id": "claude-code|gemini-cli|generic|<other_id>", "version": "string|null" },
+  "runtime": { "id": "claude_code|gemini_cli|generic|<other_id>", "version": "string|null" },
   "features": {
     "skill_load": true,
     "subagent": true|false|"unsupported",
@@ -46,5 +46,5 @@ Given environment evidence, identify the host runtime Ciel is operating inside.
 
 ## Constraints
 
-- If neither claude-code nor gemini-cli is confirmed, `id` must be `generic` or a distinct well-defined id (e.g. `aider`).
+- If neither claude_code nor gemini_cli is confirmed, `id` must be `generic` or a distinct well-defined id (e.g. `aider`).
 - Do not include raw env var values in `reasoning`.

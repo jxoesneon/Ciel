@@ -5,7 +5,7 @@
 version: 1
 runtime_prefs:
   preferred: auto
-  fallback_order: [claude-code, gemini-cli, generic]
+  fallback_order: [claude_code, gemini_cli, generic]
 telemetry:
   otel_enabled: false
   otel_endpoint: null
@@ -22,7 +22,7 @@ improvement:
 
 Primary knobs:
 
-- `runtime_prefs.preferred` — hard-pin to `claude-code` or `gemini-cli` if desired.
+- `runtime_prefs.preferred` — hard-pin to `claude_code` or `gemini_cli` if desired.
 - `telemetry.otel_*` — enable and endpoint for external observability.
 - `backup.*` — global backup cadence and retention.
 - `improvement.auto_tune` — whether Ciel may self-tune within trivial range.

@@ -15,7 +15,7 @@ One JSON object per line (JSONL). Schema:
 {
   "ts": "2026-01-15T09:24:00.123Z",
   "session": "<session_id>",
-  "runtime": "claude-code|gemini-cli|generic",
+  "runtime": "claude_code|gemini_cli|generic",
   "project": "<hash>|null",
   "kind": "route|acquisition|council|mutation|escalation|health|merge|permission|error|improvement|sweep|backup",
   "op": "<short-op>",

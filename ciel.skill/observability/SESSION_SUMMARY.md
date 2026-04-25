@@ -15,7 +15,7 @@ Markdown, rendered to the user's native output + saved to `~/.ciel/sessions/<ses
 ```markdown
 ## Ciel session summary
 
-- **Runtime**: claude-code
+- **Runtime**: claude_code
 - **Project**: <hash>
 - **Duration**: 42m
 - **Requests routed**: 18 (fast: 12, reasoning: 5, acquisition: 1)

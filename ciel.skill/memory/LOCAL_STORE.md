@@ -62,7 +62,7 @@ removes the `.ciel/` directory, drops the MemPalace partition, and removes any g
   "detected_at": "...",
   "language": "...",
   "framework": "...",
-  "runtime_hint": "claude-code|gemini-cli|generic",
+  "runtime_hint": "claude_code|gemini_cli|generic",
   "escalation_override": null
 }
 ```

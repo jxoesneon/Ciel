@@ -177,11 +177,11 @@ Runtime-specific trigger cache updates.
 
 ```yaml
 discovery_paths:
-  claude-code:
+  claude_code:
     - ~/.claude/skills/*/
     - ./.claude/skills/*/
     
-  gemini-cli:
+  gemini_cli:
     - ~/.gemini/skills/*/
     - ./.gemini/skills/*/
     
@@ -221,7 +221,7 @@ backup:
 ./scripts/discover-local-skills.sh --scan-all
 
 # Discover specific runtime
-./scripts/discover-local-skills.sh --runtime claude-code
+./scripts/discover-local-skills.sh --runtime claude_code
 
 # Output to file
 ./scripts/discover-local-skills.sh --output discovered.json

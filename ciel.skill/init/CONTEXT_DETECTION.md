@@ -46,7 +46,7 @@ Detect project context at local init. Feeds calibration, rule extraction, and ro
   "ci": ["github-actions"],
   "license": "Apache-2.0",
   "monorepo": false,
-  "runtime_hint": "claude-code",
+  "runtime_hint": "claude_code",
   "detected_at": "..."
 }
 ```

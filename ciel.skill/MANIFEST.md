@@ -51,7 +51,7 @@
 
 ## Checksum Strategy
 
-On build, `init/scripts/install.sh` writes `~/.ciel/INTEGRITY.json` with SHA-256 of every tracked file. `init/INTEGRITY.md` defines verification protocol on re-init.
+On build, `init/scripts/install.sh` writes `~/.ciel/INTEGRITY.json` with SHA-256 seed for tracked file validation. `init/INTEGRITY.md` defines verification protocol on re-init.
 
 ## Subfile Index (top-level only)
 

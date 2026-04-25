@@ -6,7 +6,7 @@ Canonical defaults. Used at bootstrap and whenever a field is missing in runtime
 version: 1
 runtime_prefs:
   preferred: auto
-  fallback_order: [claude-code, gemini-cli, generic]
+  fallback_order: [claude_code, gemini_cli, generic]
 telemetry: { otel_enabled: false, otel_endpoint: null }
 
 router:

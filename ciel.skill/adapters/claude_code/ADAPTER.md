@@ -5,7 +5,7 @@ Full capability adapter for Claude Code (Anthropic's agent CLI).
 ## Capability Flags
 
 ```yaml
-runtime: claude-code
+runtime: claude_code
 floor: { skills: true, subagents: true, mcp: true, shell: true, fs: true, context: true }
 enhanced:
   hooks: true                  # PreToolUse, PostToolUse, PostToolUseFailure, PermissionRequest, PermissionDenied

@@ -5,15 +5,15 @@ Fingerprint the host runtime on every invocation. Cache the result per session.
 ## Probe Order
 
 1. **Environment variables** (cheapest)
-    - `CLAUDE_CODE_VERSION` / `CLAUDECODE=1` → **claude-code**
-    - `GEMINI_CLI_VERSION` / `GEMINI_API_KEY` + CLI binary present → **gemini-cli**
+    - `CLAUDE_CODE_VERSION` / `CLAUDECODE=1` → **claude_code**
+    - `GEMINI_CLI_VERSION` / `GEMINI_API_KEY` + CLI binary present → **gemini_cli**
     - `WINDSURF_VERSION` / `WINDSURF_WORKSPACE_ID` → **windsurf**
 2. **Filesystem fingerprints**
-    - `.claude/` directory, `~/.claude/settings.json` → claude-code
-    - `.gemini/` directory, `~/.gemini/settings.json` → gemini-cli
+    - `.claude/` directory, `~/.claude/settings.json` → claude_code
+    - `.gemini/` directory, `~/.gemini/settings.json` → gemini_cli
 3. **Binary probes** (if `seed_skills/shell/SKILL.md` available)
-    - `claude --version` success → claude-code
-    - `gemini --version` success → gemini-cli
+    - `claude --version` success → claude_code
+    - `gemini --version` success → gemini_cli
 4. **Capability probe** (generic fallback)
     - Defer to `adapters/generic/CAPABILITY_PROBE.md`.
 
@@ -21,7 +21,7 @@ Fingerprint the host runtime on every invocation. Cache the result per session.
 
 ```yaml
 runtime:
-  id: claude-code | gemini-cli | generic
+  id: claude_code | gemini_cli | windsurf | generic
   version: "..."
   features:
     hooks: true
