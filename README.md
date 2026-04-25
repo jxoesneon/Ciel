@@ -21,6 +21,7 @@
 CIEL 1.0 is designed for seamless integration into modern agentic runtimes.
 
 **Unix (Bash):**
+
 ```bash
 
 # 1. Clone the repository
@@ -34,6 +35,7 @@ bash ciel.skill/init/scripts/install.sh
 ```
 
 **Windows (PowerShell):**
+
 ```powershell
 
 # 1. Clone the repository
@@ -85,7 +87,6 @@ CIEL consolidates over 100+ specialized agents into **10 High-Signal Guilds**. E
 | **Experience** | UI/UX, A11y, Design | `visual-architect`, `accessibility-guardian` |
 | **Strategy & Ops** | Startup CTO, SRE | `startup-cto`, `workflow-automator` |
 | **Quality** | Refactoring, E2E | `tech-debt-surgeon`, `playwright-pro` |
-
 
 ---
 

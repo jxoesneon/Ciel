@@ -109,14 +109,14 @@ ciel_space_context:
   council_status: "active"
   risk_rubric: "standard"
   checkpoint_policy: "pre_high_risk"
-  
+
   inherited_context:
 
     - council/CONSTITUTION.md
     - council/members/*.md
     - router/ROUTE_REGISTRY.md
     - risk/RUBRIC.md
-    
+
   session_injection: |
     You are in a Ciel-governed Space.
     Council of Five is active for high-risk decisions.

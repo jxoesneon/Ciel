@@ -48,10 +48,10 @@ Before proposing a custom implementation, agents must evaluate existing solution
 When triggered, execute the following workflow:
 
 1. **Need Analysis**: Define the exact constraints (language, framework, license).
-2. **Local Context Search**: 
+2. **Local Context Search**:
    - Use `grep_search` and `glob` to verify the functionality doesn't already exist in the repo.
    - Check available MCP servers (e.g., via `cli_help` or direct MCP tool listing).
-3. **Ecosystem Search**: 
+3. **Ecosystem Search**:
    - If internet tools (like `google_web_search` or `exa-search`) are available, search the relevant package manager (npm, PyPI, crates.io).
    - Evaluate community trust, download counts, and recent update activity to mitigate supply chain risks.
 4. **Evaluate & Decide**: Score candidates and apply the Decision Matrix.

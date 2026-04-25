@@ -43,12 +43,14 @@ dependencies:
 ## I/O Contract
 
 ```yaml
+
 io_contract:
   input: { {{...}} }
   output: { {{...}} }
   idempotent: {{true|false|depends}}
   side_effects: {{[shell|fs|network|state_mutation|external_api]}}
-```
+
+```text
 
 ## Safety
 

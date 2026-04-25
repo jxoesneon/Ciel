@@ -23,7 +23,7 @@ triggers:
       skill: ciel
       confidence: 0.95
       type: alias
-    
+
   # Functional triggers - what the skill does
   functional:
 
@@ -33,7 +33,7 @@ triggers:
       confidence: 0.9
       type: capability
       examples: ["route this to a skill", "orchestrate my agents"]
-    
+
   # Domain triggers - subject area
   domain:
 
@@ -42,7 +42,7 @@ triggers:
       skill: ciel
       confidence: 0.85
       type: intent
-    
+
   # Intent triggers - user goal
   intent:
 
@@ -51,7 +51,7 @@ triggers:
       skill: ciel
       confidence: 0.9
       type: meta_request
-    
+
   # Composite triggers - multi-skill patterns
   composite:
 

@@ -52,7 +52,7 @@ extract_sources:
       - triggers       # Explicit list
       - description    # Keyword extraction
       - keywords       # Domain tags
-      
+
   filename:
     pattern: "{name}.skill"
     transforms:
@@ -60,11 +60,11 @@ extract_sources:
       - lowercase
       - strip_version
       - split_camelcase
-      
+
   directory_structure:
     scan: ["*.md", "docs/*.md"]
     extract: headers, command names, API endpoints
-    
+
   code_signatures:
     scan: ["*.{js,py,ts,go,rs}"]
     extract: function names, CLI args, tool definitions
@@ -80,7 +80,7 @@ generation_rules:
   name_variants:
     input: "web_search"
     outputs: ["web search", "websearch", "search web", "websearcher"]
-    
+
   # From description
   description_keywords:
     input: "Fetches web pages and extracts clean markdown content"
@@ -89,13 +89,13 @@ generation_rules:
       - pattern: "(fetch|get|retrieve).*(web|page|url)"
       - pattern: "(extract|parse).*(markdown|content|text)"
       - pattern: "web.*scraping"
-      
+
   # Functional synonyms
   capability_synonyms:
     "search": ["find", "lookup", "query", "discover", "locate"]
     "read": ["fetch", "get", "load", "retrieve"]
     "write": ["save", "store", "create", "update"]
-    
+
   # Domain expansion
   domain_hierarchy:
     "web_search": ["web", "internet", "online", "url", "http"]
@@ -115,7 +115,7 @@ scoring:
     description_keyword: 0.70
     generated_synonym: 0.60
     domain_hierarchy: 0.50
-    
+
   modifiers:
     length_bonus: "+(0.02 * word_count)"  # Longer = more specific
     ambiguity_penalty: "-(0.1 * conflict_count)"
@@ -131,13 +131,13 @@ validation_checks:
     - Check pattern overlap with existing triggers
     - Flag if confidence difference < 0.1
     - Report to Council if conflict detected
-    
+
   test_cases:
 
     - Run all examples from SKILL.md
     - Run generated examples
     - Verify top-3 match accuracy > 0.9
-    
+
   performance:
 
     - Compile regex time < 10ms
@@ -157,7 +157,7 @@ registration:
     - Compile patterns
     - Verify compilation
     - Commit or rollback
-    
+
   metadata:
     skill_id: "<skill_name>"
     version: "<skill_version>"
@@ -174,13 +174,13 @@ deployment:
     - Update in-memory trigger cache
     - Notify active sessions (if applicable)
     - Write to runtime-specific location
-    
+
   claude_code:
     path: ".claude/triggers/ciel_triggers.json"
-    
+
   gemini_cli:
     path: ".gemini/triggers/ciel_triggers.json"
-    
+
   windsurf:
     inject_into: ".windsurf/rules"
 ```
@@ -236,7 +236,7 @@ templates:
       - "use {name}"
 
     examples: ["git status", "run docker", "npm install"]
-    
+
   # File operation pattern
   file_operation:
     patterns:
@@ -245,7 +245,7 @@ templates:
       - "{domain}.*(file|directory|folder)"
 
     examples: ["list files", "read directory", "delete folder"]
-    
+
   # Search pattern
   search_tool:
     patterns:
@@ -256,7 +256,7 @@ templates:
       - "query.*{domain}"
 
     examples: ["search web", "find files", "lookup command"]
-    
+
   # Analysis pattern
   analyzer:
     patterns:

@@ -40,11 +40,11 @@ If you wrote code before a test: **Delete it. Start over.**
 
 ## The Cycle
 
-1.  **RED**: Write one minimal test for the desired behavior.
-2.  **Verify RED**: Run the test and **confirm it fails** for the expected reason.
-3.  **GREEN**: Write the **minimal code** required to pass the test.
-4.  **Verify GREEN**: Run the test and confirm it passes.
-5.  **REFACTOR**: Clean up the code while keeping the test green.
+1. **RED**: Write one minimal test for the desired behavior.
+2. **Verify RED**: Run the test and **confirm it fails** for the expected reason.
+3. **GREEN**: Write the **minimal code** required to pass the test.
+4. **Verify GREEN**: Run the test and confirm it passes.
+5. **REFACTOR**: Clean up the code while keeping the test green.
 
 ## Orchestration Logic
 

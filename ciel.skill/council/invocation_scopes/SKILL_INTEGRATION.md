@@ -59,21 +59,21 @@ Unlike batch acquisition, **each core skill requires individual Council delibera
 
    └─→ Identify skill in ~/.agents/skills/
    └─→ Verify SKILL.md exists with basic frontmatter
-   
+
 2. ANALYSIS (Individual)
 
    └─→ Read full SKILL.md content
    └─→ Identify capability domain and overlap with existing skills
    └─→ Assess documentation completeness
    └─→ Note any runtime-specific dependencies
-   
+
 3. HARMONIZATION (Individual)
 
    └─→ Convert to Ciel format (skill/1.0)
    └─→ Add proper frontmatter (version, runtimes, triggers)
    └─→ Generate activation triggers
    └─→ Create ADAPTATION_METADATA.json
-   
+
 4. COUNCIL DELIBERATION (Required)
 
    └─→ Present to Council of Five with:
@@ -83,7 +83,7 @@ Unlike batch acquisition, **each core skill requires individual Council delibera
        - Capability overlap analysis
        - Proposed triggers and confidence scores
        - Backup location of original
-   
+
 5. INTEGRATION (On Council Pass)
 
    └─→ Install to ~/.ciel/skills/<name>/
@@ -91,7 +91,7 @@ Unlike batch acquisition, **each core skill requires individual Council delibera
    └─→ Update TRIGGER_REGISTRY
    └─→ Create .bkp.zip of original in ~/.ciel/.attic/core_skills/
    └─→ Git commit: "core: integrate <skill_name> from ECC ecosystem"
-   
+
 6. REJECT (On Council Veto)
 
    └─→ Archive harmonization attempt

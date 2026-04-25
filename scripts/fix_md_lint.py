@@ -5,37 +5,75 @@ def fix_markdown(content):
     if not content.strip():
         return content
     
+    # MD012: No multiple blank lines
+    content = re.sub(r'\n{3,}', '\n\n', content)
+    
+    # MD009: No trailing spaces
+    lines = [line.rstrip() for line in content.splitlines()]
+    
     # MD022: Blanks around headings
-    lines = content.splitlines()
-    new_lines = []
+    # MD026: No trailing punctuation in heading
+    temp_lines = []
     for i, line in enumerate(lines):
         if re.match(r'^#+ ', line):
-            if i > 0 and new_lines and new_lines[-1].strip() != '':
-                new_lines.append('')
-            new_lines.append(line)
-            # Look ahead for MD022 below
+            # MD026: Remove trailing colon, semicolon, etc. from headings
+            line = re.sub(r'[:;,.]$', '', line.strip())
+            
+            if i > 0 and temp_lines and temp_lines[-1].strip() != '':
+                temp_lines.append('')
+            temp_lines.append(line)
             if i < len(lines) - 1 and lines[i+1].strip() != '' and not re.match(r'^#+ ', lines[i+1]):
-                 new_lines.append('')
+                 temp_lines.append('')
         else:
-            new_lines.append(line)
+            temp_lines.append(line)
     
+    # MD031: Blanks around fences
+    # MD040: Fenced code blocks language
+    lines = temp_lines
+    temp_lines = []
+    in_code_block = False
+    for i, line in enumerate(lines):
+        if line.startswith('```'):
+            if not in_code_block:
+                # Opening fence
+                if i > 0 and temp_lines and temp_lines[-1].strip() != '':
+                    temp_lines.append('')
+                # MD040: Default language if missing
+                if line.strip() == '```':
+                    line = '```text'
+                temp_lines.append(line)
+                in_code_block = True
+            else:
+                # Closing fence
+                temp_lines.append(line)
+                in_code_block = False
+                if i < len(lines) - 1 and lines[i+1].strip() != '':
+                    temp_lines.append('')
+        else:
+            temp_lines.append(line)
+
     # MD032: Blanks around lists
-    content = '\n'.join(new_lines)
-    lines = content.splitlines()
+    # MD030: Spaces after list markers
+    lines = temp_lines
     final_lines = []
-    # Match list items: starting with *, -, +, or 1.
-    list_pattern = r'^(\s*)(\d+\.|[\*\-\+])\s+'
+    list_pattern = r'^(\s*)(\d+\.|[\*\-\+])(\s+)'
     
     for i, line in enumerate(lines):
-        is_list = re.match(list_pattern, line)
-        
-        if is_list:
+        m = re.match(list_pattern, line)
+        if m:
+            # MD030: Ensure exactly one space after marker
+            indent = m.group(1)
+            marker = m.group(2)
+            rest = line[m.end():].lstrip()
+            line = f"{indent}{marker} {rest}"
+            
+            # MD032: Blank line above list
             prev_is_list = i > 0 and re.match(list_pattern, lines[i-1])
             if not prev_is_list and i > 0 and final_lines and final_lines[-1].strip() != '':
                 final_lines.append('')
             final_lines.append(line)
             
-            # Look ahead
+            # MD032: Blank line below list
             if i < len(lines) - 1:
                 next_is_list = re.match(list_pattern, lines[i+1])
                 if not next_is_list and lines[i+1].strip() != '':
