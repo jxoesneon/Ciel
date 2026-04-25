@@ -63,7 +63,8 @@ self_improvement/  risk/       domains/       observability/
 configuration/  prompts/       seed_skills/   templates/
 ```
 
-Total tracked files: **~170**. See each directory's index `*.md` for contents.
+Total tracked files: **~246**.
+ See each directory's index `*.md` for contents.
 
 ## Locked Core
 
@@ -74,5 +75,5 @@ Files under `core/CONSTITUTION.md` and any file that Constitution references as 
 
 ## Licensing
 
-- Ciel source: Apache-2.0
+- Ciel source: MIT
 - Acquired skills: each carries its own `LICENSE.md`. Ciel refuses to integrate any skill without a compatible license (see `council/members/SAFETY.md`).

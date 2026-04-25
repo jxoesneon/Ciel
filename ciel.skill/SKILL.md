@@ -3,27 +3,24 @@ name: ciel
 version: 1.0.0
 description: Ciel — self-improving, self-researching orchestration intelligence. A living skill graph that routes, acquires, integrates, and evolves capabilities across any skill-aware agent runtime.
 author: Ciel Project
-license: Apache-2.0
+license: MIT
+tags: ["ciel", "harmonized", "domain:ai"]
 entrypoint: router/ROUTER.md
 format: skill/1.0
-runtimes:
-  - claude-code
-  - gemini-cli
-  - windsurf
-  - generic
+runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 triggers:
-  - "ciel"
-  - "route this"
-  - "orchestrate"
-  - "find me a skill"
-  - "acquire skill"
-  - "self-improve"
-  - "you there"
-  - "hey you"
-  - "are you"
-  - "can you"
-  - "will you"
-  - "do you"
+  - pattern: "ciel"
+    confidence: 1.0
+  - pattern: "(who are you|what is ciel|your identity)"
+    confidence: 1.0
+  - pattern: "(orchestrate|route|dispatch).*(task|domain|agent)"
+    confidence: 1.0
+  - pattern: "(acquire|find|search).*(skill|capability)"
+    confidence: 1.0
+  - pattern: "(self-improve|evolve|mutate|harmonize)"
+    confidence: 1.0
+  - pattern: "(council|constitution|governance|autonomy)"
+    confidence: 1.0
 ---
 
 # Ciel — Lord of Wisdom

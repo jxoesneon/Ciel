@@ -53,6 +53,12 @@ EXPECTED_FILES=(
   adapters/gemini_cli/INTERACTIVE_SHELL.md adapters/gemini_cli/COUNCIL_INVOCATION.md
   adapters/gemini_cli/CONTEXT_FILES.md
 
+  adapters/windsurf/ADAPTER.md adapters/windsurf/HOOKS.md
+  adapters/windsurf/SUBAGENTS.md adapters/windsurf/MCP.md
+  adapters/windsurf/SPACES.md adapters/windsurf/WORKFLOWS.md
+  adapters/windsurf/CHECKPOINTS.md adapters/windsurf/CONTEXT_FILES.md
+  adapters/windsurf/COUNCIL_INVOCATION.md
+
   adapters/generic/ADAPTER.md adapters/generic/RESEARCH_PROTOCOL.md
   adapters/generic/CAPABILITY_PROBE.md
 
@@ -177,6 +183,19 @@ for f in "$SKILL"/seed_skills/*/SKILL.md; do
   rm -f "$f.head.$$"
 done
 
+# ---------------------------------------------------------------- External skills frontmatter
+say "Checking external skills frontmatter..."
+for f in "$ROOT"/skills/*/SKILL.md; do
+  [[ -f "$f" ]] || continue
+  head -n 30 "$f" >"$f.head.$$"
+  for key in name version format runtimes triggers license tags description; do
+    if ! grep -qE "^${key}:" "$f.head.$$"; then
+      fail "$(realpath --relative-to="$ROOT" "$f" 2>/dev/null || echo "$f"): missing frontmatter key '${key}'"
+    fi
+  done
+  rm -f "$f.head.$$"
+done
+
 # ---------------------------------------------------------------- SKILL.md frontmatter (root)
 say "Checking root SKILL.md frontmatter..."
 for key in name version description entrypoint format runtimes; do
@@ -208,6 +227,14 @@ done
 say "Checking version consistency..."
 VER_SKILL="$(awk -F': *' '/^version:/{print $2; exit}' "$SKILL/SKILL.md" | tr -d '[:space:]')"
 VER_MANIFEST="$(awk -F'`' '/^- \*\*Version\*\*:/{print $2; exit}' "$SKILL/MANIFEST.md")"
+
+if [[ -z "$VER_SKILL" ]]; then
+  fail "could not extract version from SKILL.md"
+fi
+if [[ -z "$VER_MANIFEST" ]]; then
+  fail "could not extract version from MANIFEST.md (check format: - **Version**: \`X.Y.Z\`)"
+fi
+
 if [[ -n "$VER_SKILL" && -n "$VER_MANIFEST" && "$VER_SKILL" != "$VER_MANIFEST" ]]; then
   fail "version mismatch: SKILL.md=$VER_SKILL vs MANIFEST.md=$VER_MANIFEST"
 else

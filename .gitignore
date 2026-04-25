@@ -41,7 +41,5 @@ node_modules/
 .pytest_cache/
 __pycache__/
 
-# Helper scripts (useful but not core)
-scripts/adapt-skill.sh
-scripts/analyze-skill.sh
-scripts/generate-triggers.sh
+# Helper scripts
+# (Removed explicit ignores to allow adapt-skill.sh, analyze-skill.sh, generate-triggers.sh)

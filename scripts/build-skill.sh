@@ -61,16 +61,12 @@ rm -f "$DIST/$ARTIFACT" "$DIST/${ARTIFACT}.sha256" "$DIST/SHA256SUMS"
 STAGE="$(mktemp -d -t ciel-build.XXXXXX)"
 trap 'rm -rf "$STAGE"' EXIT
 
-rsync -a \
-  --exclude '.DS_Store' \
-  --exclude 'Thumbs.db' \
-  --exclude '*.swp' \
-  --exclude '*~' \
-  --exclude '.idea/' \
-  --exclude '.vscode/' \
-  --exclude '*.bak' \
-  --exclude '*.orig' \
-  "$SRC"/ "$STAGE/ciel.skill/"
+mkdir -p "$STAGE/ciel.skill"
+cp -r "$SRC/." "$STAGE/ciel.skill/"
+
+# Clean up excluded patterns manually since cp -r doesn't support --exclude
+find "$STAGE/ciel.skill" -type f \( -name ".DS_Store" -o -name "Thumbs.db" -o -name "*.swp" -o -name "*~" -o -name "*.bak" -o -name "*.orig" \) -delete
+find "$STAGE/ciel.skill" -type d \( -name ".idea" -o -name ".vscode" \) -exec rm -rf {} +
 
 # Ensure install scripts retain exec bit.
 chmod +x "$STAGE/ciel.skill/init/scripts/install.sh" "$STAGE/ciel.skill/init/scripts/verify.sh"

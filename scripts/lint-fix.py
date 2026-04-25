@@ -18,8 +18,8 @@ import pathlib
 import re
 import sys
 
-ROOT = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else "/Users/mey/Ciel/ciel.skill")
-TARGETS = list(ROOT.rglob("*.md")) + [pathlib.Path("/Users/mey/Ciel/README.md")]
+ROOT = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else pathlib.Path(__file__).parent.parent / "ciel.skill")
+TARGETS = list(ROOT.rglob("*.md")) + [ROOT.parent / "README.md"]
 
 def sniff_language(block: str) -> str:
     b = block.strip()
@@ -53,12 +53,11 @@ def fix_md040(text: str) -> str:
     lines = text.split("\n")
     out = []
     i = 0
-    in_fence = False
     while i < len(lines):
         line = lines[i]
         # Detect opening fence (```$ or ``` with just whitespace)
         m = re.match(r'^(\s*)```\s*$', line)
-        if m and not in_fence:
+        if m:
             # collect block content until closing fence
             indent = m.group(1)
             body_lines = []
@@ -78,7 +77,7 @@ def fix_md040(text: str) -> str:
             continue
         # Detect existing language tag (already has one) — pass through
         m2 = re.match(r'^(\s*)```\s*\S+', line)
-        if m2 and not in_fence:
+        if m2:
             # pass the open fence
             out.append(line)
             i += 1
@@ -130,7 +129,7 @@ def fix_md060(text: str) -> str:
                 if not stripped.startswith("|"):
                     stripped = "|" + stripped
                 if not stripped.endswith("|"):
-                    stripped = stripped + "|"  # noqa: PLR5501
+                    stripped = stripped + "|"
                 # Split on | but keep inner escapes
                 # GitHub tables don't require escaping; split plainly
                 cells = stripped.split("|")
