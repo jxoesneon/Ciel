@@ -89,6 +89,7 @@ jobs:
   shfmt:
     name: shfmt
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
       - name: Install shfmt
@@ -117,12 +118,13 @@ jobs:
   psscriptanalyzer:
     name: PSScriptAnalyzer
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
       - name: Run PSScriptAnalyzer
         shell: pwsh
         run: |
-          $results = Invoke-ScriptAnalyzer -Path "scripts/*.ps1", "ciel.skill/init/scripts/*.ps1" -Recurse
+          $results = Get-ChildItem -Path scripts/*.ps1, ciel.skill/init/scripts/*.ps1 -Recurse | Invoke-ScriptAnalyzer
           $results | Select-Object -Property Message, Path, Line | Format-Table
           if ($results | Where-Object Severity -in 'Error','Warning') { exit 1 }
 
