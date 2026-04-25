@@ -153,7 +153,7 @@ jobs:
             echo "::error title=File count drift::archive contains $count files; expected ~241"
             exit 1
           fi
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: ciel-skill-ci
           path: dist/

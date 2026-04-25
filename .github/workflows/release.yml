@@ -115,7 +115,7 @@ jobs:
           '
 
       - name: Upload build artifact (also for non-tag runs)
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ciel-skill-${{ steps.ver.outputs.version }}
           path: |
