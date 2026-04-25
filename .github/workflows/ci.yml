@@ -164,7 +164,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-test
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: ciel-skill-ci
           path: dist

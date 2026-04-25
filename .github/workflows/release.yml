@@ -138,7 +138,7 @@ jobs:
           fetch-depth: 0
 
       - name: Download build artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: ciel-skill-${{ needs.build.outputs.version }}
           path: dist
