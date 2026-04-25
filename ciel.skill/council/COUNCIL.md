@@ -1,3 +1,7 @@
+---
+locked: true
+---
+
 # COUNCIL — Council of Five
 
 Ciel's integration immune system and self-modification gate. Convened automatically on any Council-scope event (see `invocation_scopes/`).

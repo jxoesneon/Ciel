@@ -268,6 +268,8 @@ foreach ($rel in $EXPECTED_FILES) {
 }
 if ($global:FAILED_COUNT -eq 0) { ok "all expected files present" }
 
+$validation_logic
+
 # ---------------------------------------------------------------- Seed skills
 say "Checking seed skills (glob)..."
 $seeds = Get-ChildItem -Path "$SKILL\seed_skills" -Directory
