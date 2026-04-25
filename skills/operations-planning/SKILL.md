@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "drum-buffer-rope"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Operations Planning (Demand & Production)
 
 This skill formalizes "Flow Control" for physical and digital assets. It applies senior-level heuristics to minimize stockouts and maximize throughput at the system constraint.

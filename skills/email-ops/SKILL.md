@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "reply to (the|this) email"
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Email Ops (Mailbox Operations)
 
 This skill manages formal mailbox interaction. It focuses on thread history, brand voice alignment, and explicit send verification.

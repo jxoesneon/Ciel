@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "is this (healthcare|hipaa) compliant"
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Healthcare Compliance (PHI/PII Protection)
 
 This skill formalizes the handling of Protected Health Information (PHI) and Personally Identifiable Information (PII). It acts as an overlay to `security-review` for regulated medical environments.

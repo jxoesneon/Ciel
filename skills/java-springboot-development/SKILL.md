@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "spring security"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Java & Spring Boot (The Enterprise Layer)
 
 This skill formalizes the development of production-grade Java services using Spring Boot. It mandates immutability, fail-fast error handling, and security-first configuration.

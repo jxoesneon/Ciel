@@ -4,12 +4,11 @@ version: 1.0.0
 description: Code review — security audit, quality assessment, suggested fixes.
 triggers: [review, audit code, quality, lint suggestions]
 tags: [code, scope:both, runtime:any, risk:low]
-runtime_compatibility: { claude_code: true, gemini_cli: true, generic: true }
+runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [code_analysis/SKILL.md, linter_formatter/SKILL.md] }
 ---
-
 # code_review
 
 Review code and produce actionable feedback.

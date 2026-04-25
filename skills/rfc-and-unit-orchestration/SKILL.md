@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "ralphinho rfc pipeline"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: RFC & Unit Orchestration (The Structure Layer)
 
 This skill formalizes the decomposition of large features into independently verifiable work units. it prioritizes quality gates and merge safety.

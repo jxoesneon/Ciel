@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "useGSAP"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Animation Framework Integration (Memory & Lifecycle)
 
 This skill dictates how to safely use GSAP inside component-based frameworks. it focuses on the "Mounted/Unmounted" lifecycle and selective scoping.

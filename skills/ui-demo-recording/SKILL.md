@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "show me how it works visually"
     confidence: 0.85
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: UI Demo Recording (Playwright)
 
 This skill formalizes the process for creating professional, storytelling demo videos of web applications. It uses Playwright for deterministic recording and overlays for visual polish.

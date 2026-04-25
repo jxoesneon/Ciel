@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "nuxt route rules"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Nuxt Development (The Vue Meta-Layer)
 
 This skill formalizes the development of high-performance Vue applications using Nuxt 4. it focuses on hydration safety and granular rendering strategies.

@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "write a guide for"
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Article Writing (The Content Layer)
 
 This skill formalizes the creation of long-form content that avoids the "AI Smoothing" trap. it prioritizes proof, artifacts, and a distinctive point of view.

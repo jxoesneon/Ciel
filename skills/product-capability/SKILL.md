@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "turn (prd|intent) into (srs|contract)"
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Product Capability (The Engineering Contract)
 
 This skill bridges the gap between "What should we build?" and "How exactly must it behave?". It turns product intent into a durable engineering contract.

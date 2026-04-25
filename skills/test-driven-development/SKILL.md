@@ -13,8 +13,10 @@ triggers:
     confidence: 1.0
   - pattern: "write.*test.*first"
     confidence: 0.95
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Test-Driven Development (TDD)
 
 This skill enforces CIEL's "Iron Law" of engineering: no production code without a failing test first.

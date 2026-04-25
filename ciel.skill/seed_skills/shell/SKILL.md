@@ -4,11 +4,12 @@ version: 1.0.0
 description: Shell command execution with process management, env vars, piping, timeouts.
 triggers: [shell, bash, run, exec, command]
 tags: [shell, scope:both, runtime:any, risk:low]
-runtime_compatibility: { claude_code: true, gemini_cli: true, generic: true }
+runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: Apache-2.0
 source: { tier: 0, origin: seed }
----
 
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # shell
 
 Execute shell commands. All commands use the universal set defined in `PLATFORM_AGNOSTIC_MAPPING.md`.

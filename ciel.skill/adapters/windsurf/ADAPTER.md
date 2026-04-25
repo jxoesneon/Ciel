@@ -112,9 +112,9 @@ See `SPACES.md` for Space governance patterns and Ciel integration.
 
 Windsurf supports `.windsurf/workflows/*.md` invoked via `/workflow-name`. Ciel provides:
 
-- `templates/workflows/council.md` — Council deliberation workflow
-- `templates/workflows/acquire-skill.md` — Skill acquisition workflow
-- `templates/workflows/self-improve.md` — Self-improvement workflow
+- `init/workflows/windsurf/ciel-council.md` — Council deliberation workflow
+- `init/workflows/windsurf/ciel-acquire.md` — Skill acquisition workflow
+- `init/workflows/windsurf/ciel-improve.md` — Self-improvement workflow
 
 ## Degraded Features
 

@@ -11,8 +11,10 @@ triggers:
     confidence: 0.8
   - pattern: "respond at (25|50|75|100)%"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Token Budget Advisor (Depth Control)
 
 This skill allows the user to explicitly control the "Resolution" of CIEL's responses. It intercepts the response flow to offer a choice between Essential, Moderate, Detailed, and Exhaustive depth levels.

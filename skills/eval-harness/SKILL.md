@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "setup (eval|edd|eval-driven)"
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Eval-Harness (Verification Architecture)
 
 This skill formalizes Eval-Driven Development (EDD) within CIEL. It acts as the ultimate quality gate for agent-generated code, prompt engineering, and complex workflows. It treats AI evaluations as "unit tests for agent development."

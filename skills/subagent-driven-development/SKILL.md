@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "(delegate|dispatch).*(task|subagent)"
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Subagent-Driven Development (Delegation Mandate)
 
 This skill formalizes CIEL's orchestration philosophy regarding context management and task execution. To preserve the Orchestrator's context window, independent implementation tasks MUST be delegated to fresh, ephemeral sub-agents (e.g., the `generalist` tool or specific skill agents).

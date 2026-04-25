@@ -11,8 +11,10 @@ triggers:
     confidence: 1.0
   - pattern: "node init_skill.cjs"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Skill Engineering (The Reproduction Layer)
 
 This skill formalizes the creation, packaging, and iteration of CIEL skills. it mandates a TDD-based documentation approach.

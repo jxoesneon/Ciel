@@ -11,8 +11,10 @@ triggers:
     confidence: 1.0
   - pattern: "request.*review"
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Review and Adversarial (The Challenger)
 
 This skill mandates adversarial thinking during code review. It refuses to rubber-stamp changes and actively hunts for flaws.

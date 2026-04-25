@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "find exploitable bugs"
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Security Bounty Hunter (Offensive Discovery)
 
 This skill formalizes "Practical Vulnerability Hunting." Unlike a broad security review, it focuses on remotely reachable, user-controlled attack paths that qualify for responsible disclosure.

@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "remotion"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Remotion Video (Programmable Media)
 
 This skill formalizes the use of Remotion for creating videos through code. It is used for overlays, data visualizations, and repeatable motion graphics.

@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "multi-agent workflow"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Autonomous Orchestration (Fleets & Missions)
 
 This skill formalizes the execution of multi-step, multi-agent workflows. it prioritizes isolation, structured reporting, and persistent scheduling.

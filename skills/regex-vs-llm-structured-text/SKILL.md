@@ -11,8 +11,10 @@ triggers:
     confidence: 0.9
   - pattern: "(regex vs llm|regex or llm)"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Regex vs. LLM (Parsing Strategy)
 
 This skill provides a decision framework for structured text extraction, prioritizing deterministic speed (Regex) for the common case and reserving LLM reasoning for the long tail.

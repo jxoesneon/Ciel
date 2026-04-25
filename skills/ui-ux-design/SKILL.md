@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "recommend (style|color|font)"
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: UI/UX Design (Intelligence)
 
 This skill formalizes visual design and user experience quality control. It provides the "Intelligence" needed to build professional, accessible, and high-performance interfaces.

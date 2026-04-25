@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "brand guidelines"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Brand Identity (Voice & Vision)
 
 This skill formalizes the "Brand Layer" of CIEL. It ensures consistency across all user-facing content, from terminal output to marketing assets.

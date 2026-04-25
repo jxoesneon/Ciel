@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "laravel patterns"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Laravel Development (The Modern PHP Layer)
 
 This skill formalizes the development of high-quality Laravel applications. It mandates thin controllers, action-based logic, and a strict "RefreshDatabase" testing strategy.

@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "database migrations"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Database Migrations (Schema Safety)
 
 This skill formalizes the process for making reversible, zero-downtime database changes. It prioritizes table safety over implementation speed.

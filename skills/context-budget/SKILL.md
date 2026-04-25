@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "/context-budget"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Context Budget (Context Audit)
 
 This skill provides the Orchestrator with a proactive mechanism to monitor and optimize the "Permanent Context" overhead of the system. It identifies bloat in agent definitions, redundant skills, and over-subscribed MCP servers.

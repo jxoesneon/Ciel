@@ -11,8 +11,10 @@ triggers:
     confidence: 0.9
   - pattern: "exa web search"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Neural Intelligence (Exa & fal.ai)
 
 This skill formalizes the use of neural search and generative media. it prioritizes high-signal retrieval and multimodal consistency.

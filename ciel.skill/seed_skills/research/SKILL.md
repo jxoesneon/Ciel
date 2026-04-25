@@ -4,12 +4,11 @@ version: 1.0.0
 description: Deep research protocol — multi-source synthesis, confidence assessment, citations.
 triggers: [research, deep research, investigate, look up]
 tags: [network, scope:both, runtime:any, risk:low]
-runtime_compatibility: { claude_code: true, gemini_cli: true, generic: true }
+runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [web_search/SKILL.md, web_fetch/SKILL.md, context_summarizer/SKILL.md] }
 ---
-
 # research
 
 Multi-source synthesis with citations.

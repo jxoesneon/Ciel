@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "improve search visibility"
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: SEO Optimization (Search Logic)
 
 This skill formalizes the "Technical SEO" layer. it focuses on correctness and performance rather than content-stuffing gimmicks.

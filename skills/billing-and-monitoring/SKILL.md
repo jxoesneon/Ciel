@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "customer billing ops"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Billing & Monitoring (The Revenue Layer)
 
 This skill formalizes the intersection of customer health and system observability. it prioritizes reversible remediation and question-driven dashboards.

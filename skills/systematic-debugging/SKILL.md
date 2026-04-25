@@ -15,8 +15,10 @@ triggers:
     confidence: 0.95
   - pattern: "fix.*(again|it)"
     confidence: 0.85
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Systematic Debugging
 
 This skill enforces CIEL's diagnostic rigor: NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST.

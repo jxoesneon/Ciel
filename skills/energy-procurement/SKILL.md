@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "demand charge mitigation"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Energy Procurement (C&I Strategy)
 
 This skill formalizes the management of large-scale energy portfolios. it prioritizes budget certainty and total-cost optimization over simple rate hunting.

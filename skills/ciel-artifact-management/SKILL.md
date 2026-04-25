@@ -11,8 +11,10 @@ triggers:
     confidence: 1.0
   - pattern: "planning mode"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Artifact Management (The Vault)
 
 This skill formalizes the "Antigravity" model of separating product code from agentic waste. It ensures that transient reasoning data is stored in isolated, auditable vaults.

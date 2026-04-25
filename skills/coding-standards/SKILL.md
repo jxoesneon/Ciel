@@ -13,8 +13,10 @@ triggers:
     confidence: 0.95
   - pattern: "(review|refactor).*(code|file).*(quality|readability)"
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Coding-Standards (Engineering Baseline)
 
 This skill provides the baseline engineering conventions applicable across CIEL projects. It establishes the "shared floor" for code quality, focusing on readability, immutability, and architectural soundness.

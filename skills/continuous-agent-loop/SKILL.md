@@ -11,8 +11,10 @@ triggers:
     confidence: 0.9
   - pattern: "how should I (run|execute) this (autonomous|continuous) task"
     confidence: 0.85
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Continuous Agent Loop (Execution Stacks)
 
 This skill formalizes the selection and management of autonomous execution loops in CIEL. It supersedes `autonomous-loops` by introducing a structured "Loop Selection Flow" based on task requirements.

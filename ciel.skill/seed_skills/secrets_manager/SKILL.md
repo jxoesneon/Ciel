@@ -4,12 +4,11 @@ version: 1.0.0
 description: Secure credential handling — env vars, keychain, vault lookup; never plaintext.
 triggers: [secret, credential, env var, keychain, vault]
 tags: [security, scope:both, runtime:any, risk:high]
-runtime_compatibility: { claude_code: true, gemini_cli: true, generic: true }
+runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [shell/SKILL.md] }
 ---
-
 # secrets_manager
 
 Resolve credentials by reference; never inline.

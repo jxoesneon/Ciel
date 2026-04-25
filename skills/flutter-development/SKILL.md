@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "flutter patterns"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Flutter Development (Patterns & Review)
 
 This skill formalizes the development and review of Flutter/Dart applications. It combines idiomatic implementation patterns with a rigorous quality checklist.

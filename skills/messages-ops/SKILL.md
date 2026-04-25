@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "look in (imessage|twitter|x) dms"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Messages Ops (Instant Messaging)
 
 This skill manages live message retrieval from instant messaging surfaces. It is specialized for high-speed, evidence-based tasks like retrieving One-Time Passwords (OTPs) or inspecting DM threads.

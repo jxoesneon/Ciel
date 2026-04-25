@@ -11,8 +11,10 @@ triggers:
     confidence: 1.0
   - pattern: "analyze logs"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Root Cause Debugger (The Scalpel)
 
 This skill formalizes the transition from "guessing" to "empirical evidence" during debugging. it mandates the use of execution data.

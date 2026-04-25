@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "review (my|the) code"
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Requesting Code Review (The Auditor Protocol)
 
 This skill formalizes the "Code Quality Review" stage of CIEL's `subagent-driven-development` cycle. It dictates how the Orchestrator requests a peer review from the Auditor sub-agent, ensuring that reviews are objective, context-isolated, and strictly aligned with CIEL standards.

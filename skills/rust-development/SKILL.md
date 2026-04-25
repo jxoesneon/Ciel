@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "rust patterns"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Rust Development (Safety & Performance)
 
 This skill formalizes the development of high-integrity Rust applications. it prioritizes ownership-aware design and making illegal states unrepresentable.

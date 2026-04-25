@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "healthcare safety patterns"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Healthcare Systems (Safety & Workflows)
 
 This skill formalizes the development of patient-critical healthcare software. It mandates fail-safe logic and accessibility-first UI.

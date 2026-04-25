@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "swiftui patterns"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: SwiftUI Patterns (Declarative UI)
 
 This skill formalizes the use of the Observation framework and type-safe navigation in modern SwiftUI.

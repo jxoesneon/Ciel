@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "deep research report"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Research & Intelligence (The Knowledge Layer)
 
 This skill formalizes the retrieval and synthesis of external knowledge. it prioritizes cited evidence and automated data collection.

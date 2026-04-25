@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "git flow"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Workflow & Platform (The Delivery Layer)
 
 This skill manages the standard mechanisms of collaboration and specialized platform features (iOS).

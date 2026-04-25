@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "standardize project"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Project Scaffolder (The Foundation)
 
 This skill ensures that every new piece of CIEL code starts with high architectural integrity and standard-compliant structure.

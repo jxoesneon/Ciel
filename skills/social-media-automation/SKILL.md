@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "x api"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Social Media Automation (X & Cross-Post)
 
 This skill formalizes the use of the X API and cross-platform workflows. it prioritizes rate-limit safety and voice consistency.

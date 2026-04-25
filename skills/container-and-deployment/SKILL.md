@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "deployment patterns"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Containers & Deployment (The Ship Layer)
 
 This skill formalizes the packaging and delivery of services. it prioritizes reproducible builds and zero-downtime rollouts.

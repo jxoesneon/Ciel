@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "context keeper"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Context & Memory (Persistence)
 
 This skill formalizes the management of project-specific knowledge and stylistic identity. it prioritizes high-fidelity recall and guided onboarding.

@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "is the agent (following|obeying) (the rule|this skill)"
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Skill Comply (Quality Audit)
 
 This skill provides the data-backed answer to the question: "Is CIEL actually following its own rules?" It measures compliance by auto-generating scenarios and analyzing tool-call timelines against established behavioral specs.

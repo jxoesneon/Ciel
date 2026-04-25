@@ -4,12 +4,11 @@ version: 1.0.0
 description: Vulnerability scanning, outdated-dep detection, update strategy.
 triggers: [audit deps, cve, vulnerability, outdated]
 tags: [security, pkg, scope:both, runtime:any, risk:low]
-runtime_compatibility: { claude_code: true, gemini_cli: true, generic: true }
+runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [package_manager/SKILL.md, shell/SKILL.md] }
 ---
-
 # dependency_audit
 
 Scan project and acquired skills for vulnerable or outdated dependencies.

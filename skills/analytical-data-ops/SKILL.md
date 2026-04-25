@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "materialized view"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Analytical Data Ops (ClickHouse & Pipelines)
 
 This skill formalizes high-performance analytics. it prioritizes column-oriented efficiency and real-time pre-aggregation.

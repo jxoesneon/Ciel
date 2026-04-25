@@ -13,8 +13,10 @@ triggers:
     confidence: 0.85
   - pattern: "write a (script|wrapper|client) for"
     confidence: 0.8
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Search-First (Research Mandate)
 
 This skill operationalizes CIEL's core **"Research-Before-Strategy"** mandate. It acts as a hard gate preventing the premature generation of net-new code when robust, maintained solutions already exist in the ecosystem, the repository, or via MCP servers.

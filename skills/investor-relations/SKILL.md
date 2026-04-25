@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "reply to (vc|investor)"
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Investor Relations (Fundraising)
 
 This skill formalizes the "Investor Layer" of CIEL. It ensures that all communications and materials are concrete, personalized, and architecturally consistent.

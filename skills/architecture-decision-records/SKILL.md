@@ -15,8 +15,10 @@ triggers:
     confidence: 0.9
   - pattern: "consequences.*of.*(pattern|framework)"
     confidence: 0.85
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Architecture Decision Records (ADR)
 
 This skill provides CIEL's framework for capturing the "Why" behind architectural choices. It ensures that every major decision is documented, reasoned, and auditable.

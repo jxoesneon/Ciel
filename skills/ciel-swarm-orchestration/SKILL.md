@@ -11,8 +11,10 @@ triggers:
     confidence: 1.0
   - pattern: "invoke subagents"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Swarm Orchestration (The Network)
 
 This skill formalizes the "Alloy" swarm model, allowing CIEL to decompose complex tasks into parallel sub-tasks.

@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "approachable concurrency"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Swift & iOS Standards (The Apple Layer)
 
 This skill formalizes modern Swift development. it prioritizes data-race safety and the Liquid Glass design language.

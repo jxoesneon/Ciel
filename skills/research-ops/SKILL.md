@@ -15,8 +15,10 @@ triggers:
     confidence: 0.9
   - pattern: "market.*research"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Research Ops
 
 This skill provides CIEL's "Discovery" layer, coordinating external search, multi-source synthesis, and evidence-based recommendations.

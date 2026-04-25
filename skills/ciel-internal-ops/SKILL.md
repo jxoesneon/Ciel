@@ -11,8 +11,10 @@ triggers:
     confidence: 1.0
   - pattern: "configure-ecc"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Internal Operations (The Meta-Framework)
 
 This skill formalizes the self-management of CIEL, from installation to cost-aware execution.

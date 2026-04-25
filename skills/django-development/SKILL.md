@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "django patterns"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Django Development (The Python Web Layer)
 
 This skill formalizes the development of scalable Django and Django REST Framework (DRF) applications.

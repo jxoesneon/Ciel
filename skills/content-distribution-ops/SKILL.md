@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "content engine"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Content Distribution (The Social Layer)
 
 This skill formalizes the lifecycle of public-facing content, from network optimization to platform-native distribution. it prioritizes voice integrity and signal-to-noise ratio.

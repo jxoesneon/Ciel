@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "root cause analysis"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Quality & Returns (Integrity & Recovery)
 
 This skill formalizes the lifecycle of non-conforming physical goods, from manufacturing defects to customer returns. It prioritizes safety, regulatory compliance, and margin recovery.

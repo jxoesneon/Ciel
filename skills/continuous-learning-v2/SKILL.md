@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: 'how is (ciel|the agent) evolving'
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Continuous Learning V2 (The Instinct Engine)
 
 This is CIEL's core engine for autonomous evolution. It turns every session into structured knowledge by capturing atomic "instincts"—small, confidence-weighted behaviors learned from direct observation.

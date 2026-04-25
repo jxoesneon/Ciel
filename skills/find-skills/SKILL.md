@@ -15,8 +15,10 @@ triggers:
     confidence: 0.7
   - pattern: "npx skills.*"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Find Skills
 
 This skill facilitates the discovery and installation of modular capabilities from the open agent skills ecosystem.

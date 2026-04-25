@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "x402"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Agent Payment Execution (x402)
 
 This skill enables CIEL sub-agents to execute autonomous payments via the x402 HTTP payment protocol. It prioritizes safety through mandatory spending policies and non-custodial wallet management.

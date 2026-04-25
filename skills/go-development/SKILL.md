@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "go test"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Go Development (Simplicity & Concurrency)
 
 This skill formalizes the development of performant, readable Go services. it prioritizes the "Errors are Values" philosophy and idiomatic concurrency.

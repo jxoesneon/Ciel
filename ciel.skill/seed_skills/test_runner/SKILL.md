@@ -4,12 +4,11 @@ version: 1.0.0
 description: Test execution, coverage analysis, failure diagnosis, re-run strategy.
 triggers: [test, run tests, pytest, jest, cargo test, go test]
 tags: [test, scope:both, runtime:any, risk:low]
-runtime_compatibility: { claude_code: true, gemini_cli: true, generic: true }
+runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [shell/SKILL.md, environment_detection/SKILL.md] }
 ---
-
 # test_runner
 
 Execute and analyze tests.

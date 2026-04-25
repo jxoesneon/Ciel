@@ -15,8 +15,10 @@ triggers:
     confidence: 0.9
   - pattern: "second opinion"
     confidence: 0.8
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Council of Five
 
 This skill implements CIEL's core reasoning and evaluation mechanism. It convenes five specialized sub-agents to provide multi-perspective analysis on complex decisions.

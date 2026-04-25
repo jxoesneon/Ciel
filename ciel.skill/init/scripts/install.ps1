@@ -93,7 +93,7 @@ if ($SkipMempalace) {
 # --- 6. Integrity seed -------------------------------------------------------
 $now = (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
 @"
-{ "schema": 1, "version": "$CielVersion", "generated_at": "$now", "files": {} }
+{ "schema": 1, "version": "$CielVersion", "timestamp": "$now", "files": {} }
 "@ | Set-Content -Path (Join-Path $CielHome "INTEGRITY.json")
 Say "Integrity seed written."
 

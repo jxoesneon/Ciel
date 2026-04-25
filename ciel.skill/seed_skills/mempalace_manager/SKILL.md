@@ -4,12 +4,11 @@ version: 1.0.0
 description: MemPalace-rs operations — read, write, query, partition management, AAAK.
 triggers: [memory, mempalace, recall, remember, store]
 tags: [memory, scope:both, runtime:any, risk:low]
-runtime_compatibility: { claude_code: true, gemini_cli: true, generic: true }
+runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [shell/SKILL.md], system: [mempalace-rs] }
 ---
-
 # mempalace_manager
 
 Abstract memory API — backend-neutral wrapper.

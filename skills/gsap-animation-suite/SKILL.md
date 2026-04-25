@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "gsap.to"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: GSAP Animation Suite (The Motion Layer)
 
 This skill manages complex animation sequencing and visual polish. it prioritizes performance-safe transforms over layout-heavy properties.

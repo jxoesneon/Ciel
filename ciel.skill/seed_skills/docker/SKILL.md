@@ -4,12 +4,11 @@ version: 1.0.0
 description: Docker / Compose — build, run, inspect, cleanup, sandbox support.
 triggers: [docker, container, compose, podman]
 tags: [deploy, scope:both, runtime:any, risk:mid]
-runtime_compatibility: { claude_code: true, gemini_cli: true, generic: true }
+runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [shell/SKILL.md], system: [docker] }
 ---
-
 # docker
 
 Container operations.

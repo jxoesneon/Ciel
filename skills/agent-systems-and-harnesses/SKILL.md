@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "generator-evaluator loop"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Agent Systems (The Autonomy Layer)
 
 This skill formalizes the operation of complex AI systems, from cloud-hosted workers to adversarial feedback loops.

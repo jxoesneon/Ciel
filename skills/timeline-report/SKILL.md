@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "what is the story of this project"
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Timeline Report (Technical History)
 
 This skill leverages CIEL's persistent memory (via `claude-mem`) to generate a comprehensive "Journey Report" for a project, analyzing pivots, breakthroughs, and technical debt accumulation over time.

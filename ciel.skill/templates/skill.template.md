@@ -21,10 +21,7 @@ version: {{version|0.1.0}}
 description: {{one-sentence capability description}}
 triggers: {{[triggers]}}
 tags: {{[tags]}}
-runtime_compatibility:
-  claude_code: {{true|false|partial}}
-  gemini_cli: {{true|false|partial}}
-  generic: {{true|false|partial}}
+runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: {{SPDX}}
 source:
   tier: {{0|1|2|3}}

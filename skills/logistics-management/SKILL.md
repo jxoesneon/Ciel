@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "freight exceptions"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Logistics Management (Carrier & Claims)
 
 This skill formalizes the "Transportation Layer." It ensures Quick resolution of shipment exceptions and strategic management of carrier relationships.

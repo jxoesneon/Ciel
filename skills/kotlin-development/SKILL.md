@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "idiomatic kotlin"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Kotlin Development (Idiomatic & Async)
 
 This skill formalizes the "Modern JVM" layer. it prioritizes null safety, expression-oriented code, and structured concurrency.

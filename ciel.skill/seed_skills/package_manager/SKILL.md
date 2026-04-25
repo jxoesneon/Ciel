@@ -4,12 +4,11 @@ version: 1.0.0
 description: npm / pip / cargo / apt / brew — install, update, audit, lock.
 triggers: [install, uninstall, package, npm, pip, cargo, brew, apt]
 tags: [pkg, scope:both, runtime:any, risk:mid]
-runtime_compatibility: { claude_code: true, gemini_cli: true, generic: true }
+runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [shell/SKILL.md, environment_detection/SKILL.md] }
 ---
-
 # package_manager
 
 Cross-ecosystem package operations.

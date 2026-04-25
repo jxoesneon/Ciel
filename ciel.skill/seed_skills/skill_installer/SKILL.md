@@ -4,12 +4,11 @@ version: 1.0.0
 description: Install .skill files into the global registry — unzip, validate, register.
 triggers: [install skill, register skill, add skill]
 tags: [skill, scope:both, runtime:any, risk:mid]
-runtime_compatibility: { claude_code: true, gemini_cli: true, generic: true }
+runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [archive_manager/SKILL.md, filesystem/SKILL.md, skill_builder/SKILL.md] }
 ---
-
 # skill_installer
 
 Install a `.skill` bundle into `~/.ciel/skills/`.

@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "warm path discovery"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Social Intelligence (The Network Layer)
 
 This skill formalizes the extraction of value from social graphs. it prioritizes weighted relationship math and voice-matched outreach.

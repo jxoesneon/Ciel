@@ -11,8 +11,10 @@ triggers:
     confidence: 0.9
   - pattern: "videodb"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Video Operations (Perception & Editing)
 
 This skill manages both the "Perception" (understanding video) and "Editing" (cutting footage) of media. It prioritizes server-side processing via VideoDB and deterministic CLI tools like FFmpeg.

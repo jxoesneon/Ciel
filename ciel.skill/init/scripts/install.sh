@@ -95,10 +95,11 @@ if [ -n "${SKIP_MEMPALACE:-}" ]; then
   fi
 fi
 
-# --- 7. Integrity seed -------------------------------------------------------
-cat >"$CIEL_HOME/INTEGRITY.json" <<EOF
-{ "schema": 1, "version": "$CIEL_VERSION", "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)", "files": {} }
+# --- 7. Integrity seed --------------------------------------------------------
+cat <<EOF >"$CIEL_HOME/INTEGRITY.json"
+{ "schema": 1, "version": "$CIEL_VERSION", "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)", "files": {} }
 EOF
+
 say "Integrity seed written."
 
 # --- 8. Activity log ---------------------------------------------------------

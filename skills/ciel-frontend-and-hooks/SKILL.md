@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "hookify rule"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Frontend & Hooks (The Component Layer)
 
 This skill manages modern React development and the enforcement of local workspace rules.

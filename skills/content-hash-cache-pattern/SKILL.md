@@ -11,8 +11,10 @@ triggers:
     confidence: 0.9
   - pattern: "content-hash caching"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Content-Hash Cache (I/O Optimization)
 
 This skill provides a standard architectural pattern for caching the results of expensive, deterministic file processing operations (e.g., PDF parsing, OCR, large-file indexing).

@@ -15,8 +15,10 @@ triggers:
     confidence: 1.0
   - pattern: "bug-check.*"
     confidence: 0.95
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: AI Regression Testing
 
 This skill provides CIEL's specialized testing strategy for mitigating systematic blind spots in AI-assisted development. It focuses on contract-first verification and sandbox/production parity.

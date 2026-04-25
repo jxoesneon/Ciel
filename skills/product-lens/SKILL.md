@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "should I build (this|that)"
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Product Lens (Discovery & Viability)
 
 This skill formalizes the "Discovery" phase of CIEL development. It asks the hard questions required to validate a feature's "Why" before a single line of code is planned.
