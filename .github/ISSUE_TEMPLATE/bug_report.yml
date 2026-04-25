@@ -1,0 +1,17 @@
+name: Bug report
+description: Create a report to help us improve CIEL.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### The Iron Law Checklist
+        - [ ] I have attached fresh verification evidence (logs, screenshots).
+        - [ ] I have reproduced the issue in a clean environment.
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true

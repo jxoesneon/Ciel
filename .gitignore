@@ -43,3 +43,4 @@ __pycache__/
 
 # Helper scripts
 # (Removed explicit ignores to allow adapt-skill.sh, analyze-skill.sh, generate-triggers.sh)
+artifacts/transient/
