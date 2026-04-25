@@ -28,16 +28,11 @@ for d in skills registry council acquisition checkpoints; do
 done
 
 # 2. Required files
-# Single-element iteration is intentional to leave the structure open for
-# additional required files without reformatting.
-# shellcheck disable=SC2043
-for f in INTEGRITY.json; do
-  if [ -f "$CIEL_HOME/$f" ]; then
-    say "file ok: $f"
-  else
-    fail "file missing: $f"
-  fi
-done
+if [ -f "$CIEL_HOME/INTEGRITY.json" ]; then
+  say "file ok: INTEGRITY.json"
+else
+  fail "file missing: INTEGRITY.json"
+fi
 
 # 3. Git
 if command -v git >/dev/null 2>&1; then

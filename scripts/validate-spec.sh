@@ -291,7 +291,7 @@ say "Checking seed-skill frontmatter..."
 for f in "$SKILL"/seed_skills/*/SKILL.md; do
   [[ -f "$f" ]] || continue
   head -n 30 "$f" >"$f.head.$$"
-  for key in name version description triggers tags runtime_compatibility license; do
+  for key in name version description triggers tags runtimes license; do
     if ! grep -qE "^${key}:" "$f.head.$$"; then
       fail "$(realpath --relative-to="$SKILL" "$f" 2>/dev/null || echo "$f"): missing frontmatter key '${key}'"
     fi
