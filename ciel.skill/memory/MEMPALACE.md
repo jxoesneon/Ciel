@@ -1,3 +1,7 @@
+---
+locked: true
+---
+
 # MEMPALACE — Primary Backend
 
 `locked: true` in the sense that the primary-backend contract is Constitutional; the implementation is upgradable.

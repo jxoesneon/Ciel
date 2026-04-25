@@ -1,3 +1,7 @@
+---
+locked: true
+---
+
 # CRITICAL_RISK
 
 `locked: true`.

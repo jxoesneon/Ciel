@@ -31,7 +31,7 @@
 | `git` | system | versioning of `~/.ciel/` | yes (verified, not installed) |
 | `curl` / `wget` | system | web acquisition tier | yes (verified) |
 | `sqlite3` | system | fallback memory backend | optional |
-| `rustc` / `cargo` | `rustup` | builds `mempalace-rs` | yes (installed if missing) |
+| `rustc` / `cargo` | `rustup` | builds `mempalace-rs` | yes (opt-in via CIEL_AUTO_INSTALL_RUST=1) |
 | `node` / `npm` | system | skill-runner pkg ops | optional |
 | `python3` / `pip` | system | skill-runner pkg ops | optional |
 | `docker` | system | acquisition sandboxing | optional |

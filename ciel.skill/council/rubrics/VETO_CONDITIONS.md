@@ -1,3 +1,7 @@
+---
+locked: true
+---
+
 # VETO_CONDITIONS
 
 `locked: true` — modifications require Constitutional amendment.

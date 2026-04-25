@@ -1,3 +1,7 @@
+---
+locked: true
+---
+
 # ISOLATION — Cross-Project Guarantees
 
 `locked: true` — Constitutional invariant.
