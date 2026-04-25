@@ -325,7 +325,6 @@ for f in "$ROOT"/agents/*.md; do
   rm -f "$f.head.$$"
 done
 
-
 # ---------------------------------------------------------------- SKILL.md frontmatter (root)
 say "Checking root SKILL.md frontmatter..."
 for key in name version description entrypoint format runtimes; do
