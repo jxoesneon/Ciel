@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(benchmark|qa|watch|monitor).*(performance|lcp|regression|deploy)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "canary watch"
     confidence: 1.0
 

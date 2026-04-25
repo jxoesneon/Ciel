@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(route|classify|orchestrate|build team).*(task|domain|agent)"
-    confidence: 1.0
+    confidence: 0.9
   - pattern: "master router"
     confidence: 1.0
 

@@ -8,13 +8,13 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(remember|save|persist|store).*memory"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "what did we.*(last|previous|before)"
     confidence: 0.9
   - pattern: "search.*(history|memory|palace)"
-    confidence: 1.0
+    confidence: 0.9
   - pattern: "knowledge graph|AAAK|temporal fact"
-    confidence: 1.0
+    confidence: 0.9
 
 source: { tier: 1, origin: harmonized }
 dependencies: { skills: [], mcp: [], system: [] }

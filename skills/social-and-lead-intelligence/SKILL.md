@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(find|score|rank).*(lead|prospect|social graph|outreach)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "warm path discovery"
     confidence: 1.0
 

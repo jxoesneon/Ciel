@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "execute (plan|tasks|implementation)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "(delegate|dispatch).*(task|subagent)"
     confidence: 0.9
 

@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(fundraise|investor).*(outreach|email|pitch|deck|memo|model)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "reply to (vc|investor)"
     confidence: 0.9
 

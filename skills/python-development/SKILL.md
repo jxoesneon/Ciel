@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(design|build|review).*(python|pip|pytest|type hint)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "idiomatic python"
     confidence: 1.0
 

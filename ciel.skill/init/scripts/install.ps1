@@ -102,11 +102,29 @@ Add-Content -Path (Join-Path $CielHome "activity.log") -Value "{`"ts`":`"$now`",
 
 # --- 8. Verify ---------------------------------------------------------------
 Say "Running verification..."
-& (Join-Path $PSScriptRoot "verify.sh") 2>$null
-if ($LASTEXITCODE -ne 0) { Warn "verify.sh not runnable on Windows; performing inline check." }
+$FailedCheck = $false
 
-if (-not (Test-Path (Join-Path $CielHome "SKILL.md"))) {
-    Warn "SKILL.md not yet placed in CIEL_HOME - expected after ciel.skill unpack."
+# 8.1 Core Files Check
+$coreFiles = @("SKILL.md", "MANIFEST.md", "router/ROUTER.md", "core/CONSTITUTION.md")
+foreach ($f in $coreFiles) {
+    if (-not (Test-Path (Join-Path $CielHome $f))) { Warn "Missing core file in home: $f"; $FailedCheck = $true }
+}
+
+# 8.2 Integrity Check
+if (-not (Test-Path (Join-Path $CielHome "INTEGRITY.json"))) { Warn "Integrity seed missing"; $FailedCheck = $true }
+
+# 8.3 Git Check
+if (-not (Test-Path (Join-Path $CielHome ".git"))) { Warn "Git repo not initialized in home"; $FailedCheck = $true }
+
+# 8.4 MemPalace Check
+if (Need "mempalace-rs") {
+    try { & mempalace-rs status | Out-Null } catch { Warn "mempalace-rs not responding correctly"; $FailedCheck = $true }
+}
+
+if ($FailedCheck) {
+    Warn "One or more verification checks failed. Check bootstrap.log."
+} else {
+    Say "All verification checks passed."
 }
 
 Say "Ciel bootstrap complete."

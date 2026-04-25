@@ -10,9 +10,9 @@ triggers:
   - pattern: "(bug|error|failure|crash|unexpected|broken).*"
     confidence: 0.9
   - pattern: "debug.*"
-    confidence: 1.0
+    confidence: 0.9
   - pattern: "why does.*fail"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "fix.*(again|it)"
     confidence: 0.85
 

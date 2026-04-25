@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(design|build|architect).*(api|backend|endpoint|rest)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "backend patterns"
     confidence: 1.0
 

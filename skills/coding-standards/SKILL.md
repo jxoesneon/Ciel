@@ -8,9 +8,9 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(code|coding).*(standard|convention|quality)"
-    confidence: 1.0
+    confidence: 0.9
   - pattern: "how should I.*(write|structure|format).*(code|function|component)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "(review|refactor).*(code|file).*(quality|readability)"
     confidence: 0.9
 

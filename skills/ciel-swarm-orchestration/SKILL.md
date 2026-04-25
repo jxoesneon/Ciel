@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(swarm|parallel|coordinate|distribute|decompose).*(agents|tasks|workers)"
-    confidence: 1.0
+    confidence: 0.9
   - pattern: "invoke subagents"
     confidence: 1.0
 

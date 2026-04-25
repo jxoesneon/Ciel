@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(dispatch|run|execute).*(parallel|concurrent).*(agents|tasks)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "(multiple|several) (independent|unrelated) (failures|bugs|tasks)"
     confidence: 0.9
 

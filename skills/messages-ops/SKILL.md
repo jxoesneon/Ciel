@@ -8,9 +8,9 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(read|check).*(message|text|dm|code|otp)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "look in (imessage|twitter|x) dms"
-    confidence: 1.0
+    confidence: 0.9
 
 source: { tier: 1, origin: harmonized }
 dependencies: { skills: [], mcp: [], system: [] }

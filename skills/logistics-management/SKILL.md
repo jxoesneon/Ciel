@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(manage|negotiate|resolve).*(carrier|freight|shipment|delay|claim)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "freight exceptions"
     confidence: 1.0
 

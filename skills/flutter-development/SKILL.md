@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(build|review|refactor).*(flutter|dart).*(feature|widget|code)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "flutter patterns"
     confidence: 1.0
 

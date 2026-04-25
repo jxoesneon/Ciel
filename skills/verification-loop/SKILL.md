@@ -8,9 +8,9 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "verify.*(changes|implementation|all)"
-    confidence: 1.0
+    confidence: 0.9
   - pattern: "run.*(quality-gate|validation-loop)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "is.*(ready|complete).*(for|to|PR)"
     confidence: 0.9
 

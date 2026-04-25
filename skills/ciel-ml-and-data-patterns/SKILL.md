@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(design|build|optimize).*(pytorch|tensor|postgres|sql|ml)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "device-agnostic code"
     confidence: 1.0
 

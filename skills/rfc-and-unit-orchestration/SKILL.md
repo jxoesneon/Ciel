@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(rfc|decompose|unit).*(feature|dag|work unit|merge queue)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "ralphinho rfc pipeline"
     confidence: 1.0
 

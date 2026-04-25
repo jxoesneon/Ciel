@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(compare|benchmark|evaluate).*(agent|aider|claude code|gemini|codex)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "which (agent|model) is better for"
     confidence: 0.85
 

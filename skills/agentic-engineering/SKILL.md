@@ -8,11 +8,11 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(agentic|autonomous|agent-led).*engineering"
-    confidence: 1.0
+    confidence: 0.9
   - pattern: "route.*model.*tier"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "eval-first.*"
-    confidence: 1.0
+    confidence: 0.9
   - pattern: "task.*decomposition"
     confidence: 0.9
 

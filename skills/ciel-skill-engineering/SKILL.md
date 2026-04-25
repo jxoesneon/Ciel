@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(create|edit|review).*(skill|persona|soul|reproduce)"
-    confidence: 1.0
+    confidence: 0.9
   - pattern: "node init_skill.cjs"
     confidence: 1.0
 

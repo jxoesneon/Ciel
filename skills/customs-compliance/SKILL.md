@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(classify|export|import|customs).*(hs code|tariff|compliance|border)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "denied party screening"
     confidence: 1.0
 

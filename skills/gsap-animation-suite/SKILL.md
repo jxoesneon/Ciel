@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(animate|build).*(gsap|timeline|tween|ease|svg|morph)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "gsap.to"
     confidence: 1.0
 

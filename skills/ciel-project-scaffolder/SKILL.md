@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(scaffold|create|init|new).*(project|module|service|boilerplate)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "standardize project"
     confidence: 1.0
 

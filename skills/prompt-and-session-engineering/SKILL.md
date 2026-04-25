@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(optimize|rewrite|branch|compact).*(prompt|session|repl)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "prompt optimizer"
     confidence: 1.0
 

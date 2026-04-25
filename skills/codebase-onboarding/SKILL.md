@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(onboard|walk through|explain|understand).*(codebase|repo|project)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "generate (claude.md|starter config)"
     confidence: 0.9
 

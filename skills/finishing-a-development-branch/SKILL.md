@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(finish|complete).*(branch|epic|development|feature)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "ready to (merge|pr|push)"
     confidence: 0.9
 

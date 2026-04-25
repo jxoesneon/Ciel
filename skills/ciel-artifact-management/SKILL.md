@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:ai"]
 triggers:
   - pattern: "(create|store|archive|save).*(artifact|plan|audit|transient)"
-    confidence: 1.0
+    confidence: 0.9
   - pattern: "planning mode"
     confidence: 1.0
 

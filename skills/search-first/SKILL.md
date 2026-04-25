@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(add|build|implement|create).*(feature|functionality|integration|utility)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "how should (we|I) solve"
     confidence: 0.85
   - pattern: "write a (script|wrapper|client) for"

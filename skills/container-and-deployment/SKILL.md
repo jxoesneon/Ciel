@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(deploy|docker|ci/cd|k8s).*(container|rolling|canary|github action)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "deployment patterns"
     confidence: 1.0
 

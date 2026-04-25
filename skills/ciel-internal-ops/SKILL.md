@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(configure|manage|split).*(ciel|cost|dmux|parallel|ecc)"
-    confidence: 1.0
+    confidence: 0.9
   - pattern: "configure-ecc"
     confidence: 1.0
 

@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(manage|edit|clean|summarize|gws).*(google|drive|gdoc|gsheet|gmail|calendar)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "gws auth setup"
     confidence: 1.0
 

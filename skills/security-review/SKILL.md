@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(check|audit|review).*(security|auth|secrets|vulnerability)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "is this (safe|secure)"
     confidence: 0.9
 

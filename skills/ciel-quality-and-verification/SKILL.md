@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:ai"]
 triggers:
   - pattern: "(verify|check|test|lint).*(completion|evidence|tdd|terminal)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "verification before completion"
     confidence: 1.0
 

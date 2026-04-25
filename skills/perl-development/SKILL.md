@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(design|build|review).*(perl|cpan|cpanfile)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "modern perl"
     confidence: 1.0
 

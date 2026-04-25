@@ -10,7 +10,7 @@ triggers:
   - pattern: "(create|design|generate).*(logo|banner|icon|header|card)"
     confidence: 0.9
   - pattern: "design a (facebook|twitter|linkedin) cover"
-    confidence: 0.95
+    confidence: 0.9
 
 source: { tier: 1, origin: harmonized }
 dependencies: { skills: [], mcp: [], system: [] }

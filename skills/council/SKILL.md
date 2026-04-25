@@ -8,9 +8,9 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "convene.*council"
-    confidence: 1.0
+    confidence: 0.9
   - pattern: "council.*deliberation"
-    confidence: 1.0
+    confidence: 0.9
   - pattern: "evaluate.*(decision|choice|path)"
     confidence: 0.9
   - pattern: "second opinion"

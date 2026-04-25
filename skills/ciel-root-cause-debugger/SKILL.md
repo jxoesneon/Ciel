@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(debug|fix|trace|error|crash|fail).*(root cause|log|stack)"
-    confidence: 1.0
+    confidence: 0.9
   - pattern: "analyze logs"
     confidence: 1.0
 

@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(research|scrape|lookup).*(deep dive|exa|firecrawl|documentation)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "deep research report"
     confidence: 1.0
 

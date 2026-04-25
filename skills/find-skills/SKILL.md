@@ -8,13 +8,13 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(find|search|lookup|is there).*skill"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "how do I.*(react|testing|design|deploy)"
     confidence: 0.8
   - pattern: "can you do.*(specialized|expert)"
     confidence: 0.7
   - pattern: "npx skills.*"
-    confidence: 1.0
+    confidence: 0.9
 
 source: { tier: 1, origin: harmonized }
 dependencies: { skills: [], mcp: [], system: [] }

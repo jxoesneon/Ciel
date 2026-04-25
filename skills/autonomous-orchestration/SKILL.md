@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(orchestrate|dispatch|schedule).*(agent|fleet|cron|mission)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "multi-agent workflow"
     confidence: 1.0
 

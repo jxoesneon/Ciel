@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(test|design|build).*(e2e|playwright|frontend|ui|visual)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "page object model"
     confidence: 1.0
 

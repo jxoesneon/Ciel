@@ -8,9 +8,9 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(record|ADR).*decision"
-    confidence: 1.0
+    confidence: 0.9
   - pattern: "why did we.*(choose|use|select)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "architectural.*trade-off"
     confidence: 0.9
   - pattern: "consequences.*of.*(pattern|framework)"

@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(design|build|review).*(rust|cargo|crate|borrow checker)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "rust patterns"
     confidence: 1.0
 

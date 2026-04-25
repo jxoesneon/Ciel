@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(process|ocr|convert|animate).*(pdf|docx|nutrient|manim|explainer)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "technical explainer"
     confidence: 1.0
 

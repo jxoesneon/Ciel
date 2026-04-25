@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(research|analyze).*(market|competitor|investor|category|trend)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "tam/sam/som"
     confidence: 1.0
 

@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(investigate|process).*(non-conformance|ncr|capa|return|refund)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "root cause analysis"
     confidence: 1.0
 

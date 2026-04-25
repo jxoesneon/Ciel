@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:ai"]
 triggers:
   - pattern: "(scan|audit).*(config|settings|shield)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "npx ecc-agentshield"
     confidence: 1.0
 

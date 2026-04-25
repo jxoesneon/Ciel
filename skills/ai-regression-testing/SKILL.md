@@ -8,13 +8,13 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "ai-regression.*testing"
-    confidence: 1.0
+    confidence: 0.9
   - pattern: "catch.*blind.*spot"
     confidence: 0.9
   - pattern: "sandbox.*production.*parity"
-    confidence: 1.0
+    confidence: 0.9
   - pattern: "bug-check.*"
-    confidence: 0.95
+    confidence: 0.9
 
 source: { tier: 1, origin: harmonized }
 dependencies: { skills: [], mcp: [], system: [] }

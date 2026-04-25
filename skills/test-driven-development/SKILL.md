@@ -10,9 +10,9 @@ triggers:
   - pattern: "(implement|add|fix).* (feature|bug|capability)"
     confidence: 0.9
   - pattern: "tdd|red-green-refactor"
-    confidence: 1.0
+    confidence: 0.9
   - pattern: "write.*test.*first"
-    confidence: 0.95
+    confidence: 0.9
 
 source: { tier: 1, origin: harmonized }
 dependencies: { skills: [], mcp: [], system: [] }

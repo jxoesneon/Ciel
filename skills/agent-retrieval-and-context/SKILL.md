@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:ai"]
 triggers:
   - pattern: "(retrieve|gather|refine).*(context|codebase|file)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "iterative retrieval"
     confidence: 1.0
 
