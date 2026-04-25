@@ -2,97 +2,110 @@
 
 ![Ciel Banner](ciel.skill/assets/images/banner.jpg)
 
-Ciel is a **self-improving, self-researching skill orchestration intelligence** for AI agent runtimes. She doesn't just route requests — she routes, reasons, acquires, harmonizes, and evolves capabilities on behalf of her host.
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?style=flat-square)](https://github.com/jxoesneon/Ciel/releases)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/jxoesneon/Ciel/ci.yml?branch=main&style=flat-square)](https://github.com/jxoesneon/Ciel/actions)
+[![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](LICENSE)
+[![Format](https://img.shields.io/badge/format-skill%2F1.0-blueviolet.svg?style=flat-square)](ciel.skill/SKILL.md)
+[![AI Powered](https://img.shields.io/badge/AI-Autonomous-orange.svg?style=flat-square)](#-system-architecture)
 
-## What's in this repo
+**CIEL** is an enterprise-grade, high-density autonomous partner intelligence designed for complex, multi-agent software engineering. It transcends the role of a passive tool, operating as a cognitive layer that governs, researches, and executes alongside its host.
 
-```text
-Ciel/
-├── ciel.skill/                # the skill source tree (unpacked)
-├── scripts/                   # build + validation helpers
-├── .github/workflows/         # CI + release automation
-├── README.md
-└── LICENSE                    # Apache-2.0
-```
+<!-- markdownlint-disable MD051 -->
+[Quick Start](#quick-start) • [The Guilds](#-the-elite-guilds) • [Architecture](#-system-architecture) • [Governance](#-council-governance) • [Contributing](CONTRIBUTING.md)
+<!-- markdownlint-enable MD051 -->
 
-The entire specification lives in `ciel.skill/`. Each release bundles that directory into a single `.skill` file (a renamed ZIP per the `.skill` format standard).
+---
 
-## Runtimes Supported
+## 🚀 Quick Start
 
-| Runtime | Status | Notes |
-| --- | --- | --- |
-| Claude Code | ✅ full | Hooks, subagents, MCP (lazy schema), Ultraplan, Computer Use, Prompt Cache, Remote Control |
-| Gemini CLI | ✅ full | Hooks, parallel subagents, Plan mode, Checkpointing, A2A, Imagen / Veo / Lyria |
-| Generic | ✅ probe-and-adapt | Floor capability check + research-driven adapter bootstrap |
+CIEL 1.0 is designed for seamless integration into modern agentic runtimes.
 
-## Install
-
-### From a released `.skill` file
-
-Download `Ciel-vX.Y.Z.skill` from the [Releases](../../releases) page, then in your agent runtime:
-
+**Unix (Bash):**
 ```bash
-# Claude Code
-claude skill install ./Ciel-vX.Y.Z.skill
-
-# Gemini CLI
-gemini skill install ./Ciel-vX.Y.Z.skill
-
-# Generic — unpack and load ciel.skill/SKILL.md
-unzip Ciel-vX.Y.Z.skill -d ciel.skill/
-```
-
-On first run, Ciel bootstraps her global home (`~/.ciel/`), installs MemPalace-rs, git-inits her own history, and calibrates to your current project.
-
-### From source
-
-```bash
-git clone <this repo>
+# 1. Clone the repository
+git clone https://github.com/jxoesneon/Ciel.git
 cd Ciel
-./scripts/build-skill.sh 0.0.0-dev
-ls dist/
+
+# 2. Run the official installer
+bash ciel.skill/init/scripts/install.sh
 ```
 
-## Architecture
+**Windows (PowerShell):**
+```powershell
+# 1. Clone the repository
+git clone https://github.com/jxoesneon/Ciel.git
+cd Ciel
 
-- **Master Router** — hybrid: deterministic fast path → LLM reasoning path → tiered acquisition.
-- **Council of Five** — Coherence, Capability, Safety, Efficiency, Evolution. Governs acquisitions, self-modifications, promotions, conflicts, and high-risk ops.
-- **Two-domain model** — `~/.ciel/` (global, git-versioned) + `<project>/.ciel/` (local, gitignored, isolated MemPalace partition).
-- **Memory** — MemPalace-rs primary; SQLite / filesystem / custom fallbacks; AAAK compression.
-- **Risk model** — low autonomous / mid judge / high Council / critical user-gated. Critical never auto-approves.
-- **Self-improvement** — every meaningful interaction is a growth-signal candidate; git-backed rollback on regression.
-
-See `ciel.skill/SKILL.md` for the canonical entry point, `ciel.skill/MANIFEST.md` for the subfile index, and each directory's index file for deeper spec.
-
-## Releases
-
-Every pushed tag of the form `vMAJOR.MINOR.PATCH` triggers the **release** workflow, which:
-
-1. Validates spec coverage (`scripts/validate-spec.sh`).
-2. Builds `dist/Ciel-vX.Y.Z.skill` + `dist/Ciel-vX.Y.Z.skill.sha256`.
-3. Creates a GitHub Release with auto-generated notes and the artifact attached.
-
-Release commands:
-
-```bash
-# Cut a release
-git tag v1.2.3
-git push origin v1.2.3
+# 2. Run the official installer
+.\ciel.skill\init\scripts\install.ps1
 ```
 
-The tag's version must match the `version:` in `ciel.skill/SKILL.md` frontmatter; the release job fails otherwise.
+---
 
-## Contributing
+## 🧠 System Architecture
 
-Ciel is Council-governed, even in this repository: changes to locked core files (`ciel.skill/core/CONSTITUTION.md`, `ciel.skill/risk/CLASSIFICATION.md`, `ciel.skill/council/rubrics/VETO_CONDITIONS.md`, `ciel.skill/memory/MEMPALACE.md`, `ciel.skill/domains/ISOLATION.md`, `ciel.skill/council/members/SAFETY.md`) require explicit maintainer sign-off in PR review, mirroring the Constitutional amendment procedure.
+CIEL utilizes a multi-layer cognitive model to ensure high-integrity autonomous operation.
 
-Standard contributions:
+### 🏛️ The Core (The Soul)
 
-1. Branch.
-2. Make changes.
-3. Run `./scripts/validate-spec.sh` locally.
-4. Open a PR — CI runs spec coverage + shellcheck + YAML validation + SKILL.md frontmatter schema.
+Located in `ciel.skill/`, this layer defines the foundational identity and constraints of the intelligence.
 
-## License
+- **Identity & Persona**: A precise, research-first partner intelligence.
+- **Constitution**: The locked core enforcing safety invariants and isolation.
+- **Autonomy Ladder**: Structured decision-making (Autonomous → Council-Gated → HITL).
 
-Apache-2.0. See `LICENSE`.
+### 🗺️ Project Map (Semantic Index)
+- `ciel.skill/`: Core infrastructure, constitution, and cognitive logic.
+- `skills/`: 140 Harmonized high-density frameworks (e.g., `ciel-swarm-orchestration`).
+- `agents/`: The Specialist Layer (Elite Guilds).
+- `scripts/`: Build, validation, and CI/CD automation tools.
+
+---
+
+## 🛡️ The Elite Guilds
+
+CIEL consolidates over 100+ specialized agents into **10 High-Signal Guilds**. Each guild operates under the **Iron Law** of verification.
+
+| Guild | Specialization | Key Personas |
+| :--- | :--- | :--- |
+| **Systems** | Rust, C++, Performance | `rust-ranger`, `cpp-master` |
+| **Web** | React, Next.js, Django | `react-wizard`, `full-stack-sage` |
+| **Cloud** | AWS, GCP, K8s, IaC | `terraform-master`, `k8s-pilot` |
+| **Data** | SQL, ClickHouse, Kafka | `db-wizard`, `postgresql-guru` |
+| **Mobile** | Swift, Kotlin, Flutter | `swift-specialist`, `kotlin-expert` |
+| **Security** | Auth, Privacy, Auditing | `threat-modeler`, `solidity-sage` |
+| **Intelligence** | ML Ops, RAG, Python | `python-alchemist`, `openai-integrator` |
+| **Experience** | UI/UX, A11y, Design | `visual-architect`, `accessibility-guardian` |
+| **Strategy & Ops** | Startup CTO, SRE | `startup-cto`, `workflow-automator` |
+| **Quality** | Refactoring, E2E | `tech-debt-surgeon`, `playwright-pro` |
+
+
+---
+
+## 🏛️ Council Governance
+
+All CIEL operations are audited by the **Council of Five**, ensuring every action meets the highest engineering standards:
+
+1. **Capability**: Evaluates utility and technical depth.
+2. **Coherence**: Ensures architectural alignment and repo harmony.
+3. **Safety**: Absolute veto authority on security and integrity risks.
+4. **Efficiency**: Optimizes resource usage and token economy.
+5. **Evolution**: Manages self-improvement loops and temporal integrity.
+
+---
+
+## ⚖️ Core Mandates (CIEL 1.0)
+
+- **The Iron Law**: No completion claims without fresh verification evidence (logs, tests, screenshots).
+- **TDD 80%**: Mandatory baseline tests and 80% coverage for all logic changes.
+- **Adversarial Review**: High-risk changes undergo mandatory peer-review via the Council.
+
+---
+
+## 📜 Documentation & Legal
+
+- **[CONTRIBUTING.md](CONTRIBUTING.md)**: Standards for joining the CIEL ecosystem.
+- **[LICENSE](LICENSE)**: MIT Licensed.
+
+---
+**Status**: 1.0.0 Harmonized. **Uptime**: Stable. **Intelligence**: Active.

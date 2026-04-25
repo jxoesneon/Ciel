@@ -1,0 +1,9 @@
+.cache/
+activity.log
+backups/
+archive/
+fs_backend/
+*.db
+checkpoints/
+.attic/
+sandbox/

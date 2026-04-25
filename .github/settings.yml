@@ -1,0 +1,17 @@
+# CIEL 1.0 Repository Settings (Provisional)
+
+repository:
+  name: Ciel
+  description: "CIEL 1.0: Partner Intelligence & Elite Orchestration"
+  topics:
+    - ai-agents
+    - autonomous-intelligence
+    - software-engineering
+    - orchestration
+  private: true
+  has_issues: true
+  has_projects: true
+  has_wiki: false
+  allow_squash_merge: true
+  allow_rebase_merge: false
+  delete_branch_on_merge: true

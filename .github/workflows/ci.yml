@@ -66,6 +66,8 @@ jobs:
         with:
           globs: |
             ciel.skill/**/*.md
+            skills/**/*.md
+            agents/**/*.md
             README.md
           config: .markdownlint-cli2.jsonc
 
@@ -111,6 +113,16 @@ jobs:
       - name: ruff check
         run: ruff check scripts/
 
+  psscriptanalyzer:
+    name: PSScriptAnalyzer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run PSScriptAnalyzer
+        shell: pwsh
+        run: |
+          Invoke-ScriptAnalyzer -Path scripts/*.ps1 -Recurse | Select-Object -Property Message, Path, Line | Format-Table
+
   build-test:
     name: Dry-build (0.0.0-ci)
     runs-on: ubuntu-latest
@@ -135,8 +147,8 @@ jobs:
           # Check file count roughly matches spec (209 ± small drift)
           count=$(unzip -l "$art" | tail -1 | awk '{print $2}')
           echo "file count in archive: $count"
-          if [[ "$count" -lt 180 || "$count" -gt 260 ]]; then
-            echo "::error title=File count drift::archive contains $count files; expected ~209"
+          if [[ "$count" -lt 180 || "$count" -gt 300 ]]; then
+            echo "::error title=File count drift::archive contains $count files; expected ~246"
             exit 1
           fi
       - uses: actions/upload-artifact@v4
@@ -173,6 +185,7 @@ jobs:
           test -d council
           test -d adapters/claude_code
           test -d adapters/gemini_cli
+          test -d adapters/windsurf
 
           # Syntax check only (no real install, no real cargo)
           bash -n init/scripts/install.sh
