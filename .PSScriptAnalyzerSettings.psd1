@@ -1,16 +1,17 @@
 @{
-    Rules = @{
-        PSAvoidUsingWriteHost = @{
-            Enable = $false
-        }
-        PSUseUTF8EncodingForHelpFile = @{
-            Enable = $false
-        }
-        PSUseDeclaredVarsMoreThanAssignments = @{
-            Enable = $false
-        }
-        PSMissingModuleManifestField = @{
-            Enable = $false
-        }
-    }
+    IncludeRules = @(
+        'PSAvoidUsingEmptyCatchBlock',
+        'PSAvoidUsingPositionalParameters',
+        'PSAvoidUsingPlainTextForPassword'
+    )
+    ExcludeRules = @(
+        'PSAvoidUsingWriteHost',
+        'PSUseDeclaredVarsMoreThanAssignments',
+        'PSAvoidTrailingWhitespace',
+        'PSUseUTF8EncodingForHelpFile',
+        'PSMissingModuleManifestField',
+        'PSAvoidGlobalVars',
+        'PSUseCompatibleCommands',
+        'PSUseCompatibleTypes'
+    )
 }

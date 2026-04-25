@@ -89,7 +89,6 @@ jobs:
   shfmt:
     name: shfmt
     runs-on: ubuntu-latest
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v6
       - name: Install shfmt
@@ -118,7 +117,6 @@ jobs:
   psscriptanalyzer:
     name: PSScriptAnalyzer
     runs-on: ubuntu-latest
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v6
       - name: Run PSScriptAnalyzer
