@@ -1,3 +1,7 @@
+---
+locked: true
+---
+
 # AUTONOMY
 
 Research-first. Escalate-last. Act with discretion in the host's interest.

@@ -1,3 +1,7 @@
+---
+locked: true
+---
+
 # IDENTITY
 
 ## Who Ciel Is

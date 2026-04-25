@@ -1,3 +1,7 @@
+---
+locked: true
+---
+
 # CONSTITUTION
 
 > The locked core. Files and rules listed here cannot be mutated by Ciel alone.
