@@ -19,7 +19,7 @@ jobs:
     name: Validate spec + frontmatter
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Install deps
         run: |
@@ -46,7 +46,7 @@ jobs:
     name: shellcheck
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - run: sudo apt-get install -y -qq shellcheck
       - name: shellcheck
         run: |
@@ -62,8 +62,8 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
-      - uses: actions/checkout@v4
-      - uses: DavidAnson/markdownlint-cli2-action@v17
+      - uses: actions/checkout@v6
+      - uses: DavidAnson/markdownlint-cli2-action@v19
         with:
           globs: |
             ciel.skill/**/*.md
@@ -76,7 +76,7 @@ jobs:
     name: yamllint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Install yamllint
         run: pip install --quiet yamllint
       - name: Run yamllint
@@ -91,7 +91,7 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Install shfmt
         run: |
           curl -fsSL -o /tmp/shfmt https://github.com/mvdan/sh/releases/latest/download/shfmt_v3.13.1_linux_amd64
@@ -106,8 +106,8 @@ jobs:
     name: ruff (python)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
         with:
           python-version: '3.11'
       - name: Install ruff
@@ -120,11 +120,15 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Run PSScriptAnalyzer
         shell: pwsh
         run: |
-          $results = Get-ChildItem -Path scripts/*.ps1, ciel.skill/init/scripts/*.ps1 -Recurse | Invoke-ScriptAnalyzer
+          $results = @()
+          $files = Get-ChildItem -Path scripts/*.ps1, ciel.skill/init/scripts/*.ps1 -Recurse
+          foreach ($f in $files) {
+            $results += Invoke-ScriptAnalyzer -Path $f.FullName -Settings "$GITHUB_WORKSPACE/.PSScriptAnalyzerSettings.psd1"
+          }
           $results | Select-Object -Property Message, Path, Line | Format-Table
           if ($results | Where-Object Severity -in 'Error','Warning') { exit 1 }
 
@@ -133,7 +137,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [validate, shellcheck]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - run: sudo apt-get install -y -qq zip
       - name: Build a throwaway .skill
         run: |
@@ -156,7 +160,7 @@ jobs:
             echo "::error title=File count drift::archive contains $count files; expected ~241"
             exit 1
           fi
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: ciel-skill-ci
           path: dist/
@@ -167,7 +171,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-test
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: ciel-skill-ci
           path: dist
