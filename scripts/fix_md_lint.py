@@ -76,7 +76,7 @@ def fix_markdown(content):
             # MD032: Blank line below list
             if i < len(lines) - 1:
                 next_is_list = re.match(list_pattern, lines[i+1])
-                if not next_is_list and lines[i+1].strip() != '':
+                if not next_is_list and lines[i+1].strip() != '' and not lines[i+1].startswith('```'):
                     final_lines.append('')
         else:
             final_lines.append(line)
@@ -86,25 +86,26 @@ def fix_markdown(content):
     fixed = fixed.strip() + '\n'
     return fixed
 
-root_dir = r'C:\Users\Eduardo\Ciel'
-exclude_dirs = {'.git', 'dist', 'node_modules', '.ciel', '.attic', 'archive'}
+if __name__ == "__main__":
+    root_dir = r'C:\Users\Eduardo\Ciel'
+    exclude_dirs = {'.git', 'dist', 'node_modules', '.ciel', '.attic', 'archive'}
 
-fixed_count = 0
-for root, dirs, files in os.walk(root_dir):
-    dirs[:] = [d for d in dirs if d not in exclude_dirs]
-    for f in files:
-        if f.endswith('.md'):
-            path = os.path.join(root, f)
-            try:
-                with open(path, 'r', encoding='utf-8') as file:
-                    content = file.read()
-                fixed = fix_markdown(content)
-                if content != fixed:
-                    with open(path, 'w', encoding='utf-8') as file:
-                        file.write(fixed)
-                    print(f"Fixed {os.path.relpath(path, root_dir)}")
-                    fixed_count += 1
-            except Exception as e:
-                print(f"Error fixing {path}: {e}")
+    fixed_count = 0
+    for root, dirs, files in os.walk(root_dir):
+        dirs[:] = [d for d in dirs if d not in exclude_dirs]
+        for f in files:
+            if f.endswith('.md'):
+                path = os.path.join(root, f)
+                try:
+                    with open(path, 'r', encoding='utf-8') as file:
+                        content = file.read()
+                    fixed = fix_markdown(content)
+                    if content != fixed:
+                        with open(path, 'w', encoding='utf-8') as file:
+                            file.write(fixed)
+                        print(f"Fixed {os.path.relpath(path, root_dir)}")
+                        fixed_count += 1
+                except Exception as e:
+                    print(f"Error fixing {path}: {e}")
 
-print(f"\nTotal files fixed: {fixed_count}")
+    print(f"\nTotal files fixed: {fixed_count}")

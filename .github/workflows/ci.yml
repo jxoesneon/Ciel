@@ -109,10 +109,12 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.11'
-      - name: Install ruff
-        run: pip install --quiet ruff
+      - name: Install deps
+        run: pip install --quiet ruff pyyaml
       - name: ruff check
         run: ruff check scripts/ ciel.skill/init/scripts/
+      - name: Run Python unit tests
+        run: python3 -m unittest discover tests
 
   psscriptanalyzer:
     name: PSScriptAnalyzer

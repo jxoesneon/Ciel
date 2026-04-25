@@ -4,7 +4,7 @@
 
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?style=flat-square)](https://github.com/jxoesneon/Ciel/releases)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/jxoesneon/Ciel/ci.yml?branch=main&style=flat-square)](https://github.com/jxoesneon/Ciel/actions)
-[![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](LICENSE)
+[![License](https://img.shields.io/badge/license-Apache--2.0-green.svg?style=flat-square)](LICENSE)
 [![Format](https://img.shields.io/badge/format-skill%2F1.0-blueviolet.svg?style=flat-square)](ciel.skill/SKILL.md)
 [![AI Powered](https://img.shields.io/badge/AI-Autonomous-orange.svg?style=flat-square)](#-system-architecture)
 
@@ -113,7 +113,7 @@ All CIEL operations are audited by the **Council of Five**, ensuring every actio
 ## 📜 Documentation & Legal
 
 - **[CONTRIBUTING.md](CONTRIBUTING.md)**: Standards for joining the CIEL ecosystem.
-- **[LICENSE](LICENSE)**: MIT Licensed.
+- **[LICENSE](LICENSE)**: Apache 2.0 Licensed.
 
 ---
-**Status**: 1.0.0 Harmonized. **Uptime**: Stable. **Intelligence**: Active.
+**Status**: 1.0.0 Harmonized. **Verification**: [Passed](https://github.com/jxoesneon/Ciel/actions/workflows/ci.yml)
