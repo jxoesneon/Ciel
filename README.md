@@ -22,21 +22,27 @@ CIEL 1.0 is designed for seamless integration into modern agentic runtimes.
 
 **Unix (Bash):**
 ```bash
+
 # 1. Clone the repository
+
 git clone https://github.com/jxoesneon/Ciel.git
 cd Ciel
 
 # 2. Run the official installer
+
 bash ciel.skill/init/scripts/install.sh
 ```
 
 **Windows (PowerShell):**
 ```powershell
+
 # 1. Clone the repository
+
 git clone https://github.com/jxoesneon/Ciel.git
 cd Ciel
 
 # 2. Run the official installer
+
 .\ciel.skill\init\scripts\install.ps1
 ```
 
@@ -55,6 +61,7 @@ Located in `ciel.skill/`, this layer defines the foundational identity and const
 - **Autonomy Ladder**: Structured decision-making (Autonomous → Council-Gated → HITL).
 
 ### 🗺️ Project Map (Semantic Index)
+
 - `ciel.skill/`: Core infrastructure, constitution, and cognitive logic.
 - `skills/`: 140 Harmonized high-density frameworks (e.g., `ciel-swarm-orchestration`).
 - `agents/`: The Specialist Layer (Elite Guilds).

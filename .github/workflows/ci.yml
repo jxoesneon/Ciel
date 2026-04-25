@@ -127,10 +127,14 @@ jobs:
           $results = @()
           $files = Get-ChildItem -Path scripts/*.ps1, ciel.skill/init/scripts/*.ps1 -Recurse
           foreach ($f in $files) {
-            $results += Invoke-ScriptAnalyzer -Path $f.FullName -Settings "$GITHUB_WORKSPACE/.PSScriptAnalyzerSettings.psd1"
+            $results += Invoke-ScriptAnalyzer -Path $f.FullName -Settings "./.PSScriptAnalyzerSettings.psd1"
           }
-          $results | Select-Object -Property Message, Path, Line | Format-Table
-          if ($results | Where-Object Severity -in 'Error','Warning') { exit 1 }
+          if ($results) {
+            $results | Select-Object -Property Message, Path, Line | Format-Table
+            if ($results | Where-Object Severity -in 'Error','Warning') { exit 1 }
+          } else {
+            Write-Host "No PSScriptAnalyzer findings."
+          }
 
   build-test:
     name: Dry-build (0.0.0-ci)
