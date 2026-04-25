@@ -1,3 +1,7 @@
+---
+locked: true
+---
+
 # SAFETY — Council Member
 
 **Lens:** risk vectors, veto authority.

@@ -1,3 +1,7 @@
+---
+locked: true
+---
+
 # CLASSIFICATION
 
 `locked: true`.
@@ -26,7 +30,7 @@ Every operation is scored 0–10 on each axis. Classification uses weighted max.
 - `high_threshold ≤ composite < critical_threshold` (default 6.0–8.5) → **high**
 - `composite ≥ critical_threshold` (default 8.5) OR any veto-condition match → **critical**
 
-Veto conditions include: irreversible + external_impact ≥ 8, data_sensitivity ≥ 9 without consent, license boundary violation, any item in `council/rubrics/VETO_CONDITIONS.md`.
+Veto conditions include: irreversible + external_impact ≥ 8, data_sensitivity ≥ 9 without explicit user consent (triggers User Escalation via council/ESCALATION.md), license boundary violation, any item in council/rubrics/VETO_CONDITIONS.md.
 
 ## Examples
 
