@@ -29,10 +29,7 @@ last_updated: iso8601
 locked: bool                # Constitution-locked? rarely true
 deprecated: bool            # queued for removal
 deprecation_reason: string  # if deprecated
-runtime_compatibility:
-  claude_code: true|false|partial
-  gemini_cli: true|false|partial
-  generic: true|false|partial
+runtimes: [string]        # [claude_code, gemini_cli, windsurf, generic]
 dependencies:
   skills: [id]
   mcp: [server_id]

@@ -99,11 +99,19 @@ jobs:
             apt-get update -qq && apt-get install -y -qq unzip git curl ca-certificates >/dev/null
             mkdir -p /tmp/smoke/unpack && cd /tmp/smoke/unpack
             unzip -q "/src/dist/${{ steps.ver.outputs.artifact }}"
+            
+            # Simulated environment for verify.sh
+            export CIEL_HOME="/tmp/.ciel"
+            mkdir -p "$CIEL_HOME"/{skills,registry,council,acquisition,checkpoints,improvements,high_risk,archive,.attic,sandbox,backups,integrity,runtimes}
+            echo "{\"schema\":1,\"version\":\"${{ steps.ver.outputs.version }}\",\"timestamp\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",\"files\":{}}" > "$CIEL_HOME/INTEGRITY.json"
+            touch "$CIEL_HOME/activity.log"
+            git init "$CIEL_HOME" >/dev/null
+
             # .skill archive stores contents at zip root
             test -f SKILL.md
             test -x init/scripts/install.sh
-            bash init/scripts/verify.sh >/dev/null 2>&1 || true
-            echo "smoke-install basic check OK"
+            bash init/scripts/verify.sh
+            echo "smoke-install verification OK"
           '
 
       - name: Upload build artifact (also for non-tag runs)
@@ -119,7 +127,7 @@ jobs:
   release:
     name: Publish GitHub Release
     needs: build
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     permissions:
       contents: write
