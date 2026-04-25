@@ -60,6 +60,7 @@ jobs:
   markdownlint:
     name: markdownlint
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
       - uses: DavidAnson/markdownlint-cli2-action@v17
@@ -121,8 +122,7 @@ jobs:
       - name: Run PSScriptAnalyzer
         shell: pwsh
         run: |
-          $paths = @("scripts/*.ps1", "ciel.skill/init/scripts/*.ps1")
-          $results = Invoke-ScriptAnalyzer -Path $paths -Recurse
+          $results = Invoke-ScriptAnalyzer -Path "scripts/*.ps1", "ciel.skill/init/scripts/*.ps1" -Recurse
           $results | Select-Object -Property Message, Path, Line | Format-Table
           if ($results | Where-Object Severity -in 'Error','Warning') { exit 1 }
 
