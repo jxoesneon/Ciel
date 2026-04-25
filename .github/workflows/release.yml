@@ -99,7 +99,7 @@ jobs:
             apt-get update -qq && apt-get install -y -qq unzip git curl ca-certificates >/dev/null
             mkdir -p /tmp/smoke/unpack && cd /tmp/smoke/unpack
             unzip -q "/src/dist/${{ steps.ver.outputs.artifact }}"
-            
+
             # Simulated environment for verify.sh
             export CIEL_HOME="/tmp/.ciel"
             mkdir -p "$CIEL_HOME"; mkdir -p "$CIEL_HOME"/{skills,registry,council,acquisition,checkpoints,improvements,high_risk,archive,.attic,sandbox,backups,integrity,runtimes}
