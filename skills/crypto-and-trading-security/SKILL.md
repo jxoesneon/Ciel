@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "spend limit guard"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Crypto & Trading Security (The Asset Layer)
 
 This skill manages the extreme threat model of autonomous trading agents and DeFi contracts.

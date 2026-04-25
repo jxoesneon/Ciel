@@ -13,8 +13,10 @@ triggers:
     confidence: 0.95
   - pattern: "create.*implementation.*steps"
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Make-Plan (The Strategic Layer)
 
 This skill serves as CIEL's "Strategic Layer," transforming high-level design specs into detailed, phased implementation plans. It ensures that every action is grounded in evidence and documentation.

@@ -11,8 +11,10 @@ triggers:
     confidence: 0.9
   - pattern: "turn (skills|patterns) into rules"
     confidence: 0.95
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Rules Distill (Principle Extraction)
 
 This skill formalizes the mechanism by which CIEL evolves its global ruleset. It applies the "Deterministic Collection + LLM Judgment" principle to identify cross-cutting behaviors that should be promoted from individual skills to mandatory rules.

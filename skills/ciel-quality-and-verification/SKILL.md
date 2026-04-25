@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "verification before completion"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Quality & Verification (The Integrity Layer)
 
 This skill formalizes the "Evidence before Claims" mandate. it prioritizes fresh verification and disciplined implementation loops.

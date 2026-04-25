@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "tam/sam/som"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Market Research (Strategic Discovery)
 
 This skill formalizes "Decisional Research"—output designed to inform business strategy rather than provide generic summaries. It mandates source attribution and contrarian evidence.

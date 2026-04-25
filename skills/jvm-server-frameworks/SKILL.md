@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "ktor patterns"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: JVM Server Frameworks (Ktor & Exposed)
 
 This skill formalizes the use of lightweight, DSL-driven frameworks on the JVM. It focuses on the Ktor + Exposed + Flyway stack.

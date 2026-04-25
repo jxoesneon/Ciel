@@ -117,14 +117,15 @@ def main():
             warn("sqlite3 not found; falling back to filesystem KV backend.")
             (CIEL_HOME / "fs_backend").mkdir(parents=True, exist_ok=True)
 
-    # 5. Integrity seed
-    now = datetime.datetime.utcnow().isoformat() + "Z"
-    integrity_data = {
+    # 7. Integrity seed
+    now = datetime.datetime.now(datetime.UTC).isoformat(timespec='seconds').replace('+00:00', 'Z')
+    integrity = {
         "schema": 1,
         "version": CIEL_VERSION,
-        "generated_at": now,
+        "timestamp": now,
         "files": {}
     }
+
     (CIEL_HOME / "INTEGRITY.json").write_text(json.dumps(integrity_data, indent=2), encoding="utf-8")
     say("Integrity seed written.")
 

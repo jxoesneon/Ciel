@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "modern perl"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Perl Development (Modern & Secure)
 
 This skill formalizes the use of Perl 5.36+ for CIEL development. it prioritizes the modern feature set (signatures, postfix deref) and defensive security.

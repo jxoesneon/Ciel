@@ -11,8 +11,10 @@ triggers:
     confidence: 0.9
   - pattern: "design system"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Security & Design (The Integrity Layer)
 
 This skill manages the structural integrity of both value (Solidity) and appearance (Design Systems).

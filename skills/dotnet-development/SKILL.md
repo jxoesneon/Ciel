@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "dotnet patterns"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: .NET Development (Modern & Typed)
 
 This skill formalizes the development of robust C# applications using .NET 8+. it prioritizes immutability, explicit DI, and async efficiency.

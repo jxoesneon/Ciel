@@ -15,8 +15,10 @@ triggers:
     confidence: 0.8
   - pattern: "process.*shift"
     confidence: 0.7
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: AI-First Engineering
 
 This skill provides CIEL's core philosophy for engineering in an AI-native environment. It prioritizes planning quality, deterministic verification, and agent-friendly architectures.

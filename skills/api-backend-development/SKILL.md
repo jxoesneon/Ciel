@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "backend patterns"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: API & Backend Development (Server-Side)
 
 This skill formalizes the development of scalable, maintainable server-side systems. it enforces resource-based REST design and a strict layered architecture.

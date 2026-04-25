@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "device-agnostic code"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: ML & Data (The Intelligence Layer)
 
 This skill manages high-performance data patterns, from deep learning training loops to SQL query optimization.

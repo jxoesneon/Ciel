@@ -4,12 +4,11 @@ version: 1.0.0
 description: Build a new runtime adapter from research — probe, spec, test, register.
 triggers: [new adapter, runtime adapter, adapter for]
 tags: [adapter, scope:both, runtime:any, risk:high]
-runtime_compatibility: { claude_code: true, gemini_cli: true, generic: partial }
+runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [research/SKILL.md, skill_builder/SKILL.md, council_runner/SKILL.md] }
 ---
-
 # runtime_adapter_builder
 
 Build an `adapters/<runtime_id>/` directory + files when Ciel encounters a new host.

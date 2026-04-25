@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "technical explainer"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Doc & Video Intelligence (Nutrient & Manim)
 
 This skill formalizes document processing and technical visualization. it prioritizes data integrity and visual clarity.

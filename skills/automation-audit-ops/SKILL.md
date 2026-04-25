@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "what (automations|hooks) are (live|broken)"
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Automation Audit Ops (Inventory & Rationalization)
 
 This skill dictates how the Orchestrator inventories and rationalizes workspace automations (CI jobs, hooks, connectors, MCP servers). It focuses on evidence-backed classification to drive "Keep / Merge / Cut / Fix-Next" decisions.

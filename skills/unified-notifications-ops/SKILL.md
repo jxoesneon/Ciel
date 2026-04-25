@@ -11,8 +11,10 @@ triggers:
     confidence: 0.9
   - pattern: "what (is happening|happened) while I was (away|gone)"
     confidence: 0.85
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Unified Notifications (The Notification Hub)
 
 This skill turns fragmented alerts into a single, actionable operator surface. It prevents "alert fatigue" by applying a strict severity model and routing logic.

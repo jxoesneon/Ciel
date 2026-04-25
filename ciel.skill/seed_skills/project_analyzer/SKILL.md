@@ -4,12 +4,11 @@ version: 1.0.0
 description: Project context detection for init calibration — conventions, stack, patterns.
 triggers: [analyze project, detect stack, project context]
 tags: [fs, scope:both, runtime:any, risk:low]
-runtime_compatibility: { claude_code: true, gemini_cli: true, generic: true }
+runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [filesystem/SKILL.md, shell/SKILL.md, git/SKILL.md] }
 ---
-
 # project_analyzer
 
 Produce the `project.json` used by `init/CALIBRATION.md`.

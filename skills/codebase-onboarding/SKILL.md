@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "generate (claude.md|starter config)"
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Codebase Onboarding (Reconnaissance)
 
 This skill is CIEL's entry-point for any new repository. It avoids "reading everything" by using high-signal reconnaissance to build a functional map of the project.

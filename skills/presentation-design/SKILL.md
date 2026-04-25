@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "convert (pptx|powerpoint) to (html|slides)"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Presentation Design (The Deck Layer)
 
 This skill formalizes the creation of "Frontend Slides"—strategic, zero-dependency HTML presentations that run in any browser.

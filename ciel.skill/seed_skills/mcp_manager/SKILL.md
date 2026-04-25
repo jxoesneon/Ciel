@@ -4,12 +4,11 @@ version: 1.0.0
 description: MCP server discovery, installation, configuration, health checks.
 triggers: [mcp, mcp server, install mcp, mcp search]
 tags: [mcp, scope:both, runtime:any, risk:mid]
-runtime_compatibility: { claude_code: true, gemini_cli: true, generic: partial }
+runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [shell/SKILL.md, package_manager/SKILL.md] }
 ---
-
 # mcp_manager
 
 Manage MCP servers.

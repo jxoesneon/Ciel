@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "ready to (merge|pr|push)"
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Finishing a Development Branch (Finality Layer)
 
 This skill formalizes the "Finality Layer" of CIEL orchestration. It is triggered when an implementation plan (managed by `executing-plans`) is deemed complete. It prevents broken code from entering the main branch by enforcing a hard global verification gate before presenting integration options.

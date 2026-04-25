@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "iterative retrieval"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Agent Retrieval (Progressive Context)
 
 This skill solves the "Context Blindness" problem in multi-agent workflows. it formalizes the loop of searching, evaluating, and refining context before execution.

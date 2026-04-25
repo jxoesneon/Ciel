@@ -15,8 +15,10 @@ triggers:
     confidence: 0.9
   - pattern: "I want to.*(add|create).*(but|not sure)"
     confidence: 0.8
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Brainstorming (The Creative Layer)
 
 This skill serves as CIEL's "Creative Layer," enforcing a strict design-before-action mandate. It ensures that intent is fully understood and architectural trade-offs are weighed before a single line of code is written.

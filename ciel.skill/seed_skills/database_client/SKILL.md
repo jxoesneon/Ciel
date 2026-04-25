@@ -4,12 +4,11 @@ version: 1.0.0
 description: DB query execution — SQL / NoSQL, schema inspection, migration awareness.
 triggers: [sql, query, database, db, select, migration]
 tags: [data, scope:both, runtime:any, risk:mid]
-runtime_compatibility: { claude_code: true, gemini_cli: true, generic: true }
+runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [secrets_manager/SKILL.md, api_client/SKILL.md] }
 ---
-
 # database_client
 
 Run queries against databases.

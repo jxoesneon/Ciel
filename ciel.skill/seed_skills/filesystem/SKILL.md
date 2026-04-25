@@ -4,11 +4,12 @@ version: 1.0.0
 description: File read, write, edit, move, search, and stat operations with follow-refs support.
 triggers: [read, write, edit, cat, ls, find, stat, move, copy, delete, file]
 tags: [fs, scope:both, runtime:any, risk:low]
-runtime_compatibility: { claude_code: true, gemini_cli: true, generic: true }
+runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: Apache-2.0
 source: { tier: 0, origin: seed }
----
 
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # filesystem
 
 Primitive filesystem operations.

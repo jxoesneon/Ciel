@@ -4,12 +4,11 @@ version: 1.0.0
 description: JSON / YAML / TOML — read, write, validate, transform, schema-check.
 triggers: [json, yaml, toml, parse, config]
 tags: [code, scope:both, runtime:any, risk:low]
-runtime_compatibility: { claude_code: true, gemini_cli: true, generic: true }
+runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [filesystem/SKILL.md] }
 ---
-
 # json_yaml_toml_parser
 
 Structured config parsers.

@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "which (agent|model) is better for"
     confidence: 0.85
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Agent-Eval (Benchmarking Suite)
 
 This skill formalizes the process for objectively benchmarking different coding agents or underlying models against CIEL's codebase. It replaces subjective "vibes-based" comparisons with reproducible, data-driven task evaluations.

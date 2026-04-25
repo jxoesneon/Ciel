@@ -4,12 +4,11 @@ version: 1.0.0
 description: Log parsing, pattern detection, anomaly flagging, structured extraction.
 triggers: [log, logs, parse log, anomaly]
 tags: [observability, scope:both, runtime:any, risk:low]
-runtime_compatibility: { claude_code: true, gemini_cli: true, generic: true }
+runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [filesystem/SKILL.md] }
 ---
-
 # log_analyzer
 
 Parse and analyze logs (including Ciel's own `activity.log`).

@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "npx ecc-agentshield"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Security Scan (Harness Auditing)
 
 This skill formalizes the auditing of the CIEL harness itself. It uses `AgentShield` to detect overly permissive permissions, hardcoded secrets in configs, and command injection risks in hooks.

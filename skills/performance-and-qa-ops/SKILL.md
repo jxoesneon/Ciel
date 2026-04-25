@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "canary watch"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Performance & QA Operations (The Shield)
 
 This skill formalizes the verification of production-readiness. it prioritizes Core Web Vitals, interaction integrity, and post-deploy safety.

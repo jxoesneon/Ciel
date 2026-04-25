@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: 'cpp core guidelines'
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: C++ Development (Core Guidelines)
 
 This skill formalizes the use of modern C++ (C++17/20+). it prioritizes resource safety (RAII) and the C++ Core Guidelines.

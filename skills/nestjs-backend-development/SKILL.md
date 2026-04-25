@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "nest generate"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: NestJS Development (Modular TypeScript)
 
 This skill formalizes the development of modular, type-safe backends using NestJS. it prioritizes dependency injection and declarative validation.

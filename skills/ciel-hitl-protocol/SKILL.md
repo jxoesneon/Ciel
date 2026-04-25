@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "high risk operation"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: HITL Protocol (The Handshake)
 
 This skill formalizes when and how CIEL should stop autonomous action and seek human intervention.

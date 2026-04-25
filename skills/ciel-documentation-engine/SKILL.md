@@ -11,8 +11,10 @@ triggers:
     confidence: 1.0
   - pattern: "semantic indexing"
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Documentation Engine
 
 This framework governs the lifecycle of technical documentation within the CIEL ecosystem. It ensures that all documentation is accurate, spec-compliant, and semantically queryable.

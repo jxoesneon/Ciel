@@ -15,8 +15,10 @@ triggers:
     confidence: 0.9
   - pattern: "complex.*task"
     confidence: 0.7
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Orchestration
 
 This skill provides CIEL's high-level planning and coordination engine. It transforms complex objectives into actionable, step-by-step construction plans.

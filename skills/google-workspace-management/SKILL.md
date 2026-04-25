@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "gws auth setup"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Google Workspace Management (The Asset Layer)
 
 This skill formalizes the operation of Google Workspace using the `gws` CLI and native MCP tools.

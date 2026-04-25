@@ -11,8 +11,10 @@ triggers:
     confidence: 0.9
   - pattern: "design a (facebook|twitter|linkedin) cover"
     confidence: 0.95
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Asset Design (The Creative Hub)
 
 This skill manages the generation and export of visual assets. It prioritizes AI generation (Gemini) followed by HTML/CSS composition and screenshot export.

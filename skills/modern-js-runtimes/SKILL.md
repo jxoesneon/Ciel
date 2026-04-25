@@ -11,8 +11,10 @@ triggers:
     confidence: 0.9
   - pattern: "bun install"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Modern JS Runtimes (Bun & Keccak)
 
 This skill manages high-speed JS/TS development using Bun and enforces cryptographic correctness for specialized domains (Ethereum).

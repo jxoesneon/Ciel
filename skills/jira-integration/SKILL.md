@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "get (requirements|ac) from (ticket|jira)"
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Jira Integration (Issue Tracking)
 
 This skill formalizes how CIEL interacts with Jira for requirements gathering, status updates, and development tracking. It prioritizes the `mcp-atlassian` server for tool-based interaction.

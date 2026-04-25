@@ -11,8 +11,10 @@ triggers:
     confidence: 1.0
   - pattern: "master router"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Orchestration & Routing (The Command Layer)
 
 This skill formalizes the "Alloy" orchestration model. it prioritizes domain-specific specialist routing and conflict resolution between layers.

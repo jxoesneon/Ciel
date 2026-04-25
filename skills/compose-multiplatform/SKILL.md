@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "compose multiplatform patterns"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Compose Multiplatform (Shared UI)
 
 This skill formalizes cross-platform UI development using Compose. It focuses on skippable recomposition and platform-agnostic state management.

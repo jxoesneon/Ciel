@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "using git worktrees"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Meta & Utility (The Orchestrator)
 
 This skill formalizes the self-management of CIEL and specialized utility workflows.

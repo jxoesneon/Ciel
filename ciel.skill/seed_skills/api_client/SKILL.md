@@ -4,12 +4,11 @@ version: 1.0.0
 description: HTTP REST / GraphQL — request construction, auth, error handling, retry.
 triggers: [api, http, rest, graphql, request, endpoint]
 tags: [network, scope:both, runtime:any, risk:mid]
-runtime_compatibility: { claude_code: true, gemini_cli: true, generic: true }
+runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [secrets_manager/SKILL.md, web_fetch/SKILL.md] }
 ---
-
 # api_client
 
 HTTP REST / GraphQL client with auth and retry.

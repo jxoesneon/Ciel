@@ -13,8 +13,10 @@ triggers:
     confidence: 0.95
   - pattern: "@modelcontextprotocol/sdk"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: MCP Server Patterns
 
 This skill provides CIEL's expertise for building, maintaining, and integrating Model Context Protocol (MCP) servers.

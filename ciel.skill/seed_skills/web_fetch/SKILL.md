@@ -4,11 +4,12 @@ version: 1.0.0
 description: URL fetching with HTML/JSON/markdown extraction, pagination, retry.
 triggers: [fetch, download, curl, get url, visit]
 tags: [network, scope:both, runtime:any, risk:low]
-runtime_compatibility: { claude_code: true, gemini_cli: true, generic: true }
+runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: Apache-2.0
 source: { tier: 0, origin: seed }
----
 
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # web_fetch
 
 Fetch a URL.

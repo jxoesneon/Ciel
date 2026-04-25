@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "idiomatic python"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Python Development (Idiomatic & Typed)
 
 This skill formalizes the "Modern Python" layer. it prioritizes readability (Zen of Python), explicit type hints, and EAFP error handling.

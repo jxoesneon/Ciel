@@ -4,12 +4,11 @@ version: 1.0.0
 description: Run Council of Five deliberations — stage orchestration, result aggregation.
 triggers: [council, vote, deliberate, review artifact]
 tags: [council, scope:both, runtime:any, risk:low]
-runtime_compatibility: { claude_code: true, gemini_cli: true, generic: partial }
+runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [mempalace_manager/SKILL.md, markdown_processor/SKILL.md] }
 ---
-
 # council_runner
 
 Orchestrate the 3-stage Council of Five.

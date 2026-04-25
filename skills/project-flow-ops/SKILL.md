@@ -11,8 +11,10 @@ triggers:
     confidence: 0.9
   - pattern: "map (github|issues) to (linear|tasks)"
     confidence: 0.95
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Project Flow Ops (Backlog & Triage)
 
 This skill manages the coordination between public surfaces (GitHub) and internal execution surfaces (Linear/Jira). It is used to rationalize backlogs and decide which items deserve active execution.

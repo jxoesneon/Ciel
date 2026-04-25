@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "orchestrate (multiple|parallel) (agents|tasks)"
     confidence: 0.85
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Autonomous-Loops (Loop Architecture)
 
 This skill dictates the approved architectural patterns for running autonomous agent loops within the CIEL ecosystem. It prevents chaotic, unbounded agent executions by defining structured, verifiable pipeline patterns.

@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "ecc tools cost audit"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Billing & Burn Ops (The Value Layer)
 
 This skill formalizes the auditing of system costs and revenue integrity. it prioritizes code-backed truth and identifying high-burn failure patterns.

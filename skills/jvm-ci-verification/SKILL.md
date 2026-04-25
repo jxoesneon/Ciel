@@ -11,8 +11,10 @@ triggers:
     confidence: 0.9
   - pattern: "npx verify-jvm"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: JVM CI Verification (The Gate)
 
 This skill dictates the "Pre-PR" verification protocol for all Java and Kotlin projects. It ensures that only high-quality, verified code enters the shared repository.

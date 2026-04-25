@@ -4,12 +4,11 @@ version: 1.0.0
 description: CI/CD pipeline interaction — trigger, status check, artifact retrieval.
 triggers: [ci, cd, pipeline, github actions, gitlab ci, circle]
 tags: [deploy, scope:both, runtime:any, risk:mid]
-runtime_compatibility: { claude_code: true, gemini_cli: true, generic: true }
+runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [api_client/SKILL.md, git/SKILL.md, secrets_manager/SKILL.md] }
 ---
-
 # cicd_integration
 
 Interact with CI systems.

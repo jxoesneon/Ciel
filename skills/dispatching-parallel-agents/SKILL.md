@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "(multiple|several) (independent|unrelated) (failures|bugs|tasks)"
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Dispatching Parallel Agents (Concurrency Mandate)
 
 This skill formalizes CIEL's approach to concurrency. When the Orchestrator identifies multiple *independent* tasks (e.g., unrelated bug fixes, distinct test file failures), it MUST dispatch specialized sub-agents in parallel rather than executing them sequentially.

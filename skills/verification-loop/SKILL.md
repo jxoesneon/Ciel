@@ -13,8 +13,10 @@ triggers:
     confidence: 0.95
   - pattern: "is.*(ready|complete).*(for|to|PR)"
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Verification-Loop (The Finality Layer)
 
 This skill serves as CIEL's "Finality Layer," providing the definitive evidence required to close a task. It ensures that every implementation is not just "functional," but "high-quality" according to CIEL's engineering standards.

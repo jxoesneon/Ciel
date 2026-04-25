@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "android clean architecture"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Android & KMP Architecture (Structural Layer)
 
 This skill formalizes the "Structural Layer" for Android and KMP projects. It enforces module isolation and dependency inversion to ensure cross-platform portability and testability.

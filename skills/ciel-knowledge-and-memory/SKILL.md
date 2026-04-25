@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "smart explore"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Knowledge & Memory (The Intel Layer)
 
 This skill manages the flow of information from live codebase structure to durable cross-session memory.

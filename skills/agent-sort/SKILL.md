@@ -15,8 +15,10 @@ triggers:
     confidence: 1.0
   - pattern: "optimize.*workspace.*context"
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Agent Sort
 
 This skill provides CIEL's mechanism for maintaining a lean, high-performance orchestration surface. It uses repo-local evidence to classify capabilities into "Active" (DAILY) or "Searchable" (LIBRARY).

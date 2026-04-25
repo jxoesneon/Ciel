@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "next dev --turbopack"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Next.js Development (The React Meta-Layer)
 
 This skill formalizes the development of modern React applications using Next.js 16+. it prioritizes Turbopack for development and Server Components for production.

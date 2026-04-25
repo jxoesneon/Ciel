@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "page object model"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: E2E & Visual Verification (The Interface Layer)
 
 This skill manages the correctness and quality of user interfaces. it prioritizes stable test patterns and intentional design choices over generic UI.

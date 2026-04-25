@@ -11,8 +11,10 @@ triggers:
     confidence: 0.9
   - pattern: "click path audit"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Meta Operations (The Orchestrator)
 
 This skill manages the internal logic of CIEL and its interaction with the Claude API and UI state.

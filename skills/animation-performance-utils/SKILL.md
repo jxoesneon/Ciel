@@ -11,8 +11,10 @@ triggers:
     confidence: 0.9
   - pattern: "gsap.utils"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Animation Performance & Utils (Optimization)
 
 This skill formalizes the "Speed Layer" of CIEL animations. it uses mathematical utilities to reduce overhead and visual jitter.

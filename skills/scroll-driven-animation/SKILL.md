@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "scrolltrigger"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Scroll-Driven Animation (ScrollTrigger)
 
 This skill formalizes the implementation of scroll-linked effects. it prioritizes layout stability and performant "Scrub" logic.

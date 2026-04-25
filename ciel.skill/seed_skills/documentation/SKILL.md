@@ -4,12 +4,11 @@ version: 1.0.0
 description: README, API docs, inline comments, changelog generation.
 triggers: [readme, document, docs, changelog, api docs]
 tags: [docs, scope:both, runtime:any, risk:low]
-runtime_compatibility: { claude_code: true, gemini_cli: true, generic: true }
+runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [filesystem/SKILL.md, code_analysis/SKILL.md] }
 ---
-
 # documentation
 
 Generate and maintain project documentation.

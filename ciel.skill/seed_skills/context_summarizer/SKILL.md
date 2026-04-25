@@ -4,12 +4,11 @@ version: 1.0.0
 description: Context compression for memory — relevance scoring, AAAK formatting.
 triggers: [summarize, compress context, aaak]
 tags: [memory, scope:both, runtime:any, risk:low]
-runtime_compatibility: { claude_code: true, gemini_cli: true, generic: true }
+runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [mempalace_manager/SKILL.md] }
 ---
-
 # context_summarizer
 
 Compress long traces / conversations into recoverable AAAK blobs.

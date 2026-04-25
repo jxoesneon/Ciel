@@ -11,8 +11,10 @@ triggers:
     confidence: 0.9
   - pattern: "/compact"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Strategic Compact (Phase-Based Memory)
 
 This skill formalizes the practice of "Strategic Compaction"—manual invocation of the `/compact` command at logical boundaries rather than relying on arbitrary, token-triggered auto-compaction.

@@ -13,8 +13,10 @@ triggers:
     confidence: 0.95
   - pattern: "start.*(phase|execution)"
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Do (The Execution Layer)
 
 This skill serves as CIEL's "Execution Layer," responsible for the systematic, high-fidelity implementation of approved plans. It prioritizes delegation, verification, and adherence to evidence over raw speed.

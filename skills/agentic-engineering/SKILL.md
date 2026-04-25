@@ -15,8 +15,10 @@ triggers:
     confidence: 1.0
   - pattern: "task.*decomposition"
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Agentic Engineering
 
 This skill provides CIEL's operational framework for high-efficiency, agent-led engineering. It coordinates task decomposition, model tier routing, and eval-driven verification.

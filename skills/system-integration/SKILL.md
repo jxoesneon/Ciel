@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "hexagonal architecture"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: System Integration (Ports & Adapters)
 
 This skill formalizes the "Hexagonal" approach to integrations. It ensures business logic remains independent of frameworks, transport, and external APIs.

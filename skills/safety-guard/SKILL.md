@@ -13,8 +13,10 @@ triggers:
     confidence: 0.9
   - pattern: "(freeze|lock).*(directory|folder|writes)"
     confidence: 0.85
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Safety-Guard (Operational Failsafe)
 
 This skill serves as the primary operational failsafe for CIEL's autonomous agents. It enforces the "Do No Harm" mandate by establishing strict operational boundaries, intercepting destructive actions, and allowing for granular, directory-level write locking.

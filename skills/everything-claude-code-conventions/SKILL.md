@@ -13,8 +13,10 @@ triggers:
     confidence: 0.95
   - pattern: "what are the.*(repo|project).*standards"
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Everything-Claude-Code-Conventions (The Conventions Layer)
 
 This skill provides the "Conventions Layer" for the CIEL framework, ensuring that all generated code, commits, and project structures adhere to established standards. It is the stylistic "Source of Truth" for CIEL's engineering output.

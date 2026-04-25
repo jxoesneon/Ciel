@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "is this (safe|secure)"
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Security Review (Quality Gate)
 
 This skill formalizes the "Security Gate" for CIEL. It provides non-negotiable patterns for secrets management, input validation, and vulnerability prevention.

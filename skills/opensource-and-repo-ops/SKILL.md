@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "repo scan html report"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Open-Source & Repo Ops (The Public Layer)
 
 This skill formalizes the "Private-to-Public" transition and structural auditing of massive codebases.

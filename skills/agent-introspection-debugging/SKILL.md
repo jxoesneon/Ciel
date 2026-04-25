@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "why is the agent (failing|repeating|drifting)"
     confidence: 0.9
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Agent Introspection Debugging (Self-Diagnosis)
 
 This skill formalizes the "Self-Debug" protocol for CIEL sub-agents. It provides a systematic 4-phase loop to diagnose and recover from repetitive failures, tool-call loops, and reasoning drift before escalating to a human.

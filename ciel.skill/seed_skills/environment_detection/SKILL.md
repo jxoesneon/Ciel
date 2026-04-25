@@ -4,12 +4,11 @@ version: 1.0.0
 description: OS, runtime version, framework, toolchain, CI/CD detection.
 triggers: [detect environment, env info, os, runtime version]
 tags: [fs, scope:both, runtime:any, risk:low]
-runtime_compatibility: { claude_code: true, gemini_cli: true, generic: true }
+runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [shell/SKILL.md, filesystem/SKILL.md] }
 ---
-
 # environment_detection
 
 Detect the environment Ciel is operating in.

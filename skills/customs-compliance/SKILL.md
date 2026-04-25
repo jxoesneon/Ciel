@@ -11,8 +11,10 @@ triggers:
     confidence: 0.95
   - pattern: "denied party screening"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Customs Compliance (Trade Integrity)
 
 This skill formalizes the "Border Layer" of CIEL. It ensures lawful movement of goods across jurisdictions while optimizing duty exposure.

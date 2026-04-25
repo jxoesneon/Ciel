@@ -15,8 +15,10 @@ triggers:
     confidence: 1.0
   - pattern: "knowledge graph|AAAK|temporal fact"
     confidence: 1.0
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: MemPalace-RS
 
 This skill provides CIEL's high-performance, local-first memory stack and knowledge graph, powered by a production-grade Rust engine.

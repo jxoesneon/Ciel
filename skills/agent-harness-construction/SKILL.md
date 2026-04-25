@@ -11,8 +11,10 @@ triggers:
     confidence: 0.9
   - pattern: "how should I (structure|format) (tools|observations)"
     confidence: 0.85
----
 
+source: { tier: 1, origin: harmonized }
+dependencies: { skills: [], mcp: [], system: [] }
+---
 # CIEL ADAPTATION: Agent Harness Construction (Architecture Design)
 
 This skill provides the architectural principles for designing and optimizing the "harness" through which CIEL sub-agents interact with the world. It ensures that tool definitions are unambiguous and observations are actionable.
