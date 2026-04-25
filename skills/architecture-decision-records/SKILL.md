@@ -7,18 +7,27 @@ runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
+
   - pattern: "(record|ADR).*decision"
+
     confidence: 0.9
+
   - pattern: "why did we.*(choose|use|select)"
+
     confidence: 0.9
+
   - pattern: "architectural.*trade-off"
+
     confidence: 0.9
+
   - pattern: "consequences.*of.*(pattern|framework)"
+
     confidence: 0.85
 
 source: { tier: 1, origin: harmonized }
 dependencies: { skills: [], mcp: [], system: [] }
 ---
+
 # CIEL ADAPTATION: Architecture Decision Records (ADR)
 
 This skill provides CIEL's framework for capturing the "Why" behind architectural choices. It ensures that every major decision is documented, reasoned, and auditable.
@@ -30,6 +39,7 @@ Adapted from `~/.agents/skills/architecture-decision-records/`. This skill serve
 ## The ADR Format
 
 Every ADR must follow the standardized CIEL schema:
+
 1. **Context**: What problem are we solving? What are the constraints?
 2. **Decision**: The specific choice being made (Present Tense).
 3. **Alternatives**: What was rejected and why?
@@ -39,16 +49,21 @@ Every ADR must follow the standardized CIEL schema:
 ## Orchestration Logic
 
 ### 1. Decision Detection
+
 The **orchestration** skill must trigger an ADR draft whenever the **Council of Five** reaches a significant verdict.
 
 ### 2. Council Persistence
+
 Every approved ADR must be indexed in **MemPalace** as a high-signal "Decision" node, enabling CIEL to answer "Why did we choose X?" across sessions.
 
 ### 3. Lifecycle Management
+
 Use the `proposed -> accepted -> [deprecated | superseded]` lifecycle. When a new ADR supersedes an old one, the Knowledge Graph in **MemPalace** must be updated with an `invalidates` relationship.
 
 ### 4. Verification
+
 An ADR is "finalized" when:
+
 - It is approved by the user.
 - It is recorded in `docs/adr/`.
 - The `index.json` (or ADR README) is updated.

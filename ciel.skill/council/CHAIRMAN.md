@@ -18,6 +18,7 @@ Input: five final scores + rationales. Output: `{ verdict: pass|reject|deadlock,
 ```text
 weighted_score =
   0.20 * coherence
+
 + 0.20 * capability
 + 0.25 * safety          # heavier weight
 + 0.15 * efficiency

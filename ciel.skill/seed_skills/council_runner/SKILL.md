@@ -9,6 +9,7 @@ license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [mempalace_manager/SKILL.md, markdown_processor/SKILL.md] }
 ---
+
 # council_runner
 
 Orchestrate the 3-stage Council of Five.

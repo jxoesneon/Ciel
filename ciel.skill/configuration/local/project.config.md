@@ -1,7 +1,9 @@
 # project.config — Local Project
 
 ```yaml
+
 # <anchor:start>
+
 project:
   # Populated by init/CONTEXT_DETECTION.md. Do not hand-edit unless correcting auto-detection.
   id: null
@@ -17,7 +19,9 @@ project:
   monorepo: false
   runtime_hint: null
   detected_at: null
+
 # <anchor:end>
+
 ```
 
 ## Notes

@@ -43,12 +43,14 @@ Ciel can recommend creating a checkpoint before high-risk operations:
 
 ```bash
 #!/bin/bash
+
 # Ciel Checkpoint Recommendation Hook
 
 INPUT=$(cat)
 COMMAND=$(echo "$INPUT" | jq -r '.tool_info.command // empty')
 
 # High-risk patterns
+
 RISK_PATTERNS='rm -rf|git reset --hard|git clean -fd|git checkout --\\.|DROP TABLE|DELETE FROM'
 
 if echo "$COMMAND" | grep -qiE "$RISK_PATTERNS"; then
@@ -80,12 +82,14 @@ Ciel can use checkpoints as **recovery points** during self-improvement:
 **Pattern:**
 
 ```markdown
+
 ## Self-Improvement with Checkpoint Recovery
 
 1. **Pre-mutation checkpoint** — Create "pre-improvement-[id]"
 2. **Apply improvement** — Execute the proposed change
 3. **Observe** — Monitor subsequent interactions
 4. **Rollback if needed** — Revert to checkpoint on regression
+
 ```
 
 ### 4. Named Checkpoint Conventions

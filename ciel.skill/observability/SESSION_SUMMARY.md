@@ -13,6 +13,7 @@ Per-session summary rendered at session end (when configured).
 Markdown, rendered to the user's native output + saved to `~/.ciel/sessions/<session_id>.md`:
 
 ```markdown
+
 ## Ciel session summary
 
 - **Runtime**: claude_code
@@ -31,6 +32,7 @@ Markdown, rendered to the user's native output + saved to `~/.ciel/sessions/<ses
   - `git push origin main` gated by judge — approved after dry-run.
 
 Next steps:
+
 - None pending.
 
 Pending improvement proposals: 2 (see `/ciel-diff`).

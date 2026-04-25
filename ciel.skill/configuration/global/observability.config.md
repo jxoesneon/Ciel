@@ -1,7 +1,9 @@
 # observability.config — Global Observability
 
 ```yaml
+
 # <anchor:start>
+
 observability:
   log_verbosity: info               # info|debug|trace
   log_rotate_hour: 0
@@ -19,7 +21,9 @@ observability:
       default: 0.1
       critical: 1.0
       council: 1.0
+
 # <anchor:end>
+
 ```
 
 ## Notes

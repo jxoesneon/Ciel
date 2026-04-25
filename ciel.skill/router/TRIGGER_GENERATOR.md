@@ -47,6 +47,7 @@ extract_sources:
   frontmatter:
     path: "SKILL.md"
     fields:
+
       - name           # Direct trigger
       - triggers       # Explicit list
       - description    # Keyword extraction
@@ -55,6 +56,7 @@ extract_sources:
   filename:
     pattern: "{name}.skill"
     transforms:
+
       - lowercase
       - strip_version
       - split_camelcase
@@ -83,6 +85,7 @@ generation_rules:
   description_keywords:
     input: "Fetches web pages and extracts clean markdown content"
     outputs:
+
       - pattern: "(fetch|get|retrieve).*(web|page|url)"
       - pattern: "(extract|parse).*(markdown|content|text)"
       - pattern: "web.*scraping"
@@ -124,18 +127,22 @@ scoring:
 ```yaml
 validation_checks:
   conflicts:
+
     - Check pattern overlap with existing triggers
     - Flag if confidence difference < 0.1
     - Report to Council if conflict detected
     
   test_cases:
+
     - Run all examples from SKILL.md
     - Run generated examples
     - Verify top-3 match accuracy > 0.9
     
   performance:
+
     - Compile regex time < 10ms
     - Match time < 1ms per pattern
+
 ```
 
 ## Stage 5: Register
@@ -144,6 +151,7 @@ validation_checks:
 registration:
   atomic_update: true
   transaction:
+
     - Backup current registry
     - Add new triggers
     - Compile patterns
@@ -162,6 +170,7 @@ registration:
 ```yaml
 deployment:
   runtime_sync:
+
     - Update in-memory trigger cache
     - Notify active sessions (if applicable)
     - Write to runtime-specific location
@@ -181,13 +190,17 @@ deployment:
 ### Manual Trigger Generation
 
 ```bash
+
 # Generate triggers for specific skill
+
 ./scripts/generate-triggers.sh ~/.ciel/skills/web_search/
 
 # Regenerate all triggers
+
 ./scripts/regenerate-all-triggers.sh
 
 # Test trigger matching
+
 ./scripts/test-triggers.sh "find me a web page"
 ```
 
@@ -196,11 +209,15 @@ deployment:
 Hook into skill installation:
 
 ```yaml
+
 # In acquisition pipeline
+
 post_install:
+
   - trigger: run TRIGGER_GENERATOR
   - validate: test 10 example prompts
   - deploy: update all runtimes
+
 ```
 
 ## Trigger Templates
@@ -212,33 +229,41 @@ templates:
   # CLI tool pattern
   cli_tool:
     patterns:
+
       - "{name}"
       - "run {name}"
       - "{name} command"
       - "use {name}"
+
     examples: ["git status", "run docker", "npm install"]
     
   # File operation pattern
   file_operation:
     patterns:
+
       - "(read|write|list|delete).*{domain}"
       - "{domain}.*(file|directory|folder)"
+
     examples: ["list files", "read directory", "delete folder"]
     
   # Search pattern
   search_tool:
     patterns:
+
       - "search.*{domain}"
       - "find.*{domain}"
       - "lookup.*{domain}"
       - "query.*{domain}"
+
     examples: ["search web", "find files", "lookup command"]
     
   # Analysis pattern
   analyzer:
     patterns:
+
       - "(analyze|check|audit|scan|review).*{domain}"
       - "{domain}.*(analysis|report|check)"
+
     examples: ["analyze code", "audit dependencies", "security scan"]
 ```
 

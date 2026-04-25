@@ -26,7 +26,9 @@ Project-scoped domain. Created at local init; added to the project's `.gitignore
 Appended by `init/GITIGNORE.md`:
 
 ```text
+
 # Ciel local domain
+
 .ciel/
 ```
 

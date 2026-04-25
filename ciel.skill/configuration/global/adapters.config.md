@@ -1,7 +1,9 @@
 # adapters.config — Global Adapters
 
 ```yaml
+
 # <anchor:start>
+
 adapters:
   claude_code:
     hooks:
@@ -34,7 +36,9 @@ adapters:
       fallback_confidence_bump: 0.05
   generic:
     research_enabled: true
+
 # <anchor:end>
+
 ```
 
 ## Notes

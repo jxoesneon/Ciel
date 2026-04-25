@@ -53,6 +53,7 @@ When the user says: "ciel", "route this", "orchestrate", "find me a skill", "acq
 1. Act autonomously on low-risk operations
 2. Council-gate mid/high-risk decisions
 3. Escalate to user when confidence < threshold
+
 ```
 
 ## Installation

@@ -7,14 +7,19 @@ runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
+
   - pattern: "(finish|complete).*(branch|epic|development|feature)"
+
     confidence: 0.9
+
   - pattern: "ready to (merge|pr|push)"
+
     confidence: 0.9
 
 source: { tier: 1, origin: harmonized }
 dependencies: { skills: [], mcp: [], system: [] }
 ---
+
 # CIEL ADAPTATION: Finishing a Development Branch (Finality Layer)
 
 This skill formalizes the "Finality Layer" of CIEL orchestration. It is triggered when an implementation plan (managed by `executing-plans`) is deemed complete. It prevents broken code from entering the main branch by enforcing a hard global verification gate before presenting integration options.
@@ -28,6 +33,7 @@ Adapted from `~/.agents/skills/finishing-a-development-branch/`. This is the fin
 ### Step 1: The Global Verification Gate (Hard Stop)
 
 Before offering *any* integration options to the user, the Orchestrator MUST run the full project `verification-loop` (lint, test, build).
+
 - **If Verification Fails**: Halt. Present the failures to the user. The branch cannot be merged or PR'd until the build is green.
 - **If Verification Passes**: Proceed to Step 2.
 
@@ -43,6 +49,7 @@ The Orchestrator MUST present exactly these four options using the `ask_user` to
 ### Step 3: Evolutionary Retrospective (Post-Mortem)
 
 Before destroying the branch or worktree, the Orchestrator MUST extract actionable lessons from the development cycle to inform future epics:
+
 - Log the success rate, recurring blocker themes, or architectural friction points encountered during implementation to the MemPalace Diary (`mempalace_diary_write`).
 - If new implicit dependencies were discovered, update the Knowledge Graph (`mempalace_kg_add`).
 

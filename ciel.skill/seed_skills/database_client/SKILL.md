@@ -9,6 +9,7 @@ license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [secrets_manager/SKILL.md, api_client/SKILL.md] }
 ---
+
 # database_client
 
 Run queries against databases.

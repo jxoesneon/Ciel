@@ -1,7 +1,9 @@
 # improvement.config — Global Self-Improvement
 
 ```yaml
+
 # <anchor:start>
+
 improvement:
   global_max_per_day: 20
   local_max_per_day: 10
@@ -15,7 +17,9 @@ improvement:
     watch_hours: 48
   auto_tune: true
   auto_tune_range: 0.10            # ±10% is trivial
+
 # <anchor:end>
+
 ```
 
 ## Notes

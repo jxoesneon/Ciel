@@ -23,13 +23,17 @@ extension:
   name: example-extension
   mcp_servers: [...]
   context_files:
+
     - path: GEMINI.md
+
       inject: extension-guide.md
   playbook: |
     When <trigger>:
+
       1. run <tool>
       2. if <condition>: <tool2>
       3. else: <tool3>
+
 ```
 
 Ciel treats playbooks as read-only external skills. She does not edit an installed extension's files — if she needs to adapt behaviour, she composes a new wrapper skill under her own registry.

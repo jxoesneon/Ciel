@@ -9,6 +9,7 @@ license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [web_fetch/SKILL.md] }
 ---
+
 # web_search
 
 Query a search engine and rank results.

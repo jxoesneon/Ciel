@@ -7,14 +7,19 @@ runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
+
   - pattern: "execute (plan|tasks|implementation)"
+
     confidence: 0.9
+
   - pattern: "(delegate|dispatch).*(task|subagent)"
+
     confidence: 0.9
 
 source: { tier: 1, origin: harmonized }
 dependencies: { skills: [], mcp: [], system: [] }
 ---
+
 # CIEL ADAPTATION: Subagent-Driven Development (Delegation Mandate)
 
 This skill formalizes CIEL's orchestration philosophy regarding context management and task execution. To preserve the Orchestrator's context window, independent implementation tasks MUST be delegated to fresh, ephemeral sub-agents (e.g., the `generalist` tool or specific skill agents).
@@ -28,16 +33,19 @@ Adapted from `~/.agents/skills/subagent-driven-development/`. This skill represe
 When executing an approved implementation plan, the Orchestrator executes the following loop for each discrete task:
 
 ### 1. Dispatch (The Implementer)
+
 - Extract the specific task, relevant context, and strict acceptance criteria from the plan.
 - Dispatch a sub-agent (e.g., `generalist`) with a highly focused prompt.
 - **Rule**: Do NOT pass the entire session history. Pass ONLY what the sub-agent needs to succeed.
 
 ### 2. Stage 1: Spec Compliance Review (The Verifier)
+
 - Once the Implementer returns, the Orchestrator (or a secondary sub-agent) evaluates the diff strictly against the original task specification.
 - **Goal**: Did it build exactly what was asked, without over-engineering (YAGNI) or missing requirements?
 - If it fails, dispatch a sub-agent to fix the specific gaps.
 
 ### 3. Stage 2: Code Quality Review (The Auditor)
+
 - After Spec Compliance is verified, evaluate the diff against CIEL's `coding-standards`.
 - **Goal**: Is it readable? Does it respect immutability? Are there code smells (deep nesting, long functions)?
 - If it fails, dispatch a sub-agent to refactor for quality.

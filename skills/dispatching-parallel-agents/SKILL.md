@@ -7,14 +7,19 @@ runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
+
   - pattern: "(dispatch|run|execute).*(parallel|concurrent).*(agents|tasks)"
+
     confidence: 0.9
+
   - pattern: "(multiple|several) (independent|unrelated) (failures|bugs|tasks)"
+
     confidence: 0.9
 
 source: { tier: 1, origin: harmonized }
 dependencies: { skills: [], mcp: [], system: [] }
 ---
+
 # CIEL ADAPTATION: Dispatching Parallel Agents (Concurrency Mandate)
 
 This skill formalizes CIEL's approach to concurrency. When the Orchestrator identifies multiple *independent* tasks (e.g., unrelated bug fixes, distinct test file failures), it MUST dispatch specialized sub-agents in parallel rather than executing them sequentially.
@@ -28,11 +33,13 @@ Adapted from `~/.agents/skills/dispatching-parallel-agents/`. This is an advance
 Before dispatching in parallel, the Orchestrator MUST evaluate the tasks against these conditions:
 
 **🟢 Proceed with Parallel Dispatch IF:**
+
 - Tasks operate on distinct, non-overlapping files or subsystems.
 - Fixing/implementing Task A has zero theoretical impact on Task B.
 - The root causes or requirements are entirely independent.
 
 **🔴 Fallback to Sequential Dispatch IF:**
+
 - Tasks require modifying the same files (Shared State).
 - Tasks are sequentially dependent (Task B relies on the output of Task A).
 - The Orchestrator does not fully understand the system state and is performing exploratory debugging.

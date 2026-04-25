@@ -1,7 +1,9 @@
 # risk.config — Global Risk
 
 ```yaml
+
 # <anchor:start>
+
 risk:
   mid_threshold: 3.0
   high_threshold: 6.0
@@ -24,7 +26,9 @@ critical:
   require_post_mortem: true
   require_alternative_proposal: true
   accept_remote_approval: false      # Constitutional: locked false
+
 # <anchor:end>
+
 ```
 
 ## Notes

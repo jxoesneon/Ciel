@@ -1,7 +1,9 @@
 # council.config — Global Council
 
 ```yaml
+
 # <anchor:start>
+
 council:
   pass_score: 6
   weighted_pass: 6.5
@@ -16,7 +18,9 @@ council:
   anonymize_stage2: true   # Constitutional: locked true
   stage_timeout_s: 60
   local_quorum_min: 3
+
 # <anchor:end>
+
 ```
 
 ## Notes

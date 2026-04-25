@@ -1,7 +1,9 @@
 # ciel.config — Top-Level Global
 
 ```yaml
+
 # <anchor:start>
+
 version: 1
 runtime_prefs:
   preferred: auto
@@ -17,7 +19,9 @@ backup:
   remote: null
 improvement:
   auto_tune: true
+
 # <anchor:end>
+
 ```
 
 Primary knobs:

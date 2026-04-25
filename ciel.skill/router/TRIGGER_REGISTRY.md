@@ -11,18 +11,24 @@ last_updated: "2025-01-20T10:00:00Z"
 triggers:
   # Direct triggers - skill name/alias
   direct:
+
     - pattern: "^ciel$"
+
       skill: ciel
       confidence: 1.0
       type: exact_name
+
     - pattern: "^orchestrate$"
+
       skill: ciel
       confidence: 0.95
       type: alias
     
   # Functional triggers - what the skill does
   functional:
+
     - pattern: "(route|orchestrate|coordinate|manage).*(skill|agent|task)"
+
       skill: ciel
       confidence: 0.9
       type: capability
@@ -30,25 +36,32 @@ triggers:
     
   # Domain triggers - subject area
   domain:
+
     - pattern: "(skill|capability|tool).*(find|search|discover|get|acquire)"
+
       skill: ciel
       confidence: 0.85
       type: intent
     
   # Intent triggers - user goal
   intent:
+
     - pattern: "(self.?improve|evolve|upgrade|enhance).*(skill|system|yourself)"
+
       skill: ciel
       confidence: 0.9
       type: meta_request
     
   # Composite triggers - multi-skill patterns
   composite:
+
     - patterns: ["find.*skill", "then.*use.*it"]
+
       workflow: [discover, execute]
       confidence: 0.8
 
 # Compiled patterns for performance
+
 compiled:
   fast_path: "/^(ciel|orchestrate|route this|you there|hey you)$/i"
   reasoning_path: "/(skill.*(find|acquire|search)|orchestrate|self.?improve|are you|can you|will you|do you)/i"

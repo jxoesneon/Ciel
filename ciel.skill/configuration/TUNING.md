@@ -33,7 +33,9 @@ User-set values pin. Ciel does not auto-tune a user-pinned field without explici
 All `configuration/global/*.config.md` share:
 
 ```yaml
+
 # File: <name>.config.md — managed by Ciel.
+
 <anchor:start>
 <YAML body>
 <anchor:end>

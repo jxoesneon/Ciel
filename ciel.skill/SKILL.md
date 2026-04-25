@@ -9,17 +9,29 @@ entrypoint: router/ROUTER.md
 format: skill/1.0
 runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 triggers:
+
   - pattern: "ciel"
+
     confidence: 1.0
+
   - pattern: "(who are you|what is ciel|your identity)"
+
     confidence: 1.0
+
   - pattern: "(orchestrate|route|dispatch).*(task|domain|agent)"
+
     confidence: 1.0
+
   - pattern: "(acquire|find|search).*(skill|capability)"
+
     confidence: 1.0
+
   - pattern: "(self-improve|evolve|mutate|harmonize)"
+
     confidence: 1.0
+
   - pattern: "(council|constitution|governance|autonomy)"
+
     confidence: 1.0
 ---
 

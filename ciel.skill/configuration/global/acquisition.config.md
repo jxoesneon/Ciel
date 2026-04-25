@@ -1,7 +1,9 @@
 # acquisition.config — Global Acquisition
 
 ```yaml
+
 # <anchor:start>
+
 acquisition:
   tier1_timeout_s: 10
   tier2_timeout_s: 30
@@ -16,7 +18,9 @@ acquisition:
     wall_s: 60
   sandbox_retention_hours: 48
   min_trust: 0.2
+
 # <anchor:end>
+
 ```
 
 ## Notes

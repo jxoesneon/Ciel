@@ -18,16 +18,20 @@ ultraplan:
   name: "refactor-imports-monorepo"
   repo: "<git url or local tarball>"
   plan: |
+
     1. clone
     2. run analysis
     3. propose diffs
     4. open PR / write patch
+
   budget:
     time: 4h
     tokens: 500k
   on_complete:
+
     - fetch artifacts
     - Council-gate integration
+
 ```
 
 ## Artifact Flow

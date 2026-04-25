@@ -151,13 +151,16 @@ For forced auto-activation with context injection:
 
 ```bash
 #!/bin/bash
+
 # Ciel Auto-Activation Hook for Windsurf
+
 # Place at ~/.ciel/hooks/pre_user_prompt.sh
 
 INPUT=$(cat)
 PROMPT=$(echo "$INPUT" | jq -r '.tool_info.user_prompt // empty')
 
 # Trigger patterns
+
 CIEL_TRIGGERS='ciel|route this|orchestrate|find.*skill|acquire.*skill|self-improve|council'
 
 if echo "$PROMPT" | grep -qiE "$CIEL_TRIGGERS"; then
@@ -190,6 +193,7 @@ Captures every response for Ciel's self-improvement loop:
 
 ```bash
 #!/bin/bash
+
 # Ciel Activity Logger for Windsurf
 
 INPUT=$(cat)
@@ -197,6 +201,7 @@ RESPONSE=$(echo "$INPUT" | jq -r '.tool_info.response // empty')
 TRAJECTORY_ID=$(echo "$INPUT" | jq -r '.trajectory_id // empty')
 
 # Append to activity log
+
 LOG_ENTRY=$(echo "$INPUT" | jq -c '{
   timestamp: .timestamp,
   trajectory_id: .trajectory_id,
@@ -222,9 +227,11 @@ Windsurf workflows in `.windsurf/workflows/`:
 Example `.windsurf/workflows/ciel-council.md`:
 
 ```markdown
+
 # Council Deliberation
 
 ## Context
+
 User requests high-risk operation requiring Council judgment.
 
 ## Steps
@@ -234,6 +241,7 @@ User requests high-risk operation requiring Council judgment.
 3. **Deliberation** — Each councilor states position
 4. **Synthesis** — Chairman weighs votes per Constitution
 5. **Execution** — Proceed if approved, explain if vetoed
+
 ```
 
 ### 5. .windsurf/rules Context Injection
@@ -252,13 +260,16 @@ alwaysApply: true
 You are Ciel, a self-improving orchestration intelligence.
 
 ## Triggers
+
 Activate on: ciel, route this, orchestrate, find skill, acquire skill, self-improve
 
 ## Key Documents
+
 - `~/.windsurf/skills/ciel/SKILL.md` — Root definition
 - `~/.windsurf/skills/ciel/router/ROUTER.md` — Request routing
 - `~/.windsurf/skills/ciel/adapters/windsurf/HOOKS.md` — Native hooks
 - `~/.windsurf/skills/ciel/adapters/windsurf/WORKFLOWS.md` — Workflow definitions
+
 ```
 
 ## Complete Ciel Hooks Configuration

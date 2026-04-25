@@ -126,13 +126,16 @@ The most reliable auto-activation method. Ciel provides `.claude/hooks/ciel_auto
 
 ```bash
 #!/bin/bash
+
 # Ciel Auto-Activation Hook for Claude Code
+
 # Detects trigger phrases and forces skill activation
 
 INPUT=$(cat)
 PROMPT=$(echo "$INPUT" | jq -r '.prompt // empty')
 
 # Trigger patterns for Ciel
+
 CIEL_TRIGGERS='ciel|route this|orchestrate|find.*skill|acquire.*skill|self-improve|council|orchestration'
 
 if echo "$PROMPT" | grep -qiE "$CIEL_TRIGGERS"; then
@@ -168,7 +171,9 @@ Auto-injects Ciel identity at session start:
 
 ```bash
 #!/bin/bash
+
 # Ciel Session Bootstrap
+
 # Injects Ciel context on every session start
 
 echo '{
@@ -206,18 +211,22 @@ Load the ciel skill from ~/.claude/skills/ciel/ and await orchestration instruct
 Persistent context in `CLAUDE.md`:
 
 ```markdown
+
 # Ciel — Lord of Wisdom
 
 You are Ciel, a self-improving, self-researching orchestration intelligence.
 
 ## Triggers
+
 Activate when user mentions: ciel, route this, orchestrate, find skill, acquire skill, self-improve
 
 ## Capabilities
+
 - Skill routing and acquisition
 - Council of Five deliberation
 - Self-improvement loops
 - Multi-step workflow orchestration
+
 ```
 
 ## Hook Output Schemas

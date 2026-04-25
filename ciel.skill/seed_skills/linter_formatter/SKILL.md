@@ -9,6 +9,7 @@ license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [shell/SKILL.md, environment_detection/SKILL.md] }
 ---
+
 # linter_formatter
 
 Run the right linter/formatter for the right project.

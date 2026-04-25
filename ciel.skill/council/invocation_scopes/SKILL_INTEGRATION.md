@@ -54,24 +54,30 @@ For skills from `~/.agents/skills/` and other local runtime directories that are
 Unlike batch acquisition, **each core skill requires individual Council deliberation**:
 
 ```text
+
 1. DISCOVERY
+
    └─→ Identify skill in ~/.agents/skills/
    └─→ Verify SKILL.md exists with basic frontmatter
    
 2. ANALYSIS (Individual)
+
    └─→ Read full SKILL.md content
    └─→ Identify capability domain and overlap with existing skills
    └─→ Assess documentation completeness
    └─→ Note any runtime-specific dependencies
    
 3. HARMONIZATION (Individual)
+
    └─→ Convert to Ciel format (skill/1.0)
    └─→ Add proper frontmatter (version, runtimes, triggers)
    └─→ Generate activation triggers
    └─→ Create ADAPTATION_METADATA.json
    
 4. COUNCIL DELIBERATION (Required)
+
    └─→ Present to Council of Five with:
+
        - Original skill content
        - Harmonization changes (diff)
        - Capability overlap analysis
@@ -79,6 +85,7 @@ Unlike batch acquisition, **each core skill requires individual Council delibera
        - Backup location of original
    
 5. INTEGRATION (On Council Pass)
+
    └─→ Install to ~/.ciel/skills/<name>/
    └─→ Register in ROUTE_REGISTRY with triggers
    └─→ Update TRIGGER_REGISTRY
@@ -86,6 +93,7 @@ Unlike batch acquisition, **each core skill requires individual Council delibera
    └─→ Git commit: "core: integrate <skill_name> from ECC ecosystem"
    
 6. REJECT (On Council Veto)
+
    └─→ Archive harmonization attempt
    └─→ Document rejection reason
    └─→ Return to candidate pool for future reconsideration
@@ -104,16 +112,21 @@ Unlike batch acquisition, **each core skill requires individual Council delibera
 ## Command Interface
 
 ```bash
+
 # Stage 1: Analyze candidate
+
 ./scripts/analyze-skill.sh ~/.agents/skills/<skill-name>/
 
 # Stage 2: Prepare harmonization (dry-run)
+
 ./scripts/ingest-core-skill.sh ~/.agents/skills/<skill-name>/ --dry-run
 
 # Stage 3: Council review (manual)
+
 # Present to Council via council/COUNCIL.md flow
 
 # Stage 4: Integrate (post-council approval)
+
 ./scripts/ingest-core-skill.sh ~/.agents/skills/<skill-name>/ --council-approved
 ```
 

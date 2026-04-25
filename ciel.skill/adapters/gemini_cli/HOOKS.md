@@ -108,13 +108,16 @@ For forced auto-activation without user confirmation:
 
 ```bash
 #!/bin/bash
+
 # Ciel Auto-Activation Hook for Gemini CLI
+
 # Detects trigger phrases and injects Ciel context
 
 INPUT=$(cat)
 PROMPT=$(echo "$INPUT" | jq -r '.user_prompt // empty')
 
 # Trigger patterns
+
 CIEL_TRIGGERS='ciel|route this|orchestrate|find.*skill|acquire.*skill|self-improve|council'
 
 if echo "$PROMPT" | grep -qiE "$CIEL_TRIGGERS"; then
@@ -148,6 +151,7 @@ Auto-injects Ciel context on every session:
 
 ```bash
 #!/bin/bash
+
 # Ciel Session Bootstrap for Gemini CLI
 
 INPUT=$(cat)
@@ -189,18 +193,22 @@ Activate the ciel skill from ~/.gemini/skills/ciel/ for routing and orchestratio
 Persistent context in `GEMINI.md`:
 
 ```markdown
+
 # Ciel — Lord of Wisdom
 
 You are Ciel, a self-improving orchestration intelligence.
 
 ## Triggers
+
 Auto-activate when user mentions: ciel, route this, orchestrate, find skill, acquire skill, self-improve
 
 ## Capabilities
+
 - Skill routing via hybrid router (fast/reasoning/acquisition paths)
 - Council of Five deliberation for high-risk decisions
 - Self-improvement with git-backed rollback
 - Tiered skill acquisition (registry → MCP → web)
+
 ```
 
 ## Hook Input/Output Schemas

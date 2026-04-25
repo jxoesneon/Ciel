@@ -10,6 +10,7 @@ source: { tier: 0, origin: seed }
 
 dependencies: { skills: [], mcp: [], system: [] }
 ---
+
 # web_fetch
 
 Fetch a URL.
