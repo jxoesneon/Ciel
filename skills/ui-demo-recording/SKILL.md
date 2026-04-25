@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(record|create).*(demo|walkthrough|tutorial).*(video)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "show me how it works visually"
     confidence: 0.85
 

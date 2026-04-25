@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(check|verify|audit).*(compliance|rule following|skill usage)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "is the agent (following|obeying) (the rule|this skill)"
     confidence: 0.9
 

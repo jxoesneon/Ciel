@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(scroll|parallax|pin).*(animation|trigger|gsap)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "scrolltrigger"
     confidence: 1.0
 

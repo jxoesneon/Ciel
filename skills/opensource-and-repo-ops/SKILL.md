@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(open source|sanitize|scan|audit).*(repo|project|github|secret)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "repo scan html report"
     confidence: 1.0
 

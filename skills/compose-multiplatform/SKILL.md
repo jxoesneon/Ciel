@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(build|design).*(compose multiplatform|jetpack compose).*(ui|interface)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "compose multiplatform patterns"
     confidence: 1.0
 

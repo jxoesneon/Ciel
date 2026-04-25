@@ -126,7 +126,7 @@ def main():
         "files": {}
     }
 
-    (CIEL_HOME / "INTEGRITY.json").write_text(json.dumps(integrity_data, indent=2), encoding="utf-8")
+    (CIEL_HOME / "INTEGRITY.json").write_text(json.dumps(integrity, indent=2), encoding="utf-8")
     say("Integrity seed written.")
 
     # 6. Activity log

@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(run|execute).*(danger|production|autonomous)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "prevent (destructive|dangerous) (operations|commands)"
     confidence: 0.9
   - pattern: "(freeze|lock).*(directory|folder|writes)"

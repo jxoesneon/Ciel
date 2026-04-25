@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(design|build|review).*(swift|ios|concurrency|actor|glass)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "approachable concurrency"
     confidence: 1.0
 

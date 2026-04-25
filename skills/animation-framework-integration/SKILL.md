@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(gsap|animation).*(react|vue|svelte|mounted|cleanup)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "useGSAP"
     confidence: 1.0
 

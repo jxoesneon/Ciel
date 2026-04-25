@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(request|get|perform).*(code review|audit|peer review)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "review (my|the) code"
     confidence: 0.9
 

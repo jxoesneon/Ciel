@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(save|resume|model|tour).*(context|voice|memory|walkthrough)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "context keeper"
     confidence: 1.0
 

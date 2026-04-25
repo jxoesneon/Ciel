@@ -10,7 +10,7 @@ triggers:
   - pattern: "(triage|backlog|audit).*(issue|pr|backlog)"
     confidence: 0.9
   - pattern: "map (github|issues) to (linear|tasks)"
-    confidence: 0.95
+    confidence: 0.9
 
 source: { tier: 1, origin: harmonized }
 dependencies: { skills: [], mcp: [], system: [] }

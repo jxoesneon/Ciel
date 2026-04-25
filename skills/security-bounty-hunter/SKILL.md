@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(hunt|discover).*(vulnerability|exploit|bounty)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "find exploitable bugs"
     confidence: 0.9
 

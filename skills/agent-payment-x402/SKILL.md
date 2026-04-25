@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(agent|autonomous).*(payment|pay|wallet|spend|budget)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "x402"
     confidence: 1.0
 

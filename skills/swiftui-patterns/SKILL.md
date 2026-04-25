@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(build|design).*(swiftui|ios|macos).*(view|interface)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "swiftui patterns"
     confidence: 1.0
 

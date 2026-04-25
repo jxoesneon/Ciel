@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:ai"]
 triggers:
   - pattern: "(generate|write).*(timeline|journey|history).*(report)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "what is the story of this project"
     confidence: 0.9
 

@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(agent|self).*(debugging|introspection|looping|stuck)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "why is the agent (failing|repeating|drifting)"
     confidence: 0.9
 

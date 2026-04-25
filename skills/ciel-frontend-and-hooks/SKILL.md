@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(build|review|enforce).*(react|hook|pattern|rule|hookify)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "hookify rule"
     confidence: 1.0
 

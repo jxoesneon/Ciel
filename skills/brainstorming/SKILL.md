@@ -8,9 +8,9 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(brainstorm|design|spec|requirements).*(for|new|feature)"
-    confidence: 1.0
+    confidence: 0.9
   - pattern: "how should we.*(build|implement|architecture)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "let's explore.*(idea|concept|approach)"
     confidence: 0.9
   - pattern: "I want to.*(add|create).*(but|not sure)"

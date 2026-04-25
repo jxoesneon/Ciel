@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(orchestrate|harness|manage).*(agent|fleet|gan|gsd|headless)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "generator-evaluator loop"
     confidence: 1.0
 

@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(design|build|review).*(laravel|php|artisan)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "laravel patterns"
     confidence: 1.0
 

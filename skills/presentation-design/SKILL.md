@@ -8,9 +8,9 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(create|build).*(presentation|deck|slides|pitch)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "convert (pptx|powerpoint) to (html|slides)"
-    confidence: 1.0
+    confidence: 0.9
 
 source: { tier: 1, origin: harmonized }
 dependencies: { skills: [], mcp: [], system: [] }

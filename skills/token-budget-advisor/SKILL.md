@@ -10,7 +10,7 @@ triggers:
   - pattern: "(token budget|depth|length|detailed|brief|tldr)"
     confidence: 0.8
   - pattern: "respond at (25|50|75|100)%"
-    confidence: 1.0
+    confidence: 0.9
 
 source: { tier: 1, origin: harmonized }
 dependencies: { skills: [], mcp: [], system: [] }

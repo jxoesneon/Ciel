@@ -10,7 +10,7 @@ triggers:
   - pattern: "(distill|extract|update).*(rules|principles)"
     confidence: 0.9
   - pattern: "turn (skills|patterns) into rules"
-    confidence: 0.95
+    confidence: 0.9
 
 source: { tier: 1, origin: harmonized }
 dependencies: { skills: [], mcp: [], system: [] }

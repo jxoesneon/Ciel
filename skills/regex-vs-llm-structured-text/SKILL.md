@@ -10,7 +10,7 @@ triggers:
   - pattern: "parse (quiz|form|invoice|structured text)"
     confidence: 0.9
   - pattern: "(regex vs llm|regex or llm)"
-    confidence: 1.0
+    confidence: 0.9
 
 source: { tier: 1, origin: harmonized }
 dependencies: { skills: [], mcp: [], system: [] }

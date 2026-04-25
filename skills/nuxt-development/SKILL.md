@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(design|build|review).*(nuxt|vue|nitro|hydration)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "nuxt route rules"
     confidence: 1.0
 

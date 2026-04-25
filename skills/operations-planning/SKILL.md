@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(plan|forecast|schedule).*(production|demand|inventory|bottleneck)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "drum-buffer-rope"
     confidence: 1.0
 

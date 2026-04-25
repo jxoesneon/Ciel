@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(design|build|refactor).*(ui|ux|interface|page|component)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "recommend (style|color|font)"
     confidence: 0.9
 

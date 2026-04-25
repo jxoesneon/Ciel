@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(design|build|review).*(dotnet|.net|c#|csharp)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "dotnet patterns"
     confidence: 1.0
 

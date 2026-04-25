@@ -8,9 +8,9 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(convention|style|standard|commit).*(rule|guide|pattern)"
-    confidence: 1.0
+    confidence: 0.9
   - pattern: "how should I.*(name|format|structure)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "what are the.*(repo|project).*standards"
     confidence: 0.9
 

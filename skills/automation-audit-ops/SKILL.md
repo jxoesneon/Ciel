@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:ai"]
 triggers:
   - pattern: "(audit|inventory|list).*(automation|job|workflow|hook|connector)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "what (automations|hooks) are (live|broken)"
     confidence: 0.9
 

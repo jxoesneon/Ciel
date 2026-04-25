@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(design|build|review).*(next.js|nextjs|turbopack|app router)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "next dev --turbopack"
     confidence: 1.0
 

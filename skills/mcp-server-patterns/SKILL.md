@@ -8,9 +8,9 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:ai"]
 triggers:
   - pattern: "(build|create|add).*mcp.*(server|tool|resource)"
-    confidence: 1.0
+    confidence: 0.9
   - pattern: "mcp.*integration"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "@modelcontextprotocol/sdk"
     confidence: 1.0
 

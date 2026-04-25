@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(healthcare|hipaa|phi|pii|baa).*(compliance|patient|clinician)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "is this (healthcare|hipaa) compliant"
     confidence: 0.9
 

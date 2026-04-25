@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "ai-first.*engineering"
-    confidence: 1.0
+    confidence: 0.9
   - pattern: "agent-friendly.*architecture"
     confidence: 0.9
   - pattern: "raise.*testing.*bar"

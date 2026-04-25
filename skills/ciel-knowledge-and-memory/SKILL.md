@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(save|search|sync|explore).*(knowledge|memory|session|structure|ast)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "smart explore"
     confidence: 1.0
 

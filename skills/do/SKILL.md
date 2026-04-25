@@ -8,9 +8,9 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "execute.*plan"
-    confidence: 1.0
+    confidence: 0.9
   - pattern: "do.*(implementation|tasks)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "start.*(phase|execution)"
     confidence: 0.9
 

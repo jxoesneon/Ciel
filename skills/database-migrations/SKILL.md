@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(create|alter|migrate|update).*(table|schema|database|column)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "database migrations"
     confidence: 1.0
 

@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(seo|keyword|sitemap|metadata).*(audit|plan|implement)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "improve search visibility"
     confidence: 0.9
 

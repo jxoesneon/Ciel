@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(build|setup).*(ktor|exposed|hikari|flyway)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "ktor patterns"
     confidence: 1.0
 

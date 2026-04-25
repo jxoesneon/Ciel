@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(design|build|review).*(django|drf|manage.py|python web)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "django patterns"
     confidence: 1.0
 

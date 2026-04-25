@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(jira|atlassian).*(ticket|issue|sprint|jql)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "get (requirements|ac) from (ticket|jira)"
     confidence: 0.9
 

@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(procure|analyze|negotiate).*(energy|electricity|gas|ppa|utility)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "demand charge mitigation"
     confidence: 1.0
 

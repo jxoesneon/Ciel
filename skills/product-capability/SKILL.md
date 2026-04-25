@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(create|define|translate).*(capability|contract|constraints)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "turn (prd|intent) into (srs|contract)"
     confidence: 0.9
 

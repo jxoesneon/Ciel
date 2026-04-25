@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(audit|analyze|remediate).*(billing|burn|cost|revenue|stripe)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "ecc tools cost audit"
     confidence: 1.0
 

@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(structure|setup|architect).*(android|kmp|kotlin multiplatform).*(project|module)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "android clean architecture"
     confidence: 1.0
 

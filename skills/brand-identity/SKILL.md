@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(define|update|audit).*(brand|voice|identity|tone)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "brand guidelines"
     confidence: 1.0
 

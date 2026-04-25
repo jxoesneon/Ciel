@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(manage|audit|configure).*(skill|worktree|workspace|visa)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "using git worktrees"
     confidence: 1.0
 

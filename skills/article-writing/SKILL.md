@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(write|draft|polished).*(article|blog|essay|newsletter|tutorial)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "write a guide for"
     confidence: 0.9
 

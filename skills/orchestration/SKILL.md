@@ -8,9 +8,9 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(blueprint|plan|roadmap).*for"
-    confidence: 1.0
+    confidence: 0.9
   - pattern: "orchestrate.*"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "break down.*into steps"
     confidence: 0.9
   - pattern: "complex.*task"

@@ -8,9 +8,9 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "make.*plan.*(for|implement|build)"
-    confidence: 1.0
+    confidence: 0.9
   - pattern: "how should we.*(execute|start).*(implementation|this)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "create.*implementation.*steps"
     confidence: 0.9
 

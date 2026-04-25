@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(design|build|review).*(nest.js|nestjs|decorator|provider)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "nest generate"
     confidence: 1.0
 

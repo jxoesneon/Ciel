@@ -8,9 +8,9 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
   - pattern: "(sort|trim|curate).*skills"
-    confidence: 1.0
+    confidence: 0.9
   - pattern: "remove.*unnecessary.*(skills|rules)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "DAILY vs LIBRARY"
     confidence: 1.0
   - pattern: "optimize.*workspace.*context"

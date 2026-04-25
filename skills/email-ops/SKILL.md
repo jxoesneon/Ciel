@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(read|send|triage|draft).*(email|mail|inbox)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "reply to (the|this) email"
     confidence: 0.9
 

@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(manage|branch|release|triage).*(git|github|ios|foundationmodel)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "git flow"
     confidence: 1.0
 

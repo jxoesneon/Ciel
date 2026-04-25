@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(design|optimize|query).*(clickhouse|olap|analytics|mergetree)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "materialized view"
     confidence: 1.0
 

@@ -8,7 +8,7 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
   - pattern: "(setup|run|create).*(autonomous|continuous).*(loop|pipeline|workflow)"
-    confidence: 0.95
+    confidence: 0.9
   - pattern: "orchestrate (multiple|parallel) (agents|tasks)"
     confidence: 0.85
 
