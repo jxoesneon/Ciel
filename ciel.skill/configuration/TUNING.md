@@ -34,7 +34,7 @@ All `configuration/global/*.config.md` share:
 
 ```yaml
 
-# File: <name>.config.md — managed by Ciel.
+# File: <name>.config.md — managed by Ciel
 
 <anchor:start>
 <YAML body>

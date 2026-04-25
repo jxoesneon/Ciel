@@ -21,7 +21,7 @@ Ciel implements auto-activation mechanisms on all three supported runtimes, usin
 Inject Ciel identity at session start:
 
 - **Claude Code**: `SessionStart` hook
-- **Gemini CLI**: `SessionStart` hook  
+- **Gemini CLI**: `SessionStart` hook
 - **Windsurf**: `.windsurf/rules` (persistent context)
 
 ### Tier 2: Trigger Phrase Detection (All Platforms)

@@ -26,7 +26,7 @@ This skill formalizes the "Structural Layer" for Android and KMP projects. It en
 
 ## Recommended Module Layout
 
-```
+```text
 project/
 ├── app/                  # Platform entry point (Android), DI wiring.
 ├── domain/               # Pure Kotlin. UseCases, Domain Models, Repository Interfaces.

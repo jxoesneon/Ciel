@@ -124,7 +124,7 @@ triggers:
 ```yaml
 scoring_algorithm:
   base_score: 1.0
-  
+
   modifiers:
     pattern_specificity: +0.1    # Longer patterns score higher
     word_order_match: +0.05       # Exact phrase order bonus
@@ -132,7 +132,7 @@ scoring_algorithm:
     history_bonus: +0.1          # Recent successful activation
     frequency_penalty: -0.05      # Overused generic patterns
     ambiguity_penalty: -0.15      # Multiple skill matches
-    
+
   floor_thresholds:
     fast_path: 0.85
     reasoning_path: 0.60
@@ -195,12 +195,12 @@ discovery_paths:
 
     - ~/.claude/skills/*/
     - ./.claude/skills/*/
-    
+
   gemini_cli:
 
     - ~/.gemini/skills/*/
     - ./.gemini/skills/*/
-    
+
   windsurf:
 
     - ~/.windsurf/skills/*/
@@ -288,17 +288,17 @@ routing_flow:
     - Load compiled patterns from TRIGGER_REGISTRY
     - Match in order: direct > functional > domain > intent
     - Confidence >= 0.85: fast path execution
-    
+
   2_registry_lookup:
 
     - Fallback to tag-based routing
     - For backwards compatibility
-    
+
   3_reasoning_path:
 
     - LLM-driven composition
     - Can reference trigger patterns as hints
-    
+
   4_acquisition:
 
     - Gap detection triggers new skill acquisition
@@ -361,13 +361,13 @@ resolution_strategy:
 trigger_safety:
   foreign_skill_triggers:
     default_confidence: 0.6  # Lower than native
-    
+
   sandbox_recommendations:
 
     - Test trigger matching before deploy
     - Monitor for false positives
     - Review user override patterns
-    
+
   audit_logging:
 
     - All trigger changes logged

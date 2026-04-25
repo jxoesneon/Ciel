@@ -7,11 +7,13 @@ New `configuration/global/<name>.config.md` or local equivalent.
 # {{name}}.config — {{scope}}
 
 ```yaml
+
 <anchor:start>
 {{field}}:
   {{subfield}}: {{default}}
 <anchor:end>
-```
+
+```text
 
 ## Notes
 
