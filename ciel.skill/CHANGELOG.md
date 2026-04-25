@@ -16,10 +16,12 @@ All notable changes to Ciel are tracked here. Ciel appends an entry on every sel
 - **The Iron Law**: Mandatory verification evidence protocol for all completion claims.
 - **TDD 80% Floor**: Mandatory baseline testing and 80% coverage mandate across all logic paths.
 - **High-Density Frameworks**:
+
   - `ciel-swarm-orchestration`: Parallel multi-agent task decomposition.
   - `ciel-hitl-protocol`: Human-in-the-Loop risk gating.
   - `ciel-root-cause-debugger`: Empirical RCA and trace analysis.
   - `ciel-project-scaffolder`: Standardized architectural initialization.
+
 - **MemPalace-rs**: Primary memory backend with AAAK 3.2 compression and SQLite/Filesystem fallbacks.
 - **Validation Suite**: Platform-agnostic shell and PowerShell scripts for spec compliance and frontmatter integrity.
 - **Automation**: Enterprise-grade CI/CD pipelines for release, verification, and mandate enforcement.
