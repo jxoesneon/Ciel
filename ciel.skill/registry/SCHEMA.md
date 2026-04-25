@@ -52,7 +52,7 @@ Top-level namespaces (`configuration/global/acquisition.config.md` for full list
 
 - `vcs`, `shell`, `code`, `test`, `build`, `deploy`, `docs`, `fs`, `pkg`, `network`,
 - `lang:python`, `lang:rust`, `lang:js`, `lang:go`, ...,
-- `runtime:claude-code`, `runtime:gemini-cli`, `runtime:generic`,
+- `runtime:claude_code`, `runtime:gemini_cli`, `runtime:generic`,
 - `scope:global`, `scope:local`, `scope:both`,
 - `risk:low`, `risk:mid`, `risk:high`, `risk:critical`.
 

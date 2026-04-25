@@ -5,7 +5,7 @@ Full capability adapter for Gemini CLI.
 ## Capability Flags
 
 ```yaml
-runtime: gemini-cli
+runtime: gemini_cli
 floor: { skills: true, subagents: true, mcp: true, shell: true, fs: true, context: true }
 enhanced:
   hooks: true

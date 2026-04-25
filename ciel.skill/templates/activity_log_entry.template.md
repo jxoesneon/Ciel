@@ -6,7 +6,7 @@ One JSON object per line. Must validate against this shape.
 {
   "ts": "{{iso8601}}",
   "session": "{{session_id}}",
-  "runtime": "claude-code|gemini-cli|generic",
+  "runtime": "claude_code|gemini_cli|generic",
   "project": "{{hash}}|null",
   "kind": "route|acquisition|council|mutation|escalation|health|merge|permission|error|improvement|sweep|backup|trace",
   "op": "{{short-op}}",

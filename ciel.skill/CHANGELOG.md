@@ -33,4 +33,4 @@ All notable changes to Ciel are tracked here. Ciel appends an entry on every sel
 
 ### Notes
 
-- This version represents the terminal state of the CIEL 1.0 harmonization process. No backlog remains.
+- This version represents the terminal state of the CIEL 1.0 harmonization process. The core CIEL 1.0 ecosystem is harmonized and ready for deployment.

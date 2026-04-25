@@ -7,8 +7,8 @@ Every Ciel config field. Canonical.
 ```yaml
 version: 1                              # schema version
 runtime_prefs:
-  preferred: auto                       # auto | claude-code | gemini-cli | generic
-  fallback_order: [claude-code, gemini-cli, generic]
+  preferred: auto                       # auto | claude_code | gemini_cli | generic
+  fallback_order: [claude_code, gemini_cli, generic]
 telemetry:
   otel_enabled: false
   otel_endpoint: null

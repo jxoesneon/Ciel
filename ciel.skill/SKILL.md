@@ -36,7 +36,7 @@ See `core/IDENTITY.md` for Ciel's self-model. In short: Ciel is an autonomous, r
 When a host agent loads `ciel.skill`:
 
 1. **Identity load** — `core/IDENTITY.md`, `core/CONSTITUTION.md`, `core/AUTONOMY.md`, `core/AWARENESS.md`.
-2. **Runtime detection** — `router/RUNTIME_DETECTION.md` fingerprints the host (Claude Code, Gemini CLI, generic).
+2. **Runtime detection** — `router/RUNTIME_DETECTION.md` fingerprints the host (Claude Code, Gemini CLI, Windsurf, generic).
 3. **Adapter load** — the matching adapter under `adapters/<runtime>/` is loaded.
 4. **Init check** — if `~/.ciel/` does not exist, run `init/BOOTSTRAP.md` → `init/scripts/install.sh`. If `.ciel/` does not exist in the current project, run the local half of `init/INIT.md`.
 5. **Integrity verification** — `init/INTEGRITY.md` confirms checksums (see `MANIFEST.md`).

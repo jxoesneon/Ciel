@@ -15,7 +15,7 @@ Hybrid. Three paths, tried in order, with early exit:
 ```yaml
 request:
   text: "..."                # user or agent input
-  host_runtime: claude-code  # from router/RUNTIME_DETECTION.md
+  host_runtime: claude_code  # from router/RUNTIME_DETECTION.md
   project_ctx:               # from init/CONTEXT_DETECTION.md cache
     language: ...
     framework: ...
