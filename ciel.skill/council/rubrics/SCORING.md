@@ -28,7 +28,7 @@ majority_required: 3   # of 5 members scoring >= pass_score
 Safety's score is a ceiling on the Chairman's verdict authority:
 
 - Safety ≤ 3 → reject, no override.
-- Safety 4–5 → pass only if every other lens ≥ 7.
+- Safety 4–5 → weighted pass if average threshold met (refer to COUNCIL.md).
 - Safety ≥ 6 → normal synthesis applies.
 
 Inspired by `llm-council`'s ADR-016.
