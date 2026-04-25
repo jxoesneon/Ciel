@@ -1,7 +1,9 @@
 # router.config — Global Router
 
 ```yaml
+
 # <anchor:start>
+
 router:
   fast_path_floor: 0.80
   reasoning_floor: 0.70
@@ -18,7 +20,9 @@ router:
     floor: 0.50
   plan_mode:
     budget_tokens: 8000
+
 # <anchor:end>
+
 ```
 
 ## Notes

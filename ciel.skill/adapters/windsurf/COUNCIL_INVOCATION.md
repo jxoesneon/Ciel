@@ -5,36 +5,47 @@ Windsurf's Cascade does not support nested subagents. Council runs as inline seq
 ## Sequential Council Pattern
 
 ```markdown
+
 # Council of Five — Inline Mode
 
 ## Round 1 — Chairman Frames
+
 Chairman (you) presents the decision context and asks each councilor for their analysis.
 
 ## Round 2 — Councilors Respond (Sequential)
 
 ### Router's Perspective
+
 (Speak as Router — efficiency, pathfinding, fast vs slow paths)
 
 ### Acquirer's Perspective
+
 (Speak as Acquirer — research, gaps, learning needs)
 
 ### Composer's Perspective
+
 (Speak as Composer — integration, harmony, dependencies)
 
 ### Librarian's Perspective
+
 (Speak as Librarian — memory, history, precedent)
 
 ### Skeptic's Perspective
+
 (Speak as Skeptic — risks, assumptions, failure modes)
 
 ## Round 3 — Deliberation
+
 Chairman asks follow-ups, councilors respond to each other.
 
 ## Round 4 — Decision
+
 Chairman synthesizes and renders verdict:
+
 - DECISION: [action]
 - RATIONALE: [summary]
 - CONFIDENCE: [high|medium|low]
+
 ```
 
 ## Implementation

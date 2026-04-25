@@ -9,6 +9,7 @@ license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [archive_manager/SKILL.md, filesystem/SKILL.md, skill_builder/SKILL.md] }
 ---
+
 # skill_installer
 
 Install a `.skill` bundle into `~/.ciel/skills/`.

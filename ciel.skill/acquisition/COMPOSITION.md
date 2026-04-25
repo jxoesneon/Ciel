@@ -16,13 +16,17 @@ A composition skill references its component skills:
 id: "deploy_static_site/SKILL.md"
 version: 1.0.0
 composes:
+
   - git/SKILL.md
   - shell/SKILL.md
   - api_client/SKILL.md
+
 flow: |
+
   1. git/SKILL.md: checkout
   2. shell/SKILL.md: run build
   3. api_client/SKILL.md: upload to CDN
+
 ```
 
 ## Benefits

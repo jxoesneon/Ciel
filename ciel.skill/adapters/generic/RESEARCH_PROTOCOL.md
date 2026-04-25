@@ -11,7 +11,9 @@ When Ciel encounters an unknown runtime, she kicks off a research cycle to produ
 
 2. **Research the runtime**
     - Use `seed_skills/research/SKILL.md` with query template:
+
       `"<runtime> CLI agent skill format hooks MCP subagents"`.
+
     - Gather docs, GitHub readmes, release notes.
     - Deduce capability matrix aligned with `adapters/ADAPTER_CONTRACT.md`.
 

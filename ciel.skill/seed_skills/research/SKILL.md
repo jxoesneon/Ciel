@@ -9,6 +9,7 @@ license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [web_search/SKILL.md, web_fetch/SKILL.md, context_summarizer/SKILL.md] }
 ---
+
 # research
 
 Multi-source synthesis with citations.

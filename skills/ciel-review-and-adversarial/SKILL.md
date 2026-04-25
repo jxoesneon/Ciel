@@ -7,14 +7,19 @@ runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
+
   - pattern: "(review|audit|adversarial|challenge|critique).*(code|pr|security|design)"
+
     confidence: 0.9
+
   - pattern: "request.*review"
+
     confidence: 0.9
 
 source: { tier: 1, origin: harmonized }
 dependencies: { skills: [], mcp: [], system: [] }
 ---
+
 # CIEL ADAPTATION: Review and Adversarial (The Challenger)
 
 This skill mandates adversarial thinking during code review. It refuses to rubber-stamp changes and actively hunts for flaws.

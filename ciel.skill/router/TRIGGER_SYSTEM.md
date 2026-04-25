@@ -46,10 +46,14 @@ Exact skill names and aliases.
 
 ```yaml
 triggers:
+
   - pattern: "^ciel$"           # Exact match
+
     skill: ciel
     confidence: 1.0
+
   - pattern: "^orchestrate$"     # Alias
+
     skill: ciel
     confidence: 0.95
 ```
@@ -60,12 +64,16 @@ Capability-based patterns describing what the skill does.
 
 ```yaml
 triggers:
+
   - pattern: "(route|orchestrate).*(skill|agent)"
+
     skill: ciel
     confidence: 0.9
     examples:
+
       - "route this to a skill"
       - "orchestrate my agents"
+
 ```
 
 ### 3. Domain Triggers (Confidence: 0.6-0.8)
@@ -74,7 +82,9 @@ Subject matter patterns.
 
 ```yaml
 triggers:
+
   - pattern: "(skill|tool).*(find|search|acquire)"
+
     skill: ciel
     confidence: 0.85
     context: "when seeking capabilities"
@@ -86,7 +96,9 @@ User goal patterns.
 
 ```yaml
 triggers:
+
   - pattern: "(self.?improve|evolve|upgrade).*(skill|system)"
+
     skill: ciel
     confidence: 0.9
     meta_request: true
@@ -98,9 +110,11 @@ Multi-step workflow patterns.
 
 ```yaml
 triggers:
+
   - patterns:
       - "find.*skill"
       - "then.*use.*it"
+
     workflow: [discover, execute]
     confidence: 0.8
 ```
@@ -178,17 +192,21 @@ Runtime-specific trigger cache updates.
 ```yaml
 discovery_paths:
   claude_code:
+
     - ~/.claude/skills/*/
     - ./.claude/skills/*/
     
   gemini_cli:
+
     - ~/.gemini/skills/*/
     - ./.gemini/skills/*/
     
   windsurf:
+
     - ~/.windsurf/skills/*/
     - ./.windsurf/skills/*/
     - ~/.codeium/windsurf/skills/*/
+
 ```
 
 ### Format Detection & Adaptation
@@ -217,36 +235,47 @@ backup:
 ### Discover Local Skills
 
 ```bash
+
 # Discover all
+
 ./scripts/discover-local-skills.sh --scan-all
 
 # Discover specific runtime
+
 ./scripts/discover-local-skills.sh --runtime claude_code
 
 # Output to file
+
 ./scripts/discover-local-skills.sh --output discovered.json
 ```
 
 ### Ingest Skills
 
 ```bash
+
 # Ingest single skill with adaptation
+
 ./scripts/ingest-skill.sh ~/.claude/skills/my-skill/ --adapt
 
 # Batch ingest
+
 ./scripts/ingest-skill.sh ~/.claude/skills/*/ --adapt --backup
 
 # Dry run (simulate only)
+
 ./scripts/ingest-skill.sh ~/.claude/skills/my-skill/ --dry-run
 ```
 
 ### Generate Triggers
 
 ```bash
+
 # Generate for specific skill
+
 ./scripts/generate-triggers.sh ~/.ciel/skills/my-skill/
 
 # Test trigger matching
+
 ./scripts/test-triggers.sh "find me a web search skill"
 ```
 
@@ -255,21 +284,26 @@ backup:
 ```yaml
 routing_flow:
   1_trigger_match:
+
     - Load compiled patterns from TRIGGER_REGISTRY
     - Match in order: direct > functional > domain > intent
     - Confidence >= 0.85: fast path execution
     
   2_registry_lookup:
+
     - Fallback to tag-based routing
     - For backwards compatibility
     
   3_reasoning_path:
+
     - LLM-driven composition
     - Can reference trigger patterns as hints
     
   4_acquisition:
+
     - Gap detection triggers new skill acquisition
     - Auto-generation of triggers on skill install
+
 ```
 
 ## Registry Updates on Skill Lifecycle
@@ -303,14 +337,22 @@ When multiple skills match the same trigger:
 resolution_strategy:
   1_higher_confidence_wins: true
   2_context_disambiguation:
+
     - Use project language/framework context
     - Prefer skills matching current domain
+
   3_frequency_penalty:
+
     - Apply decay to overused generic skills
+
   4_explicit_escalation:
+
     - Ask user: "Did you mean skill A or skill B?"
+
   5_council_override:
+
     - Manual resolution for persistent conflicts
+
 ```
 
 ## Safety & Trust
@@ -321,14 +363,17 @@ trigger_safety:
     default_confidence: 0.6  # Lower than native
     
   sandbox_recommendations:
+
     - Test trigger matching before deploy
     - Monitor for false positives
     - Review user override patterns
     
   audit_logging:
+
     - All trigger changes logged
     - Match statistics per trigger
     - User override tracking
+
 ```
 
 ## Best Practices

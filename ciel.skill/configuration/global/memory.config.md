@@ -1,7 +1,9 @@
 # memory.config — Global Memory
 
 ```yaml
+
 # <anchor:start>
+
 memory:
   backend: mempalace           # mempalace|sqlite|filesystem|custom
   auto_update: true
@@ -16,7 +18,9 @@ memory:
     runtime: null
     endpoint: null
     auth_env: null
+
 # <anchor:end>
+
 ```
 
 ## Notes

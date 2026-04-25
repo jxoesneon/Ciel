@@ -30,10 +30,12 @@ Populated via `SOURCES.md`. Examples:
 
 ```text
 score = 0.35 * tag_overlap
+
       + 0.25 * trigger_overlap
       + 0.15 * origin_trust
       + 0.15 * runtime_compat
       + 0.10 * license_compat
+
 ```
 
 ## Cutoff

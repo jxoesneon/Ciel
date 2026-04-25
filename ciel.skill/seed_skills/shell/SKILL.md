@@ -10,6 +10,7 @@ source: { tier: 0, origin: seed }
 
 dependencies: { skills: [], mcp: [], system: [] }
 ---
+
 # shell
 
 Execute shell commands. All commands use the universal set defined in `PLATFORM_AGNOSTIC_MAPPING.md`.

@@ -9,6 +9,7 @@ license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [api_client/SKILL.md, git/SKILL.md, secrets_manager/SKILL.md] }
 ---
+
 # cicd_integration
 
 Interact with CI systems.

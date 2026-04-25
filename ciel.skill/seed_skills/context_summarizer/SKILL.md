@@ -9,6 +9,7 @@ license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [mempalace_manager/SKILL.md] }
 ---
+
 # context_summarizer
 
 Compress long traces / conversations into recoverable AAAK blobs.

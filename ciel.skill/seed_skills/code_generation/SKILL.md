@@ -9,6 +9,7 @@ license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [filesystem/SKILL.md, code_analysis/SKILL.md] }
 ---
+
 # code_generation
 
 Generate code from a specification.

@@ -7,16 +7,23 @@ runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
+
   - pattern: "(add|build|implement|create).*(feature|functionality|integration|utility)"
+
     confidence: 0.9
+
   - pattern: "how should (we|I) solve"
+
     confidence: 0.85
+
   - pattern: "write a (script|wrapper|client) for"
+
     confidence: 0.8
 
 source: { tier: 1, origin: harmonized }
 dependencies: { skills: [], mcp: [], system: [] }
 ---
+
 # CIEL ADAPTATION: Search-First (Research Mandate)
 
 This skill operationalizes CIEL's core **"Research-Before-Strategy"** mandate. It acts as a hard gate preventing the premature generation of net-new code when robust, maintained solutions already exist in the ecosystem, the repository, or via MCP servers.
@@ -57,4 +64,5 @@ When triggered, execute the following workflow:
 - **Dependency Bloat**: Pulling in a massive, multi-megabyte framework just to use a single string-manipulation function (e.g., pulling all of `lodash` for a simple `camelCase` conversion).
 
 ## Council Alignment
+
 This skill is critical for **Ciel-Efficiency** (preventing architectural bloat) and **Ciel-Safety** (preferring battle-tested, community-audited code over unverified custom implementations).

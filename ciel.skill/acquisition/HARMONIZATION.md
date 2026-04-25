@@ -36,9 +36,13 @@ Harmonized `.skill` bundle + a harmonization report attached to the Council run:
 ```yaml
 harmonization_report:
   diffs:
+
     - path: SKILL.md
+
       change: "renamed + re-frontmatter"
+
     - path: README.md
+
       change: "merged into SKILL.md body"
   unknown_tags: ["obscure-tag"]
   warnings: []

@@ -9,6 +9,7 @@ license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [shell/SKILL.md, filesystem/SKILL.md] }
 ---
+
 # environment_detection
 
 Detect the environment Ciel is operating in.

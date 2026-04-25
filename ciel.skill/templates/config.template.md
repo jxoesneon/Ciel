@@ -3,6 +3,7 @@
 New `configuration/global/<name>.config.md` or local equivalent.
 
 ```markdown
+
 # {{name}}.config — {{scope}}
 
 ```yaml

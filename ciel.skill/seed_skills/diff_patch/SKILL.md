@@ -9,6 +9,7 @@ license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [filesystem/SKILL.md, shell/SKILL.md] }
 ---
+
 # diff_patch
 
 Unified diffs + patch application.

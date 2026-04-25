@@ -7,16 +7,23 @@ runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
+
   - pattern: "(code|coding).*(standard|convention|quality)"
+
     confidence: 0.9
+
   - pattern: "how should I.*(write|structure|format).*(code|function|component)"
+
     confidence: 0.9
+
   - pattern: "(review|refactor).*(code|file).*(quality|readability)"
+
     confidence: 0.9
 
 source: { tier: 1, origin: harmonized }
 dependencies: { skills: [], mcp: [], system: [] }
 ---
+
 # CIEL ADAPTATION: Coding-Standards (Engineering Baseline)
 
 This skill provides the baseline engineering conventions applicable across CIEL projects. It establishes the "shared floor" for code quality, focusing on readability, immutability, and architectural soundness.
@@ -35,15 +42,19 @@ Adapted from `~/.agents/skills/coding-standards/`. This skill serves as a founda
 ## Mandated Patterns
 
 ### 1. Immutability (CRITICAL)
+
 - **NEVER** mutate variables directly.
 - **ALWAYS** use the spread operator (`...`) or array methods that return new instances (e.g., `map`, `filter`).
 
 ### 2. Error Handling
+
 - **ALWAYS** use comprehensive `try/catch` blocks for asynchronous operations.
 - **NEVER** swallow errors silently. Provide user-friendly error messages and log technical details.
 
 ### 3. Code Smells
+
 The **Auditor** sub-agent MUST reject implementations containing:
+
 - Functions exceeding 50 lines (Long Functions).
 - Logic nesting deeper than 3 levels (Deep Nesting) — use early returns.
 - Unexplained "Magic Numbers" — use named constants.

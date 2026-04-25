@@ -3,7 +3,9 @@
 Codified rules specific to this project. Extracted from CLAUDE.md / GEMINI.md + detected conventions + user additions.
 
 ```yaml
+
 # <anchor:start>
+
 rules:
   forbidden_ops: []
     # examples:
@@ -25,7 +27,9 @@ rules:
   documentation:
     require_docstrings: false
     require_changelog_entry: false
+
 # <anchor:end>
+
 ```
 
 ## Notes

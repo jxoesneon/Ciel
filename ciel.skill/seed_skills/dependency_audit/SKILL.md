@@ -9,6 +9,7 @@ license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [package_manager/SKILL.md, shell/SKILL.md] }
 ---
+
 # dependency_audit
 
 Scan project and acquired skills for vulnerable or outdated dependencies.

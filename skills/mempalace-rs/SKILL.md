@@ -7,18 +7,27 @@ runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
 tags: ["ciel", "harmonized", "domain:systems"]
 triggers:
+
   - pattern: "(remember|save|persist|store).*memory"
+
     confidence: 0.9
+
   - pattern: "what did we.*(last|previous|before)"
+
     confidence: 0.9
+
   - pattern: "search.*(history|memory|palace)"
+
     confidence: 0.9
+
   - pattern: "knowledge graph|AAAK|temporal fact"
+
     confidence: 0.9
 
 source: { tier: 1, origin: harmonized }
 dependencies: { skills: [], mcp: [], system: [] }
 ---
+
 # CIEL ADAPTATION: MemPalace-RS
 
 This skill provides CIEL's high-performance, local-first memory stack and knowledge graph, powered by a production-grade Rust engine.
@@ -37,26 +46,33 @@ Adapted from `~/.gemini/skills/mempalace-rs/`. This is the definitive memory lay
 ## Core Capabilities
 
 ### 1. Semantic Mining
+
 Mine conversations, codebases, and documents into the palace using `mempalace mine`.
 
 ### 2. Knowledge Graph
+
 Track temporal relationships (Subject -> Predicate -> Object) with validity intervals using `mempalace_kg_add/query`.
 
 ### 3. Agent Diary
+
 Maintain a chronological audit trail of CIEL's decisions and reflections using `mempalace_diary_write/read`.
 
 ### 4. AAAK Compression
+
 Utilize the Agent-to-Agent Knowledge (AAAK) dialect to compress large contexts into high-density tokens.
 
 ## Orchestration Logic
 
 ### 1. Context Hydration
+
 On every session start, the **orchestration** skill must call `mempalace wakeup` to hydrate the active context.
 
 ### 2. Persistence Gate
+
 Every **Council of Five** decision must be recorded in the Knowledge Graph or Agent Diary to ensure long-term system alignment.
 
 ### 3. Retrieval-Augmented Deliberation
+
 Before any high-stakes Council meeting, CIEL must search the palace for relevant historical precedents or related decisions.
 
 ---

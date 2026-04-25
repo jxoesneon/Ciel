@@ -19,10 +19,12 @@ Transitions are logged; reverse transitions require Council.
 
 ```text
 trust = 0.4 * origin_tier_bias
+
       + 0.2 * sandbox_pass_rate
       + 0.2 * production_success_rate
       + 0.1 * council_pass_count
       + 0.1 * age_bonus (log-scaled, capped)
+
 ```
 
 Origin tier bias: Tier 1 = 1.0, Tier 2 = 0.8, Tier 3 = 0.4, Composition = average of components.

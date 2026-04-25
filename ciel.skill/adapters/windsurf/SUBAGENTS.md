@@ -7,18 +7,23 @@ Windsurf Cascade does not support native subagent spawning. Ciel emulates subage
 Instead of spawning agents, Ciel structures prompts with clear persona headers:
 
 ```markdown
+
 # Subagent: {name}
 
 ## Persona
+
 {persona from .windsurf/skills/ciel/agents/{name}.md}
 
 ## Input
+
 {task input}
 
 ## Your Task
+
 Execute as this persona. Return only the result, no meta-commentary.
 
 ## Result
+
 (You respond here as the persona)
 ```
 

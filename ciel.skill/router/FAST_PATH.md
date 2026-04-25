@@ -17,9 +17,11 @@ Deterministic registry lookup. O(1) key match plus O(log n) tag search.
 
 ```text
 confidence = 0.4 * trigger_match
+
            + 0.3 * tag_intersection
            + 0.2 * contract_compat
            + 0.1 * recency_bias
+
 ```
 
 ## Floor

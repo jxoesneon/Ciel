@@ -20,6 +20,7 @@ Workflows differ from Skills:
 Guides through Council of Five decision-making:
 
 ```markdown
+
 # Council Deliberation Workflow
 
 ## Context
@@ -51,6 +52,7 @@ User requests high-risk operation requiring Council judgment.
    - If approved: proceed with operation
    - If vetoed: explain blockage to user
    - If escalated: request user confirmation
+
 ```
 
 ### `/ciel-acquire` — Skill Acquisition
@@ -58,6 +60,7 @@ User requests high-risk operation requiring Council judgment.
 Guides through tiered skill acquisition:
 
 ```markdown
+
 # Skill Acquisition Workflow
 
 ## Steps
@@ -87,6 +90,7 @@ Guides through tiered skill acquisition:
    - Harmonize with existing skills
    - Run Council approval if non-trivial
    - Promote to registry on success
+
 ```
 
 ### `/ciel-improve` — Self-Improvement
@@ -94,6 +98,7 @@ Guides through tiered skill acquisition:
 Guides through growth signal to improvement:
 
 ```markdown
+
 # Self-Improvement Workflow
 
 ## Trigger
@@ -126,6 +131,7 @@ Growth signal detected from interaction outcome.
    - Monitor subsequent interactions
    - Compare pre/post metrics
    - Rollback if regression detected
+
 ```
 
 ## Workflow Discovery

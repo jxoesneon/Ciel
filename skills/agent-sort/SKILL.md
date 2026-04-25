@@ -7,18 +7,27 @@ runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
 tags: ["ciel", "harmonized", "domain:web"]
 triggers:
+
   - pattern: "(sort|trim|curate).*skills"
+
     confidence: 0.9
+
   - pattern: "remove.*unnecessary.*(skills|rules)"
+
     confidence: 0.9
+
   - pattern: "DAILY vs LIBRARY"
+
     confidence: 1.0
+
   - pattern: "optimize.*workspace.*context"
+
     confidence: 0.9
 
 source: { tier: 1, origin: harmonized }
 dependencies: { skills: [], mcp: [], system: [] }
 ---
+
 # CIEL ADAPTATION: Agent Sort
 
 This skill provides CIEL's mechanism for maintaining a lean, high-performance orchestration surface. It uses repo-local evidence to classify capabilities into "Active" (DAILY) or "Searchable" (LIBRARY).
@@ -35,16 +44,21 @@ Adapted from `~/.agents/skills/agent-sort/`. This skill is critical for CIEL's *
 ## Orchestration Logic
 
 ### 1. Evidence-First Triage
+
 Before any major ingestion batch, the **orchestration** skill should trigger an `agent-sort` pass to establish the repo's real stack.
 
 ### 2. Context Optimization
+
 During **Strategic Compact** operations, use this skill to demote skills that haven't been "hit" (per **MemPalace** stats) to the LIBRARY bucket.
 
 ### 3. Registry Synchronization
+
 The **Council of Five** must approve all DAILY vs LIBRARY promotion/demotion cycles to ensure no critical safeguards are accidentally offloaded.
 
 ### 4. Verification
+
 A sort pass is complete when:
+
 - All DAILY items have cited repo evidence (file extensions, manifests).
 - Stale or off-stack rules and hooks are identified and marked for removal.
 - The resulting context window reduction is documented.

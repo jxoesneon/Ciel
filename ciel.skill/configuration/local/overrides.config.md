@@ -3,7 +3,9 @@
 Explicit overrides of global config values for this project.
 
 ```yaml
+
 # <anchor:start>
+
 overrides:
   # Any leaf field from configuration/global/*.config.md may be overridden here.
   # Constitutional invariants cannot be overridden.
@@ -14,7 +16,9 @@ overrides:
   #   high_threshold: 5.0
   # observability:
   #   log_verbosity: debug
+
 # <anchor:end>
+
 ```
 
 ## Notes

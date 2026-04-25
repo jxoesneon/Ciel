@@ -20,7 +20,9 @@ Ciel supports cross-platform hooks for Gemini CLI. Use the appropriate script ex
 ## Example: Session Start (PowerShell)
 
 ```powershell
+
 # ciel_session_start.ps1
+
 $InputData = $Input | Out-String | ConvertFrom-Json
 $Source = $InputData.source
 

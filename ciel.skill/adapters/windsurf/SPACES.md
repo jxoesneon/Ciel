@@ -46,9 +46,11 @@ When creating a new session in a Space:
 **Implementation:**
 
 ```markdown
+
 # Ciel Space Governance
 
 ## Space Initialization
+
 When a Space is created for Ciel-managed project:
 
 1. **Inject Council context** — All sessions inherit Council constitution
@@ -64,6 +66,7 @@ When a high-risk request arrives in ANY session within the Space:
 2. **Shared deliberation context** — Council reasoning visible across Space
 3. **Unified decision** — Single Council decision applies to all sessions
 4. **Propagate outcome** — Decision context injected into all Space sessions
+
 ```
 
 ### 2. Ciel-Managed Space Types
@@ -81,6 +84,7 @@ When a high-risk request arrives in ANY session within the Space:
 Ciel can maintain a **Space-local skill registry**:
 
 ```markdown
+
 ## Space-Local Skills
 
 Skills acquired within a Space can be:
@@ -89,6 +93,7 @@ Skills acquired within a Space can be:
 - **Promoted to global** — Synced to `~/.ciel/skills/` after validation
 - **Shared with other Spaces** — Via skill export/import
 - **Versioned per-Space** — Different Spaces can use different skill versions
+
 ```
 
 ### 4. Context Persistence Strategy
@@ -96,6 +101,7 @@ Skills acquired within a Space can be:
 **Ciel ensures Council context persists across Space sessions:**
 
 ```yaml
+
 # Injected into all Space sessions via .windsurf/rules
 
 ciel_space_context:
@@ -105,6 +111,7 @@ ciel_space_context:
   checkpoint_policy: "pre_high_risk"
   
   inherited_context:
+
     - council/CONSTITUTION.md
     - council/members/*.md
     - router/ROUTE_REGISTRY.md
@@ -121,6 +128,7 @@ ciel_space_context:
 #### Pattern: Parallel Council Deliberation
 
 ```markdown
+
 ## Parallel Council in Space
 
 1. **Spawn 5 sessions** — One per Council member in same Space
@@ -128,14 +136,17 @@ ciel_space_context:
 3. **Parallel reasoning** — Each member responds in their session
 4. **Chairman synthesis** — Chairman session aggregates votes
 5. **Unified decision** — Outcome propagated to all Space sessions
+
 ```
 
 #### Pattern: Skill Acquisition Pipeline
 
 ```markdown
+
 ## Acquisition Pipeline Space
 
 Sessions in Space:
+
 - **Session 1: Discovery** — Research available implementations
 - **Session 2: Sandbox** — Test in isolated environment
 - **Session 3: Integration** — Harmonize with existing skills
@@ -143,10 +154,12 @@ Sessions in Space:
 - **Session 5: Documentation** — Update registry + docs
 
 All sessions share:
+
 - Acquisition target
 - Test results
 - Council decisions
 - Final skill artifact
+
 ```
 
 ## Integration with .ciel/ Domain Model
@@ -186,14 +199,17 @@ alwaysApply: true
 This Space is governed by Ciel's Council of Five.
 
 ## Shared Context
+
 - Constitution: `~/.ciel/council/CONSTITUTION.md`
 - Members: `~/.ciel/council/members/`
 - Risk Rubric: `~/.ciel/risk/RUBRIC.md`
 
 ## Triggers
+
 Activate Council for: high-risk operations, skill acquisition, self-improvement
 
 ## Checkpoints
+
 Create named checkpoints before destructive operations.
 ```
 

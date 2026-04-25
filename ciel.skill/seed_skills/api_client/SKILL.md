@@ -9,6 +9,7 @@ license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [secrets_manager/SKILL.md, web_fetch/SKILL.md] }
 ---
+
 # api_client
 
 HTTP REST / GraphQL client with auth and retry.

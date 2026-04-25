@@ -7,16 +7,23 @@ runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
 tags: ["ciel", "harmonized", "domain:ai"]
 triggers:
+
   - pattern: "(implement|add|fix).* (feature|bug|capability)"
+
     confidence: 0.9
+
   - pattern: "tdd|red-green-refactor"
+
     confidence: 0.9
+
   - pattern: "write.*test.*first"
+
     confidence: 0.9
 
 source: { tier: 1, origin: harmonized }
 dependencies: { skills: [], mcp: [], system: [] }
 ---
+
 # CIEL ADAPTATION: Test-Driven Development (TDD)
 
 This skill enforces CIEL's "Iron Law" of engineering: no production code without a failing test first.
@@ -42,13 +49,17 @@ If you wrote code before a test: **Delete it. Start over.**
 ## Orchestration Logic
 
 ### 1. Pre-Task Triage
+
 Before any engineering sub-task, the **orchestration** skill must ensure a TDD strategy is defined.
 
 ### 2. Council Gate
+
 For high-risk features, the **Council of Five** (specifically **Safety** and **Evolution**) will review the test plan before implementation starts.
 
 ### 3. Verification
+
 A task is not "complete" until:
+
 - Every new function/method has a corresponding test.
 - All tests pass in the target environment.
 - Output is pristine (no warnings/errors).

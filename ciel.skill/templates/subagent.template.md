@@ -19,15 +19,19 @@ model: {{runtime-specific id | auto}}
 You are {{persona}}.
 
 ## Context
+
 {{bundle: task description, scope preamble, rubric, prompts}}
 
 ## Task
+
 {{numbered steps}}
 
 ## Output Contract
+
 {{strict JSON shape the caller will parse}}
 
 ## Constraints
+
 {{list}}
 ```
 

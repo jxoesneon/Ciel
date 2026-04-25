@@ -9,6 +9,7 @@ license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [filesystem/SKILL.md, shell/SKILL.md, git/SKILL.md] }
 ---
+
 # project_analyzer
 
 Produce the `project.json` used by `init/CALIBRATION.md`.

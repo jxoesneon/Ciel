@@ -8,7 +8,9 @@ Ciel adds `.ciel/` to the current project's `.gitignore` at local init.
 2. If missing, create with header:
 
 ```text
+
 # Project .gitignore
+
 ```
 
 1. Check for exact `.ciel/` line.
@@ -18,6 +20,7 @@ Ciel adds `.ciel/` to the current project's `.gitignore` at local init.
 ```text
 
 # Ciel local domain
+
 .ciel/
 ```
 

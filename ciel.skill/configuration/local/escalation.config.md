@@ -1,7 +1,9 @@
 # escalation.config — Local Escalation Threshold
 
 ```yaml
+
 # <anchor:start>
+
 escalation:
   # Auto-detected value set by init/CALIBRATION.md.
   # Do not edit `auto_detected` directly; use `override` to set a value.
@@ -10,7 +12,9 @@ escalation:
   override_reason: null
   override_set_by: null
   override_set_at: null
+
 # <anchor:end>
+
 ```
 
 ## Notes
