@@ -6,7 +6,6 @@
 set -uo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-SKILL="$ROOT/ciel.skill"
 FAILED=0
 
 say() { printf "\033[1;36m[fm]\033[0m %s\n" "$*"; }
