@@ -27,7 +27,7 @@ jobs:
       sha256: ${{ steps.hash.outputs.sha256 }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -115,7 +115,7 @@ jobs:
           '
 
       - name: Upload build artifact (also for non-tag runs)
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ciel-skill-${{ steps.ver.outputs.version }}
           path: |
@@ -133,12 +133,12 @@ jobs:
       contents: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Download build artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: ciel-skill-${{ needs.build.outputs.version }}
           path: dist
