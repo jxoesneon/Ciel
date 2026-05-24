@@ -1,0 +1,71 @@
+---
+name: mempalace
+description: A local, offline-first AI memory system. Use for mining projects/conversations, semantic search, knowledge graph queries, and managing specialist agent diaries using MCP tools and AAAK compression.
+---
+
+# MemPalace Memory Management Skill
+
+## Description
+This skill enables Gemini CLI to integrate with **MemPalace**, a high-performance, local, offline-first memory system. It allows the agent to mine conversations and project files, store them in a structured "palace," and retrieve critical facts efficiently using the AAAK compression dialect.
+
+## Integration Guide
+
+### 1. Installation & Initialization
+MemPalace is designed to be self-contained and local.
+- **Install:** Ensure `mempalace` is installed (`pip install mempalace`).
+- **Initialize:** Run `mempalace init ~/projects/myapp` to set up your memory palace world.
+
+### 2. Mining Data
+Use MemPalace to mine your existing information:
+- **Projects:** `mempalace mine ~/projects/myapp`
+- **Conversations:** `mempalace mine ~/chats/ --mode convos`
+- **General/Classification:** `mempalace mine ~/chats/ --mode convos --extract general`
+
+### 3. MCP Server Integration
+To allow your AI agent to query the memory system automatically:
+```bash
+claude mcp add mempalace -- python -m mempalace.mcp_server
+```
+This grants access to 19 tools for reading, writing, searching, and managing knowledge graph entries.
+
+### 4. Memory Stack Usage
+MemPalace operates on a 4-layer stack:
+- **L0 (Identity):** Basic identity info.
+- **L1 (Critical Facts):** Loaded via `mempalace wake-up` (uses ~170 tokens of AAAK).
+- **L2 (Room Recall):** On-demand retrieval for active topics.
+- **L3 (Deep Search):** Semantic search across all closets.
+
+### 5. Best Practices
+- **Never manually summarize:** Let MemPalace manage the closets and drawers.
+- **Use AAAK:** MemPalace's compression dialect (AAAK) is natively understood by the agent through MCP.
+- **Leverage Structure:** Always utilize wings and rooms to improve retrieval recall by up to 34%.
+- **Use Knowledge Graph:** For temporal entity-relationship tracking, use `mempalace_kg_*` tools.
+
+## Key Tools
+### MCP Tools (For AI Automation)
+- `mempalace_search`: Semantic search with wing/room filters.
+- `mempalace_status`: Palace overview + memory protocol.
+- `mempalace_kg_query`: Query entity relationships.
+- `mempalace_diary_write/read`: Manage specialist agent diaries.
+- `mempalace_add_drawer`: Add verbatim content.
+
+### CLI Tools (For Manual/Batch Ops)
+- `mempalace init`: Guided onboarding + entity detection.
+- `mempalace mine`: Batch ingest projects or conversations.
+- `mempalace search`: Search existing memory from the command line.
+- `mempalace split`: Clean up concatenated transcript files.
+- `mempalace wake-up`: Load L0+L1 critical context into memory.
+
+## Auto-Save Hooks
+Configure Claude Code to automatically save memories during long-running sessions to prevent loss:
+
+```json
+{
+  "hooks": {
+    "Stop": [{"matcher": "", "hooks": [{"type": "command", "command": "/path/to/mempalace/hooks/mempal_save_hook.sh"}]}],
+    "PreCompact": [{"matcher": "", "hooks": [{"type": "command", "command": "/path/to/mempalace/hooks/mempal_precompact_hook.sh"}]}]
+  }
+}
+```
+
+

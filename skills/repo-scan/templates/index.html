@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">Asset Overview</title>
+<style>
+  :root {
+    --bg: #0d1117; --surface: #161b22; --border: #30363d;
+    --text: #e6edf3; --text-dim: #8b949e; --accent: #58a6ff;
+    --green: #3fb950; --yellow: #d29922; --red: #f85149; --purple: #bc8cff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+         background: var(--bg); color: var(--text); line-height: 1.6; }
+  .container { max-width: 1400px; margin: 0 auto; padding: 24px; }
+
+  .header { text-align: center; padding: 48px 0 32px; border-bottom: 1px solid var(--border); margin-bottom: 32px; }
+  .header h1 { font-size: 28px; font-weight: 600; margin-bottom: 8px; }
+  .header .meta { color: var(--text-dim); font-size: 14px; }
+  .header .desc { color: var(--text-dim); font-size: 13px; margin-top: 8px; }
+
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 32px; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 20px; }
+  .stat-card .label { font-size: 12px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; }
+  .stat-card .value { font-size: 28px; font-weight: 700; margin-top: 4px; }
+  .stat-card .value.green { color: var(--green); }
+  .stat-card .value.yellow { color: var(--yellow); }
+  .stat-card .value.accent { color: var(--accent); }
+  .stat-card .value.purple { color: var(--purple); }
+  .stat-card .value.red { color: var(--red); }
+
+  .section { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 24px; }
+  .section-header { padding: 16px 20px; border-bottom: 1px solid var(--border); cursor: pointer;
+                     display: flex; justify-content: space-between; align-items: center; user-select: none; }
+  .section-header h2 { font-size: 18px; font-weight: 600; }
+  .section-header .toggle { color: var(--text-dim); font-size: 20px; transition: transform 0.2s; }
+  .section.collapsed .section-body { display: none; }
+  .section.collapsed .toggle { transform: rotate(-90deg); }
+  .section-body { padding: 20px; }
+
+  /* ── 子项目卡片网格 ── */
+  .project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+  .project-card { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 20px;
+                  display: block; text-decoration: none; color: inherit;
+                  transition: border-color 0.2s, box-shadow 0.2s; cursor: pointer; }
+  .project-card:hover { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(88,166,255,0.1); }
+  .project-card .proj-name { font-size: 16px; font-weight: 600; color: var(--accent); margin-bottom: 4px; }
+  .project-card .proj-meta { font-size: 12px; color: var(--text-dim); margin-bottom: 12px; }
+  .project-card .proj-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .tag { font-size: 11px; padding: 2px 8px; border-radius: 10px; border: 1px solid var(--border);
+         color: var(--text-dim); background: var(--surface); }
+  .tag.cpp { border-color: #2188ff44; color: #2188ff; background: #2188ff11; }
+  .tag.java { border-color: #f0883e44; color: #f0883e; background: #f0883e11; }
+  .tag.ios { border-color: #bc8cff44; color: #bc8cff; background: #bc8cff11; }
+  .tag.csharp { border-color: #23912044; color: #239120; background: #23912011; }
+  .tag.web { border-color: #3fb95044; color: #3fb950; background: #3fb95011; }
+  .verdict-bar-wrap { margin-bottom: 8px; }
+  .verdict-bar-label { font-size: 11px; color: var(--text-dim); margin-bottom: 4px; }
+  .verdict-bar { display: flex; height: 8px; border-radius: 4px; overflow: hidden; gap: 2px; }
+  .vb-core  { background: var(--green); border-radius: 2px; }
+  .vb-merge { background: var(--yellow); border-radius: 2px; }
+  .vb-rebuild { background: var(--purple); border-radius: 2px; }
+  .vb-retire { background: var(--red); border-radius: 2px; }
+  .verdict-legend { display: flex; gap: 12px; font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+  .verdict-legend span { display: flex; align-items: center; gap: 4px; }
+  .verdict-legend .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .open-hint { font-size: 11px; color: var(--accent); margin-top: 12px; opacity: 0.7; }
+
+  /* ── 交叉分析表格 ── */
+  .cross-table { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed; margin-bottom: 24px; }
+  .cross-table th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border);
+                    color: var(--text-dim); font-weight: 600; font-size: 12px;
+                    text-transform: uppercase; letter-spacing: 0.3px; word-break: break-word; }
+  .cross-table td { padding: 10px 12px; border-bottom: 1px solid var(--border);
+                    vertical-align: top; word-break: break-word; overflow-wrap: break-word; }
+  .cross-table tr:hover { background: rgba(88,166,255,0.04); }
+  .cross-table h4 { font-size: 14px; color: var(--accent); margin-bottom: 12px; margin-top: 4px; }
+  .overlap-cols th:nth-child(1) { width: 20%; }
+  .overlap-cols th:nth-child(2) { width: 35%; }
+  .overlap-cols th:nth-child(3) { width: 45%; }
+  .overlap-cols-4 th:nth-child(1) { width: 18%; }
+  .overlap-cols-4 th:nth-child(2) { width: 37%; }
+  .overlap-cols-4 th:nth-child(3) { width: 10%; }
+  .overlap-cols-4 th:nth-child(4) { width: 35%; }
+  .topo-cols th:nth-child(1) { width: 10%; }
+  .topo-cols th:nth-child(2) { width: 20%; }
+  .topo-cols th:nth-child(3) { width: 15%; }
+  .topo-cols th:nth-child(4) { width: 55%; }
+  .revision-cols th:nth-child(1) { width: 18%; }
+  .revision-cols th:nth-child(2) { width: 16%; }
+  .revision-cols th:nth-child(3) { width: 16%; }
+  .revision-cols th:nth-child(4) { width: 50%; }
+  .verdict-core { color: var(--green); font-weight: 600; }
+  .verdict-merge { color: var(--yellow); font-weight: 600; }
+  .verdict-rebuild { color: var(--purple); font-weight: 600; }
+  .verdict-retire { color: var(--red); font-weight: 600; }
+
+  /* ── 行动清单 ── */
+  .action-list { list-style: none; padding: 0; }
+  .action-list li { padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; display: flex; gap: 12px; }
+  .action-list li:last-child { border-bottom: none; }
+  .action-num { background: rgba(88,166,255,0.15); color: var(--accent); border-radius: 50%;
+                width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;
+                font-size: 12px; font-weight: 700; flex-shrink: 0; }
+
+  /* ── Deep 分析章节 ── */
+  .deep-badge { display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: 700;
+                background: linear-gradient(135deg, rgba(188,140,255,0.2), rgba(88,166,255,0.2));
+                border: 1px solid var(--purple); color: var(--purple); letter-spacing: 1px; margin-right: 8px; }
+  .deep-subsection { margin-bottom: 20px; }
+  .deep-subsection h4 { font-size: 14px; color: var(--accent); margin-bottom: 10px; padding-bottom: 6px;
+                         border-bottom: 1px solid var(--border); }
+  .deep-subsection ul { padding-left: 20px; margin: 0; }
+  .deep-subsection li { margin-bottom: 6px; font-size: 13px; line-height: 1.6; }
+  .deep-files { font-family: 'Cascadia Code', 'Fira Code', Consolas, monospace; font-size: 12px; }
+  .deep-files li { color: var(--text-dim); margin-bottom: 4px; }
+  .deep-files code { color: var(--accent); }
+
+  /* ── 双扫描交叉验证（简要摘要，详情见 dual-scan.html） ── */
+  .dual-badge { display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: 700;
+                background: linear-gradient(135deg, rgba(63,185,80,0.2), rgba(88,166,255,0.2));
+                border: 1px solid var(--green); color: var(--green); letter-spacing: 1px; margin-right: 8px; }
+  .dual-summary-card { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 16px; }
+  .dual-summary-stat { padding: 12px 20px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); text-align: center; }
+  .dual-summary-stat .ds-val { font-size: 22px; font-weight: 700; }
+  .dual-summary-stat .ds-lbl { font-size: 11px; color: var(--text-dim); }
+  .dual-open-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 8px;
+    background: linear-gradient(135deg, rgba(63,185,80,0.08), rgba(88,166,255,0.08));
+    border: 1px solid var(--green); color: var(--green); text-decoration: none;
+    font-size: 14px; font-weight: 600; transition: all 0.2s; margin-top: 8px; }
+  .dual-open-link:hover { background: linear-gradient(135deg, rgba(63,185,80,0.15), rgba(88,166,255,0.15));
+    box-shadow: 0 0 0 3px rgba(63,185,80,0.1); }
+
+  /* ── 总结 ── */
+  .summary h3 { font-size: 16px; margin-bottom: 12px; color: var(--accent); }
+  .summary ul { padding-left: 20px; margin-bottom: 16px; }
+  .summary li { margin-bottom: 6px; font-size: 13px; }
+  .summary .risk { color: var(--red); }
+  .summary .action { color: var(--green); }
+
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1 id="reportTitle"></h1>
+    <div class="meta">
+      <span id="scanTarget"></span> &nbsp;|&nbsp;
+      <span id="scanDate"></span>
+    </div>
+    <div class="desc" id="scanDesc"></div>
+  </div>
+
+  <div class="stats-grid" id="statsGrid"></div>
+
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <h2 id="secSubprojects"></h2><span class="toggle">&#9660;</span>
+    </div>
+    <div class="section-body">
+      <div class="project-grid" id="projectGrid"></div>
+    </div>
+  </div>
+
+  <div class="section" id="treeSection" style="display:none">
+    <div class="section-header" onclick="toggleSection(this)">
+      <h2 id="secTree"></h2><span class="toggle">&#9660;</span>
+    </div>
+    <div class="section-body"><pre id="assetTree" style="font-size:13px;line-height:1.5;overflow-x:auto;white-space:pre;color:var(--text-dim)"></pre></div>
+  </div>
+
+  <div class="section" id="modulesSection" style="display:none">
+    <div class="section-header" onclick="toggleSection(this)">
+      <h2 id="secModules"></h2><span class="toggle">&#9660;</span>
+    </div>
+    <div class="section-body" id="modulesBody"></div>
+  </div>
+
+  <div class="section" id="triageSection" style="display:none">
+    <div class="section-header" onclick="toggleSection(this)">
+      <h2 id="secTriage"></h2><span class="toggle">&#9660;</span>
+    </div>
+    <div class="section-body"><div style="overflow-x:auto"><table class="cross-table" id="triageTable"></table></div></div>
+  </div>
+
+  <div class="section" id="deepSection" style="display:none">
+    <div class="section-header" onclick="toggleSection(this)" style="border-left: 3px solid var(--purple);">
+      <h2><span style="background:linear-gradient(135deg,var(--purple),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:700">DEEP</span> <span id="secDeep"></span></h2><span class="toggle">&#9660;</span>
+    </div>
+    <div class="section-body" id="deepBody"></div>
+  </div>
+
+  <div class="section" id="crossSection" style="display:none">
+    <div class="section-header" onclick="toggleSection(this)">
+      <h2 id="secCross"></h2><span class="toggle">&#9660;</span>
+    </div>
+    <div class="section-body" id="crossBody"></div>
+  </div>
+
+  <div class="section" id="dualScanSection" style="display:none">
+    <div class="section-header" onclick="toggleSection(this)" style="border-left: 3px solid var(--green);">
+      <h2><span style="background:linear-gradient(135deg,var(--green),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:700">DUAL</span> <span id="secDual"></span></h2><span class="toggle">&#9660;</span>
+    </div>
+    <div class="section-body" id="dualScanBody"></div>
+  </div>
+
+  <div class="section" id="summarySection" style="display:none">
+    <div class="section-header" onclick="toggleSection(this)">
+      <h2 id="secSummary"></h2><span class="toggle">&#9660;</span>
+    </div>
+    <div class="section-body summary" id="summaryBody"></div>
+  </div>
+</div>
+
+<script>
+// __REPORT_BEGIN__
+const REPORT = {};
+// __REPORT_END__
+
+var L = REPORT.LANG || {};
+
+function init() {
+  document.title = L.title_index || 'Asset Overview';
+  document.getElementById('reportTitle').innerHTML = (REPORT.title || L.title_index || 'Asset Overview') +
+    (REPORT.hasDeep ? ' <span class="deep-badge" style="font-size:13px;vertical-align:middle">DEEP</span>' : '') +
+    (REPORT.hasDualScan ? ' <span class="dual-badge" style="font-size:13px;vertical-align:middle">DUAL</span>' : '');
+  document.getElementById('scanTarget').textContent = (L.target_path||'Target') + ': ' + (REPORT.target || '—');
+  document.getElementById('scanDate').textContent = (L.scan_date||'Scan Date') + ': ' + (REPORT.date || '—');
+  // Section titles
+  var _st = function(id,key,fb){ var e=document.getElementById(id); if(e) e.textContent=L[key]||fb; };
+  _st('secSubprojects','sec_subprojects','Sub-projects');
+  _st('secTree','sec_tree','Asset Tree');
+  _st('secModules','sec_modules','Module Descriptions');
+  _st('secTriage','sec_triage','Asset Triage Table');
+  _st('secDeep','sec_deep','Deep Analysis');
+  _st('secCross','sec_cross','Cross-Module Review');
+  _st('secDual','sec_dual','Dual-Scan');
+  _st('secSummary','sec_summary','Audit Summary');
+  if (REPORT.desc) document.getElementById('scanDesc').textContent = REPORT.desc;
+  renderStats();
+  renderProjects();
+  renderTree();
+  renderModules();
+  renderTriage();
+  renderDeep();
+  renderDualScan();
+  renderCross();
+  renderSummary();
+}
+
+function renderStats() {
+  var projects = REPORT.subprojects || [];
+  var totalFiles = 0, totalCore = 0, totalMerge = 0, totalRebuild = 0, totalRetire = 0;
+  projects.forEach(function(p) {
+    totalFiles += parseInt(p.files) || 0;
+    var v = p.verdicts || {};
+    totalCore    += v['核心基石'] || 0;
+    totalMerge   += v['提纯合并'] || 0;
+    totalRebuild += v['重塑提取'] || 0;
+    totalRetire  += v['彻底淘汰'] || 0;
+  });
+  var stats = [
+    { label: L.stat_subprojects||'Sub-projects', value: projects.length, color: 'accent' },
+    { label: L.stat_total_files||'Source Files', value: totalFiles || '—', color: 'green' },
+    { label: L.verdict_core||'Core', value: totalCore, color: 'green' },
+    { label: L.verdict_merge||'Merge', value: totalMerge, color: 'yellow' },
+    { label: L.verdict_rebuild||'Reshape', value: totalRebuild, color: 'purple' },
+    { label: L.verdict_retire||'Retire', value: totalRetire, color: 'red' },
+  ];
+  document.getElementById('statsGrid').innerHTML = stats.map(function(s) {
+    return '<div class="stat-card"><div class="label">'+s.label+'</div><div class="value '+s.color+'">'+s.value+'</div></div>';
+  }).join('');
+}
+
+function renderProjects() {
+  var projects = REPORT.subprojects || [];
+  document.getElementById('projectGrid').innerHTML = projects.map(function(p) {
+    var v = p.verdicts || {};
+    var vKeys = [['核心基石','Core'],['提纯合并','Purify & Merge'],['重塑提取','Reshape'],['彻底淘汰','Retire']];
+    function vCount(vk){ return v[vk[0]]||v[vk[1]]||0; }
+    var total = vKeys.reduce(function(s,k){return s+vCount(k);},0);
+    function pct(n) { return total > 0 ? (n/total*100).toFixed(0) : 0; }
+
+    var vLabels = [L.verdict_core||'Core',L.verdict_merge||'Purify & Merge',L.verdict_rebuild||'Reshape',L.verdict_retire||'Retire'];
+    var vCls = ['vb-core','vb-merge','vb-rebuild','vb-retire'];
+    var barHtml = total > 0 ? vKeys.map(function(k,i){return {cls:vCls[i],n:vCount(k)};})
+    .filter(function(x){return x.n>0;}).map(function(x){
+      return '<div class="'+x.cls+'" style="flex:'+x.n+'"></div>';
+    }).join('') : '';
+
+    var legendHtml = vKeys.map(function(k,i){return {cls:vCls[i],label:vLabels[i],n:vCount(k)};})
+    .filter(function(x){return x.n>0;}).map(function(x){
+      return '<span><span class="dot" style="background:'+dotColor(x.cls)+'"></span>'+x.label+' '+x.n+'</span>';
+    }).join('');
+
+    var stackTags = (p.stack||'').split(/[,\/、]/).map(function(s){ s=s.trim();
+      var cls = s.indexOf('C#')>=0||s.indexOf('.NET')>=0?'csharp':
+                s.indexOf('C')===0?'cpp': s.indexOf('Java')>=0||s.indexOf('Android')>=0?'java':
+                s.indexOf('iOS')>=0||s.indexOf('OC')>=0||s.indexOf('Swift')>=0?'ios':
+                s.indexOf('Web')>=0||s.indexOf('TS')>=0||s.indexOf('JS')>=0?'web':'';
+      return s ? '<span class="tag '+cls+'">'+s+'</span>' : '';
+    }).join('');
+
+    var href = p.htmlFile || '';
+    var hasLink = href.length > 0;
+    var deepTag = p.hasDeep ? ' <span class="deep-badge" style="font-size:10px;vertical-align:middle">DEEP' + (p.deepCount > 1 ? ' ×' + p.deepCount : '') + '</span>' : '';
+    return (hasLink ? '<a class="project-card" href="'+href+'">' : '<div class="project-card">') +
+      '<div class="proj-name">'+p.name+deepTag+'</div>'+
+      '<div class="proj-meta">'+(p.buildSystem||'')+(p.files?' &nbsp;·&nbsp; '+p.files+' '+(L.files_unit||'files'):'')+(p.size?' &nbsp;·&nbsp; '+p.size:'')+(p.lastModified && p.lastModified!=='-' ? ' &nbsp;·&nbsp; <span style="color:var(--accent)">'+p.lastModified+'</span>':'')+'</div>'+
+      (stackTags ? '<div class="proj-tags">'+stackTags+'</div>' : '')+
+      (total > 0 ? '<div class="verdict-bar-wrap"><div class="verdict-bar-label">'+(L.verdict_distribution||'Verdict Distribution')+'</div>'+
+        '<div class="verdict-bar">'+barHtml+'</div>'+
+        '<div class="verdict-legend">'+legendHtml+'</div></div>' : '')+
+      (hasLink ? '<div class="open-hint">'+(L.click_detail||'Click for details')+' →</div>' : '')+
+      (hasLink ? '</a>' : '</div>');
+  }).join('');
+}
+
+function renderTree() {
+  var tree = REPORT.tree || '';
+  if (!tree) return;
+  document.getElementById('treeSection').style.display = '';
+  document.getElementById('assetTree').innerHTML = tree;
+}
+
+function renderModules() {
+  var modules = REPORT.modules || [];
+  if (!modules.length) return;
+  document.getElementById('modulesSection').style.display = '';
+  var h = '';
+  modules.forEach(function(m, i) {
+    var vc = verdictClass(m.verdict);
+    h += '<div style="border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:12px;background:var(--bg)">';
+    h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">';
+    h += '<strong style="font-size:15px">' + m.name + '</strong>';
+    if (m.verdict) h += '<span class="verdict-'+vc+'" style="font-size:13px">'+m.verdict+'</span>';
+    h += '</div>';
+    if (m.path) h += '<div style="font-size:12px;color:var(--text-dim);margin-bottom:6px">📂 '+m.path+'</div>';
+    if (m.function) h += '<div style="font-size:13px;margin-bottom:6px">'+m.function+'</div>';
+    if (m.coreClasses) h += '<div style="font-size:12px;margin-bottom:4px"><span style="color:var(--text-dim)">'+(L.field_core_cls||'Core Classes')+': </span>'+m.coreClasses+'</div>';
+    if (m.deps) h += '<div style="font-size:12px;margin-bottom:4px"><span style="color:var(--text-dim)">'+(L.field_dep_rel||'Dependencies')+': </span>'+m.deps+'</div>';
+    if (m.thirdParty) h += '<div style="font-size:12px;margin-bottom:4px"><span style="color:var(--text-dim)">'+(L.field_third_lib||'Third-Party')+': </span>'+m.thirdParty+'</div>';
+    if (m.codeSize) h += '<div style="font-size:12px;margin-bottom:4px"><span style="color:var(--text-dim)">'+(L.field_code_size||'Code Size')+': </span>'+m.codeSize+'</div>';
+    if (m.quality) h += '<div style="font-size:12px;margin-bottom:4px">'+m.quality+'</div>';
+    h += '</div>';
+  });
+  document.getElementById('modulesBody').innerHTML = h;
+}
+
+function renderTriage() {
+  var triage = REPORT.triage || [];
+  if (!triage.length) return;
+  document.getElementById('triageSection').style.display = '';
+  var h = '<thead><tr><th>'+(L.col_module||'Module')+'</th><th>'+(L.col_function||'Core Function')+'</th><th>'+(L.col_third_party||'Third-Party Deps')+'</th><th>'+(L.col_deps||'Dependencies')+'</th><th>'+(L.col_activity||'Activity')+'</th><th>'+(L.col_quality||'Quality')+'</th><th>'+(L.col_verdict||'Verdict')+'</th></tr></thead><tbody>';
+  triage.forEach(function(t) {
+    var vc = verdictClass(t.verdict);
+    h += '<tr><td><strong>'+t.module+'</strong></td><td>'+t.function+'</td><td>'+t.thirdParty+'</td><td>'+t.deps+'</td><td>'+t.activity+'</td><td>'+t.quality+'</td><td class="verdict-'+vc+'">'+t.verdict+'</td></tr>';
+  });
+  h += '</tbody>';
+  document.getElementById('triageTable').innerHTML = h;
+}
+
+function dotColor(cls) {
+  return {'vb-core':'#3fb950','vb-merge':'#d29922','vb-rebuild':'#bc8cff','vb-retire':'#f85149'}[cls] || '#8b949e';
+}
+
+function renderDeep() {
+  var d = REPORT.deep;
+  if (!d) return;
+  document.getElementById('deepSection').style.display = '';
+  var h = '';
+  var sections = [
+    {key:'files', title:L.deep_files||'Files Read', cls:'deep-files'},
+    {key:'threadSafety', title:L.deep_thread||'Thread Safety', cls:''},
+    {key:'memory', title:L.deep_memory||'Memory Management', cls:''},
+    {key:'errorHandling', title:L.deep_error||'Error Handling', cls:''},
+    {key:'apiConsistency', title:L.deep_api||'API Consistency', cls:''},
+    {key:'extraFindings', title:L.deep_extra||'Deep Supplementary Findings', cls:''},
+  ];
+  sections.forEach(function(sec) {
+    var items = d[sec.key];
+    if (!items || !items.length) return;
+    h += '<div class="deep-subsection">';
+    h += '<h4><span class="deep-badge">DEEP</span>' + sec.title + '</h4>';
+    h += '<ul class="' + (sec.cls||'') + '">';
+    items.forEach(function(item) { h += '<li>' + item + '</li>'; });
+    h += '</ul></div>';
+  });
+  var vr = d.verdictRevision;
+  if (vr && vr.length) {
+    h += '<div class="deep-subsection" style="border:1px solid var(--red);border-radius:8px;padding:16px;background:rgba(248,81,73,0.05)">';
+    h += '<h4 style="color:var(--red);border-bottom-color:var(--red)"><span class="deep-badge" style="border-color:var(--red);color:var(--red);background:rgba(248,81,73,0.15)">REVISED</span>'+(L.deep_revised||'Verdict Revisions')+'</h4>';
+    h += '<ul>';
+    vr.forEach(function(item) { h += '<li>' + item + '</li>'; });
+    h += '</ul></div>';
+  }
+  document.getElementById('deepBody').innerHTML = h;
+}
+
+function renderCross() {
+  var overlaps  = REPORT.overlaps  || [];
+  var topology  = REPORT.topology  || [];
+  var revisions = REPORT.revisions || [];
+  var actions   = REPORT.actions   || [];
+
+  var bugs = REPORT.bugs || [];
+  if (!overlaps.length && !topology.length && !revisions.length && !actions.length && !bugs.length) return;
+  document.getElementById('crossSection').style.display = '';
+
+  var h = '';
+
+  if (overlaps.length) {
+    var hasCount = overlaps[0].count !== undefined;
+    h += '<h4>'+(L.cross_overlap||'Capability Overlap Map')+'</h4>';
+    if (hasCount) {
+      h += '<table class="cross-table overlap-cols-4"><thead><tr><th>'+(L.col_function||'Capability')+'</th><th>'+(L.col_module||'Modules')+'</th><th>Count</th><th>Suggestion</th></tr></thead><tbody>';
+      h += overlaps.map(function(o){
+        return '<tr><td><strong>'+o.capability+'</strong></td><td>'+o.modules+'</td><td style="color:var(--red);font-weight:600">'+o.count+'</td><td>'+o.suggestion+'</td></tr>';
+      }).join('');
+    } else {
+      h += '<table class="cross-table overlap-cols"><thead><tr><th>'+(L.col_function||'Capability')+'</th><th>'+(L.col_module||'Modules')+'</th><th>Suggestion</th></tr></thead><tbody>';
+      h += overlaps.map(function(o){
+        return '<tr><td><strong>'+o.capability+'</strong></td><td><code>'+o.modules+'</code></td><td>'+o.suggestion+'</td></tr>';
+      }).join('');
+    }
+    h += '</tbody></table>';
+  }
+
+  if (topology.length) {
+    h += '<h4>'+(L.cross_topology||'Dependency Topology')+'</h4>';
+    h += '<table class="cross-table topo-cols"><thead><tr><th>Level</th><th>'+(L.col_module||'Module')+'</th><th>Dependents</th><th>Note</th></tr></thead><tbody>';
+    h += topology.map(function(t){
+      return '<tr><td><strong>'+t.level+'</strong></td><td><code>'+t.module+'</code></td><td>'+t.dependents+'</td><td>'+t.note+'</td></tr>';
+    }).join('');
+    h += '</tbody></table>';
+  }
+
+  if (revisions.length) {
+    h += '<h4>'+(L.cross_revision||'Verdict Revisions')+'</h4>';
+    h += '<table class="cross-table revision-cols"><thead><tr><th>'+(L.col_module||'Module')+'</th><th>Original</th><th>Revised</th><th>Reason</th></tr></thead><tbody>';
+    h += revisions.map(function(r){
+      return '<tr><td><strong>'+r.module+'</strong></td>'+
+        '<td class="verdict-'+verdictClass(r.original)+'">'+r.original+'</td>'+
+        '<td class="verdict-'+verdictClass(r.revised)+'">'+r.revised+'</td>'+
+        '<td>'+r.reason+'</td></tr>';
+    }).join('');
+    h += '</tbody></table>';
+  }
+
+  if (actions.length) {
+    h += '<h4>'+(L.cross_actions||'Refactoring Priority')+'</h4><ol class="action-list">';
+    h += actions.map(function(a, i){
+      return '<li><span class="action-num">'+(i+1)+'</span><span>'+a+'</span></li>';
+    }).join('');
+    h += '</ol>';
+  }
+
+  var bugs = REPORT.bugs || [];
+  if (bugs.length) {
+    h += '<h4>'+(L.cross_bugs||'Common Bug Patterns (Deep)')+'</h4>';
+    h += '<table class="cross-table"><thead><tr><th>Pattern</th><th>'+(L.col_module||'Modules')+'</th><th>Severity</th><th>Note</th></tr></thead><tbody>';
+    h += bugs.map(function(b){
+      var sevColor = b.severity.indexOf('高')>=0?'var(--red)':b.severity.indexOf('中')>=0?'var(--yellow)':'var(--text-dim)';
+      return '<tr><td><strong>'+b.pattern+'</strong></td><td>'+b.modules+'</td><td style="color:'+sevColor+';font-weight:600">'+b.severity+'</td><td>'+b.note+'</td></tr>';
+    }).join('');
+    h += '</tbody></table>';
+  }
+
+  var risks = REPORT.risks || [];
+  if (risks.length) {
+    h += '<h4>'+(L.cross_risks||'Global Critical Risks')+'</h4>';
+    h += '<table class="cross-table revision-cols"><thead><tr><th>Risk</th><th>Severity</th><th>Scope</th><th>Suggestion</th></tr></thead><tbody>';
+    h += risks.map(function(r){
+      var sevColor = r.severity.indexOf('严重')>=0?'var(--red)':r.severity.indexOf('高')>=0?'var(--red)':r.severity.indexOf('中')>=0?'var(--yellow)':'var(--text-dim)';
+      return '<tr><td>'+r.risk+'</td><td style="color:'+sevColor+';font-weight:600">'+r.severity+'</td><td>'+r.scope+'</td><td>'+r.suggestion+'</td></tr>';
+    }).join('');
+    h += '</tbody></table>';
+  }
+
+  document.getElementById('crossBody').innerHTML = h;
+}
+
+function renderSummary() {
+  var s = REPORT.summary;
+  if (!s || (!s.profile && !s.risks && !s.actions)) return;
+  document.getElementById('summarySection').style.display = '';
+  var h = '';
+  if (s.profile) { h += '<h3>'+(L.summary_profile||'Project Profile')+'</h3><ul>'+s.profile.map(function(p){return '<li>'+p+'</li>';}).join('')+'</ul>'; }
+  if (s.risks)   { h += '<h3 style="color:var(--red)">'+(L.summary_risks||'Key Risks')+'</h3><ul>'+s.risks.map(function(r){return '<li class="risk">'+r+'</li>';}).join('')+'</ul>'; }
+  if (s.actions) { h += '<h3 style="color:var(--green)">'+(L.summary_actions||'Priority Actions')+'</h3><ul>'+s.actions.map(function(a){return '<li class="action">'+a+'</li>';}).join('')+'</ul>'; }
+  document.getElementById('summaryBody').innerHTML = h;
+}
+
+function renderDualScan() {
+  var ds = REPORT.dualScan;
+  if (!ds) return;
+  document.getElementById('dualScanSection').style.display = '';
+  var h = '';
+  var comps = ds.comparisons || [];
+  var details = ds.moduleDetails || [];
+  var agreeCount = 0, disagreeCount = 0;
+  (details.length ? details : comps).forEach(function(d) { d.agree ? agreeCount++ : disagreeCount++; });
+  var total = agreeCount + disagreeCount;
+
+  // ── Quick stats ──
+  h += '<div class="dual-summary-card">';
+  h += '<div class="dual-summary-stat"><div class="ds-val" style="color:var(--accent)">' + total + '</div><div class="ds-lbl">'+(L.stat_modules||'Modules Verified')+'</div></div>';
+  h += '<div class="dual-summary-stat"><div class="ds-val" style="color:var(--green)">' + agreeCount + '</div><div class="ds-lbl">'+(L.stat_agree||'Agreed')+'</div></div>';
+  h += '<div class="dual-summary-stat"><div class="ds-val" style="color:var(--red)">' + disagreeCount + '</div><div class="ds-lbl">'+(L.stat_disagree||'Disputed')+'</div></div>';
+  h += '<div class="dual-summary-stat"><div class="ds-val" style="color:var(--yellow)">' + (ds.agreeRate || '—') + '</div><div class="ds-lbl">'+(L.stat_agree_rate||'Agreement Rate')+'</div></div>';
+  h += '</div>';
+
+  if (ds.systemicFinding) {
+    h += '<div style="padding:12px 16px;border-radius:8px;border:1px solid var(--yellow);background:rgba(210,153,34,0.06);margin-bottom:16px;font-size:13px;line-height:1.6">';
+    h += '<strong style="color:var(--yellow)">&#9888; '+(L.systemic_finding||'Systemic Finding')+'：</strong>' + ds.systemicFinding + '</div>';
+  }
+
+  h += '<p style="font-size:13px;color:var(--text-dim);margin-bottom:16px">'+(L.dual_desc||'The full dual-scan comparison report is on a separate page.')+'</p>';
+  h += '<a class="dual-open-link" href="dual-scan.html">&#9878; '+(L.open_dual_report||'Open Full Dual-Scan Report')+' &rarr;</a>';
+
+  document.getElementById('dualScanBody').innerHTML = h;
+}
+
+function verdictClass(v) {
+  if (!v) return 'core';
+  v = v.toLowerCase();
+  if (v.indexOf('基石')>=0 || v.indexOf('core')>=0) return 'core';
+  if (v.indexOf('合并')>=0 || v.indexOf('merge')>=0 || v.indexOf('purif')>=0) return 'merge';
+  if (v.indexOf('重塑')>=0 || v.indexOf('reshape')>=0 || v.indexOf('rebuild')>=0) return 'rebuild';
+  if (v.indexOf('淘汰')>=0 || v.indexOf('retire')>=0 || v.indexOf('discard')>=0) return 'retire';
+  return 'core';
+}
+function toggleSection(header) { header.parentElement.classList.toggle('collapsed'); }
+
+init();
+</script>
+</body>
+</html>

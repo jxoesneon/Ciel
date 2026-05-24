@@ -1,0 +1,17 @@
+{
+    "skill_name": "frontend-slides",
+    "original_format": "ecc-simple",
+    "original_path": "/Users/meilynlopezcubero/.agents/skills/frontend-slides/",
+    "ciel_format": "skill/1.0",
+    "adapted_at": "2026-04-20T18-44-00",
+    "ciel_version": "1.0.0",
+    "adapter_version": "1.0.0",
+    "backup_location": "/Users/meilynlopezcubero/.ciel/.attic/core_skills/frontend-slides_2026-04-20T18-44-00.bkp.zip",
+    "council_approved": true,
+    "harmonization_changes": [
+        "Added format: skill/1.0 frontmatter",
+        "Added version, runtimes, triggers",
+        "Generated activation triggers",
+        "Preserved original as SKILL.md.orig"
+    ]
+}

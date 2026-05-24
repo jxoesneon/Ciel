@@ -1,0 +1,31 @@
+---
+name: rust-testing
+version: 1.0.0
+description: Rust testing patterns including unit tests, integration tests, async testing, property-based testing, mocking, and coverage. Follows TDD methodology.
+format: skill/1.0
+author: ECC Project
+license: Apache-2.0
+runtimes:
+  - claude-code
+  - gemini-cli
+  - windsurf
+  - generic
+triggers:
+  - "rust-testing"
+entrypoint: SKILL.md
+---
+
+# rust-testing
+
+Rust testing patterns including unit tests, integration tests, async testing, property-based testing, mocking, and coverage. Follows TDD methodology.
+
+## Integration
+
+This skill is part of Ciel's core capability ecosystem.
+
+## Origin
+
+- **Source**: ECC (Everything Claude Code) ecosystem
+- **Original Path**: /Users/meilynlopezcubero/.agents/skills/rust-testing/
+- **Integrated**: 2026-04-20T18:37:25-06:00
+- **Council Review**: Completed per SKILL_INTEGRATION scope

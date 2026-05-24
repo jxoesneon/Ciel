@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">Asset Audit Report</title>
+<style>
+  :root {
+    --bg: #0d1117; --surface: #161b22; --border: #30363d;
+    --text: #e6edf3; --text-dim: #8b949e; --accent: #58a6ff;
+    --green: #3fb950; --yellow: #d29922; --red: #f85149; --purple: #bc8cff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+         background: var(--bg); color: var(--text); line-height: 1.6; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+
+  .header { text-align: center; padding: 48px 0 32px; border-bottom: 1px solid var(--border); margin-bottom: 32px; }
+  .header h1 { font-size: 28px; font-weight: 600; margin-bottom: 8px; }
+  .header .meta { color: var(--text-dim); font-size: 14px; }
+  .header .desc { color: var(--text-dim); font-size: 13px; margin-top: 8px; max-width: 800px; margin-left: auto; margin-right: auto; }
+
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 32px; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 20px; }
+  .stat-card .label { font-size: 12px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; }
+  .stat-card .value { font-size: 28px; font-weight: 700; margin-top: 4px; }
+  .stat-card .value.green { color: var(--green); }
+  .stat-card .value.yellow { color: var(--yellow); }
+  .stat-card .value.accent { color: var(--accent); }
+  .stat-card .value.purple { color: var(--purple); }
+  .stat-card .value.red { color: var(--red); }
+
+  .section { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 24px; }
+  .section-header { padding: 16px 20px; border-bottom: 1px solid var(--border); cursor: pointer;
+                     display: flex; justify-content: space-between; align-items: center; user-select: none; }
+  .section-header h2 { font-size: 18px; font-weight: 600; }
+  .section-header .toggle { color: var(--text-dim); font-size: 20px; transition: transform 0.2s; }
+  .section.collapsed .section-body { display: none; }
+  .section.collapsed .toggle { transform: rotate(-90deg); }
+  .section-body { padding: 20px; }
+
+  .tree { font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace; font-size: 13px;
+          white-space: pre; overflow-x: auto; line-height: 1.8; color: var(--text-dim); }
+  .tree .dir { color: var(--accent); font-weight: 500; }
+  .tree .tag-3rd { color: var(--yellow); }
+  .tree .tag-core { color: var(--green); }
+  .tree .tag-dead { color: var(--red); }
+
+  .module-card { border: 1px solid var(--border); border-radius: 6px; margin-bottom: 16px; overflow: hidden; }
+  .module-card:last-child { margin-bottom: 0; }
+  .module-title { padding: 12px 16px; background: rgba(88,166,255,0.08); cursor: pointer;
+                  display: flex; justify-content: space-between; align-items: center; }
+  .module-title h3 { font-size: 15px; font-weight: 600; color: var(--accent); }
+  .module-title .badge { font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 500; }
+  .badge-core { background: rgba(63,185,80,0.15); color: var(--green); }
+  .badge-merge { background: rgba(210,153,34,0.15); color: var(--yellow); }
+  .badge-rebuild { background: rgba(188,140,255,0.15); color: var(--purple); }
+  .badge-retire { background: rgba(248,81,73,0.15); color: var(--red); }
+  .module-detail { padding: 16px; display: none; }
+  .module-card.open .module-detail { display: block; }
+  .module-detail table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .module-detail td { padding: 6px 0; vertical-align: top; }
+  .module-detail td:first-child { width: 140px; color: var(--text-dim); font-weight: 500; }
+
+  .triage-table { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed; }
+  .triage-table th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border);
+                     color: var(--text-dim); font-weight: 600; font-size: 12px; text-transform: uppercase;
+                     letter-spacing: 0.3px; word-break: break-word; }
+  .triage-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top;
+                     word-break: break-word; overflow-wrap: break-word; }
+  .triage-table tr:hover { background: rgba(88,166,255,0.04); }
+  .triage-table .verdict { font-weight: 600; }
+  .verdict-core { color: var(--green); }
+  .verdict-merge { color: var(--yellow); }
+  .verdict-rebuild { color: var(--purple); }
+  .verdict-retire { color: var(--red); }
+  /* 资产定级表各列宽度 */
+  #triageBody ~ * th:nth-child(1), .triage-table.triage th:nth-child(1) { width: 12%; }
+  .triage-cols th:nth-child(1) { width: 12%; }
+  .triage-cols th:nth-child(2) { width: 18%; }
+  .triage-cols th:nth-child(3) { width: 14%; }
+  .triage-cols th:nth-child(4) { width: 14%; }
+  .triage-cols th:nth-child(5) { width: 12%; }
+  .triage-cols th:nth-child(6) { width: 20%; }
+  .triage-cols th:nth-child(7) { width: 10%; }
+  /* 三方依赖表各列宽度 */
+  .deps-cols th:nth-child(1) { width: 10%; }
+  .deps-cols th:nth-child(2) { width: 14%; }
+  .deps-cols th:nth-child(3) { width: 14%; }
+  .deps-cols th:nth-child(4) { width: 8%; }
+  .deps-cols th:nth-child(5) { width: 12%; }
+  .deps-cols th:nth-child(6) { width: 18%; }
+  .deps-cols th:nth-child(7) { width: 24%; }
+
+  .stack-bar { display: flex; height: 24px; border-radius: 4px; overflow: hidden; margin: 8px 0; }
+  .stack-bar .seg { display: flex; align-items: center; justify-content: center;
+                    font-size: 11px; font-weight: 600; color: #fff; min-width: 40px; }
+  .seg-cpp { background: #2188ff; }
+  .seg-java { background: #f0883e; }
+  .seg-ios { background: #bc8cff; }
+  .seg-csharp { background: #239120; }
+  .seg-web { background: #3fb950; }
+  .seg-other { background: #484f58; }
+  .stack-legend { display: flex; gap: 16px; margin-top: 8px; font-size: 12px; color: var(--text-dim); }
+  .stack-legend span::before { content: ''; display: inline-block; width: 10px; height: 10px;
+                                border-radius: 2px; margin-right: 4px; vertical-align: middle; }
+  .legend-cpp::before { background: #2188ff; }
+  .legend-java::before { background: #f0883e; }
+  .legend-ios::before { background: #bc8cff; }
+  .legend-csharp::before { background: #239120; }
+  .legend-web::before { background: #3fb950; }
+  .legend-other::before { background: #484f58; }
+
+  .filter-bar { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  .filter-btn { padding: 4px 12px; border-radius: 16px; border: 1px solid var(--border);
+                background: transparent; color: var(--text-dim); cursor: pointer; font-size: 12px; }
+  .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .summary h3 { font-size: 16px; margin-bottom: 12px; color: var(--accent); }
+  .summary ul { padding-left: 20px; margin-bottom: 16px; }
+  .summary li { margin-bottom: 6px; font-size: 13px; }
+  .summary .risk { color: var(--red); }
+  .summary .action { color: var(--green); }
+
+  /* ── Dual-Scan 双扫描验证 ── */
+  .dual-badge { display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: 700;
+                background: linear-gradient(135deg, rgba(63,185,80,0.2), rgba(88,166,255,0.2));
+                border: 1px solid var(--green); color: var(--green); letter-spacing: 1px; margin-right: 8px; }
+  .tag-both { display: inline-block; padding: 1px 6px; border-radius: 4px; font-size: 11px; font-weight: 600;
+              background: rgba(63,185,80,0.15); color: var(--green); margin-right: 4px; }
+  .tag-agent1 { display: inline-block; padding: 1px 6px; border-radius: 4px; font-size: 11px; font-weight: 600;
+                background: rgba(88,166,255,0.15); color: var(--accent); margin-right: 4px; }
+  .tag-agent2 { display: inline-block; padding: 1px 6px; border-radius: 4px; font-size: 11px; font-weight: 600;
+                background: rgba(188,140,255,0.15); color: var(--purple); margin-right: 4px; }
+  .dispute-box { border: 1px solid var(--yellow); border-radius: 8px; padding: 16px; margin-bottom: 12px;
+                 background: rgba(210,153,34,0.05); }
+  .dispute-box h5 { color: var(--yellow); font-size: 14px; margin-bottom: 8px; }
+  .agree-yes { color: var(--green); }
+  .agree-no { color: var(--red); font-weight: 600; }
+
+  /* ── Deep 分析章节 ── */
+  .deep-badge { display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: 700;
+                background: linear-gradient(135deg, rgba(188,140,255,0.2), rgba(88,166,255,0.2));
+                border: 1px solid var(--purple); color: var(--purple); letter-spacing: 1px; margin-right: 8px; }
+  .deep-subsection { margin-bottom: 20px; }
+  .deep-subsection h4 { font-size: 14px; color: var(--accent); margin-bottom: 10px; padding-bottom: 6px;
+                         border-bottom: 1px solid var(--border); }
+  .deep-subsection ul { padding-left: 20px; margin: 0; }
+  .deep-subsection li { margin-bottom: 6px; font-size: 13px; line-height: 1.6; }
+  .deep-files { font-family: 'Cascadia Code', 'Fira Code', Consolas, monospace; font-size: 12px; }
+  .deep-files li { color: var(--text-dim); margin-bottom: 4px; }
+  .deep-files code { color: var(--accent); }
+
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  @media print { body { background: #fff; color: #000; }
+    .section, .stat-card, .module-card { border-color: #ddd; background: #fff; }
+    .section-body, .module-detail { display: block !important; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1 id="reportTitle"></h1>
+    <div class="meta">
+      <span id="scanTarget"></span> &nbsp;|&nbsp;
+      <span id="scanDate"></span>
+      <span id="scanDates" style="display:none"> &nbsp;|&nbsp; <span id="dateRange"></span></span>
+    </div>
+    <div class="desc" id="scanDesc"></div>
+  </div>
+  <div class="stats-grid" id="statsGrid"></div>
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <h2 id="secTechStack"></h2><span class="toggle">&#9660;</span>
+    </div>
+    <div class="section-body">
+      <div class="stack-bar" id="stackBar"></div>
+      <div class="stack-legend">
+        <span class="legend-cpp">C/C++</span>
+        <span class="legend-java">Java/Android</span>
+        <span class="legend-ios">iOS</span>
+        <span class="legend-csharp">C#/.NET</span>
+        <span class="legend-web">Web/TS</span>
+        <span class="legend-other">Other</span>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <h2 id="secTree"></h2><span class="toggle">&#9660;</span>
+    </div>
+    <div class="section-body">
+      <div class="tree" id="assetTree"></div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <h2 id="secModules"></h2><span class="toggle">&#9660;</span>
+    </div>
+    <div class="section-body">
+      <div class="filter-bar" id="filterBar"></div>
+      <div id="moduleList"></div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <h2 id="secTriage"></h2><span class="toggle">&#9660;</span>
+    </div>
+    <div class="section-body">
+      <table class="triage-table triage-cols">
+        <thead id="triageHead"></thead>
+        <tbody id="triageBody"></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <h2 id="secThirdParty"></h2><span class="toggle">&#9660;</span>
+    </div>
+    <div class="section-body">
+      <table class="triage-table deps-cols">
+        <thead id="depsHead"></thead>
+        <tbody id="depsBody"></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="section" id="deepSection" style="display:none">
+    <div class="section-header" onclick="toggleSection(this)" style="border-left: 3px solid var(--purple);">
+      <h2><span style="background:linear-gradient(135deg,var(--purple),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:700">DEEP</span> <span id="secDeep"></span></h2><span class="toggle">&#9660;</span>
+    </div>
+    <div class="section-body" id="deepBody"></div>
+  </div>
+  <div class="section" id="dualScanSection" style="display:none">
+    <div class="section-header" onclick="toggleSection(this)" style="border-left: 3px solid var(--green);">
+      <h2><span style="background:linear-gradient(135deg,var(--green),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:700">DUAL</span> <span id="secDual"></span></h2><span class="toggle">&#9660;</span>
+    </div>
+    <div class="section-body" id="dualScanBody"></div>
+  </div>
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <h2 id="secSummary"></h2><span class="toggle">&#9660;</span>
+    </div>
+    <div class="section-body summary" id="summaryBody"></div>
+  </div>
+</div>
+
+<script>
+// __REPORT_BEGIN__
+const REPORT = {};
+// __REPORT_END__
+
+var L = REPORT.LANG || {};
+
+function init() {
+  document.title = L.title_report || 'Asset Audit Report';
+  document.getElementById('reportTitle').innerHTML = (REPORT.title || L.title_report || 'Asset Audit Report') +
+    (REPORT.hasDeep ? ' <span class="deep-badge" style="font-size:13px;vertical-align:middle">DEEP</span>' : '') +
+    (REPORT.hasDualScan ? ' <span class="dual-badge" style="font-size:13px;vertical-align:middle">DUAL</span>' : '');
+  document.getElementById('scanTarget').textContent = (L.target_path||'Target') + ': ' + (REPORT.target || '—');
+  document.getElementById('scanDate').textContent = (L.scan_date||'Scan Date') + ': ' + (REPORT.date || '—');
+  if (REPORT.oldestSource || REPORT.newestSource) {
+    var range = (REPORT.oldestSource||'?') + ' ~ ' + (REPORT.newestSource||'?');
+    document.getElementById('dateRange').textContent = range;
+    document.getElementById('scanDates').style.display = '';
+  }
+  if (REPORT.desc) document.getElementById('scanDesc').textContent = REPORT.desc;
+  // Section titles
+  var _st = function(id,key,fb){ var e=document.getElementById(id); if(e) e.textContent=L[key]||fb; };
+  _st('secTechStack','sec_tech_stack','Tech Stack Distribution');
+  _st('secTree','sec_tree','Asset Tree');
+  _st('secModules','sec_module_details','Module Details');
+  _st('secTriage','sec_triage','Asset Triage Table');
+  _st('secThirdParty','sec_third_party','Third-Party Dependencies');
+  _st('secDeep','sec_deep','Deep Analysis');
+  _st('secDual','sec_dual','Dual-Scan');
+  _st('secSummary','sec_summary','Audit Summary');
+  // Triage table header
+  document.getElementById('triageHead').innerHTML = '<tr><th>'+(L.col_module||'Module')+'</th><th>'+(L.col_function||'Core Function')+'</th><th>'+(L.col_third_party||'Third-Party Deps')+'</th><th>'+(L.col_deps||'Dependencies')+'</th><th>'+(L.col_activity||'Activity')+'</th><th>'+(L.col_quality||'Quality')+'</th><th>'+(L.col_verdict||'Verdict')+'</th></tr>';
+  // Deps table header
+  document.getElementById('depsHead').innerHTML = '<tr><th>'+(L.col_lib_name||'Library')+'</th><th>'+(L.col_version||'Version')+'</th><th>'+(L.col_location||'Location')+'</th><th>'+(L.col_size||'Size')+'</th><th>'+(L.col_ref_modules||'Used By')+'</th><th>'+(L.col_usage||'Usage')+'</th><th>'+(L.col_assessment||'Assessment')+'</th></tr>';
+  // Filter bar
+  renderFilterBar();
+  renderStats(); renderStackBar(); renderTree(); renderModules(); renderTriage(); renderDeps(); renderDeep(); renderDualScan(); renderSummary();
+}
+function renderFilterBar() {
+  var vLabels = [L.verdict_core||'Core',L.verdict_merge||'Purify & Merge',L.verdict_rebuild||'Reshape',L.verdict_retire||'Retire'];
+  var vKeys = ['core','merge','rebuild','retire'];
+  var h = '<button class="filter-btn active" onclick="filterModules(\'all\', this)">'+(L.filter_all||'All')+'</button>';
+  vLabels.forEach(function(label,i){ h += '<button class="filter-btn" data-vkey="'+vKeys[i]+'" onclick="filterModules(\''+vKeys[i]+'\', this)">'+label+'</button>'; });
+  document.getElementById('filterBar').innerHTML = h;
+}
+function renderStats() {
+  document.getElementById('statsGrid').innerHTML = (REPORT.stats||[]).map(s =>
+    '<div class="stat-card"><div class="label">'+s.label+'</div><div class="value '+(s.color||'')+'">'+s.value+'</div></div>').join('');
+}
+function renderStackBar() {
+  var s = REPORT.stack || {};
+  var segs = [{cls:'seg-cpp',val:s.cpp||0,label:'C++'},{cls:'seg-java',val:s.java||0,label:'Java'},
+    {cls:'seg-ios',val:s.ios||0,label:'iOS'},{cls:'seg-csharp',val:s.csharp||0,label:'C#'},
+    {cls:'seg-web',val:s.web||0,label:'Web'},{cls:'seg-other',val:s.other||0,label:'Other'}].filter(function(x){return x.val>0;});
+  document.getElementById('stackBar').innerHTML = segs.map(function(x){
+    return '<div class="'+x.cls+' seg" style="width:'+x.val+'%">'+(x.val>=5?x.label+' '+x.val+'%':'')+'</div>';}).join('');
+}
+function renderTree() { document.getElementById('assetTree').innerHTML = REPORT.tree || (L.no_data||'No data'); }
+function renderModules() {
+  document.getElementById('moduleList').innerHTML = (REPORT.modules||[]).map(function(m){
+    var vc = verdictClass(m.verdict);
+    return '<div class="module-card" data-vkey="'+vc+'"><div class="module-title" onclick="this.parentElement.classList.toggle(\'open\')">'+
+      '<h3>'+m.name+' <span style="color:var(--text-dim);font-weight:400;font-size:13px">'+(m.path||'')+'</span></h3>'+
+      '<span class="badge badge-'+vc+'">'+m.verdict+'</span></div>'+
+      '<div class="module-detail"><table>'+
+      '<tr><td>'+(L.field_function||'Capabilities')+'</td><td>'+(m.function||'—')+'</td></tr>'+
+      '<tr><td>'+(L.field_core_classes||'Core Code Modules')+'</td><td>'+(m.coreClasses||'—')+'</td></tr>'+
+      '<tr><td>'+(L.field_deps||'Dependencies')+'</td><td>'+(m.deps||'—')+'</td></tr>'+
+      '<tr><td>'+(L.field_third_party||'Third-Party Libs')+'</td><td>'+(m.thirdParty||'—')+'</td></tr>'+
+      '<tr><td>'+(L.field_code_size||'Code Size')+'</td><td>'+(m.codeSize||'—')+'</td></tr>'+
+      '<tr><td>'+(L.field_quality||'Quality Assessment')+'</td><td>'+(m.quality||'—')+'</td></tr>'+
+      '<tr><td>'+(L.field_activity||'Activity')+'</td><td>'+(m.activity||'—')+'</td></tr>'+
+      '</table></div></div>';}).join('');
+}
+function renderTriage() {
+  document.getElementById('triageBody').innerHTML = (REPORT.triage||[]).map(function(r){
+    return '<tr><td><strong>'+r.module+'</strong></td><td>'+r.function+'</td><td>'+r.thirdParty+'</td>'+
+      '<td>'+r.deps+'</td><td>'+r.activity+'</td><td>'+r.quality+'</td>'+
+      '<td class="verdict verdict-'+verdictClass(r.verdict)+'">'+r.verdict+'</td></tr>';}).join('');
+}
+function renderDeps() {
+  document.getElementById('depsBody').innerHTML = (REPORT.thirdPartyDeps||[]).map(function(d){
+    return '<tr><td><strong>'+d.name+'</strong></td><td>'+d.version+'</td><td style="font-size:12px">'+d.location+'</td>'+
+      '<td>'+d.size+'</td><td>'+d.usedBy+'</td><td>'+d.usage+'</td><td>'+d.assessment+'</td></tr>';}).join('');
+}
+function renderDeep() {
+  var d = REPORT.deep;
+  if (!d) return;
+  document.getElementById('deepSection').style.display = '';
+  var h = '';
+  var sections = [
+    {key:'files', title:L.deep_files||'Files Read', cls:'deep-files'},
+    {key:'threadSafety', title:L.deep_thread||'Thread Safety', cls:''},
+    {key:'memory', title:L.deep_memory||'Memory Management', cls:''},
+    {key:'errorHandling', title:L.deep_error||'Error Handling', cls:''},
+    {key:'apiConsistency', title:L.deep_api||'API Consistency', cls:''},
+    {key:'extraFindings', title:L.deep_extra||'Deep Supplementary Findings', cls:''},
+  ];
+  sections.forEach(function(sec) {
+    var items = d[sec.key];
+    if (!items || !items.length) return;
+    h += '<div class="deep-subsection">';
+    h += '<h4><span class="deep-badge">DEEP</span>' + sec.title + '</h4>';
+    h += '<ul class="' + (sec.cls||'') + '">';
+    items.forEach(function(item) { h += '<li>' + item + '</li>'; });
+    h += '</ul></div>';
+  });
+  var vr = d.verdictRevision;
+  if (vr && vr.length) {
+    h += '<div class="deep-subsection" style="border:1px solid var(--red);border-radius:8px;padding:16px;background:rgba(248,81,73,0.05)">';
+    h += '<h4 style="color:var(--red);border-bottom-color:var(--red)"><span class="deep-badge" style="border-color:var(--red);color:var(--red);background:rgba(248,81,73,0.15)">REVISED</span>'+(L.deep_revised||'Verdict Revisions')+'</h4>';
+    h += '<ul>';
+    vr.forEach(function(item) { h += '<li>' + item + '</li>'; });
+    h += '</ul></div>';
+  }
+  document.getElementById('deepBody').innerHTML = h;
+}
+function renderDualScan() {
+  var ds = REPORT.dualScan;
+  if (!ds) return;
+  document.getElementById('dualScanSection').style.display = '';
+  var h = '';
+  // 验证概况
+  if (ds.overview && ds.overview.agreeRate) {
+    h += '<div style="margin-bottom:20px;padding:12px 16px;background:rgba(63,185,80,0.08);border-radius:6px;font-size:14px">';
+    h += '<strong>'+(L.stat_agree_rate||'Agreement Rate')+'：</strong>' + ds.overview.agreeRate;
+    h += '</div>';
+  }
+  // 判决对比表
+  if (ds.comparisons && ds.comparisons.length) {
+    h += '<h4 style="margin-bottom:12px;color:var(--accent)">'+(L.sec_comp_table||'Comparison Table')+'</h4>';
+    h += '<table class="triage-table" style="margin-bottom:24px"><thead><tr>';
+    h += '<th style="width:20%">'+(L.col_module||'Module')+'</th><th style="width:20%">Agent-1</th><th style="width:20%">Agent-2</th>';
+    h += '<th style="width:20%">'+(L.col_verdict||'Final')+'</th><th style="width:20%">Agreement</th></tr></thead><tbody>';
+    ds.comparisons.forEach(function(c) {
+      var vc = verdictClass(c.final);
+      h += '<tr><td><strong>' + c.module + '</strong></td>';
+      h += '<td class="verdict verdict-' + verdictClass(c.agent1) + '">' + c.agent1 + '</td>';
+      h += '<td class="verdict verdict-' + verdictClass(c.agent2) + '">' + c.agent2 + '</td>';
+      h += '<td class="verdict verdict-' + vc + '">' + c.final + '</td>';
+      h += '<td class="' + (c.agree ? 'agree-yes' : 'agree-no') + '">' + (c.agree ? '✓ '+(L.stat_agree||'Agreed') : '✗ '+(L.stat_disagree||'Disputed')) + '</td></tr>';
+    });
+    h += '</tbody></table>';
+  }
+  // 发现对比明细
+  if (ds.findings && Object.keys(ds.findings).length) {
+    h += '<h4 style="margin-bottom:12px;color:var(--accent)">'+(L.sec_unique_findings||'Findings')+'</h4>';
+    Object.keys(ds.findings).forEach(function(mod) {
+      h += '<div style="margin-bottom:16px"><h5 style="font-size:14px;color:var(--text);margin-bottom:8px">' + mod + '</h5><ul style="padding-left:20px">';
+      ds.findings[mod].forEach(function(f) {
+        var cls = f.tag === 'Both' ? 'tag-both' : f.tag.indexOf('Agent-1') === 0 ? 'tag-agent1' : 'tag-agent2';
+        h += '<li style="margin-bottom:4px"><span class="' + cls + '">' + f.tag + '</span> ' + f.text + '</li>';
+      });
+      h += '</ul></div>';
+    });
+  }
+  // 分歧解析
+  if (ds.disputes && ds.disputes.length) {
+    h += '<h4 style="margin-bottom:12px;color:var(--yellow)">'+(L.ai_dispute||'Dispute Resolution')+'</h4>';
+    ds.disputes.forEach(function(d) {
+      h += '<div class="dispute-box"><h5>' + d.module + (d.subtitle ? ' — ' + d.subtitle : '') + '</h5><ul style="padding-left:20px">';
+      d.lines.forEach(function(l) { h += '<li style="margin-bottom:4px">' + l + '</li>'; });
+      h += '</ul></div>';
+    });
+  }
+  document.getElementById('dualScanBody').innerHTML = h;
+}
+function renderSummary() {
+  var s = REPORT.summary;
+  if (!s) return;
+  var h = '';
+  if (s.profile) { h += '<h3>'+(L.summary_profile||'Project Profile')+'</h3><ul>'+s.profile.map(function(p){return '<li>'+p+'</li>';}).join('')+'</ul>'; }
+  if (s.risks) { h += '<h3 style="color:var(--red)">'+(L.summary_risks||'Key Risks')+'</h3><ul>'+s.risks.map(function(r){return '<li class="risk">'+r+'</li>';}).join('')+'</ul>'; }
+  if (s.actions) { h += '<h3 style="color:var(--green)">'+(L.summary_actions||'Priority Actions')+'</h3><ul>'+s.actions.map(function(a){return '<li class="action">'+a+'</li>';}).join('')+'</ul>'; }
+  document.getElementById('summaryBody').innerHTML = h;
+}
+function verdictClass(v) {
+  if (!v) return 'core';
+  v = v.toLowerCase();
+  if (v.indexOf('基石')>=0 || v.indexOf('core')>=0) return 'core';
+  if (v.indexOf('合并')>=0 || v.indexOf('merge')>=0 || v.indexOf('purif')>=0) return 'merge';
+  if (v.indexOf('重塑')>=0 || v.indexOf('reshape')>=0 || v.indexOf('rebuild')>=0) return 'rebuild';
+  if (v.indexOf('淘汰')>=0 || v.indexOf('retire')>=0 || v.indexOf('discard')>=0) return 'retire';
+  return 'core';
+}
+function toggleSection(header) { header.parentElement.classList.toggle('collapsed'); }
+function filterModules(vkey, btn) {
+  document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  document.querySelectorAll('.module-card').forEach(function(card){
+    card.style.display = (vkey==='all'||card.dataset.vkey===vkey) ? '' : 'none';});
+}
+init();
+</script>
+</body>
+</html>

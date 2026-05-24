@@ -1,0 +1,17 @@
+{
+    "skill_name": "requesting-code-review",
+    "original_format": "ecc-simple",
+    "original_path": "/Users/meilynlopezcubero/.agents/skills/requesting-code-review/",
+    "ciel_format": "skill/1.0",
+    "adapted_at": "2026-04-20T18-44-47",
+    "ciel_version": "1.0.0",
+    "adapter_version": "1.0.0",
+    "backup_location": "/Users/meilynlopezcubero/.ciel/.attic/core_skills/requesting-code-review_2026-04-20T18-44-47.bkp.zip",
+    "council_approved": true,
+    "harmonization_changes": [
+        "Added format: skill/1.0 frontmatter",
+        "Added version, runtimes, triggers",
+        "Generated activation triggers",
+        "Preserved original as SKILL.md.orig"
+    ]
+}
