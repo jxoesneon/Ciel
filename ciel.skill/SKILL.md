@@ -7,7 +7,12 @@ license: MIT
 tags: ["ciel", "harmonized", "domain:ai"]
 entrypoint: router/ROUTER.md
 format: skill/1.0
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
+runtimes:
+  - claude-code
+  - gemini-cli
+  - windsurf
+  - devin-for-terminal
+  - generic
 triggers:
 
   - pattern: "ciel"

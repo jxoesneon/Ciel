@@ -8,12 +8,17 @@ Fingerprint the host runtime on every invocation. Cache the result per session.
     - `CLAUDE_CODE_VERSION` / `CLAUDECODE=1` → **claude_code**
     - `GEMINI_CLI_VERSION` / `GEMINI_API_KEY` + CLI binary present → **gemini_cli**
     - `WINDSURF_VERSION` / `WINDSURF_WORKSPACE_ID` → **windsurf**
+    - `DEVIN_VERSION` / `DEVIN_CLI=1` / `DEVIN_API_KEY` → **devin-for-terminal**
 2. **Filesystem fingerprints**
-    - `.claude/` directory, `~/.claude/settings.json` → claude_code
-    - `.gemini/` directory, `~/.gemini/settings.json` → gemini_cli
+    - `.claude/` directory, `~/.claude/settings.json` → claude-code
+    - `.gemini/` directory, `~/.gemini/settings.json` → gemini-cli
+    - `.devin/` directory, `~/.config/devin/config.json` → devin-for-terminal
+    - Presence of `devin` binary + Windsurf app bundle → devin-for-terminal (Windsurf channel)
+    - `AGENTS.md` at project root + `.devin/` → strong devin-for-terminal signal
 3. **Binary probes** (if `seed_skills/shell/SKILL.md` available)
-    - `claude --version` success → claude_code
-    - `gemini --version` success → gemini_cli
+    - `claude --version` success → claude-code
+    - `gemini --version` success → gemini-cli
+    - `devin --version` success → devin-for-terminal
 4. **Capability probe** (generic fallback)
     - Defer to `adapters/generic/CAPABILITY_PROBE.md`.
 
@@ -21,7 +26,7 @@ Fingerprint the host runtime on every invocation. Cache the result per session.
 
 ```yaml
 runtime:
-  id: claude_code | gemini_cli | windsurf | generic
+  id: claude-code | gemini-cli | windsurf | devin-for-terminal | generic
   version: "..."
   features:
     hooks: true
@@ -30,6 +35,7 @@ runtime:
     parallel_subagents: false | true
     computer_use: false | preview | true
     plan_mode: false | true
+    sandbox: false | true
 ```
 
 ## Adapter Load
