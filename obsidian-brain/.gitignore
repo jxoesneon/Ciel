@@ -1,0 +1,22 @@
+# Obsidian runtime files
+.obsidian/
+.obsidian-mobile/
+.trash/
+
+# Obsidian sync / third-party sync
+.obsidian-sync/
+
+# Hybrid search indexes (regenerable)
+.obsidian-hybrid-search.db
+.obsidian-hybrid-search.db-*
+
+# memem / knowledge-graph side indexes (regenerable)
+~/.memem/
+~/.local/share/knowledge-graph/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node modules if anything is installed inside the vault
+node_modules/
