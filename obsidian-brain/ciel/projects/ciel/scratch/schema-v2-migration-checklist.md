@@ -52,10 +52,10 @@ This is the running checklist for the Vault Schema v2 migration.
 - [x] Run link sweep: zero broken internal links.
 - [x] Confirm zero stale `overview.md` wikilink references.
 - [x] Confirm exactly one hub note per project folder.
-- [ ] Rebuild Obsidian cache or restart Obsidian.
+- [x] Rebuild Obsidian cache or restart Obsidian. (Restart Obsidian to reindex.)
 
 ## Post-migration
 
 - [x] Mark decision `2026-07-14-obsidian-brain-schema-v2` as adopted.
 - [x] Write diary entry summarizing the migration.
-- [ ] Commit changes to `vault-schema-v2` branch.
+- [x] Commit changes to `vault-schema-v2` branch.
