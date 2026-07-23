@@ -15,7 +15,7 @@ Five lenses, each a dedicated evaluator:
 ## Design Council Mapping to Ciel Council
 
 | Ciel Council | Design Council | Shared Concern |
-|--------------|----------------|----------------|
+| ------------ | ---------------- | ---------------- |
 | Coherence | Clarity | harmony, consistency, fitting patterns |
 | Capability | Actionability | can the user/agent accomplish the goal |
 | Safety | Inclusion | risk of harm/exclusion, veto authority |
