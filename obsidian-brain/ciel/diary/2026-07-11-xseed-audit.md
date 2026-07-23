@@ -1,9 +1,0 @@
----
-title: Xseed Audit
-type: diary
-tags: [diary, session]
-created: 2026-07-11
-status: active
----
-
-{"content":"# X-Seed static-analysis & test-health audit (2026-07-11)\n\n## Summary\n- \flutter analyze --fatal-infos: clean (no issues).\n- \flutter test: 1930 passed, 0 failed. AGENTS.md still says 1751 tests - docs need update.\n- \flutter test --coverage: 74.90% line coverage (14982 instrumented, 11222 covered). Regression of ~14.15pp vs AGENTS.md baseline 89.05%, and below 80% Iron Law threshold.\n- Builds: \flutter build apk --debug --flavor play and --flavor full both succeeded with Kotlin Gradle Plugin deprecation warnings.\n- Flakiness: no failures in one full run; IPFS lifecycle and addon-server tests are slow/timing-sensitive and are the main flake risk areas.\n\n## RC blockers\n1. Coverage regression (74.9% < 80% < 89.05%).\n2. 21 files have 0% coverage, totaling 1134 instrumented lines; top offenders include community providers, debug UI, tracker cache/refresh, and configurable HTTP provider.\n\n## Suggested fixes\n- Add unit tests for community scraper providers using mock HTTP clients.\n- Add widget tests for debug_logs_screen.dart, community_plugins_section.dart, popularity_settings_section.dart, and stream_filters.dart.\n- Add tests for \tracker_cache_repository.dart, \tracker_refresh_service.dart, precache_service.dart, and community_plugin_loader.dart.\n- Resolve addon-server test binding warnings by ensuring TestWidgetsFlutterBinding.ensureInitialized() or mocking ServicesBinding usage.\n- Update AGENTS.md test count and coverage baseline once tests are added.\n"}
