@@ -5,7 +5,7 @@ Implements the Ciel abstract memory API (`CielMemoryBackend`) over an Obsidian v
 ## Responsibilities
 
 | Abstract Method | Obsidian Service Used |
-|-----------------|----------------------|
+| ----------------- | ---------------------- |
 | `put` | `obsidian-local-rest-api` PUT `/vault/{path}` |
 | `get` | `obsidian-local-rest-api` GET `/vault/{path}` |
 | `query` | `obsidian-hybrid-search` with scope filters |

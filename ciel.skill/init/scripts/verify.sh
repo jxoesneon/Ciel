@@ -8,6 +8,7 @@ CIEL_HOME="${CIEL_HOME:-$HOME/.ciel}"
 FAILED=0
 
 say() { printf "\033[1;36m[ciel-verify]\033[0m %s\n" "$*"; }
+warn() { printf "\033[1;33m[ciel-verify]\033[0m %s\n" "$*" 1>&2; }
 fail() {
   printf "\033[1;31m[ciel-verify]\033[0m %s\n" "$*" 1>&2
   FAILED=1
