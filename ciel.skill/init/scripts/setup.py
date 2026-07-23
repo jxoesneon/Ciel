@@ -41,7 +41,7 @@ def run(cmd: list[str], cwd: Path | None = None, check: bool = True) -> subproce
 def main():
     CIEL_HOME.mkdir(parents=True, exist_ok=True)
     with open(LOG_FILE, "w", encoding="utf-8") as f:
-        f.write(f"--- Ciel Bootstrap {datetime.datetime.now().isoformat()} ---\n")
+        f.write(f"--- Ciel Bootstrap {datetime.datetime.now(datetime.timezone.utc).isoformat()} ---\n")
 
     say(f"Ciel {CIEL_VERSION} — unified cross-platform setup")
     say(f"CIEL_HOME={CIEL_HOME}")
