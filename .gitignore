@@ -48,3 +48,13 @@ artifacts/transient/
 # Obsidian brain — migrated to private repo (jxoesneon/obsidian-brain)
 # Contains personal data (DOB, phone, emails, job applications)
 obsidian-brain/
+
+# Local Obsidian vault config (if a vault is opened in the repo root)
+.obsidian/
+
+# Legacy MemPalace local stores (superseded by Obsidian backend)
+.mempalace/
+.fastembed_cache/
+
+# Local archive of superseded skills (kept as .disabled/ in-tree instead)
+archive/
