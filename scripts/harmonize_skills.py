@@ -43,7 +43,7 @@ def harmonize_skill(file_path):
             tags.append(f"domain:{domain}")
         # Clean up tags
         tags = [t for t in tags if t not in ["ciel", "harmonized"]]
-        tags = ["ciel", "harmonized"] + sorted(list(set(tags)))
+        tags = ["ciel", "harmonized"] + sorted(set(tags))
         new_tags_str = 'tags: [' + ', '.join(f'"{t}"' for t in tags) + ']'
         content = content.replace(tag_match.group(0), new_tags_str)
 

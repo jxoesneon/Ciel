@@ -30,7 +30,7 @@ def die(msg: str):
 def need(cmd: str) -> bool:
     return shutil.which(cmd) is not None
 
-def run(cmd: list[str], cwd: Path = None, check: bool = True) -> subprocess.CompletedProcess:
+def run(cmd: list[str], cwd: Path | None = None, check: bool = True) -> subprocess.CompletedProcess:
     try:
         return subprocess.run(cmd, cwd=cwd, check=check, capture_output=True, text=True)
     except subprocess.CalledProcessError as e:

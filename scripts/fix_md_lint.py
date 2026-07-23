@@ -1,6 +1,7 @@
 import os
 import re
 
+
 def fix_markdown(content):
     if not content.strip():
         return content
@@ -105,7 +106,7 @@ if __name__ == "__main__":
                             file.write(fixed)
                         print(f"Fixed {os.path.relpath(path, root_dir)}")
                         fixed_count += 1
-                except Exception as e:
+                except (OSError, UnicodeDecodeError) as e:
                     print(f"Error fixing {path}: {e}")
 
     print(f"\nTotal files fixed: {fixed_count}")
