@@ -44,3 +44,7 @@ __pycache__/
 # Helper scripts
 # (Removed explicit ignores to allow adapt-skill.sh, analyze-skill.sh, generate-triggers.sh)
 artifacts/transient/
+
+# Obsidian brain — migrated to private repo (jxoesneon/obsidian-brain)
+# Contains personal data (DOB, phone, emails, job applications)
+obsidian-brain/
