@@ -21,7 +21,7 @@ interface CielMemoryBackend {
 }
 ```
 
-The abstract definition is in `seed_skills/mempalace_manager/SKILL.md`.
+The abstract definition is in `skills/obsidian-memory/SKILL.md`.
 
 ## Configuration
 

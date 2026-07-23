@@ -1,36 +1,52 @@
-# INSTALL — MemPalace-rs
+# INSTALL — Obsidian Backend
 
-Ciel installs, maintains, and updates MemPalace-rs.
+Ciel installs, maintains, and updates the Obsidian memory backend.
 
 ## Prerequisites
 
-- Rust toolchain (`rustup`, `cargo`). If missing, Ciel proposes installation via `seed_skills/package_manager/SKILL.md`.
+- Obsidian desktop app installed and running.
+- `obsidian-local-rest-api` plugin enabled with a generated API key.
+- Node.js (`node` + `npm`) available.
+- Optional: `obsidian-hybrid-search` for semantic/hybrid retrieval.
 
-## Install Command
+## Install / Update Dependencies
 
 ```bash
-cargo install mempalace-rs --locked
+cd ciel.skill/memory/backends/obsidian
+npm install
 ```
 
-Success verified by `mempalace-rs --version` returning a parseable semver.
+This installs `js-yaml` and other adapter dependencies.
+
+## Verify Obsidian Backend
+
+```bash
+node ciel.skill/memory/backends/obsidian/cli.mjs --self-test
+```
+
+Expected checks:
+
+- Local REST API status responds with `OK`.
+- Read/write round-trip succeeds.
+- Hybrid search server is reachable.
+- Knowledge-graph server is reachable (optional).
 
 ## Upgrade Cadence
 
 On every `init/INIT.md` invocation:
 
-1. Query installed version.
-2. Query latest (`cargo search mempalace-rs` or `crates.io` API).
-3. If newer is available and `memory.config.auto_update: true`, propose upgrade.
-4. Upgrade is Council-gated (`council/invocation_scopes/SKILL_INTEGRATION.md`) because it changes a load-bearing dep.
-5. On pass, run upgrade, migration, and integrity check.
+1. Verify Obsidian backend dependencies (`npm install` if `package.json` changed).
+2. Run the adapter self-test.
+3. If the self-test fails, propose a fix or fall back per `FALLBACK.md`.
+4. On pass, run migration and integrity check.
 
 ## Migration
 
-Schema version lives at `ciel-global:meta/schema_version`. Each upgrade runs migrations in order. Failed migration → auto-rollback to previous version and backup restore (`BACKUP.md`).
+Schema version lives in `obsidian-brain/.obsidian/` and vault structure. Each upgrade runs migrations in order. Failed migration → auto-rollback to previous snapshot and backup restore (`BACKUP.md`).
 
 ## Fallback Installation Failure
 
-If installation fails (no rust, offline, crates.io unreachable) or MemPalace health check fails, Ciel falls back per `FALLBACK.md`:
+If Obsidian is not available or the self-test fails, Ciel falls back per `FALLBACK.md`:
 
 1. Try SQLite backend (`backends/SQLITE.md`).
 2. Try filesystem KV (`backends/FILESYSTEM.md`).
@@ -40,16 +56,16 @@ If installation fails (no rust, offline, crates.io unreachable) or MemPalace hea
 
 ```yaml
 memory:
-  backend: mempalace|sqlite|filesystem|custom
-  auto_update: true
-  version_pin: null          # or "1.2.3"
+  backend: custom
+  auto_update: false
+  custom:
+    entry: "ciel.skill/memory/backends/obsidian/cli.mjs"
+    runtime: node
+    endpoint: null
+    auth_env: OBSIDIAN_API_KEY
 ```
 
-Pinning prevents auto-updates; Ciel warns on known-security-update version gaps.
+## Binary / Entry Location
 
-## Binary Location
-
-- macOS/Linux: `$CARGO_HOME/bin/mempalace-rs` (typically `~/.cargo/bin/mempalace-rs`).
-- Windows: `%USERPROFILE%\.cargo\bin\mempalace-rs.exe`.
-
-`init/scripts/install.sh` ensures `$CARGO_HOME/bin` is on PATH.
+- Adapter entry: `ciel.skill/memory/backends/obsidian/cli.mjs`.
+- Node runtime must be on PATH.

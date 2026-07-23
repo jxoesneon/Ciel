@@ -1,6 +1,6 @@
 # MEMORY — Architecture Master
 
-Ciel's persistent memory. Primary: **MemPalace-rs**. Fallbacks: SQLite, filesystem KV, custom.
+Ciel's persistent memory. Primary: **Obsidian vault** via the `custom` backend. Fallbacks: SQLite, filesystem KV, custom.
 
 ## Goals
 
@@ -14,7 +14,7 @@ Ciel's persistent memory. Primary: **MemPalace-rs**. Fallbacks: SQLite, filesyst
 
 | Layer | Role |
 | --- | --- |
-| `MEMPALACE.md` | primary backend contract |
+| `MEMPALACE.md` | primary Obsidian backend contract |
 | `PARTITION.md` | partition schema (keyspaces) |
 | `INSTALL.md` | install + auto-update protocol |
 | `FALLBACK.md` | fallback trigger + selection |
@@ -26,7 +26,7 @@ Ciel's persistent memory. Primary: **MemPalace-rs**. Fallbacks: SQLite, filesyst
 
 ## Access Pattern
 
-All memory access goes through `seed_skills/mempalace_manager/SKILL.md` (backend-abstracting). Direct backend calls are forbidden.
+All memory access goes through `skills/obsidian-memory/SKILL.md` (backend-abstracting). Direct backend calls are forbidden.
 
 ## Keyspace (top-level)
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Ciel — single-call setup (POSIX/macOS/Linux)
-# Runs bootstrap: creates ~/.ciel/, installs mempalace-rs, git-inits, verifies.
+# Runs bootstrap: creates ~/.ciel/, installs Obsidian backend deps, git-inits, verifies.
 
 set -euo pipefail
 
@@ -57,35 +57,35 @@ else
   warn "git not found; skipping git setup. Ciel can run but history will be disabled."
 fi
 
-# --- 4. Rust toolchain -------------------------------------------------------
-if ! need cargo; then
-  warn "Rust toolchain not found."
-  if [ "${CIEL_AUTO_INSTALL_RUST:-0}" = "1" ]; then
-    say "Installing Rust via rustup (auto)…"
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable --profile minimal
-    # shellcheck source=/dev/null
-    . "$HOME/.cargo/env"
-  else
-    warn "Set CIEL_AUTO_INSTALL_RUST=1 to auto-install. Falling back to SQLite backend."
-    SKIP_MEMPALACE=1
+# --- 4. Node.js toolchain ------------------------------------------------------
+SKIP_OBSIDIAN_BACKEND=1
+if need node && need npm; then
+  SKIP_OBSIDIAN_BACKEND=0
+else
+  warn "Node.js toolchain (node/npm) not found. Obsidian backend requires it."
+  if [ "${CIEL_AUTO_INSTALL_NODE:-0}" = "1" ]; then
+    warn "Auto-install of Node.js is not implemented in this bootstrap; please install Node.js and re-run."
   fi
 fi
 
-# --- 5. MemPalace-rs ---------------------------------------------------------
-if [ -z "${SKIP_MEMPALACE:-}" ] && need cargo; then
-  if ! need mempalace-rs; then
-    say "Installing mempalace-rs (cargo install --locked)…"
-    cargo install mempalace-rs --locked || {
-      warn "cargo install failed; will fall back"
-      SKIP_MEMPALACE=1
+# --- 5. Obsidian backend dependencies ----------------------------------------
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+OBSIDIAN_BACKEND_DIR="$SCRIPT_DIR/../../memory/backends/obsidian"
+if [ "$SKIP_OBSIDIAN_BACKEND" -eq 0 ]; then
+  if [ -d "$OBSIDIAN_BACKEND_DIR" ]; then
+    say "Installing Obsidian backend dependencies (npm install)..."
+    (cd "$OBSIDIAN_BACKEND_DIR" && npm install) || {
+      warn "npm install failed for Obsidian backend; will fall back"
+      SKIP_OBSIDIAN_BACKEND=1
     }
   else
-    say "mempalace-rs already installed: $(mempalace-rs --version 2>/dev/null || echo 'unknown')"
+    warn "Obsidian backend directory not found at $OBSIDIAN_BACKEND_DIR"
+    SKIP_OBSIDIAN_BACKEND=1
   fi
 fi
 
 # --- 6. Fallback backend (SQLite) --------------------------------------------
-if [ -n "${SKIP_MEMPALACE:-}" ]; then
+if [ "$SKIP_OBSIDIAN_BACKEND" -ne 0 ]; then
   if need sqlite3; then
     say "Configuring SQLite fallback backend."
     touch "$CIEL_HOME/ciel.db"

@@ -41,7 +41,7 @@ def run(cmd: list[str], cwd: Path = None, check: bool = True) -> subprocess.Comp
 def main():
     CIEL_HOME.mkdir(parents=True, exist_ok=True)
     with open(LOG_FILE, "w", encoding="utf-8") as f:
-        f.write(f"--- Ciel Bootstrap {datetime.datetime.now().isoformat()} ---\n")
+        f.write(f"--- Ciel Bootstrap {datetime.datetime.now(datetime.timezone.utc).isoformat()} ---\n")
 
     say(f"Ciel {CIEL_VERSION} — unified cross-platform setup")
     say(f"CIEL_HOME={CIEL_HOME}")
@@ -84,31 +84,29 @@ def main():
     else:
         warn("git not found; skipping git setup.")
 
-    # 3. Rust & MemPalace-rs
-    skip_mempalace = False
-    if not need("cargo"):
-        warn("Rust toolchain (cargo) not found.")
-        if os.environ.get("CIEL_AUTO_INSTALL_RUST") == "1":
-            say("Auto-installing Rust...")
-            # This is complex across platforms, usually we'd download rustup-init
-            # For brevity in this setup.py, we'll assume the user should install it or we fallback
-            warn("Auto-install of Rust not fully implemented in setup.py yet. Falling back.")
-            skip_mempalace = True
-        else:
-            skip_mempalace = True
+    # 3. Node.js toolchain
+    skip_obsidian_backend = False
+    if not need("node") or not need("npm"):
+        warn("Node.js toolchain (node/npm) not found. Obsidian backend requires it.")
+        skip_obsidian_backend = True
 
-    if not skip_mempalace and need("cargo"):
-        if not need("mempalace-rs"):
-            say("Installing mempalace-rs (cargo install --locked)...")
-            res = run(["cargo", "install", "mempalace-rs", "--locked"], check=False)
+    # 4. Obsidian backend dependencies
+    obsidian_backend_dir = Path(__file__).parent.parent.parent / "memory" / "backends" / "obsidian"
+    if not skip_obsidian_backend:
+        if obsidian_backend_dir.exists():
+            say("Installing Obsidian backend dependencies (npm install)...")
+            res = run(["npm", "install"], cwd=obsidian_backend_dir, check=False)
             if res.returncode != 0:
-                warn(f"cargo install failed. Error: {res.stderr}")
-                skip_mempalace = True
+                warn(f"npm install failed. Error: {res.stderr}")
+                skip_obsidian_backend = True
+            else:
+                say("Obsidian backend dependencies installed.")
         else:
-            say("mempalace-rs already installed.")
+            warn(f"Obsidian backend directory not found at {obsidian_backend_dir}")
+            skip_obsidian_backend = True
 
-    # 4. Fallback backend
-    if skip_mempalace:
+    # 5. Fallback backend
+    if skip_obsidian_backend:
         if need("sqlite3"):
             say("Configuring SQLite fallback backend.")
             (CIEL_HOME / "ciel.db").touch()
@@ -116,8 +114,8 @@ def main():
             warn("sqlite3 not found; falling back to filesystem KV backend.")
             (CIEL_HOME / "fs_backend").mkdir(parents=True, exist_ok=True)
 
-    # 7. Integrity seed
-    now = datetime.datetime.now(datetime.UTC).isoformat(timespec='seconds').replace('+00:00', 'Z')
+    # 6. Integrity seed
+    now = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec='seconds').replace('+00:00', 'Z')
     integrity = {
         "schema": 1,
         "version": CIEL_VERSION,
@@ -128,7 +126,7 @@ def main():
     (CIEL_HOME / "INTEGRITY.json").write_text(json.dumps(integrity, indent=2), encoding="utf-8")
     say("Integrity seed written.")
 
-    # 6. Activity log
+    # 7. Activity log
     log_entry = {
         "ts": now,
         "kind": "bootstrap",
@@ -137,7 +135,7 @@ def main():
     with open(CIEL_HOME / "activity.log", "a", encoding="utf-8") as f:
         f.write(json.dumps(log_entry) + "\n")
 
-    # 7. Verification
+    # 8. Verification
     say("Running verification...")
     # Verify.sh is still POSIX-centric, so we skip it if on Windows or it fails
     verify_script = Path(__file__).parent / "verify.sh"

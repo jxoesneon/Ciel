@@ -35,7 +35,7 @@ See `SCHEMA.md` for the full schema. Per-skill:
 
 ## Query Interface
 
-Exposed by `seed_skills/mempalace_manager/SKILL.md`:
+Exposed by `skills/obsidian-memory/SKILL.md`:
 
 - `registry.by_trigger(token)` — exact and fuzzy.
 - `registry.by_tag(tag)` — tag intersection search.

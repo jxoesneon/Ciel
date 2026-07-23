@@ -46,7 +46,7 @@ CIEL MUST NOT invoke implementation skills (writing code, scaffolding, refactori
 
 ### 1. Context Mining
 
-Before asking the first question, CIEL must use `grep_search` and `mempalace-rs` to understand the existing project DNA (conventions, patterns, prior ADRs).
+Before asking the first question, CIEL must use `grep_search` and `obsidian-memory` to understand the existing project DNA (conventions, patterns, prior ADRs).
 
 ### 2. The Socratic Loop
 

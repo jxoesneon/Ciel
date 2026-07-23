@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Ciel — dependency verification + integrity check.
 # Exits non-zero on any failure.
+# In Obsidian mode, the primary memory backend is the Obsidian vault adapter.
 
 set -euo pipefail
 
@@ -51,12 +52,12 @@ else
 fi
 
 # 4. Memory backend
-if command -v mempalace-rs >/dev/null 2>&1; then
-  VER="$(mempalace-rs --version 2>/dev/null || true)"
-  if [ -n "$VER" ]; then
-    say "mempalace-rs ok: $VER"
+OBSIDIAN_BACKEND_DIR="$(cd "$(dirname "$0")" && pwd)/../../memory/backends/obsidian"
+if command -v node >/dev/null 2>&1 && [ -f "$OBSIDIAN_BACKEND_DIR/cli.mjs" ]; then
+  if node "$OBSIDIAN_BACKEND_DIR/cli.mjs" --self-test >/dev/null 2>&1; then
+    say "obsidian backend ok"
   else
-    fail "mempalace-rs present but not runnable"
+    warn "obsidian backend self-test failed; vault may not be open or Local REST API not enabled"
   fi
 elif [ -f "$CIEL_HOME/ciel.db" ]; then
   say "sqlite fallback detected."

@@ -16,7 +16,7 @@ locked: true
 
 ## Enforcement
 
-- **Partition scoping** — `seed_skills/mempalace_manager/SKILL.md` rejects cross-partition reads without explicit scope declaration.
+- **Partition scoping** — `skills/obsidian-memory/SKILL.md` rejects cross-partition reads without explicit scope declaration.
 - **Activity log** — every cross-scope operation is logged with reason, actor, keys.
 - **Integrity sweep** — periodic scan for stray cross-references; violations are immediate Safety incidents.
 - **Promotion stripping** — `HARMONIZATION.md` style identifier removal at promotion time.

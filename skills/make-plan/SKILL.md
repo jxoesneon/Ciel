@@ -42,7 +42,7 @@ The plan MUST start by reading the approved design spec from `docs/ciel/specs/`.
 
 Before any implementation tasks are defined, CIEL must:
 
-- Use `grep_search` and `mempalace-rs` to find relevant internal examples.
+- Use `grep_search` and `obsidian-memory` to find relevant internal examples.
 - Use `documentation-lookup` or `web_fetch` for external API signatures.
 - Output a "Source of Truth" summary: exact file paths, API signatures, and copy-ready patterns.
 

@@ -1,0 +1,23 @@
+{
+  "name": "ciel-obsidian-memory-backend",
+  "version": "1.0.0",
+  "description": "CielMemoryBackend implementation over Obsidian Local REST API, obsidian-hybrid-search, and knowledge-graph.",
+  "type": "module",
+  "main": "adapter.mjs",
+  "bin": {
+    "ciel-obsidian-memory": "./cli.mjs"
+  },
+  "scripts": {
+    "test": "node --test tests/*.mjs",
+    "self-test": "node cli.mjs --self-test"
+  },
+  "dependencies": {
+    "front-matter": "^4.0.2",
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "license": "MIT"
+}

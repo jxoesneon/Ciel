@@ -1,19 +1,19 @@
 # FALLBACK — Memory Backends
 
-Triggers and order when MemPalace-rs is unavailable.
+Triggers and order when the Obsidian backend is unavailable.
 
 ## Triggers
 
-1. `cargo install mempalace-rs` fails after retry.
-2. `HEALTH_CHECK.md` reports critical failure (corrupt index, API mismatch).
+1. Obsidian desktop app is not running or the Local REST API plugin is not loaded.
+2. `node ciel.skill/memory/backends/obsidian/cli.mjs --self-test` reports a critical failure (network, auth, corrupt vault index).
 3. User explicitly configures a different backend.
-4. Schema migration fails irreparably.
+4. Schema migration or vault path change fails irreparably.
 
 ## Order
 
 1. **SQLite** (`backends/SQLITE.md`) — single-file, ubiquitous, reliable. No semantic search.
 2. **Filesystem KV** (`backends/FILESYSTEM.md`) — key-per-file; simple; no embeddings.
-3. **Custom** (`backends/CUSTOM.md`) — only if user supplies an adapter implementing the abstract API.
+3. **Custom** (`backends/CUSTOM.md`) — only if the user supplies an adapter implementing the abstract API.
 
 ## Semantic Search in Fallback
 
@@ -25,7 +25,7 @@ Every fallback event is a prominent activity.log entry and a user-visible summar
 
 ## Auto-Recovery
 
-Ciel periodically re-attempts MemPalace-rs install on the cadence `memory.config.reinstall_check_days` (default 7). Successful recovery triggers a supervised migration from fallback store back into MemPalace.
+Ciel periodically re-attempts Obsidian backend connectivity on the cadence `memory.config.reinstall_check_days` (default 7). Successful recovery triggers a supervised migration from fallback store back into the Obsidian vault.
 
 ## Data Loss Avoidance
 

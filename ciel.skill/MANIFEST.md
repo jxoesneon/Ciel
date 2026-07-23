@@ -27,11 +27,11 @@
 
 | Tool | Source | Required | Auto-install |
 | --- | --- | --- | --- |
-| `mempalace-rs` | `cargo install mempalace-rs` | primary memory backend | yes (see `memory/INSTALL.md`) |
+| `obsidian-backend` | `npm install` in `ciel.skill/memory/backends/obsidian/` | primary memory backend | yes (see `memory/INSTALL.md`) |
 | `git` | system | versioning of `~/.ciel/` | yes (verified, not installed) |
 | `curl` / `wget` | system | web acquisition tier | yes (verified) |
 | `sqlite3` | system | fallback memory backend | optional |
-| `rustc` / `cargo` | `rustup` | builds `mempalace-rs` | yes (opt-in via CIEL_AUTO_INSTALL_RUST=1) |
+| `rustc` / `cargo` | `rustup` | builds legacy Rust backend (archived) | no — disabled in Obsidian mode |
 | `node` / `npm` | system | skill-runner pkg ops | optional |
 | `python3` / `pip` | system | skill-runner pkg ops | optional |
 | `docker` | system | acquisition sandboxing | optional |
@@ -44,7 +44,7 @@
 - Skill composition + harmonization
 - Council of Five deliberation
 - Two-domain operation (global + local)
-- MemPalace-rs primary memory with SQLite / filesystem fallback
+- Obsidian vault primary memory with SQLite / filesystem fallback
 - Self-improvement loop with git-backed rollback
 - Risk classification + LLM judge gate
 - OpenTelemetry + activity log observability

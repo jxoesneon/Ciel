@@ -1,22 +1,24 @@
-# HEALTH_CHECK — MemPalace-rs
+# HEALTH_CHECK — Obsidian Backend
 
-Startup verification + corruption recovery for the memory backend.
+Startup verification + corruption recovery for the Obsidian memory backend.
 
 ## Checks
 
-1. **Binary present & runnable** — `mempalace-rs --version` succeeds.
-2. **Schema version** — `get ciel-global meta/schema_version` matches expected (or upgradable).
-3. **Partitions listed** — `ciel-global` and current project's partition both present.
-4. **RW self-test** — put a throw-away key, read back, delete. Expect no errors.
-5. **Checksum of recent entries** — verify last 10 non-archive entries parseable.
+1. **Obsidian running & Local REST API reachable** — GET `/` returns `status: OK`.
+2. **API key valid** — authenticated read/write round-trip succeeds.
+3. **Vault path present** — `OBSIDIAN_VAULT_PATH` points to a directory containing `obsidian-brain`.
+4. **Hybrid search reachable** — `obsidian-hybrid-search` health endpoint responds.
+5. **RW self-test** — put a throw-away key, read back, delete. Expect no errors.
+6. **Checksum of recent entries** — verify last 10 non-archive entries parseable.
 
 ## On Failure
 
 | Failure | Action |
 | --- | --- |
-| Binary missing | Attempt `INSTALL.md`; on failure → fallback. |
-| Schema mismatch | Attempt auto-migration; on failure → fallback. |
-| Partitions missing | Attempt restore from latest backup; on failure → recreate empty + escalate. |
+| Obsidian not running | Prompt user to start Obsidian; retry once, then fallback. |
+| API key invalid / missing | Direct user to Local REST API settings to regenerate/copy key. |
+| Vault path missing | Prompt user to open `obsidian-brain/` as a vault. |
+| Hybrid search down | Attempt to start (`npx obsidian-hybrid-search serve`); on failure degrade to vault listing. |
 | RW self-test fails | Fallback. Run corruption diagnostic in the background. |
 | Checksum failure | Move corrupt entries to `~/.ciel/.attic/corrupt/<ts>/`, reindex, continue. |
 
@@ -28,7 +30,7 @@ Startup verification + corruption recovery for the memory backend.
 
 ## Recovery Without Data Loss
 
-Auto-recovery prefers data preservation. If a choice must be made between availability and integrity, Ciel chooses integrity — entering degraded mode with fallback backend while preserving the original MemPalace partition for forensic inspection.
+Auto-recovery prefers data preservation. If a choice must be made between availability and integrity, Ciel chooses integrity — entering degraded mode with fallback backend while preserving the original Obsidian vault for forensic inspection.
 
 ## Notification
 

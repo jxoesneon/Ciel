@@ -1,5 +1,5 @@
 # Ciel — single-call setup (Windows PowerShell)
-# Runs bootstrap: creates ~/.ciel/, installs mempalace-rs, git-inits, verifies.
+# Runs bootstrap: creates ~/.ciel/, installs Obsidian backend deps, git-inits, verifies.
 
 $ErrorActionPreference = "Stop"
 
@@ -52,35 +52,33 @@ sandbox/
     Warn "git not found; skipping git setup."
 }
 
-# --- 3. Rust toolchain -------------------------------------------------------
-$SkipMempalace = $false
-if (-not (Need "cargo")) {
-    Warn "Rust toolchain not found."
-    if ($env:CIEL_AUTO_INSTALL_RUST -eq "1") {
-        Say "Installing Rust via rustup-init.exe (auto)..."
-        $rustInit = Join-Path $env:TEMP "rustup-init.exe"
-        Invoke-WebRequest "https://win.rustup.rs" -OutFile $rustInit
-        & $rustInit -y --default-toolchain stable --profile minimal | Out-Null
-        $cargoBin = Join-Path $HOME ".cargo\bin"
-        $env:PATH = "$cargoBin;$env:PATH"
-    } else {
-        Warn "Set CIEL_AUTO_INSTALL_RUST=1 to auto-install. Falling back."
-        $SkipMempalace = $true
+# --- 3. Node.js toolchain ----------------------------------------------------
+$SkipObsidianBackend = $false
+if (-not (Need "node") -or -not (Need "npm")) {
+    Warn "Node.js toolchain (node/npm) not found. Obsidian backend requires it."
+    if ($env:CIEL_AUTO_INSTALL_NODE -eq "1") {
+        Say "Auto-install of Node.js is not implemented in this bootstrap; please install Node.js and re-run."
     }
+    $SkipObsidianBackend = $true
 }
 
-# --- 4. MemPalace-rs ---------------------------------------------------------
-if (-not $SkipMempalace -and (Need "cargo")) {
-    if (-not (Need "mempalace-rs")) {
-        Say "Installing mempalace-rs (cargo install --locked)..."
-        try { cargo install mempalace-rs --locked } catch { Warn "cargo install failed; will fall back"; $SkipMempalace = $true }
-    } else {
-        Say "mempalace-rs already installed."
+# --- 4. Obsidian backend dependencies ----------------------------------------
+$ObsidianBackendDir = Join-Path $PSScriptRoot "..\..\memory\backends\obsidian" | Resolve-Path
+if (-not $SkipObsidianBackend) {
+    Say "Installing Obsidian backend dependencies (npm install)..."
+    try {
+        Push-Location $ObsidianBackendDir
+        npm install | Out-Null
+        Pop-Location
+        Say "Obsidian backend dependencies installed."
+    } catch {
+        Warn "npm install failed for Obsidian backend; will fall back"
+        $SkipObsidianBackend = $true
     }
 }
 
 # --- 5. Fallback backend -----------------------------------------------------
-if ($SkipMempalace) {
+if ($SkipObsidianBackend) {
     if (Need "sqlite3") {
         Say "Configuring SQLite fallback backend."
         New-Item -ItemType File -Force -Path (Join-Path $CielHome "ciel.db") | Out-Null
@@ -116,9 +114,15 @@ if (-not (Test-Path (Join-Path $CielHome "INTEGRITY.json"))) { Warn "Integrity s
 # 8.3 Git Check
 if (-not (Test-Path (Join-Path $CielHome ".git"))) { Warn "Git repo not initialized in home"; $FailedCheck = $true }
 
-# 8.4 MemPalace Check
-if (Need "mempalace-rs") {
-    try { & mempalace-rs status | Out-Null } catch { Warn "mempalace-rs not responding correctly"; $FailedCheck = $true }
+# 8.4 Obsidian backend check
+if (-not $SkipObsidianBackend -and (Need "node")) {
+    try {
+        $selfTest = & node (Join-Path $ObsidianBackendDir "cli.mjs") --self-test 2>&1
+        if ($LASTEXITCODE -ne 0) { Warn "Obsidian backend self-test failed"; $FailedCheck = $true }
+        else { Say "Obsidian backend self-test passed." }
+    } catch {
+        Warn "Could not run Obsidian backend self-test: $_"; $FailedCheck = $true
+    }
 }
 
 if ($FailedCheck) {

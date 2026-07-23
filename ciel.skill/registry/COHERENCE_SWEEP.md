@@ -6,7 +6,7 @@ Periodic holistic check of the registry and `~/.ciel/` tree.
 
 Default weekly. Configurable via `configuration/global/improvement.config.md.sweep_interval`. Also triggered:
 
-- post-major-migration (e.g. MemPalace-rs upgrade),
+- post-major-migration (e.g. Obsidian backend upgrade),
 - after any `conflict_resolution` commit,
 - manually via `/ciel-registry --sweep`.
 

@@ -1,6 +1,6 @@
 # SQLITE — Fallback Backend
 
-Single-file SQLite database as a fallback when MemPalace-rs is unavailable.
+Single-file SQLite database as a fallback when the Obsidian backend is unavailable.
 
 ## Location
 

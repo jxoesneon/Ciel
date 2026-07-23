@@ -7,7 +7,7 @@ tags: [memory, scope:both, runtime:any, risk:low]
 runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: Apache-2.0
 source: { tier: 0, origin: seed }
-dependencies: { skills: [mempalace_manager/SKILL.md] }
+dependencies: { skills: [obsidian-memory/SKILL.md] }
 ---
 
 # context_summarizer

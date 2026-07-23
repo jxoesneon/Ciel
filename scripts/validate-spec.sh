@@ -238,7 +238,6 @@ EXPECTED_FILES=(
   "seed_skills/log_analyzer/SKILL.md"
   "seed_skills/markdown_processor/SKILL.md"
   "seed_skills/mcp_manager/SKILL.md"
-  "seed_skills/mempalace_manager/SKILL.md"
   "seed_skills/package_manager/SKILL.md"
   "seed_skills/project_analyzer/SKILL.md"
   "seed_skills/research/SKILL.md"

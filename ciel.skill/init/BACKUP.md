@@ -5,7 +5,7 @@ Periodic snapshots complementary to git history.
 ## Why Both
 
 - **Git** captures diffs and history; excellent for rollbacks of tracked files.
-- **Backup** captures untracked state (MemPalace partition, sqlite db, fallback kv, checkpoints).
+- **Backup** captures untracked state (Obsidian vault snapshot, sqlite db, fallback kv, checkpoints).
 
 ## Schedule
 
@@ -20,7 +20,7 @@ backup:
 ## What's Included
 
 - `~/.ciel/` full tree **except** `backups/`, `archive/`, `sandbox/`, `.cache/`.
-- MemPalace partition snapshots via `mempalace-rs snapshot <partition> <path>`.
+- Obsidian vault snapshots via filesystem copy of `obsidian-brain/`.
 - SQLite fallback db copied with WAL checkpoint.
 
 ## Format

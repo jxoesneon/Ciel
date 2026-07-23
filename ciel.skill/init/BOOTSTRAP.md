@@ -1,6 +1,6 @@
 # BOOTSTRAP — Cold Start
 
-First-ever run on a machine. `~/.ciel/` does not exist; MemPalace not installed.
+First-ever run on a machine. `~/.ciel/` does not exist; Obsidian backend is not yet configured.
 
 ## Seed State
 
@@ -13,7 +13,7 @@ Ciel ships with all seed skills bundled (`seed_skills/`). On cold start, Ciel ha
 3. **Install seed** — copy `seed_skills/` → `~/.ciel/skills/`.
 4. **Write integrity** — compute SHA-256 of every tracked file → `~/.ciel/INTEGRITY.json`.
 5. **Git init** — `GIT_SETUP.md`.
-6. **Install MemPalace-rs** — `scripts/setup.py` runs `cargo install mempalace-rs --locked`. If rust missing, setup.py prompts or falls back per configuration.
+6. **Install Obsidian backend dependencies** — `scripts/setup.py` runs `npm install` in `ciel.skill/memory/backends/obsidian/`. If Node.js is missing, setup.py prompts or falls back per configuration.
 7. **Create partitions** — `ciel-global` immediately; project partition at local init.
 8. **Write default config** — instantiate `configuration/global/*.config.md` at defaults.
 9. **Memory health** — `memory/HEALTH_CHECK.md`. On fail, fallback per `memory/FALLBACK.md`.

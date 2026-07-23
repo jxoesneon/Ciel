@@ -27,7 +27,7 @@ Constitutional (see `core/CONSTITUTION.md` + `domains/ISOLATION.md`):
 
 - No global partition read may be triggered by project-scoped code without a deliberate "lift" call.
 - No project partition may be read by another project partition.
-- Enforced by `seed_skills/mempalace_manager/SKILL.md` via partition-name scoping on every operation.
+- Enforced by `skills/obsidian-memory/SKILL.md` via partition-name scoping on every operation.
 
 ## Naming Conventions
 

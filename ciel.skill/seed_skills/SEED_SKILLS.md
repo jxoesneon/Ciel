@@ -14,8 +14,8 @@ Load order at bootstrap reflects dependency chains:
 6. `json_yaml_toml_parser` — config/manifest parsing.
 7. `markdown_processor` — skill body parsing.
 8. `diff_patch` — self-mod applications.
-9. `package_manager` — install deps (including MemPalace).
-10. `mempalace_manager` — primary memory backend.
+9. `package_manager` — install deps.
+10. `obsidian-memory` — primary memory backend (Obsidian vault).
 11. `secrets_manager` — credential handling.
 12. `web_fetch`, `web_search` — research.
 13. `mcp_manager` — MCP servers.
@@ -61,7 +61,7 @@ Circular deps are forbidden. Any seed skill needing another must declare it in `
 17. `skill_builder`
 18. `skill_installer`
 19. `archive_manager`
-20. `mempalace_manager`
+20. `obsidian-memory`
 21. `council_runner`
 22. `context_summarizer`
 23. `research`
