@@ -1,0 +1,2329 @@
+Found 154 run_subagent rows in awake-scion
+--- node_id=925 ---
+Title: Council Member: Coherence
+Profile: subagent_explore
+Task: You are the **Coherence** member of Ciel's Council of Five. You evaluate repository harmony and architectural consistency.
+
+## Your Task
+Evaluate whether adding a **Public Marketing SPA** (5th SPA) to the Blindsight migration plan is coherent with the existing architecture and conventions.
+
+## Context
+
+### Current Migration Plan (4 SPAs)
+The `MIGRATION_PLAN.md` lists these SPAs in Section 3.1:
+1. **Survey Renderer SPA** — `/surveys/:surveyId` — public participants
+2. **Customer Console SPA** — `/app/*` — authenticated survey owners. Also currently hosts `/login`, `/register`, and `/` (landing page)
+3. **Mail Client SPA** — `/mail/*` — authenticated mail users
+4. **Blindsight Admin SPA** — `/admin/*` — internal staff
+
+The plan's stated principle: "Split into separate SPAs only when there is
+
+--- node_id=925 ---
+Title: Council Member: Capability
+Profile: subagent_explore
+Task: You are the **Capability** member of Ciel's Council of Five. You evaluate whether a proposal genuinely expands useful surface or merely duplicates existing capability.
+
+## Your Task
+Evaluate whether adding a **Public Marketing SPA** to the Blindsight migration plan fills a real gap or is redundant.
+
+## Context
+
+### Legacy Site (blindsightsurveys.com)
+The legacy site is a full marketing funnel with:
+- Home page with hero "Empower Your Voice"
+- Features page
+- Pricing page
+- How It Works (3-step process)
+- Resources page
+- About Us
+- FAQ
+- Contact Us
+- Milestones
+- Privacy Policy
+- Terms of Service
+- User testimonials/reviews
+- Community section
+- Footer with all links
+
+It markets to **survey respondents** ("Speak your mind freely"). The current new app markets to **survey creators** ("Priva
+
+--- node_id=925 ---
+Title: Council Member: Safety
+Profile: subagent_explore
+Task: You are the **Safety** member of Ciel's Council of Five. You hold veto authority. You evaluate risk vectors.
+
+## Your Task
+Evaluate the safety implications of adding a **Public Marketing SPA** to the Blindsight migration plan, and of the CURRENT state where the Customer Console SPA serves public visitors.
+
+## Context
+
+### Current State (Risk Analysis)
+The `web/apps/dashboard` app serves:
+- `/` — public landing page (anonymous visitors)
+- `/login`, `/register` — unauthenticated users
+- `/intelligence`, `/surveys/*`, `/privacy`, `/dlp/*` — authenticated users
+
+This means **anonymous visitors download the full Customer Console bundle**, which includes:
+- React Router with all authenticated routes
+- Auth service logic
+- Survey CRUD components
+- DLP admin page components
+- Analytics components 
+
+--- node_id=925 ---
+Title: Council Member: Efficiency
+Profile: subagent_explore
+Task: You are the **Efficiency** member of Ciel's Council of Five. You evaluate leanness, bloat, and performance cost.
+
+## Your Task
+Evaluate the efficiency implications of adding a **Public Marketing SPA** (5th SPA total) to the Blindsight migration plan.
+
+## Context
+
+### Current State
+- 4 SPAs already: dashboard, survey-renderer, mail-client, blindsight-admin
+- Built with Nx monorepo + Vite
+- `dashboard` currently serves everything: landing page, auth, and authenticated dashboard
+- Public visitors download the full dashboard bundle (Recharts, all components, all routes)
+
+### Current Bundle Implications
+The dashboard SPA includes heavy dependencies that public visitors don't need:
+- Recharts (charting library)
+- React Router (with all authenticated routes)
+- Survey builder components (VisualBui
+
+--- node_id=925 ---
+Title: Council Member: Evolution
+Profile: subagent_explore
+Task: You are the **Evolution** member of Ciel's Council of Five. You evaluate growth trajectory and strategic forward motion.
+
+## Your Task
+Evaluate whether adding a **Public Marketing SPA** to the Blindsight migration plan moves the project forward strategically.
+
+## Context
+
+### Business Context
+Blindsight is a privacy-first survey platform. It has TWO target audiences:
+1. **Survey creators** (customers) — who need the dashboard
+2. **Survey respondents** (the public) — who need to trust the platform enough to participate
+
+The legacy site (`blindsightsurveys.com`) was heavily respondent-focused:
+- "Empower Your Voice"
+- "Speak your mind freely"
+- "Your data is secure with Blindsight Surveys"
+- Community section, testimonials, knowledge sharing
+
+The current new dashboard (`IndexPage.tsx`) is cr
+
+--- node_id=958 ---
+Title: Council Member: Coherence
+Profile: subagent_explore
+Task: You are the **Coherence** member of Ciel's Council of Five. You evaluate repository harmony and architectural consistency.
+
+## Your Task
+Evaluate whether adding a **Public Marketing SPA** (5th SPA) to the Blindsight migration plan is coherent with the existing architecture and conventions.
+
+## Context
+
+### Current Migration Plan (4 SPAs)
+The `MIGRATION_PLAN.md` lists these SPAs in Section 3.1:
+1. **Survey Renderer SPA** — `/surveys/:surveyId` — public participants
+2. **Customer Console SPA** — `/app/*` — authenticated survey owners. Also currently hosts `/login`, `/register`, and `/` (landing page)
+3. **Mail Client SPA** — `/mail/*` — authenticated mail users
+4. **Blindsight Admin SPA** — `/admin/*` — internal staff
+
+The plan's stated principle: "Split into separate SPAs only when there is
+
+--- node_id=958 ---
+Title: Council Member: Capability
+Profile: subagent_explore
+Task: You are the **Capability** member of Ciel's Council of Five. You evaluate whether a proposal genuinely expands useful surface or merely duplicates existing capability.
+
+## Your Task
+Evaluate whether adding a **Public Marketing SPA** to the Blindsight migration plan fills a real gap or is redundant.
+
+## Context
+
+### Legacy Site (blindsightsurveys.com)
+The legacy site is a full marketing funnel with:
+- Home page with hero "Empower Your Voice"
+- Features page
+- Pricing page
+- How It Works (3-step process)
+- Resources page
+- About Us
+- FAQ
+- Contact Us
+- Milestones
+- Privacy Policy
+- Terms of Service
+- User testimonials/reviews
+- Community section
+- Footer with all links
+
+It markets to **survey respondents** ("Speak your mind freely"). The current new app markets to **survey creators** ("Priva
+
+--- node_id=958 ---
+Title: Council Member: Safety
+Profile: subagent_explore
+Task: You are the **Safety** member of Ciel's Council of Five. You hold veto authority. You evaluate risk vectors.
+
+## Your Task
+Evaluate the safety implications of adding a **Public Marketing SPA** to the Blindsight migration plan, and of the CURRENT state where the Customer Console SPA serves public visitors.
+
+## Context
+
+### Current State (Risk Analysis)
+The `web/apps/dashboard` app serves:
+- `/` — public landing page (anonymous visitors)
+- `/login`, `/register` — unauthenticated users
+- `/intelligence`, `/surveys/*`, `/privacy`, `/dlp/*` — authenticated users
+
+This means **anonymous visitors download the full Customer Console bundle**, which includes:
+- React Router with all authenticated routes
+- Auth service logic
+- Survey CRUD components
+- DLP admin page components
+- Analytics components 
+
+--- node_id=958 ---
+Title: Council Member: Efficiency
+Profile: subagent_explore
+Task: You are the **Efficiency** member of Ciel's Council of Five. You evaluate leanness, bloat, and performance cost.
+
+## Your Task
+Evaluate the efficiency implications of adding a **Public Marketing SPA** (5th SPA total) to the Blindsight migration plan.
+
+## Context
+
+### Current State
+- 4 SPAs already: dashboard, survey-renderer, mail-client, blindsight-admin
+- Built with Nx monorepo + Vite
+- `dashboard` currently serves everything: landing page, auth, and authenticated dashboard
+- Public visitors download the full dashboard bundle (Recharts, all components, all routes)
+
+### Current Bundle Implications
+The dashboard SPA includes heavy dependencies that public visitors don't need:
+- Recharts (charting library)
+- React Router (with all authenticated routes)
+- Survey builder components (VisualBui
+
+--- node_id=958 ---
+Title: Council Member: Evolution
+Profile: subagent_explore
+Task: You are the **Evolution** member of Ciel's Council of Five. You evaluate growth trajectory and strategic forward motion.
+
+## Your Task
+Evaluate whether adding a **Public Marketing SPA** to the Blindsight migration plan moves the project forward strategically.
+
+## Context
+
+### Business Context
+Blindsight is a privacy-first survey platform. It has TWO target audiences:
+1. **Survey creators** (customers) — who need the dashboard
+2. **Survey respondents** (the public) — who need to trust the platform enough to participate
+
+The legacy site (`blindsightsurveys.com`) was heavily respondent-focused:
+- "Empower Your Voice"
+- "Speak your mind freely"
+- "Your data is secure with Blindsight Surveys"
+- Community section, testimonials, knowledge sharing
+
+The current new dashboard (`IndexPage.tsx`) is cr
+
+--- node_id=1444 ---
+Title: Spec: Marketing Surface Implementation
+Profile: subagent_general
+Task: Create a comprehensive implementation specification document at `c:/Users/josee/blindsight/docs/specs/marketing_surface_implementation.md`.
+
+This spec documents the 2-phase approach approved by the Ciel Council for adding public marketing content to the Blindsight dashboard SPA.
+
+## Context
+
+The legacy site `blindsightsurveys.com` had a full marketing funnel:
+- Home: "Empower Your Voice" — respondent-focused
+- Features, Pricing, How It Works, Resources
+- About Us, FAQ, Contact Us, Milestones
+- Privacy Policy, Terms of Service
+- Testimonials, Community section
+
+The new dashboard currently has a minimal `IndexPage.tsx` at `/` that is creator-focused ("Private surveys and secure feedback"). It lives inside `web/apps/dashboard` which also serves all authenticated routes.
+
+## Spec Requirements
+
+
+--- node_id=1444 ---
+Title: Marketing Pages Components
+Profile: subagent_general
+Task: Create 9 marketing page components for the Blindsight dashboard app. All components go in `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/`.
+
+## Design System
+Use the same glassmorphism dark theme as the rest of the dashboard:
+- Background: `bg-[#020617]` or `bg-white/5`
+- Cards: `glass-card` or `p-6 bg-white/5 border border-white/10 rounded-[2rem]`
+- Buttons: `glass-btn-primary` or `px-6 py-2.5 rounded-xl bg-[#6366f1] text-white font-bold`
+- Text: white headings, `text-slate-400` for body, `text-slate-500` for muted
+- Accent color: `[#6366f1]` (indigo)
+- Icons: Lucide React (import from 'lucide-react')
+- Layout: max-w-7xl mx-auto, responsive grid layouts
+
+## Pages to Create
+
+### 1. FeaturesPage.tsx — `/features`
+Showcase Blindsight features in a grid:
+- Private surveys
+-
+
+--- node_id=1444 ---
+Title: Update Dashboard Routing with Lazy Loading
+Profile: subagent_general
+Task: Update the dashboard app's routing to use React.lazy() for code-splitting and add all new marketing routes.
+
+## File to modify
+`c:/Users/josee/blindsight/web/apps/dashboard/src/app/app.tsx`
+
+## Current app.tsx structure
+Currently all pages are statically imported at the top:
+```tsx
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { AppShell } from '../components/AppShell';
+import { ProtectedRoute } from '../components/ProtectedRoute';
+import { DashboardPage } from '../pages/DashboardPage';
+// ... 16 more static imports
+import { IndexPage } from '../pages/IndexPage';
+```
+
+Routes:
+- `/` → IndexPage
+- `/login` → LoginPage
+- `/register` → RegisterPage
+- Protected routes inside AppShell: `/intelligence`, `/surveys/*`, `/privacy`, `/dlp/*`
+
+## Required Changes
+
+1. **Convert ALL
+
+--- node_id=1444 ---
+Title: Rename /privacy to /app/privacy
+Profile: subagent_general
+Task: Rename the authenticated privacy controls route from `/privacy` to `/app/privacy` across all files in the dashboard app.
+
+## Files to modify
+
+1. `c:/Users/josee/blindsight/web/apps/dashboard/src/app/app.tsx`
+   - Change `<Route path="/privacy" element={<PrivacyPage />} />` to `<Route path="/app/privacy" element={<PrivacyPage />} />`
+   - This is INSIDE the ProtectedRoute/AppShell wrapper
+
+2. `c:/Users/josee/blindsight/web/apps/dashboard/src/components/AppShell.tsx`
+   - Find the navigation link that points to `/privacy` and change it to `/app/privacy`
+   - Look for something like `<NavItem to="/privacy" ... />` or similar
+
+3. Any other files that reference `/privacy` as an internal route:
+   - Search for `to="/privacy"` or `href="/privacy"` or `navigate('/privacy')` in the dashboard src di
+
+--- node_id=1444 ---
+Title: Bundle Monitoring Setup
+Profile: subagent_general
+Task: Set up bundle size monitoring for the dashboard app to enforce the 150KB public-chunk budget.
+
+## Context
+The Ciel Council approved a 150KB budget for the public marketing route chunk (`/` route). Public visitors should never download authenticated-only components (Recharts, survey builder, DLP admin pages).
+
+## Files to modify/create
+
+### 1. `c:/Users/josee/blindsight/web/apps/dashboard/vite.config.mts`
+Add `rollup-plugin-visualizer` or `vite-bundle-analyzer` to the build config so bundle analysis runs automatically on build.
+
+Read the current file first, then add:
+```typescript
+import { visualizer } from 'rollup-plugin-visualizer';
+```
+
+In the plugins array, add (conditionally in build):
+```typescript
+plugins: [
+  react(),
+  nxViteTsPaths(),
+  process.env.ANALYZE === 'true' && visualizer
+
+--- node_id=1472 ---
+Title: Spec: Marketing Surface Implementation
+Profile: subagent_general
+Task: Create a comprehensive implementation specification document at `c:/Users/josee/blindsight/docs/specs/marketing_surface_implementation.md`.
+
+This spec documents the 2-phase approach approved by the Ciel Council for adding public marketing content to the Blindsight dashboard SPA.
+
+## Context
+
+The legacy site `blindsightsurveys.com` had a full marketing funnel:
+- Home: "Empower Your Voice" — respondent-focused
+- Features, Pricing, How It Works, Resources
+- About Us, FAQ, Contact Us, Milestones
+- Privacy Policy, Terms of Service
+- Testimonials, Community section
+
+The new dashboard currently has a minimal `IndexPage.tsx` at `/` that is creator-focused ("Private surveys and secure feedback"). It lives inside `web/apps/dashboard` which also serves all authenticated routes.
+
+## Spec Requirements
+
+
+--- node_id=1472 ---
+Title: Marketing Pages Components
+Profile: subagent_general
+Task: Create 9 marketing page components for the Blindsight dashboard app. All components go in `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/`.
+
+## Design System
+Use the same glassmorphism dark theme as the rest of the dashboard:
+- Background: `bg-[#020617]` or `bg-white/5`
+- Cards: `glass-card` or `p-6 bg-white/5 border border-white/10 rounded-[2rem]`
+- Buttons: `glass-btn-primary` or `px-6 py-2.5 rounded-xl bg-[#6366f1] text-white font-bold`
+- Text: white headings, `text-slate-400` for body, `text-slate-500` for muted
+- Accent color: `[#6366f1]` (indigo)
+- Icons: Lucide React (import from 'lucide-react')
+- Layout: max-w-7xl mx-auto, responsive grid layouts
+
+## Pages to Create
+
+### 1. FeaturesPage.tsx — `/features`
+Showcase Blindsight features in a grid:
+- Private surveys
+-
+
+--- node_id=1472 ---
+Title: Update Dashboard Routing with Lazy Loading
+Profile: subagent_general
+Task: Update the dashboard app's routing to use React.lazy() for code-splitting and add all new marketing routes.
+
+## File to modify
+`c:/Users/josee/blindsight/web/apps/dashboard/src/app/app.tsx`
+
+## Current app.tsx structure
+Currently all pages are statically imported at the top:
+```tsx
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { AppShell } from '../components/AppShell';
+import { ProtectedRoute } from '../components/ProtectedRoute';
+import { DashboardPage } from '../pages/DashboardPage';
+// ... 16 more static imports
+import { IndexPage } from '../pages/IndexPage';
+```
+
+Routes:
+- `/` → IndexPage
+- `/login` → LoginPage
+- `/register` → RegisterPage
+- Protected routes inside AppShell: `/intelligence`, `/surveys/*`, `/privacy`, `/dlp/*`
+
+## Required Changes
+
+1. **Convert ALL
+
+--- node_id=1472 ---
+Title: Rename /privacy to /app/privacy
+Profile: subagent_general
+Task: Rename the authenticated privacy controls route from `/privacy` to `/app/privacy` across all files in the dashboard app.
+
+## Files to modify
+
+1. `c:/Users/josee/blindsight/web/apps/dashboard/src/app/app.tsx`
+   - Change `<Route path="/privacy" element={<PrivacyPage />} />` to `<Route path="/app/privacy" element={<PrivacyPage />} />`
+   - This is INSIDE the ProtectedRoute/AppShell wrapper
+
+2. `c:/Users/josee/blindsight/web/apps/dashboard/src/components/AppShell.tsx`
+   - Find the navigation link that points to `/privacy` and change it to `/app/privacy`
+   - Look for something like `<NavItem to="/privacy" ... />` or similar
+
+3. Any other files that reference `/privacy` as an internal route:
+   - Search for `to="/privacy"` or `href="/privacy"` or `navigate('/privacy')` in the dashboard src di
+
+--- node_id=1472 ---
+Title: Bundle Monitoring Setup
+Profile: subagent_general
+Task: Set up bundle size monitoring for the dashboard app to enforce the 150KB public-chunk budget.
+
+## Context
+The Ciel Council approved a 150KB budget for the public marketing route chunk (`/` route). Public visitors should never download authenticated-only components (Recharts, survey builder, DLP admin pages).
+
+## Files to modify/create
+
+### 1. `c:/Users/josee/blindsight/web/apps/dashboard/vite.config.mts`
+Add `rollup-plugin-visualizer` or `vite-bundle-analyzer` to the build config so bundle analysis runs automatically on build.
+
+Read the current file first, then add:
+```typescript
+import { visualizer } from 'rollup-plugin-visualizer';
+```
+
+In the plugins array, add (conditionally in build):
+```typescript
+plugins: [
+  react(),
+  nxViteTsPaths(),
+  process.env.ANALYZE === 'true' && visualizer
+
+--- node_id=2191 ---
+Title: Council Member: Coherence
+Profile: subagent_explore
+Task: You are the **Coherence** member of Ciel's Council of Five. You evaluate repository harmony and architectural consistency.
+
+## Your Task
+Evaluate whether adding a **Public Marketing SPA** (5th SPA) to the Blindsight migration plan is coherent with the existing architecture and conventions.
+
+## Context
+
+### Current Migration Plan (4 SPAs)
+The `MIGRATION_PLAN.md` lists these SPAs in Section 3.1:
+1. **Survey Renderer SPA** — `/surveys/:surveyId` — public participants
+2. **Customer Console SPA** — `/app/*` — authenticated survey owners. Also currently hosts `/login`, `/register`, and `/` (landing page)
+3. **Mail Client SPA** — `/mail/*` — authenticated mail users
+4. **Blindsight Admin SPA** — `/admin/*` — internal staff
+
+The plan's stated principle: "Split into separate SPAs only when there is
+
+--- node_id=2191 ---
+Title: Council Member: Capability
+Profile: subagent_explore
+Task: You are the **Capability** member of Ciel's Council of Five. You evaluate whether a proposal genuinely expands useful surface or merely duplicates existing capability.
+
+## Your Task
+Evaluate whether adding a **Public Marketing SPA** to the Blindsight migration plan fills a real gap or is redundant.
+
+## Context
+
+### Legacy Site (blindsightsurveys.com)
+The legacy site is a full marketing funnel with:
+- Home page with hero "Empower Your Voice"
+- Features page
+- Pricing page
+- How It Works (3-step process)
+- Resources page
+- About Us
+- FAQ
+- Contact Us
+- Milestones
+- Privacy Policy
+- Terms of Service
+- User testimonials/reviews
+- Community section
+- Footer with all links
+
+It markets to **survey respondents** ("Speak your mind freely"). The current new app markets to **survey creators** ("Priva
+
+--- node_id=2191 ---
+Title: Council Member: Safety
+Profile: subagent_explore
+Task: You are the **Safety** member of Ciel's Council of Five. You hold veto authority. You evaluate risk vectors.
+
+## Your Task
+Evaluate the safety implications of adding a **Public Marketing SPA** to the Blindsight migration plan, and of the CURRENT state where the Customer Console SPA serves public visitors.
+
+## Context
+
+### Current State (Risk Analysis)
+The `web/apps/dashboard` app serves:
+- `/` — public landing page (anonymous visitors)
+- `/login`, `/register` — unauthenticated users
+- `/intelligence`, `/surveys/*`, `/privacy`, `/dlp/*` — authenticated users
+
+This means **anonymous visitors download the full Customer Console bundle**, which includes:
+- React Router with all authenticated routes
+- Auth service logic
+- Survey CRUD components
+- DLP admin page components
+- Analytics components 
+
+--- node_id=2191 ---
+Title: Council Member: Efficiency
+Profile: subagent_explore
+Task: You are the **Efficiency** member of Ciel's Council of Five. You evaluate leanness, bloat, and performance cost.
+
+## Your Task
+Evaluate the efficiency implications of adding a **Public Marketing SPA** (5th SPA total) to the Blindsight migration plan.
+
+## Context
+
+### Current State
+- 4 SPAs already: dashboard, survey-renderer, mail-client, blindsight-admin
+- Built with Nx monorepo + Vite
+- `dashboard` currently serves everything: landing page, auth, and authenticated dashboard
+- Public visitors download the full dashboard bundle (Recharts, all components, all routes)
+
+### Current Bundle Implications
+The dashboard SPA includes heavy dependencies that public visitors don't need:
+- Recharts (charting library)
+- React Router (with all authenticated routes)
+- Survey builder components (VisualBui
+
+--- node_id=2191 ---
+Title: Council Member: Evolution
+Profile: subagent_explore
+Task: You are the **Evolution** member of Ciel's Council of Five. You evaluate growth trajectory and strategic forward motion.
+
+## Your Task
+Evaluate whether adding a **Public Marketing SPA** to the Blindsight migration plan moves the project forward strategically.
+
+## Context
+
+### Business Context
+Blindsight is a privacy-first survey platform. It has TWO target audiences:
+1. **Survey creators** (customers) — who need the dashboard
+2. **Survey respondents** (the public) — who need to trust the platform enough to participate
+
+The legacy site (`blindsightsurveys.com`) was heavily respondent-focused:
+- "Empower Your Voice"
+- "Speak your mind freely"
+- "Your data is secure with Blindsight Surveys"
+- Community section, testimonials, knowledge sharing
+
+The current new dashboard (`IndexPage.tsx`) is cr
+
+--- node_id=2235 ---
+Title: Spec: Marketing Surface Implementation
+Profile: subagent_general
+Task: Create a comprehensive implementation specification document at `c:/Users/josee/blindsight/docs/specs/marketing_surface_implementation.md`.
+
+This spec documents the 2-phase approach approved by the Ciel Council for adding public marketing content to the Blindsight dashboard SPA.
+
+## Context
+
+The legacy site `blindsightsurveys.com` had a full marketing funnel:
+- Home: "Empower Your Voice" — respondent-focused
+- Features, Pricing, How It Works, Resources
+- About Us, FAQ, Contact Us, Milestones
+- Privacy Policy, Terms of Service
+- Testimonials, Community section
+
+The new dashboard currently has a minimal `IndexPage.tsx` at `/` that is creator-focused ("Private surveys and secure feedback"). It lives inside `web/apps/dashboard` which also serves all authenticated routes.
+
+## Spec Requirements
+
+
+--- node_id=2235 ---
+Title: Marketing Pages Components
+Profile: subagent_general
+Task: Create 9 marketing page components for the Blindsight dashboard app. All components go in `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/`.
+
+## Design System
+Use the same glassmorphism dark theme as the rest of the dashboard:
+- Background: `bg-[#020617]` or `bg-white/5`
+- Cards: `glass-card` or `p-6 bg-white/5 border border-white/10 rounded-[2rem]`
+- Buttons: `glass-btn-primary` or `px-6 py-2.5 rounded-xl bg-[#6366f1] text-white font-bold`
+- Text: white headings, `text-slate-400` for body, `text-slate-500` for muted
+- Accent color: `[#6366f1]` (indigo)
+- Icons: Lucide React (import from 'lucide-react')
+- Layout: max-w-7xl mx-auto, responsive grid layouts
+
+## Pages to Create
+
+### 1. FeaturesPage.tsx — `/features`
+Showcase Blindsight features in a grid:
+- Private surveys
+-
+
+--- node_id=2235 ---
+Title: Update Dashboard Routing with Lazy Loading
+Profile: subagent_general
+Task: Update the dashboard app's routing to use React.lazy() for code-splitting and add all new marketing routes.
+
+## File to modify
+`c:/Users/josee/blindsight/web/apps/dashboard/src/app/app.tsx`
+
+## Current app.tsx structure
+Currently all pages are statically imported at the top:
+```tsx
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { AppShell } from '../components/AppShell';
+import { ProtectedRoute } from '../components/ProtectedRoute';
+import { DashboardPage } from '../pages/DashboardPage';
+// ... 16 more static imports
+import { IndexPage } from '../pages/IndexPage';
+```
+
+Routes:
+- `/` → IndexPage
+- `/login` → LoginPage
+- `/register` → RegisterPage
+- Protected routes inside AppShell: `/intelligence`, `/surveys/*`, `/privacy`, `/dlp/*`
+
+## Required Changes
+
+1. **Convert ALL
+
+--- node_id=2235 ---
+Title: Rename /privacy to /app/privacy
+Profile: subagent_general
+Task: Rename the authenticated privacy controls route from `/privacy` to `/app/privacy` across all files in the dashboard app.
+
+## Files to modify
+
+1. `c:/Users/josee/blindsight/web/apps/dashboard/src/app/app.tsx`
+   - Change `<Route path="/privacy" element={<PrivacyPage />} />` to `<Route path="/app/privacy" element={<PrivacyPage />} />`
+   - This is INSIDE the ProtectedRoute/AppShell wrapper
+
+2. `c:/Users/josee/blindsight/web/apps/dashboard/src/components/AppShell.tsx`
+   - Find the navigation link that points to `/privacy` and change it to `/app/privacy`
+   - Look for something like `<NavItem to="/privacy" ... />` or similar
+
+3. Any other files that reference `/privacy` as an internal route:
+   - Search for `to="/privacy"` or `href="/privacy"` or `navigate('/privacy')` in the dashboard src di
+
+--- node_id=2235 ---
+Title: Bundle Monitoring Setup
+Profile: subagent_general
+Task: Set up bundle size monitoring for the dashboard app to enforce the 150KB public-chunk budget.
+
+## Context
+The Ciel Council approved a 150KB budget for the public marketing route chunk (`/` route). Public visitors should never download authenticated-only components (Recharts, survey builder, DLP admin pages).
+
+## Files to modify/create
+
+### 1. `c:/Users/josee/blindsight/web/apps/dashboard/vite.config.mts`
+Add `rollup-plugin-visualizer` or `vite-bundle-analyzer` to the build config so bundle analysis runs automatically on build.
+
+Read the current file first, then add:
+```typescript
+import { visualizer } from 'rollup-plugin-visualizer';
+```
+
+In the plugins array, add (conditionally in build):
+```typescript
+plugins: [
+  react(),
+  nxViteTsPaths(),
+  process.env.ANALYZE === 'true' && visualizer
+
+--- node_id=2348 ---
+Title: Wrap marketing pages with MarketingLayout
+Profile: subagent_general
+Task: Update all marketing page components in `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/` to use the shared `MarketingLayout` component from `../../components/MarketingLayout`.
+
+## What to do
+
+Each marketing page currently has its own duplicated header and footer code. You need to:
+1. Remove the header (logo + nav + Login/Register buttons)
+2. Remove the footer (copyright + legal links)
+3. Remove the background glows divs (they're now in MarketingLayout)
+4. Remove the outer `<div className="min-h-screen bg-[#020617] ...">` wrapper
+5. Wrap the remaining content with `<MarketingLayout>`
+
+## Pages to update (9 files)
+
+Read each file first, then edit it. For each page:
+
+### Before (typical pattern):
+```tsx
+import { ... } from 'lucide-react';
+import React from 'react';
+import {
+
+--- node_id=2352 ---
+Title: Wrap marketing pages with MarketingLayout
+Profile: subagent_general
+Task: Update all marketing page components in `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/` to use the shared `MarketingLayout` component from `../../components/MarketingLayout`.
+
+## What to do
+
+Each marketing page currently has its own duplicated header and footer code. You need to:
+1. Remove the header (logo + nav + Login/Register buttons)
+2. Remove the footer (copyright + legal links)
+3. Remove the background glows divs (they're now in MarketingLayout)
+4. Remove the outer `<div className="min-h-screen bg-[#020617] ...">` wrapper
+5. Wrap the remaining content with `<MarketingLayout>`
+
+## Pages to update (9 files)
+
+Read each file first, then edit it. For each page:
+
+### Before (typical pattern):
+```tsx
+import { ... } from 'lucide-react';
+import React from 'react';
+import {
+
+--- node_id=2395 ---
+Title: Wrap FeaturesPage with MarketingLayout
+Profile: subagent_general
+Task: Read `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/FeaturesPage.tsx`.
+
+Replace the ENTIRE file content with a version that:
+1. Adds `import { MarketingLayout } from '../../components/MarketingLayout';` at the top
+2. Removes the outer wrapper div, background glows, header, and footer
+3. Wraps the main content with `<MarketingLayout>`
+
+The result should start like:
+```tsx
+import { ... } from 'lucide-react';
+import React from 'react';
+import { MarketingLayout } from '../../components/MarketingLayout';
+
+export const FeaturesPage: React.FC = () => {
+  return (
+    <MarketingLayout>
+      <div className="max-w-7xl mx-auto w-full px-6 py-16">
+        ...rest of content without header/footer...
+      </div>
+    </MarketingLayout>
+  );
+};
+```
+
+Keep ALL the actual page content (f
+
+--- node_id=2395 ---
+Title: Wrap PricingPage with MarketingLayout
+Profile: subagent_general
+Task: Read `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/PricingPage.tsx`.
+
+Replace the ENTIRE file content with a version that:
+1. Adds `import { MarketingLayout } from '../../components/MarketingLayout';` at the top
+2. Removes the outer wrapper div, background glows, header, and footer
+3. Wraps the main content with `<MarketingLayout>`
+
+Keep ALL the actual page content (pricing cards, tiers, CTAs). Only remove the duplicated header/footer code. The result should use `<MarketingLayout>` as the outer wrapper and have the pricing content inside a `<div className="max-w-7xl mx-auto w-full px-6 py-16">`.
+
+--- node_id=2395 ---
+Title: Wrap HowItWorksPage with MarketingLayout
+Profile: subagent_general
+Task: Read `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/HowItWorksPage.tsx`.
+
+Replace the ENTIRE file content with a version that:
+1. Adds `import { MarketingLayout } from '../../components/MarketingLayout';` at the top
+2. Removes the outer wrapper div, background glows, header, and footer
+3. Wraps the main content with `<MarketingLayout>`
+
+Keep ALL the actual page content (3-step timeline). Only remove the duplicated header/footer code.
+
+--- node_id=2395 ---
+Title: Wrap AboutPage with MarketingLayout
+Profile: subagent_general
+Task: Read `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/AboutPage.tsx`.
+
+Replace the ENTIRE file content with a version that:
+1. Adds `import { MarketingLayout } from '../../components/MarketingLayout';` at the top
+2. Removes the outer wrapper div, background glows, header, and footer
+3. Wraps the main content with `<MarketingLayout>`
+
+Keep ALL the actual page content (mission statement, values). Only remove the duplicated header/footer code.
+
+--- node_id=2395 ---
+Title: Wrap FAQPage with MarketingLayout
+Profile: subagent_general
+Task: Read `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/FAQPage.tsx`.
+
+Replace the ENTIRE file content with a version that:
+1. Adds `import { MarketingLayout } from '../../components/MarketingLayout';` at the top
+2. Removes the outer wrapper div, background glows, header, and footer
+3. Wraps the main content with `<MarketingLayout>`
+
+Keep ALL the actual page content (FAQ accordion). Only remove the duplicated header/footer code.
+
+--- node_id=2395 ---
+Title: Wrap ContactPage with MarketingLayout
+Profile: subagent_general
+Task: Read `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/ContactPage.tsx`.
+
+Replace the ENTIRE file content with a version that:
+1. Adds `import { MarketingLayout } from '../../components/MarketingLayout';` at the top
+2. Removes the outer wrapper div, background glows, header, and footer
+3. Wraps the main content with `<MarketingLayout>`
+
+Keep ALL the actual page content (contact form, info sidebar). Only remove the duplicated header/footer code.
+
+--- node_id=2395 ---
+Title: Wrap MilestonesPage with MarketingLayout
+Profile: subagent_general
+Task: Read `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/MilestonesPage.tsx`.
+
+Replace the ENTIRE file content with a version that:
+1. Adds `import { MarketingLayout } from '../../components/MarketingLayout';` at the top
+2. Removes the outer wrapper div, background glows, header, and footer
+3. Wraps the main content with `<MarketingLayout>`
+
+Keep ALL the actual page content (timeline). Only remove the duplicated header/footer code.
+
+--- node_id=2395 ---
+Title: Wrap PrivacyPolicyPage with MarketingLayout
+Profile: subagent_general
+Task: Read `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/PrivacyPolicyPage.tsx`.
+
+Replace the ENTIRE file content with a version that:
+1. Adds `import { MarketingLayout } from '../../components/MarketingLayout';` at the top
+2. Removes the outer wrapper div, background glows, header, and footer
+3. Wraps the main content with `<MarketingLayout>`
+
+Keep ALL the actual page content (privacy policy sections). Only remove the duplicated header/footer code.
+
+--- node_id=2395 ---
+Title: Wrap TermsPage with MarketingLayout
+Profile: subagent_general
+Task: Read `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/TermsPage.tsx`.
+
+Replace the ENTIRE file content with a version that:
+1. Adds `import { MarketingLayout } from '../../components/MarketingLayout';` at the top
+2. Removes the outer wrapper div, background glows, header, and footer
+3. Wraps the main content with `<MarketingLayout>`
+
+Keep ALL the actual page content (terms sections). Only remove the duplicated header/footer code.
+
+--- node_id=2395 ---
+Title: Wrap ResourcesPage with MarketingLayout
+Profile: subagent_general
+Task: Read `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/ResourcesPage.tsx`.
+
+Replace the ENTIRE file content with a version that:
+1. Adds `import { MarketingLayout } from '../../components/MarketingLayout';` at the top
+2. Removes the outer wrapper div, background glows, header, and footer
+3. Wraps the main content with `<MarketingLayout>`
+
+Keep ALL the actual page content. Only remove the duplicated header/footer code.
+
+--- node_id=2462 ---
+Title: Wrap FeaturesPage with MarketingLayout
+Profile: subagent_general
+Task: Read `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/FeaturesPage.tsx`.
+
+Replace the ENTIRE file content with a version that:
+1. Adds `import { MarketingLayout } from '../../components/MarketingLayout';` at the top
+2. Removes the outer wrapper div, background glows, header, and footer
+3. Wraps the main content with `<MarketingLayout>`
+
+The result should start like:
+```tsx
+import { ... } from 'lucide-react';
+import React from 'react';
+import { MarketingLayout } from '../../components/MarketingLayout';
+
+export const FeaturesPage: React.FC = () => {
+  return (
+    <MarketingLayout>
+      <div className="max-w-7xl mx-auto w-full px-6 py-16">
+        ...rest of content without header/footer...
+      </div>
+    </MarketingLayout>
+  );
+};
+```
+
+Keep ALL the actual page content (f
+
+--- node_id=2462 ---
+Title: Wrap PricingPage with MarketingLayout
+Profile: subagent_general
+Task: Read `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/PricingPage.tsx`.
+
+Replace the ENTIRE file content with a version that:
+1. Adds `import { MarketingLayout } from '../../components/MarketingLayout';` at the top
+2. Removes the outer wrapper div, background glows, header, and footer
+3. Wraps the main content with `<MarketingLayout>`
+
+Keep ALL the actual page content (pricing cards, tiers, CTAs). Only remove the duplicated header/footer code. The result should use `<MarketingLayout>` as the outer wrapper and have the pricing content inside a `<div className="max-w-7xl mx-auto w-full px-6 py-16">`.
+
+--- node_id=2462 ---
+Title: Wrap HowItWorksPage with MarketingLayout
+Profile: subagent_general
+Task: Read `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/HowItWorksPage.tsx`.
+
+Replace the ENTIRE file content with a version that:
+1. Adds `import { MarketingLayout } from '../../components/MarketingLayout';` at the top
+2. Removes the outer wrapper div, background glows, header, and footer
+3. Wraps the main content with `<MarketingLayout>`
+
+Keep ALL the actual page content (3-step timeline). Only remove the duplicated header/footer code.
+
+--- node_id=2462 ---
+Title: Wrap AboutPage with MarketingLayout
+Profile: subagent_general
+Task: Read `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/AboutPage.tsx`.
+
+Replace the ENTIRE file content with a version that:
+1. Adds `import { MarketingLayout } from '../../components/MarketingLayout';` at the top
+2. Removes the outer wrapper div, background glows, header, and footer
+3. Wraps the main content with `<MarketingLayout>`
+
+Keep ALL the actual page content (mission statement, values). Only remove the duplicated header/footer code.
+
+--- node_id=2462 ---
+Title: Wrap FAQPage with MarketingLayout
+Profile: subagent_general
+Task: Read `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/FAQPage.tsx`.
+
+Replace the ENTIRE file content with a version that:
+1. Adds `import { MarketingLayout } from '../../components/MarketingLayout';` at the top
+2. Removes the outer wrapper div, background glows, header, and footer
+3. Wraps the main content with `<MarketingLayout>`
+
+Keep ALL the actual page content (FAQ accordion). Only remove the duplicated header/footer code.
+
+--- node_id=2462 ---
+Title: Wrap ContactPage with MarketingLayout
+Profile: subagent_general
+Task: Read `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/ContactPage.tsx`.
+
+Replace the ENTIRE file content with a version that:
+1. Adds `import { MarketingLayout } from '../../components/MarketingLayout';` at the top
+2. Removes the outer wrapper div, background glows, header, and footer
+3. Wraps the main content with `<MarketingLayout>`
+
+Keep ALL the actual page content (contact form, info sidebar). Only remove the duplicated header/footer code.
+
+--- node_id=2462 ---
+Title: Wrap MilestonesPage with MarketingLayout
+Profile: subagent_general
+Task: Read `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/MilestonesPage.tsx`.
+
+Replace the ENTIRE file content with a version that:
+1. Adds `import { MarketingLayout } from '../../components/MarketingLayout';` at the top
+2. Removes the outer wrapper div, background glows, header, and footer
+3. Wraps the main content with `<MarketingLayout>`
+
+Keep ALL the actual page content (timeline). Only remove the duplicated header/footer code.
+
+--- node_id=2462 ---
+Title: Wrap PrivacyPolicyPage with MarketingLayout
+Profile: subagent_general
+Task: Read `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/PrivacyPolicyPage.tsx`.
+
+Replace the ENTIRE file content with a version that:
+1. Adds `import { MarketingLayout } from '../../components/MarketingLayout';` at the top
+2. Removes the outer wrapper div, background glows, header, and footer
+3. Wraps the main content with `<MarketingLayout>`
+
+Keep ALL the actual page content (privacy policy sections). Only remove the duplicated header/footer code.
+
+--- node_id=2462 ---
+Title: Wrap TermsPage with MarketingLayout
+Profile: subagent_general
+Task: Read `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/TermsPage.tsx`.
+
+Replace the ENTIRE file content with a version that:
+1. Adds `import { MarketingLayout } from '../../components/MarketingLayout';` at the top
+2. Removes the outer wrapper div, background glows, header, and footer
+3. Wraps the main content with `<MarketingLayout>`
+
+Keep ALL the actual page content (terms sections). Only remove the duplicated header/footer code.
+
+--- node_id=2462 ---
+Title: Wrap ResourcesPage with MarketingLayout
+Profile: subagent_general
+Task: Read `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/ResourcesPage.tsx`.
+
+Replace the ENTIRE file content with a version that:
+1. Adds `import { MarketingLayout } from '../../components/MarketingLayout';` at the top
+2. Removes the outer wrapper div, background glows, header, and footer
+3. Wraps the main content with `<MarketingLayout>`
+
+Keep ALL the actual page content. Only remove the duplicated header/footer code.
+
+--- node_id=2705 ---
+Title: Wrap marketing pages with MarketingLayout
+Profile: subagent_general
+Task: Update all marketing page components in `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/` to use the shared `MarketingLayout` component from `../../components/MarketingLayout`.
+
+## What to do
+
+Each marketing page currently has its own duplicated header and footer code. You need to:
+1. Remove the header (logo + nav + Login/Register buttons)
+2. Remove the footer (copyright + legal links)
+3. Remove the background glows divs (they're now in MarketingLayout)
+4. Remove the outer `<div className="min-h-screen bg-[#020617] ...">` wrapper
+5. Wrap the remaining content with `<MarketingLayout>`
+
+## Pages to update (9 files)
+
+Read each file first, then edit it. For each page:
+
+### Before (typical pattern):
+```tsx
+import { ... } from 'lucide-react';
+import React from 'react';
+import {
+
+--- node_id=2720 ---
+Title: Wrap FeaturesPage with MarketingLayout
+Profile: subagent_general
+Task: Read `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/FeaturesPage.tsx`.
+
+Replace the ENTIRE file content with a version that:
+1. Adds `import { MarketingLayout } from '../../components/MarketingLayout';` at the top
+2. Removes the outer wrapper div, background glows, header, and footer
+3. Wraps the main content with `<MarketingLayout>`
+
+The result should start like:
+```tsx
+import { ... } from 'lucide-react';
+import React from 'react';
+import { MarketingLayout } from '../../components/MarketingLayout';
+
+export const FeaturesPage: React.FC = () => {
+  return (
+    <MarketingLayout>
+      <div className="max-w-7xl mx-auto w-full px-6 py-16">
+        ...rest of content without header/footer...
+      </div>
+    </MarketingLayout>
+  );
+};
+```
+
+Keep ALL the actual page content (f
+
+--- node_id=2720 ---
+Title: Wrap PricingPage with MarketingLayout
+Profile: subagent_general
+Task: Read `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/PricingPage.tsx`.
+
+Replace the ENTIRE file content with a version that:
+1. Adds `import { MarketingLayout } from '../../components/MarketingLayout';` at the top
+2. Removes the outer wrapper div, background glows, header, and footer
+3. Wraps the main content with `<MarketingLayout>`
+
+Keep ALL the actual page content (pricing cards, tiers, CTAs). Only remove the duplicated header/footer code. The result should use `<MarketingLayout>` as the outer wrapper and have the pricing content inside a `<div className="max-w-7xl mx-auto w-full px-6 py-16">`.
+
+--- node_id=2720 ---
+Title: Wrap HowItWorksPage with MarketingLayout
+Profile: subagent_general
+Task: Read `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/HowItWorksPage.tsx`.
+
+Replace the ENTIRE file content with a version that:
+1. Adds `import { MarketingLayout } from '../../components/MarketingLayout';` at the top
+2. Removes the outer wrapper div, background glows, header, and footer
+3. Wraps the main content with `<MarketingLayout>`
+
+Keep ALL the actual page content (3-step timeline). Only remove the duplicated header/footer code.
+
+--- node_id=2720 ---
+Title: Wrap AboutPage with MarketingLayout
+Profile: subagent_general
+Task: Read `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/AboutPage.tsx`.
+
+Replace the ENTIRE file content with a version that:
+1. Adds `import { MarketingLayout } from '../../components/MarketingLayout';` at the top
+2. Removes the outer wrapper div, background glows, header, and footer
+3. Wraps the main content with `<MarketingLayout>`
+
+Keep ALL the actual page content (mission statement, values). Only remove the duplicated header/footer code.
+
+--- node_id=2720 ---
+Title: Wrap FAQPage with MarketingLayout
+Profile: subagent_general
+Task: Read `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/FAQPage.tsx`.
+
+Replace the ENTIRE file content with a version that:
+1. Adds `import { MarketingLayout } from '../../components/MarketingLayout';` at the top
+2. Removes the outer wrapper div, background glows, header, and footer
+3. Wraps the main content with `<MarketingLayout>`
+
+Keep ALL the actual page content (FAQ accordion). Only remove the duplicated header/footer code.
+
+--- node_id=2720 ---
+Title: Wrap ContactPage with MarketingLayout
+Profile: subagent_general
+Task: Read `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/ContactPage.tsx`.
+
+Replace the ENTIRE file content with a version that:
+1. Adds `import { MarketingLayout } from '../../components/MarketingLayout';` at the top
+2. Removes the outer wrapper div, background glows, header, and footer
+3. Wraps the main content with `<MarketingLayout>`
+
+Keep ALL the actual page content (contact form, info sidebar). Only remove the duplicated header/footer code.
+
+--- node_id=2720 ---
+Title: Wrap MilestonesPage with MarketingLayout
+Profile: subagent_general
+Task: Read `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/MilestonesPage.tsx`.
+
+Replace the ENTIRE file content with a version that:
+1. Adds `import { MarketingLayout } from '../../components/MarketingLayout';` at the top
+2. Removes the outer wrapper div, background glows, header, and footer
+3. Wraps the main content with `<MarketingLayout>`
+
+Keep ALL the actual page content (timeline). Only remove the duplicated header/footer code.
+
+--- node_id=2720 ---
+Title: Wrap PrivacyPolicyPage with MarketingLayout
+Profile: subagent_general
+Task: Read `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/PrivacyPolicyPage.tsx`.
+
+Replace the ENTIRE file content with a version that:
+1. Adds `import { MarketingLayout } from '../../components/MarketingLayout';` at the top
+2. Removes the outer wrapper div, background glows, header, and footer
+3. Wraps the main content with `<MarketingLayout>`
+
+Keep ALL the actual page content (privacy policy sections). Only remove the duplicated header/footer code.
+
+--- node_id=2720 ---
+Title: Wrap TermsPage with MarketingLayout
+Profile: subagent_general
+Task: Read `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/TermsPage.tsx`.
+
+Replace the ENTIRE file content with a version that:
+1. Adds `import { MarketingLayout } from '../../components/MarketingLayout';` at the top
+2. Removes the outer wrapper div, background glows, header, and footer
+3. Wraps the main content with `<MarketingLayout>`
+
+Keep ALL the actual page content (terms sections). Only remove the duplicated header/footer code.
+
+--- node_id=2720 ---
+Title: Wrap ResourcesPage with MarketingLayout
+Profile: subagent_general
+Task: Read `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/marketing/ResourcesPage.tsx`.
+
+Replace the ENTIRE file content with a version that:
+1. Adds `import { MarketingLayout } from '../../components/MarketingLayout';` at the top
+2. Removes the outer wrapper div, background glows, header, and footer
+3. Wraps the main content with `<MarketingLayout>`
+
+Keep ALL the actual page content. Only remove the duplicated header/footer code.
+
+--- node_id=2794 ---
+Title: Audit legacy routing vs current
+Profile: subagent_explore
+Task: Compare the legacy routing with the current routing.
+
+Read `c:/Users/josee/blindsight/legacy/web/apps/dashboard/src/app/app.tsx` and `c:/Users/josee/blindsight/web/apps/dashboard/src/app/app.tsx`.
+
+List:
+1. All routes that exist in legacy but not in current (missing routes)
+2. All routes that exist in current but not in legacy (new routes)
+3. Any route path changes (e.g., `/privacy` → `/app/privacy`)
+4. Any import changes that might cause issues (e.g., default vs named exports, lazy loading changes)
+
+Provide a clear table with route path, legacy component, current component, and status.
+
+--- node_id=2794 ---
+Title: Audit legacy AppShell vs current
+Profile: subagent_explore
+Task: Compare the legacy AppShell with the current AppShell.
+
+Read `c:/Users/josee/blindsight/legacy/web/apps/dashboard/src/components/AppShell.tsx` and `c:/Users/josee/blindsight/web/apps/dashboard/src/components/AppShell.tsx`.
+
+List:
+1. Any navigation items in legacy that are missing in current
+2. Any navigation items in current that are new
+3. Any functional differences (auth checks, role checks, layout differences)
+4. Any style/className differences that might affect UX
+5. Any missing utility functions or hooks
+
+Provide a clear diff-like summary.
+
+--- node_id=2794 ---
+Title: Audit legacy page components vs current
+Profile: subagent_explore
+Task: Compare legacy page components with current page components.
+
+Read the following legacy files and compare with their current counterparts:
+1. Legacy: `c:/Users/josee/blindsight/legacy/web/apps/dashboard/src/pages/LoginPage.tsx` vs Current: `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/LoginPage.tsx`
+2. Legacy: `c:/Users/josee/blindsight/legacy/web/apps/dashboard/src/pages/RegisterPage.tsx` vs Current: `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/RegisterPage.tsx`
+3. Legacy: `c:/Users/josee/blindsight/legacy/web/apps/dashboard/src/pages/DashboardPage.tsx` vs Current: `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/DashboardPage.tsx`
+4. Legacy: `c:/Users/josee/blindsight/legacy/web/apps/dashboard/src/pages/PrivacyPage.tsx` vs Current: `c:/Users/josee/blindsight/w
+
+--- node_id=2794 ---
+Title: Audit legacy global styles and CSS
+Profile: subagent_explore
+Task: Compare legacy global styles with current.
+
+Read:
+1. `c:/Users/josee/blindsight/legacy/web/apps/dashboard/src/index.css` vs `c:/Users/josee/blindsight/web/apps/dashboard/src/index.css`
+2. `c:/Users/josee/blindsight/legacy/web/apps/dashboard/src/styles.css` vs `c:/Users/josee/blindsight/web/apps/dashboard/src/styles.css`
+3. `c:/Users/josee/blindsight/legacy/web/apps/dashboard/src/App.css` vs `c:/Users/josee/blindsight/web/apps/dashboard/src/App.css`
+4. `c:/Users/josee/blindsight/legacy/web/apps/dashboard/src/app.css` vs `c:/Users/josee/blindsight/web/apps/dashboard/src/app.css`
+
+List any missing CSS classes, styles, or global configurations. Pay special attention to:
+- `.glass-btn-primary` class
+- `.glass-card` class  
+- Any Tailwind customizations
+- Any global CSS variables
+
+Also check for
+
+--- node_id=2820 ---
+Title: Audit legacy routing vs current
+Profile: subagent_explore
+Task: Compare the legacy routing with the current routing.
+
+Read `c:/Users/josee/blindsight/legacy/web/apps/dashboard/src/app/app.tsx` and `c:/Users/josee/blindsight/web/apps/dashboard/src/app/app.tsx`.
+
+List:
+1. All routes that exist in legacy but not in current (missing routes)
+2. All routes that exist in current but not in legacy (new routes)
+3. Any route path changes (e.g., `/privacy` → `/app/privacy`)
+4. Any import changes that might cause issues (e.g., default vs named exports, lazy loading changes)
+
+Provide a clear table with route path, legacy component, current component, and status.
+
+--- node_id=2820 ---
+Title: Audit legacy AppShell vs current
+Profile: subagent_explore
+Task: Compare the legacy AppShell with the current AppShell.
+
+Read `c:/Users/josee/blindsight/legacy/web/apps/dashboard/src/components/AppShell.tsx` and `c:/Users/josee/blindsight/web/apps/dashboard/src/components/AppShell.tsx`.
+
+List:
+1. Any navigation items in legacy that are missing in current
+2. Any navigation items in current that are new
+3. Any functional differences (auth checks, role checks, layout differences)
+4. Any style/className differences that might affect UX
+5. Any missing utility functions or hooks
+
+Provide a clear diff-like summary.
+
+--- node_id=2820 ---
+Title: Audit legacy page components vs current
+Profile: subagent_explore
+Task: Compare legacy page components with current page components.
+
+Read the following legacy files and compare with their current counterparts:
+1. Legacy: `c:/Users/josee/blindsight/legacy/web/apps/dashboard/src/pages/LoginPage.tsx` vs Current: `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/LoginPage.tsx`
+2. Legacy: `c:/Users/josee/blindsight/legacy/web/apps/dashboard/src/pages/RegisterPage.tsx` vs Current: `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/RegisterPage.tsx`
+3. Legacy: `c:/Users/josee/blindsight/legacy/web/apps/dashboard/src/pages/DashboardPage.tsx` vs Current: `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/DashboardPage.tsx`
+4. Legacy: `c:/Users/josee/blindsight/legacy/web/apps/dashboard/src/pages/PrivacyPage.tsx` vs Current: `c:/Users/josee/blindsight/w
+
+--- node_id=2820 ---
+Title: Audit legacy global styles and CSS
+Profile: subagent_explore
+Task: Compare legacy global styles with current.
+
+Read:
+1. `c:/Users/josee/blindsight/legacy/web/apps/dashboard/src/index.css` vs `c:/Users/josee/blindsight/web/apps/dashboard/src/index.css`
+2. `c:/Users/josee/blindsight/legacy/web/apps/dashboard/src/styles.css` vs `c:/Users/josee/blindsight/web/apps/dashboard/src/styles.css`
+3. `c:/Users/josee/blindsight/legacy/web/apps/dashboard/src/App.css` vs `c:/Users/josee/blindsight/web/apps/dashboard/src/App.css`
+4. `c:/Users/josee/blindsight/legacy/web/apps/dashboard/src/app.css` vs `c:/Users/josee/blindsight/web/apps/dashboard/src/app.css`
+
+List any missing CSS classes, styles, or global configurations. Pay special attention to:
+- `.glass-btn-primary` class
+- `.glass-card` class  
+- Any Tailwind customizations
+- Any global CSS variables
+
+Also check for
+
+--- node_id=3278 ---
+Title: Designer: Finalize Blindsight landing page
+Profile: subagent_general
+Task: You are a senior UI/UX designer specializing in dark-mode SaaS landing pages. Your job is to review and refine the Blindsight landing page (`IndexPage.tsx`) and its stylesheet (`styles.css`) to achieve pixel-perfect, accessible, visually stunning quality.
+
+## Context
+
+The landing page is based on a Stitch with Google design reference. The current implementation lives at:
+- **Page:** `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/IndexPage.tsx`
+- **Styles:** `c:/Users/josee/blindsight/web/apps/dashboard/src/styles.css`
+
+The Stitch design reference HTML is at:
+- `c:/Users/josee/Downloads/stitch_blindsight_private_surveys/blindsight_desktop_landing_animated/code.html`
+
+## Your Tasks
+
+### 1. Read and Analyze
+Read these three files thoroughly. Compare the current implementation against
+
+--- node_id=3282 ---
+Title: Designer: Finalize Blindsight landing page
+Profile: subagent_general
+Task: You are a senior UI/UX designer specializing in dark-mode SaaS landing pages. Your job is to review and refine the Blindsight landing page (`IndexPage.tsx`) and its stylesheet (`styles.css`) to achieve pixel-perfect, accessible, visually stunning quality.
+
+## Context
+
+The landing page is based on a Stitch with Google design reference. The current implementation lives at:
+- **Page:** `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/IndexPage.tsx`
+- **Styles:** `c:/Users/josee/blindsight/web/apps/dashboard/src/styles.css`
+
+The Stitch design reference HTML is at:
+- `c:/Users/josee/Downloads/stitch_blindsight_private_surveys/blindsight_desktop_landing_animated/code.html`
+
+## Your Tasks
+
+### 1. Read and Analyze
+Read these three files thoroughly. Compare the current implementation against
+
+--- node_id=3692 ---
+Title: Designer: Finalize Blindsight landing page
+Profile: subagent_general
+Task: You are a senior UI/UX designer specializing in dark-mode SaaS landing pages. Your job is to review and refine the Blindsight landing page (`IndexPage.tsx`) and its stylesheet (`styles.css`) to achieve pixel-perfect, accessible, visually stunning quality.
+
+## Context
+
+The landing page is based on a Stitch with Google design reference. The current implementation lives at:
+- **Page:** `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/IndexPage.tsx`
+- **Styles:** `c:/Users/josee/blindsight/web/apps/dashboard/src/styles.css`
+
+The Stitch design reference HTML is at:
+- `c:/Users/josee/Downloads/stitch_blindsight_private_surveys/blindsight_desktop_landing_animated/code.html`
+
+## Your Tasks
+
+### 1. Read and Analyze
+Read these three files thoroughly. Compare the current implementation against
+
+--- node_id=4130 ---
+Title: Designer: Finalize Blindsight landing page
+Profile: subagent_general
+Task: You are a senior UI/UX designer specializing in dark-mode SaaS landing pages. Your job is to review and refine the Blindsight landing page (`IndexPage.tsx`) and its stylesheet (`styles.css`) to achieve pixel-perfect, accessible, visually stunning quality.
+
+## Context
+
+The landing page is based on a Stitch with Google design reference. The current implementation lives at:
+- **Page:** `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/IndexPage.tsx`
+- **Styles:** `c:/Users/josee/blindsight/web/apps/dashboard/src/styles.css`
+
+The Stitch design reference HTML is at:
+- `c:/Users/josee/Downloads/stitch_blindsight_private_surveys/blindsight_desktop_landing_animated/code.html`
+
+## Your Tasks
+
+### 1. Read and Analyze
+Read these three files thoroughly. Compare the current implementation against
+
+--- node_id=4749 ---
+Title: Designer: Finalize Blindsight landing page
+Profile: subagent_general
+Task: You are a senior UI/UX designer specializing in dark-mode SaaS landing pages. Your job is to review and refine the Blindsight landing page (`IndexPage.tsx`) and its stylesheet (`styles.css`) to achieve pixel-perfect, accessible, visually stunning quality.
+
+## Context
+
+The landing page is based on a Stitch with Google design reference. The current implementation lives at:
+- **Page:** `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/IndexPage.tsx`
+- **Styles:** `c:/Users/josee/blindsight/web/apps/dashboard/src/styles.css`
+
+The Stitch design reference HTML is at:
+- `c:/Users/josee/Downloads/stitch_blindsight_private_surveys/blindsight_desktop_landing_animated/code.html`
+
+## Your Tasks
+
+### 1. Read and Analyze
+Read these three files thoroughly. Compare the current implementation against
+
+--- node_id=5355 ---
+Title: Designer: Finalize Blindsight landing page
+Profile: subagent_general
+Task: You are a senior UI/UX designer specializing in dark-mode SaaS landing pages. Your job is to review and refine the Blindsight landing page (`IndexPage.tsx`) and its stylesheet (`styles.css`) to achieve pixel-perfect, accessible, visually stunning quality.
+
+## Context
+
+The landing page is based on a Stitch with Google design reference. The current implementation lives at:
+- **Page:** `c:/Users/josee/blindsight/web/apps/dashboard/src/pages/IndexPage.tsx`
+- **Styles:** `c:/Users/josee/blindsight/web/apps/dashboard/src/styles.css`
+
+The Stitch design reference HTML is at:
+- `c:/Users/josee/Downloads/stitch_blindsight_private_surveys/blindsight_desktop_landing_animated/code.html`
+
+## Your Tasks
+
+### 1. Read and Analyze
+Read these three files thoroughly. Compare the current implementation against
+
+--- node_id=8831 ---
+Title: UX Audit - Navigation & IA
+Profile: subagent_explore
+Task: Conduct a UX audit focused on Navigation and Information Architecture for the Blindsight web application.
+
+Read these files and identify issues:
+1. web/apps/dashboard/src/app/app.tsx - main routing structure
+2. web/apps/dashboard/src/components/AppShell.tsx - layout/navigation
+3. web/apps/dashboard/src/components/MarketingLayout.tsx - marketing layout
+
+Look for:
+- Missing or broken routes
+- Inconsistent navigation patterns between authenticated and public areas
+- Deep navigation without breadcrumbs
+- Missing active route indicators
+- Marketing pages that may not be linked from main nav
+- Route conflicts or confusing URL patterns
+- Missing 404 handling
+- Pages that exist but aren't reachable from the UI
+
+Return a concise bullet list of findings with severity (critical/moderate/minor) and fi
+
+--- node_id=8836 ---
+Title: UX Audit - Navigation & IA
+Profile: subagent_explore
+Task: Conduct a UX audit focused on Navigation and Information Architecture for the Blindsight web application.
+
+Read these files and identify issues:
+1. web/apps/dashboard/src/app/app.tsx - main routing structure
+2. web/apps/dashboard/src/components/AppShell.tsx - layout/navigation
+3. web/apps/dashboard/src/components/MarketingLayout.tsx - marketing layout
+
+Look for:
+- Missing or broken routes
+- Inconsistent navigation patterns between authenticated and public areas
+- Deep navigation without breadcrumbs
+- Missing active route indicators
+- Marketing pages that may not be linked from main nav
+- Route conflicts or confusing URL patterns
+- Missing 404 handling
+- Pages that exist but aren't reachable from the UI
+
+Return a concise bullet list of findings with severity (critical/moderate/minor) and fi
+
+--- node_id=8856 ---
+Title: UX Audit - Forms & Validation
+Profile: subagent_explore
+Task: Conduct a UX audit focused on Form UX and Validation for the Blindsight web application.
+
+Read these files and identify issues:
+1. web/apps/dashboard/src/components/VisualBuilder.tsx - survey builder forms
+2. web/apps/dashboard/src/pages/LoginPage.tsx
+3. web/apps/dashboard/src/pages/RegisterPage.tsx
+4. web/apps/dashboard/src/pages/CreateSurveyPage.tsx
+5. web/apps/survey-renderer/src/app/app.tsx - survey taker forms
+6. web/apps/survey-renderer/src/components/QuestionField.tsx
+
+Look for:
+- Missing field labels or helper text
+- Password visibility toggles
+- Inline vs after-submit validation
+- Error message clarity and placement
+- Success feedback after actions
+- Missing form state (dirty/clean)
+- Autocomplete attributes missing
+- Keyboard navigation issues
+- Missing confirmation on destructiv
+
+--- node_id=8861 ---
+Title: UX Audit - Forms & Validation
+Profile: subagent_explore
+Task: Conduct a UX audit focused on Form UX and Validation for the Blindsight web application.
+
+Read these files and identify issues:
+1. web/apps/dashboard/src/components/VisualBuilder.tsx - survey builder forms
+2. web/apps/dashboard/src/pages/LoginPage.tsx
+3. web/apps/dashboard/src/pages/RegisterPage.tsx
+4. web/apps/dashboard/src/pages/CreateSurveyPage.tsx
+5. web/apps/survey-renderer/src/app/app.tsx - survey taker forms
+6. web/apps/survey-renderer/src/components/QuestionField.tsx
+
+Look for:
+- Missing field labels or helper text
+- Password visibility toggles
+- Inline vs after-submit validation
+- Error message clarity and placement
+- Success feedback after actions
+- Missing form state (dirty/clean)
+- Autocomplete attributes missing
+- Keyboard navigation issues
+- Missing confirmation on destructiv
+
+--- node_id=8887 ---
+Title: UX Audit - Error Handling & Edge Cases
+Profile: subagent_explore
+Task: Conduct a UX audit focused on Error Handling and Edge Cases for the Blindsight web application.
+
+Read these key files:
+1. web/apps/dashboard/src/services/api.ts - API client and error handling
+2. web/apps/dashboard/src/services/api-client.ts (if exists) - shared API client
+3. src/core/middleware/error_handler.py - backend error handling
+4. web/apps/dashboard/src/pages/SurveyDetailPage.tsx - save error handling
+5. web/apps/survey-renderer/src/app/app.tsx - renderer error states
+
+Also check if these patterns exist:
+- Generic "An error occurred" without actionable next steps
+- Network error recovery (retry buttons)
+- Form resubmission prevention on error
+- Session expiration handling
+- Toast/notification system for non-blocking errors
+- Offline state handling
+- Loading skeletons vs spinners
+-
+
+--- node_id=8892 ---
+Title: UX Audit - Error Handling & Edge Cases
+Profile: subagent_explore
+Task: Conduct a UX audit focused on Error Handling and Edge Cases for the Blindsight web application.
+
+Read these key files:
+1. web/apps/dashboard/src/services/api.ts - API client and error handling
+2. web/apps/dashboard/src/services/api-client.ts (if exists) - shared API client
+3. src/core/middleware/error_handler.py - backend error handling
+4. web/apps/dashboard/src/pages/SurveyDetailPage.tsx - save error handling
+5. web/apps/survey-renderer/src/app/app.tsx - renderer error states
+
+Also check if these patterns exist:
+- Generic "An error occurred" without actionable next steps
+- Network error recovery (retry buttons)
+- Form resubmission prevention on error
+- Session expiration handling
+- Toast/notification system for non-blocking errors
+- Offline state handling
+- Loading skeletons vs spinners
+-
+
+--- node_id=8924 ---
+Title: UX Audit - Accessibility
+Profile: subagent_explore
+Task: Conduct an accessibility (a11y) audit of the Blindsight web application.
+
+Read these files and identify issues:
+1. web/apps/dashboard/src/pages/IndexPage.tsx - landing page
+2. web/apps/dashboard/src/components/VisualBuilder.tsx
+3. web/apps/survey-renderer/src/components/QuestionField.tsx
+4. web/apps/dashboard/src/pages/LoginPage.tsx
+5. web/apps/dashboard/src/pages/RegisterPage.tsx
+
+Look for:
+- Missing or incorrect aria-labels, aria-describedby, role attributes
+- Form inputs without associated labels
+- Buttons that are actually divs or spans
+- Color contrast issues (light text on light backgrounds, low contrast ratios)
+- Keyboard trap situations
+- Focus management (visible focus rings, focus loss on modal open/close)
+- Missing skip links
+- Images without alt text
+- Headings that skip levels
+
+--- node_id=8929 ---
+Title: UX Audit - Accessibility
+Profile: subagent_explore
+Task: Conduct an accessibility (a11y) audit of the Blindsight web application.
+
+Read these files and identify issues:
+1. web/apps/dashboard/src/pages/IndexPage.tsx - landing page
+2. web/apps/dashboard/src/components/VisualBuilder.tsx
+3. web/apps/survey-renderer/src/components/QuestionField.tsx
+4. web/apps/dashboard/src/pages/LoginPage.tsx
+5. web/apps/dashboard/src/pages/RegisterPage.tsx
+
+Look for:
+- Missing or incorrect aria-labels, aria-describedby, role attributes
+- Form inputs without associated labels
+- Buttons that are actually divs or spans
+- Color contrast issues (light text on light backgrounds, low contrast ratios)
+- Keyboard trap situations
+- Focus management (visible focus rings, focus loss on modal open/close)
+- Missing skip links
+- Images without alt text
+- Headings that skip levels
+
+--- node_id=9447 ---
+Title: Fix page titles across all pages
+Profile: subagent_general
+Task: Fix the page titles across the Blindsight web application. Every page currently shows "Dashboard" as the <title>. Update each page component to set document.title appropriately.
+
+Read these files and add `document.title = 'appropriate title'` at the top of each page component (inside useEffect or at component start):
+
+1. web/apps/dashboard/src/pages/LoginPage.tsx → "Sign In — Blindsight"
+2. web/apps/dashboard/src/pages/RegisterPage.tsx → "Create Account — Blindsight"
+3. web/apps/dashboard/src/pages/CreateSurveyPage.tsx → "Create Survey — Blindsight"
+4. web/apps/dashboard/src/pages/SurveyDetailPage.tsx → dynamic: `${title} — Blindsight Survey` or "Survey Builder — Blindsight"
+5. web/apps/dashboard/src/pages/SurveyAnalyticsPage.tsx → "Survey Analytics — Blindsight"
+6. web/apps/dashboard/src/
+
+--- node_id=9451 ---
+Title: Fix page titles across all pages
+Profile: subagent_general
+Task: Fix the page titles across the Blindsight web application. Every page currently shows "Dashboard" as the <title>. Update each page component to set document.title appropriately.
+
+Read these files and add `document.title = 'appropriate title'` at the top of each page component (inside useEffect or at component start):
+
+1. web/apps/dashboard/src/pages/LoginPage.tsx → "Sign In — Blindsight"
+2. web/apps/dashboard/src/pages/RegisterPage.tsx → "Create Account — Blindsight"
+3. web/apps/dashboard/src/pages/CreateSurveyPage.tsx → "Create Survey — Blindsight"
+4. web/apps/dashboard/src/pages/SurveyDetailPage.tsx → dynamic: `${title} — Blindsight Survey` or "Survey Builder — Blindsight"
+5. web/apps/dashboard/src/pages/SurveyAnalyticsPage.tsx → "Survey Analytics — Blindsight"
+6. web/apps/dashboard/src/
+
+--- node_id=9461 ---
+Title: Add back buttons + navigation fixes
+Profile: subagent_general
+Task: Fix navigation issues in the Blindsight dashboard:
+
+1. **Add back buttons to survey pages:**
+   - Read `web/apps/dashboard/src/pages/SurveyDetailPage.tsx` and add a back button (with ArrowLeft icon from lucide-react) in the header that navigates to `/intelligence`
+   - Read `web/apps/dashboard/src/pages/SurveyAnalyticsPage.tsx` and add a back button that navigates to `/intelligence` (or keep existing back-to-survey and add a breadcrumb)
+   - Read `web/apps/dashboard/src/pages/SurveySharePage.tsx` and add a back button that navigates to `/intelligence`
+   - Read `web/apps/dashboard/src/pages/SurveyResponsesPage.tsx` and add a back button that navigates to `/intelligence`
+
+2. **Fix "New Survey" active indicator:**
+   - Read `web/apps/dashboard/src/components/AppShell.tsx` and add `end={true}
+
+--- node_id=9465 ---
+Title: Add back buttons + navigation fixes
+Profile: subagent_general
+Task: Fix navigation issues in the Blindsight dashboard:
+
+1. **Add back buttons to survey pages:**
+   - Read `web/apps/dashboard/src/pages/SurveyDetailPage.tsx` and add a back button (with ArrowLeft icon from lucide-react) in the header that navigates to `/intelligence`
+   - Read `web/apps/dashboard/src/pages/SurveyAnalyticsPage.tsx` and add a back button that navigates to `/intelligence` (or keep existing back-to-survey and add a breadcrumb)
+   - Read `web/apps/dashboard/src/pages/SurveySharePage.tsx` and add a back button that navigates to `/intelligence`
+   - Read `web/apps/dashboard/src/pages/SurveyResponsesPage.tsx` and add a back button that navigates to `/intelligence`
+
+2. **Fix "New Survey" active indicator:**
+   - Read `web/apps/dashboard/src/components/AppShell.tsx` and add `end={true}
+
+--- node_id=9488 ---
+Title: Add Error Boundaries to all SPAs
+Profile: subagent_general
+Task: Add React Error Boundaries to all SPAs in the Blindsight application to prevent blank screens on component crashes.
+
+1. Create a reusable ErrorBoundary component at `web/apps/dashboard/src/components/ErrorBoundary.tsx`:
+   - Class component that implements componentDidCatch
+   - Shows a friendly error UI with "Something went wrong" message
+   - Include a "Reload page" button (window.location.reload())
+   - Use the app's design system: `nm-convex`, `bg-base-bg`, `text-text-main`, etc.
+
+2. Read `web/apps/dashboard/src/app/app.tsx` and wrap the main route content with ErrorBoundary (inside Suspense but around routes)
+
+3. Create a similar ErrorBoundary for the survey-renderer at `web/apps/survey-renderer/src/components/ErrorBoundary.tsx`
+
+4. Read `web/apps/survey-renderer/src/app/app.tsx` and 
+
+--- node_id=9492 ---
+Title: Add Error Boundaries to all SPAs
+Profile: subagent_general
+Task: Add React Error Boundaries to all SPAs in the Blindsight application to prevent blank screens on component crashes.
+
+1. Create a reusable ErrorBoundary component at `web/apps/dashboard/src/components/ErrorBoundary.tsx`:
+   - Class component that implements componentDidCatch
+   - Shows a friendly error UI with "Something went wrong" message
+   - Include a "Reload page" button (window.location.reload())
+   - Use the app's design system: `nm-convex`, `bg-base-bg`, `text-text-main`, etc.
+
+2. Read `web/apps/dashboard/src/app/app.tsx` and wrap the main route content with ErrorBoundary (inside Suspense but around routes)
+
+3. Create a similar ErrorBoundary for the survey-renderer at `web/apps/survey-renderer/src/components/ErrorBoundary.tsx`
+
+4. Read `web/apps/survey-renderer/src/app/app.tsx` and 
+
+--- node_id=9539 ---
+Title: Fix a11y - labels, contrast, motion
+Profile: subagent_general
+Task: Fix accessibility issues in the Blindsight application:
+
+1. **Fix LoginPage labels:**
+   - Read `web/apps/dashboard/src/pages/LoginPage.tsx`
+   - Add `id="username"` to username input and `htmlFor="username"` to its label
+   - Add `id="password"` to password input and `htmlFor="password"` to its label
+   - Add `aria-label="Show password"` / `aria-label="Hide password"` to the Eye/EyeOff toggle button based on state
+   - Add `role="alert"` to the error message div
+   - Add `aria-invalid={!!error}` to both inputs
+   - Add `aria-describedby={error ? 'login-error' : undefined}` linking to error div id
+   - Add `role="status" aria-label="Loading"` to the spinner div
+
+2. **Fix RegisterPage similarly:**
+   - Read `web/apps/dashboard/src/pages/RegisterPage.tsx`
+   - Add matching id/htmlFor to all 
+
+--- node_id=9543 ---
+Title: Fix a11y - labels, contrast, motion
+Profile: subagent_general
+Task: Fix accessibility issues in the Blindsight application:
+
+1. **Fix LoginPage labels:**
+   - Read `web/apps/dashboard/src/pages/LoginPage.tsx`
+   - Add `id="username"` to username input and `htmlFor="username"` to its label
+   - Add `id="password"` to password input and `htmlFor="password"` to its label
+   - Add `aria-label="Show password"` / `aria-label="Hide password"` to the Eye/EyeOff toggle button based on state
+   - Add `role="alert"` to the error message div
+   - Add `aria-invalid={!!error}` to both inputs
+   - Add `aria-describedby={error ? 'login-error' : undefined}` linking to error div id
+   - Add `role="status" aria-label="Loading"` to the spinner div
+
+2. **Fix RegisterPage similarly:**
+   - Read `web/apps/dashboard/src/pages/RegisterPage.tsx`
+   - Add matching id/htmlFor to all 
+
+--- node_id=9586 ---
+Title: Add empty states and skeleton loaders
+Profile: subagent_general
+Task: Add empty states and skeleton loaders to data-heavy pages in the Blindsight dashboard.
+
+1. **Empty state for survey list:**
+   - Read `web/apps/dashboard/src/pages/DashboardPage.tsx` (the /intelligence page)
+   - When surveys array is empty, show a friendly empty state instead of blank space:
+     - Icon (e.g., ClipboardList from lucide-react)
+     - Text: "No surveys yet"
+     - Subtext: "Create your first survey to start collecting feedback"
+     - CTA button linking to /surveys/new
+   - Use the design system: `nm-convex`, `text-text-muted`, etc.
+
+2. **Empty states for DLP pages:**
+   - Read `web/apps/dashboard/src/pages/DlpPoliciesPage.tsx` — add empty state when no policies
+   - Read `web/apps/dashboard/src/pages/DlpIncidentsPage.tsx` — add empty state when no incidents
+   - Read `web/
+
+--- node_id=9590 ---
+Title: Add empty states and skeleton loaders
+Profile: subagent_general
+Task: Add empty states and skeleton loaders to data-heavy pages in the Blindsight dashboard.
+
+1. **Empty state for survey list:**
+   - Read `web/apps/dashboard/src/pages/DashboardPage.tsx` (the /intelligence page)
+   - When surveys array is empty, show a friendly empty state instead of blank space:
+     - Icon (e.g., ClipboardList from lucide-react)
+     - Text: "No surveys yet"
+     - Subtext: "Create your first survey to start collecting feedback"
+     - CTA button linking to /surveys/new
+   - Use the design system: `nm-convex`, `text-text-muted`, etc.
+
+2. **Empty states for DLP pages:**
+   - Read `web/apps/dashboard/src/pages/DlpPoliciesPage.tsx` — add empty state when no policies
+   - Read `web/apps/dashboard/src/pages/DlpIncidentsPage.tsx` — add empty state when no incidents
+   - Read `web/
+
+--- node_id=10721 ---
+Title: Fix page titles across all pages
+Profile: subagent_general
+Task: Fix the page titles across the Blindsight web application. Every page currently shows "Dashboard" as the <title>. Update each page component to set document.title appropriately.
+
+Read these files and add `document.title = 'appropriate title'` at the top of each page component (inside useEffect or at component start):
+
+1. web/apps/dashboard/src/pages/LoginPage.tsx → "Sign In — Blindsight"
+2. web/apps/dashboard/src/pages/RegisterPage.tsx → "Create Account — Blindsight"
+3. web/apps/dashboard/src/pages/CreateSurveyPage.tsx → "Create Survey — Blindsight"
+4. web/apps/dashboard/src/pages/SurveyDetailPage.tsx → dynamic: `${title} — Blindsight Survey` or "Survey Builder — Blindsight"
+5. web/apps/dashboard/src/pages/SurveyAnalyticsPage.tsx → "Survey Analytics — Blindsight"
+6. web/apps/dashboard/src/
+
+--- node_id=10723 ---
+Title: Add back buttons + navigation fixes
+Profile: subagent_general
+Task: Fix navigation issues in the Blindsight dashboard:
+
+1. **Add back buttons to survey pages:**
+   - Read `web/apps/dashboard/src/pages/SurveyDetailPage.tsx` and add a back button (with ArrowLeft icon from lucide-react) in the header that navigates to `/intelligence`
+   - Read `web/apps/dashboard/src/pages/SurveyAnalyticsPage.tsx` and add a back button that navigates to `/intelligence` (or keep existing back-to-survey and add a breadcrumb)
+   - Read `web/apps/dashboard/src/pages/SurveySharePage.tsx` and add a back button that navigates to `/intelligence`
+   - Read `web/apps/dashboard/src/pages/SurveyResponsesPage.tsx` and add a back button that navigates to `/intelligence`
+
+2. **Fix "New Survey" active indicator:**
+   - Read `web/apps/dashboard/src/components/AppShell.tsx` and add `end={true}
+
+--- node_id=10725 ---
+Title: Add Error Boundaries to all SPAs
+Profile: subagent_general
+Task: Add React Error Boundaries to all SPAs in the Blindsight application to prevent blank screens on component crashes.
+
+1. Create a reusable ErrorBoundary component at `web/apps/dashboard/src/components/ErrorBoundary.tsx`:
+   - Class component that implements componentDidCatch
+   - Shows a friendly error UI with "Something went wrong" message
+   - Include a "Reload page" button (window.location.reload())
+   - Use the app's design system: `nm-convex`, `bg-base-bg`, `text-text-main`, etc.
+
+2. Read `web/apps/dashboard/src/app/app.tsx` and wrap the main route content with ErrorBoundary (inside Suspense but around routes)
+
+3. Create a similar ErrorBoundary for the survey-renderer at `web/apps/survey-renderer/src/components/ErrorBoundary.tsx`
+
+4. Read `web/apps/survey-renderer/src/app/app.tsx` and 
+
+--- node_id=10727 ---
+Title: Fix a11y - labels, contrast, motion
+Profile: subagent_general
+Task: Fix accessibility issues in the Blindsight application:
+
+1. **Fix LoginPage labels:**
+   - Read `web/apps/dashboard/src/pages/LoginPage.tsx`
+   - Add `id="username"` to username input and `htmlFor="username"` to its label
+   - Add `id="password"` to password input and `htmlFor="password"` to its label
+   - Add `aria-label="Show password"` / `aria-label="Hide password"` to the Eye/EyeOff toggle button based on state
+   - Add `role="alert"` to the error message div
+   - Add `aria-invalid={!!error}` to both inputs
+   - Add `aria-describedby={error ? 'login-error' : undefined}` linking to error div id
+   - Add `role="status" aria-label="Loading"` to the spinner div
+
+2. **Fix RegisterPage similarly:**
+   - Read `web/apps/dashboard/src/pages/RegisterPage.tsx`
+   - Add matching id/htmlFor to all 
+
+--- node_id=10729 ---
+Title: Add empty states and skeleton loaders
+Profile: subagent_general
+Task: Add empty states and skeleton loaders to data-heavy pages in the Blindsight dashboard.
+
+1. **Empty state for survey list:**
+   - Read `web/apps/dashboard/src/pages/DashboardPage.tsx` (the /intelligence page)
+   - When surveys array is empty, show a friendly empty state instead of blank space:
+     - Icon (e.g., ClipboardList from lucide-react)
+     - Text: "No surveys yet"
+     - Subtext: "Create your first survey to start collecting feedback"
+     - CTA button linking to /surveys/new
+   - Use the design system: `nm-convex`, `text-text-muted`, etc.
+
+2. **Empty states for DLP pages:**
+   - Read `web/apps/dashboard/src/pages/DlpPoliciesPage.tsx` — add empty state when no policies
+   - Read `web/apps/dashboard/src/pages/DlpIncidentsPage.tsx` — add empty state when no incidents
+   - Read `web/
+
+--- node_id=11005 ---
+Title: Rewrite QuestionField with glassmorphism
+Profile: subagent_general
+Task: Rewrite `web/apps/survey-renderer/src/components/QuestionField.tsx` to use the glassmorphism / neumorphic design system instead of generic gray Bootstrap-like styling.
+
+The design system CSS utilities have just been added to `web/apps/survey-renderer/src/styles.css`:
+- `@theme` defines: `--color-base-bg: #020617`, `--color-brand-primary: #6366f1`, `--color-brand-secondary: #2ecc71`, `--color-text-main: #f8fafc`, `--color-text-muted: #94a3b8`
+- `@utility nm-convex` — raised glass surface with gradient + shadow
+- `@utility nm-concave` — inset glass surface
+- `@utility nm-btn` — neumorphic button
+- `@utility glass-input` — dark glass input field (black/20 bg, white/10 border, white text, brand-primary focus)
+- `@utility glass-btn-primary` — primary brand button
+
+**Styling rules for the rewrit
+
+--- node_id=11009 ---
+Title: Rewrite QuestionField with glassmorphism
+Profile: subagent_general
+Task: Rewrite `web/apps/survey-renderer/src/components/QuestionField.tsx` to use the glassmorphism / neumorphic design system instead of generic gray Bootstrap-like styling.
+
+The design system CSS utilities have just been added to `web/apps/survey-renderer/src/styles.css`:
+- `@theme` defines: `--color-base-bg: #020617`, `--color-brand-primary: #6366f1`, `--color-brand-secondary: #2ecc71`, `--color-text-main: #f8fafc`, `--color-text-muted: #94a3b8`
+- `@utility nm-convex` — raised glass surface with gradient + shadow
+- `@utility nm-concave` — inset glass surface
+- `@utility nm-btn` — neumorphic button
+- `@utility glass-input` — dark glass input field (black/20 bg, white/10 border, white text, brand-primary focus)
+- `@utility glass-btn-primary` — primary brand button
+
+**Styling rules for the rewrit
+
+--- node_id=11507 ---
+Title: UX Audit - Navigation & IA
+Profile: subagent_explore
+Task: Do a fresh UX audit of Navigation & Information Architecture for the Blindsight web application.
+
+Read these key files:
+1. web/apps/dashboard/src/app/app.tsx — check all routes, lazy loading, route organization
+2. web/apps/dashboard/src/components/AppShell.tsx — sidebar navigation, active states
+3. web/apps/survey-renderer/src/app/app.tsx — renderer routes
+4. web/apps/dashboard/src/pages/SurveyDetailPage.tsx — tab navigation within survey
+5. web/apps/dashboard/src/pages/LoginPage.tsx — marketing page links, auth nav
+6. web/apps/dashboard/src/pages/IndexPage.tsx — marketing nav
+
+Check for:
+- Missing breadcrumbs in deep routes
+- Inconsistent navigation patterns (button vs link)
+- Tab/wizard flows that lack clear progression
+- Route organization (are related routes grouped?)
+- Missing "escape
+
+--- node_id=11512 ---
+Title: UX Audit - Navigation & IA
+Profile: subagent_explore
+Task: Do a fresh UX audit of Navigation & Information Architecture for the Blindsight web application.
+
+Read these key files:
+1. web/apps/dashboard/src/app/app.tsx — check all routes, lazy loading, route organization
+2. web/apps/dashboard/src/components/AppShell.tsx — sidebar navigation, active states
+3. web/apps/survey-renderer/src/app/app.tsx — renderer routes
+4. web/apps/dashboard/src/pages/SurveyDetailPage.tsx — tab navigation within survey
+5. web/apps/dashboard/src/pages/LoginPage.tsx — marketing page links, auth nav
+6. web/apps/dashboard/src/pages/IndexPage.tsx — marketing nav
+
+Check for:
+- Missing breadcrumbs in deep routes
+- Inconsistent navigation patterns (button vs link)
+- Tab/wizard flows that lack clear progression
+- Route organization (are related routes grouped?)
+- Missing "escape
+
+--- node_id=11529 ---
+Title: UX Audit - Visual Design Consistency
+Profile: subagent_explore
+Task: Do a fresh UX audit of Visual Design Consistency for the Blindsight web application.
+
+Read these files:
+1. web/apps/dashboard/src/styles.css — design tokens, utilities
+2. web/apps/survey-renderer/src/styles.css — design tokens, utilities  
+3. web/apps/dashboard/src/pages/IndexPage.tsx — marketing page styling
+4. web/apps/dashboard/src/pages/LoginPage.tsx — auth page styling
+5. web/apps/dashboard/src/pages/CreateSurveyPage.tsx — form styling
+6. web/apps/dashboard/src/components/VisualBuilder.tsx — builder styling
+7. web/apps/survey-renderer/src/app/app.tsx — renderer shell styling
+8. web/apps/survey-renderer/src/components/QuestionField.tsx — question styling
+
+Check for:
+- Inconsistent border radius (arbitrary values vs standard tokens)
+- Inconsistent spacing/padding (one-off values vs desi
+
+--- node_id=11534 ---
+Title: UX Audit - Visual Design Consistency
+Profile: subagent_explore
+Task: Do a fresh UX audit of Visual Design Consistency for the Blindsight web application.
+
+Read these files:
+1. web/apps/dashboard/src/styles.css — design tokens, utilities
+2. web/apps/survey-renderer/src/styles.css — design tokens, utilities  
+3. web/apps/dashboard/src/pages/IndexPage.tsx — marketing page styling
+4. web/apps/dashboard/src/pages/LoginPage.tsx — auth page styling
+5. web/apps/dashboard/src/pages/CreateSurveyPage.tsx — form styling
+6. web/apps/dashboard/src/components/VisualBuilder.tsx — builder styling
+7. web/apps/survey-renderer/src/app/app.tsx — renderer shell styling
+8. web/apps/survey-renderer/src/components/QuestionField.tsx — question styling
+
+Check for:
+- Inconsistent border radius (arbitrary values vs standard tokens)
+- Inconsistent spacing/padding (one-off values vs desi
+
+--- node_id=11566 ---
+Title: UX Audit - Forms & Validation
+Profile: subagent_explore
+Task: Do a fresh UX audit of Forms & Validation for the Blindsight web application.
+
+Read these files:
+1. web/apps/dashboard/src/pages/LoginPage.tsx — auth form UX
+2. web/apps/dashboard/src/pages/RegisterPage.tsx — registration form UX
+3. web/apps/dashboard/src/pages/CreateSurveyPage.tsx — survey creation form
+4. web/apps/dashboard/src/components/VisualBuilder.tsx — question builder forms
+5. web/apps/survey-renderer/src/components/QuestionField.tsx — survey response form
+6. web/apps/survey-renderer/src/app/app.tsx — submit flow, validation
+
+Check for:
+- Inline validation (real-time feedback)
+- Error message clarity and placement
+- Required field indicators
+- Helper text / field descriptions
+- Form dirty-state tracking / navigation guards
+- Loading states on submit buttons
+- Success feedback afte
+
+--- node_id=11571 ---
+Title: UX Audit - Forms & Validation
+Profile: subagent_explore
+Task: Do a fresh UX audit of Forms & Validation for the Blindsight web application.
+
+Read these files:
+1. web/apps/dashboard/src/pages/LoginPage.tsx — auth form UX
+2. web/apps/dashboard/src/pages/RegisterPage.tsx — registration form UX
+3. web/apps/dashboard/src/pages/CreateSurveyPage.tsx — survey creation form
+4. web/apps/dashboard/src/components/VisualBuilder.tsx — question builder forms
+5. web/apps/survey-renderer/src/components/QuestionField.tsx — survey response form
+6. web/apps/survey-renderer/src/app/app.tsx — submit flow, validation
+
+Check for:
+- Inline validation (real-time feedback)
+- Error message clarity and placement
+- Required field indicators
+- Helper text / field descriptions
+- Form dirty-state tracking / navigation guards
+- Loading states on submit buttons
+- Success feedback afte
+
+--- node_id=11616 ---
+Title: UX Audit - Error Handling & a11y
+Profile: subagent_explore
+Task: Do a fresh UX audit of Error Handling and Accessibility for the Blindsight web application.
+
+Read these files:
+1. web/apps/dashboard/src/app/app.tsx — error boundaries, route handling
+2. web/apps/survey-renderer/src/app/app.tsx — renderer error handling
+3. web/apps/dashboard/src/pages/SurveyDetailPage.tsx — error states, retry
+4. web/apps/dashboard/src/pages/LoginPage.tsx — error display
+5. web/apps/dashboard/src/components/ErrorBoundary.tsx — error boundary UX
+6. web/apps/dashboard/src/pages/IndexPage.tsx — a11y: headings, labels, focus
+7. web/apps/survey-renderer/src/components/QuestionField.tsx — a11y on form inputs
+8. web/apps/dashboard/src/styles.css — motion preferences
+9. web/apps/survey-renderer/src/styles.css — motion preferences
+
+Check for:
+Error Handling:
+- Error boundary covera
+
+--- node_id=11621 ---
+Title: UX Audit - Error Handling & a11y
+Profile: subagent_explore
+Task: Do a fresh UX audit of Error Handling and Accessibility for the Blindsight web application.
+
+Read these files:
+1. web/apps/dashboard/src/app/app.tsx — error boundaries, route handling
+2. web/apps/survey-renderer/src/app/app.tsx — renderer error handling
+3. web/apps/dashboard/src/pages/SurveyDetailPage.tsx — error states, retry
+4. web/apps/dashboard/src/pages/LoginPage.tsx — error display
+5. web/apps/dashboard/src/components/ErrorBoundary.tsx — error boundary UX
+6. web/apps/dashboard/src/pages/IndexPage.tsx — a11y: headings, labels, focus
+7. web/apps/survey-renderer/src/components/QuestionField.tsx — a11y on form inputs
+8. web/apps/dashboard/src/styles.css — motion preferences
+9. web/apps/survey-renderer/src/styles.css — motion preferences
+
+Check for:
+Error Handling:
+- Error boundary covera
+
+--- node_id=12028 ---
+Title: Add breadcrumbs + tab URL state
+Profile: subagent_general
+Task: Implement two navigation improvements in the Blindsight dashboard:
+
+1. **Add breadcrumbs to deep survey routes**
+
+Create a reusable Breadcrumb component at `web/apps/dashboard/src/components/Breadcrumb.tsx`:
+- Accepts an array of `{ label: string, to?: string }` items
+- Uses design system: `text-text-muted`, `text-white` for current, `hover:text-white` for links
+- Separator: `>` or `/` character, styled small and muted
+- Render as a flex row with `text-xs font-medium`
+
+Then add breadcrumbs to these pages by reading each file and inserting at the top of the page content:
+- `web/apps/dashboard/src/pages/SurveyDetailPage.tsx` — "Dashboard > Surveys > [Survey Title]"
+- `web/apps/dashboard/src/pages/SurveyAnalyticsPage.tsx` — "Dashboard > Surveys > [Title] > Analytics"
+- `web/apps/dashboard/src
+
+--- node_id=12032 ---
+Title: Add breadcrumbs + tab URL state
+Profile: subagent_general
+Task: Implement two navigation improvements in the Blindsight dashboard:
+
+1. **Add breadcrumbs to deep survey routes**
+
+Create a reusable Breadcrumb component at `web/apps/dashboard/src/components/Breadcrumb.tsx`:
+- Accepts an array of `{ label: string, to?: string }` items
+- Uses design system: `text-text-muted`, `text-white` for current, `hover:text-white` for links
+- Separator: `>` or `/` character, styled small and muted
+- Render as a flex row with `text-xs font-medium`
+
+Then add breadcrumbs to these pages by reading each file and inserting at the top of the page content:
+- `web/apps/dashboard/src/pages/SurveyDetailPage.tsx` — "Dashboard > Surveys > [Survey Title]"
+- `web/apps/dashboard/src/pages/SurveyAnalyticsPage.tsx` — "Dashboard > Surveys > [Title] > Analytics"
+- `web/apps/dashboard/src
+
+--- node_id=12051 ---
+Title: Fix QuestionField a11y + focus-visible
+Profile: subagent_general
+Task: Fix accessibility and focus states in the Blindsight survey renderer QuestionField component.
+
+Read `web/apps/survey-renderer/src/components/QuestionField.tsx` and make these changes:
+
+1. **Add `aria-invalid` and `aria-describedby` to ALL inputs**
+   - Every input element (text, textarea, select, number, date, time, datetime, range, file) needs:
+     - `aria-invalid={!!error}`
+     - `aria-describedby={error ? `${q.id}-error` : undefined}`
+   - Every custom radio/checkbox button needs `aria-pressed` or `aria-checked` depending on implementation
+   - The error message paragraph needs `id={`${q.id}-error`}` and `role="alert"`
+
+2. **Add `focus-visible` indicators to custom controls**
+   - For custom radio buttons: the native `<input type="radio" className="sr-only" />` should have `focus-visi
+
+--- node_id=12055 ---
+Title: Fix QuestionField a11y + focus-visible
+Profile: subagent_general
+Task: Fix accessibility and focus states in the Blindsight survey renderer QuestionField component.
+
+Read `web/apps/survey-renderer/src/components/QuestionField.tsx` and make these changes:
+
+1. **Add `aria-invalid` and `aria-describedby` to ALL inputs**
+   - Every input element (text, textarea, select, number, date, time, datetime, range, file) needs:
+     - `aria-invalid={!!error}`
+     - `aria-describedby={error ? `${q.id}-error` : undefined}`
+   - Every custom radio/checkbox button needs `aria-pressed` or `aria-checked` depending on implementation
+   - The error message paragraph needs `id={`${q.id}-error`}` and `role="alert"`
+
+2. **Add `focus-visible` indicators to custom controls**
+   - For custom radio buttons: the native `<input type="radio" className="sr-only" />` should have `focus-visi
+
+--- node_id=12086 ---
+Title: Add auth form enhancements
+Profile: subagent_general
+Task: Enhance the auth forms in the Blindsight dashboard with better validation, feedback, and UX.
+
+1. **Add real-time password strength meter to RegisterPage**
+   Read `web/apps/dashboard/src/pages/RegisterPage.tsx`:
+   - Add a `getPasswordStrength` function that returns 0-4 based on:
+     - length >= 8
+     - has uppercase
+     - has lowercase  
+     - has number
+     - has symbol
+   - Add a visual strength bar below the password input:
+     - 4 segments that fill with color: red (0-1), orange (2), yellow (3), green (4)
+     - Show text label: "Weak", "Fair", "Good", "Strong"
+   - Add a criteria checklist below the password field:
+     - "8+ characters", "Uppercase letter", "Lowercase letter", "Number", "Special character"
+     - Show ✓ in green when criterion met, ○ in muted when not
+
+2. **Ad
+
+--- node_id=12093 ---
+Title: Add auth form enhancements
+Profile: subagent_general
+Task: Enhance the auth forms in the Blindsight dashboard with better validation, feedback, and UX.
+
+1. **Add real-time password strength meter to RegisterPage**
+   Read `web/apps/dashboard/src/pages/RegisterPage.tsx`:
+   - Add a `getPasswordStrength` function that returns 0-4 based on:
+     - length >= 8
+     - has uppercase
+     - has lowercase  
+     - has number
+     - has symbol
+   - Add a visual strength bar below the password input:
+     - 4 segments that fill with color: red (0-1), orange (2), yellow (3), green (4)
+     - Show text label: "Weak", "Fair", "Good", "Strong"
+   - Add a criteria checklist below the password field:
+     - "8+ characters", "Uppercase letter", "Lowercase letter", "Number", "Special character"
+     - Show ✓ in green when criterion met, ○ in muted when not
+
+2. **Ad
+
+--- node_id=12124 ---
+Title: Consolidate Tailwind design tokens
+Profile: subagent_general
+Task: Consolidate and standardize the Tailwind design system for both SPAs in the Blindsight project.
+
+1. **Read and update `web/apps/dashboard/tailwind.config.js`**
+   Extend the theme with these tokens:
+   ```js
+   theme: {
+     extend: {
+       colors: {
+         'brand-primary': '#6366f1',
+         'brand-secondary': '#2ecc71',
+         'base-bg': '#020617',
+         'text-main': '#f8fafc',
+         'text-muted': '#94a3b8',
+       },
+       borderRadius: {
+         'card': '2.5rem',
+         'card-lg': '3rem',
+       },
+       spacing: {
+         '18': '4.5rem',
+         '22': '5.5rem',
+       },
+     },
+   }
+   ```
+
+2. **Read and update `web/apps/survey-renderer/tailwind.config.js`**
+   Add the same extensions as dashboard.
+
+3. **Read `web/apps/dashboard/src/styles.css`**
+   - Add `@utility
+
+--- node_id=12128 ---
+Title: Consolidate Tailwind design tokens
+Profile: subagent_general
+Task: Consolidate and standardize the Tailwind design system for both SPAs in the Blindsight project.
+
+1. **Read and update `web/apps/dashboard/tailwind.config.js`**
+   Extend the theme with these tokens:
+   ```js
+   theme: {
+     extend: {
+       colors: {
+         'brand-primary': '#6366f1',
+         'brand-secondary': '#2ecc71',
+         'base-bg': '#020617',
+         'text-main': '#f8fafc',
+         'text-muted': '#94a3b8',
+       },
+       borderRadius: {
+         'card': '2.5rem',
+         'card-lg': '3rem',
+       },
+       spacing: {
+         '18': '4.5rem',
+         '22': '5.5rem',
+       },
+     },
+   }
+   ```
+
+2. **Read and update `web/apps/survey-renderer/tailwind.config.js`**
+   Add the same extensions as dashboard.
+
+3. **Read `web/apps/dashboard/src/styles.css`**
+   - Add `@utility
+
+--- node_id=12172 ---
+Title: Standardize back navigation + add escape hatches
+Profile: subagent_general
+Task: Standardize back navigation and add escape hatch dialogs to the Blindsight dashboard.
+
+1. **Create a reusable BackButton component**
+   Create `web/apps/dashboard/src/components/BackButton.tsx`:
+   - Props: `to: string`, `label?: string` (default "Back")
+   - Uses `<Link>` from react-router-dom (not `navigate()`)
+   - Uses design system: `nm-btn px-4 py-2 text-xs font-bold uppercase tracking-widest`
+   - Includes `ArrowLeft` icon from lucide-react
+   - Must be a `<Link>` component for proper browser behavior (middle-click, right-click, accessibility)
+
+2. **Replace back buttons in all pages**
+   Read and update each file, removing any `navigate()`-based back buttons and replacing with `<BackButton>`:
+   - `web/apps/dashboard/src/pages/SurveyDetailPage.tsx` — keep one back button to `/intell
+
+--- node_id=12176 ---
+Title: Standardize back navigation + add escape hatches
+Profile: subagent_general
+Task: Standardize back navigation and add escape hatch dialogs to the Blindsight dashboard.
+
+1. **Create a reusable BackButton component**
+   Create `web/apps/dashboard/src/components/BackButton.tsx`:
+   - Props: `to: string`, `label?: string` (default "Back")
+   - Uses `<Link>` from react-router-dom (not `navigate()`)
+   - Uses design system: `nm-btn px-4 py-2 text-xs font-bold uppercase tracking-widest`
+   - Includes `ArrowLeft` icon from lucide-react
+   - Must be a `<Link>` component for proper browser behavior (middle-click, right-click, accessibility)
+
+2. **Replace back buttons in all pages**
+   Read and update each file, removing any `navigate()`-based back buttons and replacing with `<BackButton>`:
+   - `web/apps/dashboard/src/pages/SurveyDetailPage.tsx` — keep one back button to `/intell
+
+--- node_id=12220 ---
+Title: Add toast system + semantic headings
+Profile: subagent_general
+Task: Add a toast notification system and fix semantic heading tags across the Blindsight dashboard.
+
+1. **Create a toast notification system**
+   Since installing new npm packages may fail (peer dep conflicts per AGENTS.md), create a lightweight custom toast system:
+
+   Create `web/apps/dashboard/src/components/ToastProvider.tsx`:
+   - Uses React Context + useState for toast queue
+   - Toast types: 'success' | 'error' | 'info'
+   - Auto-dismiss after 3s for success/info, manual dismiss for error
+   - Position: top-right corner, fixed position
+   - Styling: uses design system (nm-convex for container, brand-primary for success, red-400 for error)
+   - Show title + message
+   - Export `useToast()` hook that provides `toast.success(msg)`, `toast.error(msg)`, `toast.info(msg)`
+
+   Create `web/apps/
+
+--- node_id=12224 ---
+Title: Add toast system + semantic headings
+Profile: subagent_general
+Task: Add a toast notification system and fix semantic heading tags across the Blindsight dashboard.
+
+1. **Create a toast notification system**
+   Since installing new npm packages may fail (peer dep conflicts per AGENTS.md), create a lightweight custom toast system:
+
+   Create `web/apps/dashboard/src/components/ToastProvider.tsx`:
+   - Uses React Context + useState for toast queue
+   - Toast types: 'success' | 'error' | 'info'
+   - Auto-dismiss after 3s for success/info, manual dismiss for error
+   - Position: top-right corner, fixed position
+   - Styling: uses design system (nm-convex for container, brand-primary for success, red-400 for error)
+   - Show title + message
+   - Export `useToast()` hook that provides `toast.success(msg)`, `toast.error(msg)`, `toast.info(msg)`
+
+   Create `web/apps/
+
+--- node_id=12258 ---
+Title: Fix color contrast + touch targets
+Profile: subagent_general
+Task: Fix color contrast issues and increase touch target sizes across the Blindsight dashboard and survey renderer.
+
+1. **Fix color contrast on IndexPage**
+   Read `web/apps/dashboard/src/pages/IndexPage.tsx`:
+   - Find all `text-slate-500` and change to `text-slate-300` (especially on dark backgrounds)
+   - Find all `text-slate-400` that are body text (not decorative) and change to `text-slate-300`
+   - Skip `text-slate-400` that's on lighter backgrounds or decorative only
+   - The goal is WCAG AA 4.5:1 minimum for normal text
+
+2. **Fix color contrast on LoginPage**
+   Read `web/apps/dashboard/src/pages/LoginPage.tsx`:
+   - Find `text-slate-500` labels/helpers and change to `text-slate-400` (or `text-slate-300` if very small)
+   - The subtitle text `text-slate-500` should be `text-slate-400`
+
+
+
+--- node_id=12262 ---
+Title: Fix color contrast + touch targets
+Profile: subagent_general
+Task: Fix color contrast issues and increase touch target sizes across the Blindsight dashboard and survey renderer.
+
+1. **Fix color contrast on IndexPage**
+   Read `web/apps/dashboard/src/pages/IndexPage.tsx`:
+   - Find all `text-slate-500` and change to `text-slate-300` (especially on dark backgrounds)
+   - Find all `text-slate-400` that are body text (not decorative) and change to `text-slate-300`
+   - Skip `text-slate-400` that's on lighter backgrounds or decorative only
+   - The goal is WCAG AA 4.5:1 minimum for normal text
+
+2. **Fix color contrast on LoginPage**
+   Read `web/apps/dashboard/src/pages/LoginPage.tsx`:
+   - Find `text-slate-500` labels/helpers and change to `text-slate-400` (or `text-slate-300` if very small)
+   - The subtitle text `text-slate-500` should be `text-slate-400`
+
+
