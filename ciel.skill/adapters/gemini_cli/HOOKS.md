@@ -23,9 +23,10 @@ Gemini CLI exposes a comprehensive hook system covering the full agent lifecycle
 
 | Event | Fires | Blockable | Ciel Use Case |
 | --- | --- | --- | --- |
-| `BeforeModel` | Before LLM call | **Yes** | **CRITICAL: Auto-activate on trigger phrases** |
+| `BeforeModel` | Before LLM call | **Yes** | **Auto-activate triggers + Context Sentinel Injection (`«Report» Master,`)** |
 | `BeforeToolSelection` | Before tool selection | No | Influence tool routing |
-| `AfterModel` | After LLM response | No | Response scoring |
+| `AfterModel` | After LLM response | No | **Response scoring + Context Rot Detection (verifies Sentinel presence)** |
+
 
 ### Session Lifecycle Hooks
 
