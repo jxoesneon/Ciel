@@ -1,0 +1,379 @@
+1. [3x] Navigation fixes: breadcrumbs, active states, marketing nav
+   You are implementing pending UX audit v2 fixes for the Blindsight dashboard app. Work ONLY in `c:/Users/josee/blindsight/web/apps/dashboard/src/`.
+
+Your tasks:
+
+1. **Add Breadcrumbs to SurveyResponses
+
+2. [3x] Accessibility & design system fixes
+   You are implementing pending UX audit v2 fixes for the Blindsight dashboard and survey-renderer apps. Work in `c:/Users/josee/blindsight/web/apps/dashboard/src/` and `c:/Users/josee/blindsight/web/app
+
+3. [3x] Rewrite mail-client app.tsx to glassmorphism
+   Rewrite the file C:\Users\josee\blindsight\web\apps\mail-client\src\app\app.tsx to use the Blindsight glassmorphism design system.
+
+The current file uses a light theme (bg-white, text-gray-900, bg-gra
+
+4. [3x] Rewrite blindsight-admin app.tsx to glassmorphism
+   Read the file C:\Users\josee\blindsight\web\apps\blindsight-admin\src\app\app.tsx and fix any design system issues so it properly uses the Blindsight glassmorphism design system.
+
+The file already use
+
+5. [3x] Audit all gaps in codebase
+   I need a comprehensive audit of what's missing or broken in the Blindsight codebase at C:\Users\josee\blindsight. Check ALL of the following and report back with a detailed list:
+
+1. **Marketing Pages
+
+6. [3x] Implement legal pages and contact form
+   Implement the following missing features in the Blindsight project at C:\Users\josee\blindsight:
+
+## Task 1: Replace Privacy Policy placeholder content
+File: `C:\Users\josee\blindsight\web\apps\dashbo
+
+7. [3x] Implement email reply and forward
+   Implement Reply and Forward functionality for the Blindsight mail client at C:\Users\josee\blindsight.
+
+## Task 1: Add Reply/Forward backend endpoints
+File to edit: `C:\Users\josee\blindsight\src\api\
+
+8. [3x] Dashboard SPA full gap audit
+   Perform a comprehensive gap audit of the Dashboard SPA at `C:\Users\josee\blindsight\web\apps\dashboard`.
+
+The Dashboard is the main SPA with both public routes (marketing pages: /, /features, /pricin
+
+9. [3x] Survey-renderer SPA full gap audit
+   Perform a comprehensive gap audit of the Survey Renderer SPA at `C:\Users\josee\blindsight\web\apps\survey-renderer`.
+
+The Survey Renderer is a public-facing SPA that renders surveys for participants.
+
+10. [3x] Mail-client SPA full gap audit
+   Perform a comprehensive gap audit of the Mail Client SPA at `C:\Users\josee\blindsight\web\apps\mail-client`.
+
+The Mail Client is an authenticated SPA for email management. It runs on port 4201 and se
+
+11. [3x] Blindsight-admin SPA full gap audit
+   Perform a comprehensive gap audit of the Blindsight Admin SPA at `C:\Users\josee\blindsight\web\apps\blindsight-admin`.
+
+The Admin SPA is for internal staff. It runs on port 4202 and serves at `/admin
+
+12. [2x] Fix dashboard light-theme colors and resources
+   Fix the following issues in the Dashboard SPA at `C:\Users\josee\blindsight\web\apps\dashboard`:
+
+## Fix 1: ProtectedRoute Loading State (light theme)
+File: `src/components/ProtectedRoute.tsx`
+- Find 
+
+13. [2x] Fix survey renderer gaps
+   Fix the following issues in the Survey Renderer SPA at `C:\Users\josee\blindsight\web\apps\survey-renderer`:
+
+## Fix 1: Add 404 catch-all route
+File: `src/app/app.tsx`
+- After the existing routes, add
+
+14. [2x] Rewrite mail-client app.tsx with proper routing
+   Fix the Mail Client SPA at `C:\Users\josee\blindsight\web\apps\mail-client`.
+
+The audit found that `src/app/app.tsx` is a legacy/basic implementation with placeholder routes, while the REAL mail funct
+
+15. [2x] Rewrite blindsight-admin app.tsx with proper routing
+   Fix the Blindsight Admin SPA at `C:\Users\josee\blindsight\web\apps\blindsight-admin`.
+
+The audit found that `src/app/app.tsx` has INLINE panels (UsersPanel, SystemHealthPanel) with duplicate API call
+
+16. [4x] Implement password reset flow
+   Implement a complete password reset flow for the Blindsight project at `C:\Users\josee\blindsight`.
+
+## Backend Changes
+
+### Step 1: Add password reset endpoints to auth router
+File: `src/api/v1/auth/
+
+17. [4x] Mail client glassmorphism + feature fixes
+   Fix the Mail Client SPA at `C:\Users\josee\blindsight\web\apps\mail-client`.
+
+## Task 1: Convert MailHomePage to glassmorphism
+File: `src/pages/MailHomePage.tsx`
+
+This file uses light-theme Tailwind c
+
+18. [4x] Admin glassmorphism + CRUD wiring
+   Fix the Blindsight Admin SPA at `C:\Users\josee\blindsight\web\apps\blindsight-admin`.
+
+## Task 1: Convert all page components to glassmorphism
+Read and modify these files. Each uses light-theme Tailw
+
+19. [2x] Survey renderer feature fixes
+   Fix the Survey Renderer SPA at `C:\Users\josee\blindsight\web\apps\survey-renderer`.
+
+## Task 1: Implement image question types
+File: `src/components/QuestionField.tsx`
+
+Currently `image_select`, `img
+
+20. [2x] Survey renderer feature fixes
+   Fix the Survey Renderer SPA at `C:\Users\josee\blindsight\web\apps\survey-renderer`.
+
+## Task 1: Implement image question types
+File: `src/components/QuestionField.tsx`
+
+Replace the placeholder for `i
+
+21. [3x] Fix Organizations page and survey renderer polish
+   Fix two remaining issues in the Blindsight project:
+
+## Fix 1: Organizations Page (Blindsight Admin)
+File: `C:\Users\josee\blindsight\web\apps\blindsight-admin\src\app\app.tsx`
+
+Find the inline `Organ
+
+22. [2x] Fix mail-client and survey-renderer light-theme classes
+   Fix all remaining light-theme Tailwind classes in two SPAs: mail-client and survey-renderer.
+
+## Mail Client SPA
+
+Files to fix:
+1. `C:\Users\josee\blindsight\web\apps\mail-client\src\pages\LoginPage.t
+
+23. [2x] Fix blindsight-admin light-theme classes
+   Fix all remaining light-theme Tailwind classes in the blindsight-admin SPA.
+
+Files to fix:
+1. `C:\Users\josee\blindsight\web\apps\blindsight-admin\src\pages\LoginPage.tsx`
+2. `C:\Users\josee\blindsigh
+
+24. [2x] Fix dashboard auth and app pages light-theme classes
+   Fix all remaining light-theme Tailwind classes in the dashboard SPA - auth pages and core app pages.
+
+## Auth Pages
+1. `C:\Users\josee\blindsight\web\apps\dashboard\src\pages\LoginPage.tsx`
+2. `C:\Use
+
+25. [2x] Fix dashboard DLP, components, and marketing pages light-theme classes
+   Fix all remaining light-theme Tailwind classes in the dashboard SPA - DLP pages, components, and marketing pages.
+
+## DLP Pages
+1. `C:\Users\josee\blindsight\web\apps\dashboard\src\pages\DlpPoliciesPa
+
+26. [2x] Backend full audit
+   Perform a comprehensive audit of the Blindsight backend at `C:\Users\josee\blindsight\src\`.
+
+Check for:
+1. **Dead code:** Unused imports, functions never called, commented-out code blocks
+2. **Securi
+
+27. [2x] Frontend Tailwind class audit
+   Audit ALL Tailwind CSS classes across all 4 SPAs in `C:\Users\josee\blindsight\web\apps\`.
+
+Check for:
+1. **Light-theme leakage:** Any remaining `text-gray-900/800/700/600/500/400`, `bg-gray-50/100/20
+
+28. [2x] Frontend API integration audit
+   Audit the frontend-backend API integration in `C:\Users\josee\blindsight\web\apps\`.
+
+For each SPA, check:
+1. **Service files** (`src/services/*.ts` or `src/api/*.ts`) - what endpoints do they call?
+2
+
+29. [2x] Frontend code quality audit
+   Audit code quality across all 4 SPAs in `C:\Users\josee\blindsight\web\apps\`.
+
+Check for:
+1. **TODO/FIXME/HACK/BUG/XXX comments** - list file, line, comment text
+2. **Console.log/debugger statements*
+
+30. [2x] Fix backend security issues
+   Fix HIGH and MEDIUM severity backend security issues in the Blindsight project at `C:\Users\josee\blindsight\src\`.
+
+## Fix 1: Stop leaking exception details to clients
+Replace `detail=str(e)` with ge
+
+31. [2x] Fix frontend code quality issues
+   Fix HIGH and MEDIUM severity frontend code quality issues across all 4 SPAs in `C:\Users\josee\blindsight\web\apps\`.
+
+## Fix 1: Replace `any` types with proper types
+Files and locations:
+- `C:\Users\
+
+32. [2x] Fix frontend any types and console.errors
+   Fix HIGH severity frontend code quality issues in `C:\Users\josee\blindsight\web\apps\`.
+
+## Fix 1: Replace `any` types
+For each file below, find the `any` keyword and replace with a more specific typ
+
+33. [2x] Fix frontend empty catches, UTF-8, accessibility
+   Fix MEDIUM severity frontend issues in `C:\Users\josee\blindsight\web\apps\`.
+
+## Fix 1: Empty error handlers
+Replace `.catch(() => {})` with at least a console.warn:
+- `dashboard/src/app/AnalyticsDas
+
+34. [2x] Fix backend medium and low severity issues
+   Fix MEDIUM and LOW severity backend issues in `C:\Users\josee\blindsight\src\`.
+
+## Fix 1: Fix bare exceptions in services
+In these files, change bare `except Exception:` to `except Exception as e:` a
+
+35. [4x] Backend API: reply/forward/star/snooze/label endpoints
+   You are implementing backend API endpoints for the Blindsight mail client to achieve Gmail feature parity.
+
+## Context
+The mail client is a React SPA (`web/apps/mail-client`) that talks to a FastAPI b
+
+36. [6x] ComposePage: rich text, reply/forward modes, signatures
+   You are enhancing the Blindsight mail client's Compose page to achieve Gmail feature parity.
+
+## Context
+The compose page is at `web/apps/mail-client/src/pages/ComposePage.tsx`. It currently supports 
+
+37. [4x] New components: EmailListItem, ConversationThread, ActionBar, BulkToolbar, AdvancedSearch, LabelChips
+   You are creating new React components for the Blindsight mail client to achieve Gmail feature parity. These will be integrated into MailHomePage by the main agent later.
+
+## Context
+The mail client is
+
+38. [4x] Labels service + LabelManager page
+   You are implementing a Gmail-style labels system for the Blindsight mail client.
+
+## Context
+The mail client is at `web/apps/mail-client/`. Emails already have a `labels: string[]` field in the backen
+
+39. [4x] Keyboard shortcuts + Settings + Attachment preview
+   You are implementing keyboard shortcuts, settings, and attachment preview for the Blindsight mail client.
+
+## Context
+The mail client is at `web/apps/mail-client/`. It currently has basic keyboard nav
+
+40. [2x] Backend API: reply/forward/star/label endpoints
+   You are implementing backend API endpoints for the Blindsight mail client to achieve Gmail feature parity.
+
+## Context
+The mail client is a React SPA (`web/apps/mail-client`) that talks to a FastAPI b
+
+41. [3x] Backend API full audit
+   You are auditing the Blindsight mail client's FastAPI backend for Gmail feature parity.
+
+## Your Task
+Read through ALL email-related backend routers and list EVERY endpoint that exists. Then compare a
+
+42. [3x] Frontend UI full audit
+   You are auditing the Blindsight mail client's React frontend for Gmail feature parity.
+
+## Your Task
+Read through ALL frontend pages and components and list EVERY UI feature that exists. Then compare 
+
+43. [3x] Email model and data layer audit
+   You are auditing the Blindsight mail client's data models and service layer for Gmail feature parity.
+
+## Your Task
+Read through the domain models, repositories, and services to understand what data i
+
+44. [3x] Red Team - Security Vulnerability Audit
+   You are a Red Team security auditor for a FastAPI + React project. Your job is to find security vulnerabilities, misconfigurations, and attack vectors.
+
+PROJECT CONTEXT:
+- Backend: FastAPI (Python) wi
+
+45. [3x] Blue Team - Defensive Hardening Audit
+   You are a Blue Team defensive security auditor for a FastAPI + React project. Your job is to audit existing defensive controls and identify gaps in security posture.
+
+PROJECT CONTEXT:
+- Backend: FastA
+
+46. [2x] Backend Security Hardening (IDOR + CSRF + Lockout)
+   You are working on the Blindsight project at c:/Users/josee/blindsight.
+
+**Task:** Implement three backend security hardening measures:
+
+### 1. Fix IDOR on Email Attachment Download
+In `src/api/v1/ema
+
+47. [2x] Frontend Admin Orphan Fix + Orphan Detection
+   You are working on the Blindsight project at c:/Users/josee/blindsight.
+
+**Task 1: Fix Orphan AdminHomePage**
+
+The file `web/apps/blindsight-admin/src/pages/AdminHomePage.tsx` exists but is never impo
+
+48. [3x] Dashboard SPA Interactive Element Map
+   You are working on the Blindsight project at c:/Users/josee/blindsight.
+
+**Task:** Create a comprehensive catalog of EVERY interactive element (buttons, links, form submissions, clickable cards, tabs,
+
+49. [3x] Mail Client SPA Interactive Element Map
+   You are working on the Blindsight project at c:/Users/josee/blindsight.
+
+**Task:** Create a comprehensive catalog of EVERY interactive element (buttons, links, form submissions, clickable cards, tabs,
+
+50. [3x] Blindsight Admin SPA Interactive Element Map
+   You are working on the Blindsight project at c:/Users/josee/blindsight.
+
+**Task:** Create a comprehensive catalog of EVERY interactive element (buttons, links, form submissions, clickable cards, tabs,
+
+51. [3x] Survey Renderer SPA Interactive Element Map
+   You are working on the Blindsight project at c:/Users/josee/blindsight.
+
+**Task:** Create a comprehensive catalog of EVERY interactive element (buttons, links, form submissions, clickable cards, tabs,
+
+52. [3x] Backend API to Frontend Caller Mapping
+   You are working on the Blindsight project at c:/Users/josee/blindsight.
+
+**Task:** Map every backend API endpoint to its frontend callers.
+
+**Step 1:** Extract all API endpoints from the backend.
+Read
+
+53. [3x] Fix Survey Versioning Tests
+   You are working on the Blindsight project at c:/Users/josee/blindsight.
+
+**Task:** Fix the pre-existing test failures in `tests/test_schema_versioning.py`.
+
+**Problem:** The tests expect `SurveyServic
+
+54. [3x] Create Security Regression Test Suite
+   You are working on the Blindsight project at c:/Users/josee/blindsight.
+
+**Task:** Create a comprehensive security regression test suite at `tests/test_security_regression.py` that verifies all 12 sec
+
+55. [3x] Implement User Profile Page in Dashboard
+   You are working on the Blindsight project at c:/Users/josee/blindsight.
+
+**Task:** Implement a User Profile page in the Dashboard SPA that wires to the backend `/api/v1/profile/` endpoints.
+
+**Backend
+
+56. [3x] Implement API Keys Page in Dashboard
+   You are working on the Blindsight project at c:/Users/josee/blindsight.
+
+**Task:** Implement an API Keys management page in the Dashboard SPA that wires to the backend `/api/v1/api-keys/` endpoints.
+
+
+
+57. [3x] Implement Storage Usage Widget in Dashboard
+   You are working on the Blindsight project at c:/Users/josee/blindsight.
+
+**Task:** Implement a Storage Usage widget/page in the Dashboard SPA that wires to `GET /api/v1/storage/usage`.
+
+**Backend endp
+
+58. [3x] Implement Training Page in Dashboard
+   You are working on the Blindsight project at c:/Users/josee/blindsight.
+
+**Task:** Implement a Training Modules page in the Dashboard SPA at `web/apps/dashboard/src/`.
+
+**Backend endpoints:**
+- `GET /
+
+59. [3x] Implement Groups Management Page in Dashboard
+   You are working on the Blindsight project at c:/Users/josee/blindsight.
+
+**Task:** Implement a Groups management page in the Dashboard SPA at `web/apps/dashboard/src/`.
+
+**Backend endpoints:**
+- `POST
+
+60. [3x] Implement Security Reports Admin Page
+   You are working on the Blindsight project at c:/Users/josee/blindsight.
+
+**Task:** Implement a Security Reports management page in the Blindsight Admin SPA at `web/apps/blindsight-admin/src/`.
+
+**Back
+
