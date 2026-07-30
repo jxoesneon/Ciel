@@ -4,15 +4,15 @@ Ciel implements auto-activation mechanisms on all three supported runtimes, usin
 
 ## Platform Comparison
 
-| Mechanism | Claude Code | Gemini CLI | Windsurf | Devin for Terminal |
-| --- | --- | --- | --- | --- |
-| **Native Auto-Discovery** | Description-based (unreliable) | `activate_skill` tool (best) | Description-based | Description-based |
-| **Hook-Based Activation** | `UserPromptSubmit` | `BeforeModel` | `pre_user_prompt` | `UserPromptSubmit` |
-| **Session Bootstrap** | `SessionStart` | `SessionStart` | N/A | `SessionStart` |
-| **Context Injection** | `CLAUDE.md` | `GEMINI.md` | `.windsurf/rules` | `AGENTS.md` / `CLAUDE.md` |
-| **Manual Commands** | Slash commands | Commands | Workflows | Slash commands (`/ciel`) |
-| **Pre-Tool Safety** | `PreToolUse` | `BeforeTool` | `pre_*` events | `PreToolUse` |
-| **Post-Tool Scoring** | `PostToolUse` | `AfterTool` | `post_*` events | `PostToolUse` |
+| Mechanism | Claude Code | Gemini CLI | Windsurf |
+| --- | --- | --- | --- |
+| **Native Auto-Discovery** | Description-based (unreliable) | `activate_skill` tool (best) | Description-based |
+| **Hook-Based Activation** | `UserPromptSubmit` | `BeforeModel` | `pre_user_prompt` |
+| **Session Bootstrap** | `SessionStart` | `SessionStart` | N/A |
+| **Context Injection** | `CLAUDE.md` | `GEMINI.md` | `.windsurf/rules` |
+| **Manual Commands** | Slash commands | Commands | Workflows |
+| **Pre-Tool Safety** | `PreToolUse` | `BeforeTool` | `pre_*` events |
+| **Post-Tool Scoring** | `PostToolUse` | `AfterTool` | `post_*` events |
 
 ## Recommended Auto-Activation Strategy
 
@@ -23,7 +23,6 @@ Inject Ciel identity at session start:
 - **Claude Code**: `SessionStart` hook
 - **Gemini CLI**: `SessionStart` hook
 - **Windsurf**: `.windsurf/rules` (persistent context)
-- **Devin for Terminal**: `SessionStart` hook in `~/.config/devin/config.json`
 
 ### Tier 2: Trigger Phrase Detection (All Platforms)
 
@@ -32,7 +31,6 @@ Force skill activation on trigger words:
 - **Claude Code**: `UserPromptSubmit` hook with regex
 - **Gemini CLI**: `BeforeModel` hook with context injection
 - **Windsurf**: `pre_user_prompt` hook
-- **Devin for Terminal**: `UserPromptSubmit` hook in `.devin/hooks.v1.json`
 
 **Common Trigger Patterns:**
 
@@ -54,7 +52,6 @@ Explicit user invocation:
 - **Claude Code**: `/ciel` slash command
 - **Gemini CLI**: `ciel` command
 - **Windsurf**: `@ciel` mention or `/ciel` workflow
-- **Devin for Terminal**: `/ciel` slash command (via `.devin/skills/ciel/SKILL.md`)
 
 ## Implementation Checklist
 
@@ -84,27 +81,16 @@ Explicit user invocation:
 - [ ] `.windsurf/workflows/ciel-*.md` workflows
 - [ ] Strong SKILL.md description
 
-### Devin for Terminal
-
-- [ ] `SessionStart` hook in `~/.config/devin/config.json` for bootstrap
-- [ ] `UserPromptSubmit` hook in `.devin/hooks.v1.json` for triggers
-- [ ] `PreToolUse` hook for safety gating
-- [ ] `PostToolUse` hook for outcome scoring
-- [ ] `AGENTS.md` or `CLAUDE.md` with Ciel identity block
-- [ ] `.devin/skills/ciel/SKILL.md` project-scoped skill
-- [ ] `.devin/config.json` with scope-based permissions
-- [ ] Strong SKILL.md description for auto-discovery
-
 ## Cross-Platform Hook Equivalents
 
-| Ciel Function | Claude Code | Gemini CLI | Windsurf | Devin for Terminal |
-| --- | --- | --- | --- | --- |
-| Session bootstrap | `SessionStart` | `SessionStart` | N/A (use rules) | `SessionStart` |
-| Trigger detection | `UserPromptSubmit` | `BeforeModel` | `pre_user_prompt` | `UserPromptSubmit` |
-| Pre-tool safety | `PreToolUse` | `BeforeTool` | `pre_*` | `PreToolUse` |
-| Post-tool logging | `PostToolUse` | `AfterTool` | `post_*` | `PostToolUse` |
-| Subagent tracking | `SubagentStart/Stop` | `Before/AfterAgent` | N/A | N/A (root only) |
-| Compression | `PreCompact` | `PreCompress` | N/A | `PostCompaction` |
+| Ciel Function | Claude Code | Gemini CLI | Windsurf |
+| --- | --- | --- | --- |
+| Session bootstrap | `SessionStart` | `SessionStart` | N/A (use rules) |
+| Trigger detection | `UserPromptSubmit` | `BeforeModel` | `pre_user_prompt` |
+| Pre-tool safety | `PreToolUse` | `BeforeTool` | `pre_*` |
+| Post-tool logging | `PostToolUse` | `AfterTool` | `post_*` |
+| Subagent tracking | `SubagentStart/Stop` | `Before/AfterAgent` | N/A |
+| Compression | `PreCompact` | `PreCompress` | N/A |
 
 ## Key Insight
 
@@ -122,4 +108,3 @@ See per-platform docs:
 - `adapters/claude_code/HOOKS.md`
 - `adapters/gemini_cli/HOOKS.md`
 - `adapters/windsurf/HOOKS.md`
-- `adapters/devin/HOOKS.md`

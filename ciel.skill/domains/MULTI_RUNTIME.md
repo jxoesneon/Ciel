@@ -10,13 +10,13 @@ A developer uses Claude Code in one terminal and Gemini CLI in another, both on 
 
 - `~/.ciel/` is shared. Single source of truth.
 - `<project>/.ciel/` is shared. Single source of truth.
-- MemPalace partitions are shared.
+- Obsidian vault files are shared.
 - `activity.log` is append-only and shared.
 
 ## Concurrency
 
 - Writes use file-level locks (`flock`) on `*.json` indices.
-- MemPalace-rs provides its own concurrency primitives; when available, used.
+- Obsidian provides its own concurrency primitives via the Local REST API; when available, used.
 - For git commits to `~/.ciel/`, a file lock on `~/.ciel/.git/ciel.lock` serializes Ciel's self-mutations across runtimes.
 - Long-running operations (acquisition, Council) take an exclusive lock on their subsystem.
 
