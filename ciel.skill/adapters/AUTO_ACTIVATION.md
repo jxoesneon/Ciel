@@ -100,8 +100,9 @@ Explicit user invocation:
 
 1. Session hook injects identity
 2. Prompt hook detects triggers and forces activation
-3. Tool hooks provide safety gating
+3. Tool hooks provide safety gating (**Mandatory Pre-Tool Council Gate**: Any file modification targeting `core/`, `self_improvement/`, or `configuration/global/` is intercepted by `PreToolUse`/`BeforeTool` and MUST execute a Council of Five evaluation before file mutation is permitted)
 4. Post-tool hooks enable self-improvement
+
 
 See per-platform docs:
 
