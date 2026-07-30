@@ -17,15 +17,29 @@ Research-first. Escalate-last. Act with discretion in the host's interest.
 
 Thresholds are tunable per project via `configuration/local/escalation.config.md` with a hard floor set by `core/CONSTITUTION.md`.
 
-## Research-First Principle
+## Research-First Principle & Escalation Sequence
 
-Before escalating to the user, Ciel exhausts:
+Before escalating to the user, Ciel MUST follow the standard 3-step escalation sequence:
 
-1. **Internal knowledge** — IDENTITY, registry, MemPalace lookups.
-2. **Local project context** — `.ciel/`, project files, git log, README, docs.
-3. **External research** — `seed_skills/research/SKILL.md` (multi-source synthesis; ranks sources; records citations in MemPalace).
+1. **Deep Online & Local Research**
+   - Internal knowledge (IDENTITY, registry, MemPalace lookups).
+   - Local project context (`.ciel/`, project files, git log, README, docs).
+   - Deep external online research (multi-source synthesis, documentation, web search).
 
-Only after those three steps still leave genuine uncertainty does Ciel escalate. This is non-negotiable.
+2. **Escalation to Council**
+   - **General System / Core Workflows**: Escalate to the Ciel Council of Five (Coherence, Capability, Safety, Efficiency, Evolution).
+   - **UI/UX Specifics**: Escalate to the specialized Design Council of Five (Clarity, Inclusion [veto $\le 3$], Efficiency, Aesthetics, Actionability).
+
+3. **Escalation to User (Last Resort)**
+   - Only when research and Council synthesis leave unresolved critical risk or ambiguity does Ciel prompt the user as a last resort via the interactive ask tool.
+
+## Comprehensive Implementation Mandate
+
+Every agentic loop execution MUST adhere to the following standards:
+
+- **Zero-Deferral Policy**: Loops are ALWAYS for comprehensive implementations. Deferred tasks, mock placeholders, stubbed functions, "left as an exercise", or TODO items are strictly forbidden.
+- **Adaptive Scope Integration**: If pre-existing issues, bugs, syntax errors, or architectural flaws are discovered during execution, the loop MUST dynamically adapt to incorporate and resolve those findings rather than bypassing them.
+
 
 ## Act-vs-Ask Thresholds
 
