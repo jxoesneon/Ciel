@@ -26,21 +26,23 @@ Generate and audit UI/UX artifacts against the Design Council standards (`counci
 - `ui.loading_strategy(duration_ms)` — loading state by duration (nothing < 400ms, skeleton 400ms–3s, progress 3–10s, bar > 10s).
 - `ui.dark_mode()` — OKLCH four-surface luminance hierarchy (base → raised → overlay → nested).
 - `ui.micro_interaction(trigger)` — spring-physics feedback (mass, stiffness, damping) in 100–400ms range.
+- `ui.anti_slop_audit(markup)` — detect distributional convergence (centroid look: Inter, purple gradient, three cards, emoji icons) and flag AI slop patterns.
+- `ui.craft_signals(artifact)` — attach C2PA provenance metadata, generate process documentation, and verify visible effort signals.
 
 ## I/O Contract
 
 ```yaml
 io_contract:
   input: { op, target_file?, component_spec?, layout_schema?, duration_ms? }
-  output: { result: component_code|audit_report|theme_tokens|layout_grid|recovery_flow }
+  output: { result: component_code|audit_report|theme_tokens|layout_grid|recovery_flow|slop_report|provenance_manifest }
   idempotent: true
   side_effects: [fs]
 ```
 
 ## Standards Reference
 
-Full 16-standard specification with research citations in `council/rubrics/UI_UX_MASTERY_STANDARDS.md`. Covers: agentic UX transparency, Core Web Vitals, WCAG 2.2/3.0, Bento Grid, Liquid Glass, Tailwind v4 tokens, shadcn/ui, micro-interactions, OKLCH dark mode, token governance, thumb-zone ergonomics, undo/cancel patterns, performance perception, OKLCH color, information architecture, competitive landscape.
+Full 18-standard specification with research citations in `council/rubrics/UI_UX_MASTERY_STANDARDS.md`. Covers: agentic UX transparency, Core Web Vitals, WCAG 2.2/3.0, Bento Grid, Liquid Glass, Tailwind v4 tokens, shadcn/ui, micro-interactions, OKLCH dark mode, token governance, thumb-zone ergonomics, undo/cancel patterns, performance perception, OKLCH color, information architecture, competitive landscape, anti-slop design principles, content provenance and craft signals.
 
 ## Safety
 
-Enforces Human-in-the-Loop Interception for destructive UI actions. Inclusion Lens veto (≤ 3.0) for WCAG 2.2 violations. Action Audit Trail with reversibility status. EU AI Act transparency compliance.
+Enforces Human-in-the-Loop Interception for destructive UI actions. Inclusion Lens veto (≤ 3.0) for WCAG 2.2 violations. Action Audit Trail with reversibility status. EU AI Act Article 50 awareness (machine-readable AI content marking, effective August 2026; C2PA is a leading approach, not a formally approved standard). C2PA provenance metadata with known security caveats (validate manifests, prevent XSS from untrusted input). Anti-slop linting is advisory and context-aware.

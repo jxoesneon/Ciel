@@ -1,10 +1,10 @@
 # UI/UX MASTERY STANDARDS — Design Council Master Specifications (2026)
 
-Synthesized by a joint session of the **Ciel System Council of Five** and the **Design Council of Five**. Revised with deep research (15 web searches across WCAG 2.2/3.0, Core Web Vitals field data, agentic UX pattern libraries, Tailwind v4 token architecture, shadcn/ui Base UI, mobile ergonomics research, undo/cancel pattern frameworks, performance perception science, spring-physics micro-interactions, OKLCH dark mode, bento grid intent hierarchy, and liquid glass composite materials).
+Synthesized by a joint session of the **Ciel System Council of Five** and the **Design Council of Five**. Revised with deep research (27 web searches across WCAG 2.2/3.0, Core Web Vitals field data, agentic UX pattern libraries, Tailwind v4 token architecture, shadcn/ui Base UI, mobile ergonomics research, undo/cancel pattern frameworks, performance perception science, spring-physics micro-interactions, OKLCH dark mode, bento grid intent hierarchy, liquid glass composite materials, AI slop definition/detection, distributional convergence, C2PA content provenance, EU AI Act Article 50, the struggle premium, dead internet theory, indie web counter-movement, and prompt engineering craft).
 
 ---
 
-## The 16 UI/UX Engineering & Design Standards
+## The 18 UI/UX Engineering & Design Standards
 
 ### 1. Agentic UX — Transparency, Control & Recovery (2026 Pattern Library)
 
@@ -188,6 +188,65 @@ The UI/UX skill ecosystem in 2026:
 - **Key Insight**: Entry-level roles now draw 300–500 applications. Portfolios (3–5 case studies with original research) differentiate, not certificates. Only 55% of companies conduct UX testing — competitive opportunity.
 - **Ciel's Position**: `ui_ux_mastery` fills a gap no existing Ciel seed skill covers — design governance, accessibility enforcement, performance budgeting, and agentic UI patterns with Council oversight. No overlap with the 33 existing infrastructure-focused seed skills.
 
+### 17. Anti-Slop Design Principles — Defeating Distributional Convergence (NEW)
+
+AI-generated UI converges on a statistical average — the "centroid look" — because language models predict the most probable token from training data. Point ten different products at the same prompt and you get the same output: Inter typeface, purple-to-indigo gradient, centered hero, three rounded cards, emoji as icons. This is **structural, not a capability gap**. The model is succeeding at a different task than intended: generating something defensibly plausible rather than something specifically right.
+
+**The Centroid Look — Patterns That Signal AI Slop:**
+- **Color**: Blue-to-purple gradient (blue-600 → purple-600), violet primary (#7c3aed — shadcn/ui default that escaped), gradient text on dark backgrounds
+- **Typography**: Inter everywhere (or Roboto). No secondary typeface. No typographic personality
+- **Layout**: Centered hero → one-line subhead → three identical feature cards → centered CTA. The skeleton that satisfies symmetry without requiring a hierarchy decision
+- **Icons**: Emoji as feature icons (🚀✨🔒 arranged in rows of three) instead of custom or branded iconography
+- **Contrast**: CTA buttons at ~2.5:1 contrast — technically present, practically invisible
+- **Motion**: Fade-up-on-scroll on every section, identical easing everywhere
+- **Copy**: Marketing copy that names no specific feature. "Transform your workflow" / "harness the power" / "in today's digital landscape"
+- **Density**: White space so aggressive it reads as absence of content rather than breathing room
+
+**Anti-Convergence Mandates:**
+1. **Brand Specificity**: Every design decision MUST be defensible against "why this and not the default?" If the answer is "it's what the model produced," it's slop. Override at least 3 centroid defaults per page (color, type, layout, or icon system).
+2. **Point of View**: A design without a point of view is slop regardless of polish. The design MUST communicate a specific brand identity, not a generic "modern web" aesthetic. If you removed the logo, could anyone tell whose product it is?
+3. **Hierarchy Decisions**: The three-card grid is the absence of a hierarchy decision. When content matters differently, size it differently. Bento Grid tier hierarchy (Standard 4) exists precisely to prevent this.
+4. **Typographic Range**: Use at least two typefaces with intentional contrast — not Inter + Inter. The typeface choice is a brand signal (Aesthetics lens), not an efficiency mandate. For utility-first internal tools where efficiency is paramount, a single typeface is acceptable.
+5. **Icon Authenticity**: No emoji as feature icons in production/marketing surfaces. Emoji are universally recognized (zero learning curve) and acceptable for internal tools or rapid prototyping. For user-facing product surfaces, use custom SVG, branded iconography, or a deliberately chosen icon library with consistent stroke weight.
+6. **Copy Specificity**: Marketing copy MUST name specific features, specific numbers, specific outcomes. Generic advice that "could apply to anyone" is the textbook definition of slop.
+7. **Contrast Verification**: All CTA buttons MUST meet WCAG 3:1 contrast minimum (Standard 3). The ~2.5:1 AI default fails accessibility AND converts poorly.
+
+**The Slop Test**: Four or more centroid patterns on the same page = AI slop in full. One can be coincidence. Four is the average asserting itself because no constraints were provided.
+
+**Distributional Convergence Mechanism**: The model reverts to the center of its training distribution. The center of "modern web UI" is a very specific, very repeated look. The fix is **process and context, not a cleverer prompt** — provide brand constraints, design tokens, explicit anti-defaults, and reference designs that diverge from the centroid.
+
+### 18. Content Provenance & Craft Signals (NEW)
+
+In an era where AI-generated content accounts for 44% of uploads on some platforms but draws only 1-3% of streams, audiences are developing slop detection instincts. The "struggle premium" — visible evidence of human effort — drives perceived value. Designs MUST signal their provenance and craft.
+
+**Content Provenance — C2PA & EU AI Act Compliance:**
+- **C2PA Content Credentials**: A widely adopted open standard for provenance metadata (Adobe, Microsoft, Google, OpenAI). JSON-LD manifest embedded in content files, signed with X.509 certificates, tamper-evident. Embedding by format: JPEG (APP11/JUMBF), PNG (caBX chunk), PDF (XMP), text/HTML (HTTP header or .c2pa sidecar). **Security caveat**: Independent analysis (IACR eprint 2026/804) identifies known limitations — timestamp agreement failures, inadequate certificate revocation, validator inconsistency. C2PA is one approach among possible solutions, not a formally approved standard under EU AI Act. Implementation MUST follow C2PA Security Considerations: validate manifest data before rendering, treat manifest content as untrusted input, prevent XSS/UI injection from malicious manifests.
+- **EU AI Act Article 50** (effective August 2, 2026): Requires machine-readable marks on AI-generated content AND perceivable disclosure at point of interaction — not just metadata. AI-generated UI artifacts (images, illustrations, generated layouts) distributed in EU markets SHOULD carry provenance metadata. **Exemption**: Source code is exempt from marking obligations under EU guidelines. C2PA is a leading candidate approach but the EU Commission has not named an approved technical standard.
+- **Disclosure Hierarchy**: AI-assisted (human-controlled, human-edited) vs AI-generated (model-produced, minimally edited). The distinction matters — "slop is not defined by whether AI wrote it, but by whether a human took responsibility for it."
+
+**Visible Effort Signals — The Struggle Premium:**
+Research shows visible effort cues have statistically significant effects on perceived authenticity:
+1. **Process Documentation** (23.1% recognition rate): Show the design process — wireframes, iterations, rejected alternatives. A design that appears fully-formed from nowhere reads as AI-generated.
+2. **Time Investment** (15.6%): Document time spent on key decisions. "We spent 3 weeks on the navigation pattern because..." signals craft.
+3. **Written Rationale** (15.0%): Every major design decision should have a written explanation. Not "it looks good" — "we chose this because it solves [specific problem] for [specific user]."
+4. **Mistakes & Iteration**: Show changes made during creation. Perfect outputs without visible process feel less meaningful (51.5% agreement). Bob Ross "happy accidents" — experimentation is the root of creation.
+5. **Specificity**: Real names, real dates, real places, real numbers. Generic statements are the #1 slop signal. "Designed for 12,000 daily active users in the healthcare vertical" vs "designed for modern teams."
+
+**The Goalpost Effect**: Exposure to AI-made products shifts evaluation criteria — qualities less applicable to AI become MORE valuable in human-made work. After seeing AI slop, evaluators prioritize intentionality, process visibility, emotional depth, and specific craft. Designing WITH this in mind means leading with what AI can't do.
+
+**Anti-Slop Linting for Generated UI Code (advisory, context-aware):**
+- **Em-dash density**: AI overuses em-dashes (—) where commas or nothing would do. Flag > 2 per 100 words in UI copy. Advisory — em-dashes are legitimate punctuation; flag density, not presence.
+- **Vocabulary tells**: "delve," "tapestry," "nuanced," "multifaceted," "harness," "transform," "cutting-edge" in UI copy are AI slop signals. Context-aware — these words may be appropriate in specific contexts; flag clusters, not individual uses. Replace with specific, concrete language where the word adds no information.
+- **Structural uniformity**: Every paragraph the same length, every section the same structure = AI default. Vary rhythm intentionally.
+- **List addiction**: Bullets where prose would be clearer. Not everything is a list.
+- **Hedging**: "it's worth noting," "it's important to remember," "it's crucial to consider" — hollow qualifiers that say a lot while conveying little. Cut them.
+- **No personal voice**: If the UI copy reads like it could be sent to anyone in any industry without modification, it's slop. Inject brand voice and point of view.
+
+**Craft Signals — Application Guidance:**
+- `ui.craft_signals` is **optional for simple artifacts** (single components, small fixes). Process documentation and provenance metadata are proportional to artifact scope — a button component does not need a 3-week process log.
+- Process documentation serves **trust and provenance**, not interaction speed. It belongs in the artifact's metadata, changelog, or design rationale — not in the user-facing UI.
+- C2PA provenance embedding is **regulatory compliance friction** for EU distribution, not an efficiency optimization. Apply when distributing to EU markets, not for internal development.
+
 ---
 
 ## Design Council Scoring Rubric Integration
@@ -197,13 +256,14 @@ Each UI/UX artifact submitted to Ciel is evaluated across the 5 Design Council l
 - **Inclusion Lens**: Enforces WCAG 2.2 success criteria (Focus Not Obscured, Target Size, Dragging Movements, Consistent Help, Redundant Entry) and WCAG 3.0 forward readiness. Any score $\le 3.0$ triggers an absolute veto (Standard 3).
 - **Efficiency Lens**: Enforces Core Web Vitals field data thresholds (INP $\le 200\text{ms}$, LCP $\le 2.5\text{s}$, CLS $\le 0.1$), thumb-zone ergonomics, undo/cancel recovery patterns, and performance perception loading strategy (Standards 2, 11, 12, 13).
 - **Aesthetics Lens**: Evaluates Liquid Glass three-layer composite, OKLCH dark mode luminance hierarchy, spring-physics micro-interactions, and color system perceptual uniformity (Standards 5, 8, 9, 14).
-- **Actionability Lens**: Evaluates Agentic UX transparency patterns (Intent Preview, Autonomy Dial, Action Receipts, Audit Trail), micro-interaction feedback, and conversion affordance (Standards 1, 8).
+- **Actionability Lens**: Evaluates Agentic UX transparency patterns (Intent Preview, Autonomy Dial, Action Receipts, Audit Trail), micro-interaction feedback, conversion affordance, and anti-slop brand specificity (Standards 1, 8, 17).
+- **Craft & Provenance Lens** (NEW): Evaluates content provenance (C2PA, EU AI Act Art.50), visible effort signals (process documentation, rationale, specificity), and anti-slop linting (distributional convergence, centroid look detection, vocabulary tells) (Standards 17, 18).
 
 ---
 
 ## Research Sources
 
-This document synthesizes findings from 15 web searches (July 2026) across:
+This document synthesizes findings from 27 web searches (July 2026) across:
 - W3C WCAG 2.2 Recommendation & WCAG 3.0 Working Draft (March 2026)
 - web.dev Core Web Vitals documentation & CrUX field data analysis
 - Smashing Magazine, HatchWorks, Thiago Patriota, transparencypatterns.com — Agentic UX pattern libraries (16+ patterns)
@@ -217,3 +277,10 @@ This document synthesizes findings from 15 web searches (July 2026) across:
 - SaaSFrame & studiomeyer — bento grid intent hierarchy research
 - Setproduct & lucky.graphics — liquid glass composite material architecture
 - Coursera, edubracket, UXCrush — UI/UX competitive landscape 2026
+- Wikipedia, Columbia IGP Report, arXiv (Kommers et al.) — AI slop definition, 7Vs framework, three prototypical properties
+- Superdesign, Sailop, Built In, booplex — distributional convergence, 90+ AI design patterns, centroid look
+- C2PA Specification 2.4, EU AI Act Article 50, US Copyright Office Part 2 Report — content provenance, legal framework
+- arXiv (Struggle Premium), Observer, Frontiers in Psychology — visible effort signals, lay theory violations, goalpost-moving effect
+- Fast Company, Fortune, The Next Web — dead internet theory, bot majority June 2026, slop ceiling
+- The Verge, The Bunker, Another Rodeo, Paula Righetti — indie web revival, handmade web, hand-coded as hand-made
+- bestprompt.art, SurePrompts, ArtisticMonk — prompt engineering as craft, six-slot brief, deliberate underspecification
