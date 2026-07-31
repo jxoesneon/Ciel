@@ -35,12 +35,13 @@ Load order at bootstrap reflects dependency chains:
 27. `project_analyzer` — init context.
 28. `research` — deep research.
 29. `runtime_adapter_builder` — new adapters.
+30. `ui_ux_mastery` — UI/UX design governance (depends on `documentation`).
 
 ## Interdependencies
 
 Circular deps are forbidden. Any seed skill needing another must declare it in `dependencies.skills`.
 
-## 32 Seed Skills (index)
+## 34 Seed Skills (index)
 
 1. `filesystem`
 2. `shell`
@@ -75,8 +76,9 @@ Circular deps are forbidden. Any seed skill needing another must declare it in `
 31. `cicd_integration`
 32. `database_client`
 33. `markdown_processor`
+34. `ui_ux_mastery`
 
-(33 entries — spec said 32; counted above includes `markdown_processor` per spec; markdown_processor is the final one.)
+(34 entries — `ui_ux_mastery` added post-initial-seed as Design Council governance skill.)
 
 Each has a `SKILL.md` under `seed_skills/<name>/SKILL.md`.
 

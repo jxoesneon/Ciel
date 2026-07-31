@@ -1,10 +1,10 @@
 ---
 name: ui_ux_mastery
 version: 1.0.0
-description: Top-of-the-line UI/UX design intelligence, component system architecture, accessibility standards (WCAG 2.2), and Core Web Vitals optimization.
-triggers: [ui, ux, design system, component library, bento grid, glassmorphism, accessibility, wcag]
+description: UI/UX design governance — design systems, accessibility audits, performance budgets, agentic UX patterns.
+triggers: [ui, ux, design system, accessibility, wcag, agentic ui]
 tags: [ui, scope:both, runtime:any, risk:low]
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
+runtime_compatibility: { claude_code: true, gemini_cli: true, generic: true }
 license: Apache-2.0
 source: { tier: 0, origin: seed }
 dependencies: { skills: [documentation/SKILL.md] }
@@ -12,40 +12,35 @@ dependencies: { skills: [documentation/SKILL.md] }
 
 # ui_ux_mastery
 
-Enforce top-of-the-line modern web design aesthetics, user-experience standards, and technical front-end performance.
+Generate and audit UI/UX artifacts against the Design Council standards (`council/rubrics/UI_UX_MASTERY_STANDARDS.md`).
 
 ## Operations
 
-- `ui.design_system()` — generate Tailwind v4 native `@theme` tokens and shadcn/ui headless Radix component specifications.
-- `ui.bento_grid(layout_schema)` — construct modular Bento Grid spatial layouts for complex SaaS dashboards.
-- `ui.accessibility_audit(markup)` — verify WCAG 2.2 Level AA/AAA standards (Focus ring $\ge 3:1$, target size $\ge 24\text{px}$).
-- `ui.performance_budget()` — enforce Core Web Vitals budgets ($\text{INP} < 200\text{ms}$, $\text{LCP} < 2.5\text{s}$, $\text{CLS} < 0.1$).
-- `ui.agent_transparency()` — render Plan-Execute transparent layers and tool invocation state progress indicators.
+- `ui.design_system(spec)` — Tailwind v4 `@theme` tokens (base → semantic → component) and shadcn/ui component specs.
+- `ui.bento_grid(layout_schema)` — intent-based Bento Grid layout (Hero/Utility/Micro-Data tiers) via CSS Grid.
+- `ui.accessibility_audit(markup)` — WCAG 2.2 AA/AAA verification (9 new success criteria) with WCAG 3.0 forward readiness.
+- `ui.performance_budget()` — Core Web Vitals field data thresholds (INP ≤ 200ms, LCP ≤ 2.5s, CLS ≤ 0.1 at 75th percentile).
+- `ui.agentic_ux()` — 6-pattern control surface (Intent Preview, Autonomy Dial, Rationale, Confidence, Receipts, Audit Trail).
+- `ui.thumb_zone(layout)` — dominant-hand functional area placement; destructive actions outside easy reach.
+- `ui.recovery_pattern(action)` — select recovery pattern (confirmation dialog / undo window / soft delete) by reversibility.
+- `ui.loading_strategy(duration_ms)` — loading state by duration (nothing < 400ms, skeleton 400ms–3s, progress 3–10s, bar > 10s).
+- `ui.dark_mode()` — OKLCH four-surface luminance hierarchy (base → raised → overlay → nested).
+- `ui.micro_interaction(trigger)` — spring-physics feedback (mass, stiffness, damping) in 100–400ms range.
 
 ## I/O Contract
 
 ```yaml
 io_contract:
-  input:
-    op: enum
-    "target_file?": string
-    "component_spec?": structured_map
-  output:
-    result: component_code|audit_report|theme_tokens
+  input: { op, target_file?, component_spec?, layout_schema?, duration_ms? }
+  output: { result: component_code|audit_report|theme_tokens|layout_grid|recovery_flow }
   idempotent: true
   side_effects: [fs]
 ```
 
-## Strategy
+## Standards Reference
 
-1. **Design System Engine**: Integrates Tailwind CSS v4, `@theme` native variables, and shadcn/ui headless Radix UI components.
-2. **Accessibility Compliance**: Guarantees WCAG 2.2 Level AA/AAA standards (Focus appearance, touch target $\ge 24\text{px}$, high-contrast dark modes).
-3. **Core Web Vitals Enforcement**: Optimizes for INP $< 200\text{ms}$, LCP $< 2.5\text{s}$, and CLS $< 0.1$.
-4. **Visual Aesthetics**: Implements Bento Grid layouts, Liquid Glass backdrop-blur, dark mode HSL scales, and functional micro-interactions.
-5. **Agentic UI Patterns**: Renders clear Plan-Execute transparent layers and tool invocation state progress for autonomous workflows.
+Full 16-standard specification with research citations in `council/rubrics/UI_UX_MASTERY_STANDARDS.md`. Covers: agentic UX transparency, Core Web Vitals, WCAG 2.2/3.0, Bento Grid, Liquid Glass, Tailwind v4 tokens, shadcn/ui, micro-interactions, OKLCH dark mode, token governance, thumb-zone ergonomics, undo/cancel patterns, performance perception, OKLCH color, information architecture, competitive landscape.
 
 ## Safety
 
-- Enforces Human-in-the-Loop Interception for destructive or irreversible UI actions.
-- Mandatory Inclusion Lens veto ($\le 3.0$) for any design excluding users or violating accessibility standards.
-- Evaluated by the **Design Council of Five** (`council/DESIGN_COUNCIL.md`) using `council/rubrics/UI_UX_MASTERY_STANDARDS.md`.
+Enforces Human-in-the-Loop Interception for destructive UI actions. Inclusion Lens veto (≤ 3.0) for WCAG 2.2 violations. Action Audit Trail with reversibility status. EU AI Act transparency compliance.
