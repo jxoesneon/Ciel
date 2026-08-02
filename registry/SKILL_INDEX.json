@@ -1,0 +1,2129 @@
+{
+  "schema": 1,
+  "version": "1.0.0",
+  "total_skills": 265,
+  "seed_skills": 35,
+  "adapted_skills": 230,
+  "skills": [
+    {
+      "name": "agent-eval",
+      "title": "agent-eval",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "agent-harness-construction",
+      "title": "agent-harness-construction",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "agent-introspection-debugging",
+      "title": "agent-introspection-debugging",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "agent-payment-x402",
+      "title": "agent-payment-x402",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "agent-sort",
+      "title": "agent-sort",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "agentic-engineering",
+      "title": "agentic-engineering",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "ai-first-engineering",
+      "title": "ai-first-engineering",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "ai-regression-testing",
+      "title": "ai-regression-testing",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "android-clean-architecture",
+      "title": "android-clean-architecture",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "api-connector-builder",
+      "title": "api-connector-builder",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "api-design",
+      "title": "api-design",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "api_client",
+      "title": "api_client",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "architecture-decision-records",
+      "title": "architecture-decision-records",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "archive_manager",
+      "title": "archive_manager",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "article-writing",
+      "title": "article-writing",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "automation-audit-ops",
+      "title": "automation-audit-ops",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "autonomous-agent-harness",
+      "title": "autonomous-agent-harness",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "autonomous-loops",
+      "title": "autonomous-loops",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "backend-patterns",
+      "title": "backend-patterns",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "benchmark",
+      "title": "benchmark",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "blueprint",
+      "title": "blueprint",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "brainstorming",
+      "title": "brainstorming",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "brand-voice",
+      "title": "brand-voice",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "browser-qa",
+      "title": "browser-qa",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "bun-runtime",
+      "title": "bun-runtime",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "canary-watch",
+      "title": "canary-watch",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "carrier-relationship-management",
+      "title": "carrier-relationship-management",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "cicd_integration",
+      "title": "cicd_integration",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "ck",
+      "title": "ck",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "ckm-banner-design",
+      "title": "ckm-banner-design",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "ckm-brand",
+      "title": "ckm-brand",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "ckm-design",
+      "title": "ckm-design",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "ckm-design-system",
+      "title": "ckm-design-system",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "ckm-slides",
+      "title": "ckm-slides",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "ckm-ui-styling",
+      "title": "ckm-ui-styling",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "claude-api",
+      "title": "claude-api",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "claude-code-plugin-release",
+      "title": "claud",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "claude-devfleet",
+      "title": "claude-devfleet",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "click-path-audit",
+      "title": "click-path-audit",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "clickhouse-io",
+      "title": "clickhouse-io",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "code-tour",
+      "title": "code-tour",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "code_analysis",
+      "title": "code_analysis",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "code_generation",
+      "title": "code_generation",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "code_review",
+      "title": "code_review",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "codebase-onboarding",
+      "title": "codebase-onboa",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "coding-standards",
+      "title": "coding-standards",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "compose-multiplatform-patterns",
+      "title": "compose-multiplatform-patterns",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "configure-ecc",
+      "title": "configure-ecc",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "connections-optimizer",
+      "title": "connections-optimizer",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "content-engine",
+      "title": "content-",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "content-hash-cache-pattern",
+      "title": "content-hash-cache-pattern",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "context-budget",
+      "title": "context-budget",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "context_summarizer",
+      "title": "context_summarizer",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "continuous-agent-loop",
+      "title": "continuous-agent-loop",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "continuous-learning",
+      "title": "continuous-learning",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "continuous-learning-v2",
+      "title": "continuous-l",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "convoy-orchestration",
+      "title": "convoy-orchestration",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "cost-aware-llm-pipeline",
+      "title": "cost-aware-llm-pipeline",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "council",
+      "title": "council",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "council_runner",
+      "title": "council_runner",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "cpp-coding-standards",
+      "title": "cpp-coding-standards",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "cpp-testing",
+      "title": "cpp-testing",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "crosspost",
+      "title": "crosspost",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "csharp-testing",
+      "title": "csharp-testing",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "customer-billing-ops",
+      "title": "customer-billing-ops",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "customs-trade-compliance",
+      "title": "customs-trade-compliance",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "dart-flutter-patterns",
+      "title": "dart-flutter-patterns",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "dashboard-builder",
+      "title": "dashboard-builder",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "data-scraper-agent",
+      "title": "data-scraper-agent",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "database-migrations",
+      "title": "database-migrations",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "database_client",
+      "title": "database_client",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "deep-research",
+      "title": "deep-research",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "defi-amm-security",
+      "title": "defi-amm-security",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "defuddle",
+      "title": "defuddle",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "dependency_audit",
+      "title": "dependency_audit",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "deployment-patterns",
+      "title": "deployment-patterns",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "design-system",
+      "title": "design-system",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "dev-browser",
+      "title": "dev-browser",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "diff_patch",
+      "title": "diff_patch",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "dispatching-parallel-agents",
+      "title": "dispatching-parallel-agents",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "django-patterns",
+      "title": "django-patterns",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "django-security",
+      "title": "django-security",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "django-tdd",
+      "title": "django-tdd",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "django-verification",
+      "title": "django-verification",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "dmux-workflows",
+      "title": "dmux-workflows",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "do",
+      "title": "do",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "docker",
+      "title": "docker",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "docker-patterns",
+      "title": "docker-patterns",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "documentation",
+      "title": "documentation",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "documentation-lookup",
+      "title": "documentation-lookup",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "dotnet-patterns",
+      "title": "dotnet-patterns",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "e2e-testing",
+      "title": "e2e-testing",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "ecc-tools-cost-audit",
+      "title": "ecc-tools-cost-audit",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "email-ops",
+      "title": "email-ops",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "energy-procurement",
+      "title": "energy-procurement",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "enterprise-agent-ops",
+      "title": "enterprise-agent-ops",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "environment_detection",
+      "title": "environment_detection",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "eval-harness",
+      "title": "eval-harness",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "everything-claude-code-conventions",
+      "title": "everything-claude-code-conventions",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "evm-token-decimals",
+      "title": "evm-token-decimals",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "exa-search",
+      "title": "exa-search",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "executing-plans",
+      "title": "executing-plans",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "fal-ai-media",
+      "title": "fal-ai-media",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "filesystem",
+      "title": "filesystem",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "finance-billing-ops",
+      "title": "finance-billing-ops",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "find-skills",
+      "title": "find-skills",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "finishing-a-development-branch",
+      "title": "finishing-a-development-branch",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "flutter-dart-code-review",
+      "title": "flutter-da",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "foundation-models-on-device",
+      "title": "foundation-models-on-device",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "frontend-design",
+      "title": "frontend-design",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "frontend-patterns",
+      "title": "frontend-patterns",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "frontend-slides",
+      "title": "frontend-slides",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "gan-style-harness",
+      "title": "gan-style-harness",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "gastown",
+      "title": "gastown",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "git",
+      "title": "git",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "git-workflow",
+      "title": "git-workflow",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "github-ops",
+      "title": "github-ops",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "golang-patterns",
+      "title": "golang-patterns",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "golang-testing",
+      "title": "golang-testing",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "google-workspace-ops",
+      "title": "google-workspace-ops",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "gsap-core",
+      "title": "gsap-core",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "gsap-frameworks",
+      "title": "gsap-frameworks",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "gsap-performance",
+      "title": "gsap-performance",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "gsap-plugins",
+      "title": "gsap-plugins",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "gsap-react",
+      "title": "gsap-react",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "gsap-scrolltrigger",
+      "title": "gsap-scrolltrigger",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "gsap-timeline",
+      "title": "gsap-timeline",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "gsap-utils",
+      "title": "gsap-utils",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "gsd-orchestrator",
+      "title": "gsd-orchestrator",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "healthcare-cdss-patterns",
+      "title": "healthcare-cdss-patterns",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "healthcare-emr-patterns",
+      "title": "healthcare-emr-patterns",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "healthcare-eval-harness",
+      "title": "healthcare-eval-harne",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "healthcare-phi-compliance",
+      "title": "healthcare-phi-co",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "hexagonal-architecture",
+      "title": "hexagonal-architecture",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "hipaa-compliance",
+      "title": "hipaa-compliance",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "hookify-rules",
+      "title": "hookify-rules",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "inventory-demand-planning",
+      "title": "inventory-demand-planning",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "investor-materials",
+      "title": "investor-materials",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "investor-outreach",
+      "title": "in",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "iterative-retrieval",
+      "title": "iterative-retrieval",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "java-coding-standards",
+      "title": "java-coding-standards",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "jira-integration",
+      "title": "jira-integration",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "jpa-patterns",
+      "title": "jpa-patterns",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "json-canvas",
+      "title": "json-canvas",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "json_yaml_toml_parser",
+      "title": "json_yaml_toml_parser",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "knowledge-ops",
+      "title": "knowledge-ops",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "kotlin-coroutines-flows",
+      "title": "kotlin-coroutines-flows",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "kotlin-exposed-patterns",
+      "title": "kotlin-exposed-patterns",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "kotlin-ktor-patterns",
+      "title": "kotlin-ktor-patterns",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "kotlin-patterns",
+      "title": "kotlin-patterns",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "kotlin-testing",
+      "title": "kotlin-testing",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "laravel-patterns",
+      "title": "laravel-patterns",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "laravel-plugin-discovery",
+      "title": "laravel-plugin-discovery",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "laravel-security",
+      "title": "laravel-security",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "laravel-tdd",
+      "title": "laravel-tdd",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "laravel-verification",
+      "title": "laravel-verification",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "lead-intelligence",
+      "title": "lead-intelligence",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "linter_formatter",
+      "title": "linter_formatter",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "liquid-glass-design",
+      "title": "liquid-glass-design",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "llm-trading-agent-security",
+      "title": "llm-trading-agent-security",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "log_analyzer",
+      "title": "log_analyzer",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "logistics-exception-management",
+      "title": "logistics-exception-management",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "make-plan",
+      "title": "make-plan",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "manim-video",
+      "title": "manim-video",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "markdown_processor",
+      "title": "markdown_processor",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "market-research",
+      "title": "market-research",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "mcp-server-patterns",
+      "title": "mcp-server-patterns",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "mcp_manager",
+      "title": "mcp_manager",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "mem-search",
+      "title": "mem-search",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "mempalace",
+      "title": "mempalace",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "mempalace_manager",
+      "title": "mempalace_manager",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "messages-ops",
+      "title": "messages-ops",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "nanoclaw-repl",
+      "title": "nanoclaw-repl",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "nestjs-patterns",
+      "title": "nestjs-patterns",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "nextjs-turbopack",
+      "title": "nextjs-turbopack",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "nodejs-keccak256",
+      "title": "nodejs-keccak256",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "nutrient-document-processing",
+      "title": "nutrient-document-processing",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "nuxt4-patterns",
+      "title": "nuxt4-patterns",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "obsidian-bases",
+      "title": "obsidia",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "obsidian-cli",
+      "title": "obsidian-cli",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "obsidian-markdown",
+      "title": "obsidian-markdown",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "open-source-maintainer",
+      "title": "open-source-maintainer",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "openclaw-persona-forge",
+      "title": "openclaw-persona-forge",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "opensource-pipeline",
+      "title": "opensource-pipeline",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "orchestration",
+      "title": "orchestration",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "package_manager",
+      "title": "package_manager",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "perl-patterns",
+      "title": "perl-patterns",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "perl-security",
+      "title": "perl-security",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "perl-testing",
+      "title": "perl-testing",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "plankton-code-quality",
+      "title": "plankton-code-quality",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "postgres-patterns",
+      "title": "postgres-patterns",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "product-capability",
+      "title": "product-capability",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "product-lens",
+      "title": "product-lens",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "production-scheduling",
+      "title": "production-scheduling",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "project-flow-ops",
+      "title": "project-flow-ops",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "project-guidelines-example",
+      "title": "project-guidelines-example",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "project_analyzer",
+      "title": "project_analyzer",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "prompt-optimizer",
+      "title": "prompt-optimizer",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "python-patterns",
+      "title": "python-patterns",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "python-testing",
+      "title": "python-testing",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "pytorch-patterns",
+      "title": "pytorch-patterns",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "quality-nonconformance",
+      "title": "quality-nonconformance",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "ralphinho-rfc-pipeline",
+      "title": "ralphinho-rfc-pipeline",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "receiving-code-review",
+      "title": "receiving-code-",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "regex-vs-llm-structured-text",
+      "title": "regex-vs-llm-structured-text",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "remotion-video-creation",
+      "title": "remotion-video-creation",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "repo-scan",
+      "title": "repo-scan",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": false,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "requesting-code-review",
+      "title": "requesting-code-review",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "research",
+      "title": "research",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "research-ops",
+      "title": "research-ops",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "returns-reverse-logistics",
+      "title": "returns-reverse-logistics",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "rules-distill",
+      "title": "rules-distill",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "runtime_adapter_builder",
+      "title": "runtime_adapter_builde",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "rust-patterns",
+      "title": "rust-patterns",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "rust-testing",
+      "title": "rust-testing",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "safety-guard",
+      "title": "safety-guard",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "santa-method",
+      "title": "santa-method",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "search-first",
+      "title": "search-first",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "secrets_manager",
+      "title": "secrets_manager",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "security-bounty-hunter",
+      "title": "security-bounty-hunter",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "security-review",
+      "title": "security-review",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "security-scan",
+      "title": "security-scan",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "seo",
+      "title": "seo",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "shell",
+      "title": "shell",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "skill-comply",
+      "title": "skill-comply",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "skill-discovery",
+      "title": "skill-discovery",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "skill_builder",
+      "title": "skill_builder",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "skill_installer",
+      "title": "skill_installer",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "smart-explore",
+      "title": "smart-explore",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "social-graph-ranker",
+      "title": "social-graph-ranker",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "springboot-patterns",
+      "title": "springboot-patterns",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "springboot-security",
+      "title": "springboot-security",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "springboot-tdd",
+      "title": "springboot-tdd",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "springboot-verification",
+      "title": "springboot-verification",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "strategic-compact",
+      "title": "strategic-compact",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "subagent-driven-development",
+      "title": "subagent-driven-development",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "swift-actor-persistence",
+      "title": "swift-actor-persistence",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "swift-concurrency-6-2",
+      "title": "swift-concurrency-6-2",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "swift-protocol-di-testing",
+      "title": "swift-protocol-di-testing",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "swiftui-patterns",
+      "title": "swiftui-patterns",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "systematic-debugging",
+      "title": "systematic-debugging",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "tdd-workflow",
+      "title": "tdd-workflow",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "team-builder",
+      "title": "team-builder",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "terminal-ops",
+      "title": "terminal-ops",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "test-driven-development",
+      "title": "test-driven-development",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "test_runner",
+      "title": "test_runner",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "timeline-report",
+      "title": "timeline-report",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "token-budget-advisor",
+      "title": "token-budget-advisor",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "ui-demo",
+      "title": "ui-demo",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "ui-ux-pro-max",
+      "title": "ui-ux-pro-max",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "unified-notifications-ops",
+      "title": "unified-notificatio",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "using-git-worktrees",
+      "title": "using-git-worktrees",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "using-superpowers",
+      "title": "using-superpowers",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "verification-before-completion",
+      "title": "verifi",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "verification-loop",
+      "title": "verification-loop",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "video-editing",
+      "title": "video-editing",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "videodb",
+      "title": "videodb",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "visa-doc-translate",
+      "title": "visa-doc-translate",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "web_fetch",
+      "title": "web_fetch",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "web_search",
+      "title": "web_search",
+      "origin": "seed",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": false
+    },
+    {
+      "name": "workspace-surface-audit",
+      "title": "workspace-surface-audit",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "writing-plans",
+      "title": "writing-plans",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "writing-skills",
+      "title": "writing-skills",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "x-api",
+      "title": "x-api",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    },
+    {
+      "name": "zai-cli",
+      "title": "zai-cli",
+      "origin": "adapted",
+      "has_license": true,
+      "has_provenance": true,
+      "has_adaptation_metadata": true
+    }
+  ]
+}
