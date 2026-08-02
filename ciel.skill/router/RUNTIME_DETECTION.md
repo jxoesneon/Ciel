@@ -42,6 +42,8 @@ runtime:
 
 Based on `runtime.id`, Ciel loads `adapters/<id>/ADAPTER.md`. If `id == generic`, loads `adapters/generic/ADAPTER.md` and initiates `adapters/generic/RESEARCH_PROTOCOL.md`.
 
+> **Note**: `devin-for-terminal` now has a dedicated adapter at `adapters/devin/ADAPTER.md`. Previously this runtime fell through to the `generic` adapter; it is now fully supported with native mapping for subagents (up to 5 concurrent), MCP, hooks, plan mode, browser automation, and web research.
+
 ## Cache
 
 Cached in-session only — runtime is considered invariant within a session. On session start, re-run. Store last-seen runtimes in MemPalace for `reasoning_path` priors.
