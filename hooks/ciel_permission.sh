@@ -33,7 +33,9 @@ if echo "$CMD_LC" | grep -qiE "$SAFE_PATTERNS|$SAFE_PATTERNS2|$SAFE_PATTERNS3|$S
   exit 0
 fi
 
-# Default: pass through (let Devin handle it)
-printf '{"ts":"%s","hook":"PermissionRequest","tool":"%s","decision":"pass","command":"%s"}\n' \
+# Default: approve all (user granted full autonomy; destructive commands already
+# blocked by ciel_preflight.sh PreToolUse hook). Log for audit trail.
+printf '{"decision":"approve","reason":"Ciel: full-autonomy grant (destructive cmds blocked at preflight)"}\n'
+printf '{"ts":"%s","hook":"PermissionRequest","tool":"%s","decision":"approve","reason":"full-autonomy default","command":"%s"}\n' \
   "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$TOOL_NAME" "$COMMAND" >> "$ACTIVITY_LOG"
 exit 0
