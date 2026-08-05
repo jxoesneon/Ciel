@@ -1,25 +1,52 @@
 {
-  "schema": "memory_state/1.0",
-  "version": "1.0.0",
-  "updated": "2026-08-04T23:55:23Z",
+  "schema": "memory_state/2.0",
+  "version": "2.0.0",
+  "schema_version": "2.0",
+  "schema_compliant": true,
+  "updated": "2026-08-05T00:26:10Z",
   "primary_backend": "mempalace",
   "fallback_backend": "sqlite",
   "mempalace_binary": "~/.cargo/bin/mempalace-rs",
   "mempalace_version": "0.5.0",
   "db_path": "~/.ciel/memory/palace.db",
-  "db_size_bytes": 12288,
-  "tables": [
+  "db_size_bytes": 49152,
+  "tables": ["entries", "entries_fts", "meta"],
+  "table_details": [
     {
-      "name": "memories",
-      "schema": "CREATE TABLE memories (id TEXT PRIMARY KEY, content TEXT, created_at TEXT)",
+      "name": "entries",
+      "schema": "CREATE TABLE entries (partition TEXT NOT NULL, key TEXT NOT NULL, value BLOB NOT NULL, metadata TEXT NOT NULL, created INTEGER NOT NULL, updated INTEGER NOT NULL, PRIMARY KEY (partition, key))",
       "row_count": 0,
       "columns": [
-        {"name": "id", "type": "TEXT", "primary_key": true},
-        {"name": "content", "type": "TEXT", "primary_key": false},
-        {"name": "created_at", "type": "TEXT", "primary_key": false}
+        {"name": "partition", "type": "TEXT", "primary_key": true},
+        {"name": "key", "type": "TEXT", "primary_key": true},
+        {"name": "value", "type": "BLOB", "primary_key": false},
+        {"name": "metadata", "type": "TEXT", "primary_key": false},
+        {"name": "created", "type": "INTEGER", "primary_key": false},
+        {"name": "updated", "type": "INTEGER", "primary_key": false}
+      ],
+      "indexes": ["idx_entries_created"]
+    },
+    {
+      "name": "entries_fts",
+      "schema": "CREATE VIRTUAL TABLE entries_fts USING fts5(partition, key, content, content='entries', content_rowid='rowid')",
+      "type": "fts5",
+      "row_count": 0
+    },
+    {
+      "name": "meta",
+      "schema": "CREATE TABLE meta (key TEXT PRIMARY KEY, value TEXT)",
+      "row_count": 3,
+      "columns": [
+        {"name": "key", "type": "TEXT", "primary_key": true},
+        {"name": "value", "type": "TEXT", "primary_key": false}
       ]
     }
   ],
+  "meta_records": {
+    "schema_version": "2.0",
+    "migration_date": "2026-08-05T00:26:10Z",
+    "migrated_from": "memories_table"
+  },
   "partitions": {
     "global": {
       "key_count": 0,
@@ -31,9 +58,11 @@
     }
   },
   "health_status": "healthy",
-  "last_health_check": "2026-08-04T23:55:23Z",
+  "last_health_check": "2026-08-05T00:26:10Z",
   "health_check_details": {
     "db_accessible": true,
+    "fts5_functional": true,
+    "schema_compliant": true,
     "activity_log_writable": true,
     "registry_readable": true,
     "registry_skill_count": 265
@@ -46,13 +75,30 @@
     "auto_update": true,
     "isolation_strict": true,
     "partition_size_limit_mb": 1024,
-    "fallback_order": ["mempalace", "sqlite", "filesystem", "custom"]
+    "fallback_order": ["mempalace", "sqlite", "filesystem", "custom"],
+    "journal_mode": "WAL",
+    "synchronous": "NORMAL"
   },
+  "migration_history": [
+    {
+      "date": "2026-08-05T00:26:10Z",
+      "from_schema": "1.0",
+      "to_schema": "2.0",
+      "from_table": "memories",
+      "to_tables": ["entries", "entries_fts", "meta"],
+      "rows_migrated": 0,
+      "backup_path": "~/.ciel/memory/palace.db.pre-migration.bak",
+      "script": "~/.ciel/memory/migrate_palace_db.py",
+      "spec": "memory/backends/SQLITE.md",
+      "status": "success"
+    }
+  ],
   "notes": [
     "MemPalace-rs binary installed at ~/.cargo/bin/mempalace-rs (v0.5.0) — primary backend active",
-    "palace.db is a SQLite file at ~/.ciel/memory/palace.db with simple memories(id, content, created_at) schema — serves as fallback store",
-    "palace.db schema does not match the full SQLITE.md spec (entries/entries_fts/meta tables) — appears to be a simpler custom schema",
-    "Database has 0 rows — initialized but no entries written yet",
-    "Health check protocol passed: binary runnable, schema accessible, RW self-test passed, activity log writable, registry readable"
+    "palace.db migrated to spec-compliant schema (entries/entries_fts/meta) per memory/backends/SQLITE.md",
+    "Schema version 2.0 — FTS5 virtual table entries_fts operational, meta records populated",
+    "Database has 0 entries — initialized but no entries written yet",
+    "PRAGMA journal_mode=WAL, synchronous=NORMAL applied for durability per spec",
+    "Health check re-verified post-migration: db accessible, FTS5 functional, schema compliant, activity log writable, registry readable"
   ]
 }

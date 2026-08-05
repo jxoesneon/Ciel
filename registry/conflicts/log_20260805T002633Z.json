@@ -1,0 +1,25 @@
+{
+  "conflict_id": "log_20260805T002633Z",
+  "type": "direct_trigger_overlap",
+  "pattern": "log",
+  "skills": [
+    "git",
+    "log_analyzer"
+  ],
+  "resolution": "delegate",
+  "rationale": "log_analyzer parses logs, detects anomalies, and extracts structure from log streams; git exposes log as one sub-operation (git.log(n, path)). The bare 'log' is ambiguous. Delegate: log_analyzer keeps 'log' (the generic log-analysis concept); git receives the more specific 'git log' trigger so it is only matched when the user clearly wants VCS history.",
+  "lens_scores": {
+    "coherence": 9,
+    "capability": 9,
+    "safety": 8,
+    "efficiency": 7,
+    "evolution": 8
+  },
+  "actions_taken": [
+    "Removed bare trigger 'log' from git in ROUTE_REGISTRY.json",
+    "Removed trigger entry {pattern:'log', skill:'git'} from TRIGGER_REGISTRY.json",
+    "Added trigger 'git log' -> git (functional, 0.8) to TRIGGER_REGISTRY.json",
+    "log_analyzer skill retains exclusive 'log' trigger"
+  ],
+  "resolved_at": "2026-08-05T00:26:33Z"
+}

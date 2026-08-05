@@ -1,29 +1,36 @@
 {
   "schema": "observability_state/1.0",
   "version": "1.0.0",
-  "updated": "2026-08-04T23:55:23Z",
+  "updated": "2026-08-05T00:27:46.272Z",
   "activity_log_path": "~/.ciel/activity.log",
-  "activity_log_size_bytes": 8952639,
-  "activity_log_entries": 83247,
+  "activity_log_size_bytes": 13838626,
+  "activity_log_entries": 41390,
   "otel_enabled": false,
   "session_summaries_enabled": true,
   "session_summary_mode": "on_error",
   "debug_mode": false,
   "last_session_summary": null,
   "statistics": {
-    "total_events": 83247,
-    "json_entries": 46652,
-    "non_json_entries": 36403,
+    "total_events": 41390,
+    "json_entries": 41390,
+    "non_json_entries": 0,
     "events_by_type": {
-      "PreToolUse": 23314,
-      "PostToolUse": 23181,
-      "SessionStart": 145,
-      "PermissionRequest": 4,
-      "bootstrap": 3,
-      "other": 36274
+      "health": 188,
+      "permission": 41175,
+      "council": 2,
+      "improvement": 2,
+      "acquisition": 3,
+      "route": 17,
+      "escalation": 2
     },
     "events_by_kind": {
-      "bootstrap": 3
+      "health": 188,
+      "permission": 41175,
+      "council": 2,
+      "improvement": 2,
+      "acquisition": 3,
+      "route": 17,
+      "escalation": 2
     }
   },
   "config": {
@@ -44,11 +51,31 @@
       }
     }
   },
-  "format_inconsistencies": [
-    "Activity log spec (ACTIVITY_LOG.md) defines JSONL with fields: ts, session, runtime, project, kind, op, risk, path, skill, decision, duration_ms, tokens, cost_usd, commit, council_run, notes, redacted",
-    "Existing entries use a hook-based schema with fields: ts, hook, tool, decision, reason, command — does not match the template",
-    "36403 of 82921 lines are non-JSON (Python code fragments, partial JSON, stray text) — log corruption from multi-line command outputs being appended",
-    "No entries use the 'kind' field from the spec; instead 'hook' is the primary classifier",
-    "Required fields (session, kind, op) are missing from most existing entries"
-  ]
+  "format_inconsistencies": [],
+  "normalization_history": [
+    {
+      "timestamp": "2026-08-05T00:27:46.272Z",
+      "script": "~/.ciel/observability/normalize_activity_log.py",
+      "total_in": 41689,
+      "normalized": 41389,
+      "skipped": 300,
+      "by_source": {
+        "spec": 41389,
+        "skipped_nonjson": 277
+      },
+      "by_kind": {
+        "health": 188,
+        "permission": 41175,
+        "council": 2,
+        "improvement": 2,
+        "acquisition": 3,
+        "route": 17,
+        "escalation": 2
+      },
+      "archived_to": "~/.ciel/archive/logs/activity-pre-migration-20260805.log",
+      "post_migration_entry_appended": true,
+      "note": "Multi-pass normalization: original 87818-line log normalized, then live hook entries re-normalized."
+    }
+  ],
+  "last_normalization": "2026-08-05T00:27:46.272Z"
 }

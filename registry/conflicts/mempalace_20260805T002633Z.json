@@ -1,0 +1,26 @@
+{
+  "conflict_id": "mempalace_20260805T002633Z",
+  "type": "direct_trigger_overlap",
+  "pattern": "mempalace",
+  "skills": [
+    "mempalace",
+    "mempalace_manager"
+  ],
+  "resolution": "delegate",
+  "rationale": "mempalace is the concept/guide for the offline-first AI memory system (mining, semantic search, knowledge graph); mempalace_manager is the executor (read/write/query/partition operations against MemPalace-rs). They are functionally distinct. Delegate: mempalace keeps the bare 'mempalace' trigger; mempalace_manager receives more specific 'manage mempalace' and 'mempalace manager' triggers and retains memory/recall/remember/store.",
+  "lens_scores": {
+    "coherence": 9,
+    "capability": 9,
+    "safety": 8,
+    "efficiency": 7,
+    "evolution": 8
+  },
+  "actions_taken": [
+    "Removed bare trigger 'mempalace' from mempalace_manager in ROUTE_REGISTRY.json",
+    "Removed trigger entry {pattern:'mempalace', skill:'mempalace_manager'} from TRIGGER_REGISTRY.json",
+    "Added trigger 'manage mempalace' -> mempalace_manager (functional, 0.8) to TRIGGER_REGISTRY.json",
+    "Added trigger 'mempalace manager' -> mempalace_manager (functional, 0.8) to TRIGGER_REGISTRY.json",
+    "mempalace skill retains exclusive 'mempalace' trigger"
+  ],
+  "resolved_at": "2026-08-05T00:26:33Z"
+}

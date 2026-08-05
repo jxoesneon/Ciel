@@ -1,7 +1,7 @@
 {
   "schema": "route_registry/1.0",
   "version": "1.0.0",
-  "updated": "2026-08-04T23:55:57Z",
+  "updated": "2026-08-05T00:26:33Z",
   "total_routes": 265,
   "routes": [
     {
@@ -168,7 +168,12 @@
       "confidence": 0.9,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:mid",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "architecture-decision-records",
@@ -203,7 +208,12 @@
       "confidence": 0.9,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:low",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "article-writing",
@@ -395,7 +405,12 @@
       "confidence": 0.9,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:mid",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "ck",
@@ -587,7 +602,12 @@
       "confidence": 0.9,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:low",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "code_generation",
@@ -609,7 +629,12 @@
       "confidence": 0.9,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:low",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "code_review",
@@ -630,7 +655,12 @@
       "confidence": 0.9,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:low",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "codebase-onboarding",
@@ -754,7 +784,12 @@
       "confidence": 0.9,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:low",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "continuous-agent-loop",
@@ -845,7 +880,8 @@
       "skill_name": "council_runner",
       "skill_path": "~/.ciel/skills/council_runner/SKILL.md",
       "triggers": [
-        "council",
+        "run council",
+        "council runner",
         "vote",
         "deliberate",
         "review artifact"
@@ -860,7 +896,12 @@
       "confidence": 0.9,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:low",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "cpp-coding-standards",
@@ -1013,7 +1054,12 @@
       "confidence": 0.9,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:mid",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "deep-research",
@@ -1074,7 +1120,12 @@
       "confidence": 0.9,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:low",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "deployment-patterns",
@@ -1134,7 +1185,12 @@
       "confidence": 0.9,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:low",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "dispatching-parallel-agents",
@@ -1246,7 +1302,12 @@
       "confidence": 0.9,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:mid",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "docker-patterns",
@@ -1281,7 +1342,12 @@
       "confidence": 0.9,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:low",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "documentation-lookup",
@@ -1393,7 +1459,12 @@
       "confidence": 0.9,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:low",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "eval-harness",
@@ -1499,7 +1570,12 @@
       "confidence": 0.9,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:low",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "finance-billing-ops",
@@ -1637,8 +1713,8 @@
       "triggers": [
         "git",
         "commit",
-        "diff",
-        "log",
+        "git diff",
+        "git log",
         "branch",
         "revert",
         "stash"
@@ -1653,7 +1729,12 @@
       "confidence": 0.9,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:low",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "git-workflow",
@@ -2052,7 +2133,12 @@
       "confidence": 0.9,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:low",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "knowledge-ops",
@@ -2232,7 +2318,12 @@
       "confidence": 0.9,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:low",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "liquid-glass-design",
@@ -2279,7 +2370,12 @@
       "confidence": 0.9,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:low",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "logistics-exception-management",
@@ -2340,7 +2436,12 @@
       "confidence": 0.9,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:low",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "market-research",
@@ -2387,7 +2488,12 @@
       "confidence": 0.9,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:mid",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "mem-search",
@@ -2420,7 +2526,8 @@
       "skill_path": "~/.ciel/skills/mempalace_manager/SKILL.md",
       "triggers": [
         "memory",
-        "mempalace",
+        "manage mempalace",
+        "mempalace manager",
         "recall",
         "remember",
         "store"
@@ -2435,7 +2542,12 @@
       "confidence": 0.9,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:low",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "messages-ops",
@@ -2642,7 +2754,12 @@
       "confidence": 0.9,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:mid",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "perl-patterns",
@@ -2792,7 +2909,12 @@
       "confidence": 0.8,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:low",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "prompt-optimizer",
@@ -2956,7 +3078,12 @@
       "confidence": 0.9,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:low",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "research-ops",
@@ -3015,7 +3142,12 @@
       "confidence": 0.8,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:high",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "rust-patterns",
@@ -3102,7 +3234,12 @@
       "confidence": 0.9,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:high",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "security-bounty-hunter",
@@ -3176,7 +3313,12 @@
       "confidence": 0.9,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:low",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "skill-comply",
@@ -3199,7 +3341,6 @@
         "find a skill",
         "discover skill",
         "what skill can",
-        "install skill",
         "skill for",
         "how do I",
         "can you help me with"
@@ -3230,7 +3371,12 @@
       "confidence": 0.8,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:low",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "skill_installer",
@@ -3250,7 +3396,12 @@
       "confidence": 0.8,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:mid",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "smart-explore",
@@ -3494,7 +3645,12 @@
       "confidence": 0.9,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:low",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "timeline-report",
@@ -3672,7 +3828,12 @@
       "confidence": 0.9,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:low",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "web_search",
@@ -3693,7 +3854,12 @@
       "confidence": 0.9,
       "hit_count": 0,
       "last_hit": null,
-      "fast_path_eligible": true
+      "fast_path_eligible": true,
+      "expected_overlap_tags": [
+        "risk:low",
+        "runtime:any",
+        "scope:both"
+      ]
     },
     {
       "skill_name": "workspace-surface-audit",

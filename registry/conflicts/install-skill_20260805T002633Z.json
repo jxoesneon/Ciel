@@ -1,0 +1,24 @@
+{
+  "conflict_id": "install-skill_20260805T002633Z",
+  "type": "direct_trigger_overlap",
+  "pattern": "install skill",
+  "skills": [
+    "skill-discovery",
+    "skill_installer"
+  ],
+  "resolution": "delegate",
+  "rationale": "skill_installer performs the actual install action (unzip, validate, checksum, register a .skill bundle); skill-discovery is about finding/evaluating capabilities, not installing them. The 'install skill' trigger on skill-discovery was a broad intent catch that shadowed the true installer. Delegate: skill_installer keeps 'install skill' (the concrete action); skill-discovery retains discovery-oriented triggers (skill discovery, find a skill, discover skill, what skill can, skill for, how do I, can you help me with).",
+  "lens_scores": {
+    "coherence": 9,
+    "capability": 9,
+    "safety": 8,
+    "efficiency": 7,
+    "evolution": 8
+  },
+  "actions_taken": [
+    "Removed trigger 'install skill' from skill-discovery in ROUTE_REGISTRY.json",
+    "Removed trigger entry {pattern:'install skill', skill:'skill-discovery'} from TRIGGER_REGISTRY.json",
+    "skill_installer skill retains exclusive 'install skill' trigger"
+  ],
+  "resolved_at": "2026-08-05T00:26:33Z"
+}

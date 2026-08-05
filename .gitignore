@@ -1,1 +1,5 @@
 activity.log
+palace.db.pre-migration.bak
+palace.db-shm
+palace.db-wal
+activity.log.normalized

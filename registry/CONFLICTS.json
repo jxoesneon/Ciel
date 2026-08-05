@@ -1,41 +1,61 @@
 {
   "schema": "conflicts/1.0",
-  "checked_at": "2026-08-05T00:12:45Z",
+  "checked_at": "2026-08-05T00:25:47Z",
   "trigger_overlaps": [
     {
       "pattern": "council",
       "skills": [
         "council",
         "council_runner"
-      ]
+      ],
+      "status": "resolved",
+      "resolution": "delegate",
+      "resolved_at": "2026-08-05T00:26:33Z",
+      "artifact": "conflicts/council_20260805T002633Z.json"
     },
     {
       "pattern": "diff",
       "skills": [
         "diff_patch",
         "git"
-      ]
+      ],
+      "status": "resolved",
+      "resolution": "delegate",
+      "resolved_at": "2026-08-05T00:26:33Z",
+      "artifact": "conflicts/diff_20260805T002633Z.json"
     },
     {
       "pattern": "log",
       "skills": [
         "git",
         "log_analyzer"
-      ]
+      ],
+      "status": "resolved",
+      "resolution": "delegate",
+      "resolved_at": "2026-08-05T00:26:33Z",
+      "artifact": "conflicts/log_20260805T002633Z.json"
     },
     {
       "pattern": "mempalace",
       "skills": [
         "mempalace",
         "mempalace_manager"
-      ]
+      ],
+      "status": "resolved",
+      "resolution": "delegate",
+      "resolved_at": "2026-08-05T00:26:33Z",
+      "artifact": "conflicts/mempalace_20260805T002633Z.json"
     },
     {
       "pattern": "install skill",
       "skills": [
         "skill-discovery",
         "skill_installer"
-      ]
+      ],
+      "status": "resolved",
+      "resolution": "delegate",
+      "resolved_at": "2026-08-05T00:26:33Z",
+      "artifact": "conflicts/install-skill_20260805T002633Z.json"
     }
   ],
   "tag_overlaps": [
@@ -46,7 +66,12 @@
         "research",
         "web_fetch",
         "web_search"
-      ]
+      ],
+      "classification": "expected_overlap",
+      "expected_overlap": true,
+      "status": "resolved",
+      "rationale": "functionally distinct capabilities sharing network domain: api_client (API calls), research (research synthesis), web_fetch (URL fetching), web_search (search queries)",
+      "overlap_type": "capability_domain"
     },
     {
       "tag": "scope:both",
@@ -84,7 +109,12 @@
         "test_runner",
         "web_fetch",
         "web_search"
-      ]
+      ],
+      "classification": "expected_overlap",
+      "expected_overlap": true,
+      "status": "resolved",
+      "rationale": "scope classification metadata, not a routing trigger; all seed skills legitimately share both scope",
+      "overlap_type": "taxonomy_bucket"
     },
     {
       "tag": "runtime:any",
@@ -122,7 +152,12 @@
         "test_runner",
         "web_fetch",
         "web_search"
-      ]
+      ],
+      "classification": "expected_overlap",
+      "expected_overlap": true,
+      "status": "resolved",
+      "rationale": "runtime classification metadata, not a routing trigger; all seed skills legitimately share any runtime",
+      "overlap_type": "taxonomy_bucket"
     },
     {
       "tag": "risk:mid",
@@ -134,7 +169,12 @@
         "mcp_manager",
         "package_manager",
         "skill_installer"
-      ]
+      ],
+      "classification": "expected_overlap",
+      "expected_overlap": true,
+      "status": "resolved",
+      "rationale": "risk classification metadata, not a routing trigger; all mid-risk seed skills legitimately share this bucket",
+      "overlap_type": "taxonomy_bucket"
     },
     {
       "tag": "fs",
@@ -143,7 +183,12 @@
         "environment_detection",
         "filesystem",
         "project_analyzer"
-      ]
+      ],
+      "classification": "expected_overlap",
+      "expected_overlap": true,
+      "status": "resolved",
+      "rationale": "functionally distinct capabilities sharing fs domain: archive_manager (archiving), environment_detection (env detection), filesystem (fs operations), project_analyzer (project analysis)",
+      "overlap_type": "capability_domain"
     },
     {
       "tag": "risk:low",
@@ -172,14 +217,24 @@
         "test_runner",
         "web_fetch",
         "web_search"
-      ]
+      ],
+      "classification": "expected_overlap",
+      "expected_overlap": true,
+      "status": "resolved",
+      "rationale": "risk classification metadata, not a routing trigger; all low-risk seed skills legitimately share this bucket",
+      "overlap_type": "taxonomy_bucket"
     },
     {
       "tag": "deploy",
       "skills": [
         "cicd_integration",
         "docker"
-      ]
+      ],
+      "classification": "expected_overlap",
+      "expected_overlap": true,
+      "status": "resolved",
+      "rationale": "related but distinct capabilities: cicd_integration (CI/CD pipeline orchestration) vs docker (container runtime)",
+      "overlap_type": "capability_domain"
     },
     {
       "tag": "code",
@@ -190,49 +245,84 @@
         "diff_patch",
         "json_yaml_toml_parser",
         "linter_formatter"
-      ]
+      ],
+      "classification": "expected_overlap",
+      "expected_overlap": true,
+      "status": "resolved",
+      "rationale": "functionally distinct capabilities sharing code domain: code_analysis (analyze), code_generation (generate), code_review (review), diff_patch (diff), json_yaml_toml_parser (parse), linter_formatter (lint)",
+      "overlap_type": "capability_domain"
     },
     {
       "tag": "memory",
       "skills": [
         "context_summarizer",
         "mempalace_manager"
-      ]
+      ],
+      "classification": "expected_overlap",
+      "expected_overlap": true,
+      "status": "resolved",
+      "rationale": "distinct capabilities: context_summarizer (summarization) vs mempalace_manager (memory DB management)",
+      "overlap_type": "capability_domain"
     },
     {
       "tag": "security",
       "skills": [
         "dependency_audit",
         "secrets_manager"
-      ]
+      ],
+      "classification": "expected_overlap",
+      "expected_overlap": true,
+      "status": "resolved",
+      "rationale": "distinct capabilities: dependency_audit (dependency vulnerability scanning) vs secrets_manager (secret storage/management)",
+      "overlap_type": "capability_domain"
     },
     {
       "tag": "pkg",
       "skills": [
         "dependency_audit",
         "package_manager"
-      ]
+      ],
+      "classification": "expected_overlap",
+      "expected_overlap": true,
+      "status": "resolved",
+      "rationale": "distinct capabilities: dependency_audit (audit packages) vs package_manager (install/manage packages)",
+      "overlap_type": "capability_domain"
     },
     {
       "tag": "docs",
       "skills": [
         "documentation",
         "markdown_processor"
-      ]
+      ],
+      "classification": "expected_overlap",
+      "expected_overlap": true,
+      "status": "resolved",
+      "rationale": "distinct capabilities: documentation (generate docs) vs markdown_processor (process markdown)",
+      "overlap_type": "capability_domain"
     },
     {
       "tag": "risk:high",
       "skills": [
         "runtime_adapter_builder",
         "secrets_manager"
-      ]
+      ],
+      "classification": "expected_overlap",
+      "expected_overlap": true,
+      "status": "resolved",
+      "rationale": "risk classification metadata, not a routing trigger; all high-risk seed skills legitimately share this bucket",
+      "overlap_type": "taxonomy_bucket"
     },
     {
       "tag": "skill",
       "skills": [
         "skill_builder",
         "skill_installer"
-      ]
+      ],
+      "classification": "expected_overlap",
+      "expected_overlap": true,
+      "status": "resolved",
+      "rationale": "distinct capabilities: skill_builder (build skills) vs skill_installer (install skills)",
+      "overlap_type": "capability_domain"
     }
   ],
   "total_conflicts": 19

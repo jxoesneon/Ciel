@@ -1,0 +1,26 @@
+{
+  "conflict_id": "council_20260805T002633Z",
+  "type": "direct_trigger_overlap",
+  "pattern": "council",
+  "skills": [
+    "council",
+    "council_runner"
+  ],
+  "resolution": "delegate",
+  "rationale": "council is the concept/decision-guide (convene a four-voice council for ambiguous decisions); council_runner is the executor (stage orchestration, result aggregation for the Council of Five). They are functionally distinct \u2014 merging would collapse the concept/execution separation. Delegate: council keeps the bare 'council' trigger; council_runner receives more specific 'run council' and 'council runner' triggers so the executor is only invoked when the user explicitly wants deliberation executed.",
+  "lens_scores": {
+    "coherence": 9,
+    "capability": 9,
+    "safety": 8,
+    "efficiency": 7,
+    "evolution": 8
+  },
+  "actions_taken": [
+    "Removed bare trigger 'council' from council_runner in ROUTE_REGISTRY.json",
+    "Removed trigger entry {pattern:'council', skill:'council_runner'} from TRIGGER_REGISTRY.json",
+    "Added trigger 'run council' -> council_runner (functional, 0.8) to TRIGGER_REGISTRY.json",
+    "Added trigger 'council runner' -> council_runner (functional, 0.8) to TRIGGER_REGISTRY.json",
+    "council skill retains exclusive 'council' trigger"
+  ],
+  "resolved_at": "2026-08-05T00:26:33Z"
+}

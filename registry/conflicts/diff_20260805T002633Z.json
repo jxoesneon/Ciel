@@ -1,0 +1,25 @@
+{
+  "conflict_id": "diff_20260805T002633Z",
+  "type": "direct_trigger_overlap",
+  "pattern": "diff",
+  "skills": [
+    "diff_patch",
+    "git"
+  ],
+  "resolution": "delegate",
+  "rationale": "diff_patch creates/applies textual unified diffs and patches (diff.create, patch.apply, three-way merge); git exposes diff as one sub-operation of version control (git.diff(ref)). The bare 'diff' is ambiguous. Delegate: diff_patch keeps 'diff' (the generic diff/patch concept); git receives the more specific 'git diff' trigger so it is only matched when the user clearly wants a VCS diff.",
+  "lens_scores": {
+    "coherence": 9,
+    "capability": 9,
+    "safety": 8,
+    "efficiency": 7,
+    "evolution": 8
+  },
+  "actions_taken": [
+    "Removed bare trigger 'diff' from git in ROUTE_REGISTRY.json",
+    "Removed trigger entry {pattern:'diff', skill:'git'} from TRIGGER_REGISTRY.json",
+    "Added trigger 'git diff' -> git (functional, 0.8) to TRIGGER_REGISTRY.json",
+    "diff_patch skill retains exclusive 'diff' trigger"
+  ],
+  "resolved_at": "2026-08-05T00:26:33Z"
+}
