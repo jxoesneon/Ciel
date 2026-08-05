@@ -1,0 +1,29 @@
+{
+  "total_dockets": 4,
+  "dockets": [
+    {
+      "id": "20260730_AGENTIC_LOOP_STANDARDS",
+      "subject": "Agentic Loop Standards — core/AUTONOMY.md & growth signal",
+      "date": "2026-07-30",
+      "status": "resolved"
+    },
+    {
+      "id": "20260730_AUTOMATED_HOOK_INJECTION",
+      "subject": "Automated Hook Injection — adapters/gemini_cli/HOOKS.md & AUTO_ACTIVATION.md",
+      "date": "2026-07-30",
+      "status": "resolved"
+    },
+    {
+      "id": "20260730_THEMATIC_SENTINEL_BEACON",
+      "subject": "Thematic Sentinel Beacon — core/IDENTITY.md",
+      "date": "2026-07-30",
+      "status": "resolved"
+    },
+    {
+      "id": "20260730_UI_UX_COUNCIL_SYNTHESIS",
+      "subject": "UI/UX Council Synthesis V3 — ui_ux_mastery SKILL.md & UI_UX_MASTERY_STANDARDS.md (joint session)",
+      "date": "2026-07-30",
+      "status": "resolved"
+    }
+  ]
+}

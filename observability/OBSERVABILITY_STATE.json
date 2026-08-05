@@ -1,0 +1,54 @@
+{
+  "schema": "observability_state/1.0",
+  "version": "1.0.0",
+  "updated": "2026-08-04T23:55:23Z",
+  "activity_log_path": "~/.ciel/activity.log",
+  "activity_log_size_bytes": 8952639,
+  "activity_log_entries": 83247,
+  "otel_enabled": false,
+  "session_summaries_enabled": true,
+  "session_summary_mode": "on_error",
+  "debug_mode": false,
+  "last_session_summary": null,
+  "statistics": {
+    "total_events": 83247,
+    "json_entries": 46652,
+    "non_json_entries": 36403,
+    "events_by_type": {
+      "PreToolUse": 23314,
+      "PostToolUse": 23181,
+      "SessionStart": 145,
+      "PermissionRequest": 4,
+      "bootstrap": 3,
+      "other": 36274
+    },
+    "events_by_kind": {
+      "bootstrap": 3
+    }
+  },
+  "config": {
+    "log_verbosity": "info",
+    "log_rotate_hour": 0,
+    "log_retention_days": 90,
+    "redact_secrets": true,
+    "session_summary": "on_error",
+    "session_summary_retention_days": 30,
+    "otel": {
+      "enabled": false,
+      "endpoint": null,
+      "service_name": "ciel",
+      "sampling": {
+        "default": 0.1,
+        "critical": 1.0,
+        "council": 1.0
+      }
+    }
+  },
+  "format_inconsistencies": [
+    "Activity log spec (ACTIVITY_LOG.md) defines JSONL with fields: ts, session, runtime, project, kind, op, risk, path, skill, decision, duration_ms, tokens, cost_usd, commit, council_run, notes, redacted",
+    "Existing entries use a hook-based schema with fields: ts, hook, tool, decision, reason, command — does not match the template",
+    "36403 of 82921 lines are non-JSON (Python code fragments, partial JSON, stray text) — log corruption from multi-line command outputs being appended",
+    "No entries use the 'kind' field from the spec; instead 'hook' is the primary classifier",
+    "Required fields (session, kind, op) are missing from most existing entries"
+  ]
+}

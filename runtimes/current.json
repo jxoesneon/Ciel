@@ -1,0 +1,18 @@
+{
+  "id": "devin-for-terminal",
+  "version": "3.6.27",
+  "detected_at": "2026-08-04T23:55:23Z",
+  "detection_signals": ["env_vars", "filesystem", "binary"],
+  "features": {
+    "hooks": true,
+    "subagents": true,
+    "mcp": true,
+    "parallel_subagents": true,
+    "plan_mode": true,
+    "computer_use": true,
+    "web_research": true,
+    "todo_tracking": true,
+    "user_escalation": true,
+    "persistent_shell": true
+  }
+}

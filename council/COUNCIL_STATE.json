@@ -1,0 +1,111 @@
+{
+  "schema": "council_state/1.0",
+  "version": "1.0.0",
+  "updated": "2026-08-04T23:55:20Z",
+  "architecture_council": {
+    "members": [
+      {
+        "name": "Coherence",
+        "role": "repository harmony",
+        "veto_authority": false,
+        "scores": {}
+      },
+      {
+        "name": "Capability",
+        "role": "genuine expansion vs redundancy",
+        "veto_authority": false,
+        "scores": {}
+      },
+      {
+        "name": "Safety",
+        "role": "risk vectors",
+        "veto_authority": true,
+        "scores": {}
+      },
+      {
+        "name": "Efficiency",
+        "role": "leanness, bloat, perf",
+        "veto_authority": false,
+        "scores": {}
+      },
+      {
+        "name": "Evolution",
+        "role": "growth trajectory",
+        "veto_authority": false,
+        "scores": {}
+      }
+    ],
+    "chairman": "self",
+    "voting_threshold": 3,
+    "safety_veto_floor": 3,
+    "stage_1_scoring": true,
+    "stage_2_cross_review": true,
+    "stage_3_synthesis": true
+  },
+  "design_council": {
+    "members": [
+      {
+        "name": "Clarity",
+        "role": "information architecture",
+        "veto_authority": false,
+        "scores": {}
+      },
+      {
+        "name": "Inclusion",
+        "role": "accessibility, inclusivity",
+        "veto_authority": true,
+        "scores": {}
+      },
+      {
+        "name": "Efficiency",
+        "role": "interaction speed, control, flow",
+        "veto_authority": false,
+        "scores": {}
+      },
+      {
+        "name": "Aesthetics",
+        "role": "visual hierarchy, emotional resonance",
+        "veto_authority": false,
+        "scores": {}
+      },
+      {
+        "name": "Actionability",
+        "role": "affordance, conversion, goal completion",
+        "veto_authority": false,
+        "scores": {}
+      }
+    ],
+    "chairman": "self",
+    "voting_threshold": 3,
+    "inclusion_veto_floor": 3
+  },
+  "dockets": [
+    {
+      "id": "20260730_AGENTIC_LOOP_STANDARDS",
+      "subject": "Agentic Loop Standards \u2014 core/AUTONOMY.md & growth signal",
+      "date": "2026-07-30",
+      "status": "resolved"
+    },
+    {
+      "id": "20260730_AUTOMATED_HOOK_INJECTION",
+      "subject": "Automated Hook Injection \u2014 adapters/gemini_cli/HOOKS.md & AUTO_ACTIVATION.md",
+      "date": "2026-07-30",
+      "status": "resolved"
+    },
+    {
+      "id": "20260730_THEMATIC_SENTINEL_BEACON",
+      "subject": "Thematic Sentinel Beacon \u2014 core/IDENTITY.md",
+      "date": "2026-07-30",
+      "status": "resolved"
+    },
+    {
+      "id": "20260730_UI_UX_COUNCIL_SYNTHESIS",
+      "subject": "UI/UX Council Synthesis V3 \u2014 ui_ux_mastery SKILL.md & UI_UX_MASTERY_STANDARDS.md (joint session)",
+      "date": "2026-07-30",
+      "status": "resolved"
+    }
+  ],
+  "total_invocations": 0,
+  "total_amendments": 0,
+  "total_vetoes": 0
+}

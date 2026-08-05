@@ -1,0 +1,31 @@
+{
+  "schema": "growth_signals_index/1.0",
+  "updated": "2026-08-04T23:58:45Z",
+  "total_signals": 3,
+  "signals": [
+    {
+      "id": "GROWTH_SIGNAL_20260422_AMNESIAC_RECOVERY",
+      "date": "2026-04-22",
+      "subject": "Second-Order Failure (Amnesiac Recovery)",
+      "severity": "CRITICAL",
+      "status": "processed",
+      "source": "self_improvement/GROWTH_SIGNAL_20260422_AMNESIAC_RECOVERY.md"
+    },
+    {
+      "id": "GROWTH_SIGNAL_20260422_BLIND_DELETION",
+      "date": "2026-04-22",
+      "subject": "Blind Deletion Recovery",
+      "severity": "HIGH",
+      "status": "processed",
+      "source": "self_improvement/GROWTH_SIGNAL_20260422_BLIND_DELETION.md"
+    },
+    {
+      "id": "GROWTH_SIGNAL_20260730_AGENTIC_LOOP_STANDARDS",
+      "date": "2026-07-30",
+      "subject": "Agentic Loop Standards & Best Practices",
+      "severity": "CORE",
+      "status": "processed",
+      "source": "self_improvement/GROWTH_SIGNAL_20260730_AGENTIC_LOOP_STANDARDS.md"
+    }
+  ]
+}

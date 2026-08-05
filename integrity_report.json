@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-08-02T19:30:00Z",
+  "integrity_json_exists": true,
+  "tracked_files_count": 1941,
+  "registry_index_count": 265,
+  "on_disk_skills_count": 265,
+  "orphaned_skills": [],
+  "ghost_skills": [],
+  "checksum_sample_verified": true,
+  "git_clean": true,
+  "last_git_commit": "d738171d937ac88b980ab9c9f5f2d38584c6b8ff",
+  "drift_fixed": false
+}

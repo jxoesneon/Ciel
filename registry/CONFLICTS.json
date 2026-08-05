@@ -1,0 +1,239 @@
+{
+  "schema": "conflicts/1.0",
+  "checked_at": "2026-08-05T00:12:45Z",
+  "trigger_overlaps": [
+    {
+      "pattern": "council",
+      "skills": [
+        "council",
+        "council_runner"
+      ]
+    },
+    {
+      "pattern": "diff",
+      "skills": [
+        "diff_patch",
+        "git"
+      ]
+    },
+    {
+      "pattern": "log",
+      "skills": [
+        "git",
+        "log_analyzer"
+      ]
+    },
+    {
+      "pattern": "mempalace",
+      "skills": [
+        "mempalace",
+        "mempalace_manager"
+      ]
+    },
+    {
+      "pattern": "install skill",
+      "skills": [
+        "skill-discovery",
+        "skill_installer"
+      ]
+    }
+  ],
+  "tag_overlaps": [
+    {
+      "tag": "network",
+      "skills": [
+        "api_client",
+        "research",
+        "web_fetch",
+        "web_search"
+      ]
+    },
+    {
+      "tag": "scope:both",
+      "skills": [
+        "api_client",
+        "archive_manager",
+        "cicd_integration",
+        "code_analysis",
+        "code_generation",
+        "code_review",
+        "context_summarizer",
+        "council_runner",
+        "database_client",
+        "dependency_audit",
+        "diff_patch",
+        "docker",
+        "documentation",
+        "environment_detection",
+        "filesystem",
+        "git",
+        "json_yaml_toml_parser",
+        "linter_formatter",
+        "log_analyzer",
+        "markdown_processor",
+        "mcp_manager",
+        "mempalace_manager",
+        "package_manager",
+        "project_analyzer",
+        "research",
+        "runtime_adapter_builder",
+        "secrets_manager",
+        "shell",
+        "skill_builder",
+        "skill_installer",
+        "test_runner",
+        "web_fetch",
+        "web_search"
+      ]
+    },
+    {
+      "tag": "runtime:any",
+      "skills": [
+        "api_client",
+        "archive_manager",
+        "cicd_integration",
+        "code_analysis",
+        "code_generation",
+        "code_review",
+        "context_summarizer",
+        "council_runner",
+        "database_client",
+        "dependency_audit",
+        "diff_patch",
+        "docker",
+        "documentation",
+        "environment_detection",
+        "filesystem",
+        "git",
+        "json_yaml_toml_parser",
+        "linter_formatter",
+        "log_analyzer",
+        "markdown_processor",
+        "mcp_manager",
+        "mempalace_manager",
+        "package_manager",
+        "project_analyzer",
+        "research",
+        "runtime_adapter_builder",
+        "secrets_manager",
+        "shell",
+        "skill_builder",
+        "skill_installer",
+        "test_runner",
+        "web_fetch",
+        "web_search"
+      ]
+    },
+    {
+      "tag": "risk:mid",
+      "skills": [
+        "api_client",
+        "cicd_integration",
+        "database_client",
+        "docker",
+        "mcp_manager",
+        "package_manager",
+        "skill_installer"
+      ]
+    },
+    {
+      "tag": "fs",
+      "skills": [
+        "archive_manager",
+        "environment_detection",
+        "filesystem",
+        "project_analyzer"
+      ]
+    },
+    {
+      "tag": "risk:low",
+      "skills": [
+        "archive_manager",
+        "code_analysis",
+        "code_generation",
+        "code_review",
+        "context_summarizer",
+        "council_runner",
+        "dependency_audit",
+        "diff_patch",
+        "documentation",
+        "environment_detection",
+        "filesystem",
+        "git",
+        "json_yaml_toml_parser",
+        "linter_formatter",
+        "log_analyzer",
+        "markdown_processor",
+        "mempalace_manager",
+        "project_analyzer",
+        "research",
+        "shell",
+        "skill_builder",
+        "test_runner",
+        "web_fetch",
+        "web_search"
+      ]
+    },
+    {
+      "tag": "deploy",
+      "skills": [
+        "cicd_integration",
+        "docker"
+      ]
+    },
+    {
+      "tag": "code",
+      "skills": [
+        "code_analysis",
+        "code_generation",
+        "code_review",
+        "diff_patch",
+        "json_yaml_toml_parser",
+        "linter_formatter"
+      ]
+    },
+    {
+      "tag": "memory",
+      "skills": [
+        "context_summarizer",
+        "mempalace_manager"
+      ]
+    },
+    {
+      "tag": "security",
+      "skills": [
+        "dependency_audit",
+        "secrets_manager"
+      ]
+    },
+    {
+      "tag": "pkg",
+      "skills": [
+        "dependency_audit",
+        "package_manager"
+      ]
+    },
+    {
+      "tag": "docs",
+      "skills": [
+        "documentation",
+        "markdown_processor"
+      ]
+    },
+    {
+      "tag": "risk:high",
+      "skills": [
+        "runtime_adapter_builder",
+        "secrets_manager"
+      ]
+    },
+    {
+      "tag": "skill",
+      "skills": [
+        "skill_builder",
+        "skill_installer"
+      ]
+    }
+  ],
+  "total_conflicts": 19
+}

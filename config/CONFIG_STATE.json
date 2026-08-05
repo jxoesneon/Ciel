@@ -1,0 +1,28 @@
+{
+  "schema": "config_state/1.0",
+  "version": "1.0.0",
+  "updated": "2025-08-05T00:00:00Z",
+  "global_config_loaded": true,
+  "local_config_loaded": true,
+  "config_files": {
+    "global": {
+      "ciel.config.md": true,
+      "router.config.md": true,
+      "council.config.md": true,
+      "memory.config.md": true,
+      "observability.config.md": true,
+      "improvement.config.md": true,
+      "acquisition.config.md": true,
+      "risk.config.md": true,
+      "adapters.config.md": true
+    },
+    "local": {
+      "escalation.config.md": true,
+      "overrides.config.md": true,
+      "project.config.md": true,
+      "rules.config.md": true
+    }
+  },
+  "active_overrides": [],
+  "domain_isolation_verified": true
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "registry_state/1.0",
+  "version": "1.0.0",
+  "updated": "2026-08-05T00:12:45Z",
+  "total_skills": 265,
+  "total_routes": 265,
+  "total_triggers": 410,
+  "last_coherence_sweep": "2026-08-05T00:12:45Z",
+  "last_conflict_check": "2026-08-05T00:12:45Z",
+  "conflicts_detected": 19,
+  "orphaned_skills": 0,
+  "ghost_skills": 0,
+  "versioning_enabled": true,
+  "auto_promote_enabled": false
+}

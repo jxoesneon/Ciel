@@ -1,0 +1,3764 @@
+{
+  "schema": "route_registry/1.0",
+  "version": "1.0.0",
+  "updated": "2026-08-04T23:55:57Z",
+  "total_routes": 265,
+  "routes": [
+    {
+      "skill_name": "agent-eval",
+      "skill_path": "~/.ciel/skills/agent-eval/SKILL.md",
+      "triggers": [
+        "agent-eval"
+      ],
+      "tags": [],
+      "domain": "orchestration",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "agent-harness-construction",
+      "skill_path": "~/.ciel/skills/agent-harness-construction/SKILL.md",
+      "triggers": [
+        "agent-harness-construction"
+      ],
+      "tags": [],
+      "domain": "orchestration",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "agent-introspection-debugging",
+      "skill_path": "~/.ciel/skills/agent-introspection-debugging/SKILL.md",
+      "triggers": [
+        "agent-introspection-debugging"
+      ],
+      "tags": [],
+      "domain": "testing",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "agent-payment-x402",
+      "skill_path": "~/.ciel/skills/agent-payment-x402/SKILL.md",
+      "triggers": [
+        "agent-payment-x402"
+      ],
+      "tags": [],
+      "domain": "orchestration",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "agent-sort",
+      "skill_path": "~/.ciel/skills/agent-sort/SKILL.md",
+      "triggers": [
+        "agent-sort"
+      ],
+      "tags": [],
+      "domain": "orchestration",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "agentic-engineering",
+      "skill_path": "~/.ciel/skills/agentic-engineering/SKILL.md",
+      "triggers": [
+        "agentic-engineering"
+      ],
+      "tags": [],
+      "domain": "orchestration",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "ai-first-engineering",
+      "skill_path": "~/.ciel/skills/ai-first-engineering/SKILL.md",
+      "triggers": [
+        "ai-first-engineering"
+      ],
+      "tags": [],
+      "domain": "ai-ml",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "ai-regression-testing",
+      "skill_path": "~/.ciel/skills/ai-regression-testing/SKILL.md",
+      "triggers": [
+        "ai-regression-testing"
+      ],
+      "tags": [],
+      "domain": "testing",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "android-clean-architecture",
+      "skill_path": "~/.ciel/skills/android-clean-architecture/SKILL.md",
+      "triggers": [
+        "android-clean-architecture"
+      ],
+      "tags": [],
+      "domain": "mobile",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "api-connector-builder",
+      "skill_path": "~/.ciel/skills/api-connector-builder/SKILL.md",
+      "triggers": [
+        "api-connector-builder"
+      ],
+      "tags": [],
+      "domain": "frontend",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "api-design",
+      "skill_path": "~/.ciel/skills/api-design/SKILL.md",
+      "triggers": [
+        "api-design"
+      ],
+      "tags": [],
+      "domain": "backend",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "api_client",
+      "skill_path": "~/.ciel/skills/api_client/SKILL.md",
+      "triggers": [
+        "api",
+        "http",
+        "rest",
+        "graphql",
+        "request",
+        "endpoint"
+      ],
+      "tags": [
+        "network",
+        "scope:both",
+        "runtime:any",
+        "risk:mid"
+      ],
+      "domain": "network",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "architecture-decision-records",
+      "skill_path": "~/.ciel/skills/architecture-decision-records/SKILL.md",
+      "triggers": [
+        "architecture-decision-records"
+      ],
+      "tags": [],
+      "domain": "devops",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "archive_manager",
+      "skill_path": "~/.ciel/skills/archive_manager/SKILL.md",
+      "triggers": [
+        "zip",
+        "tar",
+        "archive",
+        "unzip",
+        "extract"
+      ],
+      "tags": [
+        "fs",
+        "scope:both",
+        "runtime:any",
+        "risk:low"
+      ],
+      "domain": "filesystem",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "article-writing",
+      "skill_path": "~/.ciel/skills/article-writing/SKILL.md",
+      "triggers": [
+        "article-writing"
+      ],
+      "tags": [],
+      "domain": "content",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "automation-audit-ops",
+      "skill_path": "~/.ciel/skills/automation-audit-ops/SKILL.md",
+      "triggers": [
+        "automation-audit-ops"
+      ],
+      "tags": [],
+      "domain": "governance",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "autonomous-agent-harness",
+      "skill_path": "~/.ciel/skills/autonomous-agent-harness/SKILL.md",
+      "triggers": [
+        "autonomous-agent-harness"
+      ],
+      "tags": [],
+      "domain": "orchestration",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "autonomous-loops",
+      "skill_path": "~/.ciel/skills/autonomous-loops/SKILL.md",
+      "triggers": [
+        "autonomous-loops"
+      ],
+      "tags": [],
+      "domain": "self-improvement",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "backend-patterns",
+      "skill_path": "~/.ciel/skills/backend-patterns/SKILL.md",
+      "triggers": [
+        "backend-patterns"
+      ],
+      "tags": [],
+      "domain": "backend",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "benchmark",
+      "skill_path": "~/.ciel/skills/benchmark/SKILL.md",
+      "triggers": [
+        "benchmark"
+      ],
+      "tags": [],
+      "domain": "performance",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "blueprint",
+      "skill_path": "~/.ciel/skills/blueprint/SKILL.md",
+      "triggers": [
+        "blueprint"
+      ],
+      "tags": [],
+      "domain": "planning",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "brainstorming",
+      "skill_path": "~/.ciel/skills/brainstorming/SKILL.md",
+      "triggers": [
+        "brainstorming"
+      ],
+      "tags": [],
+      "domain": "ai-ml",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "brand-voice",
+      "skill_path": "~/.ciel/skills/brand-voice/SKILL.md",
+      "triggers": [
+        "brand-voice"
+      ],
+      "tags": [],
+      "domain": "marketing",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "browser-qa",
+      "skill_path": "~/.ciel/skills/browser-qa/SKILL.md",
+      "triggers": [
+        "browser-qa"
+      ],
+      "tags": [],
+      "domain": "browser-automation",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "bun-runtime",
+      "skill_path": "~/.ciel/skills/bun-runtime/SKILL.md",
+      "triggers": [
+        "bun-runtime"
+      ],
+      "tags": [],
+      "domain": "javascript-runtime",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "canary-watch",
+      "skill_path": "~/.ciel/skills/canary-watch/SKILL.md",
+      "triggers": [
+        "canary-watch"
+      ],
+      "tags": [],
+      "domain": "monitoring",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "carrier-relationship-management",
+      "skill_path": "~/.ciel/skills/carrier-relationship-management/SKILL.md",
+      "triggers": [
+        "carrier-relationship-management"
+      ],
+      "tags": [],
+      "domain": "logistics",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "cicd_integration",
+      "skill_path": "~/.ciel/skills/cicd_integration/SKILL.md",
+      "triggers": [
+        "ci",
+        "cd",
+        "pipeline",
+        "github actions",
+        "gitlab ci",
+        "circle"
+      ],
+      "tags": [
+        "deploy",
+        "scope:both",
+        "runtime:any",
+        "risk:mid"
+      ],
+      "domain": "devops",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "ck",
+      "skill_path": "~/.ciel/skills/ck/SKILL.md",
+      "triggers": [
+        "ck"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "ckm-banner-design",
+      "skill_path": "~/.ciel/skills/ckm-banner-design/SKILL.md",
+      "triggers": [
+        "ckm-banner-design"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "ckm-brand",
+      "skill_path": "~/.ciel/skills/ckm-brand/SKILL.md",
+      "triggers": [
+        "ckm-brand"
+      ],
+      "tags": [],
+      "domain": "marketing",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "ckm-design",
+      "skill_path": "~/.ciel/skills/ckm-design/SKILL.md",
+      "triggers": [
+        "ckm-design"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "ckm-design-system",
+      "skill_path": "~/.ciel/skills/ckm-design-system/SKILL.md",
+      "triggers": [
+        "ckm-design-system"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "ckm-slides",
+      "skill_path": "~/.ciel/skills/ckm-slides/SKILL.md",
+      "triggers": [
+        "ckm-slides"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "ckm-ui-styling",
+      "skill_path": "~/.ciel/skills/ckm-ui-styling/SKILL.md",
+      "triggers": [
+        "ckm-ui-styling"
+      ],
+      "tags": [],
+      "domain": "frontend",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "claude-api",
+      "skill_path": "~/.ciel/skills/claude-api/SKILL.md",
+      "triggers": [
+        "claude-api"
+      ],
+      "tags": [],
+      "domain": "backend",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "claude-code-plugin-release",
+      "skill_path": "~/.ciel/skills/claude-code-plugin-release/SKILL.md",
+      "triggers": [
+        "claude-code-plugin-release"
+      ],
+      "tags": [],
+      "domain": "code-quality",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "claude-devfleet",
+      "skill_path": "~/.ciel/skills/claude-devfleet/SKILL.md",
+      "triggers": [
+        "claude-devfleet"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "click-path-audit",
+      "skill_path": "~/.ciel/skills/click-path-audit/SKILL.md",
+      "triggers": [
+        "click-path-audit"
+      ],
+      "tags": [],
+      "domain": "governance",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "clickhouse-io",
+      "skill_path": "~/.ciel/skills/clickhouse-io/SKILL.md",
+      "triggers": [
+        "clickhouse-io"
+      ],
+      "tags": [],
+      "domain": "shell",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "code-tour",
+      "skill_path": "~/.ciel/skills/code-tour/SKILL.md",
+      "triggers": [
+        "code-tour"
+      ],
+      "tags": [],
+      "domain": "code-quality",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "code_analysis",
+      "skill_path": "~/.ciel/skills/code_analysis/SKILL.md",
+      "triggers": [
+        "analyze",
+        "understand",
+        "trace",
+        "symbol",
+        "architecture",
+        "code map"
+      ],
+      "tags": [
+        "code",
+        "scope:both",
+        "runtime:any",
+        "risk:low"
+      ],
+      "domain": "code-quality",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "code_generation",
+      "skill_path": "~/.ciel/skills/code_generation/SKILL.md",
+      "triggers": [
+        "generate code",
+        "scaffold",
+        "implement",
+        "write function",
+        "write class"
+      ],
+      "tags": [
+        "code",
+        "scope:both",
+        "runtime:any",
+        "risk:low"
+      ],
+      "domain": "code-quality",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "code_review",
+      "skill_path": "~/.ciel/skills/code_review/SKILL.md",
+      "triggers": [
+        "review",
+        "audit code",
+        "quality",
+        "lint suggestions"
+      ],
+      "tags": [
+        "code",
+        "scope:both",
+        "runtime:any",
+        "risk:low"
+      ],
+      "domain": "governance",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "codebase-onboarding",
+      "skill_path": "~/.ciel/skills/codebase-onboarding/SKILL.md",
+      "triggers": [
+        "codebase-onboarding"
+      ],
+      "tags": [],
+      "domain": "code-quality",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "coding-standards",
+      "skill_path": "~/.ciel/skills/coding-standards/SKILL.md",
+      "triggers": [
+        "coding-standards"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "compose-multiplatform-patterns",
+      "skill_path": "~/.ciel/skills/compose-multiplatform-patterns/SKILL.md",
+      "triggers": [
+        "compose-multiplatform-patterns"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "configure-ecc",
+      "skill_path": "~/.ciel/skills/configure-ecc/SKILL.md",
+      "triggers": [
+        "configure-ecc"
+      ],
+      "tags": [],
+      "domain": "configuration",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "connections-optimizer",
+      "skill_path": "~/.ciel/skills/connections-optimizer/SKILL.md",
+      "triggers": [
+        "connections-optimizer"
+      ],
+      "tags": [],
+      "domain": "performance",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "content-engine",
+      "skill_path": "~/.ciel/skills/content-engine/SKILL.md",
+      "triggers": [
+        "content-engine"
+      ],
+      "tags": [],
+      "domain": "content",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "content-hash-cache-pattern",
+      "skill_path": "~/.ciel/skills/content-hash-cache-pattern/SKILL.md",
+      "triggers": [
+        "content-hash-cache-pattern"
+      ],
+      "tags": [],
+      "domain": "content",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "context-budget",
+      "skill_path": "~/.ciel/skills/context-budget/SKILL.md",
+      "triggers": [
+        "context-budget"
+      ],
+      "tags": [],
+      "domain": "memory",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "context_summarizer",
+      "skill_path": "~/.ciel/skills/context_summarizer/SKILL.md",
+      "triggers": [
+        "summarize",
+        "compress context",
+        "aaak"
+      ],
+      "tags": [
+        "memory",
+        "scope:both",
+        "runtime:any",
+        "risk:low"
+      ],
+      "domain": "memory",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "continuous-agent-loop",
+      "skill_path": "~/.ciel/skills/continuous-agent-loop/SKILL.md",
+      "triggers": [
+        "continuous-agent-loop"
+      ],
+      "tags": [],
+      "domain": "orchestration",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "continuous-learning",
+      "skill_path": "~/.ciel/skills/continuous-learning/SKILL.md",
+      "triggers": [
+        "continuous-learning"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "continuous-learning-v2",
+      "skill_path": "~/.ciel/skills/continuous-learning-v2/SKILL.md",
+      "triggers": [
+        "continuous-learning-v2"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "convoy-orchestration",
+      "skill_path": "~/.ciel/skills/convoy-orchestration/SKILL.md",
+      "triggers": [
+        "convoy",
+        "multi-agent",
+        "parallel work",
+        "distribute tasks",
+        "agent coordination",
+        "sling work",
+        "work tracking",
+        "scale up"
+      ],
+      "tags": [],
+      "domain": "orchestration",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "cost-aware-llm-pipeline",
+      "skill_path": "~/.ciel/skills/cost-aware-llm-pipeline/SKILL.md",
+      "triggers": [
+        "cost-aware-llm-pipeline"
+      ],
+      "tags": [],
+      "domain": "ai-ml",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "council",
+      "skill_path": "~/.ciel/skills/council/SKILL.md",
+      "triggers": [
+        "council"
+      ],
+      "tags": [],
+      "domain": "devops",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "council_runner",
+      "skill_path": "~/.ciel/skills/council_runner/SKILL.md",
+      "triggers": [
+        "council",
+        "vote",
+        "deliberate",
+        "review artifact"
+      ],
+      "tags": [
+        "council",
+        "scope:both",
+        "runtime:any",
+        "risk:low"
+      ],
+      "domain": "devops",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "cpp-coding-standards",
+      "skill_path": "~/.ciel/skills/cpp-coding-standards/SKILL.md",
+      "triggers": [
+        "cpp-coding-standards"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "cpp-testing",
+      "skill_path": "~/.ciel/skills/cpp-testing/SKILL.md",
+      "triggers": [
+        "cpp-testing"
+      ],
+      "tags": [],
+      "domain": "testing",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "crosspost",
+      "skill_path": "~/.ciel/skills/crosspost/SKILL.md",
+      "triggers": [
+        "crosspost"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "csharp-testing",
+      "skill_path": "~/.ciel/skills/csharp-testing/SKILL.md",
+      "triggers": [
+        "csharp-testing"
+      ],
+      "tags": [],
+      "domain": "testing",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "customer-billing-ops",
+      "skill_path": "~/.ciel/skills/customer-billing-ops/SKILL.md",
+      "triggers": [
+        "customer-billing-ops"
+      ],
+      "tags": [],
+      "domain": "commerce",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "customs-trade-compliance",
+      "skill_path": "~/.ciel/skills/customs-trade-compliance/SKILL.md",
+      "triggers": [
+        "customs-trade-compliance"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "dart-flutter-patterns",
+      "skill_path": "~/.ciel/skills/dart-flutter-patterns/SKILL.md",
+      "triggers": [
+        "dart-flutter-patterns"
+      ],
+      "tags": [],
+      "domain": "mobile",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "dashboard-builder",
+      "skill_path": "~/.ciel/skills/dashboard-builder/SKILL.md",
+      "triggers": [
+        "dashboard-builder"
+      ],
+      "tags": [],
+      "domain": "frontend",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "data-scraper-agent",
+      "skill_path": "~/.ciel/skills/data-scraper-agent/SKILL.md",
+      "triggers": [
+        "data-scraper-agent"
+      ],
+      "tags": [],
+      "domain": "orchestration",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "database-migrations",
+      "skill_path": "~/.ciel/skills/database-migrations/SKILL.md",
+      "triggers": [
+        "database-migrations"
+      ],
+      "tags": [],
+      "domain": "database",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "database_client",
+      "skill_path": "~/.ciel/skills/database_client/SKILL.md",
+      "triggers": [
+        "sql",
+        "query",
+        "database",
+        "db",
+        "select",
+        "migration"
+      ],
+      "tags": [
+        "data",
+        "scope:both",
+        "runtime:any",
+        "risk:mid"
+      ],
+      "domain": "database",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "deep-research",
+      "skill_path": "~/.ciel/skills/deep-research/SKILL.md",
+      "triggers": [
+        "deep-research"
+      ],
+      "tags": [],
+      "domain": "web",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "defi-amm-security",
+      "skill_path": "~/.ciel/skills/defi-amm-security/SKILL.md",
+      "triggers": [
+        "defi-amm-security"
+      ],
+      "tags": [],
+      "domain": "security",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "defuddle",
+      "skill_path": "~/.ciel/skills/defuddle/SKILL.md",
+      "triggers": [
+        "defuddle"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "dependency_audit",
+      "skill_path": "~/.ciel/skills/dependency_audit/SKILL.md",
+      "triggers": [
+        "audit deps",
+        "cve",
+        "vulnerability",
+        "outdated"
+      ],
+      "tags": [
+        "security",
+        "pkg",
+        "scope:both",
+        "runtime:any",
+        "risk:low"
+      ],
+      "domain": "security",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "deployment-patterns",
+      "skill_path": "~/.ciel/skills/deployment-patterns/SKILL.md",
+      "triggers": [
+        "deployment-patterns"
+      ],
+      "tags": [],
+      "domain": "devops",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "design-system",
+      "skill_path": "~/.ciel/skills/design-system/SKILL.md",
+      "triggers": [
+        "design-system"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "dev-browser",
+      "skill_path": "~/.ciel/skills/dev-browser/SKILL.md",
+      "triggers": [
+        "dev-browser"
+      ],
+      "tags": [],
+      "domain": "browser-automation",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "diff_patch",
+      "skill_path": "~/.ciel/skills/diff_patch/SKILL.md",
+      "triggers": [
+        "diff",
+        "patch",
+        "apply patch",
+        "hunk"
+      ],
+      "tags": [
+        "code",
+        "scope:both",
+        "runtime:any",
+        "risk:low"
+      ],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "dispatching-parallel-agents",
+      "skill_path": "~/.ciel/skills/dispatching-parallel-agents/SKILL.md",
+      "triggers": [
+        "dispatching-parallel-agents"
+      ],
+      "tags": [],
+      "domain": "orchestration",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "django-patterns",
+      "skill_path": "~/.ciel/skills/django-patterns/SKILL.md",
+      "triggers": [
+        "django-patterns"
+      ],
+      "tags": [],
+      "domain": "python",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "django-security",
+      "skill_path": "~/.ciel/skills/django-security/SKILL.md",
+      "triggers": [
+        "django-security"
+      ],
+      "tags": [],
+      "domain": "security",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "django-tdd",
+      "skill_path": "~/.ciel/skills/django-tdd/SKILL.md",
+      "triggers": [
+        "django-tdd"
+      ],
+      "tags": [],
+      "domain": "testing",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "django-verification",
+      "skill_path": "~/.ciel/skills/django-verification/SKILL.md",
+      "triggers": [
+        "django-verification"
+      ],
+      "tags": [],
+      "domain": "python",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "dmux-workflows",
+      "skill_path": "~/.ciel/skills/dmux-workflows/SKILL.md",
+      "triggers": [
+        "dmux-workflows"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "do",
+      "skill_path": "~/.ciel/skills/do/SKILL.md",
+      "triggers": [
+        "do"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "docker",
+      "skill_path": "~/.ciel/skills/docker/SKILL.md",
+      "triggers": [
+        "docker",
+        "container",
+        "compose",
+        "podman"
+      ],
+      "tags": [
+        "deploy",
+        "scope:both",
+        "runtime:any",
+        "risk:mid"
+      ],
+      "domain": "devops",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "docker-patterns",
+      "skill_path": "~/.ciel/skills/docker-patterns/SKILL.md",
+      "triggers": [
+        "docker-patterns"
+      ],
+      "tags": [],
+      "domain": "devops",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "documentation",
+      "skill_path": "~/.ciel/skills/documentation/SKILL.md",
+      "triggers": [
+        "readme",
+        "document",
+        "docs",
+        "changelog",
+        "api docs"
+      ],
+      "tags": [
+        "docs",
+        "scope:both",
+        "runtime:any",
+        "risk:low"
+      ],
+      "domain": "content",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "documentation-lookup",
+      "skill_path": "~/.ciel/skills/documentation-lookup/SKILL.md",
+      "triggers": [
+        "documentation-lookup"
+      ],
+      "tags": [],
+      "domain": "content",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "dotnet-patterns",
+      "skill_path": "~/.ciel/skills/dotnet-patterns/SKILL.md",
+      "triggers": [
+        "dotnet-patterns"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "e2e-testing",
+      "skill_path": "~/.ciel/skills/e2e-testing/SKILL.md",
+      "triggers": [
+        "e2e-testing"
+      ],
+      "tags": [],
+      "domain": "testing",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "ecc-tools-cost-audit",
+      "skill_path": "~/.ciel/skills/ecc-tools-cost-audit/SKILL.md",
+      "triggers": [
+        "ecc-tools-cost-audit"
+      ],
+      "tags": [],
+      "domain": "governance",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "email-ops",
+      "skill_path": "~/.ciel/skills/email-ops/SKILL.md",
+      "triggers": [
+        "email-ops"
+      ],
+      "tags": [],
+      "domain": "ai-ml",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "energy-procurement",
+      "skill_path": "~/.ciel/skills/energy-procurement/SKILL.md",
+      "triggers": [
+        "energy-procurement"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "enterprise-agent-ops",
+      "skill_path": "~/.ciel/skills/enterprise-agent-ops/SKILL.md",
+      "triggers": [
+        "enterprise-agent-ops"
+      ],
+      "tags": [],
+      "domain": "orchestration",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "environment_detection",
+      "skill_path": "~/.ciel/skills/environment_detection/SKILL.md",
+      "triggers": [
+        "detect environment",
+        "env info",
+        "os",
+        "runtime version"
+      ],
+      "tags": [
+        "fs",
+        "scope:both",
+        "runtime:any",
+        "risk:low"
+      ],
+      "domain": "filesystem",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "eval-harness",
+      "skill_path": "~/.ciel/skills/eval-harness/SKILL.md",
+      "triggers": [
+        "eval-harness"
+      ],
+      "tags": [],
+      "domain": "agent-evaluation",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "everything-claude-code-conventions",
+      "skill_path": "~/.ciel/skills/everything-claude-code-conventions/SKILL.md",
+      "triggers": [
+        "everything-claude-code-conventions"
+      ],
+      "tags": [],
+      "domain": "code-quality",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "evm-token-decimals",
+      "skill_path": "~/.ciel/skills/evm-token-decimals/SKILL.md",
+      "triggers": [
+        "evm-token-decimals"
+      ],
+      "tags": [],
+      "domain": "security",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "exa-search",
+      "skill_path": "~/.ciel/skills/exa-search/SKILL.md",
+      "triggers": [
+        "exa-search"
+      ],
+      "tags": [],
+      "domain": "web",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "executing-plans",
+      "skill_path": "~/.ciel/skills/executing-plans/SKILL.md",
+      "triggers": [
+        "executing-plans"
+      ],
+      "tags": [],
+      "domain": "planning",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "fal-ai-media",
+      "skill_path": "~/.ciel/skills/fal-ai-media/SKILL.md",
+      "triggers": [
+        "fal-ai-media"
+      ],
+      "tags": [],
+      "domain": "ai-ml",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "filesystem",
+      "skill_path": "~/.ciel/skills/filesystem/SKILL.md",
+      "triggers": [
+        "read",
+        "write",
+        "edit",
+        "cat",
+        "ls",
+        "find",
+        "stat",
+        "move",
+        "copy",
+        "delete",
+        "file"
+      ],
+      "tags": [
+        "fs",
+        "scope:both",
+        "runtime:any",
+        "risk:low"
+      ],
+      "domain": "filesystem",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "finance-billing-ops",
+      "skill_path": "~/.ciel/skills/finance-billing-ops/SKILL.md",
+      "triggers": [
+        "finance-billing-ops"
+      ],
+      "tags": [],
+      "domain": "commerce",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "find-skills",
+      "skill_path": "~/.ciel/skills/find-skills/SKILL.md",
+      "triggers": [
+        "find-skills"
+      ],
+      "tags": [],
+      "domain": "orchestration",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "finishing-a-development-branch",
+      "skill_path": "~/.ciel/skills/finishing-a-development-branch/SKILL.md",
+      "triggers": [
+        "finishing-a-development-branch"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "flutter-dart-code-review",
+      "skill_path": "~/.ciel/skills/flutter-dart-code-review/SKILL.md",
+      "triggers": [
+        "flutter-dart-code-review"
+      ],
+      "tags": [],
+      "domain": "mobile",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "foundation-models-on-device",
+      "skill_path": "~/.ciel/skills/foundation-models-on-device/SKILL.md",
+      "triggers": [
+        "foundation-models-on-device"
+      ],
+      "tags": [],
+      "domain": "ai-ml",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "frontend-design",
+      "skill_path": "~/.ciel/skills/frontend-design/SKILL.md",
+      "triggers": [
+        "frontend-design"
+      ],
+      "tags": [],
+      "domain": "frontend",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "frontend-patterns",
+      "skill_path": "~/.ciel/skills/frontend-patterns/SKILL.md",
+      "triggers": [
+        "frontend-patterns"
+      ],
+      "tags": [],
+      "domain": "frontend",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "frontend-slides",
+      "skill_path": "~/.ciel/skills/frontend-slides/SKILL.md",
+      "triggers": [
+        "frontend-slides"
+      ],
+      "tags": [],
+      "domain": "frontend",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "gan-style-harness",
+      "skill_path": "~/.ciel/skills/gan-style-harness/SKILL.md",
+      "triggers": [
+        "gan-style-harness"
+      ],
+      "tags": [],
+      "domain": "agent-evaluation",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "gastown",
+      "skill_path": "~/.ciel/skills/gastown/SKILL.md",
+      "triggers": [
+        "gastown"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "git",
+      "skill_path": "~/.ciel/skills/git/SKILL.md",
+      "triggers": [
+        "git",
+        "commit",
+        "diff",
+        "log",
+        "branch",
+        "revert",
+        "stash"
+      ],
+      "tags": [
+        "vcs",
+        "scope:both",
+        "runtime:any",
+        "risk:low"
+      ],
+      "domain": "version-control",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "git-workflow",
+      "skill_path": "~/.ciel/skills/git-workflow/SKILL.md",
+      "triggers": [
+        "git-workflow"
+      ],
+      "tags": [],
+      "domain": "version-control",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "github-ops",
+      "skill_path": "~/.ciel/skills/github-ops/SKILL.md",
+      "triggers": [
+        "github-ops"
+      ],
+      "tags": [],
+      "domain": "version-control",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "golang-patterns",
+      "skill_path": "~/.ciel/skills/golang-patterns/SKILL.md",
+      "triggers": [
+        "golang-patterns"
+      ],
+      "tags": [],
+      "domain": "go",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "golang-testing",
+      "skill_path": "~/.ciel/skills/golang-testing/SKILL.md",
+      "triggers": [
+        "golang-testing"
+      ],
+      "tags": [],
+      "domain": "testing",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "google-workspace-ops",
+      "skill_path": "~/.ciel/skills/google-workspace-ops/SKILL.md",
+      "triggers": [
+        "google-workspace-ops"
+      ],
+      "tags": [],
+      "domain": "go",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "gsap-core",
+      "skill_path": "~/.ciel/skills/gsap-core/SKILL.md",
+      "triggers": [
+        "gsap-core"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "gsap-frameworks",
+      "skill_path": "~/.ciel/skills/gsap-frameworks/SKILL.md",
+      "triggers": [
+        "gsap-frameworks"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "gsap-performance",
+      "skill_path": "~/.ciel/skills/gsap-performance/SKILL.md",
+      "triggers": [
+        "gsap-performance"
+      ],
+      "tags": [],
+      "domain": "performance",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "gsap-plugins",
+      "skill_path": "~/.ciel/skills/gsap-plugins/SKILL.md",
+      "triggers": [
+        "gsap-plugins"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "gsap-react",
+      "skill_path": "~/.ciel/skills/gsap-react/SKILL.md",
+      "triggers": [
+        "gsap-react"
+      ],
+      "tags": [],
+      "domain": "frontend",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "gsap-scrolltrigger",
+      "skill_path": "~/.ciel/skills/gsap-scrolltrigger/SKILL.md",
+      "triggers": [
+        "gsap-scrolltrigger"
+      ],
+      "tags": [],
+      "domain": "lifecycle",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "gsap-timeline",
+      "skill_path": "~/.ciel/skills/gsap-timeline/SKILL.md",
+      "triggers": [
+        "gsap-timeline"
+      ],
+      "tags": [],
+      "domain": "knowledge-ops",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "gsap-utils",
+      "skill_path": "~/.ciel/skills/gsap-utils/SKILL.md",
+      "triggers": [
+        "gsap-utils"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "gsd-orchestrator",
+      "skill_path": "~/.ciel/skills/gsd-orchestrator/SKILL.md",
+      "triggers": [
+        "gsd-orchestrator"
+      ],
+      "tags": [],
+      "domain": "orchestration",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "healthcare-cdss-patterns",
+      "skill_path": "~/.ciel/skills/healthcare-cdss-patterns/SKILL.md",
+      "triggers": [
+        "healthcare-cdss-patterns"
+      ],
+      "tags": [],
+      "domain": "devops",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "healthcare-emr-patterns",
+      "skill_path": "~/.ciel/skills/healthcare-emr-patterns/SKILL.md",
+      "triggers": [
+        "healthcare-emr-patterns"
+      ],
+      "tags": [],
+      "domain": "healthcare",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "healthcare-eval-harness",
+      "skill_path": "~/.ciel/skills/healthcare-eval-harness/SKILL.md",
+      "triggers": [
+        "healthcare-eval-harness"
+      ],
+      "tags": [],
+      "domain": "healthcare",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "healthcare-phi-compliance",
+      "skill_path": "~/.ciel/skills/healthcare-phi-compliance/SKILL.md",
+      "triggers": [
+        "healthcare-phi-compliance"
+      ],
+      "tags": [],
+      "domain": "healthcare",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "hexagonal-architecture",
+      "skill_path": "~/.ciel/skills/hexagonal-architecture/SKILL.md",
+      "triggers": [
+        "hexagonal-architecture"
+      ],
+      "tags": [],
+      "domain": "go",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "hipaa-compliance",
+      "skill_path": "~/.ciel/skills/hipaa-compliance/SKILL.md",
+      "triggers": [
+        "hipaa-compliance"
+      ],
+      "tags": [],
+      "domain": "healthcare",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "hookify-rules",
+      "skill_path": "~/.ciel/skills/hookify-rules/SKILL.md",
+      "triggers": [
+        "hookify-rules"
+      ],
+      "tags": [],
+      "domain": "lifecycle",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "inventory-demand-planning",
+      "skill_path": "~/.ciel/skills/inventory-demand-planning/SKILL.md",
+      "triggers": [
+        "inventory-demand-planning"
+      ],
+      "tags": [],
+      "domain": "planning",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "investor-materials",
+      "skill_path": "~/.ciel/skills/investor-materials/SKILL.md",
+      "triggers": [
+        "investor-materials"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "investor-outreach",
+      "skill_path": "~/.ciel/skills/investor-outreach/SKILL.md",
+      "triggers": [
+        "investor-outreach"
+      ],
+      "tags": [],
+      "domain": "marketing",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "iterative-retrieval",
+      "skill_path": "~/.ciel/skills/iterative-retrieval/SKILL.md",
+      "triggers": [
+        "iterative-retrieval"
+      ],
+      "tags": [],
+      "domain": "agent-evaluation",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "java-coding-standards",
+      "skill_path": "~/.ciel/skills/java-coding-standards/SKILL.md",
+      "triggers": [
+        "java-coding-standards"
+      ],
+      "tags": [],
+      "domain": "jvm",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "jira-integration",
+      "skill_path": "~/.ciel/skills/jira-integration/SKILL.md",
+      "triggers": [
+        "jira-integration"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "jpa-patterns",
+      "skill_path": "~/.ciel/skills/jpa-patterns/SKILL.md",
+      "triggers": [
+        "jpa-patterns"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "json-canvas",
+      "skill_path": "~/.ciel/skills/json-canvas/SKILL.md",
+      "triggers": [
+        "json-canvas"
+      ],
+      "tags": [],
+      "domain": "data-format",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "json_yaml_toml_parser",
+      "skill_path": "~/.ciel/skills/json_yaml_toml_parser/SKILL.md",
+      "triggers": [
+        "json",
+        "yaml",
+        "toml",
+        "parse",
+        "config"
+      ],
+      "tags": [
+        "code",
+        "scope:both",
+        "runtime:any",
+        "risk:low"
+      ],
+      "domain": "ai-ml",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "knowledge-ops",
+      "skill_path": "~/.ciel/skills/knowledge-ops/SKILL.md",
+      "triggers": [
+        "knowledge-ops"
+      ],
+      "tags": [],
+      "domain": "knowledge-ops",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "kotlin-coroutines-flows",
+      "skill_path": "~/.ciel/skills/kotlin-coroutines-flows/SKILL.md",
+      "triggers": [
+        "kotlin-coroutines-flows"
+      ],
+      "tags": [],
+      "domain": "jvm",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "kotlin-exposed-patterns",
+      "skill_path": "~/.ciel/skills/kotlin-exposed-patterns/SKILL.md",
+      "triggers": [
+        "kotlin-exposed-patterns"
+      ],
+      "tags": [],
+      "domain": "jvm",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "kotlin-ktor-patterns",
+      "skill_path": "~/.ciel/skills/kotlin-ktor-patterns/SKILL.md",
+      "triggers": [
+        "kotlin-ktor-patterns"
+      ],
+      "tags": [],
+      "domain": "jvm",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "kotlin-patterns",
+      "skill_path": "~/.ciel/skills/kotlin-patterns/SKILL.md",
+      "triggers": [
+        "kotlin-patterns"
+      ],
+      "tags": [],
+      "domain": "jvm",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "kotlin-testing",
+      "skill_path": "~/.ciel/skills/kotlin-testing/SKILL.md",
+      "triggers": [
+        "kotlin-testing"
+      ],
+      "tags": [],
+      "domain": "testing",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "laravel-patterns",
+      "skill_path": "~/.ciel/skills/laravel-patterns/SKILL.md",
+      "triggers": [
+        "laravel-patterns"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "laravel-plugin-discovery",
+      "skill_path": "~/.ciel/skills/laravel-plugin-discovery/SKILL.md",
+      "triggers": [
+        "laravel-plugin-discovery"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "laravel-security",
+      "skill_path": "~/.ciel/skills/laravel-security/SKILL.md",
+      "triggers": [
+        "laravel-security"
+      ],
+      "tags": [],
+      "domain": "security",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "laravel-tdd",
+      "skill_path": "~/.ciel/skills/laravel-tdd/SKILL.md",
+      "triggers": [
+        "laravel-tdd"
+      ],
+      "tags": [],
+      "domain": "testing",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "laravel-verification",
+      "skill_path": "~/.ciel/skills/laravel-verification/SKILL.md",
+      "triggers": [
+        "laravel-verification"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "lead-intelligence",
+      "skill_path": "~/.ciel/skills/lead-intelligence/SKILL.md",
+      "triggers": [
+        "lead-intelligence"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "linter_formatter",
+      "skill_path": "~/.ciel/skills/linter_formatter/SKILL.md",
+      "triggers": [
+        "lint",
+        "format",
+        "prettier",
+        "eslint",
+        "rustfmt",
+        "black",
+        "gofmt"
+      ],
+      "tags": [
+        "code",
+        "scope:both",
+        "runtime:any",
+        "risk:low"
+      ],
+      "domain": "code-quality",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "liquid-glass-design",
+      "skill_path": "~/.ciel/skills/liquid-glass-design/SKILL.md",
+      "triggers": [
+        "liquid-glass-design"
+      ],
+      "tags": [],
+      "domain": "frontend",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "llm-trading-agent-security",
+      "skill_path": "~/.ciel/skills/llm-trading-agent-security/SKILL.md",
+      "triggers": [
+        "llm-trading-agent-security"
+      ],
+      "tags": [],
+      "domain": "security",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "log_analyzer",
+      "skill_path": "~/.ciel/skills/log_analyzer/SKILL.md",
+      "triggers": [
+        "log",
+        "logs",
+        "parse log",
+        "anomaly"
+      ],
+      "tags": [
+        "observability",
+        "scope:both",
+        "runtime:any",
+        "risk:low"
+      ],
+      "domain": "debugging",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "logistics-exception-management",
+      "skill_path": "~/.ciel/skills/logistics-exception-management/SKILL.md",
+      "triggers": [
+        "logistics-exception-management"
+      ],
+      "tags": [],
+      "domain": "debugging",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "make-plan",
+      "skill_path": "~/.ciel/skills/make-plan/SKILL.md",
+      "triggers": [
+        "make-plan"
+      ],
+      "tags": [],
+      "domain": "planning",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "manim-video",
+      "skill_path": "~/.ciel/skills/manim-video/SKILL.md",
+      "triggers": [
+        "manim-video"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "markdown_processor",
+      "skill_path": "~/.ciel/skills/markdown_processor/SKILL.md",
+      "triggers": [
+        "markdown",
+        "md",
+        "frontmatter",
+        "anchor",
+        "extract links"
+      ],
+      "tags": [
+        "docs",
+        "scope:both",
+        "runtime:any",
+        "risk:low"
+      ],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "market-research",
+      "skill_path": "~/.ciel/skills/market-research/SKILL.md",
+      "triggers": [
+        "market-research"
+      ],
+      "tags": [],
+      "domain": "web",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "mcp-server-patterns",
+      "skill_path": "~/.ciel/skills/mcp-server-patterns/SKILL.md",
+      "triggers": [
+        "mcp-server-patterns"
+      ],
+      "tags": [],
+      "domain": "backend",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "mcp_manager",
+      "skill_path": "~/.ciel/skills/mcp_manager/SKILL.md",
+      "triggers": [
+        "mcp",
+        "mcp server",
+        "install mcp",
+        "mcp search"
+      ],
+      "tags": [
+        "mcp",
+        "scope:both",
+        "runtime:any",
+        "risk:mid"
+      ],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "mem-search",
+      "skill_path": "~/.ciel/skills/mem-search/SKILL.md",
+      "triggers": [
+        "mem-search"
+      ],
+      "tags": [],
+      "domain": "web",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "mempalace",
+      "skill_path": "~/.ciel/skills/mempalace/SKILL.md",
+      "triggers": [
+        "mempalace"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "mempalace_manager",
+      "skill_path": "~/.ciel/skills/mempalace_manager/SKILL.md",
+      "triggers": [
+        "memory",
+        "mempalace",
+        "recall",
+        "remember",
+        "store"
+      ],
+      "tags": [
+        "memory",
+        "scope:both",
+        "runtime:any",
+        "risk:low"
+      ],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "messages-ops",
+      "skill_path": "~/.ciel/skills/messages-ops/SKILL.md",
+      "triggers": [
+        "messages-ops"
+      ],
+      "tags": [],
+      "domain": "knowledge-ops",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "nanoclaw-repl",
+      "skill_path": "~/.ciel/skills/nanoclaw-repl/SKILL.md",
+      "triggers": [
+        "nanoclaw-repl"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "nestjs-patterns",
+      "skill_path": "~/.ciel/skills/nestjs-patterns/SKILL.md",
+      "triggers": [
+        "nestjs-patterns"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "nextjs-turbopack",
+      "skill_path": "~/.ciel/skills/nextjs-turbopack/SKILL.md",
+      "triggers": [
+        "nextjs-turbopack"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "nodejs-keccak256",
+      "skill_path": "~/.ciel/skills/nodejs-keccak256/SKILL.md",
+      "triggers": [
+        "nodejs-keccak256"
+      ],
+      "tags": [],
+      "domain": "javascript-runtime",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "nutrient-document-processing",
+      "skill_path": "~/.ciel/skills/nutrient-document-processing/SKILL.md",
+      "triggers": [
+        "nutrient-document-processing"
+      ],
+      "tags": [],
+      "domain": "content",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "nuxt4-patterns",
+      "skill_path": "~/.ciel/skills/nuxt4-patterns/SKILL.md",
+      "triggers": [
+        "nuxt4-patterns"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "obsidian-bases",
+      "skill_path": "~/.ciel/skills/obsidian-bases/SKILL.md",
+      "triggers": [
+        "obsidian-bases"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "obsidian-cli",
+      "skill_path": "~/.ciel/skills/obsidian-cli/SKILL.md",
+      "triggers": [
+        "obsidian-cli"
+      ],
+      "tags": [],
+      "domain": "shell",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "obsidian-markdown",
+      "skill_path": "~/.ciel/skills/obsidian-markdown/SKILL.md",
+      "triggers": [
+        "obsidian-markdown"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "open-source-maintainer",
+      "skill_path": "~/.ciel/skills/open-source-maintainer/SKILL.md",
+      "triggers": [
+        "open-source-maintainer"
+      ],
+      "tags": [],
+      "domain": "ai-ml",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "openclaw-persona-forge",
+      "skill_path": "~/.ciel/skills/openclaw-persona-forge/SKILL.md",
+      "triggers": [
+        "openclaw-persona-forge"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "opensource-pipeline",
+      "skill_path": "~/.ciel/skills/opensource-pipeline/SKILL.md",
+      "triggers": [
+        "opensource-pipeline"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "orchestration",
+      "skill_path": "~/.ciel/skills/orchestration/SKILL.md",
+      "triggers": [
+        "orchestration"
+      ],
+      "tags": [],
+      "domain": "orchestration",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "package_manager",
+      "skill_path": "~/.ciel/skills/package_manager/SKILL.md",
+      "triggers": [
+        "install",
+        "uninstall",
+        "package",
+        "npm",
+        "pip",
+        "cargo",
+        "brew",
+        "apt"
+      ],
+      "tags": [
+        "pkg",
+        "scope:both",
+        "runtime:any",
+        "risk:mid"
+      ],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "perl-patterns",
+      "skill_path": "~/.ciel/skills/perl-patterns/SKILL.md",
+      "triggers": [
+        "perl-patterns"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "perl-security",
+      "skill_path": "~/.ciel/skills/perl-security/SKILL.md",
+      "triggers": [
+        "perl-security"
+      ],
+      "tags": [],
+      "domain": "security",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "perl-testing",
+      "skill_path": "~/.ciel/skills/perl-testing/SKILL.md",
+      "triggers": [
+        "perl-testing"
+      ],
+      "tags": [],
+      "domain": "testing",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "plankton-code-quality",
+      "skill_path": "~/.ciel/skills/plankton-code-quality/SKILL.md",
+      "triggers": [
+        "plankton-code-quality"
+      ],
+      "tags": [],
+      "domain": "code-quality",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "postgres-patterns",
+      "skill_path": "~/.ciel/skills/postgres-patterns/SKILL.md",
+      "triggers": [
+        "postgres-patterns"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "product-capability",
+      "skill_path": "~/.ciel/skills/product-capability/SKILL.md",
+      "triggers": [
+        "product-capability"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "product-lens",
+      "skill_path": "~/.ciel/skills/product-lens/SKILL.md",
+      "triggers": [
+        "product-lens"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "production-scheduling",
+      "skill_path": "~/.ciel/skills/production-scheduling/SKILL.md",
+      "triggers": [
+        "production-scheduling"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "project-flow-ops",
+      "skill_path": "~/.ciel/skills/project-flow-ops/SKILL.md",
+      "triggers": [
+        "project-flow-ops"
+      ],
+      "tags": [],
+      "domain": "knowledge-ops",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "project-guidelines-example",
+      "skill_path": "~/.ciel/skills/project-guidelines-example/SKILL.md",
+      "triggers": [
+        "project-guidelines-example"
+      ],
+      "tags": [],
+      "domain": "frontend",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "project_analyzer",
+      "skill_path": "~/.ciel/skills/project_analyzer/SKILL.md",
+      "triggers": [
+        "analyze project",
+        "detect stack",
+        "project context"
+      ],
+      "tags": [
+        "fs",
+        "scope:both",
+        "runtime:any",
+        "risk:low"
+      ],
+      "domain": "filesystem",
+      "confidence": 0.8,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "prompt-optimizer",
+      "skill_path": "~/.ciel/skills/prompt-optimizer/SKILL.md",
+      "triggers": [
+        "prompt-optimizer"
+      ],
+      "tags": [],
+      "domain": "performance",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "python-patterns",
+      "skill_path": "~/.ciel/skills/python-patterns/SKILL.md",
+      "triggers": [
+        "python-patterns"
+      ],
+      "tags": [],
+      "domain": "python",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "python-testing",
+      "skill_path": "~/.ciel/skills/python-testing/SKILL.md",
+      "triggers": [
+        "python-testing"
+      ],
+      "tags": [],
+      "domain": "testing",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "pytorch-patterns",
+      "skill_path": "~/.ciel/skills/pytorch-patterns/SKILL.md",
+      "triggers": [
+        "pytorch-patterns"
+      ],
+      "tags": [],
+      "domain": "ai-ml",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "quality-nonconformance",
+      "skill_path": "~/.ciel/skills/quality-nonconformance/SKILL.md",
+      "triggers": [
+        "quality-nonconformance"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "ralphinho-rfc-pipeline",
+      "skill_path": "~/.ciel/skills/ralphinho-rfc-pipeline/SKILL.md",
+      "triggers": [
+        "ralphinho-rfc-pipeline"
+      ],
+      "tags": [],
+      "domain": "healthcare",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "receiving-code-review",
+      "skill_path": "~/.ciel/skills/receiving-code-review/SKILL.md",
+      "triggers": [
+        "receiving-code-review"
+      ],
+      "tags": [],
+      "domain": "governance",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "regex-vs-llm-structured-text",
+      "skill_path": "~/.ciel/skills/regex-vs-llm-structured-text/SKILL.md",
+      "triggers": [
+        "regex-vs-llm-structured-text"
+      ],
+      "tags": [],
+      "domain": "ai-ml",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "remotion-video-creation",
+      "skill_path": "~/.ciel/skills/remotion-video-creation/SKILL.md",
+      "triggers": [
+        "remotion-video-creation"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "repo-scan",
+      "skill_path": "~/.ciel/skills/repo-scan/SKILL.md",
+      "triggers": [
+        "repo-scan"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "requesting-code-review",
+      "skill_path": "~/.ciel/skills/requesting-code-review/SKILL.md",
+      "triggers": [
+        "requesting-code-review"
+      ],
+      "tags": [],
+      "domain": "governance",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "research",
+      "skill_path": "~/.ciel/skills/research/SKILL.md",
+      "triggers": [
+        "research",
+        "deep research",
+        "investigate",
+        "look up"
+      ],
+      "tags": [
+        "network",
+        "scope:both",
+        "runtime:any",
+        "risk:low"
+      ],
+      "domain": "network",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "research-ops",
+      "skill_path": "~/.ciel/skills/research-ops/SKILL.md",
+      "triggers": [
+        "research-ops"
+      ],
+      "tags": [],
+      "domain": "web",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "returns-reverse-logistics",
+      "skill_path": "~/.ciel/skills/returns-reverse-logistics/SKILL.md",
+      "triggers": [
+        "returns-reverse-logistics"
+      ],
+      "tags": [],
+      "domain": "debugging",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "rules-distill",
+      "skill_path": "~/.ciel/skills/rules-distill/SKILL.md",
+      "triggers": [
+        "rules-distill"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "runtime_adapter_builder",
+      "skill_path": "~/.ciel/skills/runtime_adapter_builder/SKILL.md",
+      "triggers": [
+        "new adapter",
+        "runtime adapter",
+        "adapter for"
+      ],
+      "tags": [
+        "adapter",
+        "scope:both",
+        "runtime:any",
+        "risk:high"
+      ],
+      "domain": "frontend",
+      "confidence": 0.8,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "rust-patterns",
+      "skill_path": "~/.ciel/skills/rust-patterns/SKILL.md",
+      "triggers": [
+        "rust-patterns"
+      ],
+      "tags": [],
+      "domain": "rust",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "rust-testing",
+      "skill_path": "~/.ciel/skills/rust-testing/SKILL.md",
+      "triggers": [
+        "rust-testing"
+      ],
+      "tags": [],
+      "domain": "testing",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "safety-guard",
+      "skill_path": "~/.ciel/skills/safety-guard/SKILL.md",
+      "triggers": [
+        "safety-guard"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "santa-method",
+      "skill_path": "~/.ciel/skills/santa-method/SKILL.md",
+      "triggers": [
+        "santa-method"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "search-first",
+      "skill_path": "~/.ciel/skills/search-first/SKILL.md",
+      "triggers": [
+        "search-first"
+      ],
+      "tags": [],
+      "domain": "web",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "secrets_manager",
+      "skill_path": "~/.ciel/skills/secrets_manager/SKILL.md",
+      "triggers": [
+        "secret",
+        "credential",
+        "env var",
+        "keychain",
+        "vault"
+      ],
+      "tags": [
+        "security",
+        "scope:both",
+        "runtime:any",
+        "risk:high"
+      ],
+      "domain": "security",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "security-bounty-hunter",
+      "skill_path": "~/.ciel/skills/security-bounty-hunter/SKILL.md",
+      "triggers": [
+        "security-bounty-hunter"
+      ],
+      "tags": [],
+      "domain": "security",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "security-review",
+      "skill_path": "~/.ciel/skills/security-review/SKILL.md",
+      "triggers": [
+        "security-review"
+      ],
+      "tags": [],
+      "domain": "security",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "security-scan",
+      "skill_path": "~/.ciel/skills/security-scan/SKILL.md",
+      "triggers": [
+        "security-scan"
+      ],
+      "tags": [],
+      "domain": "security",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "seo",
+      "skill_path": "~/.ciel/skills/seo/SKILL.md",
+      "triggers": [
+        "seo"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "shell",
+      "skill_path": "~/.ciel/skills/shell/SKILL.md",
+      "triggers": [
+        "shell",
+        "bash",
+        "run",
+        "exec",
+        "command"
+      ],
+      "tags": [
+        "shell",
+        "scope:both",
+        "runtime:any",
+        "risk:low"
+      ],
+      "domain": "shell",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "skill-comply",
+      "skill_path": "~/.ciel/skills/skill-comply/SKILL.md",
+      "triggers": [
+        "skill-comply"
+      ],
+      "tags": [],
+      "domain": "orchestration",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "skill-discovery",
+      "skill_path": "~/.ciel/skills/skill-discovery/SKILL.md",
+      "triggers": [
+        "skill discovery",
+        "find a skill",
+        "discover skill",
+        "what skill can",
+        "install skill",
+        "skill for",
+        "how do I",
+        "can you help me with"
+      ],
+      "tags": [],
+      "domain": "orchestration",
+      "confidence": 0.8,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "skill_builder",
+      "skill_path": "~/.ciel/skills/skill_builder/SKILL.md",
+      "triggers": [
+        "new skill",
+        "build skill",
+        "package skill",
+        "zip skill"
+      ],
+      "tags": [
+        "skill",
+        "scope:both",
+        "runtime:any",
+        "risk:low"
+      ],
+      "domain": "frontend",
+      "confidence": 0.8,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "skill_installer",
+      "skill_path": "~/.ciel/skills/skill_installer/SKILL.md",
+      "triggers": [
+        "install skill",
+        "register skill",
+        "add skill"
+      ],
+      "tags": [
+        "skill",
+        "scope:both",
+        "runtime:any",
+        "risk:mid"
+      ],
+      "domain": "orchestration",
+      "confidence": 0.8,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "smart-explore",
+      "skill_path": "~/.ciel/skills/smart-explore/SKILL.md",
+      "triggers": [
+        "smart-explore"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "social-graph-ranker",
+      "skill_path": "~/.ciel/skills/social-graph-ranker/SKILL.md",
+      "triggers": [
+        "social-graph-ranker"
+      ],
+      "tags": [],
+      "domain": "devops",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "springboot-patterns",
+      "skill_path": "~/.ciel/skills/springboot-patterns/SKILL.md",
+      "triggers": [
+        "springboot-patterns"
+      ],
+      "tags": [],
+      "domain": "jvm",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "springboot-security",
+      "skill_path": "~/.ciel/skills/springboot-security/SKILL.md",
+      "triggers": [
+        "springboot-security"
+      ],
+      "tags": [],
+      "domain": "security",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "springboot-tdd",
+      "skill_path": "~/.ciel/skills/springboot-tdd/SKILL.md",
+      "triggers": [
+        "springboot-tdd"
+      ],
+      "tags": [],
+      "domain": "testing",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "springboot-verification",
+      "skill_path": "~/.ciel/skills/springboot-verification/SKILL.md",
+      "triggers": [
+        "springboot-verification"
+      ],
+      "tags": [],
+      "domain": "jvm",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "strategic-compact",
+      "skill_path": "~/.ciel/skills/strategic-compact/SKILL.md",
+      "triggers": [
+        "strategic-compact"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "subagent-driven-development",
+      "skill_path": "~/.ciel/skills/subagent-driven-development/SKILL.md",
+      "triggers": [
+        "subagent-driven-development"
+      ],
+      "tags": [],
+      "domain": "orchestration",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "swift-actor-persistence",
+      "skill_path": "~/.ciel/skills/swift-actor-persistence/SKILL.md",
+      "triggers": [
+        "swift-actor-persistence"
+      ],
+      "tags": [],
+      "domain": "ios",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "swift-concurrency-6-2",
+      "skill_path": "~/.ciel/skills/swift-concurrency-6-2/SKILL.md",
+      "triggers": [
+        "swift-concurrency-6-2"
+      ],
+      "tags": [],
+      "domain": "ios",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "swift-protocol-di-testing",
+      "skill_path": "~/.ciel/skills/swift-protocol-di-testing/SKILL.md",
+      "triggers": [
+        "swift-protocol-di-testing"
+      ],
+      "tags": [],
+      "domain": "testing",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "swiftui-patterns",
+      "skill_path": "~/.ciel/skills/swiftui-patterns/SKILL.md",
+      "triggers": [
+        "swiftui-patterns"
+      ],
+      "tags": [],
+      "domain": "frontend",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "systematic-debugging",
+      "skill_path": "~/.ciel/skills/systematic-debugging/SKILL.md",
+      "triggers": [
+        "systematic-debugging"
+      ],
+      "tags": [],
+      "domain": "debugging",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "tdd-workflow",
+      "skill_path": "~/.ciel/skills/tdd-workflow/SKILL.md",
+      "triggers": [
+        "tdd-workflow"
+      ],
+      "tags": [],
+      "domain": "testing",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "team-builder",
+      "skill_path": "~/.ciel/skills/team-builder/SKILL.md",
+      "triggers": [
+        "team-builder"
+      ],
+      "tags": [],
+      "domain": "frontend",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "terminal-ops",
+      "skill_path": "~/.ciel/skills/terminal-ops/SKILL.md",
+      "triggers": [
+        "terminal-ops"
+      ],
+      "tags": [],
+      "domain": "shell",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "test-driven-development",
+      "skill_path": "~/.ciel/skills/test-driven-development/SKILL.md",
+      "triggers": [
+        "test-driven-development"
+      ],
+      "tags": [],
+      "domain": "testing",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "test_runner",
+      "skill_path": "~/.ciel/skills/test_runner/SKILL.md",
+      "triggers": [
+        "test",
+        "run tests",
+        "pytest",
+        "jest",
+        "cargo test",
+        "go test"
+      ],
+      "tags": [
+        "test",
+        "scope:both",
+        "runtime:any",
+        "risk:low"
+      ],
+      "domain": "testing",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "timeline-report",
+      "skill_path": "~/.ciel/skills/timeline-report/SKILL.md",
+      "triggers": [
+        "timeline-report"
+      ],
+      "tags": [],
+      "domain": "knowledge-ops",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "token-budget-advisor",
+      "skill_path": "~/.ciel/skills/token-budget-advisor/SKILL.md",
+      "triggers": [
+        "token-budget-advisor"
+      ],
+      "tags": [],
+      "domain": "security",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "ui-demo",
+      "skill_path": "~/.ciel/skills/ui-demo/SKILL.md",
+      "triggers": [
+        "ui-demo"
+      ],
+      "tags": [],
+      "domain": "frontend",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "ui-ux-pro-max",
+      "skill_path": "~/.ciel/skills/ui-ux-pro-max/SKILL.md",
+      "triggers": [
+        "ui-ux-pro-max"
+      ],
+      "tags": [],
+      "domain": "frontend",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "unified-notifications-ops",
+      "skill_path": "~/.ciel/skills/unified-notifications-ops/SKILL.md",
+      "triggers": [
+        "unified-notifications-ops"
+      ],
+      "tags": [],
+      "domain": "knowledge-ops",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "using-git-worktrees",
+      "skill_path": "~/.ciel/skills/using-git-worktrees/SKILL.md",
+      "triggers": [
+        "using-git-worktrees"
+      ],
+      "tags": [],
+      "domain": "version-control",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "using-superpowers",
+      "skill_path": "~/.ciel/skills/using-superpowers/SKILL.md",
+      "triggers": [
+        "using-superpowers"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "verification-before-completion",
+      "skill_path": "~/.ciel/skills/verification-before-completion/SKILL.md",
+      "triggers": [
+        "verification-before-completion"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "verification-loop",
+      "skill_path": "~/.ciel/skills/verification-loop/SKILL.md",
+      "triggers": [
+        "verification-loop"
+      ],
+      "tags": [],
+      "domain": "self-improvement",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "video-editing",
+      "skill_path": "~/.ciel/skills/video-editing/SKILL.md",
+      "triggers": [
+        "video-editing"
+      ],
+      "tags": [],
+      "domain": "general",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "videodb",
+      "skill_path": "~/.ciel/skills/videodb/SKILL.md",
+      "triggers": [
+        "videodb"
+      ],
+      "tags": [],
+      "domain": "database",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "visa-doc-translate",
+      "skill_path": "~/.ciel/skills/visa-doc-translate/SKILL.md",
+      "triggers": [
+        "visa-doc-translate"
+      ],
+      "tags": [],
+      "domain": "content",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "web_fetch",
+      "skill_path": "~/.ciel/skills/web_fetch/SKILL.md",
+      "triggers": [
+        "fetch",
+        "download",
+        "curl",
+        "get url",
+        "visit"
+      ],
+      "tags": [
+        "network",
+        "scope:both",
+        "runtime:any",
+        "risk:low"
+      ],
+      "domain": "network",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "web_search",
+      "skill_path": "~/.ciel/skills/web_search/SKILL.md",
+      "triggers": [
+        "search",
+        "web search",
+        "google",
+        "find online"
+      ],
+      "tags": [
+        "network",
+        "scope:both",
+        "runtime:any",
+        "risk:low"
+      ],
+      "domain": "network",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "workspace-surface-audit",
+      "skill_path": "~/.ciel/skills/workspace-surface-audit/SKILL.md",
+      "triggers": [
+        "workspace-surface-audit"
+      ],
+      "tags": [],
+      "domain": "governance",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "writing-plans",
+      "skill_path": "~/.ciel/skills/writing-plans/SKILL.md",
+      "triggers": [
+        "writing-plans"
+      ],
+      "tags": [],
+      "domain": "content",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "writing-skills",
+      "skill_path": "~/.ciel/skills/writing-skills/SKILL.md",
+      "triggers": [
+        "writing-skills"
+      ],
+      "tags": [],
+      "domain": "content",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "x-api",
+      "skill_path": "~/.ciel/skills/x-api/SKILL.md",
+      "triggers": [
+        "x-api"
+      ],
+      "tags": [],
+      "domain": "backend",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    },
+    {
+      "skill_name": "zai-cli",
+      "skill_path": "~/.ciel/skills/zai-cli/SKILL.md",
+      "triggers": [
+        "zai-cli"
+      ],
+      "tags": [],
+      "domain": "ai-ml",
+      "confidence": 0.9,
+      "hit_count": 0,
+      "last_hit": null,
+      "fast_path_eligible": true
+    }
+  ]
+}

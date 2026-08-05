@@ -1,0 +1,58 @@
+{
+  "schema": "memory_state/1.0",
+  "version": "1.0.0",
+  "updated": "2026-08-04T23:55:23Z",
+  "primary_backend": "mempalace",
+  "fallback_backend": "sqlite",
+  "mempalace_binary": "~/.cargo/bin/mempalace-rs",
+  "mempalace_version": "0.5.0",
+  "db_path": "~/.ciel/memory/palace.db",
+  "db_size_bytes": 12288,
+  "tables": [
+    {
+      "name": "memories",
+      "schema": "CREATE TABLE memories (id TEXT PRIMARY KEY, content TEXT, created_at TEXT)",
+      "row_count": 0,
+      "columns": [
+        {"name": "id", "type": "TEXT", "primary_key": true},
+        {"name": "content", "type": "TEXT", "primary_key": false},
+        {"name": "created_at", "type": "TEXT", "primary_key": false}
+      ]
+    }
+  ],
+  "partitions": {
+    "global": {
+      "key_count": 0,
+      "last_write": null
+    },
+    "local": {
+      "key_count": 0,
+      "last_write": null
+    }
+  },
+  "health_status": "healthy",
+  "last_health_check": "2026-08-04T23:55:23Z",
+  "health_check_details": {
+    "db_accessible": true,
+    "activity_log_writable": true,
+    "registry_readable": true,
+    "registry_skill_count": 265
+  },
+  "config": {
+    "configured_backend": "mempalace",
+    "active_backend": "mempalace",
+    "mempalace_binary_present": true,
+    "mempalace_version": "0.5.0",
+    "auto_update": true,
+    "isolation_strict": true,
+    "partition_size_limit_mb": 1024,
+    "fallback_order": ["mempalace", "sqlite", "filesystem", "custom"]
+  },
+  "notes": [
+    "MemPalace-rs binary installed at ~/.cargo/bin/mempalace-rs (v0.5.0) — primary backend active",
+    "palace.db is a SQLite file at ~/.ciel/memory/palace.db with simple memories(id, content, created_at) schema — serves as fallback store",
+    "palace.db schema does not match the full SQLITE.md spec (entries/entries_fts/meta tables) — appears to be a simpler custom schema",
+    "Database has 0 rows — initialized but no entries written yet",
+    "Health check protocol passed: binary runnable, schema accessible, RW self-test passed, activity log writable, registry readable"
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "schema": "acquisition_state/1.0",
+  "version": "1.0.0",
+  "updated": "2026-08-05T00:15:00Z",
+  "tier_1_enabled": true,
+  "tier_2_enabled": true,
+  "tier_3_enabled": true,
+  "sandbox_enabled": true,
+  "trust_model": "council_gated",
+  "auto_install": false,
+  "total_acquisitions": 0,
+  "acquisition_history": [],
+  "tier_stats": {
+    "tier_1_hits": 0,
+    "tier_2_hits": 0,
+    "tier_3_hits": 0,
+    "misses": 0
+  },
+  "mcp_servers_available": [
+    {
+      "name": "mempalace-rs",
+      "tools_count": 20,
+      "tools": [
+        "mempalace_status",
+        "mempalace_list_wings",
+        "mempalace_list_rooms",
+        "mempalace_get_taxonomy",
+        "mempalace_search",
+        "mempalace_check_duplicate",
+        "mempalace_get_aaak_spec",
+        "mempalace_traverse_graph",
+        "mempalace_find_tunnels",
+        "mempalace_graph_stats",
+        "mempalace_add_drawer",
+        "mempalace_delete_drawer",
+        "mempalace_kg_query",
+        "mempalace_kg_add",
+        "mempalace_kg_invalidate",
+        "mempalace_kg_timeline",
+        "mempalace_kg_stats",
+        "mempalace_diary_write",
+        "mempalace_diary_read",
+        "mempalace_diary_list"
+      ]
+    },
+    {
+      "name": "sequential-thinking",
+      "tools_count": 1,
+      "tools": [
+        "sequentialthinking"
+      ]
+    },
+    {
+      "name": "mcp-playwright",
+      "tools_count": 20,
+      "tools": [
+        "browser_close",
+        "browser_resize",
+        "browser_console_messages",
+        "browser_handle_dialog",
+        "browser_evaluate",
+        "browser_file_upload",
+        "browser_drop",
+        "browser_find",
+        "browser_fill_form",
+        "browser_click",
+        "browser_navigate",
+        "browser_snapshot",
+        "browser_take_screenshot",
+        "browser_press_key",
+        "browser_select_option",
+        "browser_hover",
+        "browser_wait",
+        "browser_get",
+        "browser_post",
+        "browser_install"
+      ]
+    }
+  ],
+  "config": {
+    "tier1_timeout_s": 10,
+    "tier2_timeout_s": 30,
+    "tier3_timeout_s": 120,
+    "total_wall_budget_s": 300,
+    "token_budget": 80000,
+    "tier1_floor": 0.5,
+    "cve_threshold": "high",
+    "sandbox_limits": {
+      "cpu_pct": 50,
+      "memory_mb": 512,
+      "wall_s": 60
+    },
+    "sandbox_retention_hours": 48,
+    "min_trust": 0.2
+  }
+}

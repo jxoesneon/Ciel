@@ -1,0 +1,97 @@
+{
+  "schema": "prompts_index/1.0",
+  "version": "1.0.0",
+  "updated": "2026-08-04T23:55:20Z",
+  "source_dir": "/Users/mey/ciel/ciel.skill/prompts/council/",
+  "total_prompts": 11,
+  "prompts": [
+    {
+      "file": "coherence_stage1.md",
+      "member": "Coherence",
+      "council": "architecture",
+      "stage": 1,
+      "veto_authority": false,
+      "version": "1.0.0"
+    },
+    {
+      "file": "coherence_stage2.md",
+      "member": "Coherence",
+      "council": "architecture",
+      "stage": 2,
+      "veto_authority": false,
+      "version": "1.0.0"
+    },
+    {
+      "file": "capability_stage1.md",
+      "member": "Capability",
+      "council": "architecture",
+      "stage": 1,
+      "veto_authority": false,
+      "version": "1.0.0"
+    },
+    {
+      "file": "capability_stage2.md",
+      "member": "Capability",
+      "council": "architecture",
+      "stage": 2,
+      "veto_authority": false,
+      "version": "1.0.0"
+    },
+    {
+      "file": "safety_stage1.md",
+      "member": "Safety",
+      "council": "architecture",
+      "stage": 1,
+      "veto_authority": true,
+      "version": "1.0.0"
+    },
+    {
+      "file": "safety_stage2.md",
+      "member": "Safety",
+      "council": "architecture",
+      "stage": 2,
+      "veto_authority": true,
+      "version": "1.0.0"
+    },
+    {
+      "file": "efficiency_stage1.md",
+      "member": "Efficiency",
+      "council": "architecture",
+      "stage": 1,
+      "veto_authority": false,
+      "version": "1.0.0"
+    },
+    {
+      "file": "efficiency_stage2.md",
+      "member": "Efficiency",
+      "council": "architecture",
+      "stage": 2,
+      "veto_authority": false,
+      "version": "1.0.0"
+    },
+    {
+      "file": "evolution_stage1.md",
+      "member": "Evolution",
+      "council": "architecture",
+      "stage": 1,
+      "veto_authority": false,
+      "version": "1.0.0"
+    },
+    {
+      "file": "evolution_stage2.md",
+      "member": "Evolution",
+      "council": "architecture",
+      "stage": 2,
+      "veto_authority": false,
+      "version": "1.0.0"
+    },
+    {
+      "file": "chairman_synthesis.md",
+      "member": "Chairman",
+      "council": "architecture",
+      "stage": 3,
+      "veto_authority": false,
+      "version": "1.0.0"
+    }
+  ]
+}

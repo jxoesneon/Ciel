@@ -1,0 +1,45 @@
+{
+  "schema": "domain_state/1.0",
+  "version": "1.0.0",
+  "updated": "2025-08-05T00:00:00Z",
+  "global_domain": {
+    "path": "~/.ciel/",
+    "vcs": "git",
+    "clean": false,
+    "last_commit": "d738171"
+  },
+  "local_domain": {
+    "path": "/Users/mey/Zegion/.ciel/",
+    "vcs": "gitignored",
+    "exists": true,
+    "contents": [
+      "AGENTIC_LOOP_COUNCIL_SPECS.md",
+      "DELEGATION_PLAN.md",
+      "DELEGATION_PLAN_2D_TO_3D.md",
+      "DELEGATION_PLAN_CIEL_IMPLEMENTATION.md",
+      "DELEGATION_PLAN_CIEL_INIT.md",
+      "DELEGATION_PLAN_CONSOLE_ERRORS.md",
+      "DELEGATION_PLAN_COUNCIL_SPECS.md",
+      "DELEGATION_PLAN_NEW_APIS.md",
+      "DELEGATION_PLAN_OAT.md",
+      "DELEGATION_PLAN_PERSISTENCE.md",
+      "DELEGATION_PLAN_REMAINING.md",
+      "DELEGATION_PLAN_TERMINOLOGY_AUDIT.md",
+      "DELEGATION_PLAN_TTS.md",
+      "DELEGATION_PLAN_TTS_COMPLETION.md",
+      "INTEGRITY.json",
+      "OAT_RESULTS.md",
+      "checkpoints",
+      "configuration",
+      "council",
+      "escalation.json",
+      "logs",
+      "memory",
+      "project.json",
+      "refs"
+    ]
+  },
+  "isolation_verified": true,
+  "cross_project_bleed": false,
+  "promotion_queue": []
+}

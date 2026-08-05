@@ -1,0 +1,14 @@
+{
+  "schema": "versioning_state/1.0",
+  "version": "1.0.0",
+  "updated": "2026-08-05T00:12:45Z",
+  "registry_versions": [
+    {
+      "version": "1.0.0",
+      "date": "2026-08-05T00:12:45Z",
+      "changes": "initial index"
+    }
+  ],
+  "pending_promotions": [],
+  "promotion_history": []
+}

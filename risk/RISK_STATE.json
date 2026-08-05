@@ -1,0 +1,67 @@
+{
+  "schema": "risk_state/1.0",
+  "version": "1.0.0",
+  "updated": "2026-08-04T23:58:30Z",
+  "classification_levels": ["low", "mid", "high", "critical"],
+  "thresholds": {
+    "mid_threshold": 3.0,
+    "high_threshold": 6.0,
+    "critical_threshold": 8.5,
+    "critical_threshold_cap": 9.0,
+    "judge_confidence_floor": 0.70
+  },
+  "classification_weights": {
+    "reversibility": 0.25,
+    "blast_radius": 0.20,
+    "external_impact": 0.20,
+    "data_sensitivity": 0.15,
+    "cost": 0.10,
+    "novelty": 0.10
+  },
+  "escalation_ladder": [
+    {
+      "level": "A",
+      "condition": "low_risk + registry_hit + confidence>=0.8",
+      "action": "autonomous"
+    },
+    {
+      "level": "B",
+      "condition": "low_risk + reasoning_path + confidence>=0.7",
+      "action": "autonomous_with_log"
+    },
+    {
+      "level": "C",
+      "condition": "mid/high_risk OR self_modification OR skill_acquisition",
+      "action": "council_gated"
+    },
+    {
+      "level": "D",
+      "condition": "critical_risk OR confidence<threshold OR council_deadlock",
+      "action": "user_escalation"
+    }
+  ],
+  "llm_judge_enabled": true,
+  "llm_judge": {
+    "model": "auto",
+    "confidence_floor": 0.70,
+    "mid_cost_usd_threshold": 0.10,
+    "high_cost_usd_threshold": 1.00,
+    "cost_threshold": 0.20
+  },
+  "critical_risk_escalation": "always_user",
+  "critical": {
+    "watch_hours": 24,
+    "require_post_mortem": true,
+    "require_alternative_proposal": true,
+    "accept_remote_approval": false
+  },
+  "safety_veto_floor": 3,
+  "escalation_profile": {
+    "auto_detected": null,
+    "override": null,
+    "effective": "development"
+  },
+  "escalation_timeout_hours": 72,
+  "total_risk_assessments": 0,
+  "escalations_by_level": {"A": 0, "B": 0, "C": 0, "D": 0}
+}

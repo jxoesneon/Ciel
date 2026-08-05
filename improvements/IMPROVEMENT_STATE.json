@@ -1,0 +1,57 @@
+{
+  "schema": "improvement_state/1.0",
+  "version": "1.0.0",
+  "updated": "2026-08-04T23:58:45Z",
+  "total_improvements": 0,
+  "total_rollbacks": 0,
+  "total_growth_signals": 3,
+  "active_improvements": [],
+  "improvement_queue": [],
+  "rollback_history": [],
+  "growth_signals": [
+    {
+      "id": "GROWTH_SIGNAL_20260422_AMNESIAC_RECOVERY",
+      "date": "2026-04-22",
+      "subject": "Second-Order Failure (Amnesiac Recovery)",
+      "severity": "CRITICAL",
+      "status": "processed"
+    },
+    {
+      "id": "GROWTH_SIGNAL_20260422_BLIND_DELETION",
+      "date": "2026-04-22",
+      "subject": "Blind Deletion Recovery",
+      "severity": "HIGH",
+      "status": "processed"
+    },
+    {
+      "id": "GROWTH_SIGNAL_20260730_AGENTIC_LOOP_STANDARDS",
+      "date": "2026-07-30",
+      "subject": "Agentic Loop Standards & Best Practices",
+      "severity": "CORE",
+      "status": "processed"
+    }
+  ],
+  "triggers": {
+    "fast_path_miss_rate_threshold": 0.2,
+    "confidence_floor": 0.65,
+    "novel_request_recurrence": 3,
+    "duplication_overlap_threshold": 0.7
+  },
+  "config": {
+    "global_max_per_day": 20,
+    "local_max_per_day": 10,
+    "trigger_dedup_window_hours": 6,
+    "suppression_days": 7,
+    "sweep_interval": "weekly",
+    "checkpoint_stale_hours": 72,
+    "checkpoint_retention_days": 14,
+    "regression": {
+      "watch_invocations": 20,
+      "watch_hours": 48
+    },
+    "auto_tune": true,
+    "auto_tune_range": 0.1
+  },
+  "council_gate_enabled": true,
+  "auto_rollback_enabled": true
+}

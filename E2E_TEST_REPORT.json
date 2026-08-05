@@ -1,0 +1,238 @@
+{
+  "schema": "e2e_test_report/1.0",
+  "timestamp": "2026-08-05T00:16:03Z",
+  "total_tests": 6,
+  "results": [
+    {
+      "test_name": "Fast Path Hit \u2014 git",
+      "request": "git commit my changes",
+      "timestamp": "2026-08-05T00:16:03Z",
+      "steps": [
+        {
+          "step": "fast_path",
+          "path": "fast",
+          "hit": true,
+          "candidate": "git",
+          "confidence": 1.0,
+          "match_type": "direct",
+          "all_candidates": [
+            {
+              "skill": "git",
+              "confidence": 1.0,
+              "match_type": "direct",
+              "pattern": "git"
+            },
+            {
+              "skill": "git",
+              "confidence": 0.9,
+              "match_type": "direct",
+              "pattern": "commit"
+            }
+          ]
+        }
+      ],
+      "final_path": "fast",
+      "final_candidate": "git",
+      "final_confidence": 1.0
+    },
+    {
+      "test_name": "Fast Path Hit \u2014 blueprint",
+      "request": "create a blueprint for the new feature",
+      "timestamp": "2026-08-05T00:16:03Z",
+      "steps": [
+        {
+          "step": "fast_path",
+          "path": "fast",
+          "hit": true,
+          "candidate": "blueprint",
+          "confidence": 1.0,
+          "match_type": "direct",
+          "all_candidates": [
+            {
+              "skill": "blueprint",
+              "confidence": 1.0,
+              "match_type": "direct",
+              "pattern": "blueprint"
+            }
+          ]
+        }
+      ],
+      "final_path": "fast",
+      "final_candidate": "blueprint",
+      "final_confidence": 1.0
+    },
+    {
+      "test_name": "Reasoning Path \u2014 tag-based (code)",
+      "request": "analyze code quality in this project",
+      "timestamp": "2026-08-05T00:16:03Z",
+      "steps": [
+        {
+          "step": "fast_path",
+          "path": "fast",
+          "hit": true,
+          "candidate": "code_analysis",
+          "confidence": 0.9,
+          "match_type": "direct",
+          "all_candidates": [
+            {
+              "skill": "code_analysis",
+              "confidence": 0.9,
+              "match_type": "direct",
+              "pattern": "analyze"
+            },
+            {
+              "skill": "code_review",
+              "confidence": 0.9,
+              "match_type": "direct",
+              "pattern": "quality"
+            }
+          ]
+        }
+      ],
+      "final_path": "fast",
+      "final_candidate": "code_analysis",
+      "final_confidence": 0.9
+    },
+    {
+      "test_name": "Reasoning Path \u2014 tag-based (deploy)",
+      "request": "set up deploy pipeline for ci cd",
+      "timestamp": "2026-08-05T00:16:03Z",
+      "steps": [
+        {
+          "step": "fast_path",
+          "path": "fast",
+          "hit": true,
+          "candidate": "cicd_integration",
+          "confidence": 0.9,
+          "match_type": "direct",
+          "all_candidates": [
+            {
+              "skill": "cicd_integration",
+              "confidence": 0.9,
+              "match_type": "direct",
+              "pattern": "ci"
+            },
+            {
+              "skill": "cicd_integration",
+              "confidence": 0.9,
+              "match_type": "direct",
+              "pattern": "cd"
+            },
+            {
+              "skill": "cicd_integration",
+              "confidence": 0.9,
+              "match_type": "direct",
+              "pattern": "pipeline"
+            }
+          ]
+        }
+      ],
+      "final_path": "fast",
+      "final_candidate": "cicd_integration",
+      "final_confidence": 0.9
+    },
+    {
+      "test_name": "Acquisition Path \u2014 MCP browser",
+      "request": "use browser_navigate to open a webpage",
+      "timestamp": "2026-08-05T00:16:03Z",
+      "steps": [
+        {
+          "step": "fast_path",
+          "path": "fast",
+          "hit": false,
+          "confidence": 0.0,
+          "all_candidates": []
+        },
+        {
+          "step": "reasoning_path",
+          "path": "reasoning",
+          "hit": false,
+          "confidence": 0.0,
+          "gaps": [
+            {
+              "subtask": "use browser_navigate to open a webpage",
+              "reason": "no skill matched above floor"
+            }
+          ]
+        },
+        {
+          "step": "acquisition_path",
+          "path": "acquisition",
+          "hit": true,
+          "tier": 2,
+          "source": "mcp:mempalace-rs/mempalace_status",
+          "candidate": "mcp_tool:mempalace-rs/mempalace_status",
+          "council_required": true
+        },
+        {
+          "step": "council_gate",
+          "scope": "SKILL_INTEGRATION",
+          "passed": true,
+          "members": [
+            "Coherence",
+            "Capability",
+            "Safety",
+            "Efficiency",
+            "Evolution"
+          ],
+          "scores": {
+            "Coherence": 7,
+            "Capability": 8,
+            "Safety": 9,
+            "Efficiency": 7,
+            "Evolution": 8
+          },
+          "weighted_score": 7.8,
+          "threshold": 6.5
+        }
+      ],
+      "final_path": "acquisition",
+      "final_candidate": "mcp_tool:mempalace-rs/mempalace_status",
+      "final_confidence": 0.6
+    },
+    {
+      "test_name": "User Escalation \u2014 novel request",
+      "request": "xyzzy foobar quux nonexistent capability",
+      "timestamp": "2026-08-05T00:16:03Z",
+      "steps": [
+        {
+          "step": "fast_path",
+          "path": "fast",
+          "hit": false,
+          "confidence": 0.0,
+          "all_candidates": []
+        },
+        {
+          "step": "reasoning_path",
+          "path": "reasoning",
+          "hit": false,
+          "confidence": 0.0,
+          "gaps": [
+            {
+              "subtask": "xyzzy foobar quux nonexistent capability",
+              "reason": "no skill matched above floor"
+            }
+          ]
+        },
+        {
+          "step": "acquisition_path",
+          "path": "acquisition",
+          "hit": false,
+          "tier": 3,
+          "reason": "no MCP match, web extraction simulated as miss for E2E test"
+        }
+      ],
+      "final_path": "user_escalation",
+      "final_candidate": null,
+      "final_confidence": 0.0
+    }
+  ],
+  "router_stats_after": {
+    "total_requests": 11,
+    "fast_path_hits": 8,
+    "reasoning_path_hits": 0,
+    "acquisition_path_hits": 1,
+    "cache_misses": 0
+  },
+  "all_paths_exercised": true
+}

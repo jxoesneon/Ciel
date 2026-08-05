@@ -1,0 +1,17 @@
+{
+  "current_runtime": "devin-for-terminal",
+  "fast_path_floor": 0.8,
+  "reasoning_floor": 0.7,
+  "acquisition_threshold": 0.6,
+  "context_budget_tokens": 32000,
+  "last_request": "xyzzy foobar quux nonexistent capability",
+  "last_route": "user_escalation",
+  "statistics": {
+    "total_requests": 11,
+    "fast_path_hits": 8,
+    "reasoning_path_hits": 0,
+    "acquisition_path_hits": 1,
+    "cache_misses": 0
+  },
+  "updated": "2026-08-05T00:16:03Z"
+}
