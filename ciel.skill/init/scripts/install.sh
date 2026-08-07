@@ -36,8 +36,8 @@ say "Seed skill directory ready."
 # --- 3. Git init -------------------------------------------------------------
 if need git; then
   if [ ! -d "$CIEL_HOME/.git" ]; then
-    (cd "$CIEL_HOME" && git init -q && git checkout -q -b main)
-    cat >"$CIEL_HOME/.gitignore" <<'EOF'
+  (cd "$CIEL_HOME" && git init -q && git checkout -q -b main)
+  cat >"$CIEL_HOME/.gitignore" <<'EOF'
 .cache/
 activity.log
 backups/
@@ -48,10 +48,10 @@ checkpoints/
 .attic/
 sandbox/
 EOF
-    (cd "$CIEL_HOME" && git add -A && git commit -q -m "genesis: Ciel cold start @ $CIEL_VERSION") || true
-    say "Git repository initialized."
+  (cd "$CIEL_HOME" && git add -A && git commit -q -m "genesis: Ciel cold start @ $CIEL_VERSION") || true
+  say "Git repository initialized."
   else
-    say "Git repository already present."
+  say "Git repository already present."
   fi
 else
   warn "git not found; skipping git setup. Ciel can run but history will be disabled."
@@ -61,37 +61,37 @@ fi
 if ! need cargo; then
   warn "Rust toolchain not found."
   if [ "${CIEL_AUTO_INSTALL_RUST:-0}" = "1" ]; then
-    say "Installing Rust via rustup (auto)…"
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable --profile minimal
-    # shellcheck source=/dev/null
-    . "$HOME/.cargo/env"
+  say "Installing Rust via rustup (auto)…"
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable --profile minimal
+  # shellcheck source=/dev/null
+  . "$HOME/.cargo/env"
   else
-    warn "Set CIEL_AUTO_INSTALL_RUST=1 to auto-install. Falling back to SQLite backend."
-    SKIP_MEMPALACE=1
+  warn "Set CIEL_AUTO_INSTALL_RUST=1 to auto-install. Falling back to SQLite backend."
+  SKIP_MEMPALACE=1
   fi
 fi
 
 # --- 5. MemPalace-rs ---------------------------------------------------------
 if [ -z "${SKIP_MEMPALACE:-}" ] && need cargo; then
   if ! need mempalace-rs; then
-    say "Installing mempalace-rs (cargo install --locked)…"
-    cargo install mempalace-rs --locked || {
+  say "Installing mempalace-rs (cargo install --locked)…"
+  cargo install mempalace-rs --locked || {
       warn "cargo install failed; will fall back"
       SKIP_MEMPALACE=1
-    }
+  }
   else
-    say "mempalace-rs already installed: $(mempalace-rs --version 2>/dev/null || echo 'unknown')"
+  say "mempalace-rs already installed: $(mempalace-rs --version 2>/dev/null || echo 'unknown')"
   fi
 fi
 
 # --- 6. Fallback backend (SQLite) --------------------------------------------
 if [ -n "${SKIP_MEMPALACE:-}" ]; then
   if need sqlite3; then
-    say "Configuring SQLite fallback backend."
-    touch "$CIEL_HOME/ciel.db"
+  say "Configuring SQLite fallback backend."
+  touch "$CIEL_HOME/ciel.db"
   else
-    warn "sqlite3 not found; falling back to filesystem KV backend."
-    mkdir -p "$CIEL_HOME/fs_backend"
+  warn "sqlite3 not found; falling back to filesystem KV backend."
+  mkdir -p "$CIEL_HOME/fs_backend"
   fi
 fi
 

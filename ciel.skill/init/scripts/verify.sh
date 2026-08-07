@@ -22,9 +22,9 @@ fail() {
 # 1. Required directories
 for d in skills registry council acquisition checkpoints; do
   if [ -d "$CIEL_HOME/$d" ]; then
-    say "dir ok: $d"
+  say "dir ok: $d"
   else
-    fail "dir missing: $d"
+  fail "dir missing: $d"
   fi
 done
 
@@ -38,14 +38,14 @@ fi
 # 3. Git
 if command -v git >/dev/null 2>&1; then
   if [ -d "$CIEL_HOME/.git" ]; then
-    HEAD_SHA="$(git -C "$CIEL_HOME" rev-parse HEAD 2>/dev/null || true)"
-    if [ -n "$HEAD_SHA" ]; then
+  HEAD_SHA="$(git -C "$CIEL_HOME" rev-parse HEAD 2>/dev/null || true)"
+  if [ -n "$HEAD_SHA" ]; then
       say "git ok: HEAD=$HEAD_SHA"
-    else
-      fail "git repo present but no HEAD"
-    fi
   else
-    fail "git repo missing in $CIEL_HOME"
+      fail "git repo present but no HEAD"
+  fi
+  else
+  fail "git repo missing in $CIEL_HOME"
   fi
 else
   say "git not installed — history disabled (acceptable)."
@@ -55,9 +55,9 @@ fi
 if command -v mempalace-rs >/dev/null 2>&1; then
   VER="$(mempalace-rs --version 2>/dev/null || true)"
   if [ -n "$VER" ]; then
-    say "mempalace-rs ok: $VER"
+  say "mempalace-rs ok: $VER"
   else
-    fail "mempalace-rs present but not runnable"
+  fail "mempalace-rs present but not runnable"
   fi
 elif [ -f "$CIEL_HOME/ciel.db" ]; then
   say "sqlite fallback detected."
@@ -70,9 +70,9 @@ fi
 # 5. Shell essentials
 for cmd in bash grep awk sed; do
   if command -v "$cmd" >/dev/null 2>&1; then
-    say "cmd ok: $cmd"
+  say "cmd ok: $cmd"
   else
-    fail "cmd missing: $cmd"
+  fail "cmd missing: $cmd"
   fi
 done
 

@@ -65,7 +65,7 @@ MD_FILES=$(find "$SKILL_PATH" -name "*.md" -type f | head -10)
 if [[ -n "$MD_FILES" ]]; then
   echo "- **Documentation files**:"
   echo "$MD_FILES" | while read f; do
-    echo "  - $(basename "$f") ($(wc -l < "$f" | xargs) lines)"
+  echo "  - $(basename "$f") ($(wc -l < "$f" | xargs) lines)"
   done
 fi
 
@@ -81,9 +81,9 @@ if [[ -n "$DESCRIPTION" ]]; then
   
   # Look for action verbs
   for verb in "search" "find" "analyze" "check" "audit" "build" "create" "manage" "orchestrate" "automate" "review" "test" "deploy" "design" "write" "read" "process" "extract" "convert" "generate" "validate"; do
-    if echo "$DESCRIPTION" | grep -qi "$verb"; then
+  if echo "$DESCRIPTION" | grep -qi "$verb"; then
       echo "  - $verb"
-    fi
+  fi
   done
 fi
 
@@ -112,7 +112,7 @@ echo ""
 DOMAINS=""
 for domain in "frontend" "backend" "api" "database" "testing" "security" "devops" "design" "mobile" "web" "cloud" "ai" "ml" "git" "github" "docker" "kubernetes" "aws" "testing" "documentation" "writing" "research" "analysis" "orchestration" "workflow"; do
   if echo "$NAME $DESCRIPTION" | grep -qi "$domain"; then
-    DOMAINS="$DOMAINS $domain"
+  DOMAINS="$DOMAINS $domain"
   fi
 done
 

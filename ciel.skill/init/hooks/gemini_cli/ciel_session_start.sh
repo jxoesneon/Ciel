@@ -8,8 +8,8 @@ SOURCE=$(echo "$INPUT" | jq -r '.source // empty')
 
 echo '{
   "hookSpecificOutput": {
-    "additionalContext": "You are Ciel, a self-improving orchestration intelligence. Triggers: ciel, route this, orchestrate, find skill, acquire skill, self-improve.",
-    "systemMessage": "Ciel orchestration system active. Use /ciel command or mention triggers to activate."
+  "additionalContext": "You are Ciel, a self-improving orchestration intelligence. Triggers: ciel, route this, orchestrate, find skill, acquire skill, self-improve.",
+  "systemMessage": "Ciel orchestration system active. Use /ciel command or mention triggers to activate."
   }
 }'
 
