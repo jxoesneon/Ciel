@@ -274,7 +274,7 @@ EXPECTED_FILES=(
 say "Checking ${#EXPECTED_FILES[@]} expected files..."
 for rel in "${EXPECTED_FILES[@]}"; do
   if [[ ! -f "$SKILL/$rel" ]]; then
-    fail "missing file: $rel"
+  fail "missing file: $rel"
   fi
 done
 [[ $FAILED -eq 0 ]] && ok "all expected files present"
@@ -282,7 +282,7 @@ done
 # ---------------------------------------------------------------- Exec bits
 for s in init/scripts/install.sh init/scripts/verify.sh; do
   if [[ -f "$SKILL/$s" && ! -x "$SKILL/$s" ]]; then
-    fail "not executable: $s"
+  fail "not executable: $s"
   fi
 done
 
@@ -292,9 +292,9 @@ for f in "$SKILL"/seed_skills/*/SKILL.md; do
   [[ -f "$f" ]] || continue
   head -n 30 "$f" >"$f.head.$$"
   for key in name version description triggers tags runtimes license; do
-    if ! grep -qE "^${key}:" "$f.head.$$"; then
+  if ! grep -qE "^${key}:" "$f.head.$$"; then
       fail "$(realpath --relative-to="$SKILL" "$f" 2>/dev/null || echo "$f"): missing frontmatter key '${key}'"
-    fi
+  fi
   done
   rm -f "$f.head.$$"
 done
@@ -305,9 +305,9 @@ for f in "$ROOT"/skills/*/SKILL.md; do
   [[ -f "$f" ]] || continue
   head -n 30 "$f" >"$f.head.$$"
   for key in name version format runtimes triggers license tags description; do
-    if ! grep -qE "^${key}:" "$f.head.$$"; then
+  if ! grep -qE "^${key}:" "$f.head.$$"; then
       fail "$(realpath --relative-to="$ROOT" "$f" 2>/dev/null || echo "$f"): missing frontmatter key '${key}'"
-    fi
+  fi
   done
   rm -f "$f.head.$$"
 done
@@ -318,9 +318,9 @@ for f in "$ROOT"/agents/*.md; do
   [[ -f "$f" ]] || continue
   head -n 30 "$f" >"$f.head.$$"
   for key in name version description; do
-    if ! grep -qE "^${key}:" "$f.head.$$"; then
+  if ! grep -qE "^${key}:" "$f.head.$$"; then
       fail "$(realpath --relative-to="$ROOT" "$f" 2>/dev/null || echo "$f"): missing frontmatter key '${key}'"
-    fi
+  fi
   done
   rm -f "$f.head.$$"
 done
@@ -329,7 +329,7 @@ done
 say "Checking root SKILL.md frontmatter..."
 for key in name version description entrypoint format runtimes; do
   if ! grep -qE "^${key}:" "$SKILL/SKILL.md"; then
-    fail "SKILL.md missing frontmatter key '${key}'"
+  fail "SKILL.md missing frontmatter key '${key}'"
   fi
 done
 
@@ -347,8 +347,8 @@ PATTERNS=(
 for pat in "${PATTERNS[@]}"; do
   matches="$(grep -RIEl --binary-files=without-match "$pat" "$SKILL" 2>/dev/null || true)"
   if [[ -n "$matches" ]]; then
-    fail "secret-like pattern '$pat' matched in:"
-    echo "$matches"
+  fail "secret-like pattern '$pat' matched in:"
+  echo "$matches"
   fi
 done
 

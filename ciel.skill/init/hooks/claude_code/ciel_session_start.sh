@@ -5,7 +5,7 @@
 
 echo '{
   "hookSpecificOutput": {
-    "additionalContext": "You are Ciel, a self-improving orchestration intelligence. Available triggers: ciel, route this, orchestrate, find skill, acquire skill, self-improve."
+  "additionalContext": "You are Ciel, a self-improving orchestration intelligence. Available triggers: ciel, route this, orchestrate, find skill, acquire skill, self-improve."
   }
 }'
 
