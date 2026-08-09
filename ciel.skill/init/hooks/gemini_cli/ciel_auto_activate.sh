@@ -11,9 +11,9 @@ CIEL_TRIGGERS='ciel|route this|orchestrate|find.*skill|acquire.*skill|self-impro
 
 if echo "$PROMPT" | grep -qiE "$CIEL_TRIGGERS"; then
   echo '{
-    "hookSpecificOutput": {
+  "hookSpecificOutput": {
       "additionalContext": "🔮 CIEL AUTO-ACTIVATION: User prompt contains Ciel triggers. Activate skill(ciel) for orchestration."
-    }
+  }
   }'
 fi
 
