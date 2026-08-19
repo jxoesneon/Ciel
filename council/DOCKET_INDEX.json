@@ -1,5 +1,5 @@
 {
-  "total_dockets": 6,
+  "total_dockets": 7,
   "dockets": [
     {
       "id": "20260730_AGENTIC_LOOP_STANDARDS",
@@ -40,6 +40,12 @@
     {
       "id": "20260820_OPTION_B_RESEARCH",
       "subject": "Option B research \u2014 Godot mesh LOD with MultiMesh + next-step proposals",
+      "date": "2026-08-20",
+      "status": "resolved"
+    },
+    {
+      "id": "20260820_PRIMITIVE_BUDGET_AUDIT_2",
+      "subject": "Round 2 primitive budget audit \u2014 disable AsteroidField + reduce near radius/count",
       "date": "2026-08-20",
       "status": "resolved"
     }
