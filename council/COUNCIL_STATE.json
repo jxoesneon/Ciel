@@ -1,7 +1,7 @@
 {
   "schema": "council_state/1.0",
   "version": "1.0.0",
-  "updated": "2026-08-19T12:30:00Z",
+  "updated": "2026-08-19T13:15:00Z",
   "architecture_council": {
     "members": [
       {
@@ -111,7 +111,7 @@
       "status": "resolved"
     }
   ],
-  "total_invocations": 1,
-  "total_amendments": 1,
+  "total_invocations": 2,
+  "total_amendments": 3,
   "total_vetoes": 0
 }
