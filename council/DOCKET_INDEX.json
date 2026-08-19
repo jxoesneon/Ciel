@@ -1,5 +1,5 @@
 {
-  "total_dockets": 4,
+  "total_dockets": 6,
   "dockets": [
     {
       "id": "20260730_AGENTIC_LOOP_STANDARDS",
@@ -29,6 +29,18 @@
       "id": "20260819_WAVE3_AUDIT",
       "subject": "Wave 3 Implementation Audit",
       "date": "2026-08-19",
+      "status": "resolved"
+    },
+    {
+      "id": "20260820_PRIMITIVE_BUDGET_AUDIT",
+      "subject": "Flight scene primitive budget audit \u2014 dual-mesh asteroid LOD",
+      "date": "2026-08-20",
+      "status": "resolved"
+    },
+    {
+      "id": "20260820_OPTION_B_RESEARCH",
+      "subject": "Option B research \u2014 Godot mesh LOD with MultiMesh + next-step proposals",
+      "date": "2026-08-20",
       "status": "resolved"
     }
   ]

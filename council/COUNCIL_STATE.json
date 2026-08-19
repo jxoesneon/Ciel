@@ -109,9 +109,15 @@
       "subject": "Wave 3 Implementation Audit",
       "date": "2026-08-19",
       "status": "resolved"
+    },
+    {
+      "id": "20260820_PRIMITIVE_BUDGET_AUDIT",
+      "subject": "Flight scene primitive budget audit — dual-mesh asteroid LOD",
+      "date": "2026-08-20",
+      "status": "resolved"
     }
   ],
-  "total_invocations": 2,
+  "total_invocations": 3,
   "total_amendments": 3,
   "total_vetoes": 0
 }
