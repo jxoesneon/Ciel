@@ -37,6 +37,16 @@ fi
 # Normalize for matching
 CMD_LC=$(echo "$COMMAND" | tr '[:upper:]' '[:lower:]')
 
+# Interactive tools must always defer to the user — never auto-approve.
+# Exiting 0 with no decision output lets the normal permission flow render
+# the question card to the user (instead of silently skipping it).
+case "$TOOL_NAME" in
+  ask_user_question)
+    log "{\"ts\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",\"hook\":\"PreToolUse\",\"tool\":\"$TOOL_NAME\",\"decision\":\"defer\",\"reason\":\"interactive tool — prompt user\"}"
+    exit 0
+    ;;
+esac
+
 # === CRITICAL RISK: Block destructive commands ===
 if echo "$CMD_LC" | grep -qE 'rm\s+-rf\s+/|rm\s+-rf\s+\*|>:?/dev/null.*</dev/null|mkfs\.|dd\s+if=.*of=/dev/|:\(\)\s*\{\s*:\|:\s*\&\s*\};|curl.*\|\s*sh|wget.*\|\s*sh'; then
   log "{\"ts\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",\"hook\":\"PreToolUse\",\"tool\":\"$TOOL_NAME\",\"decision\":\"block\",\"reason\":\"critical-risk destructive command\",\"command\":\"$COMMAND\"}"

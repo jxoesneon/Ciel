@@ -1,0 +1,169 @@
+{
+  "recipes": {
+    "ui_click": {
+      "category": "UI",
+      "model": "DUAL_TRANSIENT_CHIRP",
+      "duration_sec": 0.035,
+      "f_start_hz": 2400.0,
+      "f_end_hz": 4800.0,
+      "decay_tau": 0.008,
+      "harmonic_ratio": 2.0,
+      "gain_db": -6.0
+    },
+    "ui_whoosh": {
+      "category": "UI",
+      "model": "SWEPT_BANDPASS_PINK",
+      "duration_sec": 0.22,
+      "f_center_start_hz": 300.0,
+      "f_center_peak_hz": 1900.0,
+      "f_center_end_hz": 400.0,
+      "q": 3.2,
+      "panning": "CONSTANT_POWER_LEFT_TO_RIGHT"
+    },
+    "ui_confirm_chord": {
+      "category": "UI",
+      "model": "ADDITIVE_MAJOR_9TH",
+      "duration_sec": 0.65,
+      "notes_midi": [72, 76, 79, 83, 86],
+      "stagger_interval_sec": 0.018,
+      "decay_tau": 0.32,
+      "harmonics": [1.0, 0.25]
+    },
+    "metal_impact": {
+      "category": "PHYSICS",
+      "model": "MODAL_INHARMONIC_RESONATOR",
+      "duration_sec": 2.5,
+      "f0_hz": 440.0,
+      "mode_ratios": [1.0, 1.414, 2.142, 2.761, 3.824, 5.123],
+      "mode_gains": [1.0, 0.75, 0.55, 0.40, 0.25, 0.15],
+      "mode_t60_sec": [2.2, 1.8, 1.3, 0.9, 0.5, 0.25],
+      "saturation": "TANH_ASYMMETRIC"
+    },
+    "wood_thud": {
+      "category": "PHYSICS",
+      "model": "PITCH_DIVE_MODAL",
+      "duration_sec": 0.8,
+      "pitch_start_hz": 220.0,
+      "pitch_end_hz": 55.0,
+      "pitch_decay_tau": 0.012,
+      "mode_ratios": [1.0, 1.84, 2.72, 3.91],
+      "mode_gains": [0.8, 0.5, 0.3, 0.15],
+      "mode_decay_tau": [0.08, 0.05, 0.025, 0.012]
+    },
+    "glass_shatter": {
+      "category": "PHYSICS",
+      "model": "POISSON_MODAL_CASCADE",
+      "duration_sec": 1.2,
+      "shard_count": 60,
+      "freq_min_hz": 2500.0,
+      "freq_max_hz": 11500.0,
+      "shard_t60_sec": [0.04, 0.22]
+    },
+    "fleshy_hit": {
+      "category": "PHYSICS",
+      "model": "SUB_THUMP_SQUELCH",
+      "duration_sec": 0.45,
+      "sub_pitch_start_hz": 162.0,
+      "sub_pitch_end_hz": 42.0,
+      "sub_decay_tau": 0.06,
+      "noise_lpf_hz": 600.0,
+      "saturation_drive": 2.5
+    },
+    "stone_impact": {
+      "category": "PHYSICS",
+      "model": "LOW_Q_MODAL_CLUSTER",
+      "duration_sec": 0.6,
+      "modes": [
+        {"freq": 85.0, "gain": 1.0, "tau": 0.07},
+        {"freq": 142.0, "gain": 0.7, "tau": 0.04},
+        {"freq": 215.0, "gain": 0.45, "tau": 0.03},
+        {"freq": 330.0, "gain": 0.25, "tau": 0.018}
+      ]
+    },
+    "rain_droplets": {
+      "category": "WEATHER",
+      "model": "MINNAERT_BUBBLE_ACOUSTICS",
+      "duration_sec": 1.0,
+      "radius_range_mm": [0.4, 2.5],
+      "upward_chirp_pct": 12.0,
+      "decay_alpha": 300.0,
+      "density_drops_per_sec": 80.0
+    },
+    "ocean_waves": {
+      "category": "WEATHER",
+      "model": "BROWN_PINK_SWELL_SVF",
+      "duration_sec": 15.0,
+      "swell_period_sec": 11.0,
+      "fc_range_hz": [150.0, 650.0],
+      "seafoam_threshold": 0.65
+    },
+    "howling_wind": {
+      "category": "WEATHER",
+      "model": "FBM_NOISE_RESONANT_BP",
+      "duration_sec": 10.0,
+      "fbm_octaves": 3,
+      "whistle_f1_range_hz": [450.0, 1250.0],
+      "whistle_f2_range_hz": [1100.0, 2300.0],
+      "q": 14.0
+    },
+    "thunder_strike": {
+      "category": "WEATHER",
+      "model": "DISPERSIVE_DELAY_BURST",
+      "duration_sec": 4.5,
+      "arc_crack_ms": 40.0,
+      "echo_delays_sec": [0.08, 0.22, 0.45, 0.78, 1.20, 1.85],
+      "dispersion_fc_start_hz": 8000.0,
+      "dispersion_fc_end_hz": 50.0,
+      "sub_rumble_hz": 40.0
+    },
+    "laser_blaster": {
+      "category": "SCI_FI",
+      "model": "EXP_PITCH_SAW_POLYBLEP",
+      "duration_sec": 0.35,
+      "f_start_hz": 3200.0,
+      "f_end_hz": 85.0,
+      "sweep_tau_sec": 0.055,
+      "polyblep_waveform": "SAW",
+      "saturation_drive": 3.5
+    },
+    "energy_shield": {
+      "category": "SCI_FI",
+      "model": "DUAL_OP_FM_FLANGER",
+      "duration_sec": 1.5,
+      "carrier_hz": 140.0,
+      "mod1_hz": 280.0,
+      "mod2_hz": 70.0,
+      "mod_index_peak": 4.8,
+      "flange_rate_hz": 3.5
+    },
+    "warp_reactor": {
+      "category": "SCI_FI",
+      "model": "PRIME_ADDITIVE_DETUNED",
+      "duration_sec": 6.0,
+      "f0_hz": 45.0,
+      "partials": [1, 2, 3, 5, 7, 11],
+      "detune_cents": [0.0, 3.5, -2.8, 5.2, -4.1, 7.8],
+      "sub_sine_hz": 22.5,
+      "pulse_rate_hz": 0.5
+    },
+    "creature_roar": {
+      "category": "ORGANIC",
+      "model": "ROSENBERG_GLOTTAL_FORMANT",
+      "duration_sec": 1.8,
+      "pitch_start_hz": 140.0,
+      "pitch_end_hz": 45.0,
+      "subharmonic_ratio": 0.5,
+      "formants_f1_hz": [650.0, 350.0],
+      "formants_f2_hz": [1100.0, 600.0],
+      "formants_f3_hz": [2400.0, 1800.0]
+    },
+    "insect_chitter": {
+      "category": "ORGANIC",
+      "model": "POISSON_MICRO_GRAIN_AM",
+      "duration_sec": 1.2,
+      "grain_len_sec": [0.04, 0.09],
+      "chirp_range_hz": [4800.0, 8300.0],
+      "flutter_rate_hz": 165.0
+    }
+  }
+}

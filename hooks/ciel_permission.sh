@@ -18,6 +18,17 @@ fi
 
 CMD_LC=$(echo "$COMMAND" | tr '[:upper:]' '[:lower:]')
 
+# Interactive tools must always defer to the user — never auto-approve.
+# Exiting 0 with no decision output lets the normal permission flow render
+# the question card to the user (instead of silently skipping it).
+case "$TOOL_NAME" in
+  ask_user_question)
+    printf '{"ts":"%s","hook":"PermissionRequest","tool":"%s","decision":"defer","reason":"interactive tool — prompt user"}\n' \
+      "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$TOOL_NAME" >> "$ACTIVITY_LOG"
+    exit 0
+    ;;
+esac
+
 # Auto-approve read-only and known-safe operations
 SAFE_PATTERNS='^git\s+(status|log|diff|show|branch|remote|config\s+--list|rev-parse|grep)\s*;?'
 SAFE_PATTERNS2='^(ls|cat|head|tail|find|grep|rg|which|pwd|echo|printf|mkdir\s+-p|touch|chmod\s+\+?x)\s*;?'

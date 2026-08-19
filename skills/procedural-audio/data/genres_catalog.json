@@ -1,0 +1,526 @@
+{
+  "schema_version": "2.0.0",
+  "total_genres": 20,
+  "genres": [
+    {
+      "id": "chiptune_8bit_nes",
+      "name": "8-Bit Chiptune / NES Arcade (Ricoh 2A03)",
+      "bpm": 144.0,
+      "meter": [
+        4,
+        4
+      ],
+      "mode": "Ionian / Mixolydian",
+      "scale": [
+        0,
+        2,
+        4,
+        5,
+        7,
+        9,
+        11
+      ],
+      "lead_synth": "PolyBLEP Pulse Wave (12.5% / 50% Duty)",
+      "bass_synth": "4-bit Quantized Triangle",
+      "percussion": "15-bit Galois LFSR Noise Burst",
+      "reverb_type": "Haas Stereo Micro-Delay",
+      "reverb_t60": 0.0,
+      "master_saturation": "NES DAC Softclip (drive: 1.2)",
+      "swing": 0.0
+    },
+    {
+      "id": "chiptune_16bit_ym2612",
+      "name": "16-Bit FM Chiptune (Sega Genesis YM2612 / SNES SPC700)",
+      "bpm": 138.0,
+      "meter": [
+        4,
+        4
+      ],
+      "mode": "Dorian / Aeolian",
+      "scale": [
+        0,
+        2,
+        3,
+        5,
+        7,
+        9,
+        10
+      ],
+      "lead_synth": "4-Op FM Synth (Algo 5, Ratios 1:1:3:7)",
+      "bass_synth": "Lately Bass (Algo 4, Ratios 0.5:0.5:1:1)",
+      "percussion": "FM Metallic Snare + DAC PCM Kick",
+      "reverb_type": "SPC700 8-tap Echo Matrix",
+      "reverb_t60": 1.8,
+      "master_saturation": "YM2612 Crossover Distortion",
+      "swing": 0.56
+    },
+    {
+      "id": "cyberpunk_darksynth",
+      "name": "Cyberpunk Darksynth & Industrial Synthwave",
+      "bpm": 120.0,
+      "meter": [
+        4,
+        4
+      ],
+      "mode": "Phrygian / Aeolian",
+      "scale": [
+        0,
+        1,
+        3,
+        5,
+        7,
+        8,
+        10
+      ],
+      "lead_synth": "Triple-Detuned PolyBLEP Supersaw + Sync",
+      "bass_synth": "Distorted Reese Bass (Saw + Sub)",
+      "percussion": "Linndrum Kick + Gated Snare + Metallic Hats",
+      "reverb_type": "Non-Linear Gated Plate",
+      "reverb_t60": 1.2,
+      "master_saturation": "Asymmetric Diode Clipping",
+      "sidechain_db": -18.0
+    },
+    {
+      "id": "dark_fantasy_epic_orchestral",
+      "name": "Dark Fantasy Epic Orchestral (Wagnerian/Stravinskian)",
+      "bpm": 88.0,
+      "meter": [
+        7,
+        8
+      ],
+      "mode": "Hungarian Minor / Octatonic",
+      "scale": [
+        0,
+        2,
+        3,
+        6,
+        7,
+        8,
+        11
+      ],
+      "lead_synth": "Unison 8 French Horns + 4 Trombones (Modal)",
+      "bass_synth": "Contrabassoon + Cimbasso + Basses",
+      "percussion": "Gran Cassa + Cast-Iron Anvil + Tam-Tam",
+      "reverb_type": "Large Stone Cathedral Reverb",
+      "reverb_t60": 3.8,
+      "master_saturation": "30 IPS Analog Tape Saturation",
+      "swing": 0.0
+    },
+    {
+      "id": "scifi_atmospheric_ambient",
+      "name": "Sci-Fi Atmospheric Ambient & Cosmic Drone",
+      "bpm": 50.0,
+      "meter": [
+        4,
+        4
+      ],
+      "mode": "Lydian sharp 9 / Whole-Tone",
+      "scale": [
+        0,
+        3,
+        4,
+        6,
+        7,
+        9,
+        11
+      ],
+      "lead_synth": "Granular Pad (180ms Hanning grains)",
+      "bass_synth": "Sub-Infrasonic Sine Drone (32.7 Hz)",
+      "percussion": "Gravitational Sub-Thud (40 Hz)",
+      "reverb_type": "16-Line Shimmer FDN Reverb",
+      "reverb_t60": 12.0,
+      "master_saturation": "Pure Linear Transparent",
+      "swing": 0.0
+    },
+    {
+      "id": "industrial_cyber_metal",
+      "name": "Industrial Cyber-Metal (Mick Gordon Drop-E)",
+      "bpm": 135.0,
+      "meter": [
+        7,
+        8
+      ],
+      "mode": "Locrian / Phrygian Dominant",
+      "scale": [
+        0,
+        1,
+        3,
+        5,
+        6,
+        8,
+        10
+      ],
+      "lead_synth": "9-String Drop-E Guitar (Karplus Non-linear)",
+      "bass_synth": "Phase-Locked Sub-Sine (41.2 Hz)",
+      "percussion": "Hybrid Acoustic-Electronic Double-Kick",
+      "reverb_type": "Ultra-Dry Metallic Impulse",
+      "reverb_t60": 0.35,
+      "master_saturation": "4-Stage Vacuum Tube Overdrive",
+      "sidechain_db": -16.0
+    },
+    {
+      "id": "jrpg_emotional_pianistic",
+      "name": "JRPG Emotional / Romantic Pianistic (Shimomura / Uematsu)",
+      "bpm": 74.0,
+      "meter": [
+        3,
+        4
+      ],
+      "mode": "Lydian / Major Pentatonic",
+      "scale": [
+        0,
+        2,
+        4,
+        6,
+        7,
+        9,
+        11
+      ],
+      "lead_synth": "Concert Grand Piano (Commuted Waveguide)",
+      "bass_synth": "Legato Orchestral Cellos & Basses",
+      "percussion": "Suspended Cymbal Swells + Felt Timpani",
+      "reverb_type": "Grand Concert Hall Reverb",
+      "reverb_t60": 2.4,
+      "master_saturation": "Class-A Discrete Transformer",
+      "swing": 0.0
+    },
+    {
+      "id": "lofi_hiphop_chillhop",
+      "name": "Lo-Fi Hip-Hop / Chillhop",
+      "bpm": 80.0,
+      "meter": [
+        4,
+        4
+      ],
+      "mode": "Dorian / Jazz Minor",
+      "scale": [
+        0,
+        2,
+        3,
+        5,
+        7,
+        9,
+        10
+      ],
+      "lead_synth": "Fender Rhodes Mark I (FM Tines, 12-bit)",
+      "bass_synth": "Analog Sub-Bass Sine (50-120 Hz)",
+      "percussion": "Dusty Boom-Bap Drums + Vinyl Crackle",
+      "reverb_type": "Small Cozy Room Reverb",
+      "reverb_t60": 0.8,
+      "master_saturation": "Cassette Tape + 12-bit Bitcrush",
+      "swing": 0.64
+    },
+    {
+      "id": "spaghetti_western_morricone",
+      "name": "Spaghetti Western (Morricone Style)",
+      "bpm": 110.0,
+      "meter": [
+        4,
+        4
+      ],
+      "mode": "Dorian / Aeolian",
+      "scale": [
+        0,
+        2,
+        3,
+        5,
+        7,
+        9,
+        10
+      ],
+      "lead_synth": "Solo Human Whistle / Sopranino Recorder",
+      "bass_synth": "Galloping Acoustic Upright Bass",
+      "percussion": "Dry Whipcrack + Church Bell + March Snare",
+      "reverb_type": "Vintage Spring Reverb + Canyon Echo",
+      "reverb_t60": 1.6,
+      "master_saturation": "Germanium Fuzz Transistor",
+      "swing": 0.5
+    },
+    {
+      "id": "gothic_horror_psychological",
+      "name": "Gothic Horror & Psychological Thriller (Herrmann / Penderecki)",
+      "bpm": 60.0,
+      "meter": [
+        4,
+        4
+      ],
+      "mode": "Locrian flat 4 / Minor-Major 7th",
+      "scale": [
+        0,
+        1,
+        3,
+        4,
+        6,
+        8,
+        10
+      ],
+      "lead_synth": "High Violins Con Sordino Screech Cluster",
+      "bass_synth": "Bowed Waterphone Rods + 30 Hz Drone",
+      "percussion": "Heartbeat Sub-Thud + Razor Bow Slashes",
+      "reverb_type": "Dark Cavern Plate Reverb",
+      "reverb_t60": 5.5,
+      "master_saturation": "Asymmetric Screaming Waveshaper",
+      "swing": 0.0
+    },
+    {
+      "id": "cozy_pastoral_folk",
+      "name": "Cozy Pastoral Folk & Fantasy Village",
+      "bpm": 102.0,
+      "meter": [
+        6,
+        8
+      ],
+      "mode": "Mixolydian / Ionian",
+      "scale": [
+        0,
+        2,
+        4,
+        5,
+        7,
+        9,
+        10
+      ],
+      "lead_synth": "Wooden Irish Low Whistle / Ocarina",
+      "bass_synth": "Warm Acoustic Upright Plucked Bass",
+      "percussion": "Bodhran Frame Drum + Egg Shaker",
+      "reverb_type": "Wooden Village Hall Reverb",
+      "reverb_t60": 1.8,
+      "master_saturation": "Tube Preamp Warmth",
+      "swing": 0.58
+    },
+    {
+      "id": "stealth_espionage",
+      "name": "Stealth Espionage & Tactical Infiltration",
+      "bpm": 104.0,
+      "meter": [
+        4,
+        4
+      ],
+      "mode": "Dorian / Aeolian",
+      "scale": [
+        0,
+        2,
+        3,
+        5,
+        7,
+        9,
+        10
+      ],
+      "lead_synth": "Muted Rhodes Stabs + Muted Palm Guitar",
+      "bass_synth": "Staccato Electric Bass + Sub Pulse",
+      "percussion": "Muted Rimshot + Silenced Pistol Clicks",
+      "reverb_type": "Concrete Bunker Plate Reverb",
+      "reverb_t60": 1.1,
+      "master_saturation": "Clean Solid-State Console",
+      "swing": 0.5
+    },
+    {
+      "id": "glitch_idm_breakcore",
+      "name": "Glitch / IDM / Breakcore",
+      "bpm": 185.0,
+      "meter": [
+        4,
+        4
+      ],
+      "mode": "Aeolian / Microtonal",
+      "scale": [
+        0,
+        2,
+        3,
+        5,
+        7,
+        8,
+        10
+      ],
+      "lead_synth": "Pointillistic Inharmonic FM Blips (1:1.732)",
+      "bass_synth": "808 Sub-Sine with Fast Pitch Drop",
+      "percussion": "Sliced Amen Break + 1/128th Stutters",
+      "reverb_type": "Metallic Resonator Comb Delay",
+      "reverb_t60": 0.4,
+      "master_saturation": "8-Bit Bitcrusher Foldback",
+      "swing": 0.0
+    },
+    {
+      "id": "tropical_calypso",
+      "name": "Tropical Island & Latin Calypso (Kondo Style)",
+      "bpm": 124.0,
+      "meter": [
+        4,
+        4
+      ],
+      "mode": "Ionian (Major) / Lydian",
+      "scale": [
+        0,
+        2,
+        4,
+        5,
+        7,
+        9,
+        11
+      ],
+      "lead_synth": "Caribbean Steel Pan (Modal Shells)",
+      "bass_synth": "Walking Acoustic Slap Bass (1-5-6-5)",
+      "percussion": "Congas (Quinto/Tumba) + Bongos + Guiro",
+      "reverb_type": "Bright Wooden Room Reverb",
+      "reverb_t60": 1.4,
+      "master_saturation": "Optical Transformer Warmth",
+      "swing": 0.6
+    },
+    {
+      "id": "ancient_epics_desert",
+      "name": "Ancient Epics & Desert Freygish / Phrygian Dominant",
+      "bpm": 86.0,
+      "meter": [
+        10,
+        8
+      ],
+      "mode": "Phrygian Dominant (Maqam Hijaz)",
+      "scale": [
+        0,
+        1,
+        4,
+        5,
+        7,
+        8,
+        10
+      ],
+      "lead_synth": "Armenian Duduk (Double-Reed Aerophone)",
+      "bass_synth": "Low Fretless Oud Bass Drone",
+      "percussion": "Darbuka (Dum/Tek) + Riq + Daf Frame Drum",
+      "reverb_type": "Ancient Sandstone Temple Reverb",
+      "reverb_t60": 4.2,
+      "master_saturation": "Analog Magnetic Tape",
+      "swing": 0.0
+    },
+    {
+      "id": "high_fantasy_heroic",
+      "name": "High Fantasy Heroic Adventure (John Williams Style)",
+      "bpm": 132.0,
+      "meter": [
+        4,
+        4
+      ],
+      "mode": "Lydian (#4) / Mixolydian",
+      "scale": [
+        0,
+        2,
+        4,
+        6,
+        7,
+        9,
+        10
+      ],
+      "lead_synth": "Section Trumpets in Bb (+7st P5 Fanfare)",
+      "bass_synth": "Symphonic Double Basses + Tuba",
+      "percussion": "5 Tuned Timpani + Crash Cymbals + Snare",
+      "reverb_type": "Hollywood Scoring Stage Reverb",
+      "reverb_t60": 2.2,
+      "master_saturation": "Pristine 24-bit / 96kHz Analog",
+      "swing": 0.0
+    },
+    {
+      "id": "minimalist_neoclassical",
+      "name": "Minimalist Neo-Classical / Cinematic Piano (Zimmer / Richter)",
+      "bpm": 60.0,
+      "meter": [
+        4,
+        4
+      ],
+      "mode": "Aeolian / Ionian",
+      "scale": [
+        0,
+        2,
+        3,
+        5,
+        7,
+        8,
+        10
+      ],
+      "lead_synth": "Felt Upright Piano (4-Note Ostinato)",
+      "bass_synth": "Double Bass Long Tones + Moog Sub-Sine",
+      "percussion": "Subtle Clockwork Mechanical Ticks",
+      "reverb_type": "Intimate Wooden Studio Reverb",
+      "reverb_t60": 2.0,
+      "master_saturation": "Analog Tape Warmth",
+      "swing": 0.0
+    },
+    {
+      "id": "cybernetic_ui_telemetry",
+      "name": "Cybernetic UI & Sci-Fi Telemetry Soundscapes",
+      "bpm": 128.0,
+      "meter": [
+        4,
+        4
+      ],
+      "mode": "Lydian / Quartal Pointillistic",
+      "scale": [
+        0,
+        2,
+        4,
+        6,
+        7,
+        9,
+        11
+      ],
+      "lead_synth": "Dual-Sine Micro-Chirps (2.4 - 4.8 kHz)",
+      "bass_synth": "Ultra-Short Sub-Pulse Sine Bursts",
+      "percussion": "Micro-Clicks (1-4ms) + Haptic Taps",
+      "reverb_type": "Micro-Plate Diffusion Reverb",
+      "reverb_t60": 0.45,
+      "master_saturation": "100% Linear Digital Transparency",
+      "swing": 0.0
+    },
+    {
+      "id": "acid_techno_303",
+      "name": "Acid Techno / Cyber-Rave 303",
+      "bpm": 138.0,
+      "meter": [
+        4,
+        4
+      ],
+      "mode": "Aeolian / Phrygian",
+      "scale": [
+        0,
+        2,
+        3,
+        5,
+        7,
+        8,
+        10
+      ],
+      "lead_synth": "Roland TB-303 (18dB Diode Ladder + Slide)",
+      "bass_synth": "TB-303 Acid Bass + TR-909 Sub-Kick",
+      "percussion": "Roland TR-909 Kit (Offbeat Open Hat)",
+      "reverb_type": "Industrial Warehouse Concrete Reverb",
+      "reverb_t60": 2.8,
+      "master_saturation": "ProCo Rat Diode Distortion",
+      "sidechain_db": -14.0
+    },
+    {
+      "id": "dark_dungeon_synth",
+      "name": "Dark Dungeon Synth & Medieval Fantasy",
+      "bpm": 64.0,
+      "meter": [
+        4,
+        4
+      ],
+      "mode": "Dorian / Aeolian",
+      "scale": [
+        0,
+        2,
+        3,
+        5,
+        7,
+        9,
+        10
+      ],
+      "lead_synth": "Monophonic 12-bit PCM Square Flute",
+      "bass_synth": "Cathedral Pipe Organ Pedal Bass",
+      "percussion": "Booming March Drum + Clinking Chains",
+      "reverb_type": "Subterranean Crypt Reverb",
+      "reverb_t60": 6.5,
+      "master_saturation": "Type I Cassette Tape Lo-Fi",
+      "swing": 0.0
+    }
+  ]
+}

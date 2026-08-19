@@ -1,0 +1,52 @@
+{
+  "materials": {
+    "steel": {
+      "stiffness_n_m": 850000.0,
+      "internal_damping": 0.02,
+      "restitution": 0.85,
+      "resonant_freq_range_hz": [1800.0, 4500.0],
+      "q_range": [25.0, 45.0],
+      "high_frequency_mode_count": 6
+    },
+    "stone": {
+      "stiffness_n_m": 520000.0,
+      "internal_damping": 0.15,
+      "restitution": 0.40,
+      "resonant_freq_range_hz": [350.0, 1100.0],
+      "q_range": [8.0, 14.0],
+      "high_frequency_mode_count": 4
+    },
+    "wood": {
+      "stiffness_n_m": 210000.0,
+      "internal_damping": 0.28,
+      "restitution": 0.50,
+      "resonant_freq_range_hz": [400.0, 900.0],
+      "q_range": [4.0, 7.0],
+      "high_frequency_mode_count": 4
+    },
+    "grass_dirt": {
+      "stiffness_n_m": 30000.0,
+      "internal_damping": 0.85,
+      "restitution": 0.05,
+      "resonant_freq_range_hz": [80.0, 250.0],
+      "q_range": [0.7, 1.5],
+      "high_frequency_mode_count": 2
+    },
+    "glass": {
+      "stiffness_n_m": 980000.0,
+      "internal_damping": 0.005,
+      "restitution": 0.90,
+      "resonant_freq_range_hz": [3200.0, 8000.0],
+      "q_range": [50.0, 80.0],
+      "high_frequency_mode_count": 8
+    },
+    "water": {
+      "stiffness_n_m": 5000.0,
+      "internal_damping": 0.95,
+      "restitution": 0.01,
+      "resonant_freq_range_hz": [800.0, 3200.0],
+      "q_range": [12.0, 16.0],
+      "high_frequency_mode_count": 12
+    }
+  }
+}

@@ -2,7 +2,7 @@
   "schema": "trigger_registry/1.0",
   "version": "1.0.0",
   "updated": "2026-08-05T00:26:33Z",
-  "total_triggers": 410,
+  "total_triggers": 432,
   "triggers": [
     {
       "pattern": "agent-eval",
@@ -3289,6 +3289,174 @@
       "skill_name": "mempalace_manager",
       "confidence": 0.8,
       "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "procedural audio",
+      "skill_name": "procedural-audio",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "soundscape",
+      "skill_name": "procedural-audio",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "create audio for this screen",
+      "skill_name": "procedural-audio",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "create the audio for this screen",
+      "skill_name": "procedural-audio",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "sound effect",
+      "skill_name": "procedural-audio",
+      "confidence": 0.95,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "sfx",
+      "skill_name": "procedural-audio",
+      "confidence": 0.95,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "synthesizer",
+      "skill_name": "procedural-audio",
+      "confidence": 0.9,
+      "match_type": "domain",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "dsp",
+      "skill_name": "procedural-audio",
+      "confidence": 0.85,
+      "match_type": "domain",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "generative music",
+      "skill_name": "procedural-audio",
+      "confidence": 0.95,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "adaptive audio",
+      "skill_name": "procedural-audio",
+      "confidence": 0.95,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "godot audio",
+      "skill_name": "procedural-audio",
+      "confidence": 0.95,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "audiostreamgenerator",
+      "skill_name": "procedural-audio",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "audio worklet",
+      "skill_name": "procedural-audio",
+      "confidence": 0.95,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "psychoacoustics",
+      "skill_name": "procedural-audio",
+      "confidence": 0.9,
+      "match_type": "domain",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "game audio",
+      "skill_name": "procedural-audio",
+      "confidence": 0.95,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "audio blueprint",
+      "skill_name": "procedural-audio",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "microtonality",
+      "skill_name": "procedural-audio",
+      "confidence": 0.9,
+      "match_type": "domain",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "spatial audio",
+      "skill_name": "procedural-audio",
+      "confidence": 0.95,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "ambisonics",
+      "skill_name": "procedural-audio",
+      "confidence": 0.95,
+      "match_type": "domain",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "raga",
+      "skill_name": "procedural-audio",
+      "confidence": 0.85,
+      "match_type": "domain",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "maqam",
+      "skill_name": "procedural-audio",
+      "confidence": 0.85,
+      "match_type": "domain",
       "hit_count": 0,
       "last_hit": null
     }

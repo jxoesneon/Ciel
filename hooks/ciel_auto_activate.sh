@@ -15,10 +15,10 @@ fi
 PROMPT_LC=$(echo "$PROMPT" | tr '[:upper:]' '[:lower:]')
 
 # Trigger patterns
-TRIGGERS='ciel|route this|orchestrate|find.*skill|acquire.*skill|self-improve|council|hey you|you there|are you|can you|will you|do you'
+TRIGGERS='ciel|route this|orchestrate|find.*skill|acquire.*skill|self-improve|council|hey you|you there|are you|can you|will you|do you|procedural.*audio|soundscape|create.*audio|sound.*effect|audiostreamgenerator'
 
 if echo "$PROMPT_LC" | grep -qiE "$TRIGGERS"; then
-  printf '{"hookSpecificOutput":{"additionalContext":"CIEL ACTIVATION: Trigger phrase detected. You are Ciel, Lord of Wisdom — orchestration intelligence for this project. Available triggers: ciel, route this, orchestrate, find skill, acquire skill, self-improve."}}\n'
+  printf '{"hookSpecificOutput":{"additionalContext":"CIEL ACTIVATION: Trigger phrase detected. You are Ciel, Lord of Wisdom — orchestration intelligence for this project. Available triggers: ciel, route this, orchestrate, find skill, acquire skill, self-improve, procedural audio."}}\n'
   exit 0
 fi
 

@@ -1,0 +1,68 @@
+{
+  "euclidean_patterns": {
+    "E_2_5": {
+      "pulses": 2,
+      "steps": 5,
+      "pattern": [1, 0, 1, 0, 0],
+      "meter": "5/8",
+      "name": "Khafif-e-ramal (Persian rhythm)",
+      "genre": "Ancient / Stealth"
+    },
+    "E_3_7": {
+      "pulses": 3,
+      "steps": 7,
+      "pattern": [1, 0, 1, 0, 1, 0, 0],
+      "meter": "7/8",
+      "name": "Ruchenitsa (Bulgarian folk)",
+      "genre": "Energetic Folk / Asymmetric Combat"
+    },
+    "E_3_8": {
+      "pulses": 3,
+      "steps": 8,
+      "pattern": [1, 0, 0, 1, 0, 0, 1, 0],
+      "meter": "8/8 (3+3+2)",
+      "name": "Tresillo / Habanera",
+      "genre": "Cinematic Tension / Latin / Reggae"
+    },
+    "E_4_9": {
+      "pulses": 4,
+      "steps": 9,
+      "pattern": [1, 0, 1, 0, 1, 0, 1, 0, 0],
+      "meter": "9/8 (2+2+2+3)",
+      "name": "Aksak (Turkish meter)",
+      "genre": "Complex Action / Epic Chase"
+    },
+    "E_5_8": {
+      "pulses": 5,
+      "steps": 8,
+      "pattern": [1, 0, 1, 1, 0, 1, 1, 0],
+      "meter": "8/8",
+      "name": "Cinquillo (Afro-Cuban)",
+      "genre": "Upbeat Combat / Dynamic Percussion"
+    },
+    "E_5_12": {
+      "pulses": 5,
+      "steps": 12,
+      "pattern": [1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0],
+      "meter": "12/8",
+      "name": "Venda Clapping Pattern (South Africa)",
+      "genre": "Polyrhythmic World / Exploration"
+    },
+    "E_7_12": {
+      "pulses": 7,
+      "steps": 12,
+      "pattern": [1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0],
+      "meter": "12/8",
+      "name": "Bembé Bell Pattern (West Africa)",
+      "genre": "Heroic Adventure / Dynamic March"
+    },
+    "E_7_16": {
+      "pulses": 7,
+      "steps": 16,
+      "pattern": [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0],
+      "meter": "16/16",
+      "name": "Samba Reggae Bell",
+      "genre": "High Velocity Cyberpunk / Fast Chase"
+    }
+  }
+}
