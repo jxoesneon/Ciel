@@ -3,26 +3,32 @@
   "dockets": [
     {
       "id": "20260730_AGENTIC_LOOP_STANDARDS",
-      "subject": "Agentic Loop Standards — core/AUTONOMY.md & growth signal",
+      "subject": "Agentic Loop Standards \u2014 core/AUTONOMY.md & growth signal",
       "date": "2026-07-30",
       "status": "resolved"
     },
     {
       "id": "20260730_AUTOMATED_HOOK_INJECTION",
-      "subject": "Automated Hook Injection — adapters/gemini_cli/HOOKS.md & AUTO_ACTIVATION.md",
+      "subject": "Automated Hook Injection \u2014 adapters/gemini_cli/HOOKS.md & AUTO_ACTIVATION.md",
       "date": "2026-07-30",
       "status": "resolved"
     },
     {
       "id": "20260730_THEMATIC_SENTINEL_BEACON",
-      "subject": "Thematic Sentinel Beacon — core/IDENTITY.md",
+      "subject": "Thematic Sentinel Beacon \u2014 core/IDENTITY.md",
       "date": "2026-07-30",
       "status": "resolved"
     },
     {
       "id": "20260730_UI_UX_COUNCIL_SYNTHESIS",
-      "subject": "UI/UX Council Synthesis V3 — ui_ux_mastery SKILL.md & UI_UX_MASTERY_STANDARDS.md (joint session)",
+      "subject": "UI/UX Council Synthesis V3 \u2014 ui_ux_mastery SKILL.md & UI_UX_MASTERY_STANDARDS.md (joint session)",
       "date": "2026-07-30",
+      "status": "resolved"
+    },
+    {
+      "id": "20260819_WAVE3_AUDIT",
+      "subject": "Wave 3 Implementation Audit",
+      "date": "2026-08-19",
       "status": "resolved"
     }
   ]
