@@ -1,0 +1,5225 @@
+{
+  "agent-eval/SKILL.md": {
+    "id": "agent-eval/SKILL.md",
+    "version": "1.0.0",
+    "description": "Benchmarking and evaluation tool for comparing different AI agents and models against CIEL's codebase tasks.",
+    "triggers": [
+      {
+        "pattern": "(compare|benchmark|evaluate).*(agent|aider|claude code|gemini|codex)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "which (agent|model) is better for",
+        "confidence": 0.85
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/agent-eval",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:34cbcb7eb409ee7d98c1ee2ae3c831e53ec9be2aca53be18a9f3fafb46279bf4"
+  },
+  "agent-harness-construction/SKILL.md": {
+    "id": "agent-harness-construction/SKILL.md",
+    "version": "1.0.0",
+    "description": "Architecture and optimization guidelines for designing agent tool-sets, action spaces, and recovery paths.",
+    "triggers": [
+      {
+        "pattern": "(create|design|build|optimize).*(agent|harness|action space|tool definition)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "how should I (structure|format) (tools|observations)",
+        "confidence": 0.85
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/agent-harness-construction",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:e5b53b3e2b442e7fffd8798e1e0d95dbf25fb00da512351319b3395c2187be4d"
+  },
+  "agent-introspection-debugging/SKILL.md": {
+    "id": "agent-introspection-debugging/SKILL.md",
+    "version": "1.0.0",
+    "description": "A structured self-debugging protocol for resolving agentic loops, failures, and reasoning drift.",
+    "triggers": [
+      {
+        "pattern": "(agent|self).*(debugging|introspection|looping|stuck)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "why is the agent (failing|repeating|drifting)",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/agent-introspection-debugging",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:864cca81e508aacb03550a4356c83426982c78deff6eea8fa54250c04843b71a"
+  },
+  "agent-payment-x402/SKILL.md": {
+    "id": "agent-payment-x402/SKILL.md",
+    "version": "1.0.0",
+    "description": "Protocol and tools for autonomous agent payments using x402, featuring strict spending policies and non-custodial wallets.",
+    "triggers": [
+      {
+        "pattern": "(agent|autonomous).*(payment|pay|wallet|spend|budget)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "x402",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/agent-payment-x402",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:490704aef5dbbefbf936f7633482a247b4db4a4b2467b007b632b21cfaa77482"
+  },
+  "agent-retrieval-and-context/SKILL.md": {
+    "id": "agent-retrieval-and-context/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for iterative context retrieval and subagent context optimization.",
+    "triggers": [
+      {
+        "pattern": "(retrieve|gather|refine).*(context|codebase|file)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "iterative retrieval",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:ai"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/agent-retrieval-and-context",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:aa70a3ffb5aa82b079c7cd3425c474b3df057f5cde00973abae4a61aaf53c144"
+  },
+  "agent-sort/SKILL.md": {
+    "id": "agent-sort/SKILL.md",
+    "version": "1.0.0",
+    "description": "Evidence-backed skill classification and context optimization.",
+    "triggers": [
+      {
+        "pattern": "(sort|trim|curate).*skills",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "remove.*unnecessary.*(skills|rules)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "DAILY vs LIBRARY",
+        "confidence": 1.0
+      },
+      {
+        "pattern": "optimize.*workspace.*context",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/agent-sort",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:cff6b85a5698b6695f20d3e0c91cf576434cc5fe76a06db7e15861125e36efad"
+  },
+  "agent-systems-and-harnesses/SKILL.md": {
+    "id": "agent-systems-and-harnesses/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for long-lived agents, adversarial harnesses, and headless orchestration.",
+    "triggers": [
+      {
+        "pattern": "(orchestrate|harness|manage).*(agent|fleet|gan|gsd|headless)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "generator-evaluator loop",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/agent-systems-and-harnesses",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:7ff313de57f8a73e25aa6cc594d60a93388e8b2b1261072ad45cb523dee3424e"
+  },
+  "agentic-engineering/SKILL.md": {
+    "id": "agentic-engineering/SKILL.md",
+    "version": "1.0.0",
+    "description": "Ciel's operational framework for agent-led engineering and cost-aware routing.",
+    "triggers": [
+      {
+        "pattern": "(agentic|autonomous|agent-led).*engineering",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "route.*model.*tier",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "eval-first.*",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "task.*decomposition",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/agentic-engineering",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:f8f79ceec3440ea40fdaacb6c87c3719b991097945d863d1e5a98ec675ac3014"
+  },
+  "ai-first-engineering/SKILL.md": {
+    "id": "ai-first-engineering/SKILL.md",
+    "version": "1.0.0",
+    "description": "Ciel's operating model for AI-native engineering and agent-friendly architecture.",
+    "triggers": [
+      {
+        "pattern": "ai-first.*engineering",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "agent-friendly.*architecture",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "raise.*testing.*bar",
+        "confidence": 0.8
+      },
+      {
+        "pattern": "process.*shift",
+        "confidence": 0.7
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/ai-first-engineering",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:adaba4dafe6a9af377debb09c5228c1e4541d91e7210b82f84b50361572e7d23"
+  },
+  "ai-regression-testing/SKILL.md": {
+    "id": "ai-regression-testing/SKILL.md",
+    "version": "1.0.0",
+    "description": "Specialized regression testing for AI-assisted development and blind spot mitigation.",
+    "triggers": [
+      {
+        "pattern": "ai-regression.*testing",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "catch.*blind.*spot",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "sandbox.*production.*parity",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "bug-check.*",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/ai-regression-testing",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:eef65c0247c2ac303107fce13b78dc8bb16a533780669309ad4a4988d74d679b"
+  },
+  "analytical-data-ops/SKILL.md": {
+    "id": "analytical-data-ops/SKILL.md",
+    "version": "1.0.0",
+    "description": "ClickHouse analytics patterns, OLAP optimization, and data pipelines.",
+    "triggers": [
+      {
+        "pattern": "(design|optimize|query).*(clickhouse|olap|analytics|mergetree)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "materialized view",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/analytical-data-ops",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:51770065db39eabe25c0f4d5baad7c92f9f2d7c3e5ee890f601914d805f60732"
+  },
+  "android-kmp-architecture/SKILL.md": {
+    "id": "android-kmp-architecture/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for Android and Kotlin Multiplatform (KMP) architecture, module boundaries, and dependency inversion.",
+    "triggers": [
+      {
+        "pattern": "(structure|setup|architect).*(android|kmp|kotlin multiplatform).*(project|module)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "android clean architecture",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/android-kmp-architecture",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:2cb499da37056f679fdbcea6bd3ed93d98f654087bff610cb7cad5993881a1f2"
+  },
+  "animation-framework-integration/SKILL.md": {
+    "id": "animation-framework-integration/SKILL.md",
+    "version": "1.0.0",
+    "description": "Standards for integrating GSAP into React, Vue, and Svelte while ensuring clean memory management.",
+    "triggers": [
+      {
+        "pattern": "(gsap|animation).*(react|vue|svelte|mounted|cleanup)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "useGSAP",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/animation-framework-integration",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:8dcf94de19a197daa1efd1a3f608e657bafe52352b589afe7dd2926698fd2564"
+  },
+  "animation-performance-utils/SKILL.md": {
+    "id": "animation-performance-utils/SKILL.md",
+    "version": "1.0.0",
+    "description": "Performance optimization and math utilities for high-performance JS animations.",
+    "triggers": [
+      {
+        "pattern": "(optimize|speed up).*(animation|gsap|fps|60fps)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "gsap.utils",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/animation-performance-utils",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:c088c86a479480ae9c68067723e6a6293c125577b0c215ddbf6fcce697f3ce9a"
+  },
+  "api-backend-development/SKILL.md": {
+    "id": "api-backend-development/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's standards for REST API design, backend architecture, and server-side patterns.",
+    "triggers": [
+      {
+        "pattern": "(design|build|architect).*(api|backend|endpoint|rest)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "backend patterns",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/api-backend-development",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:01c9e197845cb3eb6c18e7e552b313b2fbcfba87474d45d553a69d659b3a1afb"
+  },
+  "architecture-decision-records/SKILL.md": {
+    "id": "architecture-decision-records/SKILL.md",
+    "version": "1.0.0",
+    "description": "Structured architectural decision capturing and lifecycle management.",
+    "triggers": [
+      {
+        "pattern": "(record|ADR).*decision",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "why did we.*(choose|use|select)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "architectural.*trade-off",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "consequences.*of.*(pattern|framework)",
+        "confidence": 0.85
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/architecture-decision-records",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:6747153190d0c83140c848a5236e875d87b32855d776e7a345c4afbaeee809b7"
+  },
+  "article-writing/SKILL.md": {
+    "id": "article-writing/SKILL.md",
+    "version": "1.0.0",
+    "description": "Voice-aligned long-form content creation (blog posts, tutorials, newsletters).",
+    "triggers": [
+      {
+        "pattern": "(write|draft|polished).*(article|blog|essay|newsletter|tutorial)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "write a guide for",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/article-writing",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:854bc8c7898cd25a976de6e0b508a2e0acb9c389473d29b168d1053c231a1b5d"
+  },
+  "asset-design/SKILL.md": {
+    "id": "asset-design/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's unified design hub for Logo generation, Banners, Icons, and Corporate Identity (CIP).",
+    "triggers": [
+      {
+        "pattern": "(create|design|generate).*(logo|banner|icon|header|card)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "design a (facebook|twitter|linkedin) cover",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/asset-design",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:895aac495476c7162d92df6a20d8ed4b80a97bd769943070492fef6f5f6231b1"
+  },
+  "automation-audit-ops/SKILL.md": {
+    "id": "automation-audit-ops/SKILL.md",
+    "version": "1.0.0",
+    "description": "An evidence-first audit protocol for inventorying, classifying, and rationalizing workspace automations.",
+    "triggers": [
+      {
+        "pattern": "(audit|inventory|list).*(automation|job|workflow|hook|connector)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "what (automations|hooks) are (live|broken)",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:ai"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/automation-audit-ops",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:fec81b54434504e8055cdf8316447a207ab65dfb59a6a6c9c7fa34000ef73fc6"
+  },
+  "autonomous-loops/SKILL.md": {
+    "id": "autonomous-loops/SKILL.md",
+    "version": "1.0.0",
+    "description": "Architectural patterns for continuous, autonomous agent loops within CIEL. Defines acceptable patterns from simple sequential pipelines to DAG-driven orchestration.",
+    "triggers": [
+      {
+        "pattern": "(setup|run|create).*(autonomous|continuous).*(loop|pipeline|workflow)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "orchestrate (multiple|parallel) (agents|tasks)",
+        "confidence": 0.85
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/autonomous-loops",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:9d52a682a4f29d808d5d97ff55bd44b1b48e848fab5319df047eb56dddbee77e"
+  },
+  "autonomous-orchestration/SKILL.md": {
+    "id": "autonomous-orchestration/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for multi-agent orchestration, crons, and isolated worktree execution.",
+    "triggers": [
+      {
+        "pattern": "(orchestrate|dispatch|schedule).*(agent|fleet|cron|mission)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "multi-agent workflow",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/autonomous-orchestration",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:fc34cc6c2f239aec9aaae3b49d6f7b766f6ca9ce4dfca66e500b9efe59a69197"
+  },
+  "billing-and-burn-ops/SKILL.md": {
+    "id": "billing-and-burn-ops/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for revenue truth and token-burn auditing.",
+    "triggers": [
+      {
+        "pattern": "(audit|analyze|remediate).*(billing|burn|cost|revenue|stripe)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "ecc tools cost audit",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/billing-and-burn-ops",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:a6247ddc86b9c5cfe0522633bcdefb3317dc3a8846232b706b97d37d17890a12"
+  },
+  "billing-and-monitoring/SKILL.md": {
+    "id": "billing-and-monitoring/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for customer billing remediation and operational dashboards.",
+    "triggers": [
+      {
+        "pattern": "(billing|refund|dashboard|monitor).*(stripe|grafana|signoz|customer)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "customer billing ops",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/billing-and-monitoring",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:f88843ff8b5621fa24b98dc156d5b8fa09557e4fffdda957cb77264fc9434376"
+  },
+  "brainstorming/SKILL.md": {
+    "id": "brainstorming/SKILL.md",
+    "version": "1.0.0",
+    "description": "Pre-implementation exploration of intent, requirements, and architectural design.",
+    "triggers": [
+      {
+        "pattern": "(brainstorm|design|spec|requirements).*(for|new|feature)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "how should we.*(build|implement|architecture)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "let's explore.*(idea|concept|approach)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "I want to.*(add|create).*(but|not sure)",
+        "confidence": 0.8
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/brainstorming",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:01e8c81abc5c13289eeb82a030a55d5da596c845235a4d5bf6cb1af5a07fc31f"
+  },
+  "brand-identity/SKILL.md": {
+    "id": "brand-identity/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for brand voice, visual identity standards, and asset management.",
+    "triggers": [
+      {
+        "pattern": "(define|update|audit).*(brand|voice|identity|tone)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "brand guidelines",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/brand-identity",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:d8c50a3fef3eef752d7e4ed77346d2aa6ab3b8b4ae3fc5fb2b5912dce59c233e"
+  },
+  "ciel-artifact-management/SKILL.md": {
+    "id": "ciel-artifact-management/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for isolated, structured storage of plans, audits, and ephemeral reasoning data.",
+    "triggers": [
+      {
+        "pattern": "(create|store|archive|save).*(artifact|plan|audit|transient)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "planning mode",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:ai"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/ciel-artifact-management",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:6152bd5f64317dd843fea7f704d312410cfc918c5e81a9870a5b66dec5518b23"
+  },
+  "ciel-documentation-engine/SKILL.md": {
+    "id": "ciel-documentation-engine/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for high-integrity documentation generation, validation, and semantic indexing.",
+    "triggers": [
+      {
+        "pattern": "(generate|update|validate).*(docs|documentation|readme)",
+        "confidence": 1.0
+      },
+      {
+        "pattern": "semantic indexing",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "documentation",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/ciel-documentation-engine",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:40c274c9a5c098f8ae06eb54637a4b8a870c4cfb2a1a4c01e9bbb9402fcc1d00"
+  },
+  "ciel-frontend-and-hooks/SKILL.md": {
+    "id": "ciel-frontend-and-hooks/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for React patterns and local rule enforcement via Hookify.",
+    "triggers": [
+      {
+        "pattern": "(build|review|enforce).*(react|hook|pattern|rule|hookify)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "hookify rule",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/ciel-frontend-and-hooks",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:48b6379278d371b65212aad1fd5ccb43ec9583b66efc35e6abf069dc8592c476"
+  },
+  "ciel-hitl-protocol/SKILL.md": {
+    "id": "ciel-hitl-protocol/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for Human-in-the-Loop escalation, risk assessment, and decision gating.",
+    "triggers": [
+      {
+        "pattern": "(escalate|ask|approve|confirm|decide).*(user|host|human)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "high risk operation",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/ciel-hitl-protocol",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:d5783ba16acef7b1186e7ae59b4465bfefea789f8efc52f460106fa6760e4e8b"
+  },
+  "ciel-internal-ops/SKILL.md": {
+    "id": "ciel-internal-ops/SKILL.md",
+    "version": "1.0.0",
+    "description": "Meta-operations for CIEL configuration, LLM cost management, and parallel workflows.",
+    "triggers": [
+      {
+        "pattern": "(configure|manage|split).*(ciel|cost|dmux|parallel|ecc)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "configure-ecc",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/ciel-internal-ops",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:4782b5f00e49f696703903ae98c43fed4b3805e2d5b7fbf30c496acd93b86373"
+  },
+  "ciel-knowledge-and-memory/SKILL.md": {
+    "id": "ciel-knowledge-and-memory/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for multi-layer knowledge ingestion, semantic memory search, and structural code exploration.",
+    "triggers": [
+      {
+        "pattern": "(save|search|sync|explore).*(knowledge|memory|session|structure|ast)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "smart explore",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/ciel-knowledge-and-memory",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:3bb27c2f6ddc7527ff0647481a550accb0512da784b3a23bae7598eb77c91359"
+  },
+  "ciel-meta-and-utility/SKILL.md": {
+    "id": "ciel-meta-and-utility/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for skill discovery, worktrees, and capability auditing.",
+    "triggers": [
+      {
+        "pattern": "(manage|audit|configure).*(skill|worktree|workspace|visa)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "using git worktrees",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/ciel-meta-and-utility",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:3c010354b551a35edb7a5865b31a6bef49d649bb74ae8cc95c014ea965dd709f"
+  },
+  "ciel-meta-operations/SKILL.md": {
+    "id": "ciel-meta-operations/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for API standards, UI state auditing, and system configuration.",
+    "triggers": [
+      {
+        "pattern": "(audit|configure|call).*(ui|state|api|ciel|ecc)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "click path audit",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/ciel-meta-operations",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:2d7c3e152638e865ef210860c14230721bc751b81fb86826c6cb450337da8126"
+  },
+  "ciel-ml-and-data-patterns/SKILL.md": {
+    "id": "ciel-ml-and-data-patterns/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for PyTorch ML patterns and Postgres data optimization.",
+    "triggers": [
+      {
+        "pattern": "(design|build|optimize).*(pytorch|tensor|postgres|sql|ml)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "device-agnostic code",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/ciel-ml-and-data-patterns",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:22844ce47f619a5a08d5fdf3bfdd8fd311862a55b532ea11d4c545f2811d235e"
+  },
+  "ciel-orchestration-and-routing/SKILL.md": {
+    "id": "ciel-orchestration-and-routing/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's master routing layer for task classification and multi-agent specialist access.",
+    "triggers": [
+      {
+        "pattern": "(route|classify|orchestrate|build team).*(task|domain|agent)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "master router",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/ciel-orchestration-and-routing",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:56c23f87df6f760f0ecd860b8f8a22a1f7882e8e5dc247d3b0edaa728e89fc30"
+  },
+  "ciel-project-scaffolder/SKILL.md": {
+    "id": "ciel-project-scaffolder/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for standardized project initialization, module creation, and boilerplate management.",
+    "triggers": [
+      {
+        "pattern": "(scaffold|create|init|new).*(project|module|service|boilerplate)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "standardize project",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/ciel-project-scaffolder",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:030a6e27bac545907616483668119a5c28b7530ee02d8a6ccea1ae57a20dac28"
+  },
+  "ciel-quality-and-verification/SKILL.md": {
+    "id": "ciel-quality-and-verification/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for evidence-first verification, TDD, and write-time quality enforcement.",
+    "triggers": [
+      {
+        "pattern": "(verify|check|test|lint).*(completion|evidence|tdd|terminal)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "verification before completion",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:ai"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/ciel-quality-and-verification",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:eb1a38b159b63ff18bddb70f3218f3c8d30dcb4a60ce4fc241ec69f4992eb197"
+  },
+  "ciel-review-and-adversarial/SKILL.md": {
+    "id": "ciel-review-and-adversarial/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's adversarial review framework for rigorous code review, security auditing, and adversarial testing.",
+    "triggers": [
+      {
+        "pattern": "(review|audit|adversarial|challenge|critique).*(code|pr|security|design)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "request.*review",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/ciel-review-and-adversarial",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:bbb0277397790b19f5dfe407897b3ca019951014f98847892a0ed55842b288ce"
+  },
+  "ciel-root-cause-debugger/SKILL.md": {
+    "id": "ciel-root-cause-debugger/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for systematic error tracing, log analysis, and empirical bug fixing.",
+    "triggers": [
+      {
+        "pattern": "(debug|fix|trace|error|crash|fail).*(root cause|log|stack)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "analyze logs",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/ciel-root-cause-debugger",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:c28311b1e8ffac3e390b8210447491c4c181dbc8d090c594cb56a13fd90d1551"
+  },
+  "ciel-security-and-design/SKILL.md": {
+    "id": "ciel-security-and-design/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for Solidity security and visual design systems.",
+    "triggers": [
+      {
+        "pattern": "(audit|design|style).*(solidity|amm|design system|token|css)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "design system",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/ciel-security-and-design",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:6ec3a7a512a0ae64c52c647a5d072138632cab295c24e7596f93d86f4555734a"
+  },
+  "ciel-skill-engineering/SKILL.md": {
+    "id": "ciel-skill-engineering/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's meta-framework for skill creation, writing standards, and self-reproduction.",
+    "triggers": [
+      {
+        "pattern": "(create|edit|review).*(skill|persona|soul|reproduce)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "node init_skill.cjs",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/ciel-skill-engineering",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:58d62542b21aac2a3ffccd0851067fd88310463d9691b2a230264e2d02401041"
+  },
+  "ciel-swarm-orchestration/SKILL.md": {
+    "id": "ciel-swarm-orchestration/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for multi-agent coordination, task decomposition, and parallel execution.",
+    "triggers": [
+      {
+        "pattern": "(swarm|parallel|coordinate|distribute|decompose).*(agents|tasks|workers)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "invoke subagents",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/ciel-swarm-orchestration",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:92f59e682eca0fcef2f30faf5b5369dfa2b9ac0fc8e2ec29b6a1bff27420a546"
+  },
+  "ciel-swift-and-ios-standards/SKILL.md": {
+    "id": "ciel-swift-and-ios-standards/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for Swift 6.2 concurrency, actor-based persistence, and Liquid Glass design.",
+    "triggers": [
+      {
+        "pattern": "(design|build|review).*(swift|ios|concurrency|actor|glass)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "approachable concurrency",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/ciel-swift-and-ios-standards",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:0faf3cf5fe52a41c9c80be83ceb6e570742ea493fc22e3c5278bf34e3bb43c6a"
+  },
+  "codebase-onboarding/SKILL.md": {
+    "id": "codebase-onboarding/SKILL.md",
+    "version": "1.0.0",
+    "description": "Systematically maps an unfamiliar codebase and generates a starter CLAUDE.md to guide future agents.",
+    "triggers": [
+      {
+        "pattern": "(onboard|walk through|explain|understand).*(codebase|repo|project)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "generate (claude.md|starter config)",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/codebase-onboarding",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:df824b1c33091510614b33ba8244779ffacde3e5d9ff1a94bbb96ff36b8a3751"
+  },
+  "coding-standards/SKILL.md": {
+    "id": "coding-standards/SKILL.md",
+    "version": "1.0.0",
+    "description": "Baseline cross-project engineering conventions for readability, immutability, and architecture.",
+    "triggers": [
+      {
+        "pattern": "(code|coding).*(standard|convention|quality)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "how should I.*(write|structure|format).*(code|function|component)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "(review|refactor).*(code|file).*(quality|readability)",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/coding-standards",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:74403fc71a80fc1047acf169cb24d832f60331a0f6d62ba318afb3c2cc8455e8"
+  },
+  "compose-multiplatform/SKILL.md": {
+    "id": "compose-multiplatform/SKILL.md",
+    "version": "1.0.0",
+    "description": "Shared UI patterns for Android, iOS, Desktop, and Web using Compose Multiplatform.",
+    "triggers": [
+      {
+        "pattern": "(build|design).*(compose multiplatform|jetpack compose).*(ui|interface)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "compose multiplatform patterns",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/compose-multiplatform",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:3e2ce182740c3cfe4061afa00a900626f568f621e80938ef48a17ec9bff61034"
+  },
+  "container-and-deployment/SKILL.md": {
+    "id": "container-and-deployment/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for Docker containerization and CI/CD deployment strategies.",
+    "triggers": [
+      {
+        "pattern": "(deploy|docker|ci/cd|k8s).*(container|rolling|canary|github action)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "deployment patterns",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/container-and-deployment",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:988da21525e864ec79b6b3a47dd4818cf16f300bc1b91c9dd1d9771ce24dd2b2"
+  },
+  "content-distribution-ops/SKILL.md": {
+    "id": "content-distribution-ops/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for social graph optimization, content creation, and cross-platform distribution.",
+    "triggers": [
+      {
+        "pattern": "(post|tweet|distribute|optimize).*(social|x|linkedin|threads|bluesky)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "content engine",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/content-distribution-ops",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:3ba65d7fa9497bdfceb61430a81a32085080cd5c4e5d4b00db436a45cc758476"
+  },
+  "content-hash-cache-pattern/SKILL.md": {
+    "id": "content-hash-cache-pattern/SKILL.md",
+    "version": "1.0.0",
+    "description": "An architectural pattern for caching expensive file processing results using SHA-256 content hashes.",
+    "triggers": [
+      {
+        "pattern": "cache (expensive|file|processing|pdf|ocr|parsing)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "content-hash caching",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/content-hash-cache-pattern",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:90e298e49707e81b7b1a9804707e5211be984343e50ca0d8b21130c23cb81484"
+  },
+  "context-and-memory-ops/SKILL.md": {
+    "id": "context-and-memory-ops/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for project context, voice modeling, and codebase walkthroughs.",
+    "triggers": [
+      {
+        "pattern": "(save|resume|model|tour).*(context|voice|memory|walkthrough)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "context keeper",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/context-and-memory-ops",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:47dfe8b4d1ebfe0be748506ddd39fa303358b66e8cd6cf22af47cbdd5d002dfe"
+  },
+  "context-budget/SKILL.md": {
+    "id": "context-budget/SKILL.md",
+    "version": "1.0.0",
+    "description": "A proactive audit tool for monitoring and optimizing token overhead across agents, skills, and MCP servers.",
+    "triggers": [
+      {
+        "pattern": "(check|audit|view).*(context|token).*(budget|usage|overhead)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "/context-budget",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/context-budget",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:8eda01c13f249e8a5b90670e21ecb471611eadfe5f815b829931fa7fb8d1219c"
+  },
+  "continuous-agent-loop/SKILL.md": {
+    "id": "continuous-agent-loop/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's canonical loop patterns for autonomous execution with quality gates and recovery controls.",
+    "triggers": [
+      {
+        "pattern": "(start|run|select).*(loop|pattern|stack)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "how should I (run|execute) this (autonomous|continuous) task",
+        "confidence": 0.85
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/continuous-agent-loop",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:825d16d949ea72e33be35aa5df1211853bdd3d2435489f560a3cd6abee48a753"
+  },
+  "continuous-learning-v2/SKILL.md": {
+    "id": "continuous-learning-v2/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's primary evolution engine. Uses hook-driven \"Instincts\" with confidence scoring to learn project-specific and global patterns.",
+    "triggers": [
+      {
+        "pattern": "(instinct|learning|evolution).*(status|evolve|promote)",
+        "confidence": 0.95
+      },
+      {
+        "pattern": "how is (ciel|the agent) evolving",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/continuous-learning-v2",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:1f482db8ae1d093a889797e3b239524e8ab821010b77efdf5389beedb9236089"
+  },
+  "council/SKILL.md": {
+    "id": "council/SKILL.md",
+    "version": "1.0.0",
+    "description": "Ciel's primary decision-making and evaluation body. Convene the Council of Five for evaluation, triage, and high-stakes decisions.",
+    "triggers": [
+      {
+        "pattern": "convene.*council",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "council.*deliberation",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "evaluate.*(decision|choice|path)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "second opinion",
+        "confidence": 0.8
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/council",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:0444b2f71fe89b0675725cffd6cc3afd816d9ba37e188cfc4b1a1999fe215edc"
+  },
+  "cpp-development/SKILL.md": {
+    "id": "cpp-development/SKILL.md",
+    "version": "1.0.0",
+    "description": "Modern C++ (17/20+) standards based on Core Guidelines, RAII, and GoogleTest.",
+    "triggers": [
+      {
+        "pattern": "(design|build|review).*(cpp|c\\+\\+|cmake|gtest)",
+        "confidence": 0.95
+      },
+      {
+        "pattern": "cpp core guidelines",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/cpp-development",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:5e20a2ad2d9785d24e8b3f319cdf827858dbeb8668d366fbd37816e86adb2957"
+  },
+  "crypto-and-trading-security/SKILL.md": {
+    "id": "crypto-and-trading-security/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for trading agent safety, spend limits, and Solidity integrity.",
+    "triggers": [
+      {
+        "pattern": "(build|secure|audit).*(trading|bot|wallet|solidity|transaction)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "spend limit guard",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/crypto-and-trading-security",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:223a9fb421a4173371a853b550726a0a451d7279a7150926c87b8f66c1452f66"
+  },
+  "customs-compliance/SKILL.md": {
+    "id": "customs-compliance/SKILL.md",
+    "version": "1.0.0",
+    "description": "Tariff classification, documentation standards, and regulatory screening for international trade.",
+    "triggers": [
+      {
+        "pattern": "(classify|export|import|customs).*(hs code|tariff|compliance|border)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "denied party screening",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/customs-compliance",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:9c54e56adf202c7f9445ee54598d7481d80df757bd20401dd41106a41caf929c"
+  },
+  "do/SKILL.md": {
+    "id": "do/SKILL.md",
+    "version": "1.0.0",
+    "description": "Orchestrated, multi-agent execution of phased implementation plans.",
+    "triggers": [
+      {
+        "pattern": "execute.*plan",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "do.*(implementation|tasks)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "start.*(phase|execution)",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/do",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:f3711cceef5395fa8781a8ed3686c60d311169d676852a50d3d7c288a9264649"
+  },
+  "database-migrations/SKILL.md": {
+    "id": "database-migrations/SKILL.md",
+    "version": "1.0.0",
+    "description": "Safe, zero-downtime database schema changes and data backfills.",
+    "triggers": [
+      {
+        "pattern": "(create|alter|migrate|update).*(table|schema|database|column)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "database migrations",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/database-migrations",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:f48294c9fdcf70d1c2e1c6d282449dccbc9b6d23646c3e75e5b1807f61f2bfa7"
+  },
+  "dispatching-parallel-agents/SKILL.md": {
+    "id": "dispatching-parallel-agents/SKILL.md",
+    "version": "1.0.0",
+    "description": "Core orchestration pattern for executing multiple independent tasks concurrently using isolated sub-agents.",
+    "triggers": [
+      {
+        "pattern": "(dispatch|run|execute).*(parallel|concurrent).*(agents|tasks)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "(multiple|several) (independent|unrelated) (failures|bugs|tasks)",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/dispatching-parallel-agents",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:1b056b3dac4974dc8251a5b29a16391b59d101ab1146d412adf7199f3b243eb7"
+  },
+  "django-development/SKILL.md": {
+    "id": "django-development/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for Django and DRF development, security, TDD, and CI verification.",
+    "triggers": [
+      {
+        "pattern": "(design|build|review).*(django|drf|manage.py|python web)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "django patterns",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/django-development",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:9d4b0080d045e3fae30be133fc4d892d27f8babedcfa2189b4d0335667d5ca56"
+  },
+  "document-and-video-intelligence/SKILL.md": {
+    "id": "document-and-video-intelligence/SKILL.md",
+    "version": "1.0.0",
+    "description": "Document conversion/OCR via Nutrient and technical video explainers via Manim.",
+    "triggers": [
+      {
+        "pattern": "(process|ocr|convert|animate).*(pdf|docx|nutrient|manim|explainer)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "technical explainer",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/document-and-video-intelligence",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:ad0e182261637eacb10ca91d890847f6d8b095416a0b3da5e2cc0464fce481d1"
+  },
+  "dotnet-development/SKILL.md": {
+    "id": "dotnet-development/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for modern .NET/C# development, dependency injection, and xUnit testing.",
+    "triggers": [
+      {
+        "pattern": "(design|build|review).*(dotnet|.net|c#|csharp)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "dotnet patterns",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/dotnet-development",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:af08efc46c3df528916cc097704640853c2f14c904a7ba7f3523229047b8d525"
+  },
+  "e2e-and-visual-verification/SKILL.md": {
+    "id": "e2e-and-visual-verification/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for Playwright E2E testing and intentional frontend design.",
+    "triggers": [
+      {
+        "pattern": "(test|design|build).*(e2e|playwright|frontend|ui|visual)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "page object model",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/e2e-and-visual-verification",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:976f441b5626c2ad6c998bb60a497e722298fc358e5b77982593be266b76a157"
+  },
+  "email-ops/SKILL.md": {
+    "id": "email-ops/SKILL.md",
+    "version": "1.0.0",
+    "description": "Evidence-first mailbox triage, drafting, and send-verification workflow.",
+    "triggers": [
+      {
+        "pattern": "(read|send|triage|draft).*(email|mail|inbox)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "reply to (the|this) email",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/email-ops",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:8d294632dece793420f649330ebfa36f863facc9029657f9960bd786a3d90537"
+  },
+  "energy-procurement/SKILL.md": {
+    "id": "energy-procurement/SKILL.md",
+    "version": "1.0.0",
+    "description": "C&I energy spend management, tariff optimization, and PPA evaluation.",
+    "triggers": [
+      {
+        "pattern": "(procure|analyze|negotiate).*(energy|electricity|gas|ppa|utility)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "demand charge mitigation",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/energy-procurement",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:92caf71895acfcb79c90ef7e89f4be09837453330821e255eb2b562af06f78b6"
+  },
+  "eval-harness/SKILL.md": {
+    "id": "eval-harness/SKILL.md",
+    "version": "1.0.0",
+    "description": "Formal evaluation framework for CIEL sessions implementing Eval-Driven Development (EDD) principles for autonomous agents.",
+    "triggers": [
+      {
+        "pattern": "(evaluate|benchmark|test).*(agent|model|workflow)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "setup (eval|edd|eval-driven)",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/eval-harness",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:68c739175a27ec0e8366632eb822b357c34c7d8e5954d86ce1a04220f0b16359"
+  },
+  "everything-claude-code-conventions/SKILL.md": {
+    "id": "everything-claude-code-conventions/SKILL.md",
+    "version": "1.0.0",
+    "description": "Core repository standards for naming, structure, commits, and workflows.",
+    "triggers": [
+      {
+        "pattern": "(convention|style|standard|commit).*(rule|guide|pattern)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "how should I.*(name|format|structure)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "what are the.*(repo|project).*standards",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/everything-claude-code-conventions",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:0499ef960d94692c8c2e144af461d40e290f816665a1e4e47d32b889465f1ff4"
+  },
+  "executing-plans/SKILL.md": {
+    "id": "executing-plans/SKILL.md",
+    "version": "1.0.0",
+    "description": "The Orchestrator's high-level checklist for loading, reviewing, and tracking multi-step implementation plans.",
+    "triggers": [
+      {
+        "pattern": "(start|begin|load).*(plan|implementation|epic)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "execute (the|this) plan",
+        "confidence": 0.85
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/executing-plans",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:236f2b9e37423ec9228e1316c8a4e1bc5d17bd084c1e5e84c690b313acf98fa0"
+  },
+  "find-skills/SKILL.md": {
+    "id": "find-skills/SKILL.md",
+    "version": "1.0.0",
+    "description": "Discovery and installation of agent skills from the open ecosystem.",
+    "triggers": [
+      {
+        "pattern": "(find|search|lookup|is there).*skill",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "how do I.*(react|testing|design|deploy)",
+        "confidence": 0.8
+      },
+      {
+        "pattern": "can you do.*(specialized|expert)",
+        "confidence": 0.7
+      },
+      {
+        "pattern": "npx skills.*",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/find-skills",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:04f4353e0a6649ba8a9753c14028ac57c24bba10ee97310cf9b51b63c1a096cd"
+  },
+  "finishing-a-development-branch/SKILL.md": {
+    "id": "finishing-a-development-branch/SKILL.md",
+    "version": "1.0.0",
+    "description": "The Finality Layer for CIEL orchestration. Guides the completion of an epic by enforcing global verification, presenting integration options, and handling Git cleanup.",
+    "triggers": [
+      {
+        "pattern": "(finish|complete).*(branch|epic|development|feature)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "ready to (merge|pr|push)",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/finishing-a-development-branch",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:c02070e6f6d89d6740ee854d4fc3b8d540dce9e579f59004bc1cb8f1a39008ed"
+  },
+  "flutter-development/SKILL.md": {
+    "id": "flutter-development/SKILL.md",
+    "version": "1.0.0",
+    "description": "Production-ready Dart and Flutter patterns, state management, and code review standards.",
+    "triggers": [
+      {
+        "pattern": "(build|review|refactor).*(flutter|dart).*(feature|widget|code)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "flutter patterns",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/flutter-development",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:307087e4a0d224deb1872bb6741eebaef858d58666ffb1582c7538b8e0b70b31"
+  },
+  "go-development/SKILL.md": {
+    "id": "go-development/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for idiomatic Go development, table-driven testing, and performance benchmarking.",
+    "triggers": [
+      {
+        "pattern": "(design|build|review).*(go|golang|goroutine)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "go test",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/go-development",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:5901bbd353c42fd0e8bb451acf6a316ed144406204d54d71e0c0ab743503e967"
+  },
+  "google-workspace-management/SKILL.md": {
+    "id": "google-workspace-management/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for managing Google Drive, Docs, Sheets, and Slides via CLI and MCP tools.",
+    "triggers": [
+      {
+        "pattern": "(manage|edit|clean|summarize|gws).*(google|drive|gdoc|gsheet|gmail|calendar)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "gws auth setup",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/google-workspace-management",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:6746c6f3c12e3cf070540ece9fed39590e8a06b80e1764eda74e3a7933c23631"
+  },
+  "gsap-animation-suite/SKILL.md": {
+    "id": "gsap-animation-suite/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's unified framework for high-performance GSAP animations, timelines, and plugins.",
+    "triggers": [
+      {
+        "pattern": "(animate|build).*(gsap|timeline|tween|ease|svg|morph)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "gsap.to",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/gsap-animation-suite",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:a5e16691f37cc39e376f46779991b745630d87cc38b77b04a7170b1bb5fd3bee"
+  },
+  "healthcare-compliance/SKILL.md": {
+    "id": "healthcare-compliance/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for HIPAA (US), GDPR (EU), and PHI/PII compliance in healthcare environments.",
+    "triggers": [
+      {
+        "pattern": "(healthcare|hipaa|phi|pii|baa).*(compliance|patient|clinician)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "is this (healthcare|hipaa) compliant",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/healthcare-compliance",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:335ab65ac5fc6e340b2e216959acc9c7756d3d7f3ac6bc0851bf3b8e0d7dd736"
+  },
+  "healthcare-systems/SKILL.md": {
+    "id": "healthcare-systems/SKILL.md",
+    "version": "1.0.0",
+    "description": "EMR/EHR encounter workflows and Clinical Decision Support (CDSS) engine patterns.",
+    "triggers": [
+      {
+        "pattern": "(build|design).*(emr|ehr|patient encounter|cdss|interactions|dosing)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "healthcare safety patterns",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/healthcare-systems",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:8bcba53139fcf98e15aa2bf827b2884a62507b91f8a0595d505b5c850f6a290b"
+  },
+  "investor-relations/SKILL.md": {
+    "id": "investor-relations/SKILL.md",
+    "version": "1.0.0",
+    "description": "Managing investor outreach, communications, and fundraising materials with high credibility.",
+    "triggers": [
+      {
+        "pattern": "(fundraise|investor).*(outreach|email|pitch|deck|memo|model)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "reply to (vc|investor)",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/investor-relations",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:86c288090db4b5f8ef172c681a9b019441b628229543a73fd54a80bf5b037d85"
+  },
+  "java-springboot-development/SKILL.md": {
+    "id": "java-springboot-development/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for Java 17+ and Spring Boot 3+ development, security, and TDD.",
+    "triggers": [
+      {
+        "pattern": "(design|build|review).*(java|spring boot|springboot)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "spring security",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/java-springboot-development",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:0f5528087219d708540554ec06527fd1bf3aabdbdcd88f90c8053c5f083eaa62"
+  },
+  "jira-integration/SKILL.md": {
+    "id": "jira-integration/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's protocol for interacting with Jira issues, sprints, and development information.",
+    "triggers": [
+      {
+        "pattern": "(jira|atlassian).*(ticket|issue|sprint|jql)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "get (requirements|ac) from (ticket|jira)",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/jira-integration",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:f24324aabf7251138d4b436a390a162d4a2578b361a08b9db042a5ba5339cb0b"
+  },
+  "jvm-ci-verification/SKILL.md": {
+    "id": "jvm-ci-verification/SKILL.md",
+    "version": "1.0.0",
+    "description": "The formal verification loop for JVM (Java/Kotlin) projects using Maven or Gradle.",
+    "triggers": [
+      {
+        "pattern": "(verify|check|test|lint).*(maven|gradle|mvn|jvm)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "npx verify-jvm",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/jvm-ci-verification",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:50681058550bab6341d648aebfa637fad0bf4c51481f464363d16dd3a175bd24"
+  },
+  "jvm-server-frameworks/SKILL.md": {
+    "id": "jvm-server-frameworks/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for Ktor servers, Exposed ORM, and database lifecycle management.",
+    "triggers": [
+      {
+        "pattern": "(build|setup).*(ktor|exposed|hikari|flyway)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "ktor patterns",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/jvm-server-frameworks",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:5b3075c9d9f79066b41ee10d58121d52c5ecff488479e4ae64778f52bf50354d"
+  },
+  "kotlin-development/SKILL.md": {
+    "id": "kotlin-development/SKILL.md",
+    "version": "1.0.0",
+    "description": "Idiomatic Kotlin patterns, structured concurrency (Coroutines/Flow), and Kotest/MockK testing.",
+    "triggers": [
+      {
+        "pattern": "(design|build|review).*(kotlin|coroutine|flow)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "idiomatic kotlin",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/kotlin-development",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:addbc8b8f2e536c21c8bcf96994c88b8eef309782cbc5468eff918f9fd115bb5"
+  },
+  "laravel-development/SKILL.md": {
+    "id": "laravel-development/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for Laravel development, security, TDD, and CI verification.",
+    "triggers": [
+      {
+        "pattern": "(design|build|review).*(laravel|php|artisan)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "laravel patterns",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/laravel-development",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:a05f7b13bbd6621e28149a5eef0b66db6ebac2d829ad984b2484c3fac100a925"
+  },
+  "logistics-management/SKILL.md": {
+    "id": "logistics-management/SKILL.md",
+    "version": "1.0.0",
+    "description": "Managing freight exceptions, carrier portfolios, and rate negotiations with evidence-first resolution.",
+    "triggers": [
+      {
+        "pattern": "(manage|negotiate|resolve).*(carrier|freight|shipment|delay|claim)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "freight exceptions",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/logistics-management",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:94b2e03b554df71174af02080753c66d365f60419e64e7ff2591715f29d28881"
+  },
+  "make-plan/SKILL.md": {
+    "id": "make-plan/SKILL.md",
+    "version": "1.0.0",
+    "description": "Structured, LLM-friendly implementation planning based on approved design specs.",
+    "triggers": [
+      {
+        "pattern": "make.*plan.*(for|implement|build)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "how should we.*(execute|start).*(implementation|this)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "create.*implementation.*steps",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/make-plan",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:2e1795e99218ce53d569cc2b07bc156d2a6a87d5d7d195325ba26c9ac56340ef"
+  },
+  "market-research/SKILL.md": {
+    "id": "market-research/SKILL.md",
+    "version": "1.0.0",
+    "description": "Evidence-first research for competitive analysis, fund diligence, and market sizing.",
+    "triggers": [
+      {
+        "pattern": "(research|analyze).*(market|competitor|investor|category|trend)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "tam/sam/som",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/market-research",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:60b994917e0c1cce1234b786bbca81f70e2af235d9ed5af7d3b54e30ac21ca22"
+  },
+  "mcp-server-patterns/SKILL.md": {
+    "id": "mcp-server-patterns/SKILL.md",
+    "version": "1.0.0",
+    "description": "Ciel's integration layer for Model Context Protocol (MCP) development.",
+    "triggers": [
+      {
+        "pattern": "(build|create|add).*mcp.*(server|tool|resource)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "mcp.*integration",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "@modelcontextprotocol/sdk",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:ai"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/mcp-server-patterns",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:4d764ec17d2fa53b6fa4f4e0a9fb68403040a9ccb0e626dd757f1f37209b183b"
+  },
+  "mempalace-rs/SKILL.md": {
+    "id": "mempalace-rs/SKILL.md",
+    "version": "1.0.0",
+    "description": "Ciel's persistent memory and knowledge graph system (Rust-native).",
+    "triggers": [
+      {
+        "pattern": "(remember|save|persist|store).*memory",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "what did we.*(last|previous|before)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "search.*(history|memory|palace)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "knowledge graph|AAAK|temporal fact",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/mempalace-rs",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:2f7873637299915a9a6a551ea548abfa4f44439a26ea0134069d683cc9380409"
+  },
+  "messages-ops/SKILL.md": {
+    "id": "messages-ops/SKILL.md",
+    "version": "1.0.0",
+    "description": "Evidence-first retrieval and thread management for instant messaging surfaces (iMessage, DMs, OTPs).",
+    "triggers": [
+      {
+        "pattern": "(read|check).*(message|text|dm|code|otp)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "look in (imessage|twitter|x) dms",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/messages-ops",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:11bd0e23769883f33e60f83742aa01701f1daa6980ebd15e5c1fb4ec9aad4f2e"
+  },
+  "modern-js-runtimes/SKILL.md": {
+    "id": "modern-js-runtimes/SKILL.md",
+    "version": "1.0.0",
+    "description": "Fast JS/TS development using Bun and specialized hashing safety for Ethereum.",
+    "triggers": [
+      {
+        "pattern": "(build|setup|run).*(bun|runtime|hashing|keccak)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "bun install",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/modern-js-runtimes",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:21bdf31102bd1a73b3520f23db8b429c63fc9ac3aaabf3fbd4688d07f5bfdef8"
+  },
+  "nestjs-backend-development/SKILL.md": {
+    "id": "nestjs-backend-development/SKILL.md",
+    "version": "1.0.0",
+    "description": "Modular NestJS architecture, DTO validation, Guards, and Type-Safe backend patterns.",
+    "triggers": [
+      {
+        "pattern": "(design|build|review).*(nest.js|nestjs|decorator|provider)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "nest generate",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/nestjs-backend-development",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:f6c38aab66afd4f6045a4f01684a5854b712adcb2ee32cf68cffc4c87c9f6903"
+  },
+  "neural-intelligence-generation/SKILL.md": {
+    "id": "neural-intelligence-generation/SKILL.md",
+    "version": "1.0.0",
+    "description": "Neural search via Exa and multimodal generation via fal.ai.",
+    "triggers": [
+      {
+        "pattern": "(search|generate).*(exa|neural|fal.ai|image|video|audio)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "exa web search",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/neural-intelligence-generation",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:afa8e0602ef31d3d26370868f69b9596c0f452636265633c8210e14219d3623f"
+  },
+  "nextjs-development/SKILL.md": {
+    "id": "nextjs-development/SKILL.md",
+    "version": "1.0.0",
+    "description": "Next.js 16+ development using Turbopack, Server Components, and bundle optimization.",
+    "triggers": [
+      {
+        "pattern": "(design|build|review).*(next.js|nextjs|turbopack|app router)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "next dev --turbopack",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/nextjs-development",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:5048445d262a2d1ad089593aa27e35ef70b0d832470be58b018df75c4851599d"
+  },
+  "nuxt-development/SKILL.md": {
+    "id": "nuxt-development/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for Nuxt 4 development, hydration safety, and route-level rendering.",
+    "triggers": [
+      {
+        "pattern": "(design|build|review).*(nuxt|vue|nitro|hydration)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "nuxt route rules",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/nuxt-development",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:c3e63eaeee666a8fad1ba6aabe9940b609d8366fbc8e0869276925e075a81ef3"
+  },
+  "opensource-and-repo-ops/SKILL.md": {
+    "id": "opensource-and-repo-ops/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for public release pipelines and cross-stack repo scanning.",
+    "triggers": [
+      {
+        "pattern": "(open source|sanitize|scan|audit).*(repo|project|github|secret)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "repo scan html report",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/opensource-and-repo-ops",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:354dc3edf0438ad3723d215bc53e26d62a87c784c1a9126fa051ae6a39612dac"
+  },
+  "operations-planning/SKILL.md": {
+    "id": "operations-planning/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for demand forecasting, inventory replenishment, and production scheduling.",
+    "triggers": [
+      {
+        "pattern": "(plan|forecast|schedule).*(production|demand|inventory|bottleneck)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "drum-buffer-rope",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/operations-planning",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:6729079a9d3d653cf8ed49db578fc36ad6609c5eaf5413e42bc651d68564cd60"
+  },
+  "orchestration/SKILL.md": {
+    "id": "orchestration/SKILL.md",
+    "version": "1.0.0",
+    "description": "High-level task decomposition, planning, and multi-agent coordination.",
+    "triggers": [
+      {
+        "pattern": "(blueprint|plan|roadmap).*for",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "orchestrate.*",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "break down.*into steps",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "complex.*task",
+        "confidence": 0.7
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/orchestration",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:fdab4885ec0450bbc1bf109901799d20c599f110d32e998f4f65bff87118bda7"
+  },
+  "performance-and-qa-ops/SKILL.md": {
+    "id": "performance-and-qa-ops/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for benchmarking, automated browser testing, and post-deploy monitoring.",
+    "triggers": [
+      {
+        "pattern": "(benchmark|qa|watch|monitor).*(performance|lcp|regression|deploy)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "canary watch",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/performance-and-qa-ops",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:161c2984a2009402f786e1acd195f7f402508523343fbecb6a5ec0fde98cdd93"
+  },
+  "perl-development/SKILL.md": {
+    "id": "perl-development/SKILL.md",
+    "version": "1.0.0",
+    "description": "Modern Perl 5.36+ idioms, taint-aware security, and Test2::V0 testing.",
+    "triggers": [
+      {
+        "pattern": "(design|build|review).*(perl|cpan|cpanfile)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "modern perl",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/perl-development",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:3f9e89b1b7542065df668f8876bbc86856aab4c970f6d0577af9fa9d16144b28"
+  },
+  "presentation-design/SKILL.md": {
+    "id": "presentation-design/SKILL.md",
+    "version": "1.0.0",
+    "description": "Create zero-dependency, animation-rich HTML presentations and pitch decks from specs or PPTX.",
+    "triggers": [
+      {
+        "pattern": "(create|build).*(presentation|deck|slides|pitch)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "convert (pptx|powerpoint) to (html|slides)",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/presentation-design",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:46c130077527699d1f35784fbf5a3996701867c91fc682216476e32d0946f8e6"
+  },
+  "product-capability/SKILL.md": {
+    "id": "product-capability/SKILL.md",
+    "version": "1.0.0",
+    "description": "Translates high-level product intent into engineering-ready capability contracts and invariants.",
+    "triggers": [
+      {
+        "pattern": "(create|define|translate).*(capability|contract|constraints)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "turn (prd|intent) into (srs|contract)",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/product-capability",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:a83a31dfb0ffb92c7df70d0d280ee87ba467d41d8fb8d4b6f77402175f015dc1"
+  },
+  "product-lens/SKILL.md": {
+    "id": "product-lens/SKILL.md",
+    "version": "1.0.0",
+    "description": "A diagnostic framework for validating product direction and feature viability before engineering begins.",
+    "triggers": [
+      {
+        "pattern": "(analyze|diagnose|review).*(product|idea|founder lens)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "should I build (this|that)",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/product-lens",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:aeaf18a2387a17f414c62272336438c705df95bd1b9e8ab81453c0c27a257223"
+  },
+  "project-flow-ops/SKILL.md": {
+    "id": "project-flow-ops/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's coordination layer for triaging issues, PRs, and tasks across GitHub and internal tracking systems (e.g., Linear).",
+    "triggers": [
+      {
+        "pattern": "(triage|backlog|audit).*(issue|pr|backlog)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "map (github|issues) to (linear|tasks)",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/project-flow-ops",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:76c271e53f4d196ee49f3e7539c916a993454dbeccf54ab042639788add0e620"
+  },
+  "prompt-and-session-engineering/SKILL.md": {
+    "id": "prompt-and-session-engineering/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for prompt optimization and session management.",
+    "triggers": [
+      {
+        "pattern": "(optimize|rewrite|branch|compact).*(prompt|session|repl)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "prompt optimizer",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/prompt-and-session-engineering",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:6f1ee1702064a574296868b3e929268b0168234cae67bebd087cce774d6002a2"
+  },
+  "python-development/SKILL.md": {
+    "id": "python-development/SKILL.md",
+    "version": "1.0.0",
+    "description": "Idiomatic Python patterns, modern type hints, and pytest-driven development.",
+    "triggers": [
+      {
+        "pattern": "(design|build|review).*(python|pip|pytest|type hint)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "idiomatic python",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/python-development",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:9e55fccb2003e8562890743538f6270add9b65fab0b3cb80946bf0886bb0bac4"
+  },
+  "quality-and-returns/SKILL.md": {
+    "id": "quality-and-returns/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for manufacturing quality (NCR/CAPA) and reverse logistics (Returns/Grading).",
+    "triggers": [
+      {
+        "pattern": "(investigate|process).*(non-conformance|ncr|capa|return|refund)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "root cause analysis",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/quality-and-returns",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:6d844eba80b07e14eda23a1a66fbfee4e27f212806abca007daaef2c758b0b35"
+  },
+  "regex-vs-llm-structured-text/SKILL.md": {
+    "id": "regex-vs-llm-structured-text/SKILL.md",
+    "version": "1.0.0",
+    "description": "A cost-optimization framework for choosing the right tool (Regex vs. LLM) for structured text parsing.",
+    "triggers": [
+      {
+        "pattern": "parse (quiz|form|invoice|structured text)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "(regex vs llm|regex or llm)",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/regex-vs-llm-structured-text",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:d859837cd7ce017fab88166e813e5d0a64f6524b09ad079bec2f084bfaa3111b"
+  },
+  "remotion-video-creation/SKILL.md": {
+    "id": "remotion-video-creation/SKILL.md",
+    "version": "1.0.0",
+    "description": "Best practices for programmable video creation using Remotion and React.",
+    "triggers": [
+      {
+        "pattern": "(create|build|code).*(video|animation).*(remotion)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "remotion",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/remotion-video-creation",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:f060f315b1c28cc9ce9062710f3ddd7095fab86553170851588f7a4ebc332965"
+  },
+  "requesting-code-review/SKILL.md": {
+    "id": "requesting-code-review/SKILL.md",
+    "version": "1.0.0",
+    "description": "The formal protocol for requesting and processing peer code reviews from the Auditor sub-agent during CIEL execution.",
+    "triggers": [
+      {
+        "pattern": "(request|get|perform).*(code review|audit|peer review)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "review (my|the) code",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/requesting-code-review",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:ebc58d200aac23dc95f20dbea0894236d2c2f1aafa4bfdfd0a716833661c157f"
+  },
+  "research-and-intelligence/SKILL.md": {
+    "id": "research-and-intelligence/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for AI-powered scraping, deep research reports, and live documentation lookup.",
+    "triggers": [
+      {
+        "pattern": "(research|scrape|lookup).*(deep dive|exa|firecrawl|documentation)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "deep research report",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/research-and-intelligence",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:ee82b9aee1aefa6fb8e51d15cefe82ffc82084de9fd407ab0ac0401c1a7813c8"
+  },
+  "research-ops/SKILL.md": {
+    "id": "research-ops/SKILL.md",
+    "version": "1.0.0",
+    "description": "Ciel's evidence-first research and discovery orchestration.",
+    "triggers": [
+      {
+        "pattern": "research.*",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "(look up|search for|find).*latest",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "compare.*options",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "market.*research",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/research-ops",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:116f632eedf738089a2c8a08b17dde78d0b8ca085ddd63bb45ab5a86d5240e92"
+  },
+  "rfc-and-unit-orchestration/SKILL.md": {
+    "id": "rfc-and-unit-orchestration/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for RFC-driven feature implementation and unit-based orchestration.",
+    "triggers": [
+      {
+        "pattern": "(rfc|decompose|unit).*(feature|dag|work unit|merge queue)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "ralphinho rfc pipeline",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/rfc-and-unit-orchestration",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:5c2229e25c08927544167af72c115d07d3a62166335f8b4ed148c739142b2da0"
+  },
+  "rules-distill/SKILL.md": {
+    "id": "rules-distill/SKILL.md",
+    "version": "1.0.0",
+    "description": "The protocol for extracting cross-cutting principles from skills and distilling them into global workspace rules.",
+    "triggers": [
+      {
+        "pattern": "(distill|extract|update).*(rules|principles)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "turn (skills|patterns) into rules",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/rules-distill",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:d45a072c632e8567cfa10b1033400ba60d02ff22ecccb4fadc5e9d53c4e4327f"
+  },
+  "rust-development/SKILL.md": {
+    "id": "rust-development/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for idiomatic Rust, zero-cost abstractions, and robust error handling.",
+    "triggers": [
+      {
+        "pattern": "(design|build|review).*(rust|cargo|crate|borrow checker)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "rust patterns",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/rust-development",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:9ab997092cdbd9f72051ae10bde1c4d7280589d3d7c40ae24f764c6c50d4f79a"
+  },
+  "safety-guard/SKILL.md": {
+    "id": "safety-guard/SKILL.md",
+    "version": "1.0.0",
+    "description": "Primary operational failsafe. Intercepts destructive commands and enforces directory-level write freezing during autonomous orchestration.",
+    "triggers": [
+      {
+        "pattern": "(run|execute).*(danger|production|autonomous)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "prevent (destructive|dangerous) (operations|commands)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "(freeze|lock).*(directory|folder|writes)",
+        "confidence": 0.85
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/safety-guard",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:c45f5c999176227753cfb9c6556759dfd9aca0970196edeb54cc7fa1049047ff"
+  },
+  "scroll-driven-animation/SKILL.md": {
+    "id": "scroll-driven-animation/SKILL.md",
+    "version": "1.0.0",
+    "description": "GSAP ScrollTrigger standards for scroll-linked animations, pinning, and parallax.",
+    "triggers": [
+      {
+        "pattern": "(scroll|parallax|pin).*(animation|trigger|gsap)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "scrolltrigger",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/scroll-driven-animation",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:a758737c0d61b250efd401b78da4f73c7c73393d89f9510dc5914fdec13dcc69"
+  },
+  "search-first/SKILL.md": {
+    "id": "search-first/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's mandated 'Research-Before-Strategy' workflow. Enforces the discovery of existing solutions, MCPs, and libraries before writing net-new code.",
+    "triggers": [
+      {
+        "pattern": "(add|build|implement|create).*(feature|functionality|integration|utility)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "how should (we|I) solve",
+        "confidence": 0.85
+      },
+      {
+        "pattern": "write a (script|wrapper|client) for",
+        "confidence": 0.8
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/search-first",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:a3eccceba1edcff48785c7c55bc286303fba249e253af9325964237bbae092f5"
+  },
+  "security-bounty-hunter/SKILL.md": {
+    "id": "security-bounty-hunter/SKILL.md",
+    "version": "1.0.0",
+    "description": "An offensive security framework for discovering exploitable, bounty-worthy vulnerabilities in reachable surfaces.",
+    "triggers": [
+      {
+        "pattern": "(hunt|discover).*(vulnerability|exploit|bounty)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "find exploitable bugs",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/security-bounty-hunter",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:3ad5f331b2c05aff6b88e8afa27d661620a040c4953514cbd26a1d3720e182cf"
+  },
+  "security-review/SKILL.md": {
+    "id": "security-review/SKILL.md",
+    "version": "1.0.0",
+    "description": "A comprehensive security checklist and architectural patterns for CIEL development.",
+    "triggers": [
+      {
+        "pattern": "(check|audit|review).*(security|auth|secrets|vulnerability)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "is this (safe|secure)",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/security-review",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:007c78dbeff2f77825a7b9cc1cd4bc10be93f6544319e8d72ee4d1807ff1febd"
+  },
+  "security-scan/SKILL.md": {
+    "id": "security-scan/SKILL.md",
+    "version": "1.0.0",
+    "description": "Audits CIEL configuration for misconfigurations and prompt injection risks using AgentShield.",
+    "triggers": [
+      {
+        "pattern": "(scan|audit).*(config|settings|shield)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "npx ecc-agentshield",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:ai"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/security-scan",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:3ecc03ca096a174eddc7a24038fce7e710c4c7d47acdcd1a92aac966e6a3eebe"
+  },
+  "seo-optimization/SKILL.md": {
+    "id": "seo-optimization/SKILL.md",
+    "version": "1.0.0",
+    "description": "Search visibility through technical correctness, performance, and intent-based keyword mapping.",
+    "triggers": [
+      {
+        "pattern": "(seo|keyword|sitemap|metadata).*(audit|plan|implement)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "improve search visibility",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/seo-optimization",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:582ce1112e2f8ee904b6844d4cbc20e1534bf5860c342cc4ef424b810eb45435"
+  },
+  "skill-comply/SKILL.md": {
+    "id": "skill-comply/SKILL.md",
+    "version": "1.0.0",
+    "description": "Automated compliance measurement to verify if agents and sub-agents are actually following established skills and rules.",
+    "triggers": [
+      {
+        "pattern": "(check|verify|audit).*(compliance|rule following|skill usage)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "is the agent (following|obeying) (the rule|this skill)",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/skill-comply",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:b867eb7794d5f9525deeeaac2aeda0b403239ccd437693a5fb3f82a1c428f6c2"
+  },
+  "social-and-lead-intelligence/SKILL.md": {
+    "id": "social-and-lead-intelligence/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for lead scoring, social graph analysis, and warm-path outreach.",
+    "triggers": [
+      {
+        "pattern": "(find|score|rank).*(lead|prospect|social graph|outreach)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "warm path discovery",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/social-and-lead-intelligence",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:0baef5a3f538b4a2f576e97d7af062006f4cd38530bdd6702df88c8701e8f21a"
+  },
+  "strategic-compact/SKILL.md": {
+    "id": "strategic-compact/SKILL.md",
+    "version": "1.0.0",
+    "description": "A phase-aware context management strategy that suggests manual compaction at logical task boundaries.",
+    "triggers": [
+      {
+        "pattern": "(when|should I) (compact|clear context)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "/compact",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/strategic-compact",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:a2113d5db4e6ea8be49444bbcf4f46304545f6ce6e147c114d551766867e1d2e"
+  },
+  "subagent-driven-development/SKILL.md": {
+    "id": "subagent-driven-development/SKILL.md",
+    "version": "1.0.0",
+    "description": "Core CIEL orchestration pattern for delegating complex, multi-step implementation plans to ephemeral, specialized sub-agents.",
+    "triggers": [
+      {
+        "pattern": "execute (plan|tasks|implementation)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "(delegate|dispatch).*(task|subagent)",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/subagent-driven-development",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:37efd658c9076777235d755a2afbe99e9ee6283aaf50fae931796c880d7ec55c"
+  },
+  "swiftui-patterns/SKILL.md": {
+    "id": "swiftui-patterns/SKILL.md",
+    "version": "1.0.0",
+    "description": "Modern SwiftUI architecture, state management with @Observable, and view composition best practices.",
+    "triggers": [
+      {
+        "pattern": "(build|design).*(swiftui|ios|macos).*(view|interface)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "swiftui patterns",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/swiftui-patterns",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:09400f06c52491ceca651c228db9394ecfffe5ebd8b046ab591b782efed81ee2"
+  },
+  "systematic-debugging/SKILL.md": {
+    "id": "systematic-debugging/SKILL.md",
+    "version": "1.0.0",
+    "description": "Ciel's core diagnostic mandate \u2014 root cause investigation before any fix.",
+    "triggers": [
+      {
+        "pattern": "(bug|error|failure|crash|unexpected|broken).*",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "debug.*",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "why does.*fail",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "fix.*(again|it)",
+        "confidence": 0.85
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/systematic-debugging",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:bc60cc134c9c2a76473f20c85f7c4fb16f1769f2ab266265ff76ea01fd51a28e"
+  },
+  "test-driven-development/SKILL.md": {
+    "id": "test-driven-development/SKILL.md",
+    "version": "1.0.0",
+    "description": "Ciel's core engineering mandate \u2014 red-green-refactor for all behavioral changes.",
+    "triggers": [
+      {
+        "pattern": "(implement|add|fix).* (feature|bug|capability)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "tdd|red-green-refactor",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "write.*test.*first",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:ai"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/test-driven-development",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:c211d4e7fb02e1c440f610affaf29e5a56498ae9c4161c8d194bf4af2f73c0a7"
+  },
+  "token-budget-advisor/SKILL.md": {
+    "id": "token-budget-advisor/SKILL.md",
+    "version": "1.0.0",
+    "description": "A user-facing depth control that offers choices regarding response length and token expenditure before answering.",
+    "triggers": [
+      {
+        "pattern": "(token budget|depth|length|detailed|brief|tldr)",
+        "confidence": 0.8
+      },
+      {
+        "pattern": "respond at (25|50|75|100)%",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/token-budget-advisor",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:0570a944f4b55135f5361be3a69daa2c493af9030901e0760e1a7966c34417c8"
+  },
+  "ui-ux-design/SKILL.md": {
+    "id": "ui-ux-design/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's design intelligence for web and mobile. Provides style selection, UX guidelines, and accessibility standards.",
+    "triggers": [
+      {
+        "pattern": "(design|build|refactor).*(ui|ux|interface|page|component)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "recommend (style|color|font)",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/ui-ux-design",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:2115008dbdfa53f86834b4de44678d424e43b719fcc7ec15651497a12bc4dc08"
+  },
+  "verification-loop/SKILL.md": {
+    "id": "verification-loop/SKILL.md",
+    "version": "1.0.0",
+    "description": "Comprehensive E2E validation and quality gate enforcement.",
+    "triggers": [
+      {
+        "pattern": "verify.*(changes|implementation|all)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "run.*(quality-gate|validation-loop)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "is.*(ready|complete).*(for|to|PR)",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/verification-loop",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:f88cb03dcafe7024da2f4db85bdc90a8a896b2e05d4e421badc1c3f593d01837"
+  },
+  "workflow-and-platform-ops/SKILL.md": {
+    "id": "workflow-and-platform-ops/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for Git workflows, GitHub operations, and on-device LLM patterns.",
+    "triggers": [
+      {
+        "pattern": "(manage|branch|release|triage).*(git|github|ios|foundationmodel)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "git flow",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/workflow-and-platform-ops",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:3284cb511ee9eb1c6c1a9192b5223b0d5430ed5f792d63bfff8e64db77599e59"
+  },
+  "autonomous-3d-studio/SKILL.md": {
+    "id": "autonomous-3d-studio/SKILL.md",
+    "version": "2.0.0",
+    "description": "CIEL's autonomous AAA+ studio-grade 3D modeling, sculpting, retopology, UV unwrapping, PBR/MaterialX texturing, baking, procedural generation, USD composition, and engine integration engine.",
+    "triggers": [
+      {
+        "pattern": "(3d|model|mesh|sculpt|retopo|retopology|uv|bake|baking|pbr|materialx|openpbr|blender|bpy|maya|houdini|unreal|nanite|gltf|fbx|usd|obj|substance)",
+        "confidence": 0.95
+      },
+      {
+        "pattern": "(hard[- ]surface|organic|character|anatomy|facs|rigging|skinning|geometry[- ]nodes|vex|texel[- ]density|subd|trellis|hunyuan3d|rodin)",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "3d",
+      "blender",
+      "unreal-engine",
+      "usd",
+      "pbr",
+      "materialx",
+      "retopology",
+      "baking",
+      "hard-surface",
+      "character",
+      "geometry-nodes",
+      "substance",
+      "mcp",
+      "aaa-quality",
+      "domain:graphics",
+      "harmonized"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/autonomous-3d-studio",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:65bba9a31ea27213161bda89c380cd98fc4207b35e0c539a5490c51de25812c6"
+  },
+  "social-media-automation/SKILL.md": {
+    "id": "social-media-automation/SKILL.md",
+    "version": "1.0.0",
+    "description": "Programmatic interaction with X (Twitter) and cross-platform content distribution.",
+    "triggers": [
+      {
+        "pattern": "(post|tweet|thread|search).*(x|twitter|social media)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "x api",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/social-media-automation",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:ff0ea4e3b7b779e214d50cae1f2b6521e8700aa0116c90f3734f3c1291d836b3"
+  },
+  "system-integration/SKILL.md": {
+    "id": "system-integration/SKILL.md",
+    "version": "1.0.0",
+    "description": "Decoupling business logic using Hexagonal Architecture and building repo-native API connectors.",
+    "triggers": [
+      {
+        "pattern": "(integrate|build|add).*(connector|provider|integration|adapter)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "hexagonal architecture",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/system-integration",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:fcb2b225a5017b85d273ea0bb0e6f5ac5bc9ab3905d61f2144538f2b3a7af817"
+  },
+  "timeline-report/SKILL.md": {
+    "id": "timeline-report/SKILL.md",
+    "version": "1.0.0",
+    "description": "Generates a narrative history of a project's evolution using claude-mem observations.",
+    "triggers": [
+      {
+        "pattern": "(generate|write).*(timeline|journey|history).*(report)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "what is the story of this project",
+        "confidence": 0.9
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:ai"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/timeline-report",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:5592105aa2c2054cf85dc30bc7ac6050cf9bc28ad5594395b09cccad894a246c"
+  },
+  "ui-demo-recording/SKILL.md": {
+    "id": "ui-demo-recording/SKILL.md",
+    "version": "1.0.0",
+    "description": "A protocol for recording polished UI demo videos using Playwright with injected cursors and subtitles.",
+    "triggers": [
+      {
+        "pattern": "(record|create).*(demo|walkthrough|tutorial).*(video)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "show me how it works visually",
+        "confidence": 0.85
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:web"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/ui-demo-recording",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:d0eb705b01926e2945b6eed84a5ab70e62dc086e5eb8a6cb73bab17c69ada652"
+  },
+  "unified-notifications-ops/SKILL.md": {
+    "id": "unified-notifications-ops/SKILL.md",
+    "version": "1.0.0",
+    "description": "A hub for consolidating, classifying, and routing system and human notifications across multiple surfaces.",
+    "triggers": [
+      {
+        "pattern": "(unify|consolidate|route).*(notification|alert|ping)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "what (is happening|happened) while I was (away|gone)",
+        "confidence": 0.85
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/unified-notifications-ops",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:22b0a7ee5553978473b9079965eb840c005c0e1ff227e80b00658c374636bb4b"
+  },
+  "video-operations/SKILL.md": {
+    "id": "video-operations/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for AI-assisted video editing, perception, and server-side processing.",
+    "triggers": [
+      {
+        "pattern": "(edit|cut|transcode|index|stream).*(video|footage)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "videodb",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/video-operations",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:fc1764e13c7d8557b9acb835eec2af3e07d33fa0a399ffeac9e1040b72176e1e"
+  },
+  "vulnerability-and-safety-gates/SKILL.md": {
+    "id": "vulnerability-and-safety-gates/SKILL.md",
+    "version": "1.0.0",
+    "description": "CIEL's framework for patient safety and cryptographic decimal integrity.",
+    "triggers": [
+      {
+        "pattern": "(check|verify|audit).*(phi|safety|decimal|erc20|patient)",
+        "confidence": 0.9
+      },
+      {
+        "pattern": "healthcare eval harness",
+        "confidence": 1.0
+      }
+    ],
+    "tags": [
+      "ciel",
+      "harmonized",
+      "domain:systems"
+    ],
+    "io_contract": {
+      "input": {},
+      "output": {}
+    },
+    "confidence_default": 0.9,
+    "source": {
+      "tier": 1,
+      "origin": "harmonized"
+    },
+    "install_path": "~/.ciel/skills/vulnerability-and-safety-gates",
+    "hits": 0,
+    "success_rate": 1.0,
+    "avg_ms": 0,
+    "created": "2026-08-20T21:26:32.669032Z",
+    "last_updated": "2026-08-20T21:26:32.669032Z",
+    "checksum": "sha256:6fe5c4fef9afce5dbf17c0bfd88bbdb2f08270b529d02d469deb92f7a323c4de"
+  }
+}
