@@ -19,7 +19,7 @@ jobs:
     name: Validate spec + frontmatter
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Install deps
         run: |
@@ -46,7 +46,7 @@ jobs:
     name: shellcheck
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - run: sudo apt-get install -y -qq shellcheck
       - name: shellcheck
         run: |
@@ -62,7 +62,7 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: DavidAnson/markdownlint-cli2-action@v24
         with:
           globs: |
@@ -76,7 +76,7 @@ jobs:
     name: yamllint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Install yamllint
         run: pip install --quiet yamllint
       - name: Run yamllint
@@ -90,7 +90,7 @@ jobs:
     name: shfmt
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Install shfmt
         run: |
           curl -fsSL -o /tmp/shfmt https://github.com/mvdan/sh/releases/latest/download/shfmt_v3.13.1_linux_amd64
@@ -105,7 +105,7 @@ jobs:
     name: ruff (python)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-python@v6
         with:
           python-version: '3.11'
@@ -120,7 +120,7 @@ jobs:
     name: PSScriptAnalyzer
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Run PSScriptAnalyzer
         shell: pwsh
         run: |
@@ -141,7 +141,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [validate, shellcheck]
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - run: sudo apt-get install -y -qq zip
       - name: Build a throwaway .skill
         run: |
