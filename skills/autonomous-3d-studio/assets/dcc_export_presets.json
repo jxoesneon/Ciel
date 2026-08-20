@@ -1,0 +1,57 @@
+{
+  "dcc_export_presets": {
+    "blender_to_unreal_engine_5_fbx": {
+      "format": "FBX 2020",
+      "forward_axis": "-Z Forward",
+      "up_axis": "Y Up",
+      "apply_unit_scale": true,
+      "apply_transform": true,
+      "bake_space_transform": true,
+      "geometry": {
+        "smoothing": "OFF",
+        "mesh_smooth_type": "FACE",
+        "use_subsurf": false,
+        "use_mesh_modifiers": true,
+        "export_tangents": true,
+        "mikktspace": true
+      },
+      "armature": {
+        "primary_bone_axis": "Y Axis",
+        "secondary_bone_axis": "X Axis",
+        "add_leaf_bones": false,
+        "only_deform_bones": true
+      }
+    },
+    "blender_to_unity_fbx": {
+      "format": "FBX 2020",
+      "forward_axis": "-Z Forward",
+      "up_axis": "Y Up",
+      "apply_unit_scale": true,
+      "apply_transform": true,
+      "bake_space_transform": true,
+      "geometry": {
+        "smoothing": "OFF",
+        "export_tangents": true
+      }
+    },
+    "openusd_stage_export": {
+      "format": "USDA / USDC",
+      "meters_per_unit": 1.0,
+      "up_axis": "Z",
+      "export_uvs": true,
+      "export_normals": true,
+      "normals_interpolation": "faceVarying",
+      "export_materials": true,
+      "material_binding_schema": "MaterialBindingAPI"
+    },
+    "gltf_web_pbr": {
+      "format": "glTF 2.0 (.glb)",
+      "export_tangents": true,
+      "export_materials": "EXPORT",
+      "export_colors": true,
+      "export_cameras": false,
+      "export_lights": false,
+      "export_yup": true
+    }
+  }
+}

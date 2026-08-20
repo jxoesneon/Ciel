@@ -1,0 +1,76 @@
+{
+  "studio_qa_checklist": {
+    "topology_gates": {
+      "non_manifold_edges": {
+        "max_allowed": 0,
+        "severity": "CRITICAL",
+        "action_on_fail": "ABORT_EXPORT"
+      },
+      "degenerate_faces": {
+        "max_allowed": 0,
+        "severity": "ERROR",
+        "action_on_fail": "AUTO_DISSOLVE"
+      },
+      "loose_vertices": {
+        "max_allowed": 0,
+        "severity": "ERROR",
+        "action_on_fail": "AUTO_DELETE"
+      },
+      "star_poles_valence_ge_6": {
+        "max_allowed_deformable": 0,
+        "max_allowed_hard_surface": 2,
+        "severity": "WARNING",
+        "action_on_fail": "REROUTE_LOOPS"
+      },
+      "ngons_count": {
+        "max_allowed_deformable": 0,
+        "max_allowed_hard_surface_planar": 5,
+        "severity": "CRITICAL_ON_DEFORMABLE",
+        "action_on_fail": "QUADIFY_OR_TRIANGULATE"
+      }
+    },
+    "uv_texel_gates": {
+      "uv_overlap_percentage": {
+        "max_allowed": 0.0,
+        "exception": "INTENTIONAL_MIRROR_SYMMETRY_STACK",
+        "severity": "CRITICAL"
+      },
+      "flipped_uv_faces": {
+        "max_allowed": 0,
+        "severity": "ERROR",
+        "action_on_fail": "FLIP_WINDING"
+      },
+      "texel_density_variance_pct": {
+        "max_allowed": 10.0,
+        "severity": "WARNING",
+        "action_on_fail": "NORMALIZE_ISLAND_SCALE"
+      }
+    },
+    "baking_gates": {
+      "normal_map_bit_depth": {
+        "required": "16_BIT_FLOAT_OR_HIGHER",
+        "severity": "CRITICAL"
+      },
+      "normal_space": {
+        "standard": "MIKKT_SPACE_TANGENT",
+        "severity": "CRITICAL"
+      },
+      "cage_enclosure": {
+        "max_ray_miss_percentage": 0.0,
+        "severity": "CRITICAL"
+      }
+    },
+    "engine_integration_gates": {
+      "transforms_normalized": {
+        "scale": [1.0, 1.0, 1.0],
+        "rotation": [0.0, 0.0, 0.0],
+        "severity": "CRITICAL"
+      },
+      "collision_hull_presence": {
+        "required_for_static_mesh": true,
+        "naming": "UCX_ / UBX_ / USP_",
+        "severity": "WARNING"
+      }
+    }
+  }
+}
