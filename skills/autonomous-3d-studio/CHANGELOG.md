@@ -30,7 +30,7 @@
 - `scripts/autonomous_refinement_loop.py`: Closed-loop iterative convergence engine that orchestrates multi-pass auto-repair until all studio hard gates pass.
 - Programmatic `--fix` auto-remediation in `scripts/geometry_qa_validator.py` (removes zero-area degenerate faces and prunes unreferenced loose vertices).
 - Continuous learning instinct telemetry bridge logging geometry observations to `~/.ciel/instincts/3d_studio_observations.jsonl`.
-- Automated atomic backup snapshots in `/root/.gemini/hooks/ciel_3d_preflight.sh` saving timestamped `.bak` files in `$HOME/.ciel/backups/3d_assets/`.
+- Automated atomic backup snapshots in `~/.gemini/hooks/ciel_3d_preflight.sh` saving timestamped `.bak` files in `$HOME/.ciel/backups/3d_assets/`.
 
 ### Hardened & Secured
 - Python script generation in `high_to_low_baker.py` and `unreal_engine_bridge.py` hardened with `json.dumps()` escaping to eliminate template injection risks.
