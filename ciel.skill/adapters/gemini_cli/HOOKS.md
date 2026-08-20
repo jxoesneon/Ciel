@@ -27,7 +27,6 @@ Gemini CLI exposes a comprehensive hook system covering the full agent lifecycle
 | `BeforeToolSelection` | Before tool selection | No | Influence tool routing |
 | `AfterModel` | After LLM response | No | **Response scoring + Context Rot Detection (verifies Sentinel presence)** |
 
-
 ### Session Lifecycle Hooks
 
 | Event | Fires | Blockable | Ciel Use Case |

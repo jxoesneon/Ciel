@@ -103,7 +103,6 @@ Explicit user invocation:
 3. Tool hooks provide safety gating (**Mandatory Pre-Tool Council Gate**: Any file modification targeting `core/`, `self_improvement/`, or `configuration/global/` is intercepted by `PreToolUse`/`BeforeTool` and MUST execute a Council of Five evaluation before file mutation is permitted)
 4. Post-tool hooks enable self-improvement
 
-
 See per-platform docs:
 
 - `adapters/claude_code/HOOKS.md`

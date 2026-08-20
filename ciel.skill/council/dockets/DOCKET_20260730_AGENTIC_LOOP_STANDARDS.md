@@ -9,26 +9,31 @@
 ## Stage 1: Independent Member Evaluation
 
 ### 1. Coherence (`members/COHERENCE.md`)
+
 - **Score**: 9/10
 - **Rationale**: Markdown frontmatter, headers, bullet points, and section formatting perfectly align with existing `core/AUTONOMY.md` and `SELF_IMPROVEMENT.md` structure.
 - **Flags**: None.
 
 ### 2. Capability (`members/CAPABILITY.md`)
+
 - **Score**: 9/10
 - **Rationale**: Directly addresses structural failure modes (stubbed TODOs, incomplete loops, improper escalation) by explicitly defining non-negotiable execution constraints and clear 3-step escalation sequences.
 - **Flags**: None.
 
 ### 3. Safety (`members/SAFETY.md`)
+
 - **Score**: 10/10
 - **Rationale**: Enforces a Zero-Deferral policy and strict 3-step escalation path (Online Research → Council → User via ask tool). No secret leaks, unbounded network access, or untrusted code execution introduced.
 - **Veto**: False (`veto: false`, score > 3).
 
 ### 4. Efficiency (`members/EFFICIENCY.md`)
+
 - **Score**: 8/10
 - **Rationale**: Reduces token churn by avoiding incomplete loops that require user intervention to fix TODOs/placeholders later.
 - **Flags**: None.
 
 ### 5. Evolution (`members/EVOLUTION.md`)
+
 - **Score**: 10/10
 - **Rationale**: Advances Ciel's maturity by bringing core autonomy in line with modern 2025/2026 agentic engineering standards.
 - **Flags**: None.
