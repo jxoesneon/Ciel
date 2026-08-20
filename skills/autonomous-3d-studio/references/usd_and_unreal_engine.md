@@ -18,7 +18,7 @@ OpenUSD is the foundational interchange format for modern VFX studios, feature f
            └── /PBRShader (UsdShadeShader - UsdPreviewSurface / OpenPBR)
 ```
 
-### UsdGeomMesh Schema Specification (USDA format):
+### UsdGeomMesh Schema Specification (USDA format)
 
 ```python
 # UsdGeomMesh definition example
@@ -47,12 +47,14 @@ def Mesh "SM_Prop_Generator_01" (
 
 ## 2. Unreal Engine 5 Nanite & Lumen Optimization
 
-### Nanite Geometry Requirements:
+### Nanite Geometry Requirements
+
 1. **Watertight Solids**: Open sheets or 1-sided planes can cause cluster boundary shading discontinuities.
 2. **Cluster Size**: Nanite operates on clusters of 128 triangles. Geometry with high curvature requires uniform triangle distribution to avoid micro-clusters.
 3. **Materials**: Opaque or Masked blend modes. Translucent materials cannot be rendered via Nanite in UE5.
 
-### Lumen Mesh Card & Distance Field Rules:
+### Lumen Mesh Card & Distance Field Rules
+
 1. **Minimum Wall Thickness**: Geometry must have at least **$5.0\text{ cm}$ physical thickness**. Zero-thickness 1-sided planes cause severe Lumen Global Illumination light leaking.
 2. **Mesh Distance Field Resolution**: Set `DistanceFieldResolutionScale` to $1.0 - 2.0$ for hero props with tight crevices to ensure accurate ambient shadowing.
 
@@ -80,15 +82,18 @@ Physics collisions should never calculate against dense render geometry. Lightwe
 └──────────────────────────┴───────────────────────────────┴───────────────────────────────────────┘
 ```
 
-### Automated Convex Decomposition (V-HACD):
+### Automated Convex Decomposition (V-HACD)
+
 For complex concave meshes (e.g. hollow pipes, chairs, open doorways), the pipeline runs **V-HACD (Volumetric Hierarchical Approximate Convex Decomposition)**:
+
 - `max_convex_hulls`: 8 to 16 hulls per asset.
 - `max_vertices_per_hull`: 32 vertices.
 - `resolution`: 100,000 voxels.
 
-
 ## Associated Reference Frameworks
+
 For a comprehensive view of the CIEL AAA+ 3D Master Studio pipeline, explore the reciprocal blueprints:
+
 - 📐 [Pipeline Architecture & Data Flow](file://~/.gemini/config/skills/autonomous-3d-studio/references/pipeline_architecture.md)
 - ⚙️ [Hard-Surface Standards](file://~/.gemini/config/skills/autonomous-3d-studio/references/hard_surface_standards.md)
 - 👤 [Character & Organic Standards](file://~/.gemini/config/skills/autonomous-3d-studio/references/character_organic_standards.md)

@@ -37,7 +37,9 @@ Mismatch in scale and axis alignment is the leading cause of downstream animatio
 | **OpenUSD** | $+Y$ (VFX) / $+Z$ (Games) | $+Z$ / $+Y$ | Right-Handed | Configurable (`metersPerUnit`) |
 
 ### Blender to Unreal Engine Transformation Matrix
+
 When exporting FBX from Blender to Unreal Engine 5:
+
 - **Forward**: `-Z Forward`
 - **Up**: `Y Up`
 - **Apply Transform**: `True` (Apply Unit Scale + Apply Transform to prevent root bone scale $= 100$ issue in UE5).
@@ -76,24 +78,28 @@ All assets, meshes, bones, materials, and textures must strictly follow standard
 ## 4. Interchange Data Contracts
 
 ### 1. FBX (FilmBox 2020+)
+
 - Geometry: Triangulate or Quad-Preserve (engine importer will triangulate at runtime).
 - Tangents & Binormals: Export with **MikkTSpace** tangents computed.
 - Smoothing Groups: Enabled.
 - Animation: Sample rate 60 FPS, keyframe reduction tolerance $\le 0.001$.
 
 ### 2. glTF 2.0 / GLB
+
 - PBR Standard: `KHR_materials_pbrSpecularGlossiness` or core `pbrMetallicRoughness`.
 - Texture Packing: Roughness in `G`, Metallic in `B`, Occlusion in `R`.
 - Embedded buffers for single-file web/AR deployment, external `.bin` and textures for repo asset tracking.
 
 ### 3. OpenUSD (`.usd`, `.usda`, `.usdc`, `.usdz`)
+
 - Stage Units: `metersPerUnit = 1.0` or `0.01`.
 - Up Axis: `upAxis = "Z"` for Game engines, `"Y"` for VFX DCC pipelines.
 - Prims structured under a root `Xform` named `/Root` or `/<AssetName>`.
 
-
 ## Associated Reference Frameworks
+
 For a comprehensive view of the CIEL AAA+ 3D Master Studio pipeline, explore the reciprocal blueprints:
+
 - 📐 [Pipeline Architecture & Data Flow](file://~/.gemini/config/skills/autonomous-3d-studio/references/pipeline_architecture.md)
 - ⚙️ [Hard-Surface Standards](file://~/.gemini/config/skills/autonomous-3d-studio/references/hard_surface_standards.md)
 - 👤 [Character & Organic Standards](file://~/.gemini/config/skills/autonomous-3d-studio/references/character_organic_standards.md)

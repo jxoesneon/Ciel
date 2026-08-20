@@ -22,6 +22,7 @@ Procedural 3D systems allow autonomous agents to generate infinite non-destructi
 ## 2. Blender Geometry Nodes Node Tree Patterns
 
 ### Pattern A: Procedural Cable / Conduit Harness
+
 1. **Input**: Bezier curve with handle tangents.
 2. **Resample Curve**: `Mode = 'LENGTH'`, `Length = 0.05 m`.
 3. **Curve to Mesh**:
@@ -32,7 +33,9 @@ Procedural 3D systems allow autonomous agents to generate infinite non-destructi
    - Store as Named Attribute `UVMap` (Vector 2D, Face Corner domain).
 
 ### Pattern B: Poisson Disk Scatter with Slope/Normal Masking
+
 To scatter debris, bolts, foliage, or modular detail assets without inter-penetration:
+
 ```python
 # Geometry Nodes Field Evaluation Logic
 import mathutils
@@ -56,6 +59,7 @@ def evaluate_scatter_points(mesh, min_distance=0.2, max_density=50.0, max_slope_
 For Houdini procedural generation, agents employ VEX Point and Primitive Wrangles:
 
 ### VEX Wrangle 1: Procedural Edge Chamfer & Surface Normal Tangent
+
 ```c
 // Point Wrangle: Calculate curvature and displace along smooth surface normal
 vector pos = @P;
@@ -80,6 +84,7 @@ f@curvature = fit(curvature, 0.0, 0.05, 0.0, 1.0);
 ```
 
 ### VEX Wrangle 2: Ray-Casting Alignment against Terrains
+
 ```c
 // Point Wrangle: Project procedural kit roots to ground collision mesh
 vector ground_pos;
@@ -106,14 +111,16 @@ $$\text{Snap}(x, G) = \left\lfloor \frac{x}{G} + 0.5 \right\rfloor \cdot G$$
 
 Where $G$ is the grid snap increment ($1.0\text{ m}$, $0.5\text{ m}$, $0.25\text{ m}$, or $0.1\text{ m}$).
 
-### Metric Wall/Floor Modular Rule:
+### Metric Wall/Floor Modular Rule
+
 - All wall panels must align to $400\text{ cm} \times 300\text{ cm}$ or $200\text{ cm} \times 300\text{ cm}$ increments.
 - Pivot points must be placed at the bottom-left corner ($X_{\min}, Y_{\min}, Z_{\min}$) or bottom-center ($X_{\text{mid}}, Y_{\text{mid}}, Z_{\min}$) of the bounding box.
 - All connecting edges must have coplanar vertex normals ($\vec{N} = (0, \pm 1, 0)$ or $(\pm 1, 0, 0)$) to prevent visible seam splits across tiled modular sections under dynamic lighting.
 
-
 ## Associated Reference Frameworks
+
 For a comprehensive view of the CIEL AAA+ 3D Master Studio pipeline, explore the reciprocal blueprints:
+
 - 📐 [Pipeline Architecture & Data Flow](file://~/.gemini/config/skills/autonomous-3d-studio/references/pipeline_architecture.md)
 - ⚙️ [Hard-Surface Standards](file://~/.gemini/config/skills/autonomous-3d-studio/references/hard_surface_standards.md)
 - 👤 [Character & Organic Standards](file://~/.gemini/config/skills/autonomous-3d-studio/references/character_organic_standards.md)

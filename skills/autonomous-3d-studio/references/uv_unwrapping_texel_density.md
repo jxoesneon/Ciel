@@ -6,13 +6,13 @@ Texel Density ($TD$) quantifies the ratio of texture pixels mapped across a 3D g
 
 $$TD = \frac{\sqrt{\text{UV Area in Pixels}^2}}{\text{3D World Surface Area in Meters}} = \frac{R_{\text{tex}} \cdot \sqrt{\text{Area}_{\text{UV\_norm}}}}{\text{Length}_{\text{world}}}$$
 
-### Standard Studio Texel Density Profiles:
+### Standard Studio Texel Density Profiles
 
 | Asset Profile | Target TD ($\text{px/m}$) | Target TD ($\text{px/cm}$) | Typical Resolution |
 | :--- | :--- | :--- | :--- |
 | **First-Person Weapons / FPS Hands** | $4096\text{ px/m}$ | $40.96\text{ px/cm}$ | $4096 \times 4096$ (Single) / $2 \times 4096$ |
 | **Hero Characters / Main Avatars** | $2048\text{ px/m}$ | $20.48\text{ px/cm}$ | $4096 \times 4096$ (UDIM 1001-1004) |
-| **Vehicles & Primary Interactive Props**| $1024\text{ px/m}$ | $10.24\text{ px/cm}$ | $4096 \times 4096$ / $2048 \times 2048$ |
+| **Vehicles & Primary Interactive Props** | $1024\text{ px/m}$ | $10.24\text{ px/cm}$ | $4096 \times 4096$ / $2048 \times 2048$ |
 | **Modular Environment & Architecture** | $512\text{ px/m}$ - $1024\text{ px/m}$ | $5.12 - 10.24\text{ px/cm}$ | $2048 \times 2048$ (Trim Sheets / Tiling) |
 | **Background Props & Large Structures** | $256\text{ px/m}$ - $512\text{ px/m}$ | $2.56 - 5.12\text{ px/cm}$ | $1024 \times 1024$ / $2048 \times 2048$ |
 
@@ -39,7 +39,8 @@ under clothing folds, along mechanical joint seams, or behind the character's ha
 
 When game engines generate mipmaps ($4\text{K} \to 2\text{K} \to 1\text{K} \to 512 \dots$), pixels from adjacent UV islands bleed into each other if the gutter margin is too small.
 
-### Minimum Gutter Margin Table:
+### Minimum Gutter Margin Table
+
 | Texture Resolution | Minimum Island Spacing | Texture Edge Border Margin |
 | :--- | :--- | :--- |
 | **$4096 \times 4096$ (4K)** | $16\text{ pixels}$ ($0.0039\text{ UV}$) | $16\text{ pixels}$ |
@@ -47,7 +48,8 @@ When game engines generate mipmaps ($4\text{K} \to 2\text{K} \to 1\text{K} \to 5
 | **$1024 \times 1024$ (1K)** | $4\text{ pixels}$ ($0.0039\text{ UV}$) | $4\text{ pixels}$ |
 | **$512 \times 512$** | $2\text{ pixels}$ ($0.0039\text{ UV}$) | $2\text{ pixels}$ |
 
-### Island Orientation & Straightening Rule:
+### Island Orientation & Straightening Rule
+
 - All cylindrical or rectangular UV islands (straps, pipes, beams, trims) must be **straightened** along the $U$ or $V$ axis.
 - Straightening reduces aliasing, optimizes packing efficiency to $\ge 75\%$, and eliminates diagonal rasterization artifacts on normal maps.
 
@@ -68,9 +70,10 @@ For cinematic VFX and hero characters, assets use UDIM tiles starting at `1001`:
 - Each tile maintains identical Texel Density.
 - Symmetrical components (e.g. left/right boots) may be stacked into the identical UV position to double resolution, but one instance MUST be shifted $+1.0$ unit along the $U$-axis (e.g. to UDIM 1002 or off-screen space) during high-to-low baking to prevent overlapping ray collision artifacts.
 
-
 ## Associated Reference Frameworks
+
 For a comprehensive view of the CIEL AAA+ 3D Master Studio pipeline, explore the reciprocal blueprints:
+
 - 📐 [Pipeline Architecture & Data Flow](file://~/.gemini/config/skills/autonomous-3d-studio/references/pipeline_architecture.md)
 - ⚙️ [Hard-Surface Standards](file://~/.gemini/config/skills/autonomous-3d-studio/references/hard_surface_standards.md)
 - 👤 [Character & Organic Standards](file://~/.gemini/config/skills/autonomous-3d-studio/references/character_organic_standards.md)

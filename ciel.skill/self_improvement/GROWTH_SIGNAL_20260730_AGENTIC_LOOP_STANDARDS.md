@@ -11,6 +11,7 @@
 Based on modern 2025/2026 AI Agent engineering standards:
 
 ### Architectural Topologies & Control Flow
+
 - **Plan-and-Execute with Dynamic Re-Planning**: Generate structured plans upfront; dynamically adjust steps when new findings or failures occur during execution.
 - **Reflection & Self-Critique**: Run automated self-evaluation (critic pass) before declaring execution complete.
 - **Governance-by-Design & Observability**: Maintain complete trajectory visibility (decision paths, tool arguments, reasoning steps) logged to activity trails.
@@ -21,13 +22,16 @@ Based on modern 2025/2026 AI Agent engineering standards:
 ## 2. Core Execution Mandates (Non-Negotiable Rules)
 
 ### A. Zero-Deferral & Comprehensive Implementation Mandate
+
 - **No TODOs / No Placeholders**: Every agentic loop MUST produce complete, production-ready, fully implemented code and documentation. Mock responses, stubbed functions, "left for future work", or deferred TODO items are strictly forbidden.
 - **No Pending Work**: Any sub-task initiated within a loop must be brought to full resolution before closing the loop.
 
 ### B. Adaptive Problem Scope Integration
+
 - **Incorporate Pre-Existing Issues**: If pre-existing bugs, syntax errors, security vulnerabilities, or broken contracts are discovered during research or execution, the loop MUST adapt to resolve or incorporate those findings rather than ignoring them or bypassing them.
 
 ### C. Standard Ciel Escalation Path
+
 Execution failures or ambiguities must strictly follow Ciel's 3-step escalation sequence:
 
 ```text

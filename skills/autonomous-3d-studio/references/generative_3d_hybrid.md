@@ -26,6 +26,7 @@ Next-generation generative 3D models operate across diverse geometric representa
 ## 2. Raw Generative 3D Mesh Output Defects
 
 Raw outputs from 3D foundation models represent uncurated isosurfaces with severe production defects:
+
 - **Chaotic Non-Uniform Triangulation**: Sliver triangles, zero-area faces.
 - **Nested Floating Geometry**: Internal occluded shells that waste GPU draw calls.
 - **Baked Environmental Lighting**: Directional shadows and specular highlights baked into diffuse albedos.
@@ -52,6 +53,7 @@ To elevate raw AI-generated 3D geometry into AAA+ studio-ready assets, the agent
 ```
 
 ### Step 1: Internal Component Pruning
+
 Compute connected components of the mesh $G = (V, E, F)$. Retain only the principal outer hull:
 
 $$\text{Shell}_{\text{primary}} = \arg\max_{C_i \in \text{Components}} \text{SurfaceArea}(C_i)$$
@@ -59,26 +61,31 @@ $$\text{Shell}_{\text{primary}} = \arg\max_{C_i \in \text{Components}} \text{Sur
 Discard all floating sub-meshes $C_k$ where $\text{SurfaceArea}(C_k) < 0.05 \times \text{SurfaceArea}(\text{Shell}_{\text{primary}})$.
 
 ### Step 2: Voxel Remeshing for Watertight Manifold Topology
+
 Convert the mesh to an OpenVDB Signed Distance Field (SDF) and extract an isotropic manifold isosurface:
 
 $$VoxelSize = \frac{\max(L_x, L_y, L_z)}{512}$$
 
 ### Step 3: Laplacian Curvature Smoothing
+
 Apply constrained Laplacian smoothing to eliminate high-frequency point-cloud noise while pinning hard boundary features:
 
 $$v_i^{(t+1)} = v_i^{(t)} + \lambda \sum_{j \in \mathcal{N}(i)} \frac{1}{|\mathcal{N}(i)|} \left( v_j^{(t)} - v_i^{(t)} \right)$$
 
 ### Step 4: Quad Retopology (QuadriFlow / ZRemesh)
+
 Generate a clean quad mesh aligned with principal curvature lines ($K_{\min}, K_{\max}$) using [`scripts/retopology_quadriflow.py`](file://~/.gemini/config/skills/autonomous-3d-studio/scripts/retopology_quadriflow.py).
 
 ### Step 5 & 6: UV Packing & Photometric Delighting
+
 - Generate conformal UV islands with standardized Texel Density.
 - Delighting: Remove baked directional shadows from the AI diffuse texture using high-pass frequency filtering or ambient occlusion division:
   $$I_{\text{delit}} = \frac{I_{\text{raw}}}{\max(AO_{\text{baked}}, 0.15)}$$
 
-
 ## Associated Reference Frameworks
+
 For a comprehensive view of the CIEL AAA+ 3D Master Studio pipeline, explore the reciprocal blueprints:
+
 - 📐 [Pipeline Architecture & Data Flow](file://~/.gemini/config/skills/autonomous-3d-studio/references/pipeline_architecture.md)
 - ⚙️ [Hard-Surface Standards](file://~/.gemini/config/skills/autonomous-3d-studio/references/hard_surface_standards.md)
 - 👤 [Character & Organic Standards](file://~/.gemini/config/skills/autonomous-3d-studio/references/character_organic_standards.md)
