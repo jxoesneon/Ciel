@@ -28,12 +28,12 @@ echo "Generating triggers for: $SKILL_NAME"
 extract_frontmatter() {
   local file="$1"
   local field="$2"
-  
+
   if [[ ! -f "$file" ]]; then
     echo ""
     return
   fi
-  
+
   # Extract from frontmatter (between --- markers)
   sed -n '/^---$/,/^---$/p' "$file" | grep "^$field:" | head -1 | sed "s/$field:\s*//" | tr -d '"' | tr -d "'"
 }
@@ -42,25 +42,25 @@ extract_frontmatter() {
 generate_direct_triggers() {
   local name="$1"
   local triggers=()
-  
+
   # Base name
   triggers+=("$name")
-  
+
   # Name variants
   local dashed=$(echo "$name" | tr '_' '-')
   local spaced=$(echo "$name" | tr '_' ' ' | tr '-' ' ')
-  
+
   if [[ "$dashed" != "$name" ]]; then
     triggers+=("$dashed")
   fi
-  
+
   triggers+=("$spaced")
-  
+
   # Common prefixes
   triggers+=("use $name")
   triggers+=("run $name")
   triggers+=("call $name")
-  
+
   printf '%s\n' "${triggers[@]}"
 }
 
@@ -68,10 +68,10 @@ generate_direct_triggers() {
 generate_functional_triggers() {
   local description="$1"
   local triggers=()
-  
+
   # Common action verbs
   local verbs="search find get read write create update delete list analyze check"
-  
+
   # Extract potential capabilities from description
   for verb in $verbs; do
     if echo "$description" | grep -qi "$verb"; then
@@ -79,7 +79,7 @@ generate_functional_triggers() {
       triggers+=("$verb.*")
     fi
   done
-  
+
   printf '%s\n' "${triggers[@]}"
 }
 
@@ -87,11 +87,11 @@ generate_functional_triggers() {
 generate_command_triggers() {
   local commands_dir="$1"
   local triggers=()
-  
+
   if [[ ! -d "$commands_dir" ]]; then
     return
   fi
-  
+
   for cmd in "$commands_dir"/*.md; do
     if [[ -f "$cmd" ]]; then
       local cmd_name=$(basename "$cmd" .md)
@@ -100,7 +100,7 @@ generate_command_triggers() {
       triggers+=("$cmd_name command")
     fi
   done
-  
+
   printf '%s\n' "${triggers[@]}"
 }
 
@@ -108,15 +108,15 @@ generate_command_triggers() {
 generate_tool_triggers() {
   local skill_path="$1"
   local triggers=()
-  
+
   # Scan for common tool definition patterns
-  for file in "$skill_path"/*.js "$skill_path"/*.py "$skill_path"/tools/*.json 2>/dev/null; do
+  for file in "$skill_path"/*.js "$skill_path"/*.py "$skill_path"/tools/*.json; do
     if [[ -f "$file" ]]; then
       # Extract function names (simplified)
-      local funcs=$(grep -E "^(function|def|const|export)" "$file" 2>/dev/null | \
-        sed -E 's/(function|def|const|export)\s+([a-zA-Z_]+).*/\2/' | \
+      local funcs=$(grep -E "^(function|def|const|export)" "$file" |
+        sed -E 's/(function|def|const|export)\s+([a-zA-Z_]+).*/\2/' |
         head -10)
-      
+
       for func in $funcs; do
         # Convert snake_case to phrase
         local phrase=$(echo "$func" | tr '_' ' ')
@@ -124,7 +124,7 @@ generate_tool_triggers() {
       done
     fi
   done
-  
+
   printf '%s\n' "${triggers[@]}"
 }
 
@@ -132,18 +132,18 @@ generate_tool_triggers() {
 main() {
   local name=$(extract_frontmatter "$SKILL_MD" "name")
   local description=$(extract_frontmatter "$SKILL_MD" "description")
-  
+
   if [[ -z "$name" ]]; then
     name="$SKILL_NAME"
   fi
-  
+
   echo "Skill: $name"
   echo "Description: $description"
   echo ""
-  
+
   # Collect all triggers
   declare -A all_triggers
-  
+
   # Direct triggers (highest confidence)
   echo "## Direct Triggers (confidence: 0.9-1.0)"
   while IFS= read -r trigger; do
@@ -153,7 +153,7 @@ main() {
     fi
   done < <(generate_direct_triggers "$name")
   echo ""
-  
+
   # Command triggers
   if [[ -d "$SKILL_PATH/commands" ]]; then
     echo "## Command Triggers (confidence: 0.9)"
@@ -165,7 +165,7 @@ main() {
     done < <(generate_command_triggers "$SKILL_PATH/commands")
     echo ""
   fi
-  
+
   # Functional triggers
   if [[ -n "$description" ]]; then
     echo "## Functional Triggers (confidence: 0.7-0.8)"
@@ -177,7 +177,7 @@ main() {
     done < <(generate_functional_triggers "$description")
     echo ""
   fi
-  
+
   # Tool triggers
   echo "## Tool Triggers (confidence: 0.6-0.7)"
   while IFS= read -r trigger; do
@@ -187,11 +187,11 @@ main() {
     fi
   done < <(generate_tool_triggers "$SKILL_PATH")
   echo ""
-  
+
   # Write to triggers file
   local triggers_file="$SKILL_PATH/triggers.yaml"
-  
-  cat > "$triggers_file" << EOF
+
+  cat >"$triggers_file" <<EOF
 # Auto-generated triggers for $name
 # Generated: $(date -Iseconds)
 generator_version: "1.0.0"
@@ -199,17 +199,17 @@ generator_version: "1.0.0"
 skill: $name
 triggers:
 EOF
-  
+
   # Sort by confidence and write
   for trigger in "${!all_triggers[@]}"; do
     local confidence=${all_triggers[$trigger]}
-    echo "  - pattern: \"$trigger\"" >> "$triggers_file"
-    echo "    confidence: $confidence" >> "$triggers_file"
-    echo "    type: auto_generated" >> "$triggers_file"
+    echo "  - pattern: \"$trigger\"" >>"$triggers_file"
+    echo "    confidence: $confidence" >>"$triggers_file"
+    echo "    type: auto_generated" >>"$triggers_file"
   done
-  
+
   echo "Triggers written to: $triggers_file"
-  
+
   # Update SKILL.md with triggers if not present
   if [[ -f "$SKILL_MD" ]]; then
     if ! grep -q "^triggers:" "$SKILL_MD"; then

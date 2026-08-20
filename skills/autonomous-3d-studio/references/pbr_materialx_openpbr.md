@@ -6,7 +6,8 @@ AAA texturing adheres strictly to physical energy conservation and microfacet th
 
 $$f_r(\omega_i, \omega_o) = k_d \frac{c}{\pi} + k_s \frac{D(h) F(\omega_o, h) G(\omega_i, \omega_o, h)}{4 (\vec{n} \cdot \omega_i)(\vec{n} \cdot \omega_o)}$$
 
-### The Strict Binary Metallic Rule:
+### The Strict Binary Metallic Rule
+
 - **Dielectrics (Non-Metals)**: Wood, plastic, cloth, stone, skin, glass.
   - $\text{Metallic} = 0.0$.
   - Specular Reflectance at normal incidence $F_0 \approx 0.04$ ($4\%$).
@@ -35,11 +36,12 @@ To minimize texture sampling draw calls in real-time GPU pixel shaders, multiple
 └─────────────────┴─────────────────┴─────────────────┴────────────────────────────────────────────┘
 ```
 
-### Color Space Assignment Table:
+### Color Space Assignment Table
+
 | Texture File | Format | Channels | Color Space | Bit Depth |
 | :--- | :--- | :--- | :--- | :--- |
 | `T_<Name>_BC` (Base Color) | PNG / TGA | RGB | **sRGB / sRGB-Linear** | 8-bit |
-| `T_<Name>_ORM` (AO, Rough, Metal)| PNG / TGA | RGB | **Linear / Raw / Non-Color** | 8-bit |
+| `T_<Name>_ORM` (AO, Rough, Metal) | PNG / TGA | RGB | **Linear / Raw / Non-Color** | 8-bit |
 | `T_<Name>_N` (Normal Map) | PNG / EXR | RGB | **Linear / Raw / Non-Color** | **16-bit Float** |
 | `T_<Name>_E` (Emissive) | PNG / EXR | RGB | **sRGB / sRGB-Linear** | 8-bit / 16-bit |
 | `T_<Name>_H` (Displacement) | EXR / TIFF | R | **Linear / Raw / Non-Color** | **16/32-bit Float** |
@@ -50,7 +52,7 @@ To minimize texture sampling draw calls in real-time GPU pixel shaders, multiple
 
 MaterialX is the open standard for rich procedural and texture-driven shader definitions across Maya, Houdini, Unreal Engine, and WebGPU.
 
-### Production OpenPBR MaterialX Document Example:
+### Production OpenPBR MaterialX Document Example
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -110,9 +112,10 @@ MaterialX is the open standard for rich procedural and texture-driven shader def
 </materialx>
 ```
 
-
 ## Associated Reference Frameworks
+
 For a comprehensive view of the CIEL AAA+ 3D Master Studio pipeline, explore the reciprocal blueprints:
+
 - 📐 [Pipeline Architecture & Data Flow](file://~/.gemini/config/skills/autonomous-3d-studio/references/pipeline_architecture.md)
 - ⚙️ [Hard-Surface Standards](file://~/.gemini/config/skills/autonomous-3d-studio/references/hard_surface_standards.md)
 - 👤 [Character & Organic Standards](file://~/.gemini/config/skills/autonomous-3d-studio/references/character_organic_standards.md)

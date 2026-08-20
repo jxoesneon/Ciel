@@ -22,14 +22,16 @@ Visual inspection is the ultimate verification gate. While mathematical topology
 
 To ensure zero optical distortion and repeatable evaluation across assets:
 
-### Camera Rig Calibration:
+### Camera Rig Calibration
+
 - **Focal Length**: $85.0\text{ mm}$ (eliminates wide-angle perspective fish-eye distortion).
 - **Sensor Size**: $36.0\text{ mm} \times 24.0\text{ mm}$ (Full Frame 35mm equivalent).
 - **Elevation Angle**: $+15.0^\circ$ above ground plane.
 - **Azimuth Rotation Steps**: 8 camera angles ($0^\circ, 45^\circ, 90^\circ, 135^\circ, 180^\circ, 225^\circ, 270^\circ, 315^\circ$).
 - **Framing**: Bounding sphere fits within $85\%$ of vertical frame height.
 
-### 3-Point Studio Lighting Specification:
+### 3-Point Studio Lighting Specification
+
 - **Key Light**: 45° off-axis, Intensity $= 1000\text{ W}$, Temperature $= 5500\text{ K}$, Soft Area Light.
 - **Fill Light**: -60° off-axis, Intensity $= 350\text{ W}$, Temperature $= 6500\text{ K}$.
 - **Rim / Back Light**: 160° behind asset, Intensity $= 1200\text{ W}$, Temperature $= 4500\text{ K}$ (sharp silhouette separation).
@@ -58,9 +60,10 @@ $$\text{VisualScore} = 0.30 \cdot S_{\text{Silhouette}} + 0.25 \cdot S_{\text{Re
 - **Passing Threshold**: $\text{VisualScore} \ge 0.95$ (AAA Studio Quality).
 - Any individual category score $< 0.85$ triggers an automatic RED flag and halts downstream export until remediated.
 
-
 ## Associated Reference Frameworks
+
 For a comprehensive view of the CIEL AAA+ 3D Master Studio pipeline, explore the reciprocal blueprints:
+
 - 📐 [Pipeline Architecture & Data Flow](file://~/.gemini/config/skills/autonomous-3d-studio/references/pipeline_architecture.md)
 - ⚙️ [Hard-Surface Standards](file://~/.gemini/config/skills/autonomous-3d-studio/references/hard_surface_standards.md)
 - 👤 [Character & Organic Standards](file://~/.gemini/config/skills/autonomous-3d-studio/references/character_organic_standards.md)

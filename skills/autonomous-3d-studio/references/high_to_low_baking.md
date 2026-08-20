@@ -16,12 +16,14 @@ Baking transfers fine geometric details from a high-poly source mesh ($M_{\text{
  ────o───────o──────────────────────────────── M_low  (Target UV pixel)
 ```
 
-### Cage Vertex Position Formula:
+### Cage Vertex Position Formula
+
 For each vertex $v_i \in M_{\text{low}}$, the cage vertex position $v_{\text{cage}, i}$ is calculated using the **Averaged Vertex Normal** $\vec{N}_{\text{avg}}(v_i)$:
 
 $$v_{\text{cage}, i} = v_i + \vec{N}_{\text{avg}}(v_i) \cdot d_{\text{push}}$$
 
 Where:
+
 - $\vec{N}_{\text{avg}}(v_i) = \frac{\sum_{f \in \text{Faces}(v_i)} \text{Area}(f) \cdot \vec{N}(f)}{\left\| \sum_{f \in \text{Faces}(v_i)} \text{Area}(f) \cdot \vec{N}(f) \right\|}$
 - $d_{\text{push}}$ is the minimum distance required to completely envelop all high-poly peaks without intersecting neighboring geometry.
 
@@ -31,13 +33,15 @@ Where:
 
 To ensure tangent space normal maps render identically across all DCC tools and game engines, all bakes MUST use the **MikkTSpace standard**.
 
-### Coordinate System Inversion Matrix:
+### Coordinate System Inversion Matrix
+
 - **OpenGL ($+Y$)**: Blender, Maya, Unity, Godot, Substance 3D Painter.
   $$\vec{N}_{\text{OpenGL}} = (R, G, B) = (T_x, +T_y, T_z)$$
 - **DirectX ($-Y$)**: Unreal Engine 4/5, 3ds Max.
   $$\vec{N}_{\text{DirectX}} = (R, 1.0 - G, B) = (T_x, -T_y, T_z)$$
 
-### 16-Bit Bit-Depth Mandate:
+### 16-Bit Bit-Depth Mandate
+
 - Standard 8-bit normal maps have only 256 discrete values per channel ($\frac{2.0}{256} \approx 0.0078\text{ normal step}$). On smooth curved surfaces, this introduces visible stair-step banding.
 - All raw normal map bakes MUST be output as **16-bit per channel PNG or OpenEXR** ($65,536$ discrete values per channel).
 
@@ -71,9 +75,10 @@ For enterprise-scale studio pipelines, the skill orchestrates Adobe Substance Au
 | **ID Map** | Color-coded masking texture derived from high-poly vertex colors or material groups. | Clean RGB values (sRGB) | Multi-material automated masking |
 | **Thickness Map** | Inverted ray transmission depth through thin geometry. | $[0, 1]$ (Linear / Raw) | Subsurface Scattering (SSS) & ear/skin translucency |
 
-
 ## Associated Reference Frameworks
+
 For a comprehensive view of the CIEL AAA+ 3D Master Studio pipeline, explore the reciprocal blueprints:
+
 - 📐 [Pipeline Architecture & Data Flow](file://~/.gemini/config/skills/autonomous-3d-studio/references/pipeline_architecture.md)
 - ⚙️ [Hard-Surface Standards](file://~/.gemini/config/skills/autonomous-3d-studio/references/hard_surface_standards.md)
 - 👤 [Character & Organic Standards](file://~/.gemini/config/skills/autonomous-3d-studio/references/character_organic_standards.md)

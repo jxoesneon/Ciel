@@ -135,6 +135,7 @@ For in-depth procedural steps, mathematical formulations, and domain-specific ru
 ## 5. Standard Assets & Configuration Presets
 
 Pre-configured production profiles located in `assets/`:
+
 - [`assets/blender_mcp_addon.py`](file://~/.gemini/config/skills/autonomous-3d-studio/assets/blender_mcp_addon.py): Live TCP socket bridge addon for Blender 3.0+/4.0+.
 - [`assets/dcc_export_presets.json`](file://~/.gemini/config/skills/autonomous-3d-studio/assets/dcc_export_presets.json): Standard interchange export settings (Blender $\to$ Unreal/Unity/Maya/USD).
 - [`assets/texel_density_presets.json`](file://~/.gemini/config/skills/autonomous-3d-studio/assets/texel_density_presets.json): Industry texel density calibration matrix.
@@ -145,6 +146,7 @@ Pre-configured production profiles located in `assets/`:
 ## 6. Verification Loop & Closed-Loop Convergence
 
 When an agent encounters a QA violation during execution:
+
 1. **Automated Iterative Refinement**:
    - Run `scripts/autonomous_refinement_loop.py --mesh asset.obj --profile <profile>` to automatically execute multi-pass self-healing.
 2. **Programmatic Self-Repair**:

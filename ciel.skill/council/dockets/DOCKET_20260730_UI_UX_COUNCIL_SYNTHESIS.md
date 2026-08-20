@@ -3,6 +3,7 @@
 **Date**: 2026-07-30 (V3 re-evaluation)
 **Body**: Joint Session — Ciel System Council of Five & Design Council of Five
 **Candidate Artifacts**:
+
 - `seed_skills/ui_ux_mastery/SKILL.md` (v1.0.0, 48 lines, 12 operations) — evaluated by the **System Council of Five**.
 - `council/rubrics/UI_UX_MASTERY_STANDARDS.md` (18 standards, 27 web searches) — ratified by the **Design Council of Five**.
 **Scope**: `invocation_scopes/SKILL_INTEGRATION.md`
@@ -40,6 +41,7 @@ Strongly catalytic. Addresses the defining 2026 UI/UX challenge. Generalizable p
 Between Stage 1 and Stage 2, the Chairman addressed all 5 flags:
 
 **Safety fixes:**
+
 1. C2PA claims qualified: "one approach among possible solutions, not a formally approved standard under EU AI Act."
 2. Security caveat added citing IACR eprint 2026/804 (timestamp failures, certificate revocation, validator inconsistency).
 3. Implementation requirement: "validate manifest data before rendering, treat manifest content as untrusted input, prevent XSS/UI injection."
@@ -47,6 +49,7 @@ Between Stage 1 and Stage 2, the Chairman addressed all 5 flags:
 5. SKILL.md: "compliance" → "awareness", "C2PA Content Credentials" → "C2PA provenance metadata with known security caveats."
 
 **Efficiency fixes:**
+
 1. Typographic range: reframed as "brand signal (Aesthetics lens), not an efficiency mandate." Single typeface acceptable for utility-first internal tools.
 2. Icon authenticity: emoji acceptable for internal tools/rapid prototyping; custom SVG for user-facing production surfaces.
 3. Linting: qualified as "advisory" and "context-aware" — flag density not presence, flag clusters not individual uses.
@@ -62,11 +65,11 @@ Between Stage 1 and Stage 2, the Chairman addressed all 5 flags:
 
 ### Stage 3: Chairman Synthesis
 
-```
+```text
 weighted_score = 0.20×10 + 0.20×10 + 0.25×9 + 0.15×10 + 0.20×9
                = 2.0 + 2.0 + 2.25 + 1.5 + 1.8
                = 9.55
-```
+```text
 
 - **Safety veto check**: PASS (9 > 3, no veto).
 - **Weighted score**: 9.55 / 10.0 (threshold 6.5) ✓
@@ -75,8 +78,9 @@ weighted_score = 0.20×10 + 0.20×10 + 0.25×9 + 0.15×10 + 0.20×9
 - **Decision**: **PASSED & RATIFIED**.
 
 #### Evolution across V1 → V2 → V3
+
 | Member | V1 | V2 | V3 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Coherence | 9 | 10 | 10 |
 | Capability | 10 | 10 | 10 |
 | Safety | 10 | 10 | 9 |
@@ -87,6 +91,7 @@ weighted_score = 0.20×10 + 0.20×10 + 0.25×9 + 0.15×10 + 0.20×9
 V3 (9.55) is slightly lower than V2 (9.65) because Safety dropped from 10→9 — but this is an **honest deduction**. The Safety subagent independently found IACR eprint 2026/804 (a real C2PA security vulnerability paper) and verified that C2PA is not an EU-approved standard. The V2 score of 10 was overconfident; V3's 9 is accurate. Meanwhile Efficiency rose from 9→10 because all friction concerns were resolved. The standards are now more honest, more implementable, and more context-aware.
 
 #### Process Integrity Note
+
 The Safety subagent performed independent web verification of C2PA security claims — finding IACR eprint 2026/804 and confirming source code exemptions under EU AI Act Article 50. This is the isolation guarantee producing real research, not pattern-matching. The inter-stage fix process (flag → fix → verify) caught and corrected compliance overstatement that would have created legal risk in production.
 
 ---
@@ -94,6 +99,7 @@ The Safety subagent performed independent web verification of C2PA security clai
 ## Design Council of Five — `council/rubrics/UI_UX_MASTERY_STANDARDS.md`
 
 18 standards (expanded from 16 with anti-slop research). New standards:
+
 - Standard 17: Anti-Slop Design Principles (distributional convergence, centroid look, 7 anti-convergence mandates, slop test)
 - Standard 18: Content Provenance & Craft Signals (C2PA with security caveats, EU AI Act Article 50 awareness, struggle premium, advisory anti-slop linting)
 

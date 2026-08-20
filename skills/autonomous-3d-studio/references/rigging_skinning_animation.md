@@ -31,7 +31,8 @@ root (World origin 0,0,0)
 
 Improper bone roll alignment results in erratic axis flipping during IK (Inverse Kinematics) solving and twist extraction.
 
-### Blender / FBX Standard Bone Alignment:
+### Blender / FBX Standard Bone Alignment
+
 - **Primary / Roll Axis (Length)**: Points strictly from parent joint toward the direct child joint ($+Y$ axis in Blender).
 - **Bend / Hinge Axis**: Points perpendicular to the anatomical hinge bend plane ($+Z$ or $+X$ axis).
   - Elbows: Hinge axis must bend backward strictly along negative primary plane.
@@ -53,7 +54,8 @@ Improper bone roll alignment results in erratic axis flipping during IK (Inverse
    $$\hat{\mathbf{q}}_{\text{blend}} = \frac{\sum_{j=1}^{k} w_j \hat{\mathbf{q}}_j}{\left\| \sum_{j=1}^{k} w_j \hat{\mathbf{q}}_j \right\|}$$
    - Preserves 100% cylindrical volume during extreme twist deformation.
 
-### Strict AAA Skinning Hard Limits:
+### Strict AAA Skinning Hard Limits
+
 - **Maximum Bone Influences Per Vertex**:
   - Real-time mobile / VR: Max **4 influences** per vertex.
   - AAA Game Engines (UE5/Unity): Max **8 influences** per vertex.
@@ -72,13 +74,15 @@ Morph targets (Blendshapes) encode relative vertex offsets $\Delta \vec{v}_i$ fr
 
 $$\Delta \vec{v}_i = \vec{v}_{i, \text{target}} - \vec{v}_{i, \text{neutral}}$$
 
-### Blendshape Topology Integrity:
+### Blendshape Topology Integrity
+
 - **Vertex Order Invariant**: The vertex count, vertex indexing, and edge connectivity of every blendshape target MUST match the neutral base mesh with $100\%$ precision ($N_{\text{verts, target}} = N_{\text{verts, base}}$).
 - **Sparsity Optimization**: Blendshapes must store only non-zero deltas ($\|\Delta \vec{v}_i\| > 1.0 \times 10^{-5}\text{ m}$) to minimize memory footprint during engine runtime streaming.
 
-
 ## Associated Reference Frameworks
+
 For a comprehensive view of the CIEL AAA+ 3D Master Studio pipeline, explore the reciprocal blueprints:
+
 - 📐 [Pipeline Architecture & Data Flow](file://~/.gemini/config/skills/autonomous-3d-studio/references/pipeline_architecture.md)
 - ⚙️ [Hard-Surface Standards](file://~/.gemini/config/skills/autonomous-3d-studio/references/hard_surface_standards.md)
 - 👤 [Character & Organic Standards](file://~/.gemini/config/skills/autonomous-3d-studio/references/character_organic_standards.md)

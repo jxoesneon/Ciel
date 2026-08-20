@@ -1,6 +1,7 @@
 # Autonomous 3D Studio — Manifest
 
 ## Metadata
+
 - **Skill Name**: `autonomous-3d-studio`
 - **Version**: `2.0.0`
 - **Format**: `skill/1.0`
@@ -10,9 +11,11 @@
 ## Components
 
 ### Core Skill Entrypoint
+
 - `SKILL.md`: Master orchestration, lifecycle contract, hard QA gates, closed-loop refinement engine, live MCP bridge, and quick-start execution harness.
 
 ### Reference Manuals (`references/`)
+
 1. `references/pipeline_architecture.md`: 7-Stage production data pipeline, scene units, axes transformations, directory schemas.
 2. `references/hard_surface_standards.md`: CAD/NURBS conversion, SubD control loops, bevel modifiers, trim sheets, floaters.
 3. `references/character_organic_standards.md`: Facial topology loops, joint deformation mechanics, 52 FACS blendshapes, grooming.
@@ -27,6 +30,7 @@
 12. `references/visual_qa_turnaround_protocol.md`: 8-point turntable visual inspection protocol (Beauty, Clay, Wireframe, Normal, Roughness).
 
 ### Automation Scripts (`scripts/`)
+
 1. `scripts/blender_mcp_server.py`: Live Blender MCP and socket RPC bridge for interactive real-time viewport and scene control.
 2. `scripts/generative_3d_adapter.py`: AI-generative 3D foundation model bridge with disconnected shell pruning and photometric delighting.
 3. `scripts/substance_sat_baker.py`: Adobe Substance Automation Toolkit (SAT) headless baker bridge for high-speed multi-threaded GPU baking.
@@ -49,6 +53,7 @@
 20. `scripts/distill_3d_instincts.py`: Autonomous instinct consolidation engine distilling `3d_studio_observations.jsonl`.
 
 ### Assets & Presets (`assets/`)
+
 1. `assets/blender_mcp_addon.py`: Installable Blender Add-on for live TCP socket agent bridging.
 2. `assets/dcc_export_presets.json`: Standard interchange export settings (Blender $\to$ Unreal/Unity/Maya/USD).
 3. `assets/texel_density_presets.json`: Industry texel density calibration matrix for game/film profiles.

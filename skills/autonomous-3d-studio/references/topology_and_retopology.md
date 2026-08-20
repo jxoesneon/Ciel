@@ -5,6 +5,7 @@
 In AAA 3D asset engineering, mesh topology directly governs deformation, subdivision behavior, light shading, and GPU memory bandwidth.
 
 ### Vertex Valence Classification
+
 The valence $V(v)$ of vertex $v$ is the number of edges incident to it:
 
 - **Regular Vertex (Quad Grid)**: $V(v) = 4$. Perfect surface continuity under subdivision.
@@ -36,6 +37,7 @@ Implemented in [`scripts/retopology_quadriflow.py`](file://~/.gemini/config/skil
 When reducing edge loop density from high-detail zones (e.g. hands, face) to low-detail zones (e.g. torso, arms), the reduction MUST be performed using 100% pure quad configurations.
 
 ### 4-to-2 Quad Reduction Pattern
+
 ```text
 INPUT (4 LOOPS):
  │   │   │   │
@@ -47,6 +49,7 @@ OUTPUT (2 LOOPS)
 ```
 
 ### 3-to-1 Quad Reduction Pattern
+
 ```text
 INPUT (3 LOOPS):
  │   │   │
@@ -61,14 +64,16 @@ OUTPUT (1 LOOP)
 
 ## 4. Nanite Dense Meshes vs Traditional LOD Budgets
 
-### Unreal Engine 5 Nanite Mesh Standards:
+### Unreal Engine 5 Nanite Mesh Standards
+
 - **Polycount**: Up to $1\text{M} - 10\text{M}$ triangles allowed directly in engine.
 - **Geometry**: Direct high-poly SubD or CAD tessellation.
 - **Rules**:
   - Meshes must be **100% manifold watertight** solids (Nanite cluster culling requires closed silhouettes).
   - Eliminate micro-triangles smaller than $0.01\text{ mm}$ to prevent cluster boundary artifacts.
 
-### Traditional 5-Tier Game LOD Polycount & Screen-Size Hierarchy:
+### Traditional 5-Tier Game LOD Polycount & Screen-Size Hierarchy
+
 | Level | Polycount Ratio | Target Screen Size | Output File Pattern | Purpose |
 | :--- | :--- | :--- | :--- | :--- |
 | **LOD 0** | $100\%$ ($20\text{k}-80\text{k}$ tris) | $> 0.60$ | `<Asset>_LOD0.obj` | Close-up Hero view / Cutscenes |
@@ -77,9 +82,10 @@ OUTPUT (1 LOOP)
 | **LOD 3** | $12.5\%$ ($2.5\text{k}-10\text{k}$ tris) | $0.05 - 0.15$ | `<Asset>_LOD3.obj` | Far horizon view |
 | **LOD 4** | $6.25\%$ ($500-2.5\text{k}$ tris) | $< 0.05$ | `<Asset>_LOD4.obj` | Ultra-distant billboard / silhouette |
 
-
 ## Associated Reference Frameworks
+
 For a comprehensive view of the CIEL AAA+ 3D Master Studio pipeline, explore the reciprocal blueprints:
+
 - 📐 [Pipeline Architecture & Data Flow](file://~/.gemini/config/skills/autonomous-3d-studio/references/pipeline_architecture.md)
 - ⚙️ [Hard-Surface Standards](file://~/.gemini/config/skills/autonomous-3d-studio/references/hard_surface_standards.md)
 - 👤 [Character & Organic Standards](file://~/.gemini/config/skills/autonomous-3d-studio/references/character_organic_standards.md)

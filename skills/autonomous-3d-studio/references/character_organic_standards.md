@@ -52,7 +52,8 @@ Outer extensor quads stretch uniformly without tearing.
 Inner flexor quads fold cleanly into a 3-loop crease without vertex penetration.
 ```
 
-### Joint Polycount Budget Guidelines:
+### Joint Polycount Budget Guidelines
+
 - **Knees / Elbows**: Minimum 3 dedicated edge loops centered across the pivot axis.
 - **Shoulders / Clavicle**: Radial concentric loops branching into the pectoralis major and latissimus dorsi.
 - **Finger Joints**: 3 tight parallel loops per interphalangeal joint.
@@ -63,7 +64,8 @@ Inner flexor quads fold cleanly into a 3-loop crease without vertex penetration.
 
 For AAA game and cinematic performance capture, characters must provide the standardized **52 FACS (Facial Action Coding System) ShapeKeys / Morph Targets** (compatible with Apple ARKit, MetaHuman, and Maya LiveLink):
 
-### Core FACS Morph Target Manifest:
+### Core FACS Morph Target Manifest
+
 ```text
 Eye & Brow:
 - eyeBlinkLeft, eyeBlinkRight
@@ -107,13 +109,15 @@ Cheek, Nose & Tongue:
 ## 6. Cloth Simulation Geometry Standards
 
 Meshes intended for real-time cloth simulation (Chaos Cloth / Havok / Marvelous Designer export) must obey:
+
 1. **Regularized Delaunay Triangulation or Isotropic Quads**: Edge lengths must be strictly uniform ($\Delta l \le 10\%$). Long, stretched sliver triangles cause severe solver instability and tearing.
 2. **Particle Distance**: $5\text{ mm}$ for hero garments; $10\text{ mm}$ to $15\text{ mm}$ for background clothing.
 3. **Weight Map Masking**: Dedicated vertex color channel (Alpha or Vertex Color Red) defining cloth stiffness and pin constraints ($1.0 = \text{rigid attached to body}$, $0.0 = \text{fully simulated dynamic cloth}$).
 
-
 ## Associated Reference Frameworks
+
 For a comprehensive view of the CIEL AAA+ 3D Master Studio pipeline, explore the reciprocal blueprints:
+
 - 📐 [Pipeline Architecture & Data Flow](file://~/.gemini/config/skills/autonomous-3d-studio/references/pipeline_architecture.md)
 - ⚙️ [Hard-Surface Standards](file://~/.gemini/config/skills/autonomous-3d-studio/references/hard_surface_standards.md)
 - 👤 [Character & Organic Standards](file://~/.gemini/config/skills/autonomous-3d-studio/references/character_organic_standards.md)

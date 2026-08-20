@@ -25,6 +25,7 @@ AAA studio hard-surface modeling utilizes three distinct production workflows de
 When modeling for Catmull-Clark subdivision, edge sharpness is controlled by proximity support loops rather than creasing (unless using OpenSubdiv crease weights for film).
 
 ### Support Loop Distance Rule
+
 For a primary boundary edge $E_0$, two parallel support loops $E_{-1}$ and $E_{+1}$ must be inserted at distance $\delta$:
 
 $$\delta = k \cdot r_{\text{bevel}}$$
@@ -32,6 +33,7 @@ $$\delta = k \cdot r_{\text{bevel}}$$
 Where $r_{\text{bevel}}$ is the desired radius of curvature and $k \approx 0.5$.
 
 ### The 3-Edge Corner Rule
+
 At any 90-degree corner with subdivision level 2+, three edges must converge into an outer Quad corner rather than a triangle or 5-pole star to eliminate reflection pinching:
 
 ```text
@@ -50,6 +52,7 @@ CORRECT 3-EDGE CORNER QUAD FLOW:
 For mid-poly game assets (vehicles, machinery, sci-fi modular corridors), the **Weighted Normal** workflow produces crisp, baked-like chamfer highlights directly in real-time shaders without needing a high-to-low bake.
 
 ### Blender Implementation Protocol
+
 1. **Mark Sharp**: Mark all structural boundary edges (>30° angle) as **Sharp** (`use_edge_sharp = True`).
 2. **Bevel Modifier**:
    - `width`: $0.005\text{ m}$ to $0.02\text{ m}$ (depending on asset scale).
@@ -62,6 +65,7 @@ For mid-poly game assets (vehicles, machinery, sci-fi modular corridors), the **
    - `keep_sharp`: `True`.
 
 ### Normal Weighting Mathematical Formulation
+
 For vertex $v$ shared by faces $f_1, f_2, \dots, f_m$:
 
 $$\vec{N}(v) = \frac{\sum_{i=1}^m \text{Area}(f_i) \cdot \theta_i(v) \cdot \vec{N}(f_i)}{\left\| \sum_{i=1}^m \text{Area}(f_i) \cdot \theta_i(v) \cdot \vec{N}(f_i) \right\|}$$
@@ -74,7 +78,8 @@ Where $\theta_i(v)$ is the interior angle of face $f_i$ at vertex $v$.
 
 Floaters are detached geometric meshes (bolts, vents, panel seams, latches) placed slightly above the main high-poly surface ($0.1\text{ mm} \le h \le 1.0\text{ mm}$).
 
-### Floater Golden Rules:
+### Floater Golden Rules
+
 1. **Sinking Angle**: Floater edges must flare outward or chamfer at $\ge 45^\circ$ toward the base surface so rays cast from the baking cage hit the chamfer.
 2. **Floating Height**: Never hover more than $0.5 \times \text{Cage Max Distance}$ above the primary hull to prevent ray miss artifacts.
 3. **Backface Culling**: Delete back-facing geometry on floaters to reduce polygon overhead during high-poly ray traversal.
@@ -90,9 +95,10 @@ When converting STEP/IGES CAD data (from SolidWorks, Fusion 360, Rhino, Alias) i
 3. **Planar Decimation**: Co-planar adjacent triangles on flat surfaces must be dissolved into clean n-gons or quads, provided normal angles deviate by $< 0.05^\circ$.
 4. **Curvature Retention**: High density must be concentrated strictly along filleted bevels and cylinders. Cylindrical radial spans must follow the 8-Multiple Rule (16, 24, 32, 48, 64 segments).
 
-
 ## Associated Reference Frameworks
+
 For a comprehensive view of the CIEL AAA+ 3D Master Studio pipeline, explore the reciprocal blueprints:
+
 - 📐 [Pipeline Architecture & Data Flow](file://~/.gemini/config/skills/autonomous-3d-studio/references/pipeline_architecture.md)
 - ⚙️ [Hard-Surface Standards](file://~/.gemini/config/skills/autonomous-3d-studio/references/hard_surface_standards.md)
 - 👤 [Character & Organic Standards](file://~/.gemini/config/skills/autonomous-3d-studio/references/character_organic_standards.md)
