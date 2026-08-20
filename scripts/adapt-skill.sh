@@ -77,9 +77,9 @@ case "$DECISION" in
   ADAPT)
     echo "Creating fresh adaptation..."
     mkdir -p "$TARGET_DIR"
-    
+
     # Create Apache-2.0 LICENSE
-    cat > "$TARGET_DIR/LICENSE" << 'EOF'
+    cat >"$TARGET_DIR/LICENSE" <<'EOF'
 Apache License
 Version 2.0, January 2004
 http://www.apache.org/licenses/
@@ -98,9 +98,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 EOF
-    
+
     # Create PROVENANCE.md
-    cat > "$TARGET_DIR/PROVENANCE.md" << EOF
+    cat >"$TARGET_DIR/PROVENANCE.md" <<EOF
 # Provenance
 
 ## Inspiration
@@ -133,7 +133,7 @@ For reference only (not copied):
 - Source description: $SOURCE_DESCRIPTION
 
 EOF
-    
+
     echo "Created:"
     echo "  - $TARGET_DIR/LICENSE (Apache-2.0)"
     echo "  - $TARGET_DIR/PROVENANCE.md"
@@ -141,23 +141,23 @@ EOF
     echo "Next: Write fresh SKILL.md in $TARGET_DIR/"
     echo "Do NOT copy from $SOURCE_SKILL_MD — write original content"
     ;;
-    
+
   EXTRACT)
     echo "EXTRACT decision — patterns should be merged into existing skill"
     echo "Source: $SOURCE_PATH"
     echo ""
     echo "Use: ./scripts/extract-patterns.sh $SOURCE_PATH <target-skill>"
     ;;
-    
+
   DISCARD)
     echo "DISCARD decision — skill not useful for Ciel"
     echo "Source: $SOURCE_PATH"
     echo ""
     echo "Logging discard decision..."
-    echo "$(date -Iseconds),$SOURCE_NAME,DISCARD,user_decision" >> "$CIEL_HOME/.attic/discarded_skills.csv"
+    echo "$(date -Iseconds),$SOURCE_NAME,DISCARD,user_decision" >>"$CIEL_HOME/.attic/discarded_skills.csv"
     echo "Logged to $CIEL_HOME/.attic/discarded_skills.csv"
     ;;
-    
+
   *)
     echo "Error: Invalid decision '$DECISION'"
     echo "Valid: ADAPT, EXTRACT, DISCARD"
