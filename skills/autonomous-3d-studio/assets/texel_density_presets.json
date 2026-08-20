@@ -1,0 +1,45 @@
+{
+  "texel_density_profiles": {
+    "fps_first_person_weapons": {
+      "target_td_px_cm": 40.96,
+      "target_td_px_m": 4096.0,
+      "allowed_variance_pct": 5.0,
+      "default_resolution": 4096,
+      "min_gutter_padding_px": 16,
+      "description": "Ultra high density for weapons and hands right in front of camera view."
+    },
+    "hero_character": {
+      "target_td_px_cm": 20.48,
+      "target_td_px_m": 2048.0,
+      "allowed_variance_pct": 5.0,
+      "default_resolution": 4096,
+      "min_gutter_padding_px": 16,
+      "udim_tiles_recommended": ["1001_head", "1002_torso", "1003_arms", "1004_legs", "1005_gear"],
+      "description": "Standard AAA player and main NPC character resolution."
+    },
+    "vehicle_primary_prop": {
+      "target_td_px_cm": 10.24,
+      "target_td_px_m": 1024.0,
+      "allowed_variance_pct": 8.0,
+      "default_resolution": 4096,
+      "min_gutter_padding_px": 16,
+      "description": "Interactive vehicles, drivable cars, hero machinery, and weapons in third person."
+    },
+    "modular_environment": {
+      "target_td_px_cm": 10.24,
+      "target_td_px_m": 1024.0,
+      "allowed_variance_pct": 10.0,
+      "default_resolution": 2048,
+      "min_gutter_padding_px": 8,
+      "description": "Architecture, modular walls, floors, doors, sci-fi corridors."
+    },
+    "background_props": {
+      "target_td_px_cm": 5.12,
+      "target_td_px_m": 512.0,
+      "allowed_variance_pct": 15.0,
+      "default_resolution": 1024,
+      "min_gutter_padding_px": 4,
+      "description": "Distant props, background clutter, secondary furniture."
+    }
+  }
+}
