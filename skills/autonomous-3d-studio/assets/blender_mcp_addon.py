@@ -60,7 +60,7 @@ def get_or_create_auth_token():
         pass
     return new_token
 
-AUTH_TOKEN = get_or_create_auth_token()
+AUTH_TOKEN = "[REDACTED_BY_CIEL_SAFETY]"()
 
 def execute_on_main_thread(code_str):
     """Executes python code in Blender's main context and captures stdout/errors."""

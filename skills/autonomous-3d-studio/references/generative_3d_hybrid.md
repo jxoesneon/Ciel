@@ -35,7 +35,7 @@ Raw outputs from 3D foundation models represent uncurated isosurfaces with sever
 
 ## 3. The 6-Step Autonomous AI-to-AAA Cleanup Protocol
 
-To elevate raw AI-generated 3D geometry into AAA+ studio-ready assets, the agent executes this deterministic 6-step transformation pipeline via [`scripts/generative_3d_adapter.py`](file:///root/.gemini/config/skills/autonomous-3d-studio/scripts/generative_3d_adapter.py):
+To elevate raw AI-generated 3D geometry into AAA+ studio-ready assets, the agent executes this deterministic 6-step transformation pipeline via [`scripts/generative_3d_adapter.py`](file://~/.gemini/config/skills/autonomous-3d-studio/scripts/generative_3d_adapter.py):
 
 ```text
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -69,7 +69,7 @@ Apply constrained Laplacian smoothing to eliminate high-frequency point-cloud no
 $$v_i^{(t+1)} = v_i^{(t)} + \lambda \sum_{j \in \mathcal{N}(i)} \frac{1}{|\mathcal{N}(i)|} \left( v_j^{(t)} - v_i^{(t)} \right)$$
 
 ### Step 4: Quad Retopology (QuadriFlow / ZRemesh)
-Generate a clean quad mesh aligned with principal curvature lines ($K_{\min}, K_{\max}$) using [`scripts/retopology_quadriflow.py`](file:///root/.gemini/config/skills/autonomous-3d-studio/scripts/retopology_quadriflow.py).
+Generate a clean quad mesh aligned with principal curvature lines ($K_{\min}, K_{\max}$) using [`scripts/retopology_quadriflow.py`](file://~/.gemini/config/skills/autonomous-3d-studio/scripts/retopology_quadriflow.py).
 
 ### Step 5 & 6: UV Packing & Photometric Delighting
 - Generate conformal UV islands with standardized Texel Density.
@@ -79,15 +79,15 @@ Generate a clean quad mesh aligned with principal curvature lines ($K_{\min}, K_
 
 ## Associated Reference Frameworks
 For a comprehensive view of the CIEL AAA+ 3D Master Studio pipeline, explore the reciprocal blueprints:
-- 📐 [Pipeline Architecture & Data Flow](file:///root/.gemini/config/skills/autonomous-3d-studio/references/pipeline_architecture.md)
-- ⚙️ [Hard-Surface Standards](file:///root/.gemini/config/skills/autonomous-3d-studio/references/hard_surface_standards.md)
-- 👤 [Character & Organic Standards](file:///root/.gemini/config/skills/autonomous-3d-studio/references/character_organic_standards.md)
-- 🕸️ [Topology & Retopology](file:///root/.gemini/config/skills/autonomous-3d-studio/references/topology_and_retopology.md)
-- 🗺️ [UV Unwrapping & Texel Density](file:///root/.gemini/config/skills/autonomous-3d-studio/references/uv_unwrapping_texel_density.md)
-- 🎯 [High-to-Low Baking](file:///root/.gemini/config/skills/autonomous-3d-studio/references/high_to_low_baking.md)
-- 🎨 [PBR, MaterialX & OpenPBR](file:///root/.gemini/config/skills/autonomous-3d-studio/references/pbr_materialx_openpbr.md)
-- 🔮 [Procedural Geometry Nodes & VEX](file:///root/.gemini/config/skills/autonomous-3d-studio/references/procedural_geometry_nodes_vex.md)
-- 🦴 [Rigging, Skinning & Animation](file:///root/.gemini/config/skills/autonomous-3d-studio/references/rigging_skinning_animation.md)
-- 🎬 [OpenUSD & Unreal Engine 5](file:///root/.gemini/config/skills/autonomous-3d-studio/references/usd_and_unreal_engine.md)
-- 🤖 [Generative 3D Hybrid Pipelines](file:///root/.gemini/config/skills/autonomous-3d-studio/references/generative_3d_hybrid.md)
-- 🔍 [Visual QA Turnaround Protocol](file:///root/.gemini/config/skills/autonomous-3d-studio/references/visual_qa_turnaround_protocol.md)
+- 📐 [Pipeline Architecture & Data Flow](file://~/.gemini/config/skills/autonomous-3d-studio/references/pipeline_architecture.md)
+- ⚙️ [Hard-Surface Standards](file://~/.gemini/config/skills/autonomous-3d-studio/references/hard_surface_standards.md)
+- 👤 [Character & Organic Standards](file://~/.gemini/config/skills/autonomous-3d-studio/references/character_organic_standards.md)
+- 🕸️ [Topology & Retopology](file://~/.gemini/config/skills/autonomous-3d-studio/references/topology_and_retopology.md)
+- 🗺️ [UV Unwrapping & Texel Density](file://~/.gemini/config/skills/autonomous-3d-studio/references/uv_unwrapping_texel_density.md)
+- 🎯 [High-to-Low Baking](file://~/.gemini/config/skills/autonomous-3d-studio/references/high_to_low_baking.md)
+- 🎨 [PBR, MaterialX & OpenPBR](file://~/.gemini/config/skills/autonomous-3d-studio/references/pbr_materialx_openpbr.md)
+- 🔮 [Procedural Geometry Nodes & VEX](file://~/.gemini/config/skills/autonomous-3d-studio/references/procedural_geometry_nodes_vex.md)
+- 🦴 [Rigging, Skinning & Animation](file://~/.gemini/config/skills/autonomous-3d-studio/references/rigging_skinning_animation.md)
+- 🎬 [OpenUSD & Unreal Engine 5](file://~/.gemini/config/skills/autonomous-3d-studio/references/usd_and_unreal_engine.md)
+- 🤖 [Generative 3D Hybrid Pipelines](file://~/.gemini/config/skills/autonomous-3d-studio/references/generative_3d_hybrid.md)
+- 🔍 [Visual QA Turnaround Protocol](file://~/.gemini/config/skills/autonomous-3d-studio/references/visual_qa_turnaround_protocol.md)

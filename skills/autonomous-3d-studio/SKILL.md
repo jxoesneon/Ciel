@@ -62,25 +62,25 @@ The skill ships with 13 battle-tested automation scripts located in `scripts/`:
 
 | Script | Purpose | Command Line Usage |
 | :--- | :--- | :--- |
-| [`scripts/blender_mcp_server.py`](file:///root/.gemini/config/skills/autonomous-3d-studio/scripts/blender_mcp_server.py) | Live Blender MCP & TCP socket RPC bridge for interactive real-time viewport and scene control | `python3 scripts/blender_mcp_server.py --summary` |
-| [`scripts/autonomous_refinement_loop.py`](file:///root/.gemini/config/skills/autonomous-3d-studio/scripts/autonomous_refinement_loop.py) | Master closed-loop self-repair engine orchestrating multi-pass auto-convergence | `python3 scripts/autonomous_refinement_loop.py --mesh asset.obj --profile aaa_game` |
-| [`scripts/generative_3d_adapter.py`](file:///root/.gemini/config/skills/autonomous-3d-studio/scripts/generative_3d_adapter.py) | AI 3D foundation model adapter (TRELLIS.2 / Hunyuan3D / Rodin) with delighting | `python3 scripts/generative_3d_adapter.py --input raw.obj --out clean.obj` |
-| [`scripts/substance_sat_baker.py`](file:///root/.gemini/config/skills/autonomous-3d-studio/scripts/substance_sat_baker.py) | Adobe Substance Automation Toolkit (SAT) headless GPU baker bridge | `python3 scripts/substance_sat_baker.py --high high.obj --low low.obj` |
-| [`scripts/retopology_quadriflow.py`](file:///root/.gemini/config/skills/autonomous-3d-studio/scripts/retopology_quadriflow.py) | Curvature-guided quad retopology and automated 5-tier LOD hierarchy generator | `python3 scripts/retopology_quadriflow.py --mesh mesh.obj --outdir lods/` |
-| [`scripts/blender_pipeline_executor.py`](file:///root/.gemini/config/skills/autonomous-3d-studio/scripts/blender_pipeline_executor.py) | Headless Blender (`bpy`) batch runner with process-group isolation | `python3 scripts/blender_pipeline_executor.py --mode generate --config asset.json` |
-| [`scripts/geometry_qa_validator.py`](file:///root/.gemini/config/skills/autonomous-3d-studio/scripts/geometry_qa_validator.py) | Strict geometry audit with programmatic `--fix` self-healing and instinct telemetry | `python3 scripts/geometry_qa_validator.py --input mesh.obj --fix --out clean.obj` |
-| [`scripts/turnaround_qa_renderer.py`](file:///root/.gemini/config/skills/autonomous-3d-studio/scripts/turnaround_qa_renderer.py) | Renders 8-angle Beauty, Clay, Wireframe, and Normal turnarounds with HTML viewer | `python3 scripts/turnaround_qa_renderer.py --mesh mesh.obj --outdir renders/` |
-| [`scripts/uv_texel_analyzer.py`](file:///root/.gemini/config/skills/autonomous-3d-studio/scripts/uv_texel_analyzer.py) | Automated UV unwrapping, packing efficiency calculation, and Texel Density audit | `python3 scripts/uv_texel_analyzer.py --mesh mesh.obj --target-td 20.48 --res 4096` |
-| [`scripts/high_to_low_baker.py`](file:///root/.gemini/config/skills/autonomous-3d-studio/scripts/high_to_low_baker.py) | Automated high-to-low mesh transfer: cage creation, normal, AO, curvature, and ID baking | `python3 scripts/high_to_low_baker.py --high high.obj --low low.obj --out maps/` |
-| [`scripts/procedural_kit_generator.py`](file:///root/.gemini/config/skills/autonomous-3d-studio/scripts/procedural_kit_generator.py) | Procedural modular kit builder with boolean cutters, chamfers, and floater panels | `python3 scripts/procedural_kit_generator.py --type modular_panel --out kit/` |
-| [`scripts/usd_materialx_bridge.py`](file:///root/.gemini/config/skills/autonomous-3d-studio/scripts/usd_materialx_bridge.py) | OpenUSD stage composition and MaterialX / OpenPBR network generation | `python3 scripts/usd_materialx_bridge.py --usd stage.usda --matx shader.mtlx` |
-| [`scripts/unreal_engine_bridge.py`](file:///root/.gemini/config/skills/autonomous-3d-studio/scripts/unreal_engine_bridge.py) | Unreal Engine 5 remote script for automated import, Nanite, LODs, and UCX collision | `python3 scripts/unreal_engine_bridge.py --asset asset.fbx --target /Game/Assets` |
-| [`scripts/collision_hull_generator.py`](file:///root/.gemini/config/skills/autonomous-3d-studio/scripts/collision_hull_generator.py) | Generates UE5 Chaos UBX/UCX collision primitives via V-HACD | `python3 scripts/collision_hull_generator.py --input mesh.obj` |
-| [`scripts/vertex_normal_transfer.py`](file:///root/.gemini/config/skills/autonomous-3d-studio/scripts/vertex_normal_transfer.py) | Face-area weighted CAD/NURBS normal transfer to low-poly | `python3 scripts/vertex_normal_transfer.py --source high.obj --target low.obj` |
-| [`scripts/facs_blendshape_mirror.py`](file:///root/.gemini/config/skills/autonomous-3d-studio/scripts/facs_blendshape_mirror.py) | Bilateral symmetry mirroring for ARKit/FACS 52 blendshapes | `python3 scripts/facs_blendshape_mirror.py --base face.obj --shape smile_L.obj` |
-| [`scripts/udim_pack_analyzer.py`](file:///root/.gemini/config/skills/autonomous-3d-studio/scripts/udim_pack_analyzer.py) | Multi-tile UDIM distribution and boundary overlap check | `python3 scripts/udim_pack_analyzer.py --mesh asset.obj` |
-| [`scripts/usd_variant_manager.py`](file:///root/.gemini/config/skills/autonomous-3d-studio/scripts/usd_variant_manager.py) | OpenUSD UsdVariantSets (LODs, Material States) composer | `python3 scripts/usd_variant_manager.py --stage out.usda` |
-| [`scripts/distill_3d_instincts.py`](file:///root/.gemini/config/skills/autonomous-3d-studio/scripts/distill_3d_instincts.py) | Consolidates QA telemetry into workspace spatial rules | `python3 scripts/distill_3d_instincts.py` |
+| [`scripts/blender_mcp_server.py`](file://~/.gemini/config/skills/autonomous-3d-studio/scripts/blender_mcp_server.py) | Live Blender MCP & TCP socket RPC bridge for interactive real-time viewport and scene control | `python3 scripts/blender_mcp_server.py --summary` |
+| [`scripts/autonomous_refinement_loop.py`](file://~/.gemini/config/skills/autonomous-3d-studio/scripts/autonomous_refinement_loop.py) | Master closed-loop self-repair engine orchestrating multi-pass auto-convergence | `python3 scripts/autonomous_refinement_loop.py --mesh asset.obj --profile aaa_game` |
+| [`scripts/generative_3d_adapter.py`](file://~/.gemini/config/skills/autonomous-3d-studio/scripts/generative_3d_adapter.py) | AI 3D foundation model adapter (TRELLIS.2 / Hunyuan3D / Rodin) with delighting | `python3 scripts/generative_3d_adapter.py --input raw.obj --out clean.obj` |
+| [`scripts/substance_sat_baker.py`](file://~/.gemini/config/skills/autonomous-3d-studio/scripts/substance_sat_baker.py) | Adobe Substance Automation Toolkit (SAT) headless GPU baker bridge | `python3 scripts/substance_sat_baker.py --high high.obj --low low.obj` |
+| [`scripts/retopology_quadriflow.py`](file://~/.gemini/config/skills/autonomous-3d-studio/scripts/retopology_quadriflow.py) | Curvature-guided quad retopology and automated 5-tier LOD hierarchy generator | `python3 scripts/retopology_quadriflow.py --mesh mesh.obj --outdir lods/` |
+| [`scripts/blender_pipeline_executor.py`](file://~/.gemini/config/skills/autonomous-3d-studio/scripts/blender_pipeline_executor.py) | Headless Blender (`bpy`) batch runner with process-group isolation | `python3 scripts/blender_pipeline_executor.py --mode generate --config asset.json` |
+| [`scripts/geometry_qa_validator.py`](file://~/.gemini/config/skills/autonomous-3d-studio/scripts/geometry_qa_validator.py) | Strict geometry audit with programmatic `--fix` self-healing and instinct telemetry | `python3 scripts/geometry_qa_validator.py --input mesh.obj --fix --out clean.obj` |
+| [`scripts/turnaround_qa_renderer.py`](file://~/.gemini/config/skills/autonomous-3d-studio/scripts/turnaround_qa_renderer.py) | Renders 8-angle Beauty, Clay, Wireframe, and Normal turnarounds with HTML viewer | `python3 scripts/turnaround_qa_renderer.py --mesh mesh.obj --outdir renders/` |
+| [`scripts/uv_texel_analyzer.py`](file://~/.gemini/config/skills/autonomous-3d-studio/scripts/uv_texel_analyzer.py) | Automated UV unwrapping, packing efficiency calculation, and Texel Density audit | `python3 scripts/uv_texel_analyzer.py --mesh mesh.obj --target-td 20.48 --res 4096` |
+| [`scripts/high_to_low_baker.py`](file://~/.gemini/config/skills/autonomous-3d-studio/scripts/high_to_low_baker.py) | Automated high-to-low mesh transfer: cage creation, normal, AO, curvature, and ID baking | `python3 scripts/high_to_low_baker.py --high high.obj --low low.obj --out maps/` |
+| [`scripts/procedural_kit_generator.py`](file://~/.gemini/config/skills/autonomous-3d-studio/scripts/procedural_kit_generator.py) | Procedural modular kit builder with boolean cutters, chamfers, and floater panels | `python3 scripts/procedural_kit_generator.py --type modular_panel --out kit/` |
+| [`scripts/usd_materialx_bridge.py`](file://~/.gemini/config/skills/autonomous-3d-studio/scripts/usd_materialx_bridge.py) | OpenUSD stage composition and MaterialX / OpenPBR network generation | `python3 scripts/usd_materialx_bridge.py --usd stage.usda --matx shader.mtlx` |
+| [`scripts/unreal_engine_bridge.py`](file://~/.gemini/config/skills/autonomous-3d-studio/scripts/unreal_engine_bridge.py) | Unreal Engine 5 remote script for automated import, Nanite, LODs, and UCX collision | `python3 scripts/unreal_engine_bridge.py --asset asset.fbx --target /Game/Assets` |
+| [`scripts/collision_hull_generator.py`](file://~/.gemini/config/skills/autonomous-3d-studio/scripts/collision_hull_generator.py) | Generates UE5 Chaos UBX/UCX collision primitives via V-HACD | `python3 scripts/collision_hull_generator.py --input mesh.obj` |
+| [`scripts/vertex_normal_transfer.py`](file://~/.gemini/config/skills/autonomous-3d-studio/scripts/vertex_normal_transfer.py) | Face-area weighted CAD/NURBS normal transfer to low-poly | `python3 scripts/vertex_normal_transfer.py --source high.obj --target low.obj` |
+| [`scripts/facs_blendshape_mirror.py`](file://~/.gemini/config/skills/autonomous-3d-studio/scripts/facs_blendshape_mirror.py) | Bilateral symmetry mirroring for ARKit/FACS 52 blendshapes | `python3 scripts/facs_blendshape_mirror.py --base face.obj --shape smile_L.obj` |
+| [`scripts/udim_pack_analyzer.py`](file://~/.gemini/config/skills/autonomous-3d-studio/scripts/udim_pack_analyzer.py) | Multi-tile UDIM distribution and boundary overlap check | `python3 scripts/udim_pack_analyzer.py --mesh asset.obj` |
+| [`scripts/usd_variant_manager.py`](file://~/.gemini/config/skills/autonomous-3d-studio/scripts/usd_variant_manager.py) | OpenUSD UsdVariantSets (LODs, Material States) composer | `python3 scripts/usd_variant_manager.py --stage out.usda` |
+| [`scripts/distill_3d_instincts.py`](file://~/.gemini/config/skills/autonomous-3d-studio/scripts/distill_3d_instincts.py) | Consolidates QA telemetry into workspace spatial rules | `python3 scripts/distill_3d_instincts.py` |
 
 ---
 
@@ -117,28 +117,28 @@ Before any asset is marked complete or promoted to integration, it MUST pass the
 
 For in-depth procedural steps, mathematical formulations, and domain-specific rules, consult the modular reference documents:
 
-- 📐 [Pipeline Architecture & Data Flow](file:///root/.gemini/config/skills/autonomous-3d-studio/references/pipeline_architecture.md)
-- ⚙️ [Hard-Surface Modeling & CAD/SubD Workflows](file:///root/.gemini/config/skills/autonomous-3d-studio/references/hard_surface_standards.md)
-- 👤 [Character, Anatomy & Organic Standards](file:///root/.gemini/config/skills/autonomous-3d-studio/references/character_organic_standards.md)
-- 🕸️ [Topology, Retopology & Quad Flow](file:///root/.gemini/config/skills/autonomous-3d-studio/references/topology_and_retopology.md)
-- 🗺️ [UV Unwrapping, Packing & Texel Density](file:///root/.gemini/config/skills/autonomous-3d-studio/references/uv_unwrapping_texel_density.md)
-- 🎯 [Cage Math & High-to-Low Baking](file:///root/.gemini/config/skills/autonomous-3d-studio/references/high_to_low_baking.md)
-- 🎨 [PBR, MaterialX & OpenPBR Standards](file:///root/.gemini/config/skills/autonomous-3d-studio/references/pbr_materialx_openpbr.md)
-- 🔮 [Procedural Geometry Nodes & Houdini VEX](file:///root/.gemini/config/skills/autonomous-3d-studio/references/procedural_geometry_nodes_vex.md)
-- 🦴 [Rigging, Skinning & Facial FACS Blendshapes](file:///root/.gemini/config/skills/autonomous-3d-studio/references/rigging_skinning_animation.md)
-- 🎬 [OpenUSD Stages & Unreal Engine 5 Nanite](file:///root/.gemini/config/skills/autonomous-3d-studio/references/usd_and_unreal_engine.md)
-- 🤖 [AI-Generative 3D Foundation Model Pipelines](file:///root/.gemini/config/skills/autonomous-3d-studio/references/generative_3d_hybrid.md)
-- 🔍 [Visual QA Turnaround & Audit Protocol](file:///root/.gemini/config/skills/autonomous-3d-studio/references/visual_qa_turnaround_protocol.md)
+- 📐 [Pipeline Architecture & Data Flow](file://~/.gemini/config/skills/autonomous-3d-studio/references/pipeline_architecture.md)
+- ⚙️ [Hard-Surface Modeling & CAD/SubD Workflows](file://~/.gemini/config/skills/autonomous-3d-studio/references/hard_surface_standards.md)
+- 👤 [Character, Anatomy & Organic Standards](file://~/.gemini/config/skills/autonomous-3d-studio/references/character_organic_standards.md)
+- 🕸️ [Topology, Retopology & Quad Flow](file://~/.gemini/config/skills/autonomous-3d-studio/references/topology_and_retopology.md)
+- 🗺️ [UV Unwrapping, Packing & Texel Density](file://~/.gemini/config/skills/autonomous-3d-studio/references/uv_unwrapping_texel_density.md)
+- 🎯 [Cage Math & High-to-Low Baking](file://~/.gemini/config/skills/autonomous-3d-studio/references/high_to_low_baking.md)
+- 🎨 [PBR, MaterialX & OpenPBR Standards](file://~/.gemini/config/skills/autonomous-3d-studio/references/pbr_materialx_openpbr.md)
+- 🔮 [Procedural Geometry Nodes & Houdini VEX](file://~/.gemini/config/skills/autonomous-3d-studio/references/procedural_geometry_nodes_vex.md)
+- 🦴 [Rigging, Skinning & Facial FACS Blendshapes](file://~/.gemini/config/skills/autonomous-3d-studio/references/rigging_skinning_animation.md)
+- 🎬 [OpenUSD Stages & Unreal Engine 5 Nanite](file://~/.gemini/config/skills/autonomous-3d-studio/references/usd_and_unreal_engine.md)
+- 🤖 [AI-Generative 3D Foundation Model Pipelines](file://~/.gemini/config/skills/autonomous-3d-studio/references/generative_3d_hybrid.md)
+- 🔍 [Visual QA Turnaround & Audit Protocol](file://~/.gemini/config/skills/autonomous-3d-studio/references/visual_qa_turnaround_protocol.md)
 
 ---
 
 ## 5. Standard Assets & Configuration Presets
 
 Pre-configured production profiles located in `assets/`:
-- [`assets/blender_mcp_addon.py`](file:///root/.gemini/config/skills/autonomous-3d-studio/assets/blender_mcp_addon.py): Live TCP socket bridge addon for Blender 3.0+/4.0+.
-- [`assets/dcc_export_presets.json`](file:///root/.gemini/config/skills/autonomous-3d-studio/assets/dcc_export_presets.json): Standard interchange export settings (Blender $\to$ Unreal/Unity/Maya/USD).
-- [`assets/texel_density_presets.json`](file:///root/.gemini/config/skills/autonomous-3d-studio/assets/texel_density_presets.json): Industry texel density calibration matrix.
-- [`assets/studio_qa_checklist.json`](file:///root/.gemini/config/skills/autonomous-3d-studio/assets/studio_qa_checklist.json): Machine-readable QA evaluation criteria.
+- [`assets/blender_mcp_addon.py`](file://~/.gemini/config/skills/autonomous-3d-studio/assets/blender_mcp_addon.py): Live TCP socket bridge addon for Blender 3.0+/4.0+.
+- [`assets/dcc_export_presets.json`](file://~/.gemini/config/skills/autonomous-3d-studio/assets/dcc_export_presets.json): Standard interchange export settings (Blender $\to$ Unreal/Unity/Maya/USD).
+- [`assets/texel_density_presets.json`](file://~/.gemini/config/skills/autonomous-3d-studio/assets/texel_density_presets.json): Industry texel density calibration matrix.
+- [`assets/studio_qa_checklist.json`](file://~/.gemini/config/skills/autonomous-3d-studio/assets/studio_qa_checklist.json): Machine-readable QA evaluation criteria.
 
 ---
 
