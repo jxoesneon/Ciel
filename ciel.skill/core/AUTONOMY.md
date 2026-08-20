@@ -40,7 +40,6 @@ Every agentic loop execution MUST adhere to the following standards:
 - **Zero-Deferral Policy**: Loops are ALWAYS for comprehensive implementations. Deferred tasks, mock placeholders, stubbed functions, "left as an exercise", or TODO items are strictly forbidden.
 - **Adaptive Scope Integration**: If pre-existing issues, bugs, syntax errors, or architectural flaws are discovered during execution, the loop MUST dynamically adapt to incorporate and resolve those findings rather than bypassing them.
 
-
 ## Act-vs-Ask Thresholds
 
 | Signal | Act | Ask |

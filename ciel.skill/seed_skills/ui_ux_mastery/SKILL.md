@@ -4,6 +4,7 @@ version: 1.0.0
 description: UI/UX design governance — design systems, accessibility audits, performance budgets, agentic UX patterns.
 triggers: [ui, ux, design system, accessibility, wcag, agentic ui]
 tags: [ui, scope:both, runtime:any, risk:low]
+runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 runtime_compatibility: { claude_code: true, gemini_cli: true, generic: true }
 license: Apache-2.0
 source: { tier: 0, origin: seed }
