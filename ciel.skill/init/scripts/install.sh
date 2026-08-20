@@ -78,7 +78,7 @@ if [ -z "${SKIP_MEMPALACE:-}" ] && need cargo; then
     cargo install mempalace-rs --locked || {
       warn "cargo install failed; will fall back"
       SKIP_MEMPALACE=1
-  }
+    }
   else
     say "mempalace-rs already installed: $(mempalace-rs --version 2>/dev/null || echo 'unknown')"
   fi
