@@ -114,3 +114,36 @@ Acts as the foundational intelligence layer whenever Godot game development is r
 - **Dynamic NavMeshes:** Chunk the world into smaller `NavigationRegion3D` nodes. Bake asynchronously using simplified, invisible collision geometry rather than visual meshes.
 - **Avoidance Throttling:** Throttle `NavigationAgent3D` path updates. Use leader-follower logic or flow fields for massive entity counts (RTS scale).
 - **Decoupled Animation:** Separate gameplay state logic (GDScript FSM) from the animation presentation layer (`AnimationTree`). Use Advance Expressions in transitions to read state variables directly. Integrate IK via `BlendSpace2D` and additive blend nodes.
+
+---
+
+## 5. Visual Verification & Screenshot Inspection Loop
+
+### Comprehensive Screenshot Capture
+- **Real-Time Visual Feedback:** Never rely solely on log outputs for graphical, shader, or UI features. Use MCP screenshot capabilities (`take_screenshot` or automated capture scripts) to visually verify rendering, materials, lighting, and layout at each stage.
+- **Multi-Target Viewport Modes:**
+  - `target: "viewport_3d"` — Live 3D editor viewport capture (framing target entities via `focus_editor_viewport_3d`).
+  - `target: "viewport_2d"` — Live 2D editor canvas capture for UI/HUD layouts.
+  - `target: "main_screen"` — Full editor window with inspector, hierarchy, and docks.
+  - `target: "scene"` + `scene_path` — Headless / off-screen SubViewport rendering of any `.tscn` scene with custom camera angles.
+  - `output_path` — Direct saving to artifact directory (e.g. `<artifactDir>/screenshots/<name>.png`), returning markdown links (`![Label](file://...)`) for instant inline visual audit in reports.
+- **Automated Multi-Stage Capture Suites:** For complex spatial sequences (e.g. Space Flight → Warp Arrival → Atmospheric Entry → Cloud Piercing → Surface Proximity), write automated test scripts that step through stages, capture frames, and generate sequential artifact carousels.
+
+---
+
+## 6. Space-Scale & Planetary Physics Architecture
+
+### Physics Collision Layer Matrix
+- **Layer 1: Space Obstacles & General Physics** — Asteroids, debris, space stations, ship-to-ship obstacles.
+- **Layer 2: Player & Character Bodies** — `PlayerShip` (CharacterBody3D) and on-foot player collision.
+- **Layer 3: Projectiles & VFX Triggers** — Plasma bolts, lasers, sensor cones.
+- **Layer 4: Planetary Terrain Ground** — Static terrain geometry and collision meshes for planetary surfaces.
+- **Atmospheric Penetration Rule:** `PlayerShip` must use `collision_mask = 1` (detects asteroids) and ignore Layer 4 so the ship glides smoothly through high/low atmospheric shells without crashing into static spheres, while `PlanetCharacterController` uses `collision_mask = 1 | 4` to walk firmly on the ground.
+
+### Camera Projection Matrix & Depth Ratio Limits
+- **Shadow Projection Underflow Prevention:** In Godot 4, the directional light shadow culler inverts the camera projection matrix in float32 precision. If the depth ratio `far / near >= 10,000,000:1` (e.g. `20,000,000 / 0.5`), the matrix determinant underflows, flooding the engine with `core/math/projection.cpp:455` and `rendering_light_culler.cpp:682` errors.
+- **Golden Rule:** Maintain depth ratio `<= 1,000,000:1`.
+  - **Orbital / Deep Space:** `camera.far = 2,000,000.0` m (2,000 km), `camera.near = 2.0` m (Ratio: 1,000,000:1).
+  - **Atmospheric Descent:** `camera.far = 200,000.0` m (200 km), `camera.near = 1.0` m (Ratio: 200,000:1).
+  - **Surface / On-Foot:** `camera.far = 50,000.0` m (50 km), `camera.near = 0.5` m (Ratio: 100,000:1).
+
