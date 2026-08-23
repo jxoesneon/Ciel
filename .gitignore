@@ -18,6 +18,10 @@ Thumbs.db
 # Local testing / sandboxes
 .ciel/
 .cache/
+
+# Runtime-specific agent dirs (machine-local symlinks)
+.devin/
+ciel.skill/scan-output/
 node_modules/
 
 # Backup scratch
