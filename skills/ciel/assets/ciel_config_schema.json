@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CielConfiguration",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "default": "1.1.0"
+    },
+    "autonomy": {
+      "type": "object",
+      "properties": {
+        "research_first": {
+          "type": "boolean",
+          "default": true
+        },
+        "iron_law_verification": {
+          "type": "boolean",
+          "default": true
+        },
+        "tdd_coverage_target": {
+          "type": "number",
+          "default": 80
+        }
+      }
+    },
+    "council": {
+      "type": "object",
+      "properties": {
+        "safety_veto_threshold": {
+          "type": "number",
+          "default": 3
+        },
+        "quorum_majority": {
+          "type": "number",
+          "default": 3
+        }
+      }
+    },
+    "spatial_3d_standards": {
+      "type": "object",
+      "properties": {
+        "texel_density_hero_px_cm": {
+          "type": "number",
+          "default": 20.48
+        },
+        "mikk_tspace_enforced": {
+          "type": "boolean",
+          "default": true
+        },
+        "quad_dominant_topology": {
+          "type": "boolean",
+          "default": true
+        },
+        "default_export_format": {
+          "type": "string",
+          "enum": ["gltf", "glb", "usd", "obj"],
+          "default": "glb"
+        }
+      }
+    },
+    "memory": {
+      "type": "object",
+      "properties": {
+        "backend": {
+          "type": "string",
+          "default": "mempalace-rs"
+        },
+        "partition": {
+          "type": "string",
+          "default": "ciel_core"
+        }
+      }
+    }
+  }
+}
