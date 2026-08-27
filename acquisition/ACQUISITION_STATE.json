@@ -1,14 +1,14 @@
 {
   "schema": "acquisition_state/1.0",
   "version": "1.0.0",
-  "updated": "2026-08-05T00:15:00Z",
+  "updated": "2026-08-27T14:30:52.447044Z",
   "tier_1_enabled": true,
   "tier_2_enabled": true,
   "tier_3_enabled": true,
   "sandbox_enabled": true,
   "trust_model": "council_gated",
   "auto_install": false,
-  "total_acquisitions": 0,
+  "total_acquisitions": 1,
   "acquisition_history": [],
   "tier_stats": {
     "tier_1_hits": 0,
@@ -92,5 +92,27 @@
     },
     "sandbox_retention_hours": 48,
     "min_trust": 0.2
-  }
+  },
+  "acquisitions": [
+    {
+      "skill_name": "godogen",
+      "source_url": "https://github.com/htdt/godogen",
+      "tier": 3,
+      "origin": "web-extraction",
+      "fetched": "2026-08-27",
+      "trust_state": "untrusted",
+      "trust_score": 0.16,
+      "files_ingested": [
+        "skills/godogen/SKILL.md",
+        "skills/godogen/engines/godot.md",
+        "skills/godogen/engines/bevy.md",
+        "skills/godogen/engines/babylon.md",
+        "skills/godogen/asset-gen/SKILL.md",
+        "skills/godogen/asset-gen/rembg.md",
+        "skills/godogen/prompts/runtime.md"
+      ],
+      "license": "MIT",
+      "status": "harmonized"
+    }
+  ]
 }

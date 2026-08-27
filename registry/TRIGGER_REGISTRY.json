@@ -1,3536 +1,3608 @@
 {
- "schema": "trigger_registry/1.0",
- "version": "1.0.0",
- "updated": "2026-08-22T07:58:09Z",
- "total_triggers": 440,
- "triggers": [
-  {
-   "pattern": "agent-eval",
-   "skill_name": "agent-eval",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "agent-harness-construction",
-   "skill_name": "agent-harness-construction",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "agent-introspection-debugging",
-   "skill_name": "agent-introspection-debugging",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "agent-payment-x402",
-   "skill_name": "agent-payment-x402",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "agent-sort",
-   "skill_name": "agent-sort",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "agentic-engineering",
-   "skill_name": "agentic-engineering",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "ai-first-engineering",
-   "skill_name": "ai-first-engineering",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "ai-regression-testing",
-   "skill_name": "ai-regression-testing",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "android-clean-architecture",
-   "skill_name": "android-clean-architecture",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "api-connector-builder",
-   "skill_name": "api-connector-builder",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "api-design",
-   "skill_name": "api-design",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "api",
-   "skill_name": "api_client",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "http",
-   "skill_name": "api_client",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "rest",
-   "skill_name": "api_client",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "graphql",
-   "skill_name": "api_client",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "request",
-   "skill_name": "api_client",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "endpoint",
-   "skill_name": "api_client",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "architecture-decision-records",
-   "skill_name": "architecture-decision-records",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "zip",
-   "skill_name": "archive_manager",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "tar",
-   "skill_name": "archive_manager",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "archive",
-   "skill_name": "archive_manager",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "unzip",
-   "skill_name": "archive_manager",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "extract",
-   "skill_name": "archive_manager",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "article-writing",
-   "skill_name": "article-writing",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "automation-audit-ops",
-   "skill_name": "automation-audit-ops",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "autonomous-agent-harness",
-   "skill_name": "autonomous-agent-harness",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "autonomous-loops",
-   "skill_name": "autonomous-loops",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "backend-patterns",
-   "skill_name": "backend-patterns",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "benchmark",
-   "skill_name": "benchmark",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "blueprint",
-   "skill_name": "blueprint",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "brainstorming",
-   "skill_name": "brainstorming",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "brand-voice",
-   "skill_name": "brand-voice",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "browser-qa",
-   "skill_name": "browser-qa",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "bun-runtime",
-   "skill_name": "bun-runtime",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "canary-watch",
-   "skill_name": "canary-watch",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "carrier-relationship-management",
-   "skill_name": "carrier-relationship-management",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "ci",
-   "skill_name": "cicd_integration",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "cd",
-   "skill_name": "cicd_integration",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "pipeline",
-   "skill_name": "cicd_integration",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "github actions",
-   "skill_name": "cicd_integration",
-   "confidence": 0.7,
-   "match_type": "domain",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "gitlab ci",
-   "skill_name": "cicd_integration",
-   "confidence": 0.7,
-   "match_type": "domain",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "circle",
-   "skill_name": "cicd_integration",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "ck",
-   "skill_name": "ck",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "ckm-banner-design",
-   "skill_name": "ckm-banner-design",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "ckm-brand",
-   "skill_name": "ckm-brand",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "ckm-design",
-   "skill_name": "ckm-design",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "ckm-design-system",
-   "skill_name": "ckm-design-system",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "ckm-slides",
-   "skill_name": "ckm-slides",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "ckm-ui-styling",
-   "skill_name": "ckm-ui-styling",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "claude-api",
-   "skill_name": "claude-api",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "claude-code-plugin-release",
-   "skill_name": "claude-code-plugin-release",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "claude-devfleet",
-   "skill_name": "claude-devfleet",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "click-path-audit",
-   "skill_name": "click-path-audit",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "clickhouse-io",
-   "skill_name": "clickhouse-io",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "code-tour",
-   "skill_name": "code-tour",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "analyze",
-   "skill_name": "code_analysis",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "understand",
-   "skill_name": "code_analysis",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "trace",
-   "skill_name": "code_analysis",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "symbol",
-   "skill_name": "code_analysis",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "architecture",
-   "skill_name": "code_analysis",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "code map",
-   "skill_name": "code_analysis",
-   "confidence": 0.6,
-   "match_type": "intent",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "generate code",
-   "skill_name": "code_generation",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "scaffold",
-   "skill_name": "code_generation",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "implement",
-   "skill_name": "code_generation",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "write function",
-   "skill_name": "code_generation",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "write class",
-   "skill_name": "code_generation",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "review",
-   "skill_name": "code_review",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "audit code",
-   "skill_name": "code_review",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "quality",
-   "skill_name": "code_review",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "lint suggestions",
-   "skill_name": "code_review",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "codebase-onboarding",
-   "skill_name": "codebase-onboarding",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "coding-standards",
-   "skill_name": "coding-standards",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "compose-multiplatform-patterns",
-   "skill_name": "compose-multiplatform-patterns",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "configure-ecc",
-   "skill_name": "configure-ecc",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "connections-optimizer",
-   "skill_name": "connections-optimizer",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "content-engine",
-   "skill_name": "content-engine",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "content-hash-cache-pattern",
-   "skill_name": "content-hash-cache-pattern",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "context-budget",
-   "skill_name": "context-budget",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "summarize",
-   "skill_name": "context_summarizer",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "compress context",
-   "skill_name": "context_summarizer",
-   "confidence": 0.6,
-   "match_type": "intent",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "aaak",
-   "skill_name": "context_summarizer",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "continuous-agent-loop",
-   "skill_name": "continuous-agent-loop",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "continuous-learning",
-   "skill_name": "continuous-learning",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "continuous-learning-v2",
-   "skill_name": "continuous-learning-v2",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "convoy",
-   "skill_name": "convoy-orchestration",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "multi-agent",
-   "skill_name": "convoy-orchestration",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "parallel work",
-   "skill_name": "convoy-orchestration",
-   "confidence": 0.6,
-   "match_type": "intent",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "distribute tasks",
-   "skill_name": "convoy-orchestration",
-   "confidence": 0.6,
-   "match_type": "intent",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "agent coordination",
-   "skill_name": "convoy-orchestration",
-   "confidence": 0.6,
-   "match_type": "intent",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "sling work",
-   "skill_name": "convoy-orchestration",
-   "confidence": 0.6,
-   "match_type": "intent",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "work tracking",
-   "skill_name": "convoy-orchestration",
-   "confidence": 0.6,
-   "match_type": "intent",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "scale up",
-   "skill_name": "convoy-orchestration",
-   "confidence": 0.6,
-   "match_type": "intent",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "cost-aware-llm-pipeline",
-   "skill_name": "cost-aware-llm-pipeline",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "council",
-   "skill_name": "council",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "vote",
-   "skill_name": "council_runner",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "deliberate",
-   "skill_name": "council_runner",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "review artifact",
-   "skill_name": "council_runner",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "cpp-coding-standards",
-   "skill_name": "cpp-coding-standards",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "cpp-testing",
-   "skill_name": "cpp-testing",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "crosspost",
-   "skill_name": "crosspost",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "csharp-testing",
-   "skill_name": "csharp-testing",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "customer-billing-ops",
-   "skill_name": "customer-billing-ops",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "customs-trade-compliance",
-   "skill_name": "customs-trade-compliance",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "dart-flutter-patterns",
-   "skill_name": "dart-flutter-patterns",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "dashboard-builder",
-   "skill_name": "dashboard-builder",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "data-scraper-agent",
-   "skill_name": "data-scraper-agent",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "database-migrations",
-   "skill_name": "database-migrations",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "sql",
-   "skill_name": "database_client",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "query",
-   "skill_name": "database_client",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "database",
-   "skill_name": "database_client",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "db",
-   "skill_name": "database_client",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "select",
-   "skill_name": "database_client",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "migration",
-   "skill_name": "database_client",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "deep-research",
-   "skill_name": "deep-research",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "defi-amm-security",
-   "skill_name": "defi-amm-security",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "defuddle",
-   "skill_name": "defuddle",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "audit deps",
-   "skill_name": "dependency_audit",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "cve",
-   "skill_name": "dependency_audit",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "vulnerability",
-   "skill_name": "dependency_audit",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "outdated",
-   "skill_name": "dependency_audit",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "deployment-patterns",
-   "skill_name": "deployment-patterns",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "design-system",
-   "skill_name": "design-system",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "dev-browser",
-   "skill_name": "dev-browser",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "diff",
-   "skill_name": "diff_patch",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "patch",
-   "skill_name": "diff_patch",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "apply patch",
-   "skill_name": "diff_patch",
-   "confidence": 0.6,
-   "match_type": "intent",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "hunk",
-   "skill_name": "diff_patch",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "dispatching-parallel-agents",
-   "skill_name": "dispatching-parallel-agents",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "django-patterns",
-   "skill_name": "django-patterns",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "django-security",
-   "skill_name": "django-security",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "django-tdd",
-   "skill_name": "django-tdd",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "django-verification",
-   "skill_name": "django-verification",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "dmux-workflows",
-   "skill_name": "dmux-workflows",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "do",
-   "skill_name": "do",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "docker",
-   "skill_name": "docker",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "container",
-   "skill_name": "docker",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "compose",
-   "skill_name": "docker",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "podman",
-   "skill_name": "docker",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "docker-patterns",
-   "skill_name": "docker-patterns",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "readme",
-   "skill_name": "documentation",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "document",
-   "skill_name": "documentation",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "docs",
-   "skill_name": "documentation",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "changelog",
-   "skill_name": "documentation",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "api docs",
-   "skill_name": "documentation",
-   "confidence": 0.7,
-   "match_type": "domain",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "documentation-lookup",
-   "skill_name": "documentation-lookup",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "dotnet-patterns",
-   "skill_name": "dotnet-patterns",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "e2e-testing",
-   "skill_name": "e2e-testing",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "ecc-tools-cost-audit",
-   "skill_name": "ecc-tools-cost-audit",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "email-ops",
-   "skill_name": "email-ops",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "energy-procurement",
-   "skill_name": "energy-procurement",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "enterprise-agent-ops",
-   "skill_name": "enterprise-agent-ops",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "detect environment",
-   "skill_name": "environment_detection",
-   "confidence": 0.6,
-   "match_type": "intent",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "env info",
-   "skill_name": "environment_detection",
-   "confidence": 0.6,
-   "match_type": "intent",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "os",
-   "skill_name": "environment_detection",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "runtime version",
-   "skill_name": "environment_detection",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "eval-harness",
-   "skill_name": "eval-harness",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "everything-claude-code-conventions",
-   "skill_name": "everything-claude-code-conventions",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "evm-token-decimals",
-   "skill_name": "evm-token-decimals",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "exa-search",
-   "skill_name": "exa-search",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "executing-plans",
-   "skill_name": "executing-plans",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "fal-ai-media",
-   "skill_name": "fal-ai-media",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "read",
-   "skill_name": "filesystem",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "write",
-   "skill_name": "filesystem",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "edit",
-   "skill_name": "filesystem",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "cat",
-   "skill_name": "filesystem",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "ls",
-   "skill_name": "filesystem",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "find",
-   "skill_name": "filesystem",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "stat",
-   "skill_name": "filesystem",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "move",
-   "skill_name": "filesystem",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "copy",
-   "skill_name": "filesystem",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "delete",
-   "skill_name": "filesystem",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "file",
-   "skill_name": "filesystem",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "finance-billing-ops",
-   "skill_name": "finance-billing-ops",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "find-skills",
-   "skill_name": "find-skills",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "finishing-a-development-branch",
-   "skill_name": "finishing-a-development-branch",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "flutter-dart-code-review",
-   "skill_name": "flutter-dart-code-review",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "foundation-models-on-device",
-   "skill_name": "foundation-models-on-device",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "frontend-design",
-   "skill_name": "frontend-design",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "frontend-patterns",
-   "skill_name": "frontend-patterns",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "frontend-slides",
-   "skill_name": "frontend-slides",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "gan-style-harness",
-   "skill_name": "gan-style-harness",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "gastown",
-   "skill_name": "gastown",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "git",
-   "skill_name": "git",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "commit",
-   "skill_name": "git",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "branch",
-   "skill_name": "git",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "revert",
-   "skill_name": "git",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "stash",
-   "skill_name": "git",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "git-workflow",
-   "skill_name": "git-workflow",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "github-ops",
-   "skill_name": "github-ops",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "golang-patterns",
-   "skill_name": "golang-patterns",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "golang-testing",
-   "skill_name": "golang-testing",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "google-workspace-ops",
-   "skill_name": "google-workspace-ops",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "gsap-core",
-   "skill_name": "gsap-core",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "gsap-frameworks",
-   "skill_name": "gsap-frameworks",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "gsap-performance",
-   "skill_name": "gsap-performance",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "gsap-plugins",
-   "skill_name": "gsap-plugins",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "gsap-react",
-   "skill_name": "gsap-react",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "gsap-scrolltrigger",
-   "skill_name": "gsap-scrolltrigger",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "gsap-timeline",
-   "skill_name": "gsap-timeline",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "gsap-utils",
-   "skill_name": "gsap-utils",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "gsd-orchestrator",
-   "skill_name": "gsd-orchestrator",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "healthcare-cdss-patterns",
-   "skill_name": "healthcare-cdss-patterns",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "healthcare-emr-patterns",
-   "skill_name": "healthcare-emr-patterns",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "healthcare-eval-harness",
-   "skill_name": "healthcare-eval-harness",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "healthcare-phi-compliance",
-   "skill_name": "healthcare-phi-compliance",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "hexagonal-architecture",
-   "skill_name": "hexagonal-architecture",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "hipaa-compliance",
-   "skill_name": "hipaa-compliance",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "hookify-rules",
-   "skill_name": "hookify-rules",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "inventory-demand-planning",
-   "skill_name": "inventory-demand-planning",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "investor-materials",
-   "skill_name": "investor-materials",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "investor-outreach",
-   "skill_name": "investor-outreach",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "iterative-retrieval",
-   "skill_name": "iterative-retrieval",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "java-coding-standards",
-   "skill_name": "java-coding-standards",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "jira-integration",
-   "skill_name": "jira-integration",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "jpa-patterns",
-   "skill_name": "jpa-patterns",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "json-canvas",
-   "skill_name": "json-canvas",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "json",
-   "skill_name": "json_yaml_toml_parser",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "yaml",
-   "skill_name": "json_yaml_toml_parser",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "toml",
-   "skill_name": "json_yaml_toml_parser",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "parse",
-   "skill_name": "json_yaml_toml_parser",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "config",
-   "skill_name": "json_yaml_toml_parser",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "knowledge-ops",
-   "skill_name": "knowledge-ops",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "kotlin-coroutines-flows",
-   "skill_name": "kotlin-coroutines-flows",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "kotlin-exposed-patterns",
-   "skill_name": "kotlin-exposed-patterns",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "kotlin-ktor-patterns",
-   "skill_name": "kotlin-ktor-patterns",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "kotlin-patterns",
-   "skill_name": "kotlin-patterns",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "kotlin-testing",
-   "skill_name": "kotlin-testing",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "laravel-patterns",
-   "skill_name": "laravel-patterns",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "laravel-plugin-discovery",
-   "skill_name": "laravel-plugin-discovery",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "laravel-security",
-   "skill_name": "laravel-security",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "laravel-tdd",
-   "skill_name": "laravel-tdd",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "laravel-verification",
-   "skill_name": "laravel-verification",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "lead-intelligence",
-   "skill_name": "lead-intelligence",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "lint",
-   "skill_name": "linter_formatter",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "format",
-   "skill_name": "linter_formatter",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "prettier",
-   "skill_name": "linter_formatter",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "eslint",
-   "skill_name": "linter_formatter",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "rustfmt",
-   "skill_name": "linter_formatter",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "black",
-   "skill_name": "linter_formatter",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "gofmt",
-   "skill_name": "linter_formatter",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "liquid-glass-design",
-   "skill_name": "liquid-glass-design",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "llm-trading-agent-security",
-   "skill_name": "llm-trading-agent-security",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "log",
-   "skill_name": "log_analyzer",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "logs",
-   "skill_name": "log_analyzer",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "parse log",
-   "skill_name": "log_analyzer",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "anomaly",
-   "skill_name": "log_analyzer",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "logistics-exception-management",
-   "skill_name": "logistics-exception-management",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "make-plan",
-   "skill_name": "make-plan",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "manim-video",
-   "skill_name": "manim-video",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "markdown",
-   "skill_name": "markdown_processor",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "md",
-   "skill_name": "markdown_processor",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "frontmatter",
-   "skill_name": "markdown_processor",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "anchor",
-   "skill_name": "markdown_processor",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "extract links",
-   "skill_name": "markdown_processor",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "market-research",
-   "skill_name": "market-research",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "mcp-server-patterns",
-   "skill_name": "mcp-server-patterns",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "mcp",
-   "skill_name": "mcp_manager",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "mcp server",
-   "skill_name": "mcp_manager",
-   "confidence": 0.6,
-   "match_type": "intent",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "install mcp",
-   "skill_name": "mcp_manager",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "mcp search",
-   "skill_name": "mcp_manager",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "mem-search",
-   "skill_name": "mem-search",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "mempalace",
-   "skill_name": "mempalace",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "memory",
-   "skill_name": "mempalace_manager",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "recall",
-   "skill_name": "mempalace_manager",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "remember",
-   "skill_name": "mempalace_manager",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "store",
-   "skill_name": "mempalace_manager",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "messages-ops",
-   "skill_name": "messages-ops",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "nanoclaw-repl",
-   "skill_name": "nanoclaw-repl",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "nestjs-patterns",
-   "skill_name": "nestjs-patterns",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "nextjs-turbopack",
-   "skill_name": "nextjs-turbopack",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "nodejs-keccak256",
-   "skill_name": "nodejs-keccak256",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "nutrient-document-processing",
-   "skill_name": "nutrient-document-processing",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "nuxt4-patterns",
-   "skill_name": "nuxt4-patterns",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "obsidian-bases",
-   "skill_name": "obsidian-bases",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "obsidian-cli",
-   "skill_name": "obsidian-cli",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "obsidian-markdown",
-   "skill_name": "obsidian-markdown",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "open-source-maintainer",
-   "skill_name": "open-source-maintainer",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "openclaw-persona-forge",
-   "skill_name": "openclaw-persona-forge",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "opensource-pipeline",
-   "skill_name": "opensource-pipeline",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "orchestration",
-   "skill_name": "orchestration",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "install",
-   "skill_name": "package_manager",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "uninstall",
-   "skill_name": "package_manager",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "package",
-   "skill_name": "package_manager",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "npm",
-   "skill_name": "package_manager",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "pip",
-   "skill_name": "package_manager",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "cargo",
-   "skill_name": "package_manager",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "brew",
-   "skill_name": "package_manager",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "apt",
-   "skill_name": "package_manager",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "perl-patterns",
-   "skill_name": "perl-patterns",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "perl-security",
-   "skill_name": "perl-security",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "perl-testing",
-   "skill_name": "perl-testing",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "plankton-code-quality",
-   "skill_name": "plankton-code-quality",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "postgres-patterns",
-   "skill_name": "postgres-patterns",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "product-capability",
-   "skill_name": "product-capability",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "product-lens",
-   "skill_name": "product-lens",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "production-scheduling",
-   "skill_name": "production-scheduling",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "project-flow-ops",
-   "skill_name": "project-flow-ops",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "project-guidelines-example",
-   "skill_name": "project-guidelines-example",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "analyze project",
-   "skill_name": "project_analyzer",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "detect stack",
-   "skill_name": "project_analyzer",
-   "confidence": 0.6,
-   "match_type": "intent",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "project context",
-   "skill_name": "project_analyzer",
-   "confidence": 0.6,
-   "match_type": "intent",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "prompt-optimizer",
-   "skill_name": "prompt-optimizer",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "python-patterns",
-   "skill_name": "python-patterns",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "python-testing",
-   "skill_name": "python-testing",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "pytorch-patterns",
-   "skill_name": "pytorch-patterns",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "quality-nonconformance",
-   "skill_name": "quality-nonconformance",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "ralphinho-rfc-pipeline",
-   "skill_name": "ralphinho-rfc-pipeline",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "receiving-code-review",
-   "skill_name": "receiving-code-review",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "regex-vs-llm-structured-text",
-   "skill_name": "regex-vs-llm-structured-text",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "remotion-video-creation",
-   "skill_name": "remotion-video-creation",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "repo-scan",
-   "skill_name": "repo-scan",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "requesting-code-review",
-   "skill_name": "requesting-code-review",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "research",
-   "skill_name": "research",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "deep research",
-   "skill_name": "research",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "investigate",
-   "skill_name": "research",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "look up",
-   "skill_name": "research",
-   "confidence": 0.6,
-   "match_type": "intent",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "research-ops",
-   "skill_name": "research-ops",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "returns-reverse-logistics",
-   "skill_name": "returns-reverse-logistics",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "rules-distill",
-   "skill_name": "rules-distill",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "new adapter",
-   "skill_name": "runtime_adapter_builder",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "runtime adapter",
-   "skill_name": "runtime_adapter_builder",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "adapter for",
-   "skill_name": "runtime_adapter_builder",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "rust-patterns",
-   "skill_name": "rust-patterns",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "rust-testing",
-   "skill_name": "rust-testing",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "safety-guard",
-   "skill_name": "safety-guard",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "santa-method",
-   "skill_name": "santa-method",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "search-first",
-   "skill_name": "search-first",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "secret",
-   "skill_name": "secrets_manager",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "credential",
-   "skill_name": "secrets_manager",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "env var",
-   "skill_name": "secrets_manager",
-   "confidence": 0.6,
-   "match_type": "intent",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "keychain",
-   "skill_name": "secrets_manager",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "vault",
-   "skill_name": "secrets_manager",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "security-bounty-hunter",
-   "skill_name": "security-bounty-hunter",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "security-review",
-   "skill_name": "security-review",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "security-scan",
-   "skill_name": "security-scan",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "seo",
-   "skill_name": "seo",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "shell",
-   "skill_name": "shell",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "bash",
-   "skill_name": "shell",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "run",
-   "skill_name": "shell",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "exec",
-   "skill_name": "shell",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "command",
-   "skill_name": "shell",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "skill-comply",
-   "skill_name": "skill-comply",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "skill discovery",
-   "skill_name": "skill-discovery",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "find a skill",
-   "skill_name": "skill-discovery",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "discover skill",
-   "skill_name": "skill-discovery",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "what skill can",
-   "skill_name": "skill-discovery",
-   "confidence": 0.6,
-   "match_type": "intent",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "skill for",
-   "skill_name": "skill-discovery",
-   "confidence": 0.6,
-   "match_type": "intent",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "how do I",
-   "skill_name": "skill-discovery",
-   "confidence": 0.6,
-   "match_type": "intent",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "can you help me with",
-   "skill_name": "skill-discovery",
-   "confidence": 0.65,
-   "match_type": "intent",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "new skill",
-   "skill_name": "skill_builder",
-   "confidence": 0.6,
-   "match_type": "intent",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "build skill",
-   "skill_name": "skill_builder",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "package skill",
-   "skill_name": "skill_builder",
-   "confidence": 0.6,
-   "match_type": "intent",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "zip skill",
-   "skill_name": "skill_builder",
-   "confidence": 0.6,
-   "match_type": "intent",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "install skill",
-   "skill_name": "skill_installer",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "register skill",
-   "skill_name": "skill_installer",
-   "confidence": 0.6,
-   "match_type": "intent",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "add skill",
-   "skill_name": "skill_installer",
-   "confidence": 0.6,
-   "match_type": "intent",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "smart-explore",
-   "skill_name": "smart-explore",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "social-graph-ranker",
-   "skill_name": "social-graph-ranker",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "springboot-patterns",
-   "skill_name": "springboot-patterns",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "springboot-security",
-   "skill_name": "springboot-security",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "springboot-tdd",
-   "skill_name": "springboot-tdd",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "springboot-verification",
-   "skill_name": "springboot-verification",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "strategic-compact",
-   "skill_name": "strategic-compact",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "subagent-driven-development",
-   "skill_name": "subagent-driven-development",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "swift-actor-persistence",
-   "skill_name": "swift-actor-persistence",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "swift-concurrency-6-2",
-   "skill_name": "swift-concurrency-6-2",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "swift-protocol-di-testing",
-   "skill_name": "swift-protocol-di-testing",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "swiftui-patterns",
-   "skill_name": "swiftui-patterns",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "systematic-debugging",
-   "skill_name": "systematic-debugging",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "tdd-workflow",
-   "skill_name": "tdd-workflow",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "team-builder",
-   "skill_name": "team-builder",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "terminal-ops",
-   "skill_name": "terminal-ops",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "test-driven-development",
-   "skill_name": "test-driven-development",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "test",
-   "skill_name": "test_runner",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "run tests",
-   "skill_name": "test_runner",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "pytest",
-   "skill_name": "test_runner",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "jest",
-   "skill_name": "test_runner",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "cargo test",
-   "skill_name": "test_runner",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "go test",
-   "skill_name": "test_runner",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "timeline-report",
-   "skill_name": "timeline-report",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "token-budget-advisor",
-   "skill_name": "token-budget-advisor",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "ui-demo",
-   "skill_name": "ui-demo",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "ui-ux-pro-max",
-   "skill_name": "ui-ux-pro-max",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "unified-notifications-ops",
-   "skill_name": "unified-notifications-ops",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "using-git-worktrees",
-   "skill_name": "using-git-worktrees",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "using-superpowers",
-   "skill_name": "using-superpowers",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "verification-before-completion",
-   "skill_name": "verification-before-completion",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "verification-loop",
-   "skill_name": "verification-loop",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "video-editing",
-   "skill_name": "video-editing",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "videodb",
-   "skill_name": "videodb",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "visa-doc-translate",
-   "skill_name": "visa-doc-translate",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "fetch",
-   "skill_name": "web_fetch",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "download",
-   "skill_name": "web_fetch",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "curl",
-   "skill_name": "web_fetch",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "get url",
-   "skill_name": "web_fetch",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "visit",
-   "skill_name": "web_fetch",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "search",
-   "skill_name": "web_search",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "web search",
-   "skill_name": "web_search",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "google",
-   "skill_name": "web_search",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "find online",
-   "skill_name": "web_search",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "workspace-surface-audit",
-   "skill_name": "workspace-surface-audit",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "writing-plans",
-   "skill_name": "writing-plans",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "writing-skills",
-   "skill_name": "writing-skills",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "x-api",
-   "skill_name": "x-api",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "zai-cli",
-   "skill_name": "zai-cli",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "run council",
-   "skill_name": "council_runner",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "council runner",
-   "skill_name": "council_runner",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "git diff",
-   "skill_name": "git",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "git log",
-   "skill_name": "git",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "manage mempalace",
-   "skill_name": "mempalace_manager",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "mempalace manager",
-   "skill_name": "mempalace_manager",
-   "confidence": 0.8,
-   "match_type": "functional",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "procedural audio",
-   "skill_name": "procedural-audio",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "soundscape",
-   "skill_name": "procedural-audio",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "create audio for this screen",
-   "skill_name": "procedural-audio",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "create the audio for this screen",
-   "skill_name": "procedural-audio",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "sound effect",
-   "skill_name": "procedural-audio",
-   "confidence": 0.95,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "sfx",
-   "skill_name": "procedural-audio",
-   "confidence": 0.95,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "synthesizer",
-   "skill_name": "procedural-audio",
-   "confidence": 0.9,
-   "match_type": "domain",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "dsp",
-   "skill_name": "procedural-audio",
-   "confidence": 0.85,
-   "match_type": "domain",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "generative music",
-   "skill_name": "procedural-audio",
-   "confidence": 0.95,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "adaptive audio",
-   "skill_name": "procedural-audio",
-   "confidence": 0.95,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "godot audio",
-   "skill_name": "procedural-audio",
-   "confidence": 0.95,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "audiostreamgenerator",
-   "skill_name": "procedural-audio",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "audio worklet",
-   "skill_name": "procedural-audio",
-   "confidence": 0.95,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "psychoacoustics",
-   "skill_name": "procedural-audio",
-   "confidence": 0.9,
-   "match_type": "domain",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "game audio",
-   "skill_name": "procedural-audio",
-   "confidence": 0.95,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "audio blueprint",
-   "skill_name": "procedural-audio",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "microtonality",
-   "skill_name": "procedural-audio",
-   "confidence": 0.9,
-   "match_type": "domain",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "spatial audio",
-   "skill_name": "procedural-audio",
-   "confidence": 0.95,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "ambisonics",
-   "skill_name": "procedural-audio",
-   "confidence": 0.95,
-   "match_type": "domain",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "raga",
-   "skill_name": "procedural-audio",
-   "confidence": 0.85,
-   "match_type": "domain",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "maqam",
-   "skill_name": "procedural-audio",
-   "confidence": 0.85,
-   "match_type": "domain",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "trigger": "image skin",
-   "skill_name": "hermes_image_skin",
-   "pattern": "agent-eval",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null,
-   "skill": "hermes_image_skin"
-  },
-  {
-   "trigger": "ascii banner",
-   "skill_name": "hermes_image_skin",
-   "pattern": "agent-eval",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null,
-   "skill": "hermes_image_skin"
-  },
-  {
-   "trigger": "skin from image",
-   "skill_name": "hermes_image_skin",
-   "pattern": "agent-eval",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null,
-   "skill": "hermes_image_skin"
-  },
-  {
-   "trigger": "banner art",
-   "skill_name": "hermes_image_skin",
-   "pattern": "agent-eval",
-   "confidence": 1.0,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null,
-   "skill": "hermes_image_skin"
-  },
-  {
-   "pattern": "image skin",
-   "skill_name": "hermes_image_skin",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "ascii banner",
-   "skill_name": "hermes_image_skin",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "skin from image",
-   "skill_name": "hermes_image_skin",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  },
-  {
-   "pattern": "banner art",
-   "skill_name": "hermes_image_skin",
-   "confidence": 0.9,
-   "match_type": "direct",
-   "hit_count": 0,
-   "last_hit": null
-  }
- ]
+  "schema": "trigger_registry/1.0",
+  "version": "1.0.0",
+  "updated": "2026-08-27",
+  "total_triggers": 449,
+  "triggers": [
+    {
+      "pattern": "agent-eval",
+      "skill_name": "agent-eval",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "agent-harness-construction",
+      "skill_name": "agent-harness-construction",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "agent-introspection-debugging",
+      "skill_name": "agent-introspection-debugging",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "agent-payment-x402",
+      "skill_name": "agent-payment-x402",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "agent-sort",
+      "skill_name": "agent-sort",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "agentic-engineering",
+      "skill_name": "agentic-engineering",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "ai-first-engineering",
+      "skill_name": "ai-first-engineering",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "ai-regression-testing",
+      "skill_name": "ai-regression-testing",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "android-clean-architecture",
+      "skill_name": "android-clean-architecture",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "api-connector-builder",
+      "skill_name": "api-connector-builder",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "api-design",
+      "skill_name": "api-design",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "api",
+      "skill_name": "api_client",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "http",
+      "skill_name": "api_client",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "rest",
+      "skill_name": "api_client",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "graphql",
+      "skill_name": "api_client",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "request",
+      "skill_name": "api_client",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "endpoint",
+      "skill_name": "api_client",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "architecture-decision-records",
+      "skill_name": "architecture-decision-records",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "zip",
+      "skill_name": "archive_manager",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "tar",
+      "skill_name": "archive_manager",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "archive",
+      "skill_name": "archive_manager",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "unzip",
+      "skill_name": "archive_manager",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "extract",
+      "skill_name": "archive_manager",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "article-writing",
+      "skill_name": "article-writing",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "automation-audit-ops",
+      "skill_name": "automation-audit-ops",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "autonomous-agent-harness",
+      "skill_name": "autonomous-agent-harness",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "autonomous-loops",
+      "skill_name": "autonomous-loops",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "backend-patterns",
+      "skill_name": "backend-patterns",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "benchmark",
+      "skill_name": "benchmark",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "blueprint",
+      "skill_name": "blueprint",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "brainstorming",
+      "skill_name": "brainstorming",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "brand-voice",
+      "skill_name": "brand-voice",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "browser-qa",
+      "skill_name": "browser-qa",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "bun-runtime",
+      "skill_name": "bun-runtime",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "canary-watch",
+      "skill_name": "canary-watch",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "carrier-relationship-management",
+      "skill_name": "carrier-relationship-management",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "ci",
+      "skill_name": "cicd_integration",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "cd",
+      "skill_name": "cicd_integration",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "pipeline",
+      "skill_name": "cicd_integration",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "github actions",
+      "skill_name": "cicd_integration",
+      "confidence": 0.7,
+      "match_type": "domain",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "gitlab ci",
+      "skill_name": "cicd_integration",
+      "confidence": 0.7,
+      "match_type": "domain",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "circle",
+      "skill_name": "cicd_integration",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "ck",
+      "skill_name": "ck",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "ckm-banner-design",
+      "skill_name": "ckm-banner-design",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "ckm-brand",
+      "skill_name": "ckm-brand",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "ckm-design",
+      "skill_name": "ckm-design",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "ckm-design-system",
+      "skill_name": "ckm-design-system",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "ckm-slides",
+      "skill_name": "ckm-slides",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "ckm-ui-styling",
+      "skill_name": "ckm-ui-styling",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "claude-api",
+      "skill_name": "claude-api",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "claude-code-plugin-release",
+      "skill_name": "claude-code-plugin-release",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "claude-devfleet",
+      "skill_name": "claude-devfleet",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "click-path-audit",
+      "skill_name": "click-path-audit",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "clickhouse-io",
+      "skill_name": "clickhouse-io",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "code-tour",
+      "skill_name": "code-tour",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "analyze",
+      "skill_name": "code_analysis",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "understand",
+      "skill_name": "code_analysis",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "trace",
+      "skill_name": "code_analysis",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "symbol",
+      "skill_name": "code_analysis",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "architecture",
+      "skill_name": "code_analysis",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "code map",
+      "skill_name": "code_analysis",
+      "confidence": 0.6,
+      "match_type": "intent",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "generate code",
+      "skill_name": "code_generation",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "scaffold",
+      "skill_name": "code_generation",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "implement",
+      "skill_name": "code_generation",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "write function",
+      "skill_name": "code_generation",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "write class",
+      "skill_name": "code_generation",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "review",
+      "skill_name": "code_review",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "audit code",
+      "skill_name": "code_review",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "quality",
+      "skill_name": "code_review",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "lint suggestions",
+      "skill_name": "code_review",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "codebase-onboarding",
+      "skill_name": "codebase-onboarding",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "coding-standards",
+      "skill_name": "coding-standards",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "compose-multiplatform-patterns",
+      "skill_name": "compose-multiplatform-patterns",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "configure-ecc",
+      "skill_name": "configure-ecc",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "connections-optimizer",
+      "skill_name": "connections-optimizer",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "content-engine",
+      "skill_name": "content-engine",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "content-hash-cache-pattern",
+      "skill_name": "content-hash-cache-pattern",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "context-budget",
+      "skill_name": "context-budget",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "summarize",
+      "skill_name": "context_summarizer",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "compress context",
+      "skill_name": "context_summarizer",
+      "confidence": 0.6,
+      "match_type": "intent",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "aaak",
+      "skill_name": "context_summarizer",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "continuous-agent-loop",
+      "skill_name": "continuous-agent-loop",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "continuous-learning",
+      "skill_name": "continuous-learning",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "continuous-learning-v2",
+      "skill_name": "continuous-learning-v2",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "convoy",
+      "skill_name": "convoy-orchestration",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "multi-agent",
+      "skill_name": "convoy-orchestration",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "parallel work",
+      "skill_name": "convoy-orchestration",
+      "confidence": 0.6,
+      "match_type": "intent",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "distribute tasks",
+      "skill_name": "convoy-orchestration",
+      "confidence": 0.6,
+      "match_type": "intent",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "agent coordination",
+      "skill_name": "convoy-orchestration",
+      "confidence": 0.6,
+      "match_type": "intent",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "sling work",
+      "skill_name": "convoy-orchestration",
+      "confidence": 0.6,
+      "match_type": "intent",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "work tracking",
+      "skill_name": "convoy-orchestration",
+      "confidence": 0.6,
+      "match_type": "intent",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "scale up",
+      "skill_name": "convoy-orchestration",
+      "confidence": 0.6,
+      "match_type": "intent",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "cost-aware-llm-pipeline",
+      "skill_name": "cost-aware-llm-pipeline",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "council",
+      "skill_name": "council",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "vote",
+      "skill_name": "council_runner",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "deliberate",
+      "skill_name": "council_runner",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "review artifact",
+      "skill_name": "council_runner",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "cpp-coding-standards",
+      "skill_name": "cpp-coding-standards",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "cpp-testing",
+      "skill_name": "cpp-testing",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "crosspost",
+      "skill_name": "crosspost",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "csharp-testing",
+      "skill_name": "csharp-testing",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "customer-billing-ops",
+      "skill_name": "customer-billing-ops",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "customs-trade-compliance",
+      "skill_name": "customs-trade-compliance",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "dart-flutter-patterns",
+      "skill_name": "dart-flutter-patterns",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "dashboard-builder",
+      "skill_name": "dashboard-builder",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "data-scraper-agent",
+      "skill_name": "data-scraper-agent",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "database-migrations",
+      "skill_name": "database-migrations",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "sql",
+      "skill_name": "database_client",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "query",
+      "skill_name": "database_client",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "database",
+      "skill_name": "database_client",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "db",
+      "skill_name": "database_client",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "select",
+      "skill_name": "database_client",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "migration",
+      "skill_name": "database_client",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "deep-research",
+      "skill_name": "deep-research",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "defi-amm-security",
+      "skill_name": "defi-amm-security",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "defuddle",
+      "skill_name": "defuddle",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "audit deps",
+      "skill_name": "dependency_audit",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "cve",
+      "skill_name": "dependency_audit",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "vulnerability",
+      "skill_name": "dependency_audit",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "outdated",
+      "skill_name": "dependency_audit",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "deployment-patterns",
+      "skill_name": "deployment-patterns",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "design-system",
+      "skill_name": "design-system",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "dev-browser",
+      "skill_name": "dev-browser",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "diff",
+      "skill_name": "diff_patch",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "patch",
+      "skill_name": "diff_patch",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "apply patch",
+      "skill_name": "diff_patch",
+      "confidence": 0.6,
+      "match_type": "intent",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "hunk",
+      "skill_name": "diff_patch",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "dispatching-parallel-agents",
+      "skill_name": "dispatching-parallel-agents",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "django-patterns",
+      "skill_name": "django-patterns",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "django-security",
+      "skill_name": "django-security",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "django-tdd",
+      "skill_name": "django-tdd",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "django-verification",
+      "skill_name": "django-verification",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "dmux-workflows",
+      "skill_name": "dmux-workflows",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "do",
+      "skill_name": "do",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "docker",
+      "skill_name": "docker",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "container",
+      "skill_name": "docker",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "compose",
+      "skill_name": "docker",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "podman",
+      "skill_name": "docker",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "docker-patterns",
+      "skill_name": "docker-patterns",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "readme",
+      "skill_name": "documentation",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "document",
+      "skill_name": "documentation",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "docs",
+      "skill_name": "documentation",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "changelog",
+      "skill_name": "documentation",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "api docs",
+      "skill_name": "documentation",
+      "confidence": 0.7,
+      "match_type": "domain",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "documentation-lookup",
+      "skill_name": "documentation-lookup",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "dotnet-patterns",
+      "skill_name": "dotnet-patterns",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "e2e-testing",
+      "skill_name": "e2e-testing",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "ecc-tools-cost-audit",
+      "skill_name": "ecc-tools-cost-audit",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "email-ops",
+      "skill_name": "email-ops",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "energy-procurement",
+      "skill_name": "energy-procurement",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "enterprise-agent-ops",
+      "skill_name": "enterprise-agent-ops",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "detect environment",
+      "skill_name": "environment_detection",
+      "confidence": 0.6,
+      "match_type": "intent",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "env info",
+      "skill_name": "environment_detection",
+      "confidence": 0.6,
+      "match_type": "intent",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "os",
+      "skill_name": "environment_detection",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "runtime version",
+      "skill_name": "environment_detection",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "eval-harness",
+      "skill_name": "eval-harness",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "everything-claude-code-conventions",
+      "skill_name": "everything-claude-code-conventions",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "evm-token-decimals",
+      "skill_name": "evm-token-decimals",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "exa-search",
+      "skill_name": "exa-search",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "executing-plans",
+      "skill_name": "executing-plans",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "fal-ai-media",
+      "skill_name": "fal-ai-media",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "read",
+      "skill_name": "filesystem",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "write",
+      "skill_name": "filesystem",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "edit",
+      "skill_name": "filesystem",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "cat",
+      "skill_name": "filesystem",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "ls",
+      "skill_name": "filesystem",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "find",
+      "skill_name": "filesystem",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "stat",
+      "skill_name": "filesystem",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "move",
+      "skill_name": "filesystem",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "copy",
+      "skill_name": "filesystem",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "delete",
+      "skill_name": "filesystem",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "file",
+      "skill_name": "filesystem",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "finance-billing-ops",
+      "skill_name": "finance-billing-ops",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "find-skills",
+      "skill_name": "find-skills",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "finishing-a-development-branch",
+      "skill_name": "finishing-a-development-branch",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "flutter-dart-code-review",
+      "skill_name": "flutter-dart-code-review",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "foundation-models-on-device",
+      "skill_name": "foundation-models-on-device",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "frontend-design",
+      "skill_name": "frontend-design",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "frontend-patterns",
+      "skill_name": "frontend-patterns",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "frontend-slides",
+      "skill_name": "frontend-slides",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "gan-style-harness",
+      "skill_name": "gan-style-harness",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "gastown",
+      "skill_name": "gastown",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "git",
+      "skill_name": "git",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "commit",
+      "skill_name": "git",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "branch",
+      "skill_name": "git",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "revert",
+      "skill_name": "git",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "stash",
+      "skill_name": "git",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "git-workflow",
+      "skill_name": "git-workflow",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "github-ops",
+      "skill_name": "github-ops",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "golang-patterns",
+      "skill_name": "golang-patterns",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "golang-testing",
+      "skill_name": "golang-testing",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "google-workspace-ops",
+      "skill_name": "google-workspace-ops",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "gsap-core",
+      "skill_name": "gsap-core",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "gsap-frameworks",
+      "skill_name": "gsap-frameworks",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "gsap-performance",
+      "skill_name": "gsap-performance",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "gsap-plugins",
+      "skill_name": "gsap-plugins",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "gsap-react",
+      "skill_name": "gsap-react",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "gsap-scrolltrigger",
+      "skill_name": "gsap-scrolltrigger",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "gsap-timeline",
+      "skill_name": "gsap-timeline",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "gsap-utils",
+      "skill_name": "gsap-utils",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "gsd-orchestrator",
+      "skill_name": "gsd-orchestrator",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "healthcare-cdss-patterns",
+      "skill_name": "healthcare-cdss-patterns",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "healthcare-emr-patterns",
+      "skill_name": "healthcare-emr-patterns",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "healthcare-eval-harness",
+      "skill_name": "healthcare-eval-harness",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "healthcare-phi-compliance",
+      "skill_name": "healthcare-phi-compliance",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "hexagonal-architecture",
+      "skill_name": "hexagonal-architecture",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "hipaa-compliance",
+      "skill_name": "hipaa-compliance",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "hookify-rules",
+      "skill_name": "hookify-rules",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "inventory-demand-planning",
+      "skill_name": "inventory-demand-planning",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "investor-materials",
+      "skill_name": "investor-materials",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "investor-outreach",
+      "skill_name": "investor-outreach",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "iterative-retrieval",
+      "skill_name": "iterative-retrieval",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "java-coding-standards",
+      "skill_name": "java-coding-standards",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "jira-integration",
+      "skill_name": "jira-integration",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "jpa-patterns",
+      "skill_name": "jpa-patterns",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "json-canvas",
+      "skill_name": "json-canvas",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "json",
+      "skill_name": "json_yaml_toml_parser",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "yaml",
+      "skill_name": "json_yaml_toml_parser",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "toml",
+      "skill_name": "json_yaml_toml_parser",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "parse",
+      "skill_name": "json_yaml_toml_parser",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "config",
+      "skill_name": "json_yaml_toml_parser",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "knowledge-ops",
+      "skill_name": "knowledge-ops",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "kotlin-coroutines-flows",
+      "skill_name": "kotlin-coroutines-flows",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "kotlin-exposed-patterns",
+      "skill_name": "kotlin-exposed-patterns",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "kotlin-ktor-patterns",
+      "skill_name": "kotlin-ktor-patterns",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "kotlin-patterns",
+      "skill_name": "kotlin-patterns",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "kotlin-testing",
+      "skill_name": "kotlin-testing",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "laravel-patterns",
+      "skill_name": "laravel-patterns",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "laravel-plugin-discovery",
+      "skill_name": "laravel-plugin-discovery",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "laravel-security",
+      "skill_name": "laravel-security",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "laravel-tdd",
+      "skill_name": "laravel-tdd",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "laravel-verification",
+      "skill_name": "laravel-verification",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "lead-intelligence",
+      "skill_name": "lead-intelligence",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "lint",
+      "skill_name": "linter_formatter",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "format",
+      "skill_name": "linter_formatter",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "prettier",
+      "skill_name": "linter_formatter",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "eslint",
+      "skill_name": "linter_formatter",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "rustfmt",
+      "skill_name": "linter_formatter",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "black",
+      "skill_name": "linter_formatter",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "gofmt",
+      "skill_name": "linter_formatter",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "liquid-glass-design",
+      "skill_name": "liquid-glass-design",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "llm-trading-agent-security",
+      "skill_name": "llm-trading-agent-security",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "log",
+      "skill_name": "log_analyzer",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "logs",
+      "skill_name": "log_analyzer",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "parse log",
+      "skill_name": "log_analyzer",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "anomaly",
+      "skill_name": "log_analyzer",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "logistics-exception-management",
+      "skill_name": "logistics-exception-management",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "make-plan",
+      "skill_name": "make-plan",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "manim-video",
+      "skill_name": "manim-video",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "markdown",
+      "skill_name": "markdown_processor",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "md",
+      "skill_name": "markdown_processor",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "frontmatter",
+      "skill_name": "markdown_processor",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "anchor",
+      "skill_name": "markdown_processor",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "extract links",
+      "skill_name": "markdown_processor",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "market-research",
+      "skill_name": "market-research",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "mcp-server-patterns",
+      "skill_name": "mcp-server-patterns",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "mcp",
+      "skill_name": "mcp_manager",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "mcp server",
+      "skill_name": "mcp_manager",
+      "confidence": 0.6,
+      "match_type": "intent",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "install mcp",
+      "skill_name": "mcp_manager",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "mcp search",
+      "skill_name": "mcp_manager",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "mem-search",
+      "skill_name": "mem-search",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "mempalace",
+      "skill_name": "mempalace",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "memory",
+      "skill_name": "mempalace_manager",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "recall",
+      "skill_name": "mempalace_manager",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "remember",
+      "skill_name": "mempalace_manager",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "store",
+      "skill_name": "mempalace_manager",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "messages-ops",
+      "skill_name": "messages-ops",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "nanoclaw-repl",
+      "skill_name": "nanoclaw-repl",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "nestjs-patterns",
+      "skill_name": "nestjs-patterns",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "nextjs-turbopack",
+      "skill_name": "nextjs-turbopack",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "nodejs-keccak256",
+      "skill_name": "nodejs-keccak256",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "nutrient-document-processing",
+      "skill_name": "nutrient-document-processing",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "nuxt4-patterns",
+      "skill_name": "nuxt4-patterns",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "obsidian-bases",
+      "skill_name": "obsidian-bases",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "obsidian-cli",
+      "skill_name": "obsidian-cli",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "obsidian-markdown",
+      "skill_name": "obsidian-markdown",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "open-source-maintainer",
+      "skill_name": "open-source-maintainer",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "openclaw-persona-forge",
+      "skill_name": "openclaw-persona-forge",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "opensource-pipeline",
+      "skill_name": "opensource-pipeline",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "orchestration",
+      "skill_name": "orchestration",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "install",
+      "skill_name": "package_manager",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "uninstall",
+      "skill_name": "package_manager",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "package",
+      "skill_name": "package_manager",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "npm",
+      "skill_name": "package_manager",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "pip",
+      "skill_name": "package_manager",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "cargo",
+      "skill_name": "package_manager",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "brew",
+      "skill_name": "package_manager",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "apt",
+      "skill_name": "package_manager",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "perl-patterns",
+      "skill_name": "perl-patterns",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "perl-security",
+      "skill_name": "perl-security",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "perl-testing",
+      "skill_name": "perl-testing",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "plankton-code-quality",
+      "skill_name": "plankton-code-quality",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "postgres-patterns",
+      "skill_name": "postgres-patterns",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "product-capability",
+      "skill_name": "product-capability",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "product-lens",
+      "skill_name": "product-lens",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "production-scheduling",
+      "skill_name": "production-scheduling",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "project-flow-ops",
+      "skill_name": "project-flow-ops",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "project-guidelines-example",
+      "skill_name": "project-guidelines-example",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "analyze project",
+      "skill_name": "project_analyzer",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "detect stack",
+      "skill_name": "project_analyzer",
+      "confidence": 0.6,
+      "match_type": "intent",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "project context",
+      "skill_name": "project_analyzer",
+      "confidence": 0.6,
+      "match_type": "intent",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "prompt-optimizer",
+      "skill_name": "prompt-optimizer",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "python-patterns",
+      "skill_name": "python-patterns",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "python-testing",
+      "skill_name": "python-testing",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "pytorch-patterns",
+      "skill_name": "pytorch-patterns",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "quality-nonconformance",
+      "skill_name": "quality-nonconformance",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "ralphinho-rfc-pipeline",
+      "skill_name": "ralphinho-rfc-pipeline",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "receiving-code-review",
+      "skill_name": "receiving-code-review",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "regex-vs-llm-structured-text",
+      "skill_name": "regex-vs-llm-structured-text",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "remotion-video-creation",
+      "skill_name": "remotion-video-creation",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "repo-scan",
+      "skill_name": "repo-scan",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "requesting-code-review",
+      "skill_name": "requesting-code-review",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "research",
+      "skill_name": "research",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "deep research",
+      "skill_name": "research",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "investigate",
+      "skill_name": "research",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "look up",
+      "skill_name": "research",
+      "confidence": 0.6,
+      "match_type": "intent",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "research-ops",
+      "skill_name": "research-ops",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "returns-reverse-logistics",
+      "skill_name": "returns-reverse-logistics",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "rules-distill",
+      "skill_name": "rules-distill",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "new adapter",
+      "skill_name": "runtime_adapter_builder",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "runtime adapter",
+      "skill_name": "runtime_adapter_builder",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "adapter for",
+      "skill_name": "runtime_adapter_builder",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "rust-patterns",
+      "skill_name": "rust-patterns",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "rust-testing",
+      "skill_name": "rust-testing",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "safety-guard",
+      "skill_name": "safety-guard",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "santa-method",
+      "skill_name": "santa-method",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "search-first",
+      "skill_name": "search-first",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "secret",
+      "skill_name": "secrets_manager",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "credential",
+      "skill_name": "secrets_manager",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "env var",
+      "skill_name": "secrets_manager",
+      "confidence": 0.6,
+      "match_type": "intent",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "keychain",
+      "skill_name": "secrets_manager",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "vault",
+      "skill_name": "secrets_manager",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "security-bounty-hunter",
+      "skill_name": "security-bounty-hunter",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "security-review",
+      "skill_name": "security-review",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "security-scan",
+      "skill_name": "security-scan",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "seo",
+      "skill_name": "seo",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "shell",
+      "skill_name": "shell",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "bash",
+      "skill_name": "shell",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "run",
+      "skill_name": "shell",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "exec",
+      "skill_name": "shell",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "command",
+      "skill_name": "shell",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "skill-comply",
+      "skill_name": "skill-comply",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "skill discovery",
+      "skill_name": "skill-discovery",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "find a skill",
+      "skill_name": "skill-discovery",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "discover skill",
+      "skill_name": "skill-discovery",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "what skill can",
+      "skill_name": "skill-discovery",
+      "confidence": 0.6,
+      "match_type": "intent",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "skill for",
+      "skill_name": "skill-discovery",
+      "confidence": 0.6,
+      "match_type": "intent",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "how do I",
+      "skill_name": "skill-discovery",
+      "confidence": 0.6,
+      "match_type": "intent",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "can you help me with",
+      "skill_name": "skill-discovery",
+      "confidence": 0.65,
+      "match_type": "intent",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "new skill",
+      "skill_name": "skill_builder",
+      "confidence": 0.6,
+      "match_type": "intent",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "build skill",
+      "skill_name": "skill_builder",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "package skill",
+      "skill_name": "skill_builder",
+      "confidence": 0.6,
+      "match_type": "intent",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "zip skill",
+      "skill_name": "skill_builder",
+      "confidence": 0.6,
+      "match_type": "intent",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "install skill",
+      "skill_name": "skill_installer",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "register skill",
+      "skill_name": "skill_installer",
+      "confidence": 0.6,
+      "match_type": "intent",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "add skill",
+      "skill_name": "skill_installer",
+      "confidence": 0.6,
+      "match_type": "intent",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "smart-explore",
+      "skill_name": "smart-explore",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "social-graph-ranker",
+      "skill_name": "social-graph-ranker",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "springboot-patterns",
+      "skill_name": "springboot-patterns",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "springboot-security",
+      "skill_name": "springboot-security",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "springboot-tdd",
+      "skill_name": "springboot-tdd",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "springboot-verification",
+      "skill_name": "springboot-verification",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "strategic-compact",
+      "skill_name": "strategic-compact",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "subagent-driven-development",
+      "skill_name": "subagent-driven-development",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "swift-actor-persistence",
+      "skill_name": "swift-actor-persistence",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "swift-concurrency-6-2",
+      "skill_name": "swift-concurrency-6-2",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "swift-protocol-di-testing",
+      "skill_name": "swift-protocol-di-testing",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "swiftui-patterns",
+      "skill_name": "swiftui-patterns",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "systematic-debugging",
+      "skill_name": "systematic-debugging",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "tdd-workflow",
+      "skill_name": "tdd-workflow",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "team-builder",
+      "skill_name": "team-builder",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "terminal-ops",
+      "skill_name": "terminal-ops",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "test-driven-development",
+      "skill_name": "test-driven-development",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "test",
+      "skill_name": "test_runner",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "run tests",
+      "skill_name": "test_runner",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "pytest",
+      "skill_name": "test_runner",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "jest",
+      "skill_name": "test_runner",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "cargo test",
+      "skill_name": "test_runner",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "go test",
+      "skill_name": "test_runner",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "timeline-report",
+      "skill_name": "timeline-report",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "token-budget-advisor",
+      "skill_name": "token-budget-advisor",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "ui-demo",
+      "skill_name": "ui-demo",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "ui-ux-pro-max",
+      "skill_name": "ui-ux-pro-max",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "unified-notifications-ops",
+      "skill_name": "unified-notifications-ops",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "using-git-worktrees",
+      "skill_name": "using-git-worktrees",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "using-superpowers",
+      "skill_name": "using-superpowers",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "verification-before-completion",
+      "skill_name": "verification-before-completion",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "verification-loop",
+      "skill_name": "verification-loop",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "video-editing",
+      "skill_name": "video-editing",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "videodb",
+      "skill_name": "videodb",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "visa-doc-translate",
+      "skill_name": "visa-doc-translate",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "fetch",
+      "skill_name": "web_fetch",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "download",
+      "skill_name": "web_fetch",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "curl",
+      "skill_name": "web_fetch",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "get url",
+      "skill_name": "web_fetch",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "visit",
+      "skill_name": "web_fetch",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "search",
+      "skill_name": "web_search",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "web search",
+      "skill_name": "web_search",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "google",
+      "skill_name": "web_search",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "find online",
+      "skill_name": "web_search",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "workspace-surface-audit",
+      "skill_name": "workspace-surface-audit",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "writing-plans",
+      "skill_name": "writing-plans",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "writing-skills",
+      "skill_name": "writing-skills",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "x-api",
+      "skill_name": "x-api",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "zai-cli",
+      "skill_name": "zai-cli",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "run council",
+      "skill_name": "council_runner",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "council runner",
+      "skill_name": "council_runner",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "git diff",
+      "skill_name": "git",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "git log",
+      "skill_name": "git",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "manage mempalace",
+      "skill_name": "mempalace_manager",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "mempalace manager",
+      "skill_name": "mempalace_manager",
+      "confidence": 0.8,
+      "match_type": "functional",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "procedural audio",
+      "skill_name": "procedural-audio",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "soundscape",
+      "skill_name": "procedural-audio",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "create audio for this screen",
+      "skill_name": "procedural-audio",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "create the audio for this screen",
+      "skill_name": "procedural-audio",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "sound effect",
+      "skill_name": "procedural-audio",
+      "confidence": 0.95,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "sfx",
+      "skill_name": "procedural-audio",
+      "confidence": 0.95,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "synthesizer",
+      "skill_name": "procedural-audio",
+      "confidence": 0.9,
+      "match_type": "domain",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "dsp",
+      "skill_name": "procedural-audio",
+      "confidence": 0.85,
+      "match_type": "domain",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "generative music",
+      "skill_name": "procedural-audio",
+      "confidence": 0.95,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "adaptive audio",
+      "skill_name": "procedural-audio",
+      "confidence": 0.95,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "godot audio",
+      "skill_name": "procedural-audio",
+      "confidence": 0.95,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "audiostreamgenerator",
+      "skill_name": "procedural-audio",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "audio worklet",
+      "skill_name": "procedural-audio",
+      "confidence": 0.95,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "psychoacoustics",
+      "skill_name": "procedural-audio",
+      "confidence": 0.9,
+      "match_type": "domain",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "game audio",
+      "skill_name": "procedural-audio",
+      "confidence": 0.95,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "audio blueprint",
+      "skill_name": "procedural-audio",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "microtonality",
+      "skill_name": "procedural-audio",
+      "confidence": 0.9,
+      "match_type": "domain",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "spatial audio",
+      "skill_name": "procedural-audio",
+      "confidence": 0.95,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "ambisonics",
+      "skill_name": "procedural-audio",
+      "confidence": 0.95,
+      "match_type": "domain",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "raga",
+      "skill_name": "procedural-audio",
+      "confidence": 0.85,
+      "match_type": "domain",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "maqam",
+      "skill_name": "procedural-audio",
+      "confidence": 0.85,
+      "match_type": "domain",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "trigger": "image skin",
+      "skill_name": "hermes_image_skin",
+      "pattern": "agent-eval",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null,
+      "skill": "hermes_image_skin"
+    },
+    {
+      "trigger": "ascii banner",
+      "skill_name": "hermes_image_skin",
+      "pattern": "agent-eval",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null,
+      "skill": "hermes_image_skin"
+    },
+    {
+      "trigger": "skin from image",
+      "skill_name": "hermes_image_skin",
+      "pattern": "agent-eval",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null,
+      "skill": "hermes_image_skin"
+    },
+    {
+      "trigger": "banner art",
+      "skill_name": "hermes_image_skin",
+      "pattern": "agent-eval",
+      "confidence": 1.0,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null,
+      "skill": "hermes_image_skin"
+    },
+    {
+      "pattern": "image skin",
+      "skill_name": "hermes_image_skin",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "ascii banner",
+      "skill_name": "hermes_image_skin",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "skin from image",
+      "skill_name": "hermes_image_skin",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "banner art",
+      "skill_name": "hermes_image_skin",
+      "confidence": 0.9,
+      "match_type": "direct",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "make a game",
+      "skill_name": "godogen",
+      "confidence": 0.9,
+      "match_type": "phrase",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "build a game",
+      "skill_name": "godogen",
+      "confidence": 0.9,
+      "match_type": "phrase",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "generate a game",
+      "skill_name": "godogen",
+      "confidence": 0.9,
+      "match_type": "phrase",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "game from description",
+      "skill_name": "godogen",
+      "confidence": 0.9,
+      "match_type": "phrase",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "godot game",
+      "skill_name": "godogen",
+      "confidence": 0.9,
+      "match_type": "phrase",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "bevy game",
+      "skill_name": "godogen",
+      "confidence": 0.9,
+      "match_type": "phrase",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "babylon game",
+      "skill_name": "godogen",
+      "confidence": 0.9,
+      "match_type": "phrase",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "game pipeline",
+      "skill_name": "godogen",
+      "confidence": 0.9,
+      "match_type": "phrase",
+      "hit_count": 0,
+      "last_hit": null
+    },
+    {
+      "pattern": "autonomous game dev",
+      "skill_name": "godogen",
+      "confidence": 0.9,
+      "match_type": "phrase",
+      "hit_count": 0,
+      "last_hit": null
+    }
+  ]
 }
