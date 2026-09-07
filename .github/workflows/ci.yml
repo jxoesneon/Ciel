@@ -93,7 +93,7 @@ jobs:
       - uses: actions/checkout@v6
       - name: Install shfmt
         run: |
-          curl -fsSL -o /tmp/shfmt https://github.com/mvdan/sh/releases/latest/download/shfmt_v3.13.1_linux_amd64
+          curl -fsSL -o /tmp/shfmt https://github.com/mvdan/sh/releases/download/v3.14.1/shfmt_v3.14.1_linux_amd64
           chmod +x /tmp/shfmt
           sudo mv /tmp/shfmt /usr/local/bin/shfmt
       - name: shfmt diff check
