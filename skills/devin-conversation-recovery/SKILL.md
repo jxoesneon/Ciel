@@ -27,7 +27,7 @@ This skill locates and extracts past Devin CLI/ACP conversations from local SQLi
 
 ## Quick Path: Helper Script
 
-```
+```bash
 python ~/.ciel/skills/devin-conversation-recovery/scripts/find_devin_convo.py --list
 python .../find_devin_convo.py "blender-mcp"          # titles + first messages
 python .../find_devin_convo.py "search text" --deep   # grep ALL payloads (slow)

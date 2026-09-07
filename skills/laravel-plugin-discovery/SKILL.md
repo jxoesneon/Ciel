@@ -58,7 +58,7 @@ Fetch detailed metrics, readme content, and version history.
 ## Health Bands
 
 | Band | Meaning |
-|------|---------|
+| ------ | --------- |
 | `Healthy` | Active maintenance, recent updates |
 | `Medium` | Occasional updates, may need attention |
 | `Unhealthy` | Abandoned or infrequently maintained |

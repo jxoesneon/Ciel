@@ -21,7 +21,7 @@ This skill formalizes the *token layer* of a design system — the `ui-ux-design
 
 ## The Three-Layer Model
 
-```
+```text
 Component   (--button-bg, --card-padding)      per-component overrides
    ↑ refs
 Semantic    (--color-primary, --spacing-section) purpose-based aliases
@@ -51,7 +51,7 @@ Primitive   (--color-blue-600, --space-4)       raw design values
 
 ## Token Naming
 
-```
+```text
 --{category}-{item}[-{variant}][-{state}]
 --color-primary              # category-item
 --color-primary-hover        # category-item-state

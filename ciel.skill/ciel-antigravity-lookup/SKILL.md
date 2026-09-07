@@ -63,24 +63,30 @@ them, so always glob `~/.gemini/antigravity*/conversations/`.
 All ops are plain shell; run from any cwd.
 
 ### 1. Find a conversation file by exact UUID
+
 ```bash
 ls ~/.gemini/antigravity*/conversations/ | grep -i "<uuid-prefix>"
 ```
 
 ### 2. Search ALL conversations by keyword
+
 Filenames are opaque UUIDs, so sweep the files themselves. SQLite payloads are mostly
 uncompressed, so plain `grep -li` is a fast first pass:
+
 ```bash
 grep -li "monster hunter" ~/.gemini/antigravity*/conversations/*.db
 ```
 
 ### 3. Read one conversation's clean transcript (preferred)
+
 ```bash
 less "$HOME/.gemini/antigravity/brain/<UUID>/.system_generated/logs/transcript.jsonl"
 ```
+
 Each line is JSON: `{"step_index","type","created_at","content",...}` with types
 `USER_INPUT` / `GENERIC` (tool+model output) / `PLANNER_RESPONSE` / `SYSTEM_MESSAGE`.
 Extract just the user prompts:
+
 ```bash
 python3 -c "
 import json,sys
@@ -93,6 +99,7 @@ for l in open(sys.argv[1], errors='ignore'):
 ```
 
 ### 4. Read the raw `.db` when no brain dir exists
+
 ```bash
 sqlite3 -readonly "$HOME/.gemini/antigravity/conversations/<UUID>.db" \
   "SELECT idx, step_type, length(step_payload) FROM steps ORDER BY idx LIMIT 20;"
@@ -106,10 +113,12 @@ for idx,st,p in con.execute('SELECT idx,step_type,step_payload FROM steps ORDER 
             print(idx, st, m.decode()[:200])
 " "$HOME/.gemini/antigravity/conversations/<UUID>.db"
 ```
+
 Schema reference: tables `steps` (idx, step_type, status, step_payload, step_format),
 `gen_metadata`, `executor_metadata`, `trajectory_meta`, `trajectory_metadata_blob`.
 
 ### 5. Cross-reference the sidebar index (find chats invisible in the UI)
+
 ```bash
 cp "$HOME/Library/Application Support/Antigravity/User/globalStorage/state.vscdb" /tmp/ag.vscdb
 sqlite3 /tmp/ag.vscdb "SELECT key, length(value) FROM ItemTable WHERE key LIKE '%trajectory%' OR key LIKE '%Chat%';"
