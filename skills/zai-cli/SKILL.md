@@ -26,12 +26,12 @@ This skill provides access to Z.AI capabilities via `npx zai-cli` — a self-doc
 export Z_AI_API_KEY="your-api-key"
 ```
 
-Get a key at: https://z.ai/manage-apikey/apikey-list
+Get a key at: <https://z.ai/manage-apikey/apikey-list>
 
 ## Commands
 
 | Command | Purpose |
-|---------|---------|
+| --------- | --------- |
 | `vision` | Analyze images, screenshots, videos (8 subcommands) |
 | `search` | Real-time web search with domain/recency filtering |
 | `read` | Fetch web pages as markdown |

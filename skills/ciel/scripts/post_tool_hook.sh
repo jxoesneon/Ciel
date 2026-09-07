@@ -12,8 +12,8 @@ echo "[CIEL POST-HOOK] Tool completed:  with exit code "
 # Update activity log if workspace exists
 ACTIVITY_DIR=".ciel"
 if [ -d "" ]; then
-    TIMESTAMP="2026-08-19T15:08:05Z"
-    echo "{"timestamp": "", "tool": "", "status": "success"}" >> "/activity.log"
+  TIMESTAMP="2026-08-19T15:08:05Z"
+  echo "{"timestamp": "", "tool": "", "status": "success"}" >>"/activity.log"
 fi
 
 exit 0

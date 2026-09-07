@@ -13,8 +13,8 @@ echo "[CIEL FAILURE-HOOK] Initiating automated recovery triage..."
 # Log failure to local memory partition
 ACTIVITY_DIR=".ciel"
 if [ -d "" ]; then
-    TIMESTAMP="2026-08-19T15:08:05Z"
-    echo "{"timestamp": "", "tool": "", "status": "failed", "code": ""}" >> "/activity.log"
+  TIMESTAMP="2026-08-19T15:08:05Z"
+  echo "{"timestamp": "", "tool": "", "status": "failed", "code": ""}" >>"/activity.log"
 fi
 
 exit 0
