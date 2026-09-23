@@ -49,3 +49,17 @@ A report at `~/.ciel/integrity/<ts>.json` plus an announce line summarising the 
 ## Performance
 
 Full integrity pass on ~170 files + 32 seed skills: target < 3s. Incremental mode (only files whose mtime changed) is preferred.
+
+## Tooling
+
+`init/scripts/integrity.py` implements the sweep:
+
+```bash
+integrity.py [--home PATH] [--write] [--json]
+```
+
+- `--home` — target Ciel home; defaults to `$CIEL_HOME` or `~/.ciel`.
+- `--write` — regenerate `INTEGRITY.json` in the spec shape, then exit 0.
+- `--json` — print the full report JSON instead of the one-line summary.
+
+Exit codes: `0` when no unknown-drift or missing files; `1` otherwise (expected-drift and unexpected are informational); `2` when `--home` is not a git repository. Each sweep also writes a timestamped report to `~/.ciel/integrity/<YYYYMMDDTHHMMSSZ>.json`.
