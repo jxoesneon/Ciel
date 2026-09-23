@@ -25,10 +25,17 @@ policy load diagnostics instead.
 import json
 import os
 import re
-import subprocess
 import sys
-import urllib.request
 from pathlib import Path
+
+try:
+    import system1
+except ImportError:
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import system1
+    except ImportError:
+        system1 = None
 
 # Hard-tier subset applied when no policy file can be loaded. Kept minimal on
 # purpose: catastrophic, irreversible commands only.
@@ -150,105 +157,70 @@ SYSTEM1_QUESTIONS = {
 }
 
 
-def _system1_key() -> str:
-    key = os.environ.get("CIEL_SYSTEM1_KEY")
-    if key:
-        return key
-    env_file = ciel_home() / "system1" / "env"
-    try:
-        for line in env_file.read_text(encoding="utf-8").splitlines():
-            if line.startswith("LAYA_API_KEY="):
-                return line.split("=", 1)[1].strip()
-    except OSError:
-        pass
-    return ""
-
-
 def system1_verdict(tool: str, command: str, path: str,
                     timeout: float = 0.9) -> dict | None:
-    """Shadow-tier semantic risk check via a Jev-protocol endpoint (laya-serve
+    """Shadow-tier semantic risk check via the System-1 endpoint (laya-serve
     locally, or hosted Jev/AutoJev). Advisory only: returns the raw answer for
     logging and NEVER influences the decision. None when unavailable."""
-    if os.environ.get("CIEL_SYSTEM1_DISABLED"):
+    if system1 is None:
         return None
-    url = os.environ.get("CIEL_SYSTEM1_URL", "http://127.0.0.1:8765")
-    body = {
-        "state": {"tool": tool, "command": command, "path": path},
-        "questions": SYSTEM1_QUESTIONS,
-    }
-    req = urllib.request.Request(
-        url.rstrip("/") + "/v1/systemone",
-        data=json.dumps(body).encode(),
-        headers={
-            "content-type": "application/json",
-            "authorization": f"Bearer {_system1_key()}",
-        },
-        method="POST",
+    answer = system1.ask_choice(
+        {"tool": tool, "command": command, "path": path},
+        "risk",
+        SYSTEM1_QUESTIONS["risk"]["instructions"],
+        SYSTEM1_QUESTIONS["risk"]["criteria"],
+        timeout=timeout,
     )
-    try:
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
-            data = json.loads(resp.read())
-    except (OSError, ValueError):
-        return None
-    answer = (data.get("answers") or {}).get("risk")
-    if not isinstance(answer, dict):
-        return None
-    return {
-        "choice": answer.get("choice"),
-        "confidence": answer.get("confidence"),
-        "probabilities": answer.get("probabilities"),
-        "model": data.get("routing", {}).get("model") or data.get("model"),
-    }
-
-
-SHADOW_LOG_MAX = 4 * 1024 * 1024
-
-
-def _append_shadow_log(record: dict) -> None:
-    log = ciel_home() / "system1" / "shadow.log"
-    try:
-        log.parent.mkdir(parents=True, exist_ok=True)
-        if log.is_file() and log.stat().st_size > SHADOW_LOG_MAX:
-            log.rename(log.with_suffix(".log.1"))
-        with log.open("a", encoding="utf-8") as fh:
-            fh.write(json.dumps(record, ensure_ascii=False) + "\n")
-    except OSError:
-        pass
+    return answer
 
 
 def system1_shadow_async(payload: dict) -> None:
-    """Fire-and-forget: spawn a detached shadow evaluation so the hook never
-    waits on model inference (CPU-bound calls can take seconds). The verdict
-    lands in ~/.ciel/system1/shadow.log keyed by the entry's timestamp."""
-    if os.environ.get("CIEL_SYSTEM1_DISABLED"):
+    """Fire-and-forget: detached shadow evaluation via system1.ask_async so
+    the hook never waits on model inference. The verdict lands in
+    ~/.ciel/system1/events.jsonl (surface=pre_tool_risk) keyed by the entry's
+    timestamp."""
+    if system1 is None:
         return
-    try:
-        proc = subprocess.Popen(
-            [sys.executable, os.path.abspath(__file__), "--shadow"],
-            stdin=subprocess.PIPE,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-            start_new_session=True,
-        )
-        proc.stdin.write(json.dumps(payload).encode())
-        proc.stdin.close()
-    except OSError:
-        pass
+    system1.ask_async({
+        "surface": "pre_tool_risk",
+        "state": {
+            "tool": payload.get("tool") or "",
+            "command": payload.get("command") or "",
+            "path": payload.get("path") or "",
+        },
+        "questions": SYSTEM1_QUESTIONS,
+        "meta": {
+            "ts": payload.get("ts"),
+            "runtime": payload.get("runtime"),
+            "regex_decision": payload.get("regex_decision"),
+            "rule_id": payload.get("rule_id"),
+        },
+    })
 
 
 def _shadow_main() -> int:
+    """Back-compat shim: read a legacy payload {tool, command, path, ...} and
+    append a pre_tool_risk record to events.jsonl synchronously."""
+    if system1 is None:
+        return 0
     try:
         payload = json.loads(sys.stdin.read() or "{}")
     except json.JSONDecodeError:
         return 0
-    verdict = system1_verdict(
-        str(payload.get("tool") or ""),
-        str(payload.get("command") or ""),
-        str(payload.get("path") or ""),
-        timeout=20.0,
-    )
-    payload["system1"] = verdict
-    _append_shadow_log(payload)
+    state = {
+        "tool": str(payload.get("tool") or ""),
+        "command": str(payload.get("command") or ""),
+        "path": str(payload.get("path") or ""),
+    }
+    result = system1.ask(state, SYSTEM1_QUESTIONS, timeout=20.0)
+    system1._append_event({
+        "ts": payload.get("ts"),
+        "surface": "pre_tool_risk",
+        "questions": SYSTEM1_QUESTIONS,
+        "meta": {k: payload.get(k) for k in
+                 ("runtime", "regex_decision", "rule_id")},
+        "system1": result,
+    })
     return 0
 
 

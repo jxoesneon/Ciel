@@ -281,11 +281,13 @@ class TestSystem1Shadow(unittest.TestCase):
                 capture_output=True, text=True, env=env, check=False,
             )
             self.assertEqual(0, proc.returncode)
-            log = Path(tmp) / "system1" / "shadow.log"
+            log = Path(tmp) / "system1" / "events.jsonl"
             self.assertTrue(log.is_file())
             rec = json.loads(log.read_text().splitlines()[0])
             self.assertEqual("t1", rec["ts"])
-            self.assertEqual("safe", rec["system1"]["choice"])
+            self.assertEqual("pre_tool_risk", rec["surface"])
+            self.assertEqual(
+                "safe", rec["system1"]["answers"]["risk"]["choice"])
 
 
 @unittest.skipUnless(POLICY_JSON.is_file(), "policy.json not compiled")

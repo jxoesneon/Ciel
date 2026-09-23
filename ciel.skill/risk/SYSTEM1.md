@@ -1,21 +1,24 @@
 # SYSTEM1 — shadow semantic tier for the pre-tool gate
 
-`hooks/lib/risk_policy.py` supports an optional second opinion from a
-System-1 decision model speaking the Jev protocol (`POST /v1/systemone`):
-typed `choice`/`noul`/`score` questions over a compact state, answered with
-calibrated probabilities in a single forward pass. No text generation.
+`hooks/lib/system1.py` is the shared client for a System-1 decision model
+speaking the Jev protocol (`POST /v1/systemone`): typed `choice`/`noul`/
+`score` questions over a compact state, answered with probabilities in a
+single forward pass. No text generation. `hooks/lib/risk_policy.py` is its
+first consumer; see `architecture/ADR_20260923_SYSTEM1_DEEP_INTEGRATION.md`
+for the multi-surface lattice design.
 
 ## Design: shadow first
 
 The base checkpoints are near-chance zero-shot on this domain, so the tier is
 **strictly advisory**: it never influences `evaluate()`'s decision. Each
-pre-tool hook fires a detached `--shadow` subprocess (zero added latency —
-CPU inference can take seconds) that appends the verdict to
-`~/.ciel/system1/shadow.log`, correlated to `activity.log` by `ts`.
+pre-tool hook fires a detached `system1.py --ask` subprocess (zero added
+latency — CPU inference can take seconds; bounded to 2 in-flight with a
+response cache) that appends the verdict to
+`~/.ciel/system1/events.jsonl`, correlated to `activity.log` by `meta.ts`.
 
-Promotion path: shadow → measure agreement on real traffic + the red-team
-corpus → fine-tune a domain checkpoint (RLCD) → advisory tier →
-confirm/deny escalation, each step gated by the Council.
+Promotion path: shadow → `scripts/system1_eval.py` produces
+`risk/system1_calibration.json` → fine-tune a domain checkpoint (RLCD) →
+advisory tier → confirm escalation, each step gated by the Council.
 
 ## Backends
 
@@ -48,10 +51,13 @@ LAYA_API_KEY=<openssl rand -hex 24>
 `~/.ciel/system1/serve.sh` sources `env` and execs `venv/bin/laya-serve`;
 a systemd user unit (`ciel-system1.service`) keeps it resident.
 
-## Record format (shadow.log)
+## Record format (events.jsonl)
 
 ```json
-{"ts": "...", "runtime": "devin", "tool": "exec", "command": "...",
- "regex_decision": "allow", "rule_id": null,
- "system1": {"choice": "dangerous", "confidence": 0.41, "model": "english"}}
+{"ts": "...", "surface": "pre_tool_risk", "questions": {...},
+ "meta": {"ts": "...", "runtime": "devin", "regex_decision": "allow",
+          "rule_id": null},
+ "system1": {"answers": {"risk": {"choice": "dangerous",
+             "confidence": 0.41}}, "model": "english"},
+ "cache_hit": false, "latency_ms": 1966}
 ```
