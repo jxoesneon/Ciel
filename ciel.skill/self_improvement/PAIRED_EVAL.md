@@ -17,7 +17,10 @@ python3 scripts/paired_eval.py --skill skills/<candidate> \
   at `.devin/skills/<name>/`.
 - The runner template (`--runner`) executes inside the workspace; `{prompt}`
   is replaced by the task prompt. Default:
-  `devin -p --permission-mode accept-edits {prompt}`.
+  `devin -p --permission-mode accept-edits --respect-workspace-trust false -- {prompt}`.
+  (The `--` separator keeps the prompt out of the `[PATH]` positionals; the
+  trust flag is required because eval workspaces are fresh temp dirs that
+  print mode cannot prompt to trust.)
 - `verify.sh` decides pass/fail per arm — deterministic, offline-checkable.
 
 ## Outcomes and verdict

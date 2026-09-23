@@ -20,7 +20,7 @@ Usage:
 --runner is a shell template executed inside the task workspace; the literal
 token {prompt} is replaced by the shell-quoted task prompt, and {skill_dir}
 by the installed skill dir (treatment only). Default runner:
-    devin -p --permission-mode accept-edits {prompt}
+    devin -p --permission-mode accept-edits --respect-workspace-trust false -- {prompt}
 
 Task layout (evals/tasks/<id>/):
     prompt.md     the task prompt given to the runner
@@ -40,7 +40,7 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-DEFAULT_RUNNER = "devin -p --permission-mode accept-edits {prompt}"
+DEFAULT_RUNNER = "devin -p --permission-mode accept-edits --respect-workspace-trust false -- {prompt}"
 REPO_TASKS = Path(__file__).resolve().parent.parent / "evals" / "tasks"
 
 
