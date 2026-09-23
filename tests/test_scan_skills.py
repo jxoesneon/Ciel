@@ -82,6 +82,64 @@ class ScanSkillsTests(unittest.TestCase):
         self.assertEqual(self._run(str(ok), env=env).returncode, 0)
         self.assertEqual(self._run(str(ok), "--strict", env=env).returncode, 2)
 
+    def _baseline(self, entries) -> Path:
+        path = self.work / "baseline.json"
+        path.write_text(json.dumps({"accepted": entries}))
+        return path
+
+    def test_baseline_accepts_finding(self):
+        bad = self._skill("bad-skill")
+        self._canned("bad-skill", failed=True,
+                     findings=[{"rule_id": "SECRET_EXFIL", "severity": "critical",
+                                "path": "SKILL.md", "line": 1}])
+        baseline = self._baseline([{
+            "skill": "bad-skill", "rule_id": "SECRET_EXFIL",
+            "justification": "reviewed: documentation prose",
+        }])
+        proc = self._run(str(bad), "--baseline", str(baseline))
+        self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
+        self.assertIn("accepted=1", proc.stdout)
+
+    def test_baseline_path_mismatch_still_fails(self):
+        bad = self._skill("bad-skill")
+        self._canned("bad-skill", failed=True,
+                     findings=[{"rule_id": "SECRET_EXFIL", "severity": "critical",
+                                "path": "other.md", "line": 1}])
+        baseline = self._baseline([{
+            "skill": "bad-skill", "rule_id": "SECRET_EXFIL",
+            "path": "SKILL.md", "justification": "different file only",
+        }])
+        proc = self._run(str(bad), "--baseline", str(baseline))
+        self.assertEqual(proc.returncode, 2)
+
+    def test_no_baseline_flag_ignores_file(self):
+        bad = self._skill("bad-skill")
+        self._canned("bad-skill", failed=True,
+                     findings=[{"rule_id": "X", "severity": "high"}])
+        proc = self._run(str(bad), "--no-baseline")
+        self.assertEqual(proc.returncode, 2)
+
+    def test_unreadable_baseline_warns_and_scans(self):
+        bad = self._skill("bad-skill")
+        self._canned("bad-skill", failed=True,
+                     findings=[{"rule_id": "X", "severity": "high"}])
+        baseline = self.work / "broken.json"
+        baseline.write_text("{not json")
+        proc = self._run(str(bad), "--baseline", str(baseline))
+        self.assertEqual(proc.returncode, 2)
+        self.assertIn("baseline unreadable", proc.stderr)
+
+    def test_scanner_error_reported(self):
+        missing = self._skill("no-canned")
+        proc = self._run(str(missing))
+        self.assertIn("scanner error", proc.stderr)
+        self.assertIn("errors=1", proc.stdout)
+
+    def test_no_targets(self):
+        proc = self._run()
+        self.assertEqual(proc.returncode, 0)
+        self.assertIn("no skill dirs", proc.stderr)
+
 
 if __name__ == "__main__":
     unittest.main()

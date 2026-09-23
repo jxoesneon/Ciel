@@ -94,6 +94,99 @@ class TestEvaluate(unittest.TestCase):
         self.assertEqual("hook_self_tamper", v["rule_id"])
 
 
+class TestPolicySources(unittest.TestCase):
+    """Policy loading via $CIEL_POLICY and the compiled fallback path."""
+
+    def test_yaml_source_loads(self):
+        try:
+            import yaml  # noqa: F401
+        except ImportError:
+            self.skipTest("PyYAML not installed")
+        env = dict(os.environ, CIEL_POLICY=str(POLICY_YAML))
+        proc = subprocess.run(
+            [sys.executable, str(ROOT / "ciel.skill" / "init" / "hooks" / "lib" / "risk_policy.py"), "--check"],
+            capture_output=True, text=True, env=env, check=False,
+        )
+        self.assertEqual(0, proc.returncode, proc.stderr)
+        self.assertIn("source=file", proc.stdout)
+
+    def test_corrupt_json_falls_through(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            bad = Path(tmp) / "policy.json"
+            bad.write_text("{corrupt")
+            env = dict(os.environ, CIEL_POLICY=str(bad))
+            proc = subprocess.run(
+                [sys.executable, str(ROOT / "ciel.skill" / "init" / "hooks" / "lib" / "risk_policy.py"), "--check"],
+                capture_output=True, text=True, env=env, check=False,
+            )
+            # corrupt explicit file falls through to the ancestor-found repo policy
+            self.assertIn("source=file", proc.stdout)
+
+    def test_cli_stdin_verdict(self):
+        proc = subprocess.run(
+            [sys.executable, str(ROOT / "ciel.skill" / "init" / "hooks" / "lib" / "risk_policy.py")],
+            input='{"tool":"exec","command":"mkfs.ext4 /dev/sda1"}',
+            capture_output=True, text=True, check=False,
+        )
+        verdict = json.loads(proc.stdout)
+        self.assertEqual("deny", verdict["decision"])
+        self.assertEqual("mkfs", verdict["rule_id"])
+
+    def test_cli_bad_json_payload(self):
+        proc = subprocess.run(
+            [sys.executable, str(ROOT / "ciel.skill" / "init" / "hooks" / "lib" / "risk_policy.py")],
+            input="{not json",
+            capture_output=True, text=True, check=False,
+        )
+        self.assertEqual("allow", json.loads(proc.stdout)["decision"])
+
+
+class TestEvaluateBranches(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.home = Path(self.tmp.name)
+        self._old_home = os.environ.get("CIEL_HOME")
+        os.environ["CIEL_HOME"] = str(self.home / ".ciel")
+
+    def tearDown(self):
+        if self._old_home is None:
+            os.environ.pop("CIEL_HOME", None)
+        else:
+            os.environ["CIEL_HOME"] = self._old_home
+
+    def test_explicit_rules_skip_file_load(self):
+        rules = [{"id": "x", "tier": "soft", "match": "command",
+                  "pattern": "danger", "reason": "r"}]
+        v = risk_policy.evaluate(tool="exec", command="danger now",
+                                 home=self.home, rules=rules)
+        self.assertEqual("deny", v["decision"])
+
+    def test_invalid_regex_skipped(self):
+        rules = [{"id": "bad", "tier": "hard", "match": "command",
+                  "pattern": "([", "reason": "broken"}]
+        v = risk_policy.evaluate(tool="exec", command="anything",
+                                 home=self.home, rules=rules)
+        self.assertEqual("allow", v["decision"])
+
+    def test_empty_subject_skipped(self):
+        rules = [{"id": "x", "tier": "hard", "match": "path",
+                  "pattern": ".*", "reason": "match-all"}]
+        v = risk_policy.evaluate(tool="write", path="", home=self.home, rules=rules)
+        self.assertEqual("allow", v["decision"])
+
+    def test_tool_matcher_misses(self):
+        rules = [{"id": "x", "tier": "hard", "match": "command",
+                  "pattern": "danger", "reason": "r", "tools": ["^write$"]}]
+        v = risk_policy.evaluate(tool="exec", command="danger",
+                                 home=self.home, rules=rules)
+        self.assertEqual("allow", v["decision"])
+
+    def test_normalize_empty_and_home_root(self):
+        self.assertEqual("", risk_policy._normalize_path("", self.home))
+        self.assertEqual("~", risk_policy._normalize_path(str(self.home), self.home))
+
+
 @unittest.skipUnless(POLICY_JSON.is_file(), "policy.json not compiled")
 class TestPolicySync(unittest.TestCase):
     def test_json_matches_yaml(self):
@@ -116,6 +209,28 @@ class TestPolicySync(unittest.TestCase):
             self.assertTrue(rule["reason"], rule["id"])
             self.assertNotIn(rule["id"], ids, "duplicate rule id")
             ids.add(rule["id"])
+
+
+class TestCompilePolicy(unittest.TestCase):
+    SCRIPT = ROOT / "scripts" / "compile_policy.py"
+
+    def setUp(self):
+        try:
+            import yaml  # noqa: F401
+        except ImportError:
+            self.skipTest("PyYAML not installed")
+
+    def test_check_passes(self):
+        proc = subprocess.run([sys.executable, str(self.SCRIPT), "--check"],
+                              capture_output=True, text=True, check=False)
+        self.assertEqual(0, proc.returncode, proc.stdout + proc.stderr)
+
+    def test_write_is_idempotent(self):
+        before = POLICY_JSON.read_text(encoding="utf-8")
+        proc = subprocess.run([sys.executable, str(self.SCRIPT)],
+                              capture_output=True, text=True, check=False)
+        self.assertEqual(0, proc.returncode, proc.stdout + proc.stderr)
+        self.assertEqual(before, POLICY_JSON.read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":
