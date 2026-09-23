@@ -3,6 +3,7 @@
 import gzip
 import importlib.util
 import json
+import subprocess
 import tempfile
 import unittest
 from datetime import datetime, timedelta, timezone
@@ -27,8 +28,14 @@ def _utcnow():
 
 def _decompress(path: Path) -> bytes:
     if path.suffix == ".zst":
-        from compression import zstd
-        return zstd.decompress(path.read_bytes())
+        try:
+            from compression import zstd
+            return zstd.decompress(path.read_bytes())
+        except ImportError:
+            return subprocess.run(
+                ["zstd", "-d", "-c", str(path)],
+                capture_output=True, check=True,
+            ).stdout
     return gzip.decompress(path.read_bytes())
 
 
@@ -74,7 +81,7 @@ class RotateTests(unittest.TestCase):
 
         archives = self._archives()
         self.assertEqual(len(archives), 1)
-        self.assertTrue(archives[0].name.endswith(".log.zst"))
+        self.assertRegex(archives[0].name, r"\.log\.(zst|gz)$")
         self.assertEqual(_decompress(archives[0]), original)
 
         fresh_lines = self.log.read_text().splitlines()

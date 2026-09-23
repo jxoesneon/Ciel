@@ -11,7 +11,8 @@ DEVIN_CFG="${HOME}/.config/devin/config.json"
 ATTR_NOTE=""
 if [ -f "$DEVIN_CFG" ]; then
   if command -v python3 >/dev/null 2>&1; then
-    ATTR_NOTE="$(python3 - "$DEVIN_CFG" <<'PY'
+    ATTR_NOTE="$(
+      python3 - "$DEVIN_CFG" <<'PY'
 import json, sys
 p = sys.argv[1]
 try:
@@ -26,7 +27,7 @@ else:
     json.dump(d, open(p, "w"), indent=2)
     print("repaired")
 PY
-)"
+    )"
   fi
 else
   ATTR_NOTE="config-absent"
