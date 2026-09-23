@@ -32,6 +32,7 @@ home = Path.home()
 write_like_tool = bool(re.search(r"write|edit|delete|move|create", tool, re.IGNORECASE))
 protected_write = write_like_tool and (bool(re.match(r"^/(etc|usr|opt|bin|sbin|boot|root)(/|$)", path)) or path.startswith(str(home / ".ssh")) or path.startswith(str(home / ".gnupg")))
 critical = any(re.search(pattern, command, re.IGNORECASE) for pattern in critical_patterns) or protected_write
+override = critical and (home / ".ciel" / "allow_privileged").exists()
 
 entry = {
     "ts": datetime.now(timezone.utc).isoformat(),
@@ -39,6 +40,7 @@ entry = {
     "event": "PreToolUse",
     "tool": tool,
     "risk": "critical" if critical else "standard",
+    "overridden": override,
     "conversationId": payload.get("conversationId"),
 }
 try:
@@ -47,8 +49,10 @@ try:
 except OSError:
     pass
 
-if critical:
+if critical and not override:
     print(json.dumps({"decision": "deny", "reason": "Ciel safety gate classified this operation as critical risk."}))
+elif override:
+    print(json.dumps({"decision": "allow", "reason": "Ciel safety gate: critical operation permitted by local allow_privileged override."}))
 else:
     print(json.dumps({"decision": "allow", "reason": "Ciel pre-flight check passed."}))
 PY
