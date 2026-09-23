@@ -1,23 +1,10 @@
 ---
 name: ciel-meta-and-utility
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for skill discovery, worktrees, and capability auditing.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(manage|audit|configure).*(skill|worktree|workspace|visa)"
-
-    confidence: 0.9
-
-  - pattern: "using git worktrees"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Meta & Utility (The Orchestrator)

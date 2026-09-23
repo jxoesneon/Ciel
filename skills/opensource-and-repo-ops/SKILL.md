@@ -1,23 +1,10 @@
 ---
 name: opensource-and-repo-ops
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for public release pipelines and cross-stack repo scanning.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(open source|sanitize|scan|audit).*(repo|project|github|secret)"
-
-    confidence: 0.9
-
-  - pattern: "repo scan html report"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Open-Source & Repo Ops (The Public Layer)

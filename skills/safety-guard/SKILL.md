@@ -1,27 +1,10 @@
 ---
 name: safety-guard
-version: 1.0.0
-format: skill/1.0
 description: Primary operational failsafe. Intercepts destructive commands and enforces directory-level write freezing during autonomous orchestration.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(run|execute).*(danger|production|autonomous)"
-
-    confidence: 0.9
-
-  - pattern: "prevent (destructive|dangerous) (operations|commands)"
-
-    confidence: 0.9
-
-  - pattern: "(freeze|lock).*(directory|folder|writes)"
-
-    confidence: 0.85
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Safety-Guard (Operational Failsafe)

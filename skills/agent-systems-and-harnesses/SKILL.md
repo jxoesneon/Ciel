@@ -1,23 +1,10 @@
 ---
 name: agent-systems-and-harnesses
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for long-lived agents, adversarial harnesses, and headless orchestration.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(orchestrate|harness|manage).*(agent|fleet|gan|gsd|headless)"
-
-    confidence: 0.9
-
-  - pattern: "generator-evaluator loop"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Agent Systems (The Autonomy Layer)

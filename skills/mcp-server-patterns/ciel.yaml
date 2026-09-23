@@ -1,0 +1,27 @@
+# Ciel skill extension — fields beyond the Agent Skills spec. SKILL.md stays spec-pure.
+schema: 1
+version: 1.0.0
+format: skill/1.0
+runtimes:
+- claude_code
+- gemini_cli
+- windsurf
+- generic
+tags:
+- ciel
+- harmonized
+- domain:ai
+triggers:
+- pattern: (build|create|add).*mcp.*(server|tool|resource)
+  confidence: 0.9
+- pattern: mcp.*integration
+  confidence: 0.9
+- pattern: '@modelcontextprotocol/sdk'
+  confidence: 1.0
+source:
+  tier: 1
+  origin: harmonized
+dependencies:
+  skills: []
+  mcp: []
+  system: []

@@ -1,23 +1,10 @@
 ---
 name: jira-integration
-version: 1.0.0
-format: skill/1.0
 description: CIEL's protocol for interacting with Jira issues, sprints, and development information.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(jira|atlassian).*(ticket|issue|sprint|jql)"
-
-    confidence: 0.9
-
-  - pattern: "get (requirements|ac) from (ticket|jira)"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Jira Integration (Issue Tracking)

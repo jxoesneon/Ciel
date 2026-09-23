@@ -1,23 +1,10 @@
 ---
 name: continuous-agent-loop
-version: 1.0.0
-format: skill/1.0
 description: CIEL's canonical loop patterns for autonomous execution with quality gates and recovery controls.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(start|run|select).*(loop|pattern|stack)"
-
-    confidence: 0.9
-
-  - pattern: "how should I (run|execute) this (autonomous|continuous) task"
-
-    confidence: 0.85
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Continuous Agent Loop (Execution Stacks)

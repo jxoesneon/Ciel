@@ -1,31 +1,10 @@
 ---
 name: find-skills
-version: 1.0.0
-format: skill/1.0
 description: Discovery and installation of agent skills from the open ecosystem.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(find|search|lookup|is there).*skill"
-
-    confidence: 0.9
-
-  - pattern: "how do I.*(react|testing|design|deploy)"
-
-    confidence: 0.8
-
-  - pattern: "can you do.*(specialized|expert)"
-
-    confidence: 0.7
-
-  - pattern: "npx skills.*"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Find Skills

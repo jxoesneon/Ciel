@@ -1,23 +1,10 @@
 ---
 name: swiftui-patterns
-version: 1.0.0
-format: skill/1.0
 description: Modern SwiftUI architecture, state management with @Observable, and view composition best practices.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(build|design).*(swiftui|ios|macos).*(view|interface)"
-
-    confidence: 0.9
-
-  - pattern: "swiftui patterns"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: SwiftUI Patterns (Declarative UI)

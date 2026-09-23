@@ -1,23 +1,10 @@
 ---
 name: ciel-knowledge-and-memory
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for multi-layer knowledge ingestion, semantic memory search, and structural code exploration.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(save|search|sync|explore).*(knowledge|memory|session|structure|ast)"
-
-    confidence: 0.9
-
-  - pattern: "smart explore"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Knowledge & Memory (The Intel Layer)

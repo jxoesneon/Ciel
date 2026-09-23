@@ -1,23 +1,10 @@
 ---
 name: rfc-and-unit-orchestration
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for RFC-driven feature implementation and unit-based orchestration.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(rfc|decompose|unit).*(feature|dag|work unit|merge queue)"
-
-    confidence: 0.9
-
-  - pattern: "ralphinho rfc pipeline"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: RFC & Unit Orchestration (The Structure Layer)

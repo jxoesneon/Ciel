@@ -1,23 +1,10 @@
 ---
 name: product-lens
-version: 1.0.0
-format: skill/1.0
 description: A diagnostic framework for validating product direction and feature viability before engineering begins.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(analyze|diagnose|review).*(product|idea|founder lens)"
-
-    confidence: 0.9
-
-  - pattern: "should I build (this|that)"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Product Lens (Discovery & Viability)

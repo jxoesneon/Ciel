@@ -1,23 +1,10 @@
 ---
 name: animation-performance-utils
-version: 1.0.0
-format: skill/1.0
 description: Performance optimization and math utilities for high-performance JS animations.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(optimize|speed up).*(animation|gsap|fps|60fps)"
-
-    confidence: 0.9
-
-  - pattern: "gsap.utils"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Animation Performance & Utils (Optimization)

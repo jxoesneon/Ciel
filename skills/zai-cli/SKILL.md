@@ -1,19 +1,10 @@
 ---
 name: zai-cli
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for Z.AI CLI integration. Provides vision analysis, real-time web search, page reading, and GitHub code exploration via a single npx-based tool.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:ai"]
-triggers:
-  - pattern: "(z\\.ai|zai-cli|zai cli).*(vision|search|read|repo|analyze)"
-    confidence: 0.9
-  - pattern: "(analyze|ocr|describe).*(image|screenshot|video).*(zai|z\\.ai)"
-    confidence: 0.85
-source: { tier: 2, origin: "zai-cli" }
-dependencies: { skills: [], mcp: [], system: ["npx", "node"] }
-side_effects: ["network", "external_api"]
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: ZAI CLI

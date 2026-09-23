@@ -1,23 +1,10 @@
 ---
 name: automation-audit-ops
-version: 1.0.0
-format: skill/1.0
 description: An evidence-first audit protocol for inventorying, classifying, and rationalizing workspace automations.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:ai"]
-triggers:
-
-  - pattern: "(audit|inventory|list).*(automation|job|workflow|hook|connector)"
-
-    confidence: 0.9
-
-  - pattern: "what (automations|hooks) are (live|broken)"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Automation Audit Ops (Inventory & Rationalization)

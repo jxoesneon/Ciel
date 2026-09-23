@@ -1,23 +1,10 @@
 ---
 name: unified-notifications-ops
-version: 1.0.0
-format: skill/1.0
 description: A hub for consolidating, classifying, and routing system and human notifications across multiple surfaces.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(unify|consolidate|route).*(notification|alert|ping)"
-
-    confidence: 0.9
-
-  - pattern: "what (is happening|happened) while I was (away|gone)"
-
-    confidence: 0.85
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Unified Notifications (The Notification Hub)

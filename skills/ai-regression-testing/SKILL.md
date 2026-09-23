@@ -1,31 +1,10 @@
 ---
 name: ai-regression-testing
-version: 1.0.0
-format: skill/1.0
 description: Specialized regression testing for AI-assisted development and blind spot mitigation.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "ai-regression.*testing"
-
-    confidence: 0.9
-
-  - pattern: "catch.*blind.*spot"
-
-    confidence: 0.9
-
-  - pattern: "sandbox.*production.*parity"
-
-    confidence: 0.9
-
-  - pattern: "bug-check.*"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: AI Regression Testing

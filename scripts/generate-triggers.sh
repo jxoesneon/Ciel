@@ -21,6 +21,19 @@ fi
 
 SKILL_NAME=$(basename "$SKILL_PATH")
 SKILL_MD="$SKILL_PATH/SKILL.md"
+# Ciel extension fields (triggers, tags, ...) live in the ciel.yaml sidecar
+# when present; SKILL.md stays Agent-Skills-spec pure.
+CIEL_YAML="$SKILL_PATH/ciel.yaml"
+
+# Read a top-level key from ciel.yaml if present, else from SKILL.md frontmatter.
+extract_field() {
+  local field="$1"
+  if [[ -f "$CIEL_YAML" ]] && grep -q "^$field:" "$CIEL_YAML"; then
+    grep "^$field:" "$CIEL_YAML" | head -1 | sed "s/$field:\s*//" | tr -d '"' | tr -d "'"
+  else
+    extract_frontmatter "$SKILL_MD" "$field"
+  fi
+}
 
 echo "Generating triggers for: $SKILL_NAME"
 
@@ -210,9 +223,9 @@ EOF
 
   echo "Triggers written to: $triggers_file"
 
-  # Update SKILL.md with triggers if not present
+  # Update the sidecar/SKILL.md with triggers if not present
   if [[ -f "$SKILL_MD" ]]; then
-    if ! grep -q "^triggers:" "$SKILL_MD"; then
+    if [[ -z "$(extract_field triggers)" ]]; then
       echo ""
       echo "Note: SKILL.md does not have triggers: section in frontmatter"
       echo "Add the following to SKILL.md frontmatter:"

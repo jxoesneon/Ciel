@@ -1,31 +1,10 @@
 ---
 name: agent-sort
-version: 1.0.0
-format: skill/1.0
 description: Evidence-backed skill classification and context optimization.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(sort|trim|curate).*skills"
-
-    confidence: 0.9
-
-  - pattern: "remove.*unnecessary.*(skills|rules)"
-
-    confidence: 0.9
-
-  - pattern: "DAILY vs LIBRARY"
-
-    confidence: 1.0
-
-  - pattern: "optimize.*workspace.*context"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Agent Sort

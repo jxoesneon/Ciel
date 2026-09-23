@@ -1,23 +1,10 @@
 ---
 name: requesting-code-review
-version: 1.0.0
-format: skill/1.0
 description: The formal protocol for requesting and processing peer code reviews from the Auditor sub-agent during CIEL execution.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(request|get|perform).*(code review|audit|peer review)"
-
-    confidence: 0.9
-
-  - pattern: "review (my|the) code"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Requesting Code Review (The Auditor Protocol)

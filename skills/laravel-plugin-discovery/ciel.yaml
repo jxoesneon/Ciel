@@ -1,0 +1,30 @@
+# Ciel skill extension — fields beyond the Agent Skills spec. SKILL.md stays spec-pure.
+schema: 1
+version: 1.0.0
+format: skill/1.0
+runtimes:
+- claude_code
+- gemini_cli
+- windsurf
+- generic
+tags:
+- ciel
+- harmonized
+- domain:web
+triggers:
+- pattern: (find|discover|search).*(laravel|plugin|package).*(healthy|compatible|maintained)
+  confidence: 0.9
+- pattern: laravel.*(plugin|package).*(discovery|search|evaluate|health)
+  confidence: 0.85
+- pattern: laraplugins
+  confidence: 0.9
+source:
+  tier: 2
+  origin: laravel-plugin-discovery
+dependencies:
+  skills: []
+  mcp:
+  - laraplugins
+  system: []
+side_effects:
+- network

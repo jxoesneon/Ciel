@@ -1,23 +1,10 @@
 ---
 name: remotion-video-creation
-version: 1.0.0
-format: skill/1.0
 description: Best practices for programmable video creation using Remotion and React.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(create|build|code).*(video|animation).*(remotion)"
-
-    confidence: 0.9
-
-  - pattern: "remotion"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Remotion Video (Programmable Media)

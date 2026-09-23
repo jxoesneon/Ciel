@@ -1,23 +1,10 @@
 ---
 name: nuxt-development
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for Nuxt 4 development, hydration safety, and route-level rendering.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(design|build|review).*(nuxt|vue|nitro|hydration)"
-
-    confidence: 0.9
-
-  - pattern: "nuxt route rules"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Nuxt Development (The Vue Meta-Layer)

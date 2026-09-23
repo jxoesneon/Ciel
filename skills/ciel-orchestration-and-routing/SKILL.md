@@ -1,23 +1,10 @@
 ---
 name: ciel-orchestration-and-routing
-version: 1.0.0
-format: skill/1.0
 description: CIEL's master routing layer for task classification and multi-agent specialist access.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(route|classify|orchestrate|build team).*(task|domain|agent)"
-
-    confidence: 0.9
-
-  - pattern: "master router"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Orchestration & Routing (The Command Layer)

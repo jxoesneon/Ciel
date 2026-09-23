@@ -1,19 +1,10 @@
 ---
 name: obsidian-vault-ops
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for Obsidian vault operations via the obsidian CLI. Read, create, search, and manage notes, tasks, properties, and plugin development through a running Obsidian instance.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:knowledge"]
-side_effects: ["fs"]
-triggers:
-  - pattern: "(obsidian|vault).*(read|create|search|append|note|task|property)"
-    confidence: 0.9
-  - pattern: "obsidian (plugin|theme|dev|eval|reload)"
-    confidence: 1.0
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: ["obsidian"] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Obsidian Vault Operations

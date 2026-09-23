@@ -1,19 +1,10 @@
 ---
 name: convoy-orchestration
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for dependency-graph-based task distribution across parallel agent crews. Manages inter-task dependencies, checkpoints, and synthesis.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:ai"]
-side_effects: ["shell", "state_mutation"]
-triggers:
-  - pattern: "(convoy|distribute tasks|parallel work streams|dependency graph).*(agent|task|work)"
-    confidence: 0.9
-  - pattern: "agent coordination at scale"
-    confidence: 0.8
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Convoy Orchestration (Dependency-Graph Distribution)

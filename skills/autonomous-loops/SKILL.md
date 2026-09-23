@@ -1,23 +1,10 @@
 ---
 name: autonomous-loops
-version: 1.0.0
-format: skill/1.0
 description: Architectural patterns for continuous, autonomous agent loops within CIEL. Defines acceptable patterns from simple sequential pipelines to DAG-driven orchestration.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(setup|run|create).*(autonomous|continuous).*(loop|pipeline|workflow)"
-
-    confidence: 0.9
-
-  - pattern: "orchestrate (multiple|parallel) (agents|tasks)"
-
-    confidence: 0.85
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Autonomous-Loops (Loop Architecture)

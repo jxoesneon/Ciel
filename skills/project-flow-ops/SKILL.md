@@ -1,23 +1,10 @@
 ---
 name: project-flow-ops
-version: 1.0.0
-format: skill/1.0
 description: CIEL's coordination layer for triaging issues, PRs, and tasks across GitHub and internal tracking systems (e.g., Linear).
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(triage|backlog|audit).*(issue|pr|backlog)"
-
-    confidence: 0.9
-
-  - pattern: "map (github|issues) to (linear|tasks)"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Project Flow Ops (Backlog & Triage)

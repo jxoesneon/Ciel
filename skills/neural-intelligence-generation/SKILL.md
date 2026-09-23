@@ -1,23 +1,10 @@
 ---
 name: neural-intelligence-generation
-version: 1.0.0
-format: skill/1.0
 description: Neural search via Exa and multimodal generation via fal.ai.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(search|generate).*(exa|neural|fal.ai|image|video|audio)"
-
-    confidence: 0.9
-
-  - pattern: "exa web search"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Neural Intelligence (Exa & fal.ai)

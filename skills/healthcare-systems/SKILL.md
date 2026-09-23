@@ -1,23 +1,10 @@
 ---
 name: healthcare-systems
-version: 1.0.0
-format: skill/1.0
 description: EMR/EHR encounter workflows and Clinical Decision Support (CDSS) engine patterns.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(build|design).*(emr|ehr|patient encounter|cdss|interactions|dosing)"
-
-    confidence: 0.9
-
-  - pattern: "healthcare safety patterns"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Healthcare Systems (Safety & Workflows)

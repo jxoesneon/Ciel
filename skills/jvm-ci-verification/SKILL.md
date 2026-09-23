@@ -1,23 +1,10 @@
 ---
 name: jvm-ci-verification
-version: 1.0.0
-format: skill/1.0
 description: The formal verification loop for JVM (Java/Kotlin) projects using Maven or Gradle.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(verify|check|test|lint).*(maven|gradle|mvn|jvm)"
-
-    confidence: 0.9
-
-  - pattern: "npx verify-jvm"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: JVM CI Verification (The Gate)

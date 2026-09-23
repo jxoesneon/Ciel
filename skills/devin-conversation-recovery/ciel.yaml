@@ -1,0 +1,29 @@
+# Ciel skill extension — fields beyond the Agent Skills spec. SKILL.md stays spec-pure.
+schema: 1
+version: 1.0.0
+format: skill/1.0
+runtimes:
+- claude_code
+- gemini_cli
+- windsurf
+- generic
+tags:
+- ciel
+- harmonized
+- domain:ops
+triggers:
+- pattern: (recover|find|extract|locate).*(devin|conversation|session|acp)
+  confidence: 0.9
+- pattern: devin.*(history|transcript|archive|past)
+  confidence: 0.85
+source:
+  tier: 2
+  origin: devin-conversation-recovery
+dependencies:
+  skills: []
+  mcp: []
+  system:
+  - python3
+  - sqlite3
+side_effects:
+- fs

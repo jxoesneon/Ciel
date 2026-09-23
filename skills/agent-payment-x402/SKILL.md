@@ -1,23 +1,10 @@
 ---
 name: agent-payment-x402
-version: 1.0.0
-format: skill/1.0
 description: Protocol and tools for autonomous agent payments using x402, featuring strict spending policies and non-custodial wallets.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(agent|autonomous).*(payment|pay|wallet|spend|budget)"
-
-    confidence: 0.9
-
-  - pattern: "x402"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Agent Payment Execution (x402)

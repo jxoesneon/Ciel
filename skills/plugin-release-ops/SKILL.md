@@ -1,19 +1,10 @@
 ---
 name: plugin-release-ops
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for Claude Code plugin marketplace releases. Handles version bumping across marketplace.json, plugin.json, and package.json with build verification, git tagging, and GitHub release creation.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:ops"]
-triggers:
-  - pattern: "(plugin|marketplace).*(release|publish|version|bump)"
-    confidence: 0.9
-  - pattern: "release.*(plugin|marketplace\\.json|plugin\\.json)"
-    confidence: 0.85
-source: { tier: 2, origin: "claude-code-plugin-release" }
-dependencies: { skills: [], mcp: [], system: ["git", "gh", "npm"] }
-side_effects: ["shell", "network"]
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Plugin Release Ops

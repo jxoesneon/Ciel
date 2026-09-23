@@ -2,6 +2,13 @@
 
 Full schema for every registry entry.
 
+On disk each skill is a directory containing a spec-pure `SKILL.md`
+(Agent Skills spec keys only: `name`, `description`, `license`,
+`compatibility`, `metadata`, `allowed-tools`) plus a `ciel.yaml` sidecar
+holding the Ciel extension fields below (`version`, `format`, `runtimes`,
+`tags`, `triggers`, `source`, `dependencies`, `side_effects`). SKILL.md
+carries `metadata.ciel-extension: "ciel.yaml"` and `metadata.ciel-version`.
+
 ```yaml
 id: string                 # unique, kebab-or-slash case, e.g. "web_search/SKILL.md"
 version: semver            # 1.0.0

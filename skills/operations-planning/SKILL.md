@@ -1,23 +1,10 @@
 ---
 name: operations-planning
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for demand forecasting, inventory replenishment, and production scheduling.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(plan|forecast|schedule).*(production|demand|inventory|bottleneck)"
-
-    confidence: 0.9
-
-  - pattern: "drum-buffer-rope"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Operations Planning (Demand & Production)

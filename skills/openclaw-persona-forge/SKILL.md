@@ -1,21 +1,10 @@
 ---
 name: openclaw-persona-forge
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for AI persona generation. Forges complete character identities with soul descriptions, boundary rules, names, and avatar prompts via guided or gacha-random modes.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:ai"]
-triggers:
-  - pattern: "(persona|character|soul|identity).*(forge|create|design|generate)"
-    confidence: 0.9
-  - pattern: "(gacha|random|抽卡).*(persona|character|lobster|soul)"
-    confidence: 0.85
-  - pattern: "(lobster soul|虾魂|龙虾灵魂|openclaw)"
-    confidence: 0.8
-source: { tier: 2, origin: "openclaw-persona-forge" }
-dependencies: { skills: [], mcp: [], system: ["python3"] }
-side_effects: []
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: OpenClaw Persona Forge

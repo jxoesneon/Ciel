@@ -1,23 +1,10 @@
 ---
 name: database-migrations
-version: 1.0.0
-format: skill/1.0
 description: Safe, zero-downtime database schema changes and data backfills.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(create|alter|migrate|update).*(table|schema|database|column)"
-
-    confidence: 0.9
-
-  - pattern: "database migrations"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Database Migrations (Schema Safety)

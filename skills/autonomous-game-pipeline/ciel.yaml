@@ -1,0 +1,44 @@
+# Ciel skill extension — fields beyond the Agent Skills spec. SKILL.md stays spec-pure.
+schema: 1
+version: 1.0.0
+format: skill/1.0
+runtimes:
+- claude_code
+- gemini_cli
+- windsurf
+- generic
+tags:
+- ciel
+- harmonized
+- domain:ai
+- gamedev
+- godot
+- bevy
+- babylon
+- autonomous
+- procedural
+- asset-generation
+triggers:
+- pattern: (make|build|generate) a game|game from description|autonomous game (dev|pipeline)|godot|bevy|babylon game
+  confidence: 0.9
+- pattern: (godogen|game pipeline|procedural game|asset generation pipeline)
+  confidence: 0.85
+source:
+  tier: 3
+  origin: https://github.com/htdt/godogen
+side_effects:
+- shell
+- network
+- external_api
+- fs
+dependencies:
+  skills:
+  - godot-engine
+  mcp: []
+  system:
+  - Godot 4 (.NET)
+  - Python 3
+  - ffmpeg
+  - imagemagick
+  - xvfb
+  - vulkan-tools

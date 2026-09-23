@@ -1,27 +1,10 @@
 ---
 name: do
-version: 1.0.0
-format: skill/1.0
 description: Orchestrated, multi-agent execution of phased implementation plans.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "execute.*plan"
-
-    confidence: 0.9
-
-  - pattern: "do.*(implementation|tasks)"
-
-    confidence: 0.9
-
-  - pattern: "start.*(phase|execution)"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Do (The Execution Layer)

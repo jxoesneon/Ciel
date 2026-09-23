@@ -1,19 +1,10 @@
 ---
 name: dev-browser
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for browser automation with persistent page state. Navigates URLs, fills forms, takes screenshots, scrapes data, and tests web apps via sandboxed JavaScript scripts.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-side_effects: ["shell", "network", "fs"]
-triggers:
-  - pattern: "(go to|navigate to|open).*(url|website|page|http)"
-    confidence: 0.9
-  - pattern: "(click on|fill.*form|take.*screenshot|scrape|automate.*browser|test.*website|log into)"
-    confidence: 0.9
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: ["dev-browser"] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Dev Browser (Browser Automation Primitive)

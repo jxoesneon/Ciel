@@ -1,23 +1,10 @@
 ---
 name: billing-and-burn-ops
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for revenue truth and token-burn auditing.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(audit|analyze|remediate).*(billing|burn|cost|revenue|stripe)"
-
-    confidence: 0.9
-
-  - pattern: "ecc tools cost audit"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Billing & Burn Ops (The Value Layer)

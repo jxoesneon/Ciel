@@ -1,23 +1,10 @@
 ---
 name: energy-procurement
-version: 1.0.0
-format: skill/1.0
 description: C&I energy spend management, tariff optimization, and PPA evaluation.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(procure|analyze|negotiate).*(energy|electricity|gas|ppa|utility)"
-
-    confidence: 0.9
-
-  - pattern: "demand charge mitigation"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Energy Procurement (C&I Strategy)

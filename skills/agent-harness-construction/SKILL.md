@@ -1,23 +1,10 @@
 ---
 name: agent-harness-construction
-version: 1.0.0
-format: skill/1.0
 description: Architecture and optimization guidelines for designing agent tool-sets, action spaces, and recovery paths.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(create|design|build|optimize).*(agent|harness|action space|tool definition)"
-
-    confidence: 0.9
-
-  - pattern: "how should I (structure|format) (tools|observations)"
-
-    confidence: 0.85
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Agent Harness Construction (Architecture Design)

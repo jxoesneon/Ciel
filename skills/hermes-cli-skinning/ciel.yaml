@@ -1,0 +1,32 @@
+# Ciel skill extension — fields beyond the Agent Skills spec. SKILL.md stays spec-pure.
+schema: 1
+version: 1.0.0
+format: skill/1.0
+runtimes:
+- claude_code
+- gemini_cli
+- windsurf
+- generic
+tags:
+- ciel
+- harmonized
+- domain:design
+triggers:
+- pattern: (skin|theme|banner).*(image|ascii|art|picture)
+  confidence: 0.9
+- pattern: (image|picture).*(skin|theme|banner|cli)
+  confidence: 0.85
+- pattern: hermes.*(skin|theme|banner)
+  confidence: 0.8
+source:
+  tier: 3
+  origin: https://github.com/Sahil-SS9/hermes-Custom-CLI-Themes
+dependencies:
+  skills: []
+  mcp: []
+  system:
+  - python3
+  - curl
+side_effects:
+- shell
+- network

@@ -1,23 +1,10 @@
 ---
 name: workflow-and-platform-ops
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for Git workflows, GitHub operations, and on-device LLM patterns.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(manage|branch|release|triage).*(git|github|ios|foundationmodel)"
-
-    confidence: 0.9
-
-  - pattern: "git flow"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Workflow & Platform (The Delivery Layer)

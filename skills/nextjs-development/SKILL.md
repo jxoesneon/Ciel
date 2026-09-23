@@ -1,23 +1,10 @@
 ---
 name: nextjs-development
-version: 1.0.0
-format: skill/1.0
 description: Next.js 16+ development using Turbopack, Server Components, and bundle optimization.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(design|build|review).*(next.js|nextjs|turbopack|app router)"
-
-    confidence: 0.9
-
-  - pattern: "next dev --turbopack"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Next.js Development (The React Meta-Layer)

@@ -1,27 +1,10 @@
 ---
 name: test-driven-development
-version: 1.0.0
-format: skill/1.0
 description: Ciel's core engineering mandate — red-green-refactor for all behavioral changes.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:ai"]
-triggers:
-
-  - pattern: "(implement|add|fix).* (feature|bug|capability)"
-
-    confidence: 0.9
-
-  - pattern: "tdd|red-green-refactor"
-
-    confidence: 0.9
-
-  - pattern: "write.*test.*first"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Test-Driven Development (TDD)

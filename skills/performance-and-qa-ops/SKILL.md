@@ -1,23 +1,10 @@
 ---
 name: performance-and-qa-ops
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for benchmarking, automated browser testing, and post-deploy monitoring.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(benchmark|qa|watch|monitor).*(performance|lcp|regression|deploy)"
-
-    confidence: 0.9
-
-  - pattern: "canary watch"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Performance & QA Operations (The Shield)

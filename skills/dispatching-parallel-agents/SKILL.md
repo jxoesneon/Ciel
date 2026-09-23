@@ -1,23 +1,10 @@
 ---
 name: dispatching-parallel-agents
-version: 1.0.0
-format: skill/1.0
 description: Core orchestration pattern for executing multiple independent tasks concurrently using isolated sub-agents.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(dispatch|run|execute).*(parallel|concurrent).*(agents|tasks)"
-
-    confidence: 0.9
-
-  - pattern: "(multiple|several) (independent|unrelated) (failures|bugs|tasks)"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Dispatching Parallel Agents (Concurrency Mandate)

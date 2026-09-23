@@ -1,19 +1,10 @@
 ---
 name: nanoclaw-repl
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for operating and extending NanoClaw, a zero-dependency session-aware REPL built on claude -p subprocesses. Manages persistent sessions, branching, and skill loading.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:ai"]
-side_effects: ["shell"]
-triggers:
-  - pattern: "(nanoclaw|claw repl|claw\\.js|session-aware repl)"
-    confidence: 0.9
-  - pattern: "(persistent session|markdown-backed session|claude -p).*(repl|session)"
-    confidence: 0.8
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: ["claude"] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: NanoClaw REPL (Session-Aware Subprocess REPL)

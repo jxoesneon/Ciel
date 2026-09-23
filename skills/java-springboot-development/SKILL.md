@@ -1,23 +1,10 @@
 ---
 name: java-springboot-development
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for Java 17+ and Spring Boot 3+ development, security, and TDD.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(design|build|review).*(java|spring boot|springboot)"
-
-    confidence: 0.9
-
-  - pattern: "spring security"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Java & Spring Boot (The Enterprise Layer)

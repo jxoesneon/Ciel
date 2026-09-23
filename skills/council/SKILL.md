@@ -1,31 +1,10 @@
 ---
 name: council
-version: 1.0.0
-format: skill/1.0
 description: Ciel's primary decision-making and evaluation body. Convene the Council of Five for evaluation, triage, and high-stakes decisions.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "convene.*council"
-
-    confidence: 0.9
-
-  - pattern: "council.*deliberation"
-
-    confidence: 0.9
-
-  - pattern: "evaluate.*(decision|choice|path)"
-
-    confidence: 0.9
-
-  - pattern: "second opinion"
-
-    confidence: 0.8
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Council of Five

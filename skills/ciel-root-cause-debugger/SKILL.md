@@ -1,23 +1,10 @@
 ---
 name: ciel-root-cause-debugger
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for systematic error tracing, log analysis, and empirical bug fixing.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(debug|fix|trace|error|crash|fail).*(root cause|log|stack)"
-
-    confidence: 0.9
-
-  - pattern: "analyze logs"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Root Cause Debugger (The Scalpel)

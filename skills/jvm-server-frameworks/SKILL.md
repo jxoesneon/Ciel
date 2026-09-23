@@ -1,23 +1,10 @@
 ---
 name: jvm-server-frameworks
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for Ktor servers, Exposed ORM, and database lifecycle management.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(build|setup).*(ktor|exposed|hikari|flyway)"
-
-    confidence: 0.9
-
-  - pattern: "ktor patterns"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: JVM Server Frameworks (Ktor & Exposed)

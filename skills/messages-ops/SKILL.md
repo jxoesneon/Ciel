@@ -1,23 +1,10 @@
 ---
 name: messages-ops
-version: 1.0.0
-format: skill/1.0
 description: Evidence-first retrieval and thread management for instant messaging surfaces (iMessage, DMs, OTPs).
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(read|check).*(message|text|dm|code|otp)"
-
-    confidence: 0.9
-
-  - pattern: "look in (imessage|twitter|x) dms"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Messages Ops (Instant Messaging)

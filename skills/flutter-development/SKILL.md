@@ -1,23 +1,10 @@
 ---
 name: flutter-development
-version: 1.0.0
-format: skill/1.0
 description: Production-ready Dart and Flutter patterns, state management, and code review standards.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(build|review|refactor).*(flutter|dart).*(feature|widget|code)"
-
-    confidence: 0.9
-
-  - pattern: "flutter patterns"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Flutter Development (Patterns & Review)

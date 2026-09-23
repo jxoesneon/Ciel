@@ -1,23 +1,10 @@
 ---
 name: article-writing
-version: 1.0.0
-format: skill/1.0
 description: Voice-aligned long-form content creation (blog posts, tutorials, newsletters).
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(write|draft|polished).*(article|blog|essay|newsletter|tutorial)"
-
-    confidence: 0.9
-
-  - pattern: "write a guide for"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Article Writing (The Content Layer)

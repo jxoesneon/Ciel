@@ -1,31 +1,10 @@
 ---
 name: agentic-engineering
-version: 1.0.0
-format: skill/1.0
 description: Ciel's operational framework for agent-led engineering and cost-aware routing.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(agentic|autonomous|agent-led).*engineering"
-
-    confidence: 0.9
-
-  - pattern: "route.*model.*tier"
-
-    confidence: 0.9
-
-  - pattern: "eval-first.*"
-
-    confidence: 0.9
-
-  - pattern: "task.*decomposition"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Agentic Engineering

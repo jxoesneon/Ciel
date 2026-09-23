@@ -1,17 +1,10 @@
 ---
 name: ciel
-version: 1.0.0
-format: skill/1.0
 description: Autonomous partner intelligence and master cognitive orchestration layer for software engineering, deep research, AAA+ 3D spatial modeling, and multi-agent coordination. Use when orchestrating complex workflows, architecting multi-domain systems, routing tasks through specialized specialist guilds, conducting rigorous self-improvement and verification, managing long-term memory, or deliberating decisions with the Council of Five.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "orchestration", "multi-agent", "governance", "memory"]
-triggers:
-  - pattern: "(ciel|council|orchestrate|double agentic loop)"
-    confidence: 0.95
-source: { tier: 1, origin: "ciel" }
-dependencies: { skills: [], mcp: [], system: ["bash", "git"] }
-side_effects: ["system", "filesystem"]
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # Ciel

@@ -1,23 +1,10 @@
 ---
 name: cpp-development
-version: 1.0.0
-format: skill/1.0
 description: Modern C++ (17/20+) standards based on Core Guidelines, RAII, and GoogleTest.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: '(design|build|review).*(cpp|c\+\+|cmake|gtest)'
-
-    confidence: 0.95
-
-  - pattern: 'cpp core guidelines'
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: C++ Development (Core Guidelines)

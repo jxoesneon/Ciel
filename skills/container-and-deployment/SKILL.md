@@ -1,23 +1,10 @@
 ---
 name: container-and-deployment
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for Docker containerization and CI/CD deployment strategies.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(deploy|docker|ci/cd|k8s).*(container|rolling|canary|github action)"
-
-    confidence: 0.9
-
-  - pattern: "deployment patterns"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Containers & Deployment (The Ship Layer)

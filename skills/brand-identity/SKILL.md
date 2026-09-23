@@ -1,23 +1,10 @@
 ---
 name: brand-identity
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for brand voice, visual identity standards, and asset management.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(define|update|audit).*(brand|voice|identity|tone)"
-
-    confidence: 0.9
-
-  - pattern: "brand guidelines"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Brand Identity (Voice & Vision)

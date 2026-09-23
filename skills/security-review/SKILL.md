@@ -1,23 +1,10 @@
 ---
 name: security-review
-version: 1.0.0
-format: skill/1.0
 description: A comprehensive security checklist and architectural patterns for CIEL development.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(check|audit|review).*(security|auth|secrets|vulnerability)"
-
-    confidence: 0.9
-
-  - pattern: "is this (safe|secure)"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Security Review (Quality Gate)

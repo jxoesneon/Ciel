@@ -1,23 +1,10 @@
 ---
 name: healthcare-compliance
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for HIPAA (US), GDPR (EU), and PHI/PII compliance in healthcare environments.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(healthcare|hipaa|phi|pii|baa).*(compliance|patient|clinician)"
-
-    confidence: 0.9
-
-  - pattern: "is this (healthcare|hipaa) compliant"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Healthcare Compliance (PHI/PII Protection)

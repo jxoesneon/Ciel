@@ -1,23 +1,10 @@
 ---
 name: analytical-data-ops
-version: 1.0.0
-format: skill/1.0
 description: ClickHouse analytics patterns, OLAP optimization, and data pipelines.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(design|optimize|query).*(clickhouse|olap|analytics|mergetree)"
-
-    confidence: 0.9
-
-  - pattern: "materialized view"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Analytical Data Ops (ClickHouse & Pipelines)

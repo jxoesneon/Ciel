@@ -1,27 +1,10 @@
 ---
 name: search-first
-version: 1.0.0
-format: skill/1.0
 description: CIEL's mandated 'Research-Before-Strategy' workflow. Enforces the discovery of existing solutions, MCPs, and libraries before writing net-new code.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(add|build|implement|create).*(feature|functionality|integration|utility)"
-
-    confidence: 0.9
-
-  - pattern: "how should (we|I) solve"
-
-    confidence: 0.85
-
-  - pattern: "write a (script|wrapper|client) for"
-
-    confidence: 0.8
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Search-First (Research Mandate)

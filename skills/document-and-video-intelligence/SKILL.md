@@ -1,23 +1,10 @@
 ---
 name: document-and-video-intelligence
-version: 1.0.0
-format: skill/1.0
 description: Document conversion/OCR via Nutrient and technical video explainers via Manim.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(process|ocr|convert|animate).*(pdf|docx|nutrient|manim|explainer)"
-
-    confidence: 0.9
-
-  - pattern: "technical explainer"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Doc & Video Intelligence (Nutrient & Manim)

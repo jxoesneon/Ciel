@@ -1,31 +1,10 @@
 ---
 name: architecture-decision-records
-version: 1.0.0
-format: skill/1.0
 description: Structured architectural decision capturing and lifecycle management.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(record|ADR).*decision"
-
-    confidence: 0.9
-
-  - pattern: "why did we.*(choose|use|select)"
-
-    confidence: 0.9
-
-  - pattern: "architectural.*trade-off"
-
-    confidence: 0.9
-
-  - pattern: "consequences.*of.*(pattern|framework)"
-
-    confidence: 0.85
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Architecture Decision Records (ADR)

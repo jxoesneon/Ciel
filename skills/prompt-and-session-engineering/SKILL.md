@@ -1,23 +1,10 @@
 ---
 name: prompt-and-session-engineering
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for prompt optimization and session management.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(optimize|rewrite|branch|compact).*(prompt|session|repl)"
-
-    confidence: 0.9
-
-  - pattern: "prompt optimizer"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Prompt & Session Engineering (The Craft Layer)

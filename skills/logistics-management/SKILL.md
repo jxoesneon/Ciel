@@ -1,23 +1,10 @@
 ---
 name: logistics-management
-version: 1.0.0
-format: skill/1.0
 description: Managing freight exceptions, carrier portfolios, and rate negotiations with evidence-first resolution.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(manage|negotiate|resolve).*(carrier|freight|shipment|delay|claim)"
-
-    confidence: 0.9
-
-  - pattern: "freight exceptions"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Logistics Management (Carrier & Claims)

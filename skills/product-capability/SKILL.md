@@ -1,23 +1,10 @@
 ---
 name: product-capability
-version: 1.0.0
-format: skill/1.0
 description: Translates high-level product intent into engineering-ready capability contracts and invariants.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(create|define|translate).*(capability|contract|constraints)"
-
-    confidence: 0.9
-
-  - pattern: "turn (prd|intent) into (srs|contract)"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Product Capability (The Engineering Contract)

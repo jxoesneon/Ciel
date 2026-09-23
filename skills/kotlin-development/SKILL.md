@@ -1,23 +1,10 @@
 ---
 name: kotlin-development
-version: 1.0.0
-format: skill/1.0
 description: Idiomatic Kotlin patterns, structured concurrency (Coroutines/Flow), and Kotest/MockK testing.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(design|build|review).*(kotlin|coroutine|flow)"
-
-    confidence: 0.9
-
-  - pattern: "idiomatic kotlin"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Kotlin Development (Idiomatic & Async)

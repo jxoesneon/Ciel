@@ -1,23 +1,10 @@
 ---
 name: email-ops
-version: 1.0.0
-format: skill/1.0
 description: Evidence-first mailbox triage, drafting, and send-verification workflow.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(read|send|triage|draft).*(email|mail|inbox)"
-
-    confidence: 0.9
-
-  - pattern: "reply to (the|this) email"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Email Ops (Mailbox Operations)

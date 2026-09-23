@@ -1,21 +1,10 @@
 ---
 name: laravel-plugin-discovery
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for MCP-based package discovery and health evaluation. Finds, filters, and assesses Laravel packages via LaraPlugins.io MCP with health scoring and version compatibility checks.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-  - pattern: "(find|discover|search).*(laravel|plugin|package).*(healthy|compatible|maintained)"
-    confidence: 0.9
-  - pattern: "laravel.*(plugin|package).*(discovery|search|evaluate|health)"
-    confidence: 0.85
-  - pattern: "laraplugins"
-    confidence: 0.9
-source: { tier: 2, origin: "laravel-plugin-discovery" }
-dependencies: { skills: [], mcp: ["laraplugins"], system: [] }
-side_effects: ["network"]
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Laravel Plugin Discovery

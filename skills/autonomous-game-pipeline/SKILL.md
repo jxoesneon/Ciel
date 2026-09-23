@@ -1,22 +1,10 @@
 ---
 name: autonomous-game-pipeline
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for autonomous game generation from natural language descriptions across Godot 4, Bevy, and Babylon.js. Builds complete games with assets and proof video.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:ai", "gamedev", "godot", "bevy", "babylon", "autonomous", "procedural", "asset-generation"]
-triggers:
-  - pattern: "(make|build|generate) a game|game from description|autonomous game (dev|pipeline)|godot|bevy|babylon game"
-    confidence: 0.9
-  - pattern: "(godogen|game pipeline|procedural game|asset generation pipeline)"
-    confidence: 0.85
-source: { tier: 3, origin: "https://github.com/htdt/godogen" }
-side_effects: ["shell", "network", "external_api", "fs"]
-dependencies:
-  skills: ["godot-engine"]
-  mcp: []
-  system: ["Godot 4 (.NET)", "Python 3", "ffmpeg", "imagemagick", "xvfb", "vulkan-tools"]
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Autonomous Game Generator

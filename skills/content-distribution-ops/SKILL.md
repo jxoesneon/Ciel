@@ -1,23 +1,10 @@
 ---
 name: content-distribution-ops
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for social graph optimization, content creation, and cross-platform distribution.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(post|tweet|distribute|optimize).*(social|x|linkedin|threads|bluesky)"
-
-    confidence: 0.9
-
-  - pattern: "content engine"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Content Distribution (The Social Layer)

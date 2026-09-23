@@ -1,23 +1,10 @@
 ---
 name: laravel-development
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for Laravel development, security, TDD, and CI verification.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(design|build|review).*(laravel|php|artisan)"
-
-    confidence: 0.9
-
-  - pattern: "laravel patterns"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Laravel Development (The Modern PHP Layer)

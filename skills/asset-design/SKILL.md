@@ -1,23 +1,10 @@
 ---
 name: asset-design
-version: 1.0.0
-format: skill/1.0
 description: CIEL's unified design hub for Logo generation, Banners, Icons, and Corporate Identity (CIP).
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(create|design|generate).*(logo|banner|icon|header|card)"
-
-    confidence: 0.9
-
-  - pattern: "design a (facebook|twitter|linkedin) cover"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Asset Design (The Creative Hub)

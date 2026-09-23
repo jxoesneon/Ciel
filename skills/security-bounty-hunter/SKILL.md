@@ -1,23 +1,10 @@
 ---
 name: security-bounty-hunter
-version: 1.0.0
-format: skill/1.0
 description: An offensive security framework for discovering exploitable, bounty-worthy vulnerabilities in reachable surfaces.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(hunt|discover).*(vulnerability|exploit|bounty)"
-
-    confidence: 0.9
-
-  - pattern: "find exploitable bugs"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Security Bounty Hunter (Offensive Discovery)

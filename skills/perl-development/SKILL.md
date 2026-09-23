@@ -1,23 +1,10 @@
 ---
 name: perl-development
-version: 1.0.0
-format: skill/1.0
 description: Modern Perl 5.36+ idioms, taint-aware security, and Test2::V0 testing.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(design|build|review).*(perl|cpan|cpanfile)"
-
-    confidence: 0.9
-
-  - pattern: "modern perl"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Perl Development (Modern & Secure)

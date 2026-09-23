@@ -1,31 +1,10 @@
 ---
 name: research-ops
-version: 1.0.0
-format: skill/1.0
 description: Ciel's evidence-first research and discovery orchestration.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "research.*"
-
-    confidence: 0.9
-
-  - pattern: "(look up|search for|find).*latest"
-
-    confidence: 0.9
-
-  - pattern: "compare.*options"
-
-    confidence: 0.9
-
-  - pattern: "market.*research"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Research Ops

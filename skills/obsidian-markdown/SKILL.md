@@ -1,19 +1,10 @@
 ---
 name: obsidian-markdown
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for Obsidian Flavored Markdown. Author and edit wikilinks, embeds, callouts, properties, tags, and math/diagram syntax that extends CommonMark and GFM.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:knowledge"]
-side_effects: []
-triggers:
-  - pattern: "(obsidian|wikilink|callout|frontmatter|embed).*(markdown|note|syntax)"
-    confidence: 0.9
-  - pattern: "obsidian flavored markdown"
-    confidence: 1.0
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Obsidian Flavored Markdown

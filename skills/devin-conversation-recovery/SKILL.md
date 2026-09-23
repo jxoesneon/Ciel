@@ -1,19 +1,10 @@
 ---
 name: devin-conversation-recovery
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for recovering past Devin CLI/ACP conversations from local SQLite stores. A conversation archaeology primitive for context recovery across sessions.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:ops"]
-triggers:
-  - pattern: "(recover|find|extract|locate).*(devin|conversation|session|acp)"
-    confidence: 0.9
-  - pattern: "devin.*(history|transcript|archive|past)"
-    confidence: 0.85
-source: { tier: 2, origin: "devin-conversation-recovery" }
-dependencies: { skills: [], mcp: [], system: ["python3", "sqlite3"] }
-side_effects: ["fs"]
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Devin Conversation Recovery

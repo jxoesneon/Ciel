@@ -1,23 +1,10 @@
 ---
 name: social-media-automation
-version: 1.0.0
-format: skill/1.0
 description: Programmatic interaction with X (Twitter) and cross-platform content distribution.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(post|tweet|thread|search).*(x|twitter|social media)"
-
-    confidence: 0.9
-
-  - pattern: "x api"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Social Media Automation (X & Cross-Post)

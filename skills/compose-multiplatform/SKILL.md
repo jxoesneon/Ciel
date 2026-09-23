@@ -1,23 +1,10 @@
 ---
 name: compose-multiplatform
-version: 1.0.0
-format: skill/1.0
 description: Shared UI patterns for Android, iOS, Desktop, and Web using Compose Multiplatform.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(build|design).*(compose multiplatform|jetpack compose).*(ui|interface)"
-
-    confidence: 0.9
-
-  - pattern: "compose multiplatform patterns"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Compose Multiplatform (Shared UI)

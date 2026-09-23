@@ -1,31 +1,10 @@
 ---
 name: orchestration
-version: 1.0.0
-format: skill/1.0
 description: High-level task decomposition, planning, and multi-agent coordination.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(blueprint|plan|roadmap).*for"
-
-    confidence: 0.9
-
-  - pattern: "orchestrate.*"
-
-    confidence: 0.9
-
-  - pattern: "break down.*into steps"
-
-    confidence: 0.9
-
-  - pattern: "complex.*task"
-
-    confidence: 0.7
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Orchestration

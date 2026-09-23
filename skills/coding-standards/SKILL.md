@@ -1,27 +1,10 @@
 ---
 name: coding-standards
-version: 1.0.0
-format: skill/1.0
 description: Baseline cross-project engineering conventions for readability, immutability, and architecture.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(code|coding).*(standard|convention|quality)"
-
-    confidence: 0.9
-
-  - pattern: "how should I.*(write|structure|format).*(code|function|component)"
-
-    confidence: 0.9
-
-  - pattern: "(review|refactor).*(code|file).*(quality|readability)"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Coding-Standards (Engineering Baseline)

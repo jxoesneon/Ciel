@@ -1,23 +1,10 @@
 ---
 name: rules-distill
-version: 1.0.0
-format: skill/1.0
 description: The protocol for extracting cross-cutting principles from skills and distilling them into global workspace rules.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(distill|extract|update).*(rules|principles)"
-
-    confidence: 0.9
-
-  - pattern: "turn (skills|patterns) into rules"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Rules Distill (Principle Extraction)

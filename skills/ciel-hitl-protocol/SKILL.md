@@ -1,23 +1,10 @@
 ---
 name: ciel-hitl-protocol
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for Human-in-the-Loop escalation, risk assessment, and decision gating.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(escalate|ask|approve|confirm|decide).*(user|host|human)"
-
-    confidence: 0.9
-
-  - pattern: "high risk operation"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: HITL Protocol (The Handshake)

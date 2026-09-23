@@ -1,21 +1,10 @@
 ---
 name: hermes-cli-skinning
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for CLI theming via image-to-ASCII banner conversion. Turns any reference image into a complete CLI skin with rich-markup pictorial banner art.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:design"]
-triggers:
-  - pattern: "(skin|theme|banner).*(image|ascii|art|picture)"
-    confidence: 0.9
-  - pattern: "(image|picture).*(skin|theme|banner|cli)"
-    confidence: 0.85
-  - pattern: "hermes.*(skin|theme|banner)"
-    confidence: 0.8
-source: { tier: 3, origin: "https://github.com/Sahil-SS9/hermes-Custom-CLI-Themes" }
-dependencies: { skills: [], mcp: [], system: ["python3", "curl"] }
-side_effects: ["shell", "network"]
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Hermes CLI Skinning

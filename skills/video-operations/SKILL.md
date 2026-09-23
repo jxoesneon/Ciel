@@ -1,23 +1,10 @@
 ---
 name: video-operations
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for AI-assisted video editing, perception, and server-side processing.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(edit|cut|transcode|index|stream).*(video|footage)"
-
-    confidence: 0.9
-
-  - pattern: "videodb"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Video Operations (Perception & Editing)

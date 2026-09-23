@@ -1,23 +1,10 @@
 ---
 name: ciel-skill-engineering
-version: 1.0.0
-format: skill/1.0
 description: CIEL's meta-framework for skill creation, writing standards, and self-reproduction.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(create|edit|review).*(skill|persona|soul|reproduce)"
-
-    confidence: 0.9
-
-  - pattern: "node init_skill.cjs"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Skill Engineering (The Reproduction Layer)

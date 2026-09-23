@@ -1,23 +1,10 @@
 ---
 name: python-development
-version: 1.0.0
-format: skill/1.0
 description: Idiomatic Python patterns, modern type hints, and pytest-driven development.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(design|build|review).*(python|pip|pytest|type hint)"
-
-    confidence: 0.9
-
-  - pattern: "idiomatic python"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Python Development (Idiomatic & Typed)

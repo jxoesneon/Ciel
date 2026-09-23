@@ -1,0 +1,34 @@
+# Ciel skill extension — fields beyond the Agent Skills spec. SKILL.md stays spec-pure.
+schema: 1
+version: 1.0.0
+format: skill/1.0
+runtimes:
+- claude_code
+- gemini_cli
+- windsurf
+- generic
+tags:
+- ciel
+- harmonized
+- domain:systems
+- godot
+- mcp
+- visual-verification
+- debugger
+triggers:
+- pattern: (godot[- ]?mcp|godot[- ]screenshot|visual[- ]verification|godot[- ]editor[- ]bridge|mcp[- ]godot)
+  confidence: 0.9
+- pattern: (take_screenshot|execute_gdscript|get_debugger_errors|focus_editor_viewport)
+  confidence: 0.95
+source:
+  tier: 1
+  origin: self-synthesized
+side_effects:
+- shell
+- network
+dependencies:
+  skills:
+  - godot-engine
+  mcp:
+  - godot-mcp
+  system: []

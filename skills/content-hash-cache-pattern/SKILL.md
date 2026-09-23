@@ -1,23 +1,10 @@
 ---
 name: content-hash-cache-pattern
-version: 1.0.0
-format: skill/1.0
 description: An architectural pattern for caching expensive file processing results using SHA-256 content hashes.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "cache (expensive|file|processing|pdf|ocr|parsing)"
-
-    confidence: 0.9
-
-  - pattern: "content-hash caching"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Content-Hash Cache (I/O Optimization)

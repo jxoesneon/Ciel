@@ -24,19 +24,26 @@ def get_domain(skill_name, content):
     return "strategy" # Default
 
 def harmonize_skill(file_path):
-    with open(file_path, encoding='utf-8') as f:
-        content = f.read()
+    skill_dir = os.path.dirname(file_path)
+    # Ciel extension fields (runtimes, tags, ...) live in the ciel.yaml
+    # sidecar when present; SKILL.md stays Agent-Skills-spec pure.
+    meta_path = os.path.join(skill_dir, "ciel.yaml")
+    if not os.path.isfile(meta_path):
+        meta_path = file_path
+
+    with open(meta_path, encoding='utf-8') as f:
+        meta = f.read()
 
     # 1. Runtime Normalization (H1)
     # Match runtimes: [...] or runtimes: \n - ...
-    content = re.sub(r'runtimes:.*?(?=\n\w)', 'runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]', content, flags=re.DOTALL)
+    meta = re.sub(r'runtimes:.*?(?=\n\w)', 'runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]', meta, flags=re.DOTALL)
 
     # 2. Domain Tag Enrichment (H2)
-    skill_name = os.path.basename(os.path.dirname(file_path))
-    domain = get_domain(skill_name, content)
+    skill_name = os.path.basename(skill_dir)
+    domain = get_domain(skill_name, meta)
 
     # Update tags
-    tag_match = re.search(r'tags: \[(.*?)\]', content)
+    tag_match = re.search(r'tags: \[(.*?)\]', meta)
     if tag_match:
         tags = [t.strip().strip('"').strip("'") for t in tag_match.group(1).split(',')]
         if f"domain:{domain}" not in tags:
@@ -45,9 +52,17 @@ def harmonize_skill(file_path):
         tags = [t for t in tags if t not in ["ciel", "harmonized"]]
         tags = ["ciel", "harmonized"] + sorted(set(tags))
         new_tags_str = 'tags: [' + ', '.join(f'"{t}"' for t in tags) + ']'
-        content = content.replace(tag_match.group(0), new_tags_str)
+        meta = meta.replace(tag_match.group(0), new_tags_str)
 
-    # 3. Placeholder Purge (M6)
+    if meta_path != file_path:
+        with open(meta_path, 'w', encoding='utf-8') as f:
+            f.write(meta)
+    else:
+        content = meta
+
+    # 3. Placeholder Purge (M6) — SKILL.md body only
+    with open(file_path, encoding='utf-8') as f:
+        content = f.read() if meta_path != file_path else content
     # Replace TODO, FIXME, ... with signal
     content = content.replace('TODO', 'Refine implementation logic to align with Ciel 1.0 standards.')
     content = content.replace('FIXME', 'Resolve architectural debt and ensure deterministic behavior.')

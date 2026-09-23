@@ -1,23 +1,10 @@
 ---
 name: timeline-report
-version: 1.0.0
-format: skill/1.0
 description: Generates a narrative history of a project's evolution using claude-mem observations.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:ai"]
-triggers:
-
-  - pattern: "(generate|write).*(timeline|journey|history).*(report)"
-
-    confidence: 0.9
-
-  - pattern: "what is the story of this project"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Timeline Report (Technical History)

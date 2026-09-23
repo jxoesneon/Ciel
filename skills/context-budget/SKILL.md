@@ -1,23 +1,10 @@
 ---
 name: context-budget
-version: 1.0.0
-format: skill/1.0
 description: A proactive audit tool for monitoring and optimizing token overhead across agents, skills, and MCP servers.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(check|audit|view).*(context|token).*(budget|usage|overhead)"
-
-    confidence: 0.9
-
-  - pattern: "/context-budget"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Context Budget (Context Audit)

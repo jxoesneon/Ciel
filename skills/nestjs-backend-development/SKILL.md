@@ -1,23 +1,10 @@
 ---
 name: nestjs-backend-development
-version: 1.0.0
-format: skill/1.0
 description: Modular NestJS architecture, DTO validation, Guards, and Type-Safe backend patterns.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(design|build|review).*(nest.js|nestjs|decorator|provider)"
-
-    confidence: 0.9
-
-  - pattern: "nest generate"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: NestJS Development (Modular TypeScript)

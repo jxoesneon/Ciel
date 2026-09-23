@@ -1,23 +1,10 @@
 ---
 name: quality-and-returns
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for manufacturing quality (NCR/CAPA) and reverse logistics (Returns/Grading).
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(investigate|process).*(non-conformance|ncr|capa|return|refund)"
-
-    confidence: 0.9
-
-  - pattern: "root cause analysis"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Quality & Returns (Integrity & Recovery)

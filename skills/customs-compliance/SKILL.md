@@ -1,23 +1,10 @@
 ---
 name: customs-compliance
-version: 1.0.0
-format: skill/1.0
 description: Tariff classification, documentation standards, and regulatory screening for international trade.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(classify|export|import|customs).*(hs code|tariff|compliance|border)"
-
-    confidence: 0.9
-
-  - pattern: "denied party screening"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Customs Compliance (Trade Integrity)

@@ -1,0 +1,35 @@
+# Ciel skill extension — fields beyond the Agent Skills spec. SKILL.md stays spec-pure.
+schema: 1
+version: 1.0.0
+format: skill/1.0
+runtimes:
+- claude_code
+- gemini_cli
+- windsurf
+- generic
+tags:
+- ciel
+- harmonized
+- domain:ai
+- audio
+- dsp
+- synthesis
+- procedural
+- psychoacoustics
+- spatial-audio
+- game-audio
+triggers:
+- pattern: (procedural audio|soundscape|create audio for this screen|sound effect|sfx|synthesizer|dsp|generative music|adaptive audio)
+  confidence: 0.9
+- pattern: (godot audio|web audio|audiostreamgenerator|audio worklet|psychoacoustics|spatial audio|ambisonics|microtonal)
+  confidence: 0.85
+source:
+  tier: 0
+  origin: seed
+side_effects:
+- fs
+dependencies:
+  skills: []
+  mcp: []
+  system:
+  - python3

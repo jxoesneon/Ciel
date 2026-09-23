@@ -1,23 +1,10 @@
 ---
 name: ciel-swift-and-ios-standards
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for Swift 6.2 concurrency, actor-based persistence, and Liquid Glass design.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(design|build|review).*(swift|ios|concurrency|actor|glass)"
-
-    confidence: 0.9
-
-  - pattern: "approachable concurrency"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Swift & iOS Standards (The Apple Layer)

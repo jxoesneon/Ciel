@@ -1,23 +1,10 @@
 ---
 name: security-scan
-version: 1.0.0
-format: skill/1.0
 description: Audits CIEL configuration for misconfigurations and prompt injection risks using AgentShield.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:ai"]
-triggers:
-
-  - pattern: "(scan|audit).*(config|settings|shield)"
-
-    confidence: 0.9
-
-  - pattern: "npx ecc-agentshield"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Security Scan (Harness Auditing)

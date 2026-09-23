@@ -1,19 +1,10 @@
 ---
 name: blueprint
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for multi-session construction planning. Turns a one-line objective into a step-by-step plan with adversarial review gates, dependency graphs, parallel step detection, and self-contained per-step context briefs.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:strategy"]
-triggers:
-  - pattern: "(blueprint|construction plan|multi-session plan|multi-agent plan)"
-    confidence: 0.9
-  - pattern: "(plan|roadmap).*(multi-PR|multi-session|multi-agent|parallel)"
-    confidence: 0.85
-source: { tier: 1, origin: "blueprint" }
-dependencies: { skills: [], mcp: [], system: ["git", "gh"] }
-side_effects: []
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Blueprint — Construction Plan Generator

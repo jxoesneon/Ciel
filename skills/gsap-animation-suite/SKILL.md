@@ -1,23 +1,10 @@
 ---
 name: gsap-animation-suite
-version: 1.0.0
-format: skill/1.0
 description: CIEL's unified framework for high-performance GSAP animations, timelines, and plugins.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(animate|build).*(gsap|timeline|tween|ease|svg|morph)"
-
-    confidence: 0.9
-
-  - pattern: "gsap.to"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: GSAP Animation Suite (The Motion Layer)

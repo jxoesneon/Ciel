@@ -1,23 +1,10 @@
 ---
 name: animation-framework-integration
-version: 1.0.0
-format: skill/1.0
 description: Standards for integrating GSAP into React, Vue, and Svelte while ensuring clean memory management.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(gsap|animation).*(react|vue|svelte|mounted|cleanup)"
-
-    confidence: 0.9
-
-  - pattern: "useGSAP"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Animation Framework Integration (Memory & Lifecycle)

@@ -1,23 +1,10 @@
 ---
 name: ui-demo-recording
-version: 1.0.0
-format: skill/1.0
 description: A protocol for recording polished UI demo videos using Playwright with injected cursors and subtitles.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(record|create).*(demo|walkthrough|tutorial).*(video)"
-
-    confidence: 0.9
-
-  - pattern: "show me how it works visually"
-
-    confidence: 0.85
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: UI Demo Recording (Playwright)

@@ -1,23 +1,10 @@
 ---
 name: ciel-review-and-adversarial
-version: 1.0.0
-format: skill/1.0
 description: CIEL's adversarial review framework for rigorous code review, security auditing, and adversarial testing.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(review|audit|adversarial|challenge|critique).*(code|pr|security|design)"
-
-    confidence: 0.9
-
-  - pattern: "request.*review"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Review and Adversarial (The Challenger)

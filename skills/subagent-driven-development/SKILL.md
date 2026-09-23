@@ -1,23 +1,10 @@
 ---
 name: subagent-driven-development
-version: 1.0.0
-format: skill/1.0
 description: Core CIEL orchestration pattern for delegating complex, multi-step implementation plans to ephemeral, specialized sub-agents.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "execute (plan|tasks|implementation)"
-
-    confidence: 0.9
-
-  - pattern: "(delegate|dispatch).*(task|subagent)"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Subagent-Driven Development (Delegation Mandate)

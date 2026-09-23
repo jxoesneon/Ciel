@@ -1,23 +1,10 @@
 ---
 name: google-workspace-management
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for managing Google Drive, Docs, Sheets, and Slides via CLI and MCP tools.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(manage|edit|clean|summarize|gws).*(google|drive|gdoc|gsheet|gmail|calendar)"
-
-    confidence: 0.9
-
-  - pattern: "gws auth setup"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Google Workspace Management (The Asset Layer)

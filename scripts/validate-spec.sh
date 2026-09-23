@@ -20,6 +20,7 @@ fail() {
   FAILED=$((FAILED + 1))
 }
 ok() { printf "\033[1;32m[validate]\033[0m ok: %s\n" "$*"; }
+warn() { printf "\033[1;33m[validate]\033[0m %s\n" "$*" 1>&2; }
 
 [[ -d "$SKILL" ]] || {
   fail "$SKILL missing"
@@ -304,13 +305,34 @@ say "Checking external skills frontmatter..."
 for f in "$ROOT"/skills/*/SKILL.md; do
   [[ -f "$f" ]] || continue
   head -n 30 "$f" >"$f.head.$$"
-  for key in name version format runtimes triggers license tags description; do
+  for key in name description license; do
     if ! grep -qE "^${key}:" "$f.head.$$"; then
       fail "$(realpath --relative-to="$ROOT" "$f" 2>/dev/null || echo "$f"): missing frontmatter key '${key}'"
     fi
   done
   rm -f "$f.head.$$"
+  # Ciel extension fields live in the sidecar, keeping SKILL.md spec-pure.
+  sidecar="$(dirname "$f")/ciel.yaml"
+  if [[ ! -f "$sidecar" ]]; then
+    fail "$(dirname "$f"): missing ciel.yaml sidecar"
+  else
+    for key in version triggers tags runtimes; do
+      if ! grep -qE "^${key}:" "$sidecar"; then
+        fail "$sidecar: missing key '${key}'"
+      fi
+    done
+  fi
 done
+if command -v npx >/dev/null 2>&1; then
+  for f in "$ROOT"/skills/*/SKILL.md; do
+    [[ -f "$f" ]] || continue
+    if ! npx -y skills-ref validate "$(dirname "$f")" >/dev/null 2>&1; then
+      fail "$(dirname "$f"): skills-ref validation failed"
+    fi
+  done
+else
+  warn "npx not found; skipping skills-ref validation of external skills"
+fi
 
 # ---------------------------------------------------------------- Agents frontmatter
 say "Checking agents frontmatter..."

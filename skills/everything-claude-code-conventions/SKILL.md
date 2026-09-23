@@ -1,27 +1,10 @@
 ---
 name: everything-claude-code-conventions
-version: 1.0.0
-format: skill/1.0
 description: Core repository standards for naming, structure, commits, and workflows.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(convention|style|standard|commit).*(rule|guide|pattern)"
-
-    confidence: 0.9
-
-  - pattern: "how should I.*(name|format|structure)"
-
-    confidence: 0.9
-
-  - pattern: "what are the.*(repo|project).*standards"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Everything-Claude-Code-Conventions (The Conventions Layer)

@@ -1,23 +1,10 @@
 ---
 name: ciel-ml-and-data-patterns
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for PyTorch ML patterns and Postgres data optimization.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(design|build|optimize).*(pytorch|tensor|postgres|sql|ml)"
-
-    confidence: 0.9
-
-  - pattern: "device-agnostic code"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: ML & Data (The Intelligence Layer)

@@ -1,23 +1,10 @@
 ---
 name: ciel-project-scaffolder
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for standardized project initialization, module creation, and boilerplate management.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(scaffold|create|init|new).*(project|module|service|boilerplate)"
-
-    confidence: 0.9
-
-  - pattern: "standardize project"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Project Scaffolder (The Foundation)

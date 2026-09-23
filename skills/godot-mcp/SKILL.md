@@ -1,22 +1,10 @@
 ---
 name: godot-mcp
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for Godot 4 MCP editor bridging, visual screenshot verification, live GDScript execution, and runtime error telemetry. Bridges LLM reasoning with live editor execution.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems", "godot", "mcp", "visual-verification", "debugger"]
-triggers:
-  - pattern: "(godot[- ]?mcp|godot[- ]screenshot|visual[- ]verification|godot[- ]editor[- ]bridge|mcp[- ]godot)"
-    confidence: 0.9
-  - pattern: "(take_screenshot|execute_gdscript|get_debugger_errors|focus_editor_viewport)"
-    confidence: 0.95
-source: { tier: 1, origin: self-synthesized }
-side_effects: ["shell", "network"]
-dependencies:
-  skills: ["godot-engine"]
-  mcp: ["godot-mcp"]
-  system: []
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Godot MCP & Visual Verification

@@ -1,23 +1,10 @@
 ---
 name: ciel-documentation-engine
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for high-integrity documentation generation, validation, and semantic indexing.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "documentation", "domain:systems"]
-triggers:
-
-  - pattern: '(generate|update|validate).*(docs|documentation|readme)'
-
-    confidence: 1.0
-
-  - pattern: "semantic indexing"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Documentation Engine

@@ -1,21 +1,10 @@
 ---
 name: autonomous-3d-studio
-version: 2.0.0
-format: skill/1.0
 description: CIEL's autonomous AAA+ studio-grade 3D modeling, sculpting, retopology, UV unwrapping, PBR/MaterialX texturing, baking, procedural generation, USD composition, and engine integration engine.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "3d", "blender", "unreal-engine", "usd", "pbr", "materialx", "retopology", "baking", "hard-surface", "character", "geometry-nodes", "substance", "mcp", "aaa-quality", "domain:graphics", "harmonized"]
-triggers:
-  - pattern: "(3d|model|mesh|sculpt|retopo|retopology|uv|bake|baking|pbr|materialx|openpbr|blender|bpy|maya|houdini|unreal|nanite|gltf|fbx|usd|obj|substance)"
-    confidence: 0.95
-  - pattern: "(hard[- ]surface|organic|character|anatomy|facs|rigging|skinning|geometry[- ]nodes|vex|texel[- ]density|subd|trellis|hunyuan3d|rodin)"
-    confidence: 0.90
-source: { tier: 1, origin: harmonized }
-dependencies:
-  skills: ["ciel-quality-and-verification", "ciel-artifact-management", "research-ops", "continuous-learning-v2"]
-  mcp: []
-  system: ["python3", "blender"]
+metadata:
+  ciel-version: 2.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # Autonomous 3D Studio — AAA+ Production Engine

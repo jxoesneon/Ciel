@@ -1,23 +1,10 @@
 ---
 name: modern-js-runtimes
-version: 1.0.0
-format: skill/1.0
 description: Fast JS/TS development using Bun and specialized hashing safety for Ethereum.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(build|setup|run).*(bun|runtime|hashing|keccak)"
-
-    confidence: 0.9
-
-  - pattern: "bun install"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Modern JS Runtimes (Bun & Keccak)

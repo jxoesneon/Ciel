@@ -1,23 +1,10 @@
 ---
 name: market-research
-version: 1.0.0
-format: skill/1.0
 description: Evidence-first research for competitive analysis, fund diligence, and market sizing.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(research|analyze).*(market|competitor|investor|category|trend)"
-
-    confidence: 0.9
-
-  - pattern: "tam/sam/som"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Market Research (Strategic Discovery)

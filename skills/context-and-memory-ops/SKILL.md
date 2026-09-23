@@ -1,23 +1,10 @@
 ---
 name: context-and-memory-ops
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for project context, voice modeling, and codebase walkthroughs.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(save|resume|model|tour).*(context|voice|memory|walkthrough)"
-
-    confidence: 0.9
-
-  - pattern: "context keeper"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Context & Memory (Persistence)

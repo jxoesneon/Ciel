@@ -1,23 +1,10 @@
 ---
 name: ciel-meta-operations
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for API standards, UI state auditing, and system configuration.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(audit|configure|call).*(ui|state|api|ciel|ecc)"
-
-    confidence: 0.9
-
-  - pattern: "click path audit"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Meta Operations (The Orchestrator)

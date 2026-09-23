@@ -1,19 +1,10 @@
 ---
 name: gastown-orchestration
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for CLI-toolchain multi-agent orchestration via the gt/bd command suite. Manages agent lifecycles, work slinging, and crash recovery.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:ai"]
-side_effects: ["shell", "state_mutation"]
-triggers:
-  - pattern: "(gastown|gas town|gt command|bd command|sling work|polecat|convoy|rig|bead)"
-    confidence: 0.9
-  - pattern: "(crew|refinery|witness|mayor|deacon|GUPP|hook|molecule)"
-    confidence: 0.8
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: ["gt", "bd"] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Gas Town Orchestration (CLI Toolchain)

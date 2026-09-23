@@ -1,23 +1,10 @@
 ---
 name: ciel-security-and-design
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for Solidity security and visual design systems.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(audit|design|style).*(solidity|amm|design system|token|css)"
-
-    confidence: 0.9
-
-  - pattern: "design system"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Security & Design (The Integrity Layer)

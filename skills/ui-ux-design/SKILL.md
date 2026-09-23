@@ -1,23 +1,10 @@
 ---
 name: ui-ux-design
-version: 1.0.0
-format: skill/1.0
 description: CIEL's design intelligence for web and mobile. Provides style selection, UX guidelines, and accessibility standards.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(design|build|refactor).*(ui|ux|interface|page|component)"
-
-    confidence: 0.9
-
-  - pattern: "recommend (style|color|font)"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: UI/UX Design (Intelligence)

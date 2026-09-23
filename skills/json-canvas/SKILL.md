@@ -1,19 +1,10 @@
 ---
 name: json-canvas
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for JSON Canvas (.canvas) files. Build visual canvases, mind maps, and flowcharts with nodes, edges, and groups per the JSON Canvas Spec 1.0.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:knowledge"]
-side_effects: ["fs"]
-triggers:
-  - pattern: "(\\.canvas|json canvas).*(node|edge|group|create|edit)"
-    confidence: 0.9
-  - pattern: "json canvas"
-    confidence: 1.0
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: JSON Canvas

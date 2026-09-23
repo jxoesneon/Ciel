@@ -1,19 +1,10 @@
 ---
 name: procedural-audio
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for procedural audio synthesis, spatial acoustics, and generative soundscapes from scene graphs. Zero static sample dependencies — pure DSP code emission.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:ai", "audio", "dsp", "synthesis", "procedural", "psychoacoustics", "spatial-audio", "game-audio"]
-triggers:
-  - pattern: "(procedural audio|soundscape|create audio for this screen|sound effect|sfx|synthesizer|dsp|generative music|adaptive audio)"
-    confidence: 0.9
-  - pattern: "(godot audio|web audio|audiostreamgenerator|audio worklet|psychoacoustics|spatial audio|ambisonics|microtonal)"
-    confidence: 0.85
-source: { tier: 0, origin: seed }
-side_effects: ["fs"]
-dependencies: { skills: [], mcp: [], system: ["python3"] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Procedural Audio & Autonomous Audiography

@@ -1,23 +1,10 @@
 ---
 name: ciel-frontend-and-hooks
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for React patterns and local rule enforcement via Hookify.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(build|review|enforce).*(react|hook|pattern|rule|hookify)"
-
-    confidence: 0.9
-
-  - pattern: "hookify rule"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Frontend & Hooks (The Component Layer)

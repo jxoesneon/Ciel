@@ -1,23 +1,10 @@
 ---
 name: django-development
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for Django and DRF development, security, TDD, and CI verification.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(design|build|review).*(django|drf|manage.py|python web)"
-
-    confidence: 0.9
-
-  - pattern: "django patterns"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Django Development (The Python Web Layer)

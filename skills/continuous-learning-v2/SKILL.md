@@ -1,23 +1,10 @@
 ---
 name: continuous-learning-v2
-version: 1.0.0
-format: skill/1.0
 description: CIEL's primary evolution engine. Uses hook-driven "Instincts" with confidence scoring to learn project-specific and global patterns.
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
-triggers:
-
-  - pattern: '(instinct|learning|evolution).*(status|evolve|promote)'
-
-    confidence: 0.95
-
-  - pattern: 'how is (ciel|the agent) evolving'
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Continuous Learning V2 (The Instinct Engine)

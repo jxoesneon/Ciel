@@ -1,23 +1,10 @@
 ---
 name: system-integration
-version: 1.0.0
-format: skill/1.0
 description: Decoupling business logic using Hexagonal Architecture and building repo-native API connectors.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(integrate|build|add).*(connector|provider|integration|adapter)"
-
-    confidence: 0.9
-
-  - pattern: "hexagonal architecture"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: System Integration (Ports & Adapters)

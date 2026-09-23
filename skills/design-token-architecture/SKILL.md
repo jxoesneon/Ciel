@@ -1,18 +1,10 @@
 ---
 name: design-token-architecture
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for three-layer design token systems (primitive→semantic→component) with CSS variables and naming conventions. Advisory only.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:design"]
-triggers:
-  - pattern: "(design token|token architecture|css variable|design system).*(scale|naming|primitive|semantic|component)"
-    confidence: 0.9
-  - pattern: "(spacing|typography) (scale|token)"
-    confidence: 0.9
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Design Token Architecture

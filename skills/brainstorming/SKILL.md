@@ -1,31 +1,10 @@
 ---
 name: brainstorming
-version: 1.0.0
-format: skill/1.0
 description: Pre-implementation exploration of intent, requirements, and architectural design.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(brainstorm|design|spec|requirements).*(for|new|feature)"
-
-    confidence: 0.9
-
-  - pattern: "how should we.*(build|implement|architecture)"
-
-    confidence: 0.9
-
-  - pattern: "let's explore.*(idea|concept|approach)"
-
-    confidence: 0.9
-
-  - pattern: "I want to.*(add|create).*(but|not sure)"
-
-    confidence: 0.8
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Brainstorming (The Creative Layer)

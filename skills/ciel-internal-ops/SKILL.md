@@ -1,23 +1,10 @@
 ---
 name: ciel-internal-ops
-version: 1.0.0
-format: skill/1.0
 description: Meta-operations for CIEL configuration, LLM cost management, and parallel workflows.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(configure|manage|split).*(ciel|cost|dmux|parallel|ecc)"
-
-    confidence: 0.9
-
-  - pattern: "configure-ecc"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Internal Operations (The Meta-Framework)

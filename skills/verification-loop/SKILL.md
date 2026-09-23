@@ -1,27 +1,10 @@
 ---
 name: verification-loop
-version: 1.0.0
-format: skill/1.0
 description: Comprehensive E2E validation and quality gate enforcement.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "verify.*(changes|implementation|all)"
-
-    confidence: 0.9
-
-  - pattern: "run.*(quality-gate|validation-loop)"
-
-    confidence: 0.9
-
-  - pattern: "is.*(ready|complete).*(for|to|PR)"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Verification-Loop (The Finality Layer)

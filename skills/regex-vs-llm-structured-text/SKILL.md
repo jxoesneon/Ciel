@@ -1,23 +1,10 @@
 ---
 name: regex-vs-llm-structured-text
-version: 1.0.0
-format: skill/1.0
 description: A cost-optimization framework for choosing the right tool (Regex vs. LLM) for structured text parsing.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "parse (quiz|form|invoice|structured text)"
-
-    confidence: 0.9
-
-  - pattern: "(regex vs llm|regex or llm)"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Regex vs. LLM (Parsing Strategy)

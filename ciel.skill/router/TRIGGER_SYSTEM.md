@@ -147,7 +147,7 @@ When a skill is added, the pipeline automatically extracts and generates trigger
 
 Sources for trigger extraction:
 
-- `SKILL.md` frontmatter `triggers:`
+- `ciel.yaml` sidecar `triggers:` (frontmatter-level; SKILL.md stays spec-pure)
 - `SKILL.md` description keywords
 - Skill name and variants
 - Command names (from `commands/`)
@@ -213,7 +213,7 @@ discovery_paths:
 
 | Source Format | Detection | Action |
 | --- | --- | --- |
-| Ciel-native | `SKILL.md` with `format: skill/1.0` | Register directly |
+| Ciel-native | `ciel.yaml` with `format: skill/1.0` next to `SKILL.md` | Register directly |
 | Claude Code | `CLAUDE.md` present | Adapt to Ciel format |
 | Gemini CLI | `GEMINI.md` present | Adapt to Ciel format |
 | Windsurf | `.windsurf/` directory | Often compatible, minor tweaks |
@@ -310,7 +310,7 @@ routing_flow:
 
 ### On Skill Install
 
-1. Extract triggers from SKILL.md
+1. Extract triggers from the skill (`ciel.yaml` sidecar, else SKILL.md frontmatter)
 2. Generate additional triggers
 3. Register in TRIGGER_REGISTRY
 4. Compile patterns for fast matching
@@ -380,7 +380,7 @@ trigger_safety:
 
 ### For Skill Authors
 
-1. **Define explicit triggers** in SKILL.md frontmatter
+1. **Define explicit triggers** in `ciel.yaml` (the Ciel sidecar to spec-pure SKILL.md)
 2. **Include examples** for each trigger pattern
 3. **Use specific patterns** over generic ones
 4. **Test trigger matching** before publishing

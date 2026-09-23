@@ -1,19 +1,10 @@
 ---
 name: team-builder
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for interactive agent-team composition by capability profile. Provides a browsing and selection UX for composing ad-hoc teams from available agent personas.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:ai"]
-side_effects: ["shell"]
-triggers:
-  - pattern: "(team builder|compose.*team|pick.*agents|browse.*agents|agent picker)"
-    confidence: 0.9
-  - pattern: "(which agents|select agents|ad-hoc team).*(use|dispatch|work)"
-    confidence: 0.8
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Team Builder (Interactive Agent Composition)

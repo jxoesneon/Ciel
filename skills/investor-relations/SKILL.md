@@ -1,23 +1,10 @@
 ---
 name: investor-relations
-version: 1.0.0
-format: skill/1.0
 description: Managing investor outreach, communications, and fundraising materials with high credibility.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(fundraise|investor).*(outreach|email|pitch|deck|memo|model)"
-
-    confidence: 0.9
-
-  - pattern: "reply to (vc|investor)"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Investor Relations (Fundraising)

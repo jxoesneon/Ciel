@@ -1,23 +1,10 @@
 ---
 name: ciel-quality-and-verification
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for evidence-first verification, TDD, and write-time quality enforcement.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:ai"]
-triggers:
-
-  - pattern: "(verify|check|test|lint).*(completion|evidence|tdd|terminal)"
-
-    confidence: 0.9
-
-  - pattern: "verification before completion"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Quality & Verification (The Integrity Layer)

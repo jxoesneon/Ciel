@@ -1,27 +1,10 @@
 ---
 name: make-plan
-version: 1.0.0
-format: skill/1.0
 description: Structured, LLM-friendly implementation planning based on approved design specs.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "make.*plan.*(for|implement|build)"
-
-    confidence: 0.9
-
-  - pattern: "how should we.*(execute|start).*(implementation|this)"
-
-    confidence: 0.9
-
-  - pattern: "create.*implementation.*steps"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Make-Plan (The Strategic Layer)

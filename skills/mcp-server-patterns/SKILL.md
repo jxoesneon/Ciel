@@ -1,27 +1,10 @@
 ---
 name: mcp-server-patterns
-version: 1.0.0
-format: skill/1.0
 description: Ciel's integration layer for Model Context Protocol (MCP) development.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:ai"]
-triggers:
-
-  - pattern: "(build|create|add).*mcp.*(server|tool|resource)"
-
-    confidence: 0.9
-
-  - pattern: "mcp.*integration"
-
-    confidence: 0.9
-
-  - pattern: "@modelcontextprotocol/sdk"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: MCP Server Patterns

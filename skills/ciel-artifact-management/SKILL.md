@@ -1,23 +1,10 @@
 ---
 name: ciel-artifact-management
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for isolated, structured storage of plans, audits, and ephemeral reasoning data.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:ai"]
-triggers:
-
-  - pattern: "(create|store|archive|save).*(artifact|plan|audit|transient)"
-
-    confidence: 0.9
-
-  - pattern: "planning mode"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Artifact Management (The Vault)

@@ -1,23 +1,10 @@
 ---
 name: go-development
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for idiomatic Go development, table-driven testing, and performance benchmarking.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(design|build|review).*(go|golang|goroutine)"
-
-    confidence: 0.9
-
-  - pattern: "go test"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Go Development (Simplicity & Concurrency)

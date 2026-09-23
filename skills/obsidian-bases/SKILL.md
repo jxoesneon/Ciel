@@ -1,19 +1,10 @@
 ---
 name: obsidian-bases
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for Obsidian Bases (.base files). Build database-like views of notes with filters, formulas, summaries, and table/cards/list/map layouts.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:knowledge"]
-side_effects: ["fs"]
-triggers:
-  - pattern: "(\\.base|bases).*(view|filter|formula|summary|table|cards)"
-    confidence: 0.9
-  - pattern: "obsidian bases"
-    confidence: 1.0
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: ["obsidian"] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Obsidian Bases

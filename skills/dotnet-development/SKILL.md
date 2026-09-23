@@ -1,23 +1,10 @@
 ---
 name: dotnet-development
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for modern .NET/C# development, dependency injection, and xUnit testing.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(design|build|review).*(dotnet|.net|c#|csharp)"
-
-    confidence: 0.9
-
-  - pattern: "dotnet patterns"
-
-    confidence: 1.0
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: .NET Development (Modern & Typed)

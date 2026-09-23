@@ -1,23 +1,10 @@
 ---
 name: presentation-design
-version: 1.0.0
-format: skill/1.0
 description: Create zero-dependency, animation-rich HTML presentations and pitch decks from specs or PPTX.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(create|build).*(presentation|deck|slides|pitch)"
-
-    confidence: 0.9
-
-  - pattern: "convert (pptx|powerpoint) to (html|slides)"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Presentation Design (The Deck Layer)

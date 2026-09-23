@@ -1,31 +1,10 @@
 ---
 name: double-loop
-version: 1.0.0
-format: skill/1.0
 description: Double agentic loop — an outer supervisor loop (decompose, packetize, dispatch, independently verify, correct, replan) driving a bounded pool of hot-swappable inner worker loops. Use for worklists too large for one context, especially "implement every remaining issue" mandates.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "devin", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems", "orchestration"]
-triggers:
-
-  - pattern: "(double|dual|nested).*(agentic|agent).*(loop|orchestration)"
-
-    confidence: 1.0
-
-  - pattern: "(implement|resolve|drive).*(each and every|all remaining|every remaining|the whole worklist)"
-
-    confidence: 0.95
-
-  - pattern: "hot.?swap.*(slot|subagent|worker)"
-
-    confidence: 0.95
-
-  - pattern: "(worklist|issue queue|backlog).*(comprehensively|in parallel|to completion)"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [subagent-driven-development, verification-loop], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Double Agentic Loop

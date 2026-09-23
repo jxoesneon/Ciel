@@ -1,31 +1,10 @@
 ---
 name: ai-first-engineering
-version: 1.0.0
-format: skill/1.0
 description: Ciel's operating model for AI-native engineering and agent-friendly architecture.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "ai-first.*engineering"
-
-    confidence: 0.9
-
-  - pattern: "agent-friendly.*architecture"
-
-    confidence: 0.9
-
-  - pattern: "raise.*testing.*bar"
-
-    confidence: 0.8
-
-  - pattern: "process.*shift"
-
-    confidence: 0.7
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: AI-First Engineering

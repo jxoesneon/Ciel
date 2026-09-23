@@ -1,19 +1,10 @@
 ---
 name: godot-engine
-version: 1.0.0
-format: skill/1.0
 description: CIEL's framework for Godot 4.x engine architecture, node systems, signals, scene management, and AAA rendering patterns. Advisory and design guidance only.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems", "godot", "gamedev", "gdscript", "rendering", "physics"]
-triggers:
-  - pattern: "(godot|gdscript|gamedev|scene[- ]tree|node[- ]architecture|forward\\+|jolt|gdextension)"
-    confidence: 0.9
-  - pattern: "(multiplayer[- ]sync|navigation[- ]mesh|collision[- ]layer|autoload|signal[- ]bus)"
-    confidence: 0.85
-source: { tier: 1, origin: self-synthesized }
-side_effects: []
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Godot 4.x Engine Expertise

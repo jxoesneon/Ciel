@@ -1,23 +1,10 @@
 ---
 name: eval-harness
-version: 1.0.0
-format: skill/1.0
 description: Formal evaluation framework for CIEL sessions implementing Eval-Driven Development (EDD) principles for autonomous agents.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(evaluate|benchmark|test).*(agent|model|workflow)"
-
-    confidence: 0.9
-
-  - pattern: "setup (eval|edd|eval-driven)"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Eval-Harness (Verification Architecture)

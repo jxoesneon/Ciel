@@ -1,23 +1,10 @@
 ---
 name: token-budget-advisor
-version: 1.0.0
-format: skill/1.0
 description: A user-facing depth control that offers choices regarding response length and token expenditure before answering.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(token budget|depth|length|detailed|brief|tldr)"
-
-    confidence: 0.8
-
-  - pattern: "respond at (25|50|75|100)%"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Token Budget Advisor (Depth Control)

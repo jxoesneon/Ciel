@@ -1,23 +1,10 @@
 ---
 name: agent-eval
-version: 1.0.0
-format: skill/1.0
 description: Benchmarking and evaluation tool for comparing different AI agents and models against CIEL's codebase tasks.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(compare|benchmark|evaluate).*(agent|aider|claude code|gemini|codex)"
-
-    confidence: 0.9
-
-  - pattern: "which (agent|model) is better for"
-
-    confidence: 0.85
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Agent-Eval (Benchmarking Suite)

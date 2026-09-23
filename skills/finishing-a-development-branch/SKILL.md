@@ -1,23 +1,10 @@
 ---
 name: finishing-a-development-branch
-version: 1.0.0
-format: skill/1.0
 description: The Finality Layer for CIEL orchestration. Guides the completion of an epic by enforcing global verification, presenting integration options, and handling Git cleanup.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(finish|complete).*(branch|epic|development|feature)"
-
-    confidence: 0.9
-
-  - pattern: "ready to (merge|pr|push)"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: Finishing a Development Branch (Finality Layer)

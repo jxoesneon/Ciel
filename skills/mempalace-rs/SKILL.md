@@ -1,31 +1,10 @@
 ---
 name: mempalace-rs
-version: 1.0.0
-format: skill/1.0
 description: Ciel's persistent memory and knowledge graph system (Rust-native).
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:systems"]
-triggers:
-
-  - pattern: "(remember|save|persist|store).*memory"
-
-    confidence: 0.9
-
-  - pattern: "what did we.*(last|previous|before)"
-
-    confidence: 0.9
-
-  - pattern: "search.*(history|memory|palace)"
-
-    confidence: 0.9
-
-  - pattern: "knowledge graph|AAAK|temporal fact"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: MemPalace-RS

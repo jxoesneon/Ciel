@@ -1,23 +1,10 @@
 ---
 name: seo-optimization
-version: 1.0.0
-format: skill/1.0
 description: Search visibility through technical correctness, performance, and intent-based keyword mapping.
-runtimes: ["claude_code", "gemini_cli", "windsurf", "generic"]
 license: MIT
-tags: ["ciel", "harmonized", "domain:web"]
-triggers:
-
-  - pattern: "(seo|keyword|sitemap|metadata).*(audit|plan|implement)"
-
-    confidence: 0.9
-
-  - pattern: "improve search visibility"
-
-    confidence: 0.9
-
-source: { tier: 1, origin: harmonized }
-dependencies: { skills: [], mcp: [], system: [] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # CIEL ADAPTATION: SEO Optimization (Search Logic)
