@@ -1,0 +1,52 @@
+{
+  "_doc": "Accepted skillfrisk findings. Every entry was individually reviewed; 'justification' records why it is safe. Entries match on skill + rule_id (+ optional path). Removing an entry re-arms the gate against that finding.",
+  "accepted": [
+    {
+      "skill": "autonomous-3d-studio",
+      "rule_id": "SECRET_ACCESS",
+      "justification": "Reads CIEL_BRIDGE_AUTH_TOKEN from the environment to authenticate its own local Blender bridge; not transmitted anywhere."
+    },
+    {
+      "skill": "autonomous-3d-studio",
+      "rule_id": "OBFUSCATION",
+      "path": "assets/blender_mcp_addon.py",
+      "justification": "exec() inside the Blender addon is the documented remote-eval bridge design, gated by the auth token."
+    },
+    {
+      "skill": "autonomous-3d-studio",
+      "rule_id": "PY_DYNAMIC_EXEC",
+      "path": "assets/blender_mcp_addon.py",
+      "justification": "Same intentional exec() bridge as the OBFUSCATION acceptance; capability is inherent to a Blender MCP addon."
+    },
+    {
+      "skill": "ciel",
+      "rule_id": "SECRET_ACCESS",
+      "justification": "Documentation line describing the no-attribution config enforcement; references a config path, not a secret value."
+    },
+    {
+      "skill": "gastown-orchestration",
+      "rule_id": "DESTRUCTIVE_COMMAND",
+      "justification": "Documentation prose: 'gt down' is the orchestrator's own graceful-stop subcommand, not a destructive shell operation."
+    },
+    {
+      "skill": "jira-integration",
+      "rule_id": "SECRET_EXFIL",
+      "justification": "Documentation prose describing the standard Jira REST auth-header fallback (curl + JIRA_API_TOKEN); no exfiltration endpoint, token goes to the user's own Jira instance."
+    },
+    {
+      "skill": "opensource-and-repo-ops",
+      "rule_id": "SECRET_ACCESS",
+      "justification": "Documentation warning about .env.example hygiene; the skill teaches avoiding leaks, not performing them."
+    },
+    {
+      "skill": "safety-guard",
+      "rule_id": "DESTRUCTIVE_COMMAND",
+      "justification": "The skill is a safety guard enumerating dangerous commands it exists to prevent; matched on its own examples."
+    },
+    {
+      "skill": "security-review",
+      "rule_id": "SECRET_ACCESS",
+      "justification": "Documentation recommending process.env / secrets managers; prose about correct secret handling."
+    }
+  ]
+}

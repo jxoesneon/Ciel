@@ -8,7 +8,12 @@ warning (use --strict to fail instead). Exit 2 when any skill reports
 
 Usage:
     scan_skills.py [paths...] [--all] [--fail-on high|any|none]
-                  [--report PATH] [--strict]
+                  [--report PATH] [--baseline PATH] [--no-baseline] [--strict]
+
+A baseline file (default: ciel.skill/risk/skill_scan_baseline.json when it
+exists) lists individually reviewed findings — each entry needs a
+justification and matches on skill + rule_id (+ optional path). Baselined
+findings are reported under "accepted" and no longer count toward failure.
 """
 
 import argparse
@@ -56,6 +61,26 @@ def _skill_dirs(root: Path) -> list[Path]:
     return dirs
 
 
+def _load_baseline(path: Path) -> list[dict]:
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        print(f"[scan] baseline unreadable ({exc}); ignoring", file=sys.stderr)
+        return []
+    entries = data.get("accepted", [])
+    return [e for e in entries if isinstance(e, dict) and e.get("skill") and e.get("rule_id")]
+
+
+def _baselined(skill: str, finding: dict, baseline: list[dict]) -> dict | None:
+    for entry in baseline:
+        if entry["skill"] != skill or entry["rule_id"] != finding.get("rule_id"):
+            continue
+        if entry.get("path") and entry["path"] != finding.get("path"):
+            continue
+        return entry
+    return None
+
+
 def _severity_rank(findings: list) -> int:
     rank = 0
     for f in findings:
@@ -72,11 +97,21 @@ def main() -> int:
     parser.add_argument("--fail-on", choices=["high", "any", "none"], default="none",
                         help="additionally fail on findings at this severity")
     parser.add_argument("--report", type=Path, help="write aggregated JSON report to PATH")
+    parser.add_argument("--baseline", type=Path,
+                        help="accepted-findings JSON (default: ciel.skill/risk/skill_scan_baseline.json)")
+    parser.add_argument("--no-baseline", action="store_true",
+                        help="ignore the baseline file even if present")
     parser.add_argument("--strict", action="store_true",
                         help="exit 2 when the scanner is unavailable instead of warning")
     args = parser.parse_args()
 
     root = Path(__file__).resolve().parent.parent
+    baseline_path = args.baseline
+    if baseline_path is None and not args.no_baseline:
+        default = root / "ciel.skill" / "risk" / "skill_scan_baseline.json"
+        if default.is_file():
+            baseline_path = default
+    baseline = _load_baseline(baseline_path) if baseline_path else []
     targets = list(args.paths)
     if args.all:
         targets.extend(_skill_dirs(root))
@@ -93,8 +128,9 @@ def main() -> int:
         return 0
 
     scanned = 0
-    failed = []
+    raw_failed = set()
     findings_by_skill = {}
+    accepted = []
     errors = []
     for d in targets:
         result = _scan_one(d)
@@ -104,27 +140,37 @@ def main() -> int:
             continue
         scanned += 1
         if result.get("failed"):
-            failed.append(d.name)
-        findings = result.get("findings") or []
-        if findings:
-            findings_by_skill[d.name] = findings
+            raw_failed.add(d.name)
+        remaining = []
+        for finding in result.get("findings") or []:
+            entry = _baselined(d.name, finding, baseline)
+            if entry is not None:
+                accepted.append({"skill": d.name, "finding": finding,
+                                 "justification": entry.get("justification", "")})
+            else:
+                remaining.append(finding)
+        if remaining:
+            findings_by_skill[d.name] = remaining
 
-    # --fail-on severity gate (on top of skillfrisk's own `failed` flag)
+    # A skill fails when skillfrisk flagged it or its findings meet the
+    # --fail-on severity threshold — counting only non-baselined findings.
     threshold = SEVERITY_ORDER[args.fail_on]
-    if threshold > 0:
-        for name, findings in findings_by_skill.items():
-            if _severity_rank(findings) >= threshold and name not in failed:
-                failed.append(name)
+    failed = sorted(
+        name for name, findings in findings_by_skill.items()
+        if name in raw_failed or (threshold > 0 and _severity_rank(findings) >= threshold)
+    )
 
     report = {
         "ts": datetime.now(timezone.utc).isoformat(),
         "scanned": scanned,
         "failed": failed,
         "findings_by_skill": findings_by_skill,
+        "accepted": accepted,
         "capability": {
             "tool": "skillfrisk",
             "invocation": "uvx skillfrisk scan <dir> --json",
             "fail_on": args.fail_on,
+            "baseline": str(baseline_path) if baseline_path else None,
             "errors": errors,
         },
     }
@@ -134,6 +180,7 @@ def main() -> int:
     total_findings = sum(len(v) for v in findings_by_skill.values())
     print(
         f"[scan] scanned={scanned} failed={len(failed)} findings={total_findings}"
+        + (f" accepted={len(accepted)}" if accepted else "")
         + (f" errors={len(errors)}" if errors else "")
     )
     return 2 if failed else 0
