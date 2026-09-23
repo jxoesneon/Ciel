@@ -218,6 +218,7 @@ def main() -> int:
     report = {
         "generated": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "endpoint": system1._url(),
+        "model": system1._model() or "(endpoint default)",
         "surfaces": {},
     }
     for name in names:

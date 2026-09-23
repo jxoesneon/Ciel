@@ -76,22 +76,30 @@ def _disabled() -> bool:
     return bool(os.environ.get("CIEL_SYSTEM1_DISABLED"))
 
 
-def _key() -> str:
-    key = os.environ.get("CIEL_SYSTEM1_KEY")
-    if key:
-        return key
+def _env_file_value(*names: str) -> str:
     env_file = ciel_home() / "system1" / "env"
     try:
         for line in env_file.read_text(encoding="utf-8").splitlines():
-            if line.startswith("LAYA_API_KEY="):
-                return line.split("=", 1)[1].strip()
+            for name in names:
+                if line.startswith(name + "="):
+                    return line.split("=", 1)[1].strip()
     except OSError:
         pass
     return ""
 
 
+def _key() -> str:
+    return (os.environ.get("CIEL_SYSTEM1_KEY")
+            or _env_file_value("CIEL_SYSTEM1_KEY", "LAYA_API_KEY"))
+
+
 def _url() -> str:
     return os.environ.get("CIEL_SYSTEM1_URL", "http://127.0.0.1:8765").rstrip("/")
+
+
+def _model() -> str:
+    return (os.environ.get("CIEL_SYSTEM1_MODEL", "").strip()
+            or _env_file_value("CIEL_SYSTEM1_MODEL"))
 
 
 def ask(state: dict, questions: dict, timeout: float = 0.9) -> dict | None:
@@ -100,6 +108,9 @@ def ask(state: dict, questions: dict, timeout: float = 0.9) -> dict | None:
     if _disabled():
         return None
     body = {"state": state, "questions": questions}
+    model = _model()
+    if model:
+        body["model"] = model
     req = urllib.request.Request(
         _url() + "/v1/systemone",
         data=json.dumps(body).encode(),
