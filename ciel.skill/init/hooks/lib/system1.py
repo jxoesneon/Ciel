@@ -297,6 +297,7 @@ def _ask_main() -> int:
                 "%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             "surface": surface,
             "questions": questions,
+            "state": state,
             "meta": payload.get("meta") or {},
             "system1": result,
             "flag": (_band(surface, result["answers"])

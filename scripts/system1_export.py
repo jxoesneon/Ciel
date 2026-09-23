@@ -53,6 +53,7 @@ def _pairs(rec: dict) -> list[dict]:
         out.append({
             "surface": surface,
             "question_key": qkey,
+            "state": rec.get("state") or {},
             "state_ref": meta.get("ts"),
             "chosen": truth,
             "rejected": rejected,
