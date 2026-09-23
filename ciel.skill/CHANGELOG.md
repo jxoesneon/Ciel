@@ -8,6 +8,12 @@ All notable changes to Ciel are tracked here. Ciel appends an entry on every sel
 
 ### Added
 
+- **Policy-as-code pre-tool gate** (`risk/policy.yaml` + `init/hooks/lib/risk_policy.py`): single source of truth for every runtime's PreToolUse gate — hard/soft tiers, command and path matchers, tool scoping, `allow_privileged` override on soft rules only, embedded hard-rule fallback when the policy file is absent. Devin and Antigravity hooks now consume the shared evaluator; activity.log entries carry `rule_id`/`tier`/`policy` fields. `scripts/compile_policy.py` produces the stdlib-only `policy.json` twin (sync-tested).
+- **Hook red-team harness** (`tests/test_hooks_redteam.py` + `tests/fixtures/hook_redteam_cases.json`): 41 cases fired as real subprocesses against both pre-tool gates in a sandboxed HOME.
+- **Paired-evaluation commit gate** (`scripts/paired_eval.py`, `evals/tasks/`): skill mutations/promotions run a task set with and without the candidate in isolated workspaces, scored by per-task `verify.sh`; any regression fails the gate. Required before `sandboxed` → `validated` per `acquisition/TRUST_MODEL.md`.
+- **Skill-scan baseline** (`risk/skill_scan_baseline.json`): individually reviewed findings with justifications are subtracted from the scan gate; the 11 findings across 7 skills were triaged (documentation prose and an intentional token-gated bridge).
+- **Static skill security scan** (`scripts/scan_skills.py`, `skillfrisk`): mandatory gate before `untrusted` → `sandboxed`, plus a CI `skill-scan` job and JSON report output.
+- **Agent Skills spec conformance**: Ciel-specific frontmatter moved to per-skill `ciel.yaml` sidecars across all 165 skills; `SKILL.md` files now validate against the official spec (`scripts/migrate_skill_sidecar.py --check`).
 - **Bounded activity-log rotation** (`init/hooks/lib/activity_log_rotate.py`): spec-aligned daily/size triggers, zstd archives under `~/.ciel/archive/logs/`, 90-day retention, sweep markers.
 - **Devin and Antigravity hook payloads** shipped from source (`init/hooks/devin/`, `init/hooks/antigravity/`, `init/hooks/lib/`) with installer support on POSIX and Windows.
 - **Integrity sweep tool** (`init/scripts/integrity.py`) implementing `init/INTEGRITY.md`: ok / unknown-drift / expected-drift / missing / unexpected classification, timestamped reports, `--write` manifest regeneration.
