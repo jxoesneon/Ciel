@@ -1,0 +1,38 @@
+{
+  "_doc": "Router corpus. 'candidates' is the fixed option set (name -> description); each case's 'expected' is the correct skill.",
+  "candidates": {
+    "docker": "Docker / Compose — build, run, inspect, cleanup, sandbox support",
+    "git": "Git init, commit, diff, log, revert, branch, stash, remote",
+    "container-and-deployment": "Docker containerization and CI/CD deployment strategies",
+    "dev-browser": "Browser automation with persistent page state, navigate URLs, fill forms",
+    "python-development": "Idiomatic Python patterns, type hints, pytest-driven development",
+    "article-writing": "Long-form content creation: blog posts, tutorials, newsletters",
+    "brainstorming": "Pre-implementation exploration of intent, requirements, architecture",
+    "security-review": "Security checklist and architectural review patterns",
+    "archive_manager": "ZIP / tar / gz operations — create, extract, inspect"
+  },
+  "cases": [
+    {"id": "r_compose", "task": "containerize the flask app and write a compose file", "expected": "docker"},
+    {"id": "r_undo_commit", "task": "undo my last commit but keep the changes staged", "expected": "git"},
+    {"id": "r_ci_deploy", "task": "set up a github actions pipeline that deploys on merge", "expected": "container-and-deployment"},
+    {"id": "r_screenshot", "task": "open the staging site and screenshot the login page", "expected": "dev-browser"},
+    {"id": "r_typehints", "task": "add type hints and pytest coverage to this module", "expected": "python-development"},
+    {"id": "r_blogpost", "task": "draft a blog post announcing the new release", "expected": "article-writing"},
+    {"id": "r_queue_design", "task": "help me think through whether we need a queue or just polling", "expected": "brainstorming"},
+    {"id": "r_pr_audit", "task": "audit this PR for credential leaks and injection risks", "expected": "security-review"},
+    {"id": "r_zip", "task": "bundle these skill files into a .zip for transfer", "expected": "archive_manager"},
+    {"id": "r_gitpython", "task": "write a python script that uses gitpython to tag a release", "expected": "python-development"},
+    {"id": "r_stash", "task": "stash my work in progress and switch to the hotfix branch", "expected": "git"},
+    {"id": "r_prune", "task": "clean up dangling images and stopped containers", "expected": "docker"},
+    {"id": "r_form_fill", "task": "fill out the signup form on the test environment", "expected": "dev-browser"},
+    {"id": "r_refactor", "task": "refactor this module to use dataclasses and slots", "expected": "python-development"},
+    {"id": "r_tutorial", "task": "write a step-by-step tutorial for the new API", "expected": "article-writing"},
+    {"id": "r_threat_model", "task": "threat-model the new upload endpoint", "expected": "security-review"},
+    {"id": "r_untar", "task": "extract this tarball and list its contents", "expected": "archive_manager"},
+    {"id": "r_helm", "task": "package the service as a container and deploy to staging", "expected": "container-and-deployment"},
+    {"id": "r_rebase", "task": "rebase the feature branch onto latest main", "expected": "git"},
+    {"id": "r_approach", "task": "weigh options for structuring the plugin system before I code it", "expected": "brainstorming"},
+    {"id": "r_cookie_theft", "task": "check whether the login flow leaks session cookies in logs", "expected": "security-review"},
+    {"id": "r_logs_docker", "task": "pull the logs from the crashed api container", "expected": "docker"}
+  ]
+}
