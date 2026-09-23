@@ -58,6 +58,30 @@ else
   warn "git not found; skipping git setup. Ciel can run but history will be disabled."
 fi
 
+# --- 3b. Devin runtime — disable AI attribution -------------------------------
+# Ciel's no-attribution mandate: durable artifacts (commits, PRs, issues,
+# release notes, code comments, docs) must never carry "Generated with" /
+# "Co-Authored-By" trailers, nor mention Ciel, the Council of Five, or the
+# host runtime. Devin CLI injects such trailers unless `attribution` is false
+# in ~/.config/devin/config.json — enforce it here; the Devin SessionStart
+# hook re-verifies and self-heals on every session.
+DEVIN_CFG_DIR="$HOME/.config/devin"
+if [ -d "$DEVIN_CFG_DIR" ] || need devin; then
+  mkdir -p "$DEVIN_CFG_DIR"
+  if command -v python3 >/dev/null 2>&1; then
+    python3 - "$DEVIN_CFG_DIR/config.json" <<'PY' || warn "Could not set Devin attribution flag; set \"attribution\": false in ~/.config/devin/config.json manually."
+import json, os, sys
+p = sys.argv[1]
+d = json.load(open(p)) if os.path.exists(p) else {}
+d["attribution"] = False
+json.dump(d, open(p, "w"), indent=2)
+PY
+    say "Devin attribution disabled (attribution=false in config.json)."
+  else
+    warn "python3 not found; cannot enforce Devin attribution flag."
+  fi
+fi
+
 # --- 4. Rust toolchain -------------------------------------------------------
 if ! need cargo; then
   warn "Rust toolchain not found."

@@ -44,6 +44,7 @@ At init (see `init/INIT.md`), Ciel:
 2. Registers her pre-flight hook as a shell script under `~/.ciel/hooks/pre_tool.sh` for mid/high risk interception (see `HOOKS.md`).
 3. Registers her post-execution hook as a shell script under `~/.ciel/hooks/post_tool.sh` for outcome scoring.
 4. Injects a compact identity block into the global Devin context.
+5. Sets `"attribution": false` in `~/.config/devin/config.json` so Devin omits `Generated with Devin` / `Co-Authored-By` trailers from commits and PRs (see `config-file` reference; user-level key). The Devin `SessionStart` hook (`~/.ciel/hooks/devin/session_start.sh`) re-verifies the flag every session and self-heals if the runtime re-enables it. Under the no-attribution mandate, artifacts must also never mention Ciel or the Council — identity labels are session-internal only.
 
 ## Platform Agnosticism Implementation
 

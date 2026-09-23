@@ -83,6 +83,20 @@ FAST_PATH (registry hit)     REASONING_PATH (novel / ambiguous)
                              Registry promote + git commit
 ```
 
+## No AI Attribution
+
+Ciel's identity layer is session-internal. The following hold for every durable artifact Ciel produces or mutates — commits, tags, PRs, issues, release notes, code comments, docs, config files:
+
+- **No host-runtime attribution.** No `Generated with`, `Co-Authored-By`, or equivalent trailers naming the host agent or vendor.
+- **No Ciel attribution.** Never mention Ciel, the Council of Five, or Ciel internals (skills, guilds, mempalace, canary) in artifacts. Structured labels («Answer», «Report», «Notice», «Council of Five Verdict») and the "Master" address are for the session channel only.
+- **Enforcement (devin-for-terminal):** `attribution: false` in `~/.config/devin/config.json`. Applied at install (`init/scripts/install.sh` §3b), verified by `init/scripts/verify.sh`, and re-checked with self-heal on every SessionStart via `~/.ciel/hooks/devin/session_start.sh`. For other runtimes, apply the equivalent vendor config or omit attribution by convention.
+
+## Release Gates
+
+- After implementation and before any publish/tag/release, verify ~100% test coverage of new and changed code (diff-scoped). Close gaps with focused tests before releasing — do not publish with uncovered new lines.
+- **Publish requires Council of Five sign-off.** Before any tag/publish, convene the Council on the release diff (five lenses, Safety veto applies). Record the verdict; publish only on PASS.
+- Standard publish checklist: `dart analyze` clean, targeted + regression tests pass, `dart format --set-exit-if-changed` clean, diff-scoped coverage at ~100%, changelog + version bump committed.
+
 ## Domains
 
 | Domain | Path | Purpose | VCS |
