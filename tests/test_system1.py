@@ -198,6 +198,45 @@ class TestConcurrencyBound(System1TestCase):
         self.assertFalse(d.exists())
 
 
+class TestBanding(System1TestCase):
+    def test_flag_choice_dominates(self):
+        band = system1._band("pre_tool_risk",
+                             {"risk": {"choice": "dangerous",
+                                       "confidence": 0.9}})
+        self.assertEqual("flag", band)
+
+    def test_low_confidence_safe_is_uncertain(self):
+        band = system1._band("pre_tool_risk",
+                             {"risk": {"choice": "safe",
+                                       "confidence": 0.05}})
+        self.assertEqual("uncertain", band)
+
+    def test_confident_safe_passes(self):
+        band = system1._band("pre_tool_risk",
+                             {"risk": {"choice": "safe",
+                                       "confidence": 0.9}})
+        self.assertEqual("pass", band)
+
+    def test_tau_env_override(self):
+        os.environ["CIEL_SYSTEM1_TAU"] = "0.9"
+        self.addCleanup(os.environ.pop, "CIEL_SYSTEM1_TAU")
+        band = system1._band("pre_tool_risk",
+                             {"risk": {"choice": "safe",
+                                       "confidence": 0.5}})
+        self.assertEqual("uncertain", band)
+
+    def test_prescreen_surface_flags_escalate(self):
+        band = system1._band("council_prescreen",
+                             {"scope": {"choice": "escalate",
+                                        "confidence": 0.9}})
+        self.assertEqual("flag", band)
+
+    def test_unknown_surface_band(self):
+        band = system1._band("never_seen",
+                             {"q": {"choice": "x", "confidence": 0.9}})
+        self.assertEqual("pass", band)
+
+
 class TestEventLog(System1TestCase):
     def test_rotation(self):
         log = Path(self.tmp.name) / "system1" / "events.jsonl"

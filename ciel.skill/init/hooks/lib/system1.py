@@ -36,6 +36,31 @@ MAX_INFLIGHT = 2
 INFLIGHT_STALE_S = 120
 ASK_TIMEOUT = 30.0
 
+# Advisory banding per surface: a flagged choice dominates; any other choice
+# with confidence below tau (CIEL_SYSTEM1_TAU, default DEFAULT_TAU from the
+# calibration sweep) is 'uncertain' — review-worthy, never a deny.
+DEFAULT_TAU = 0.2
+SURFACE_FLAGS = {
+    "pre_tool_risk": {"flag": {"dangerous"}},
+    "council_prescreen": {"flag": {"escalate"}},
+    "router": {},
+}
+
+PRESCREEN_QUESTIONS = {
+    "scope": {
+        "type": "choice",
+        "instructions": (
+            "Does this event require full multi-lens deliberation, or is it "
+            "routine enough to proceed directly?"
+        ),
+        "criteria": {
+            "routine": "low-risk, reversible, well-precedented action",
+            "escalate": "irreversible, security-relevant, self-modifying, "
+                        "or novel-scope action",
+        },
+    }
+}
+
 
 def ciel_home() -> Path:
     return Path(os.environ.get("CIEL_HOME") or Path.home() / ".ciel")
@@ -151,6 +176,36 @@ def _append_event(record: dict) -> None:
         pass
 
 
+def _band(surface: str, answers: dict) -> str:
+    """Worst advisory band across answers: 'flag' > 'uncertain' > 'pass'."""
+    spec = SURFACE_FLAGS.get(surface, {})
+    try:
+        tau = float(os.environ.get("CIEL_SYSTEM1_TAU") or DEFAULT_TAU)
+    except ValueError:
+        tau = DEFAULT_TAU
+    worst = "pass"
+    for answer in answers.values():
+        if not isinstance(answer, dict):
+            continue
+        if answer.get("choice") in spec.get("flag", set()):
+            return "flag"
+        conf = answer.get("confidence")
+        if not isinstance(conf, (int, float)) or conf < tau:
+            worst = "uncertain"
+    return worst
+
+
+def council_prescreen(subject: str, meta: dict | None = None) -> None:
+    """Detached shadow for the council_prescreen surface: is this event
+    routine or does it need full deliberation? Advisory only."""
+    ask_async({
+        "surface": "council_prescreen",
+        "state": {"event": subject},
+        "questions": PRESCREEN_QUESTIONS,
+        "meta": meta or {},
+    })
+
+
 def _inflight_dir() -> Path:
     return ciel_home() / "system1" / "inflight"
 
@@ -230,13 +285,16 @@ def _ask_main() -> int:
             latency_ms = int((time.monotonic() - started) * 1000)
             if result is not None:
                 _cache_write(state, questions, result)
+        surface = payload.get("surface") or "unknown"
         record = {
             "ts": payload.get("meta", {}).get("ts") or time.strftime(
                 "%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-            "surface": payload.get("surface") or "unknown",
+            "surface": surface,
             "questions": questions,
             "meta": payload.get("meta") or {},
             "system1": result,
+            "flag": (_band(surface, result["answers"])
+                     if result is not None else "pass"),
             "cache_hit": hit,
         }
         if not hit:
