@@ -96,6 +96,13 @@
       ],
       "pattern": "^~/\\.ciel/(hooks|risk)(/|$)|^~/\\.config/devin/config\\.json$",
       "reason": "Agent modification of its own safety hooks, risk policy, or host config."
+    },
+    {
+      "id": "shell_sensitive_path_write",
+      "tier": "soft",
+      "match": "command",
+      "pattern": "(?:\\b(?:cp|mv|install|rsync|scp|ln|tee)\\b[^\\n|;]*|\\bdd\\b[^\\n|;]*\\bof=|>{1,2}\\s*)(?:(?:~|\\$HOME|\"\\$HOME\"|/home/[^\\s/]+|/root)?/\\.(?:ssh|gnupg|aws|kube|docker|netrc|npmrc|pypirc)\\b|(?:~|\\$HOME|\"\\$HOME\"|/home/[^\\s/]+|/root)/\\.ciel/(?:hooks|risk)\\b|(?:~|\\$HOME|\"\\$HOME\"|/home/[^\\s/]+|/root)/\\.config/devin\\b|(?<![\\w./~-])/(?:etc|usr|bin|sbin|boot|root)/)",
+      "reason": "Shell copy/move/redirect into a credential store, agent hook/policy dir, or protected system path."
     }
   ]
 }
