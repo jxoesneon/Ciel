@@ -33,7 +33,7 @@ enhanced:
 
 - `.devin/` — Devin project configuration directory
 - `AGENTS.md` — project-root instruction file (Devin's context file equivalent)
-- `~/.ciel/hooks/` — Ciel hook shell scripts (pre/post tool)
+- `~/.ciel/hooks/devin/` — Ciel hook shell scripts (`session_start.sh`, `user_prompt_submit.sh`, `pre_tool_use.sh`, `post_tool_use.sh`, `permission_request.sh`, `stop.sh`, `session_end.sh`)
 - `~/.ciel/skills/` — installed skills (including ciel.skill unpacked)
 
 ## Installation Footprint
@@ -41,8 +41,8 @@ enhanced:
 At init (see `init/INIT.md`), Ciel:
 
 1. Drops her instruction block into `AGENTS.md` at the project root (or creates it).
-2. Registers her pre-flight hook as a shell script under `~/.ciel/hooks/pre_tool.sh` for mid/high risk interception (see `HOOKS.md`).
-3. Registers her post-execution hook as a shell script under `~/.ciel/hooks/post_tool.sh` for outcome scoring.
+2. Registers her pre-flight hook as a shell script under `~/.ciel/hooks/devin/pre_tool_use.sh` for mid/high risk interception (see `HOOKS.md`).
+3. Registers her post-execution hook as a shell script under `~/.ciel/hooks/devin/post_tool_use.sh` for outcome scoring.
 4. Injects a compact identity block into the global Devin context.
 5. Sets `"attribution": false` in `~/.config/devin/config.json` so Devin omits `Generated with Devin` / `Co-Authored-By` trailers from commits and PRs (see `config-file` reference; user-level key). The Devin `SessionStart` hook (`~/.ciel/hooks/devin/session_start.sh`) re-verifies the flag every session and self-heals if the runtime re-enables it. Under the no-attribution mandate, artifacts must also never mention Ciel or the Council — identity labels are session-internal only.
 
@@ -75,7 +75,7 @@ Each logical function from `adapters/ADAPTER_CONTRACT.md` maps to a Devin CLI na
 | `fs_write(path, content)` | `write` tool | Absolute path file writes |
 | `fs_edit(path, old, new)` | `edit` tool | Exact string replacement with `replace_all` option |
 | `context_inject(scope, content)` | `AGENTS.md` (project) / global context file | Project = `AGENTS.md`; global = `~/.ciel/context.md` |
-| `hook_register(event, handler)` | shell script in `~/.ciel/hooks/` | `pre_tool.sh` / `post_tool.sh`; optional |
+| `hook_register(event, handler)` | shell script in `~/.ciel/hooks/devin/` | `pre_tool_use.sh` / `post_tool_use.sh`; optional |
 | `plan_mode(enabled: bool)` | native Plan mode toggle | Optional; dry-run / plan-then-execute |
 
 ## Capability Mapping (Native Tools)
@@ -108,10 +108,11 @@ Devin CLI exposes the following native tools that Ciel routes through:
 
 ## Hook Support
 
-Devin supports lifecycle hooks via shell scripts placed in `~/.ciel/hooks/`:
+Devin supports lifecycle hooks via shell scripts placed in `~/.ciel/hooks/devin/` — one script per event: `session_start.sh`, `user_prompt_submit.sh`, `pre_tool_use.sh`, `post_tool_use.sh`, `permission_request.sh`, `stop.sh`, `session_end.sh`:
 
-- **`pre_tool.sh`** — fires before tool execution; Ciel uses this for the pre-flight risk gate (allow/deny/ask/defer). See `HOOKS.md`.
-- **`post_tool.sh`** — fires after tool execution; Ciel uses this for outcome scoring and telemetry.
+- **`pre_tool_use.sh`** — fires before tool execution; Ciel uses this for the pre-flight risk gate (allow/deny/ask/defer). See `HOOKS.md`.
+- **`post_tool_use.sh`** — fires after tool execution; Ciel uses this for outcome scoring and telemetry.
+- **`session_start.sh`** — fires at session start; re-verifies the attribution flag and invokes `hooks/lib/activity_log_rotate.py` to bound `activity.log`.
 
 Hooks receive the tool name, arguments, and result as environment variables / stdin. Exit codes signal allow (`0`), deny (`1`), or ask (`2`).
 
@@ -158,8 +159,8 @@ Ciel routes all MCP interactions through these primitives. MCP servers are confi
 | Skill activation | `read` on `SKILL.md` + context injection into `AGENTS.md` |
 | Subagent (nested) | `run_subagent` tool |
 | Parallel dispatch | multiple `run_subagent` calls (up to 5 concurrent) |
-| Pre-flight gate | `~/.ciel/hooks/pre_tool.sh` shell script |
-| Post-execution scoring | `~/.ciel/hooks/post_tool.sh` shell script |
+| Pre-flight gate | `~/.ciel/hooks/devin/pre_tool_use.sh` shell script |
+| Post-execution scoring | `~/.ciel/hooks/devin/post_tool_use.sh` shell script |
 | MCP | `mcp_call_tool` / `mcp_list_servers` / `mcp_list_tools` |
 | Context injection | `AGENTS.md` (project) + global context file |
 | Long task | Plan mode + parallel subagents |
