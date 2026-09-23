@@ -11,7 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "ciel.skill" / "init" / "hooks" / "lib"))
 
-import risk_policy  # noqa: E402
+import risk_policy
 
 POLICY_YAML = ROOT / "ciel.skill" / "risk" / "policy.yaml"
 POLICY_JSON = ROOT / "ciel.skill" / "risk" / "policy.json"
@@ -25,7 +25,7 @@ class TestPolicyLoading(unittest.TestCase):
 
     def test_fallback_rules_when_policy_missing(self):
         original = risk_policy._candidate_policy_files
-        risk_policy._candidate_policy_files = lambda: []
+        risk_policy._candidate_policy_files = list
         try:
             rules, source = risk_policy.load_policy()
         finally:
@@ -185,6 +185,107 @@ class TestEvaluateBranches(unittest.TestCase):
     def test_normalize_empty_and_home_root(self):
         self.assertEqual("", risk_policy._normalize_path("", self.home))
         self.assertEqual("~", risk_policy._normalize_path(str(self.home), self.home))
+
+
+class TestSystem1Shadow(unittest.TestCase):
+    """The shadow tier must never influence decisions and must degrade silently."""
+
+    def setUp(self):
+        self._saved = {k: os.environ.get(k) for k in
+                       ("CIEL_SYSTEM1_DISABLED", "CIEL_SYSTEM1_URL", "CIEL_SYSTEM1_KEY")}
+
+    def tearDown(self):
+        for k, v in self._saved.items():
+            if v is None:
+                os.environ.pop(k, None)
+            else:
+                os.environ[k] = v
+
+    def test_disabled_returns_none(self):
+        os.environ["CIEL_SYSTEM1_DISABLED"] = "1"
+        self.assertIsNone(risk_policy.system1_verdict("exec", "rm -rf /", ""))
+
+    def test_unreachable_returns_none_fast(self):
+        os.environ.pop("CIEL_SYSTEM1_DISABLED", None)
+        os.environ["CIEL_SYSTEM1_URL"] = "http://127.0.0.1:9"  # discard port
+        import time
+        t0 = time.monotonic()
+        self.assertIsNone(risk_policy.system1_verdict("exec", "ls", ""))
+        self.assertLess(time.monotonic() - t0, 5)
+
+    def test_stubbed_server_returns_verdict(self):
+        import http.server
+        import threading
+
+        class H(http.server.BaseHTTPRequestHandler):
+            def do_POST(self):
+                self.send_response(200)
+                self.send_header("content-type", "application/json")
+                self.end_headers()
+                self.wfile.write(json.dumps({
+                    "answers": {"risk": {"choice": "dangerous", "confidence": 0.9}},
+                    "routing": {"model": "english"},
+                }).encode())
+
+            def log_message(self, *a):
+                pass
+
+        srv = http.server.HTTPServer(("127.0.0.1", 0), H)
+        threading.Thread(target=srv.serve_forever, daemon=True).start()
+        self.addCleanup(srv.shutdown)
+        os.environ.pop("CIEL_SYSTEM1_DISABLED", None)
+        os.environ["CIEL_SYSTEM1_URL"] = f"http://127.0.0.1:{srv.server_port}"
+        os.environ["CIEL_SYSTEM1_KEY"] = "test-key"
+        v = risk_policy.system1_verdict("exec", "rm -rf /", "")
+        self.assertEqual("dangerous", v["choice"])
+        self.assertEqual(0.9, v["confidence"])
+        self.assertEqual("english", v["model"])
+
+    def test_shadow_does_not_change_decision(self):
+        # Even if system1 would say 'dangerous', a benign command still allows.
+        os.environ["CIEL_SYSTEM1_DISABLED"] = "1"
+        v = risk_policy.evaluate(tool="exec", command="ls -la", home=Path(tempfile.mkdtemp()))
+        self.assertEqual("allow", v["decision"])
+
+    def test_shadow_main_writes_log(self):
+        import http.server
+        import threading
+
+        class H(http.server.BaseHTTPRequestHandler):
+            def do_POST(self):
+                self.send_response(200)
+                self.send_header("content-type", "application/json")
+                self.end_headers()
+                self.wfile.write(json.dumps({
+                    "answers": {"risk": {"choice": "safe", "confidence": 0.5}},
+                }).encode())
+
+            def log_message(self, *a):
+                pass
+
+        srv = http.server.HTTPServer(("127.0.0.1", 0), H)
+        threading.Thread(target=srv.serve_forever, daemon=True).start()
+        self.addCleanup(srv.shutdown)
+
+        with tempfile.TemporaryDirectory() as tmp:
+            env = dict(os.environ,
+                       CIEL_HOME=tmp,
+                       CIEL_SYSTEM1_URL=f"http://127.0.0.1:{srv.server_port}",
+                       CIEL_SYSTEM1_KEY="k")
+            env.pop("CIEL_SYSTEM1_DISABLED", None)
+            proc = subprocess.run(
+                [sys.executable,
+                 str(ROOT / "ciel.skill" / "init" / "hooks" / "lib" / "risk_policy.py"),
+                 "--shadow"],
+                input='{"ts":"t1","tool":"exec","command":"ls"}',
+                capture_output=True, text=True, env=env, check=False,
+            )
+            self.assertEqual(0, proc.returncode)
+            log = Path(tmp) / "system1" / "shadow.log"
+            self.assertTrue(log.is_file())
+            rec = json.loads(log.read_text().splitlines()[0])
+            self.assertEqual("t1", rec["ts"])
+            self.assertEqual("safe", rec["system1"]["choice"])
 
 
 @unittest.skipUnless(POLICY_JSON.is_file(), "policy.json not compiled")

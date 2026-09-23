@@ -25,7 +25,9 @@ policy load diagnostics instead.
 import json
 import os
 import re
+import subprocess
 import sys
+import urllib.request
 from pathlib import Path
 
 # Hard-tier subset applied when no policy file can be loaded. Kept minimal on
@@ -133,6 +135,123 @@ def _rule_applies_to_tool(rule: dict, tool: str) -> bool:
     return any(re.search(m, tool, re.IGNORECASE) for m in matchers)
 
 
+SYSTEM1_QUESTIONS = {
+    "risk": {
+        "type": "choice",
+        "instructions": (
+            "Is executing this tool call dangerous or destructive to the "
+            "system, credentials, or data?"
+        ),
+        "criteria": {
+            "safe": "routine, reversible, or read-only operation",
+            "dangerous": "destructive, irreversible, privilege-escalating, or data-exfiltrating operation",
+        },
+    }
+}
+
+
+def _system1_key() -> str:
+    key = os.environ.get("CIEL_SYSTEM1_KEY")
+    if key:
+        return key
+    env_file = ciel_home() / "system1" / "env"
+    try:
+        for line in env_file.read_text(encoding="utf-8").splitlines():
+            if line.startswith("LAYA_API_KEY="):
+                return line.split("=", 1)[1].strip()
+    except OSError:
+        pass
+    return ""
+
+
+def system1_verdict(tool: str, command: str, path: str,
+                    timeout: float = 0.9) -> dict | None:
+    """Shadow-tier semantic risk check via a Jev-protocol endpoint (laya-serve
+    locally, or hosted Jev/AutoJev). Advisory only: returns the raw answer for
+    logging and NEVER influences the decision. None when unavailable."""
+    if os.environ.get("CIEL_SYSTEM1_DISABLED"):
+        return None
+    url = os.environ.get("CIEL_SYSTEM1_URL", "http://127.0.0.1:8765")
+    body = {
+        "state": {"tool": tool, "command": command, "path": path},
+        "questions": SYSTEM1_QUESTIONS,
+    }
+    req = urllib.request.Request(
+        url.rstrip("/") + "/v1/systemone",
+        data=json.dumps(body).encode(),
+        headers={
+            "content-type": "application/json",
+            "authorization": f"Bearer {_system1_key()}",
+        },
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            data = json.loads(resp.read())
+    except (OSError, ValueError):
+        return None
+    answer = (data.get("answers") or {}).get("risk")
+    if not isinstance(answer, dict):
+        return None
+    return {
+        "choice": answer.get("choice"),
+        "confidence": answer.get("confidence"),
+        "probabilities": answer.get("probabilities"),
+        "model": data.get("routing", {}).get("model") or data.get("model"),
+    }
+
+
+SHADOW_LOG_MAX = 4 * 1024 * 1024
+
+
+def _append_shadow_log(record: dict) -> None:
+    log = ciel_home() / "system1" / "shadow.log"
+    try:
+        log.parent.mkdir(parents=True, exist_ok=True)
+        if log.is_file() and log.stat().st_size > SHADOW_LOG_MAX:
+            log.rename(log.with_suffix(".log.1"))
+        with log.open("a", encoding="utf-8") as fh:
+            fh.write(json.dumps(record, ensure_ascii=False) + "\n")
+    except OSError:
+        pass
+
+
+def system1_shadow_async(payload: dict) -> None:
+    """Fire-and-forget: spawn a detached shadow evaluation so the hook never
+    waits on model inference (CPU-bound calls can take seconds). The verdict
+    lands in ~/.ciel/system1/shadow.log keyed by the entry's timestamp."""
+    if os.environ.get("CIEL_SYSTEM1_DISABLED"):
+        return
+    try:
+        proc = subprocess.Popen(
+            [sys.executable, os.path.abspath(__file__), "--shadow"],
+            stdin=subprocess.PIPE,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            start_new_session=True,
+        )
+        proc.stdin.write(json.dumps(payload).encode())
+        proc.stdin.close()
+    except OSError:
+        pass
+
+
+def _shadow_main() -> int:
+    try:
+        payload = json.loads(sys.stdin.read() or "{}")
+    except json.JSONDecodeError:
+        return 0
+    verdict = system1_verdict(
+        str(payload.get("tool") or ""),
+        str(payload.get("command") or ""),
+        str(payload.get("path") or ""),
+        timeout=20.0,
+    )
+    payload["system1"] = verdict
+    _append_shadow_log(payload)
+    return 0
+
+
 def evaluate(
     tool: str = "",
     command: str = "",
@@ -205,6 +324,8 @@ def evaluate(
 
 
 def main() -> int:
+    if "--shadow" in sys.argv:
+        return _shadow_main()
     if "--check" in sys.argv:
         rules, source = load_policy()
         print(f"policy source={source} rules={len(rules)}")

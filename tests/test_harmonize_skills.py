@@ -8,7 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 
-import harmonize_skills  # noqa: E402
+import harmonize_skills
 
 
 class TestHarmonizeSkill(unittest.TestCase):

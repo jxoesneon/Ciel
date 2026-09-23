@@ -51,7 +51,7 @@ RUNTIMES = {
 
 def _run_hook(script: Path, payload: dict, home: Path) -> tuple[str, bool]:
     """Return (decision, overridden) for one firing of the hook."""
-    env = dict(os.environ, HOME=str(home))
+    env = dict(os.environ, HOME=str(home), CIEL_SYSTEM1_DISABLED="1")
     env.pop("CIEL_HOME", None)
     env.pop("CIEL_POLICY", None)
     proc = subprocess.run(

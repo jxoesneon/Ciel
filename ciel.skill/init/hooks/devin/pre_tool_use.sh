@@ -34,7 +34,6 @@ path = str(
 verdict = risk_policy.evaluate(tool=tool, command=command, path=path)
 denied = verdict["decision"] == "deny"
 override = verdict["decision"] == "allow_overridden"
-
 entry = {
     "ts": datetime.now(timezone.utc).isoformat(),
     "runtime": "devin",
@@ -53,6 +52,14 @@ try:
         fh.write(json.dumps(entry, ensure_ascii=False) + "\n")
 except OSError:
     pass
+
+# Shadow tier: detached semantic check — zero added latency, verdict lands in
+# ~/.ciel/system1/shadow.log keyed by this entry's ts. Advisory only.
+risk_policy.system1_shadow_async({
+    "ts": entry["ts"], "runtime": "devin", "tool": tool,
+    "command": command, "path": path, "regex_decision": verdict["decision"],
+    "rule_id": verdict.get("rule_id"),
+})
 
 if denied:
     reason = verdict.get("reason") or "critical risk"

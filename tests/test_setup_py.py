@@ -1,7 +1,6 @@
 """Smoke test for ciel.skill/init/scripts/setup.py in a sandboxed CIEL_HOME."""
 
 import os
-import shutil
 import subprocess
 import sys
 import tempfile

@@ -1,7 +1,6 @@
 """Tests for scripts/paired_eval.py using deterministic stub runners."""
 
 import json
-import os
 import shutil
 import subprocess
 import sys
