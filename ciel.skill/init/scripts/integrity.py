@@ -19,6 +19,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 MANIFEST = "INTEGRITY.json"
+REPORT_DIR = "integrity"
 
 
 def _git(home: Path, *args: str) -> subprocess.CompletedProcess:
@@ -35,7 +36,10 @@ def _tracked_files(home: Path) -> list[str]:
     if proc.returncode != 0:
         print(f"[integrity] {home} is not a git repository", file=sys.stderr)
         sys.exit(2)
-    return [p for p in proc.stdout.splitlines() if p and p != MANIFEST]
+    return [
+        p for p in proc.stdout.splitlines()
+        if p and p != MANIFEST and not p.startswith(REPORT_DIR + "/")
+    ]
 
 
 def _load_manifest(home: Path) -> dict[str, str]:
@@ -137,7 +141,7 @@ def main() -> int:
 
     result = sweep(home)
     report = {"ts": now_iso, "sweep": result}
-    report_dir = home / "integrity"
+    report_dir = home / REPORT_DIR
     try:
         report_dir.mkdir(parents=True, exist_ok=True)
         (report_dir / f"{now}.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
