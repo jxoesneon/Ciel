@@ -127,6 +127,20 @@ jobs:
       - name: Run Python unit tests
         run: python3 -m unittest discover tests
 
+  skill-scan:
+    name: skillfrisk static scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: astral-sh/setup-uv@v5
+      - name: Scan all skills
+        run: python3 scripts/scan_skills.py --all --report scan-report.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: skill-scan-report
+          path: scan-report.json
+          retention-days: 14
+
   psscriptanalyzer:
     name: PSScriptAnalyzer
     runs-on: ubuntu-latest

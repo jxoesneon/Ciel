@@ -15,6 +15,10 @@ Untrusted → sandboxed → validated → promoted.
 
 Transitions are logged; reverse transitions require Council.
 
+## Static scan (mandatory)
+
+Every new skill is scanned with `skillfrisk` (`scripts/scan_skills.py`) while `untrusted`, before any sandboxed execution. A skill whose scan reports `failed: true` cannot leave `untrusted` until the findings are remediated or the Council overrides. The scan `risk_score` is recorded in the trust record and re-checked on every skill update.
+
 ## Trust Score
 
 ```text

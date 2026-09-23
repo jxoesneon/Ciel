@@ -33,4 +33,4 @@ io_contract:
 
 ## Safety
 
-Installs always flow through `council/invocation_scopes/SKILL_INTEGRATION.md`. Bypass is forbidden by Constitution.
+Installs always flow through `council/invocation_scopes/SKILL_INTEGRATION.md`. Bypass is forbidden by Constitution. Before registration, run a static scan (`skillfrisk` via `scripts/scan_skills.py`): a skill that reports `failed: true` must not be installed — record its `risk_score` in the trust record and leave it `untrusted` pending Council review (see `acquisition/TRUST_MODEL.md`).
