@@ -47,6 +47,7 @@ fs_backend/
 checkpoints/
 .attic/
 sandbox/
+allow_privileged
 EOF
     (cd "$CIEL_HOME" && git add -A && git commit -q -m "genesis: Ciel cold start @ $CIEL_VERSION") || true
     say "Git repository initialized."
@@ -105,7 +106,18 @@ say "Integrity seed written."
 # --- 8. Activity log ---------------------------------------------------------
 echo "{\"ts\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",\"kind\":\"bootstrap\",\"version\":\"$CIEL_VERSION\"}" >>"$CIEL_HOME/activity.log"
 
-# --- 9. Verify ---------------------------------------------------------------
+# --- 9. Lifecycle hooks -------------------------------------------------------
+HOOK_SRC="$(cd "$(dirname "$0")/../hooks" 2>/dev/null && pwd || true)"
+if [ -n "$HOOK_SRC" ] && [ -d "$HOOK_SRC" ]; then
+  mkdir -p "$CIEL_HOME/hooks"
+  cp -R "$HOOK_SRC/." "$CIEL_HOME/hooks/"
+  find "$CIEL_HOME/hooks" -name '*.sh' -exec chmod +x {} +
+  say "Lifecycle hooks installed."
+else
+  warn "Hook payload directory not found; skipping hook install."
+fi
+
+# --- 10. Verify ---------------------------------------------------------------
 say "Running verification…"
 bash "$(dirname "$0")/verify.sh" || die "Verification failed; see $LOG"
 

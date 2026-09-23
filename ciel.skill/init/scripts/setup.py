@@ -73,6 +73,7 @@ def main():
                 "checkpoints/\n"
                 ".attic/\n"
                 "sandbox/\n"
+                "allow_privileged\n"
             )
             (CIEL_HOME / ".gitignore").write_text(gitignore_content, encoding="utf-8")
             
@@ -116,7 +117,26 @@ def main():
             warn("sqlite3 not found; falling back to filesystem KV backend.")
             (CIEL_HOME / "fs_backend").mkdir(parents=True, exist_ok=True)
 
-    # 7. Integrity seed
+    # 5. Lifecycle hooks
+    hook_src = Path(__file__).parent.parent / "hooks"
+    hook_dst = CIEL_HOME / "hooks"
+    if hook_src.is_dir():
+        hook_dst.mkdir(parents=True, exist_ok=True)
+        for adapter_dir in hook_src.iterdir():
+            if adapter_dir.is_dir():
+                target = hook_dst / adapter_dir.name
+                target.mkdir(parents=True, exist_ok=True)
+                for hook_file in adapter_dir.iterdir():
+                    if hook_file.is_file():
+                        dest = target / hook_file.name
+                        shutil.copy2(hook_file, dest)
+                        if hook_file.suffix == ".sh":
+                            dest.chmod(0o755)
+        say("Lifecycle hooks installed.")
+    else:
+        warn("Hook payload directory not found; skipping hook install.")
+
+    # 6. Integrity seed
     now = datetime.datetime.now(datetime.UTC).isoformat(timespec='seconds').replace('+00:00', 'Z')
     integrity = {
         "schema": 1,
@@ -128,7 +148,7 @@ def main():
     (CIEL_HOME / "INTEGRITY.json").write_text(json.dumps(integrity, indent=2), encoding="utf-8")
     say("Integrity seed written.")
 
-    # 6. Activity log
+    # 7. Activity log
     log_entry = {
         "ts": now,
         "kind": "bootstrap",
@@ -137,24 +157,12 @@ def main():
     with open(CIEL_HOME / "activity.log", "a", encoding="utf-8") as f:
         f.write(json.dumps(log_entry) + "\n")
 
-    # 7. Verification
+    # 8. Verification
     say("Running verification...")
-    # Verify.sh is still POSIX-centric, so we skip it if on Windows or it fails
+    # Verify.sh is still POSIX-centric, so we skip it on Windows
     verify_script = Path(__file__).parent / "verify.sh"
     if verify_script.exists() and os.name != 'nt':
         run(["bash", str(verify_script)], check=False)
-    elif os.name == 'nt':
-        # On Windows, we ensure .ps1 hooks are copied if they exist
-        hook_src = Path(__file__).parent.parent / "hooks"
-        hook_dst = CIEL_HOME / "hooks"
-        hook_dst.mkdir(parents=True, exist_ok=True)
-        for adapter_dir in hook_src.iterdir():
-            if adapter_dir.is_dir():
-                target_adapter_dir = hook_dst / adapter_dir.name
-                target_adapter_dir.mkdir(parents=True, exist_ok=True)
-                for hook_file in adapter_dir.glob("*.ps1"):
-                    shutil.copy2(hook_file, target_adapter_dir / hook_file.name)
-        say("PowerShell hooks copied for Windows.")
     else:
         say("Skipping verify.sh; Ciel integrity check will run on load.")
 
