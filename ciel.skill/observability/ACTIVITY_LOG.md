@@ -37,10 +37,11 @@ Template at `templates/activity_log_entry.template.md`.
 
 ## Rotation
 
-- Rotation policy: daily at `observability.config.log_rotate_hour` (default 00:00 UTC).
-- Rotated files: `activity-YYYYMMDD.log.zst`.
-- Retention: `observability.config.log_retention_days` (default 90).
-- Archived logs live under `~/.ciel/archive/logs/`.
+- Rotation is performed by `init/hooks/lib/activity_log_rotate.py`, invoked once per session from the session-boundary hooks (`hooks/devin/session_start.sh`, `hooks/antigravity/pre_invocation.sh`).
+- Triggers: the log crosses the UTC day boundary (first entry's `ts` is earlier than today UTC) **or** it exceeds 5 MiB (`CIEL_LOG_MAX_BYTES`).
+- Rotated files: `~/.ciel/archive/logs/activity-YYYYMMDD-HHMMSS.log.zst` (UTC rotation timestamp; `.log.gz` when no zstd backend is available). The log is renamed atomically, then compressed.
+- Retention: archives older than 90 days (`CIEL_LOG_RETENTION_DAYS`) are pruned on each rotation.
+- After rotation a `{"kind": "sweep", "op": "log_rotate"}` marker line is appended to the fresh log recording the archive path, trigger reason, and pre-rotation size.
 
 ## Redaction
 
