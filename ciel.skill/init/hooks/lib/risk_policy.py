@@ -169,7 +169,7 @@ def system1_verdict(tool: str, command: str, path: str,
     if system1 is None:
         return None
     answer = system1.ask_choice(
-        {"tool": tool, "command": command, "path": path},
+        system1.tool_state(tool, command, path),
         "risk",
         SYSTEM1_QUESTIONS["risk"]["instructions"],
         SYSTEM1_QUESTIONS["risk"]["criteria"],
@@ -187,11 +187,11 @@ def system1_shadow_async(payload: dict) -> None:
         return
     system1.ask_async({
         "surface": "pre_tool_risk",
-        "state": {
-            "tool": payload.get("tool") or "",
-            "command": payload.get("command") or "",
-            "path": payload.get("path") or "",
-        },
+        "state": system1.tool_state(
+            payload.get("tool") or "",
+            payload.get("command") or "",
+            payload.get("path") or "",
+        ),
         "questions": SYSTEM1_QUESTIONS,
         "meta": {
             "ts": payload.get("ts"),
@@ -211,11 +211,11 @@ def _shadow_main() -> int:
         payload = json.loads(sys.stdin.read() or "{}")
     except json.JSONDecodeError:
         return 0
-    state = {
-        "tool": str(payload.get("tool") or ""),
-        "command": str(payload.get("command") or ""),
-        "path": str(payload.get("path") or ""),
-    }
+    state = system1.tool_state(
+        str(payload.get("tool") or ""),
+        str(payload.get("command") or ""),
+        str(payload.get("path") or ""),
+    )
     result = system1.ask(state, SYSTEM1_QUESTIONS, timeout=20.0)
     system1._append_event({
         "ts": payload.get("ts"),

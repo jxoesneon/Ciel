@@ -11,6 +11,7 @@ import tempfile
 import threading
 import time
 import unittest
+import unittest.mock
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -246,6 +247,109 @@ class TestEventLog(System1TestCase):
         rotated = Path(self.tmp.name) / "system1" / "events.jsonl.1"
         self.assertTrue(rotated.is_file())
         self.assertLess(log.stat().st_size, 1024)
+
+
+class TestToolState(unittest.TestCase):
+    def test_read_only_tool(self):
+        s = system1.tool_state("read", "", "/tmp/x.txt")
+        self.assertEqual(s["reversibility"], "read-only; no state change")
+        self.assertNotIn("targets_sensitive_path", s)
+
+    def test_write_tool_sensitive_path(self):
+        s = system1.tool_state("write", "", "$HOME/.ssh/authorized_keys")
+        self.assertTrue(s["targets_sensitive_path"])
+        self.assertTrue(any("credential" in e for e in s["side_effects"]))
+
+    def test_exec_command(self):
+        s = system1.tool_state("exec", "rm -rf /tmp/x", "")
+        self.assertIn("rm -rf /tmp/x", s["action"])
+        self.assertIn("irreversible", s["reversibility"])
+
+    def test_no_policy_leak(self):
+        s = system1.tool_state("exec", "sudo apt install x", "")
+        self.assertNotIn("deny", json.dumps(s))
+        self.assertNotIn("policy", json.dumps(s))
+
+
+class TestShortlist(unittest.TestCase):
+    OPTIONS = {n: f"desc for {n}" for n in
+               ["docker", "git", "article-writing", "security-review",
+                "python-development"] + [f"skill-{i}" for i in range(40)]}
+
+    def setUp(self):
+        # hermetic: never spawn the real embedder venv in unit tests
+        self._p = unittest.mock.patch.dict(
+            os.environ, {"CIEL_SYSTEM1_EMBED": "0"})
+        self._p.start()
+        self.addCleanup(self._p.stop)
+
+    def test_small_set_passthrough(self):
+        opts = {"a": "x", "b": "y"}
+        self.assertEqual(system1.shortlist_options("t", opts), opts)
+
+    def test_name_token_match_survives(self):
+        out = system1.shortlist_options("run docker compose up", self.OPTIONS,
+                                        k=5)
+        self.assertIn("docker", out)
+
+    def test_lexical_relevance(self):
+        out = system1.shortlist_options(
+            "audit the PR for credential leaks", self.OPTIONS, k=5)
+        self.assertIn("security-review", out)
+
+    def test_semantic_fallback_when_no_venv(self):
+        with unittest.mock.patch.object(system1, "ciel_home",
+                                        return_value=Path("/nonexistent")):
+            out = system1.shortlist_options("anything", self.OPTIONS, k=5)
+        self.assertEqual(len(out), 5)
+
+    def test_embed_disabled_env(self):
+        with unittest.mock.patch.dict(os.environ,
+                                      {"CIEL_SYSTEM1_EMBED": "0"}):
+            self.assertEqual(
+                system1._semantic_rank("t", self.OPTIONS, 5), [])
+
+
+class TestDecideMain(System1TestCase):
+    def test_decide_prints_verdict_and_logs(self):
+        srv = _serve({"answers": {"done": {"type": "choice", "choice": "yes",
+                                          "confidence": 0.9,
+                                          "probabilities": {"yes": 0.9,
+                                                            "no": 0.1}}},
+                      "model": "stub"})
+        port = srv.server_address[1]
+        try:
+            with unittest.mock.patch.dict(
+                    os.environ, {"CIEL_SYSTEM1_URL": f"http://127.0.0.1:{port}"}):
+                proc = subprocess.run(
+                    [sys.executable, system1.__file__, "--decide"],
+                    input=json.dumps({
+                        "surface": "completion_check",
+                        "state": {"objective": "x"},
+                        "questions": {"done": {"type": "choice",
+                                               "instructions": "done?",
+                                               "criteria": {"yes": "y",
+                                                            "no": "n"}}}}),
+                    capture_output=True, text=True, timeout=30)
+            self.assertEqual(proc.returncode, 0)
+            out = json.loads(proc.stdout)
+            self.assertIn("answers", out)
+            log = Path(self.tmp.name) / "system1" / "events.jsonl"
+            events = [json.loads(l) for l in log.read_text().splitlines()]
+            self.assertEqual(events[-1]["surface"], "completion_check")
+        finally:
+            srv.shutdown()
+
+    def test_decide_offline_prints_null(self):
+        with unittest.mock.patch.dict(
+                os.environ, {"CIEL_SYSTEM1_URL": "http://127.0.0.1:9"}):
+            proc = subprocess.run(
+                [sys.executable, system1.__file__, "--decide"],
+                input=json.dumps({"surface": "s", "state": {},
+                                  "questions": {}}),
+                capture_output=True, text=True, timeout=30)
+        self.assertEqual(proc.returncode, 0)
+        self.assertEqual(proc.stdout.strip(), "null")
 
 
 if __name__ == "__main__":

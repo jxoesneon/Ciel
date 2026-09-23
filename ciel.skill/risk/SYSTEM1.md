@@ -30,7 +30,34 @@ advisory tier → confirm escalation, each step gated by the Council.
 
 `CIEL_SYSTEM1_KEY` overrides; otherwise the key is read from
 `~/.ciel/system1/env` (`LAYA_API_KEY=` line). `CIEL_SYSTEM1_DISABLED=1`
-turns the tier off entirely.
+turns the tier off entirely. `CIEL_SYSTEM1_MODEL` (env or the same env
+file) pins the request `model` — a laya checkpoint name
+(`english`, `multilingual`, `typed-decisions`) or `jev-latest` on hosted
+Jev.
+
+## On-demand asks (`--decide`)
+
+Hooks only cover surfaces with an interception point. For deliberate
+decisions — completion checks, task routing, salience — call the endpoint
+synchronously; the verdict prints to stdout and still lands in
+`events.jsonl`:
+
+```bash
+echo '{
+  "surface": "completion_check",
+  "state": {"objective": "...", "evidence": "..."},
+  "questions": {"done": {"type": "choice",
+    "instructions": "Is the objective verifiably complete?",
+    "criteria": {"complete": "all claims verified",
+                 "incomplete": "anything unverified or missing"}}}
+}' | python3 ~/.ciel/hooks/lib/system1.py --decide
+```
+
+Prints `{"answers": {...}, "model": "typed-decisions"}` or `null` when the
+endpoint is down (fail-open). Use `system1.route_choice(task, options)` for
+routing: it shortlists high-cardinality candidate sets lexically
+(`shortlist_options`, k=10) before the choice call — the documented
+coarse-to-fine pattern once options exceed ~20.
 
 ## Local setup (laya)
 
@@ -43,7 +70,7 @@ python3 -m venv ~/.ciel/system1/venv
 LAYA_HOST=127.0.0.1
 LAYA_PORT=8765
 LAYA_PRELOAD=1
-LAYA_MODELS=english        # only the English checkpoint resident (~800MB RAM)
+LAYA_MODELS=english,typed-decisions   # both resident (~1.6GB); typed-decisions is the calibrated default
 LAYA_THREADS=4
 LAYA_API_KEY=<openssl rand -hex 24>
 ```

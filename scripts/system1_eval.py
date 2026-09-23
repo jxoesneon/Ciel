@@ -22,6 +22,8 @@ Usage:
 
 import argparse
 import json
+import os
+import re
 import sys
 import time
 from pathlib import Path
@@ -41,9 +43,17 @@ EXPECT_LABEL = {"allow": "safe", "deny": "dangerous",
 PRESCREEN_QUESTIONS = system1.PRESCREEN_QUESTIONS
 
 
+RAW_STATE = False  # --raw-state: A/B the plain {tool,command,path} state
+
+
 def _risk_state(case: dict) -> dict:
-    return {"tool": case.get("tool") or "", "command": case.get("command") or "",
-            "path": case.get("path") or ""}
+    if RAW_STATE:
+        return {"tool": case.get("tool") or "",
+                "command": case.get("command") or "",
+                "path": case.get("path") or ""}
+    return system1.tool_state(case.get("tool") or "",
+                              case.get("command") or "",
+                              case.get("path") or "")
 
 
 def _prescreen_state(case: dict) -> dict:
@@ -58,6 +68,54 @@ def _router_questions(corpus: dict) -> dict:
     return {"route": {"type": "choice",
                       "instructions": "Which skill should handle this task?",
                       "criteria": corpus.get("candidates") or {}}}
+
+
+def _skill_dirs() -> list:
+    dirs = [Path(os.environ.get("CIEL_SKILLS_DIR") or "")
+            if os.environ.get("CIEL_SKILLS_DIR") else None,
+            Path.home() / ".ciel" / "skills",
+            ROOT / "skills"]
+    return [d for d in dirs if d and d.is_dir()]
+
+
+def _registry_candidates() -> dict:
+    """{skill_id: description} from the first populated skills dir — the
+    real ~200-skill registry rather than the corpus's hand-picked nine."""
+    for d in _skill_dirs():
+        out = {}
+        for skill_md in sorted(d.glob("*/SKILL.md")):
+            desc = ""
+            try:
+                head = skill_md.read_text(encoding="utf-8",
+                                          errors="replace")[:2000]
+            except OSError:
+                continue
+            m = re.search(r"(?m)^description:\s*(.+)$", head)
+            if m:
+                desc = m.group(1).strip()
+            else:
+                for line in head.splitlines():
+                    line = line.strip()
+                    if line and not line.startswith(("#", "---", "name:")):
+                        desc = line
+                        break
+            out[skill_md.parent.name] = desc
+        if out:
+            return out
+    return {}
+
+
+_REGISTRY_CACHE: dict = {}
+
+
+def _router_registry_questions(case: dict, corpus: dict) -> dict:
+    if not _REGISTRY_CACHE:
+        _REGISTRY_CACHE.update(_registry_candidates())
+    criteria = system1.shortlist_options(case.get("task") or "",
+                                         _REGISTRY_CACHE, k=10)
+    return {"route": {"type": "choice",
+                      "instructions": "Which skill should handle this task?",
+                      "criteria": criteria}}
 
 
 # surface -> {corpus, questions(static dict or fn(corpus)), state, truth,
@@ -84,6 +142,15 @@ SURFACES = {
         "truth": lambda c: c.get("expected"),
         "positive": None,  # multiclass: accuracy + margin
     },
+    # Real-registry routing: same corpus tasks, but candidates come from the
+    # full skills dir and are reduced per-case via lexical shortlist.
+    "router_registry": {
+        "corpus": FIXTURES / "system1_router_cases.json",
+        "questions_for_case": _router_registry_questions,
+        "state": _router_state,
+        "truth": lambda c: c.get("expected"),
+        "positive": None,
+    },
 }
 
 
@@ -106,15 +173,19 @@ def _confidence(answers: dict) -> float:
 def evaluate_surface(name: str, spec: dict, timeout: float) -> dict:
     corpus = json.loads(spec["corpus"].read_text(encoding="utf-8"))
     cases = corpus["cases"] if isinstance(corpus, dict) else corpus
-    questions = spec["questions"](corpus)
+    questions_for_case = spec.get("questions_for_case")
+    questions = (questions_for_case is None and spec["questions"](corpus))
 
     tp = fp = tn = fn = errors = correct = 0
+    in_options_total = in_options_hits = 0
     conf_correct, conf_wrong, margins, latencies = [], [], [], []
     per_case = []
     for case in cases:
         truth = spec["truth"](case)
         if truth is None:
             continue
+        if questions_for_case is not None:
+            questions = questions_for_case(case, corpus)
         t0 = time.monotonic()
         result = system1.ask(spec["state"](case), questions, timeout=timeout)
         latencies.append(time.monotonic() - t0)
@@ -139,6 +210,14 @@ def evaluate_surface(name: str, spec: dict, timeout: float) -> dict:
                          "confidence": conf, "margin": margin})
         pos = spec["positive"]
         if pos is None:
+            # did the truth survive candidate reduction (shortlist recall)?
+            offered = set()
+            for q in questions.values():
+                if isinstance(q, dict) and isinstance(q.get("criteria"), dict):
+                    offered.update(q["criteria"])
+            if offered:
+                in_options_total += 1
+                in_options_hits += int(truth in offered)
             correct += int(pred == truth)
             (conf_correct if pred == truth else conf_wrong).append(conf)
             continue
@@ -166,6 +245,8 @@ def evaluate_surface(name: str, spec: dict, timeout: float) -> dict:
     }
     if spec["positive"] is None:
         base["accuracy"] = (correct / len(per_case)) if per_case else None
+        if in_options_total:
+            base["shortlist_recall"] = in_options_hits / in_options_total
         return base
 
     precision = tp / (tp + fp) if tp + fp else None
@@ -212,7 +293,12 @@ def main() -> int:
     ap.add_argument("--surface", choices=sorted(SURFACES))
     ap.add_argument("--timeout", type=float, default=30.0)
     ap.add_argument("--stdout", action="store_true")
+    ap.add_argument("--raw-state", action="store_true",
+                    help="A/B: send plain {tool,command,path} instead of "
+                         "the enriched tool_state()")
     args = ap.parse_args()
+    global RAW_STATE
+    RAW_STATE = args.raw_state
 
     names = [args.surface] if args.surface else list(SURFACES)
     report = {

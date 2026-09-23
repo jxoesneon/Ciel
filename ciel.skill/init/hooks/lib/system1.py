@@ -24,7 +24,9 @@ result to events.jsonl.
 
 import hashlib
 import json
+import math
 import os
+import re
 import subprocess
 import sys
 import time
@@ -44,6 +46,8 @@ SURFACE_FLAGS = {
     "pre_tool_risk": {"flag": {"dangerous"}},
     "council_prescreen": {"flag": {"escalate"}},
     "router": {},
+    "router_registry": {},
+    "completion_check": {"flag": {"incomplete"}},
 }
 
 # Calibrated wording: an explicit "when in doubt, escalate" instruction lifts
@@ -66,6 +70,68 @@ PRESCREEN_QUESTIONS = {
         },
     }
 }
+
+_READ_ONLY_TOOLS = {
+    "read", "grep", "find_file_by_name", "webfetch", "web_search",
+    "get_output", "mcp_read_resource", "mcp_list_tools", "mcp_list_servers",
+    "notebook_read", "skill", "read_subagent", "list_skills",
+}
+_WRITE_TOOLS = {"write", "edit", "notebook_edit"}
+
+# Substrings that mark a path/command as touching a sensitive location. This
+# is a state *feature* for the model, not a policy verdict — it deliberately
+# overlaps the policy's protected set but carries no decision.
+_SENSITIVE_MARKERS = (
+    "/.ssh", "/.aws", "/.gnupg", "/.kube", "/.docker", "/.netrc",
+    "/.npmrc", "/.pypirc", "/.ciel/hooks", "/.ciel/risk",
+    "/.config/devin", "/etc/", "/usr/", "/bin/", "/sbin/", "/boot/",
+    "/root/",
+)
+
+
+def tool_state(tool: str, command: str, path: str) -> dict:
+    """Enriched state for the pre_tool_risk surface.
+
+    Beyond the raw {tool, command, path}, adds the fields AutoJev's
+    tool-guard contract shows the model uses: a plain-language action,
+    reversibility, side effects, and a sensitive-path hint. All fields are
+    derived deterministically from the inputs — the policy verdict is never
+    included, so the model's answer stays an independent signal for
+    calibration and RLCD export."""
+    tool = tool or ""
+    command = command or ""
+    path = path or ""
+    state = {"tool": tool, "command": command, "path": path}
+
+    if tool in _READ_ONLY_TOOLS:
+        state["action"] = f"read data via {tool}"
+        state["reversibility"] = "read-only; no state change"
+        state["side_effects"] = []
+    elif tool in _WRITE_TOOLS or (path and not command):
+        state["action"] = f"create or modify the file at {path or '(unknown path)'}"
+        state["reversibility"] = ("reversible if the target is tracked by "
+                                  "version control; destructive otherwise")
+        state["side_effects"] = ["modifies the filesystem at the target path"]
+    elif tool == "exec" or command:
+        state["action"] = f"run shell command: {command[:200]}"
+        state["reversibility"] = ("depends on the command; writes, deletes, "
+                                  "and package/system changes may be "
+                                  "irreversible")
+        state["side_effects"] = [
+            "runs a subprocess that may change files, network, or system state"
+        ]
+    else:
+        state["action"] = f"invoke {tool or 'a tool'}"
+        state["reversibility"] = "unknown"
+        state["side_effects"] = []
+
+    haystack = f"{path} {command}"
+    if any(m in haystack for m in _SENSITIVE_MARKERS):
+        state["targets_sensitive_path"] = True
+        state["side_effects"].append(
+            "touches a credential store, agent configuration, or protected "
+            "system path")
+    return state
 
 
 def ciel_home() -> Path:
@@ -155,6 +221,111 @@ def ask_choice(state: dict, key: str, instructions: str,
         "probabilities": answer.get("probabilities"),
         "model": result.get("model"),
     }
+
+
+_STOPWORDS = frozenset(
+    "in my and the a an to for of on is it me we i or be this that with out "
+    "up do how what which should can could would your our at by from as "
+    "into about before after just need want help please use using make get "
+    "set new all any some no not if when then so than too very will are was "
+    "were been has have had does did over again once here there where why "
+    "who these those each few more most other own same only also now like "
+    "through between both per via whether while during without within "
+    "across upon off down along around among against step run write create "
+    "add check see look take give go put let keep work thing things "
+    "something anything lot kind type part way".split())
+
+
+def _tokens(text: str) -> set:
+    out = set()
+    for tok in re.findall(r"[a-z0-9]+", text.lower()):
+        if tok in _STOPWORDS:
+            continue
+        out.add(tok)
+        if len(tok) > 3 and tok.endswith("s") and not tok.endswith("ss"):
+            out.add(tok[:-1])
+    return out
+
+
+def _lexical_rank(text: str, options: dict) -> list:
+    """Candidates ranked by IDF-weighted token overlap (name + criterion)."""
+    query = _tokens(text)
+    docs = {name: _tokens(f"{name} {crit or ''}")
+            for name, crit in options.items()}
+    df: dict = {}
+    for toks in docs.values():
+        for tok in toks:
+            df[tok] = df.get(tok, 0) + 1
+    n = len(docs) or 1
+    return sorted(
+        ((sum(math.log(n / (1 + df[t])) + 1.0 for t in query & toks), name)
+         for name, toks in docs.items()),
+        key=lambda item: (-item[0], item[1]),
+    )
+
+
+def _semantic_rank(text: str, options: dict, k: int) -> list:
+    """Bi-encoder shortlist via the laya-venv helper subprocess
+    (``system1_embed.py`` beside this file). Returns ranked names or []
+    when the venv/model is unavailable — callers fall back to lexical."""
+    if os.environ.get("CIEL_SYSTEM1_EMBED") == "0":
+        return []
+    venv_py = (ciel_home() / "system1" / "venv" / "bin" / "python")
+    helper = Path(__file__).with_name("system1_embed.py")
+    if not (venv_py.is_file() and helper.is_file()):
+        return []
+    try:
+        proc = subprocess.run(
+            [str(venv_py), str(helper)],
+            input=json.dumps({"task": text,
+                              "candidates": options, "k": k}),
+            capture_output=True, text=True, timeout=60, check=False)
+        names = json.loads(proc.stdout or "{}").get("names")
+        return names if isinstance(names, list) else []
+    except (OSError, ValueError):
+        return []
+
+
+def shortlist_options(text: str, options: dict, k: int = 10) -> dict:
+    """Coarse-to-fine candidate reduction for high-cardinality choice
+    questions — the documented pattern once options exceed ~20.
+
+    Hybrid scorer: semantic top-k from a bi-encoder (when the laya venv is
+    present) ∪ lexical top-5 ∪ exact skill-name matches, then capped at
+    k. Measured on the 22-case corpus against the 200-skill registry:
+    semantic+lexical recall 16/22 vs 12/22 lexical-only vs 4/22 from the
+    decision checkpoint's own encoder. ``CIEL_SYSTEM1_EMBED=0`` forces
+    lexical."""
+    if len(options) <= k:
+        return dict(options)
+    keep: list = []
+    for name in _semantic_rank(text, options, k):
+        if name in options and name not in keep:
+            keep.append(name)
+    for _, name in _lexical_rank(text, options)[:5]:
+        if name not in keep:
+            keep.append(name)
+    task_tokens = set(re.findall(r"[a-z0-9]+", text.lower()))
+    for name in options:
+        if (set(re.findall(r"[a-z0-9]+", name.lower())) & task_tokens
+                and name not in keep):
+            keep.append(name)
+    return {name: options[name] for name in keep[:k]}
+
+
+def route_choice(task: str, options: dict, k: int = 10,
+                 timeout: float = 0.9) -> dict | None:
+    """Route ``task`` to one of ``options`` (id -> description). Shortlists
+    to top-k when the candidate set is large, then asks one choice."""
+    candidates = (options if len(options) <= k
+                  else shortlist_options(task, options, k))
+    return ask_choice(
+        {"task": task, "candidates": sorted(candidates)},
+        "route",
+        "Which candidate best fits the task?",
+        candidates,
+        timeout=timeout,
+    )
 
 
 def _cache_path(state: dict, questions: dict) -> Path:
@@ -281,43 +452,51 @@ def ask_async(payload: dict) -> None:
             pass
 
 
+def _resolve(state: dict, questions: dict) -> tuple:
+    """Cache-read, ask, cache-write. Returns (result, cache_hit, latency_ms)."""
+    cached = _cache_read(state, questions)
+    if cached is not None:
+        return cached, True, 0
+    started = time.monotonic()
+    result = ask(state, questions, timeout=ASK_TIMEOUT)
+    latency_ms = int((time.monotonic() - started) * 1000)
+    if result is not None:
+        _cache_write(state, questions, result)
+    return result, False, latency_ms
+
+
+def _event_record(payload: dict, result: dict | None, hit: bool,
+                  latency_ms: int) -> dict:
+    surface = payload.get("surface") or "unknown"
+    record = {
+        "ts": payload.get("meta", {}).get("ts") or time.strftime(
+            "%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "surface": surface,
+        "questions": payload.get("questions") or {},
+        "state": payload.get("state") or {},
+        "meta": payload.get("meta") or {},
+        "system1": result,
+        "flag": (_band(surface, result["answers"])
+                 if result is not None else "pass"),
+        "cache_hit": hit,
+    }
+    if not hit:
+        record["latency_ms"] = latency_ms
+    return record
+
+
 def _ask_main() -> int:
     marker = os.environ.get("CIEL_SYSTEM1_MARKER")
     try:
-        payload = json.loads(sys.stdin.read() or "{}")
-    except json.JSONDecodeError:
-        payload = {}
-    try:
+        try:
+            payload = json.loads(sys.stdin.read() or "{}")
+        except json.JSONDecodeError:
+            payload = {}
         if not payload:
             return 0
-        state = payload.get("state") or {}
-        questions = payload.get("questions") or {}
-        cached = _cache_read(state, questions)
-        if cached is not None:
-            result, hit = cached, True
-        else:
-            started = time.monotonic()
-            result = ask(state, questions, timeout=ASK_TIMEOUT)
-            hit = False
-            latency_ms = int((time.monotonic() - started) * 1000)
-            if result is not None:
-                _cache_write(state, questions, result)
-        surface = payload.get("surface") or "unknown"
-        record = {
-            "ts": payload.get("meta", {}).get("ts") or time.strftime(
-                "%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-            "surface": surface,
-            "questions": questions,
-            "state": state,
-            "meta": payload.get("meta") or {},
-            "system1": result,
-            "flag": (_band(surface, result["answers"])
-                     if result is not None else "pass"),
-            "cache_hit": hit,
-        }
-        if not hit:
-            record["latency_ms"] = latency_ms
-        _append_event(record)
+        result, hit, latency_ms = _resolve(payload.get("state") or {},
+                                           payload.get("questions") or {})
+        _append_event(_event_record(payload, result, hit, latency_ms))
         return 0
     finally:
         if marker:
@@ -327,11 +506,31 @@ def _ask_main() -> int:
                 pass
 
 
+def _decide_main() -> int:
+    """Synchronous on-demand ask for interactive/agent use: read the same
+    JSON payload as --ask, append the event, and print the verdict to
+    stdout. Exit 0 with 'null' printed when the endpoint is unreachable."""
+    try:
+        payload = json.loads(sys.stdin.read() or "{}")
+    except json.JSONDecodeError:
+        payload = {}
+    if not payload:
+        print("null")
+        return 0
+    result, hit, latency_ms = _resolve(payload.get("state") or {},
+                                       payload.get("questions") or {})
+    _append_event(_event_record(payload, result, hit, latency_ms))
+    print(json.dumps(result, ensure_ascii=False))
+    return 0
+
+
 def main() -> int:
     if "--ask" in sys.argv:
         return _ask_main()
-    print("usage: system1.py --ask  (reads JSON payload on stdin)",
-          file=sys.stderr)
+    if "--decide" in sys.argv:
+        return _decide_main()
+    print("usage: system1.py --ask | --decide  (reads JSON payload on stdin; "
+          "--decide prints the verdict)", file=sys.stderr)
     return 2
 
 
