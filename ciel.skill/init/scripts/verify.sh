@@ -96,6 +96,21 @@ else
   say "devin config absent — attribution check skipped"
 fi
 
+# 5c. Risk policy present and loadable
+if [ -f "$CIEL_HOME/risk/policy.json" ]; then
+  if command -v python3 >/dev/null 2>&1 && [ -f "$CIEL_HOME/hooks/lib/risk_policy.py" ]; then
+    if CIEL_POLICY="$CIEL_HOME/risk/policy.json" python3 "$CIEL_HOME/hooks/lib/risk_policy.py" --check >/dev/null 2>&1; then
+      say "risk policy loadable"
+    else
+      fail "risk policy.json present but failed to load"
+    fi
+  else
+    warn "python3 or risk_policy.py missing; cannot verify risk policy"
+  fi
+else
+  warn "risk policy absent — hooks will use built-in fallback rules"
+fi
+
 # 6. Activity log writable
 if touch "$CIEL_HOME/activity.log" 2>/dev/null; then
   say "activity.log writable"

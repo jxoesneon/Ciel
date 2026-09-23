@@ -1,0 +1,226 @@
+#!/usr/bin/env python3
+"""Shared PreToolUse risk-policy evaluator for every runtime hook.
+
+The human-edited source of truth is ``ciel.skill/risk/policy.yaml``; hooks
+consume the compiled ``risk/policy.json`` twin so the evaluation path needs
+only the Python standard library (PyYAML is a dev-time dependency only).
+
+Policy resolution order:
+  1. ``$CIEL_POLICY`` (explicit path to a policy.json/policy.yaml)
+  2. ancestors of this file containing ``risk/policy.json``
+     (covers both the source layout ``ciel.skill/init/hooks/lib`` and the
+      deployed layout ``~/.ciel/hooks/lib``)
+  3. ``$CIEL_HOME/risk/policy.json`` then ``~/.ciel/risk/policy.json``
+
+If no policy file loads, FALLBACK_RULES (a hard-tier catastrophic subset) is
+used and the verdict carries ``"policy": "fallback"`` so the degraded state
+is visible in activity.log.
+
+CLI: reads ``{"tool", "command", "path"}`` JSON from stdin and prints a
+verdict JSON ``{"decision", "rule_id", "tier", "reason", "policy"}`` where
+decision is ``allow`` | ``deny`` | ``allow_overridden``. ``--check`` prints
+policy load diagnostics instead.
+"""
+
+import json
+import os
+import re
+import sys
+from pathlib import Path
+
+# Hard-tier subset applied when no policy file can be loaded. Kept minimal on
+# purpose: catastrophic, irreversible commands only.
+FALLBACK_RULES = [
+    {
+        "id": "fork_bomb",
+        "tier": "hard",
+        "match": "command",
+        "pattern": r":\s*\(\s*\)\s*\{\s*:\s*\|\s*:\s*&\s*\}\s*;\s*:",
+        "reason": "Fork bomb.",
+    },
+    {
+        "id": "mkfs",
+        "tier": "hard",
+        "match": "command",
+        "pattern": r"\bmkfs(\.[a-z0-9]+)?\b",
+        "reason": "Filesystem format.",
+    },
+    {
+        "id": "dd_to_device",
+        "tier": "hard",
+        "match": "command",
+        "pattern": r"\bdd\b[^\n|;&]*\bof=/dev/",
+        "reason": "Raw write to a block device.",
+    },
+    {
+        "id": "rm_root_or_home",
+        "tier": "hard",
+        "match": "command",
+        "pattern": r"\brm\s+(-[a-z]*\s+)*(-[a-z]*[rf][a-z]*\s+)+(/|~|\$HOME|\"\$HOME\"|/\*)(/?\s|/?$|/\*)",
+        "reason": "Recursive delete of / or the home directory.",
+    },
+]
+
+
+def ciel_home() -> Path:
+    override = os.environ.get("CIEL_HOME")
+    return Path(override) if override else Path.home() / ".ciel"
+
+
+def _candidate_policy_files() -> list[Path]:
+    candidates = []
+    explicit = os.environ.get("CIEL_POLICY")
+    if explicit:
+        candidates.append(Path(explicit))
+    here = Path(__file__).resolve()
+    for ancestor in here.parents:
+        candidates.append(ancestor / "risk" / "policy.json")
+    candidates.append(ciel_home() / "risk" / "policy.json")
+    return candidates
+
+
+def _load_json(path: Path) -> dict | None:
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    return data if isinstance(data, dict) and isinstance(data.get("rules"), list) else None
+
+
+def _load_yaml(path: Path) -> dict | None:
+    try:
+        import yaml
+    except ImportError:
+        return None
+    try:
+        data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    except (OSError, yaml.YAMLError):
+        return None
+    return data if isinstance(data, dict) and isinstance(data.get("rules"), list) else None
+
+
+def load_policy() -> tuple[list[dict], str]:
+    """Return (rules, source) where source is 'file', 'fallback', or 'empty'."""
+    for candidate in _candidate_policy_files():
+        if not candidate.is_file():
+            continue
+        data = (
+            _load_yaml(candidate)
+            if candidate.suffix in {".yaml", ".yml"}
+            else _load_json(candidate)
+        )
+        if data is not None:
+            return data["rules"], "file"
+    return FALLBACK_RULES, "fallback"
+
+
+def _normalize_path(raw: str, home: Path) -> str:
+    if not raw:
+        return ""
+    expanded = os.path.expanduser(os.path.expandvars(raw))
+    for base in {str(home), str(Path.home())}:
+        if expanded == base:
+            return "~"
+        if expanded.startswith(base + os.sep):
+            return "~" + expanded[len(base):].replace(os.sep, "/")
+    return expanded
+
+
+def _rule_applies_to_tool(rule: dict, tool: str) -> bool:
+    matchers = rule.get("tools")
+    if not matchers:
+        return True
+    return any(re.search(m, tool, re.IGNORECASE) for m in matchers)
+
+
+def evaluate(
+    tool: str = "",
+    command: str = "",
+    path: str = "",
+    *,
+    home: Path | None = None,
+    rules: list[dict] | None = None,
+    policy_source: str | None = None,
+) -> dict:
+    """Evaluate a tool call against the policy. Returns the verdict dict."""
+    home = home or Path.home()
+    if rules is None:
+        rules, policy_source = load_policy()
+    elif policy_source is None:
+        policy_source = "file"
+
+    normalized_path = _normalize_path(path, home)
+    subjects = {"command": command or "", "path": normalized_path}
+
+    hits = []
+    for rule in rules:
+        if not _rule_applies_to_tool(rule, tool):
+            continue
+        subject = subjects.get(rule.get("match", "command"), "")
+        if not subject:
+            continue
+        try:
+            if re.search(rule["pattern"], subject, re.IGNORECASE):
+                hits.append(rule)
+        except re.error:
+            continue
+
+    verdict = {
+        "decision": "allow",
+        "rule_id": None,
+        "tier": None,
+        "reason": "",
+        "policy": policy_source,
+        "path": normalized_path or None,
+    }
+    if not hits:
+        return verdict
+
+    hard = next((r for r in hits if r.get("tier") == "hard"), None)
+    if hard is not None:
+        verdict.update(
+            decision="deny",
+            rule_id=hard.get("id"),
+            tier="hard",
+            reason=hard.get("reason", ""),
+        )
+        return verdict
+
+    first = hits[0]
+    if (ciel_home() / "allow_privileged").exists():
+        verdict.update(
+            decision="allow_overridden",
+            rule_id=first.get("id"),
+            tier="soft",
+            reason=first.get("reason", ""),
+        )
+    else:
+        verdict.update(
+            decision="deny",
+            rule_id=first.get("id"),
+            tier="soft",
+            reason=first.get("reason", ""),
+        )
+    return verdict
+
+
+def main() -> int:
+    if "--check" in sys.argv:
+        rules, source = load_policy()
+        print(f"policy source={source} rules={len(rules)}")
+        return 0 if source == "file" and rules else 1
+    try:
+        payload = json.loads(sys.stdin.read() or "{}")
+    except json.JSONDecodeError:
+        payload = {}
+    verdict = evaluate(
+        tool=str(payload.get("tool") or ""),
+        command=str(payload.get("command") or ""),
+        path=str(payload.get("path") or ""),
+    )
+    print(json.dumps(verdict, ensure_ascii=False))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

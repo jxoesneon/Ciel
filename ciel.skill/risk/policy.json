@@ -1,0 +1,101 @@
+{
+  "schema": 1,
+  "rules": [
+    {
+      "id": "fork_bomb",
+      "tier": "hard",
+      "match": "command",
+      "pattern": ":\\s*\\(\\s*\\)\\s*\\{\\s*:\\s*\\|\\s*:\\s*&\\s*\\}\\s*;\\s*:",
+      "reason": "Fork bomb."
+    },
+    {
+      "id": "mkfs",
+      "tier": "hard",
+      "match": "command",
+      "pattern": "\\bmkfs(\\.[a-z0-9]+)?\\b",
+      "reason": "Filesystem format."
+    },
+    {
+      "id": "dd_to_device",
+      "tier": "hard",
+      "match": "command",
+      "pattern": "\\bdd\\b[^\\n|;&]*\\bof=/dev/",
+      "reason": "Raw write to a block device."
+    },
+    {
+      "id": "rm_root_or_home",
+      "tier": "hard",
+      "match": "command",
+      "pattern": "\\brm\\s+(-[a-z]*\\s+)*(-[a-z]*[rf][a-z]*\\s+)+(/|~|\\$HOME|\"\\$HOME\"|/\\*)(/?\\s|/?$|/\\*)",
+      "reason": "Recursive delete of / or the home directory."
+    },
+    {
+      "id": "privilege_escalation",
+      "tier": "soft",
+      "match": "command",
+      "pattern": "(^|[\\s;&|(])(sudo|doas|pkexec)\\s+[^\\s|;&]",
+      "reason": "Privilege escalation."
+    },
+    {
+      "id": "power_state",
+      "tier": "soft",
+      "match": "command",
+      "pattern": "(^|[\\s;&|(])(shutdown|reboot|poweroff|halt|systemctl\\s+(poweroff|reboot|halt))\\b",
+      "reason": "Host power-state change."
+    },
+    {
+      "id": "pipe_to_shell",
+      "tier": "soft",
+      "match": "command",
+      "pattern": "\\b(curl|wget)\\b[^\\n|;]*\\|\\s*(sudo\\s+)?(ba|z|da)?sh\\b",
+      "reason": "Remote script piped straight into a shell."
+    },
+    {
+      "id": "git_force_push_protected",
+      "tier": "soft",
+      "match": "command",
+      "pattern": "\\bgit\\s+push\\b[^\\n;&|]*(--force\\b|-f\\b|\\+refs/|\\s\\+[a-z])[^\\n;&|]*\\b(main|master|trunk|release)\\b|\\bgit\\s+push\\b[^\\n;&|]*\\b(main|master|trunk|release)\\b[^\\n;&|]*(--force\\b|-f\\b)",
+      "reason": "Force-push to a protected branch."
+    },
+    {
+      "id": "git_history_rewrite_push",
+      "tier": "soft",
+      "match": "command",
+      "pattern": "\\bgit\\s+push\\b[^\\n;&|]*--force-with-lease\\b[^\\n;&|]*\\b(main|master)\\b",
+      "reason": "History rewrite on a protected branch."
+    },
+    {
+      "id": "protected_system_path_write",
+      "tier": "soft",
+      "match": "path",
+      "tools": [
+        "^(write|edit|notebook_edit|multi_?edit|write_to_file|replace_file_content|create|delete|move|rename)$",
+        "write|edit|delete|move|create"
+      ],
+      "pattern": "^/(etc|usr|opt|bin|sbin|boot|root)(/|$)",
+      "reason": "Write into a protected system path."
+    },
+    {
+      "id": "secret_store_write",
+      "tier": "soft",
+      "match": "path",
+      "tools": [
+        "^(write|edit|notebook_edit|multi_?edit|write_to_file|replace_file_content|create|delete|move|rename)$",
+        "write|edit|delete|move|create"
+      ],
+      "pattern": "^~/\\.(ssh|gnupg|aws|kube|docker)(/|$)|^~/\\.(netrc|npmrc|pypirc)$",
+      "reason": "Write into a credential store."
+    },
+    {
+      "id": "hook_self_tamper",
+      "tier": "soft",
+      "match": "path",
+      "tools": [
+        "^(write|edit|notebook_edit|multi_?edit|write_to_file|replace_file_content|create|delete|move|rename)$",
+        "write|edit|delete|move|create"
+      ],
+      "pattern": "^~/\\.ciel/(hooks|risk)(/|$)|^~/\\.config/devin/config\\.json$",
+      "reason": "Agent modification of its own safety hooks, risk policy, or host config."
+    }
+  ]
+}

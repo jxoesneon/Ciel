@@ -2,15 +2,20 @@
 set -euo pipefail
 
 input="$(cat)"
+HOOK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+export CIEL_HOOK_LIB="$HOOK_DIR/../lib"
 INPUT_JSON="$input" python3 - <<'PY'
 import json
 import os
-import re
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-home = Path.home()
-log = home / ".ciel" / "activity.log"
+sys.path.insert(0, os.environ.get("CIEL_HOOK_LIB", ""))
+import risk_policy
+
+ciel_home = risk_policy.ciel_home()
+log = ciel_home / "activity.log"
 try:
     payload = json.loads(os.environ.get("INPUT_JSON", "{}"))
 except json.JSONDecodeError:
@@ -18,7 +23,6 @@ except json.JSONDecodeError:
 
 tool = payload.get("tool_name") or payload.get("toolName") or "unknown"
 tool_input = payload.get("tool_input") or payload.get("toolInput") or {}
-text = json.dumps(tool_input, ensure_ascii=False)
 command = str(tool_input.get("command") or tool_input.get("CommandLine") or "")
 path = str(
     tool_input.get("file_path")
@@ -27,25 +31,19 @@ path = str(
     or ""
 )
 
-critical_patterns = [
-    r"\b(sudo|doas|pkexec)\b",
-    r"\brm\s+(-[a-zA-Z]*[rf][a-zA-Z]*\s+)*(/|~|\$HOME)(/|\s|$)",
-    r"\bmkfs(\.|\s|$)",
-    r"\bdd\b[^\n]*\bof=/dev/",
-    r"\b(shutdown|reboot|poweroff|halt)\b",
-    r":\s*\(\s*\)\s*\{\s*:\s*\|\s*:\s*&\s*}\s*;\s*:",
-]
-protected_write = bool(re.match(r"^/(etc|usr|opt|bin|sbin|boot|root)(/|$)", path)) or path.startswith(str(home / ".ssh")) or path.startswith(str(home / ".gnupg"))
-critical = any(re.search(pattern, command, re.IGNORECASE) for pattern in critical_patterns) or (tool in {"write", "edit", "notebook_edit"} and protected_write)
-override = critical and (home / ".ciel" / "allow_privileged").exists()
-risk = "critical" if critical else "standard"
+verdict = risk_policy.evaluate(tool=tool, command=command, path=path)
+denied = verdict["decision"] == "deny"
+override = verdict["decision"] == "allow_overridden"
 
 entry = {
     "ts": datetime.now(timezone.utc).isoformat(),
     "runtime": "devin",
     "event": "PreToolUse",
     "tool": tool,
-    "risk": risk,
+    "risk": "critical" if denied else "standard",
+    "rule_id": verdict.get("rule_id"),
+    "tier": verdict.get("tier"),
+    "policy": verdict.get("policy"),
     "overridden": override,
     "session_id": payload.get("session_id"),
     "prompt_id": payload.get("prompt_id"),
@@ -56,9 +54,10 @@ try:
 except OSError:
     pass
 
-if critical and not override:
+if denied:
+    reason = verdict.get("reason") or "critical risk"
     print(json.dumps({
         "decision": "block",
-        "reason": "Ciel safety gate classified this operation as critical risk. Run it manually outside the agent or narrow the operation before retrying."
+        "reason": f"Ciel safety gate [{verdict.get('rule_id')}]: {reason} Run it manually outside the agent or narrow the operation before retrying."
     }))
 PY

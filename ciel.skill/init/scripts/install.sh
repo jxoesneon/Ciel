@@ -141,6 +141,16 @@ else
   warn "Hook payload directory not found; skipping hook install."
 fi
 
+# --- 9b. Risk policy ------------------------------------------------------------
+RISK_SRC="$(cd "$(dirname "$0")/../../risk" 2>/dev/null && pwd || true)"
+if [ -n "$RISK_SRC" ] && [ -f "$RISK_SRC/policy.json" ]; then
+  mkdir -p "$CIEL_HOME/risk"
+  cp "$RISK_SRC/policy.yaml" "$RISK_SRC/policy.json" "$CIEL_HOME/risk/"
+  say "Risk policy installed."
+else
+  warn "Risk policy payload not found; hooks will use built-in fallback rules."
+fi
+
 # --- 10. Verify ---------------------------------------------------------------
 say "Running verification…"
 bash "$(dirname "$0")/verify.sh" || die "Verification failed; see $LOG"

@@ -136,6 +136,19 @@ def main():
     else:
         warn("Hook payload directory not found; skipping hook install.")
 
+    # 5b. Risk policy
+    risk_src = Path(__file__).parent.parent.parent / "risk"
+    risk_dst = CIEL_HOME / "risk"
+    if (risk_src / "policy.json").is_file():
+        risk_dst.mkdir(parents=True, exist_ok=True)
+        for name in ("policy.yaml", "policy.json"):
+            src = risk_src / name
+            if src.is_file():
+                shutil.copy2(src, risk_dst / name)
+        say("Risk policy installed.")
+    else:
+        warn("Risk policy payload not found; hooks will use built-in fallback rules.")
+
     # 6. Integrity seed
     now = datetime.datetime.now(datetime.UTC).isoformat(timespec='seconds').replace('+00:00', 'Z')
     integrity = {
