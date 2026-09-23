@@ -1,0 +1,1 @@
+Create a file `slug.py` in the current directory containing a function `slugify(text: str) -> str` that lowercases the input, replaces every run of non-alphanumeric characters with a single hyphen, and strips leading/trailing hyphens.

@@ -1,0 +1,1 @@
+The file `paginate.py` in the current directory has an off-by-one bug: `paginate(items, size, page)` returns the wrong slice. Fix it so page 1 returns the first `size` items, page 2 the next, and so on.

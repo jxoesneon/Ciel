@@ -17,7 +17,11 @@ Transitions are logged; reverse transitions require Council.
 
 ## Static scan (mandatory)
 
-Every new skill is scanned with `skillfrisk` (`scripts/scan_skills.py`) while `untrusted`, before any sandboxed execution. A skill whose scan reports `failed: true` cannot leave `untrusted` until the findings are remediated or the Council overrides. The scan `risk_score` is recorded in the trust record and re-checked on every skill update.
+Every new skill is scanned with `skillfrisk` (`scripts/scan_skills.py`) while `untrusted`, before any sandboxed execution. A skill whose scan reports unbaselined findings cannot leave `untrusted` until the findings are remediated, or individually reviewed and recorded with a justification in `ciel.skill/risk/skill_scan_baseline.json`. The scan report is attached to the trust record and re-checked on every skill update.
+
+## Paired evaluation (mandatory before `validated`)
+
+Any skill mutation or `sandboxed` → `validated` promotion must carry a paired-eval evidence report from `scripts/paired_eval.py`: the eval task set is run with and without the candidate skill in isolated workspaces, and each arm is scored by the task's own `verify.sh`. The gate fails on any `regression` outcome (control pass → treatment fail); `--require-improvement` additionally demands at least one `improvement`. The JSON report is attached to the Council docket — self-evaluation prose is not evidence. See `ciel.skill/self_improvement/PAIRED_EVAL.md`.
 
 ## Trust Score
 
