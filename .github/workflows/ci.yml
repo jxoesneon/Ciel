@@ -41,6 +41,8 @@ jobs:
           test -x scripts/build-skill.sh             || { echo "build-skill.sh not executable"; exit 1; }
           test -x scripts/validate-spec.sh           || { echo "validate-spec.sh not executable"; exit 1; }
           test -x scripts/validate-frontmatter.sh    || { echo "validate-frontmatter.sh not executable"; exit 1; }
+          test -x ciel.skill/init/scripts/integrity.py || { echo "integrity.py not executable"; exit 1; }
+          test -x scripts/lint.sh                    || { echo "lint.sh not executable"; exit 1; }
 
   shellcheck:
     name: shellcheck
@@ -55,7 +57,10 @@ jobs:
             ciel.skill/init/scripts/verify.sh \
             scripts/build-skill.sh \
             scripts/validate-spec.sh \
-            scripts/validate-frontmatter.sh
+            scripts/validate-frontmatter.sh \
+            scripts/lint.sh \
+            ciel.skill/init/hooks/devin/*.sh \
+            ciel.skill/init/hooks/antigravity/*.sh
 
   markdownlint:
     name: markdownlint
@@ -112,7 +117,7 @@ jobs:
       - name: Install deps
         run: pip install --quiet ruff pyyaml
       - name: ruff check
-        run: ruff check scripts/ ciel.skill/init/scripts/
+        run: ruff check scripts/ ciel.skill/init/scripts/ ciel.skill/init/hooks/lib/
       - name: Run Python unit tests
         run: python3 -m unittest discover tests
 

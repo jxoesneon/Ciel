@@ -24,7 +24,7 @@ def get_domain(skill_name, content):
     return "strategy" # Default
 
 def harmonize_skill(file_path):
-    with open(file_path, 'r', encoding='utf-8') as f:
+    with open(file_path, encoding='utf-8') as f:
         content = f.read()
 
     # 1. Runtime Normalization (H1)
@@ -34,7 +34,7 @@ def harmonize_skill(file_path):
     # 2. Domain Tag Enrichment (H2)
     skill_name = os.path.basename(os.path.dirname(file_path))
     domain = get_domain(skill_name, content)
-    
+
     # Update tags
     tag_match = re.search(r'tags: \[(.*?)\]', content)
     if tag_match:
@@ -51,7 +51,7 @@ def harmonize_skill(file_path):
     # Replace TODO, FIXME, ... with signal
     content = content.replace('TODO', 'Refine implementation logic to align with Ciel 1.0 standards.')
     content = content.replace('FIXME', 'Resolve architectural debt and ensure deterministic behavior.')
-    
+
     # Only replace ... if it looks like a placeholder, not a prose ellipsis
     # Usually placeholders are alone on a line or in brackets
     content = re.sub(r'\[\.\.\.\]', '[Comprehensive implementation details following Ciel spec]', content)

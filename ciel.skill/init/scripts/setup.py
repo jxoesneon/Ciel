@@ -62,7 +62,7 @@ def main():
             run(["git", "init", "-q"], cwd=CIEL_HOME)
             # Default branch name might vary by git version/config, but we prefer 'main'
             run(["git", "checkout", "-b", "main"], cwd=CIEL_HOME, check=False)
-            
+
             gitignore_content = (
                 ".cache/\n"
                 "activity.log\n"
@@ -76,7 +76,7 @@ def main():
                 "allow_privileged\n"
             )
             (CIEL_HOME / ".gitignore").write_text(gitignore_content, encoding="utf-8")
-            
+
             run(["git", "add", "-A"], cwd=CIEL_HOME)
             run(["git", "commit", "-q", "-m", f"genesis: Ciel cold start @ {CIEL_VERSION}"], cwd=CIEL_HOME, check=False)
             say("Git repository initialized.")

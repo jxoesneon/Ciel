@@ -9,8 +9,10 @@ Usage: integrity.py [--home PATH] [--write] [--json]
 """
 
 import argparse
+import contextlib
 import hashlib
 import json
+import os
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -22,6 +24,7 @@ MANIFEST = "INTEGRITY.json"
 def _git(home: Path, *args: str) -> subprocess.CompletedProcess:
     return subprocess.run(
         ["git", "-C", str(home), *args],
+        check=False,
         capture_output=True,
         text=True,
     )
@@ -97,10 +100,8 @@ def _write_manifest(home: Path, tracked: list[str], now: str) -> None:
     version = "1.0.0"
     installed = home / "INSTALLED.json"
     if installed.is_file():
-        try:
+        with contextlib.suppress(OSError, ValueError):
             version = json.loads(installed.read_text(encoding="utf-8")).get("version", version)
-        except (OSError, ValueError):
-            pass
     files = {}
     for rel in sorted(tracked):
         path = home / rel
@@ -117,8 +118,8 @@ def _write_manifest(home: Path, tracked: list[str], now: str) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--home", type=Path,
-                        default=Path(__import__("os").environ.get("CIEL_HOME", Path.home() / ".ciel")))
+    default_home = os.environ.get("CIEL_HOME", str(Path.home() / ".ciel"))
+    parser.add_argument("--home", type=Path, default=Path(default_home))
     parser.add_argument("--write", action="store_true",
                         help="regenerate INTEGRITY.json in the spec shape")
     parser.add_argument("--json", action="store_true", help="print the full report JSON")

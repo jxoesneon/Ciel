@@ -13,6 +13,7 @@ pre_invocation.sh) call this once per session. All OSError are swallowed;
 exit code is always 0.
 """
 
+import contextlib
 import gzip
 import json
 import os
@@ -27,9 +28,9 @@ try:
 except ImportError:
     _zstd = None
 
-MAX_BYTES = int(os.environ.get("CIEL_LOG_MAX_BYTES", 5 * 1024 * 1024))
-RETENTION_DAYS = int(os.environ.get("CIEL_LOG_RETENTION_DAYS", 90))
-CIEL_HOME = Path(os.environ.get("CIEL_HOME", Path.home() / ".ciel"))
+MAX_BYTES = int(os.environ.get("CIEL_LOG_MAX_BYTES", str(5 * 1024 * 1024)))
+RETENTION_DAYS = int(os.environ.get("CIEL_LOG_RETENTION_DAYS", "90"))
+CIEL_HOME = Path(os.environ.get("CIEL_HOME", str(Path.home() / ".ciel")))
 
 ARCHIVE_GLOB = "activity-*.log.*"
 
@@ -86,14 +87,12 @@ def _prune(archive: Path, now: datetime) -> None:
     for old in archive.glob(ARCHIVE_GLOB):
         try:
             stamp = old.name.split("-", 2)[1]
-            file_date = datetime.strptime(stamp, "%Y%m%d").date()
+            file_date = datetime.strptime(stamp, "%Y%m%d").replace(tzinfo=timezone.utc).date()
         except (IndexError, ValueError):
             continue
         if file_date < cutoff:
-            try:
+            with contextlib.suppress(OSError):
                 old.unlink()
-            except OSError:
-                pass
 
 
 def rotate(ciel_home: Path, now: datetime) -> dict | None:
