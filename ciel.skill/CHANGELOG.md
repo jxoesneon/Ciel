@@ -4,6 +4,31 @@
 
 All notable changes to Ciel are tracked here. Ciel appends an entry on every self-mutation commit. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) with SemVer.
 
+## [Unreleased]
+
+### Added
+
+- **Bounded activity-log rotation** (`init/hooks/lib/activity_log_rotate.py`): spec-aligned daily/size triggers, zstd archives under `~/.ciel/archive/logs/`, 90-day retention, sweep markers.
+- **Devin and Antigravity hook payloads** shipped from source (`init/hooks/devin/`, `init/hooks/antigravity/`, `init/hooks/lib/`) with installer support on POSIX and Windows.
+- **Integrity sweep tool** (`init/scripts/integrity.py`) implementing `init/INTEGRITY.md`: ok / unknown-drift / expected-drift / missing / unexpected classification, timestamped reports, `--write` manifest regeneration.
+- **Double-loop skill**: outer supervisor loop (decompose, dispatch, independently verify, correct) driving a bounded pool of hot-swappable worker loops for large worklists.
+- **Antigravity `allow_privileged` parity**: `pre_tool_use.sh` honors the local override file like the devin gate.
+- **No-attribution enforcement**: install.sh sets `attribution: false` in the devin config and verify.sh re-checks it.
+- **Local lint script** (`scripts/lint.sh`) mirroring all CI gates.
+
+### Changed
+
+- **Hook portability**: hook payloads reference `${HOME}` instead of hardcoded absolute paths.
+- **Devin adapter docs**: hook references corrected to the real `~/.ciel/hooks/devin/<event>.sh` layout.
+
+### Fixed
+
+- Ruff auto-fixable findings across `scripts/` and `ciel.skill/init/scripts/` cleared.
+
+### Removed
+
+- **Foreign backlog**: `ciel.skill/backlog/` Blindsight task files dropped (not Ciel content).
+
 ## [1.0.0] — Genesis
 
 ### Added
