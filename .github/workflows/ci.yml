@@ -121,7 +121,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install deps
-        run: pip install --quiet ruff pyyaml
+        run: pip install --quiet ruff==0.16.8 pyyaml
       - name: ruff check
         run: ruff check scripts/ ciel.skill/init/scripts/ ciel.skill/init/hooks/lib/
       - name: Run Python unit tests
