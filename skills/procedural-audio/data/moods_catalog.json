@@ -1,0 +1,662 @@
+{
+  "schema_version": "2.0.0",
+  "total_states": 20,
+  "states": [
+    {
+      "id": "tectonic_dread",
+      "name": "Tectonic Dread & Cosmic Horror",
+      "vad": {
+        "valence": -0.92,
+        "arousal": 0.65,
+        "dominance": -0.88
+      },
+      "mode": "Locrian Natural 2",
+      "intervals": [
+        0,
+        2,
+        3,
+        5,
+        6,
+        8,
+        10
+      ],
+      "signature_chord": "Cm(maj7)b5",
+      "root_movement": "Tritone / Minor 2nd",
+      "bpm_range": [
+        40,
+        58
+      ],
+      "jitter_ms": 18.5,
+      "cutoff_hz": 180.0,
+      "resonance_q": 6.5,
+      "threat_peak_hz": 3200.0,
+      "reverb_t60": 8.5,
+      "infrasound_hz": 18.0,
+      "oscillator": "triple_detuned_sub_saw_brown_noise",
+      "saturation": "asymmetric_wavefolding"
+    },
+    {
+      "id": "celestial_wonder",
+      "name": "Celestial Wonder & Transcendence",
+      "vad": {
+        "valence": 0.88,
+        "arousal": 0.42,
+        "dominance": 0.62
+      },
+      "mode": "Lydian",
+      "intervals": [
+        0,
+        2,
+        4,
+        6,
+        7,
+        9,
+        11
+      ],
+      "signature_chord": "Cmaj9(#11)",
+      "root_movement": "Chromatic Mediant (I - III / bVI)",
+      "bpm_range": [
+        60,
+        78
+      ],
+      "jitter_ms": 4.2,
+      "cutoff_hz": 14000.0,
+      "resonance_q": 0.5,
+      "air_boost_db": 4.5,
+      "reverb_t60": 6.2,
+      "shimmer_shift_semitones": 12,
+      "oscillator": "karplus_crystal_bells_4op_fm_pad",
+      "saturation": "pure_triode_even_harmonics"
+    },
+    {
+      "id": "deep_melancholic_grief",
+      "name": "Deep Melancholic Grief",
+      "vad": {
+        "valence": -0.85,
+        "arousal": -0.72,
+        "dominance": -0.65
+      },
+      "mode": "Aeolian / Ukrainian Dorian",
+      "intervals": [
+        0,
+        2,
+        3,
+        5,
+        7,
+        8,
+        10
+      ],
+      "signature_chord": "Cm(add9)",
+      "root_movement": "Lament Bass (1 - b7 - b6 - 5)",
+      "bpm_range": [
+        44,
+        56
+      ],
+      "jitter_ms": 8.5,
+      "cutoff_hz": 3800.0,
+      "resonance_q": 0.707,
+      "formants_hz": [
+        800.0,
+        1400.0
+      ],
+      "reverb_t60": 3.4,
+      "vibrato_delay_ms": 350.0,
+      "oscillator": "karplus_bowed_cello_friction",
+      "saturation": "analog_tape_wow_flutter"
+    },
+    {
+      "id": "bittersweet_nostalgia",
+      "name": "Bittersweet Nostalgia (Saudade)",
+      "vad": {
+        "valence": 0.15,
+        "arousal": -0.45,
+        "dominance": -0.2
+      },
+      "mode": "Mixolydian b6",
+      "intervals": [
+        0,
+        2,
+        4,
+        5,
+        7,
+        8,
+        10
+      ],
+      "signature_chord": "Imaj7 to iv6",
+      "root_movement": "Plagal Minor (1 to b6maj7)",
+      "bpm_range": [
+        68,
+        82
+      ],
+      "jitter_ms": 5.2,
+      "cutoff_hz": 4800.0,
+      "resonance_q": 0.8,
+      "mid_bloom_hz": 850.0,
+      "reverb_t60": 2.2,
+      "tape_wow_hz": 0.4,
+      "oscillator": "felt_piano_physical_model_electric_tines",
+      "saturation": "cassette_tape_second_order"
+    },
+    {
+      "id": "paranoid_claustrophobia",
+      "name": "Paranoid Claustrophobia & Panic",
+      "vad": {
+        "valence": -0.82,
+        "arousal": 0.94,
+        "dominance": -0.78
+      },
+      "mode": "Octatonic Half-Whole",
+      "intervals": [
+        0,
+        1,
+        3,
+        4,
+        6,
+        7,
+        9,
+        10
+      ],
+      "signature_chord": "Semitone_Cluster_C_Db_D_Eb",
+      "root_movement": "Tritone Oscillation (C to F#)",
+      "bpm_range": [
+        145,
+        185
+      ],
+      "jitter_ms": 1.8,
+      "cutoff_hz": 3500.0,
+      "resonance_q": 8.2,
+      "threat_peak_hz": 3200.0,
+      "reverb_t60": 0.3,
+      "slapback_ms": 14.0,
+      "oscillator": "dual_fm_stochastic_tremor",
+      "saturation": "diode_clipping_10bit_crush"
+    },
+    {
+      "id": "triumphant_heroism",
+      "name": "Triumphant Heroism & Epic Victory",
+      "vad": {
+        "valence": 0.85,
+        "arousal": 0.82,
+        "dominance": 0.92
+      },
+      "mode": "Mixolydian / Lydian",
+      "intervals": [
+        0,
+        2,
+        4,
+        6,
+        7,
+        9,
+        10
+      ],
+      "signature_chord": "I_add9_Lydian_II",
+      "root_movement": "Aeolian Cadence of Triumph (1 - b6 - b7 - 1)",
+      "bpm_range": [
+        108,
+        132
+      ],
+      "jitter_ms": 0.8,
+      "cutoff_hz": 12000.0,
+      "resonance_q": 1.2,
+      "chest_punch_hz": 80.0,
+      "reverb_t60": 3.8,
+      "compressor_ratio": 4.0,
+      "oscillator": "6voice_supersaw_brass_modal_timpani",
+      "saturation": "console_transformer_warmth"
+    },
+    {
+      "id": "serene_solace",
+      "name": "Serene Solace & Peaceful Tranquility",
+      "vad": {
+        "valence": 0.82,
+        "arousal": -0.8,
+        "dominance": 0.35
+      },
+      "mode": "Major Pentatonic",
+      "intervals": [
+        0,
+        2,
+        4,
+        7,
+        9
+      ],
+      "signature_chord": "C6/9",
+      "root_movement": "Plagal Static Pedal (IV to I)",
+      "bpm_range": [
+        52,
+        66
+      ],
+      "jitter_ms": 6.0,
+      "cutoff_hz": 3200.0,
+      "resonance_q": 0.707,
+      "warmth_center_hz": 350.0,
+      "reverb_t60": 4.2,
+      "chorus_rate_hz": 0.4,
+      "oscillator": "additive_sine_flute_physical_model",
+      "saturation": "linear_pure_triode"
+    },
+    {
+      "id": "berserk_fury",
+      "name": "Berserk Fury & Aggressive Combat Flow",
+      "vad": {
+        "valence": -0.65,
+        "arousal": 0.98,
+        "dominance": 0.95
+      },
+      "mode": "Phrygian Dominant",
+      "intervals": [
+        0,
+        1,
+        4,
+        5,
+        7,
+        8,
+        10
+      ],
+      "signature_chord": "Root5th_b5_Crunch",
+      "root_movement": "Half-Step Slams (i to bII to i)",
+      "bpm_range": [
+        150,
+        190
+      ],
+      "jitter_ms": 1.2,
+      "mid_roar_hz": 2400.0,
+      "scoop_hz": 400.0,
+      "sub_punch_hz": 70.0,
+      "reverb_t60": 0.8,
+      "compressor_ratio": 8.0,
+      "oscillator": "polyblep_saw_sub_square_wavefolder",
+      "saturation": "hard_clip_guitar_amp_cabinet"
+    },
+    {
+      "id": "eerie_mystery",
+      "name": "Eerie Mystery & Cryptic Suspense",
+      "vad": {
+        "valence": -0.4,
+        "arousal": 0.25,
+        "dominance": -0.3
+      },
+      "mode": "Whole-Tone",
+      "intervals": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10
+      ],
+      "signature_chord": "C7(#5)",
+      "root_movement": "Whole-Tone / Tritone Pivot",
+      "bpm_range": [
+        54,
+        72
+      ],
+      "jitter_ms": 12.0,
+      "cutoff_hz": 6000.0,
+      "resonance_q": 4.5,
+      "sub_bass_hz": 40.0,
+      "reverb_t60": 5.5,
+      "granular_grain_ms": 80.0,
+      "oscillator": "bowed_glass_wavetable_fm_tines",
+      "saturation": "clean_with_ring_mod_metallic"
+    },
+    {
+      "id": "cyberpunk_nihilism",
+      "name": "Cyberpunk Nihilism & Cold Dystopia",
+      "vad": {
+        "valence": -0.75,
+        "arousal": 0.55,
+        "dominance": 0.2
+      },
+      "mode": "Industrial Dorian b5",
+      "intervals": [
+        0,
+        2,
+        3,
+        5,
+        6,
+        9,
+        10
+      ],
+      "signature_chord": "Cm9(no5)_b2drone",
+      "root_movement": "Parallel Planing (1 - b7 - b6)",
+      "bpm_range": [
+        95,
+        128
+      ],
+      "jitter_ms": 0.4,
+      "cutoff_hz": 4500.0,
+      "resonance_q": 3.8,
+      "sub_bass_hz": 45.0,
+      "reverb_t60": 1.6,
+      "delay_sync": "3_16_dotted",
+      "oscillator": "3x_wavetable_metallic_sub_sine",
+      "saturation": "8bit_bitcrush_14khz_downsample"
+    },
+    {
+      "id": "sacred_reverence",
+      "name": "Sacred Reverence & Ancient Ritual",
+      "vad": {
+        "valence": 0.5,
+        "arousal": -0.3,
+        "dominance": 0.6
+      },
+      "mode": "Dorian Just Intonation",
+      "intervals": [
+        0,
+        2,
+        3,
+        5,
+        7,
+        9,
+        10
+      ],
+      "signature_chord": "Parallel_Organum_5ths_Isokratima",
+      "root_movement": "Modal Drone Step (i to bVII to i)",
+      "bpm_range": [
+        48,
+        62
+      ],
+      "jitter_ms": 7.0,
+      "formants_hz": [
+        450.0,
+        800.0,
+        2400.0
+      ],
+      "warmth_center_hz": 300.0,
+      "reverb_t60": 7.0,
+      "pitch_drift_cents": 3.0,
+      "oscillator": "formant_vowel_synth_sub_drone",
+      "saturation": "transformer_console_clean"
+    },
+    {
+      "id": "playful_whimsy",
+      "name": "Playful Whimsy & Childlike Joy",
+      "vad": {
+        "valence": 0.92,
+        "arousal": 0.7,
+        "dominance": 0.45
+      },
+      "mode": "Major Pentatonic / Lydian",
+      "intervals": [
+        0,
+        2,
+        4,
+        7,
+        9
+      ],
+      "signature_chord": "I6/9_add11",
+      "root_movement": "Circle of Fifths Bouncy (I - vi - ii - V)",
+      "bpm_range": [
+        120,
+        148
+      ],
+      "jitter_ms": 2.8,
+      "cutoff_hz": 12000.0,
+      "presence_peak_hz": 4500.0,
+      "high_pass_hz": 120.0,
+      "reverb_t60": 1.2,
+      "envelope_decay_ms": 180.0,
+      "oscillator": "karplus_kalimba_fm_toy_bell",
+      "saturation": "crisp_transient_exciter"
+    },
+    {
+      "id": "romantic_yearning",
+      "name": "Romantic Yearning & Tender Intimacy",
+      "vad": {
+        "valence": 0.7,
+        "arousal": 0.1,
+        "dominance": 0.1
+      },
+      "mode": "Romantic Lydian / Chromaticism",
+      "intervals": [
+        0,
+        2,
+        4,
+        6,
+        7,
+        9,
+        11
+      ],
+      "signature_chord": "Tristan_m7b5_Maj9",
+      "root_movement": "Chromatic Passing Voice Leading",
+      "bpm_range": [
+        58,
+        74
+      ],
+      "jitter_ms": 6.8,
+      "cutoff_hz": 5500.0,
+      "resonance_q": 0.707,
+      "warmth_hz": 450.0,
+      "reverb_t60": 2.0,
+      "vibrato_rate_hz": 5.2,
+      "vibrato_depth_cents": 35.0,
+      "oscillator": "physical_solo_cello_delayed_vibrato",
+      "saturation": "analog_triode_warmth"
+    },
+    {
+      "id": "dreamlike_hallucination",
+      "name": "Disorienting Hallucination & Dreamlike Stasis",
+      "vad": {
+        "valence": -0.1,
+        "arousal": -0.35,
+        "dominance": -0.8
+      },
+      "mode": "31_EDO Microtonal / Floating Quartal",
+      "intervals": "microtonal_neutral_intervals",
+      "signature_chord": "Microtonal_Quartal_Stack",
+      "root_movement": "Drifting Chord Planes",
+      "bpm_range": [
+        40,
+        60
+      ],
+      "jitter_ms": 25.0,
+      "cutoff_hz": 8000.0,
+      "resonance_q": 4.0,
+      "reverb_t60": 12.0,
+      "grain_size_ms": 200.0,
+      "frequency_shift_hz": 1.5,
+      "oscillator": "granular_cloud_freq_shifter",
+      "saturation": "frequency_shifted_flutter"
+    },
+    {
+      "id": "grim_resolve",
+      "name": "Grim Resolve & Post-Apocalyptic Desolation",
+      "vad": {
+        "valence": -0.7,
+        "arousal": -0.2,
+        "dominance": 0.5
+      },
+      "mode": "Aeolian b5 / Celtic Lament",
+      "intervals": [
+        0,
+        2,
+        3,
+        5,
+        6,
+        8,
+        10
+      ],
+      "signature_chord": "Bare_Open_5th_add2",
+      "root_movement": "Plodding Modal Steps (1 - b7 - b6 - 1)",
+      "bpm_range": [
+        50,
+        66
+      ],
+      "jitter_ms": 4.5,
+      "cutoff_hz": 2800.0,
+      "resonance_q": 1.2,
+      "scooped_presence_hz": 2200.0,
+      "reverb_t60": 4.0,
+      "damping_hz": 1800.0,
+      "oscillator": "bowed_guitar_desert_wind_generator",
+      "saturation": "dry_string_scrape_grit"
+    },
+    {
+      "id": "tense_stealth",
+      "name": "Tense Stealth & Covert Infiltration",
+      "vad": {
+        "valence": -0.3,
+        "arousal": 0.6,
+        "dominance": -0.1
+      },
+      "mode": "Phrygian Muted",
+      "intervals": [
+        0,
+        1,
+        3,
+        5,
+        7,
+        8,
+        10
+      ],
+      "signature_chord": "Muted_Minor_Dyad_sus2",
+      "root_movement": "Half-Step Oscillation (1 to b2)",
+      "bpm_range": [
+        84,
+        104
+      ],
+      "jitter_ms": 1.2,
+      "cutoff_hz": 1800.0,
+      "resonance_q": 1.5,
+      "air_ping_hz": 9000.0,
+      "reverb_t60": 0.9,
+      "slapback_delay_ms": 85.0,
+      "oscillator": "muted_karplus_sub_pulse",
+      "saturation": "clean_transient_suppressed"
+    },
+    {
+      "id": "manic_hysteria",
+      "name": "Manic Hysteria & Chaotic Madness",
+      "vad": {
+        "valence": -0.8,
+        "arousal": 0.98,
+        "dominance": -0.4
+      },
+      "mode": "12-Tone Serialist / Symmetrical Diminished",
+      "intervals": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "signature_chord": "Bitonal_Cmaj_FsharpMaj_Cluster",
+      "root_movement": "Chaotic Brownian",
+      "bpm_range": [
+        160,
+        220
+      ],
+      "jitter_ms": 15.0,
+      "cutoff_hz": 7000.0,
+      "resonance_q": 18.0,
+      "reverb_t60": 2.5,
+      "fm_feedback_ratio": 1.414,
+      "ring_mod_hz": 880.0,
+      "oscillator": "cross_fm_lorenz_ringmod",
+      "saturation": "wavefolding_extreme_distortion"
+    },
+    {
+      "id": "majestic_royalty",
+      "name": "Majestic Royalty & Regal Splendor",
+      "vad": {
+        "valence": 0.8,
+        "arousal": 0.65,
+        "dominance": 0.9
+      },
+      "mode": "Mixolydian / Ceremonial Brass",
+      "intervals": [
+        0,
+        2,
+        4,
+        5,
+        7,
+        9,
+        10
+      ],
+      "signature_chord": "Open_Major_Triad_sus4_to_3",
+      "root_movement": "Ceremonial Fourths (I - IV - V - I)",
+      "bpm_range": [
+        80,
+        100
+      ],
+      "jitter_ms": 1.5,
+      "cutoff_hz": 14000.0,
+      "shelf_boost_hz": 4500.0,
+      "reverb_t60": 3.5,
+      "pre_delay_ms": 35.0,
+      "compressor_ratio": 3.0,
+      "oscillator": "brass_lip_reed_modal_timpani",
+      "saturation": "class_a_tube_preamp_2f"
+    },
+    {
+      "id": "cozy_comfort",
+      "name": "Cozy Domestic Comfort (Hygge)",
+      "vad": {
+        "valence": 0.85,
+        "arousal": -0.6,
+        "dominance": 0.3
+      },
+      "mode": "Major Pentatonic / Folk Consonant",
+      "intervals": [
+        0,
+        2,
+        4,
+        7,
+        9
+      ],
+      "signature_chord": "Cadd9_G6_F6/9",
+      "root_movement": "Folk Cadences (I - IV - I, I - V - vi)",
+      "bpm_range": [
+        65,
+        80
+      ],
+      "jitter_ms": 5.5,
+      "cutoff_hz": 4200.0,
+      "resonance_q": 0.707,
+      "warmth_center_hz": 280.0,
+      "reverb_t60": 1.4,
+      "fire_crackle_density": 4.0,
+      "oscillator": "karplus_nylon_strings_fire_generator",
+      "saturation": "reel_to_reel_magnetic_tape"
+    },
+    {
+      "id": "abyssal_isolation",
+      "name": "Abyssal Isolation & Deep Ocean Solitude",
+      "vad": {
+        "valence": -0.6,
+        "arousal": -0.85,
+        "dominance": -0.75
+      },
+      "mode": "Hirajoshi Pentatonic / Insen",
+      "intervals": [
+        0,
+        2,
+        3,
+        7,
+        8
+      ],
+      "signature_chord": "Open_5th_Minor2nd_Subdrone",
+      "root_movement": "Sinking Half-Steps (i to bII to i)",
+      "bpm_range": [
+        30,
+        48
+      ],
+      "jitter_ms": 16.0,
+      "cutoff_hz": 520.0,
+      "resonance_q": 2.4,
+      "sub_bass_hz": 32.0,
+      "reverb_t60": 9.5,
+      "underwater_ping_delay_ms": 800.0,
+      "oscillator": "sub_sine_drone_minnaert_bubble_modal_hull",
+      "saturation": "hydrophone_subharmonic_drive"
+    }
+  ]
+}

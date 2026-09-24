@@ -1,0 +1,69 @@
+{
+  "microtonal_systems": {
+    "22_shrutis": {
+      "name": "Indian Classical 22 Shrutis",
+      "basis": "5-Limit Just Intonation",
+      "divisions_per_octave": 22,
+      "shrutis": [
+        {"index": 0, "name": "Kshobhini", "svara": "Shadja (Sa)", "ratio": "1/1", "cents": 0.0, "tet12_diff": 0.0},
+        {"index": 1, "name": "Tivra", "svara": "Ati-Komal Re", "ratio": "256/243", "cents": 90.22, "tet12_diff": -9.8},
+        {"index": 2, "name": "Kumudvati", "svara": "Komal Re", "ratio": "16/15", "cents": 111.73, "tet12_diff": 11.7},
+        {"index": 3, "name": "Manda", "svara": "Tivra Re", "ratio": "10/9", "cents": 182.40, "tet12_diff": -17.6},
+        {"index": 4, "name": "Chandovati", "svara": "Shuddha Re", "ratio": "9/8", "cents": 203.91, "tet12_diff": 3.9},
+        {"index": 5, "name": "Dayavati", "svara": "Ati-Komal Ga", "ratio": "32/27", "cents": 294.13, "tet12_diff": -5.9},
+        {"index": 6, "name": "Ranjani", "svara": "Komal Ga", "ratio": "6/5", "cents": 315.64, "tet12_diff": 15.6},
+        {"index": 7, "name": "Raktika", "svara": "Shuddha Ga", "ratio": "5/4", "cents": 386.31, "tet12_diff": -13.7},
+        {"index": 8, "name": "Raudri", "svara": "Tivra Ga", "ratio": "81/64", "cents": 407.82, "tet12_diff": 7.8},
+        {"index": 9, "name": "Krodha", "svara": "Shuddha Ma", "ratio": "4/3", "cents": 498.04, "tet12_diff": -2.0},
+        {"index": 10, "name": "Vajrika", "svara": "Tivra Ma 1", "ratio": "27/20", "cents": 519.55, "tet12_diff": 19.5},
+        {"index": 11, "name": "Prasarini", "svara": "Tivra Ma 2", "ratio": "45/32", "cents": 590.22, "tet12_diff": -9.8},
+        {"index": 12, "name": "Priti", "svara": "Tivratara Ma", "ratio": "729/512", "cents": 611.73, "tet12_diff": 11.7},
+        {"index": 13, "name": "Marjani", "svara": "Pancham (Pa)", "ratio": "3/2", "cents": 701.96, "tet12_diff": 2.0},
+        {"index": 14, "name": "Kshiti", "svara": "Ati-Komal Dha", "ratio": "128/81", "cents": 792.18, "tet12_diff": -7.8},
+        {"index": 15, "name": "Rakta", "svara": "Komal Dha", "ratio": "8/5", "cents": 813.69, "tet12_diff": 13.7},
+        {"index": 16, "name": "Sandipini", "svara": "Tivra Dha", "ratio": "5/3", "cents": 884.36, "tet12_diff": -15.6},
+        {"index": 17, "name": "Alapini", "svara": "Shuddha Dha", "ratio": "27/16", "cents": 905.87, "tet12_diff": 5.9},
+        {"index": 18, "name": "Madhanti", "svara": "Ati-Komal Ni", "ratio": "16/9", "cents": 996.09, "tet12_diff": -3.9},
+        {"index": 19, "name": "Rohini", "svara": "Komal Ni", "ratio": "9/5", "cents": 1017.60, "tet12_diff": 17.6},
+        {"index": 20, "name": "Ramya", "svara": "Shuddha Ni", "ratio": "15/8", "cents": 1088.27, "tet12_diff": -11.7},
+        {"index": 21, "name": "Ugra", "svara": "Tivra Ni", "ratio": "243/128", "cents": 1109.78, "tet12_diff": 9.8}
+      ]
+    },
+    "arabic_24_edo_ajnas": {
+      "name": "Arabic Quarter-Tone Ajnas (24-EDO)",
+      "step_cents": 50.0,
+      "ajnas": {
+        "rast": {"root": "C", "intervals_quarter_tones": [0, 4, 7, 10], "cents": [0.0, 204.0, 355.0, 498.0]},
+        "bayati": {"root": "D", "intervals_quarter_tones": [0, 3, 6, 10], "cents": [0.0, 150.0, 300.0, 500.0]},
+        "hijaz": {"root": "D", "intervals_quarter_tones": [0, 2, 8, 10], "cents": [0.0, 100.0, 400.0, 500.0]},
+        "sikah": {"root": "E-half-flat", "intervals_quarter_tones": [0, 7, 10], "cents": [0.0, 150.0, 350.0]},
+        "saba": {"root": "D", "intervals_quarter_tones": [0, 3, 6, 8], "cents": [0.0, 150.0, 300.0, 400.0]}
+      }
+    },
+    "31_edo": {
+      "name": "31-EDO (Huygens-Fokker)",
+      "step_cents": 38.709677,
+      "fifth_steps": 18,
+      "fifth_cents": 696.77,
+      "major_third_steps": 10,
+      "major_third_cents": 387.10,
+      "harmonic_seventh_steps": 25,
+      "harmonic_seventh_cents": 967.74
+    },
+    "53_edo": {
+      "name": "53-EDO (Holden's Comma / Turkish Maqam)",
+      "step_cents": 22.641509,
+      "fifth_steps": 31,
+      "fifth_cents": 701.8868,
+      "major_third_steps": 17,
+      "major_third_cents": 384.9057
+    },
+    "gamelan_slendro": {
+      "name": "Javanese Gamelan Slendro",
+      "divisions_per_octave": 5,
+      "nominal_octave_cents": 1215.0,
+      "average_step_cents": 243.0,
+      "ombak_beating_hz": 6.0
+    }
+  }
+}

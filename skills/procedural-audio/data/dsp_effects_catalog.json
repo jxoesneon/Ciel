@@ -1,0 +1,183 @@
+{
+  "schema_version": "2.0.0",
+  "total_processors": 28,
+  "categories": [
+    "Reverberation",
+    "Delay",
+    "Modulation",
+    "Distortion",
+    "Filter",
+    "Dynamics",
+    "Spatial"
+  ],
+  "processors": [
+    {
+      "id": 1,
+      "name": "8x8 Householder Feedback Delay Network (FDN)",
+      "category": "Reverberation",
+      "complexity": "O(N)"
+    },
+    {
+      "id": 2,
+      "name": "Algorithmic Plate Reverb (Dattorro Topology)",
+      "category": "Reverberation",
+      "complexity": "O(1)"
+    },
+    {
+      "id": 3,
+      "name": "Spring Reverb (Physical Dispersion Modeling)",
+      "category": "Reverberation",
+      "complexity": "O(M_stages)"
+    },
+    {
+      "id": 4,
+      "name": "Shimmer Pitch-Shifted Reverb (+12 st Feedback)",
+      "category": "Reverberation",
+      "complexity": "O(N)"
+    },
+    {
+      "id": 5,
+      "name": "Non-Linear Gated Snare/Impact Reverb",
+      "category": "Reverberation",
+      "complexity": "O(N)"
+    },
+    {
+      "id": 6,
+      "name": "Analog Tape Echo with Wow/Flutter & Saturation",
+      "category": "Delay",
+      "complexity": "O(1)"
+    },
+    {
+      "id": 7,
+      "name": "Bucket Brigade Device (BBD) with Clock Noise",
+      "category": "Delay",
+      "complexity": "O(1)"
+    },
+    {
+      "id": 8,
+      "name": "Ping-Pong Cross-Feedback Stereo Delay",
+      "category": "Delay",
+      "complexity": "O(1)"
+    },
+    {
+      "id": 9,
+      "name": "Granular Cloud Delay & Pitch Shifter",
+      "category": "Delay",
+      "complexity": "O(M_grains)"
+    },
+    {
+      "id": 10,
+      "name": "Multi-Voice Quadrature Chorus",
+      "category": "Modulation",
+      "complexity": "O(K_voices)"
+    },
+    {
+      "id": 11,
+      "name": "Through-Zero Flanger with Comb Feedback",
+      "category": "Modulation",
+      "complexity": "O(1)"
+    },
+    {
+      "id": 12,
+      "name": "Cascaded 4/8-Stage All-Pass Phaser",
+      "category": "Modulation",
+      "complexity": "O(M_stages)"
+    },
+    {
+      "id": 13,
+      "name": "Ring Modulator & SSB Frequency Shifter",
+      "category": "Modulation",
+      "complexity": "O(1)"
+    },
+    {
+      "id": 14,
+      "name": "Opto-Tremolo & Stereo Auto-Panner",
+      "category": "Modulation",
+      "complexity": "O(1)"
+    },
+    {
+      "id": 15,
+      "name": "Asymmetric Triode Tube Warmth Waveshaper",
+      "category": "Distortion",
+      "complexity": "O(1)"
+    },
+    {
+      "id": 16,
+      "name": "Symmetrical Diode Hard Clipper & Overdrive",
+      "category": "Distortion",
+      "complexity": "O(1)"
+    },
+    {
+      "id": 17,
+      "name": "Bitcrusher (Decimator & Quantizer with Dither)",
+      "category": "Distortion",
+      "complexity": "O(1)"
+    },
+    {
+      "id": 18,
+      "name": "Buchla-Style Wavefolder Transfer Function",
+      "category": "Distortion",
+      "complexity": "O(M_folds)"
+    },
+    {
+      "id": 19,
+      "name": "Moog 4-Pole TPT Ladder Filter (24 dB/oct)",
+      "category": "Filter",
+      "complexity": "O(1)"
+    },
+    {
+      "id": 20,
+      "name": "State Variable Filter (SVF) LP/HP/BP/Notch",
+      "category": "Filter",
+      "complexity": "O(1)"
+    },
+    {
+      "id": 21,
+      "name": "3-Formant Vowel Vocal Tract Filter Bank",
+      "category": "Filter",
+      "complexity": "O(1)"
+    },
+    {
+      "id": 22,
+      "name": "Comb Filter & Resonant Flange Matrix",
+      "category": "Filter",
+      "complexity": "O(1)"
+    },
+    {
+      "id": 23,
+      "name": "VCA Compressor with Variable Knee",
+      "category": "Dynamics",
+      "complexity": "O(1)"
+    },
+    {
+      "id": 24,
+      "name": "Lookahead Brickwall Peak Limiter",
+      "category": "Dynamics",
+      "complexity": "O(D_window)"
+    },
+    {
+      "id": 25,
+      "name": "Binaural Head-Related Transfer Function (HRTF)",
+      "category": "Spatial",
+      "complexity": "O(1)"
+    },
+    {
+      "id": 26,
+      "name": "Interaural Time (ITD) & Level Difference (ILD)",
+      "category": "Spatial",
+      "complexity": "O(1)"
+    },
+    {
+      "id": 27,
+      "name": "Doppler Effect Dynamic Frequency Modulator",
+      "category": "Spatial",
+      "complexity": "O(1)"
+    },
+    {
+      "id": 28,
+      "name": "Atmospheric Air Absorption (ISO 9613-1) & Occlusion",
+      "category": "Spatial",
+      "complexity": "O(1)"
+    }
+  ]
+}

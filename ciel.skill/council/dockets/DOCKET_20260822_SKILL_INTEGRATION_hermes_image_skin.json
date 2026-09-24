@@ -1,0 +1,66 @@
+{
+ "docket": "SKILL_INTEGRATION: hermes_image_skin",
+ "date": "2026-08-22",
+ "source_tier": 3,
+ "origin": "composition (Sahil-SS9/hermes-Custom-CLI-Themes + creative/ascii-art + original Pillow primitive)",
+ "candidate": "~/.ciel/skills/hermes_image_skin/SKILL.md",
+ "harmonization": {
+  "diffs": [
+   {
+    "path": "SKILL.md",
+    "change": "composed per COMPOSITION.md \u2014 frontmatter aligned to skill/1.0 schema, io_contract added, triggers generated from task verbs"
+   },
+   {
+    "path": "PROVENANCE.md",
+    "change": "created with source attribution + first-application record"
+   },
+   {
+    "path": "LICENSE",
+    "change": "MIT (SPDX) added"
+   }
+  ],
+  "unknown_tags": [],
+  "warnings": []
+ },
+ "sandbox_trace": {
+  "run_id": "hermes_image_skin_v1",
+  "backend": "native-isolated-dir (no docker/seatbelt available; fs writes confined to ~/.ciel/sandbox/)",
+  "commands": [
+   "Pillow pipeline repro @32x28",
+   "skin YAML validation"
+  ],
+  "exit_codes": [
+   0,
+   0
+  ],
+  "network_attempts": [],
+  "fs_writes_outside_sandbox": [],
+  "anomalies": []
+ },
+ "votes": {
+  "coherence": {
+   "score": 8,
+   "rationale": "Aligns with orchestration philosophy: composes existing skills + one new primitive instead of monolithic import; documented flow respects component risk model."
+  },
+  "capability": {
+   "score": 9,
+   "rationale": "Fills a genuine gap \u2014 no existing skill converts images to Hermes rich-markup banner art. Procedure is complete, tested end-to-end on the CIEL build, and includes both converter and Pillow paths."
+  },
+  "safety": {
+   "score": 8,
+   "rationale": "Writes confined to skins dir; activation via sanctioned 'hermes config set' only; no network at runtime; sandbox trace clean (zero network attempts, zero outside-sandbox writes). Risk classified low."
+  },
+  "efficiency": {
+   "score": 7,
+   "rationale": "Small L0 footprint; reuses ascii-art knowledge. Minor overlap with generic image-to-ASCII tools, justified by the rich-markup conversion primitive that nothing else provides."
+  },
+  "evolution": {
+   "score": 8,
+   "rationaire": "",
+   "rationale": "Self-improvement ready: pitfalls section captures the indent bug and aspect-ratio lessons as structured guidance; outcome scoring can track future skin builds."
+  }
+ },
+ "verdict": "PASS",
+ "weighted_score": 8.05,
+ "majority": "5/5 >= pass_score"
+}

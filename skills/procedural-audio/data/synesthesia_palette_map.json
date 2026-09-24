@@ -1,0 +1,125 @@
+{
+  "palettes": {
+    "neon_cyber": {
+      "name": "Neon Cyber / Synthwave",
+      "hex_identifiers": ["#00FFFF", "#FF00FF", "#7928CA", "#00FF66"],
+      "mode": "Dorian",
+      "base_key": "D",
+      "synthesis_model": "FM_4OP",
+      "carrier_waveform": "SINE",
+      "modulator_waveform": "SAW",
+      "c_m_ratio": [1.0, 2.0, 3.5],
+      "mod_index": 2.8,
+      "filter_type": "BANDPASS_RESONANT",
+      "filter_cutoff_hz": 9500,
+      "resonance_q": 4.5,
+      "spatial_reverb": {
+        "room_size": 0.45,
+        "damping": 0.15,
+        "wet_db": -12.0,
+        "delay_ms": 125.0,
+        "delay_feedback": 0.45
+      }
+    },
+    "dark_gothic": {
+      "name": "Dark Gothic / Brutal Horror",
+      "hex_identifiers": ["#0A0A0A", "#8B0000", "#3A1200", "#1A0033"],
+      "mode": "Phrygian",
+      "base_key": "C",
+      "synthesis_model": "PHYSICAL_BOWED_METAL",
+      "carrier_waveform": "SAW_DISTORTED",
+      "modulator_waveform": "SINE_SUB",
+      "c_m_ratio": [1.0, 0.5],
+      "mod_index": 5.0,
+      "filter_type": "LOWPASS_4POLE",
+      "filter_cutoff_hz": 420,
+      "resonance_q": 1.6,
+      "spatial_reverb": {
+        "room_size": 0.88,
+        "damping": 0.65,
+        "wet_db": -6.0,
+        "sub_rumble_hz": 32.0
+      }
+    },
+    "warm_solar": {
+      "name": "Warm Solar / Pastoral Fantasy",
+      "hex_identifiers": ["#FFD700", "#98FB98", "#F5DEB3", "#FFA07A"],
+      "mode": "Ionian",
+      "base_key": "G",
+      "synthesis_model": "KARPLUS_STRONG_PLUCK",
+      "carrier_waveform": "TRIANGLE",
+      "modulator_waveform": "SINE",
+      "c_m_ratio": [1.0, 1.0],
+      "mod_index": 0.4,
+      "filter_type": "LOWPASS_WARM",
+      "filter_cutoff_hz": 4800,
+      "resonance_q": 0.707,
+      "spatial_reverb": {
+        "room_size": 0.65,
+        "damping": 0.45,
+        "wet_db": -10.0,
+        "tape_flutter_hz": 0.5
+      }
+    },
+    "monochrome_brutalist": {
+      "name": "Monochrome Brutalist / Industrial",
+      "hex_identifiers": ["#1A1A1A", "#808080", "#ECECEC", "#4B5563"],
+      "mode": "Aeolian",
+      "base_key": "E",
+      "synthesis_model": "GRANULAR_NOISE_PULSE",
+      "carrier_waveform": "SQUARE_POLYBLEP",
+      "modulator_waveform": "WHITE_NOISE",
+      "c_m_ratio": [1.0, 4.0],
+      "mod_index": 3.2,
+      "filter_type": "BANDPASS_COMB",
+      "filter_cutoff_hz": 1800,
+      "resonance_q": 3.8,
+      "spatial_reverb": {
+        "room_size": 0.2,
+        "damping": 0.8,
+        "wet_db": -18.0,
+        "early_reflection_slapback_ms": 18.0
+      }
+    },
+    "abyssal_deep_ocean": {
+      "name": "Abyssal Deep Ocean / Bioluminescent",
+      "hex_identifiers": ["#030B1E", "#00E5FF", "#1B4D3E", "#003366"],
+      "mode": "Hirajoshi",
+      "base_key": "F",
+      "synthesis_model": "WAVETABLE_FORMANT_MORPH",
+      "carrier_waveform": "SINE_SKEWED",
+      "modulator_waveform": "TRIANGLE",
+      "c_m_ratio": [1.0, 1.414],
+      "mod_index": 1.8,
+      "filter_type": "UNDERWATER_LOWPASS",
+      "filter_cutoff_hz": 950,
+      "resonance_q": 2.2,
+      "spatial_reverb": {
+        "room_size": 0.95,
+        "damping": 0.75,
+        "wet_db": -4.0,
+        "shimmer_pitch_shift_semitones": 12
+      }
+    },
+    "acid_wasteland": {
+      "name": "Acid Wasteland / High Energy",
+      "hex_identifiers": ["#CCFF00", "#FF5500", "#330000", "#FFFF00"],
+      "mode": "Octatonic_HW",
+      "base_key": "F#",
+      "synthesis_model": "SYNC_RINGMOD_SAW",
+      "carrier_waveform": "SAW_POLYBLEP",
+      "modulator_waveform": "RINGMOD_SINE",
+      "c_m_ratio": [1.0, 0.707],
+      "mod_index": 6.5,
+      "filter_type": "MOOG_TPT_LADDER",
+      "filter_cutoff_hz": 8200,
+      "resonance_q": 7.5,
+      "spatial_reverb": {
+        "room_size": 0.35,
+        "damping": 0.1,
+        "wet_db": -14.0,
+        "phaser_stages": 8
+      }
+    }
+  }
+}

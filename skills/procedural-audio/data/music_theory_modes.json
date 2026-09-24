@@ -1,0 +1,134 @@
+{
+  "modes": {
+    "Lydian": {
+      "intervals": [0, 2, 4, 6, 7, 9, 11],
+      "characteristic_step": 6,
+      "brightness_rank": 1,
+      "tension_index": 2.0,
+      "valence": 0.8,
+      "arousal": 0.5,
+      "cinematic_archetype": "Wonder, Cosmic Ascent, Celestial Magic, Hopeful Flight",
+      "avoidance_rule": "Avoid resolving #4 directly down to 3; emphasize Major II chord to highlight #4."
+    },
+    "Ionian": {
+      "intervals": [0, 2, 4, 5, 7, 9, 11],
+      "characteristic_step": 4,
+      "brightness_rank": 2,
+      "tension_index": 1.0,
+      "valence": 0.9,
+      "arousal": 0.2,
+      "cinematic_archetype": "Triumph, Pastoral Joy, Heroic Resolution, Sunlight",
+      "avoidance_rule": "Avoid lingering on degree 4 (unresolved tritone against 7)."
+    },
+    "Mixolydian": {
+      "intervals": [0, 2, 4, 5, 7, 9, 10],
+      "characteristic_step": 10,
+      "brightness_rank": 3,
+      "tension_index": 2.5,
+      "valence": 0.6,
+      "arousal": 0.7,
+      "cinematic_archetype": "Swashbuckling Adventure, Celtic Folk, Open Seas, Friendly Rivalry",
+      "avoidance_rule": "Avoid classical V7-I cadence; use bVII-I or v-I modal cadences."
+    },
+    "Dorian": {
+      "intervals": [0, 2, 3, 5, 7, 9, 10],
+      "characteristic_step": 9,
+      "brightness_rank": 4,
+      "tension_index": 3.0,
+      "valence": 0.0,
+      "arousal": 0.3,
+      "cinematic_archetype": "Noble Melancholy, Ancient Warriors, Cyberpunk Mystery, Resolute Heroism",
+      "avoidance_rule": "Feature IV major chord (containing natural 6) resolving to i minor."
+    },
+    "Aeolian": {
+      "intervals": [0, 2, 3, 5, 7, 8, 10],
+      "characteristic_step": 8,
+      "brightness_rank": 5,
+      "tension_index": 4.5,
+      "valence": -0.6,
+      "arousal": -0.2,
+      "cinematic_archetype": "Tragedy, Somber Reflection, Epic Loss, Winter Wilderness",
+      "avoidance_rule": "Avoid V7 dominant chord (which forces classical harmonic minor leading tone)."
+    },
+    "Phrygian": {
+      "intervals": [0, 1, 3, 5, 7, 8, 10],
+      "characteristic_step": 1,
+      "brightness_rank": 6,
+      "tension_index": 7.0,
+      "valence": -0.8,
+      "arousal": 0.6,
+      "cinematic_archetype": "Dark Mysticism, Ancient Pyramids, Scorched Desert, Ominous Threat",
+      "avoidance_rule": "Feature bII -> i cadence; avoid major 6th degrees."
+    },
+    "Locrian": {
+      "intervals": [0, 1, 3, 5, 6, 8, 10],
+      "characteristic_step": 6,
+      "brightness_rank": 7,
+      "tension_index": 9.5,
+      "valence": -0.95,
+      "arousal": 0.8,
+      "cinematic_archetype": "Abyssal Terror, Psychological Madness, Eldritch Dread, Unstable Core",
+      "avoidance_rule": "Avoid attempting to establish stable tonic; use as tension transition zone."
+    },
+    "Hirajoshi": {
+      "intervals": [0, 2, 3, 7, 8],
+      "characteristic_step": 8,
+      "brightness_rank": 5,
+      "tension_index": 3.5,
+      "valence": -0.4,
+      "arousal": -0.3,
+      "cinematic_archetype": "Melancholy, Edo Japan, Introspective Solitude, Moonlit Stealth",
+      "avoidance_rule": "Preserve the 1-semitone drops (3->2 and 8->7)."
+    },
+    "Insen": {
+      "intervals": [0, 1, 5, 7, 10],
+      "characteristic_step": 1,
+      "brightness_rank": 6,
+      "tension_index": 5.0,
+      "valence": -0.5,
+      "arousal": 0.4,
+      "cinematic_archetype": "Traditional Drama, Tension, Twilight Meditation, Martial Arts Focus",
+      "avoidance_rule": "Emphasize root-b2 tension against open fifth."
+    },
+    "Hungarian_Minor": {
+      "intervals": [0, 2, 3, 6, 7, 8, 11],
+      "characteristic_step": 6,
+      "brightness_rank": 6,
+      "tension_index": 8.5,
+      "valence": -0.7,
+      "arousal": 0.9,
+      "cinematic_archetype": "Gothic Horror, Vampiric Aristocracy, Occult Rituals, Dramatic Sorrow",
+      "avoidance_rule": "Emphasize augmented 2nd melodic intervals (b3 to #4, and b6 to 7)."
+    },
+    "Whole_Tone": {
+      "intervals": [0, 2, 4, 6, 8, 10],
+      "characteristic_step": 6,
+      "brightness_rank": 3,
+      "tension_index": 6.0,
+      "valence": 0.0,
+      "arousal": -0.5,
+      "cinematic_archetype": "Dream Sequence, Time Warp, Amnesia, Subaquatic Hallucination",
+      "avoidance_rule": "Has no tonic hierarchy; modulate by transposition steps (+1 or -1)."
+    },
+    "Octatonic_HW": {
+      "intervals": [0, 1, 3, 4, 6, 7, 9, 10],
+      "characteristic_step": 6,
+      "brightness_rank": 7,
+      "tension_index": 9.0,
+      "valence": -0.85,
+      "arousal": 0.95,
+      "cinematic_archetype": "Lovecraftian Cosmic Dread, High-Stakes Boss Combat, Stravinsky Rhythms",
+      "avoidance_rule": "Alternate strictly between half and whole steps."
+    },
+    "Acoustic_Scale": {
+      "intervals": [0, 2, 4, 6, 7, 9, 10],
+      "characteristic_step": 6,
+      "brightness_rank": 2,
+      "tension_index": 4.8,
+      "valence": 0.5,
+      "arousal": 0.4,
+      "cinematic_archetype": "Lydian Dominant, Mystical Flight, Whimsical Sci-Fi, Debussy Magic",
+      "avoidance_rule": "Balance #4 brightness with b7 bluesy subtonic."
+    }
+  }
+}
