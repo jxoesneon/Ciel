@@ -14,14 +14,20 @@ const DEFAULT_MODE: &str = "shadow";
 
 fn patterns() -> Vec<(&'static str, Regex)> {
     vec![
-        ("attribution_trailer",
-         Regex::new(r"(?i)generated\s+with|co-authored-by\s*:").unwrap()),
-        ("internal_identity",
-         Regex::new("(?i)«(?:Answer|Report|Notice|Council[^»]*)»|council\\s+of\\s+five").unwrap()),
-        ("ai_emoji",
-         Regex::new("[\u{1F300}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]").unwrap()),
-        ("host_runtime",
-         Regex::new(r"(?i)\bdevin\b").unwrap()),
+        (
+            "attribution_trailer",
+            Regex::new(r"(?i)generated\s+with|co-authored-by\s*:").unwrap(),
+        ),
+        (
+            "internal_identity",
+            Regex::new("(?i)«(?:Answer|Report|Notice|Council[^»]*)»|council\\s+of\\s+five")
+                .unwrap(),
+        ),
+        (
+            "ai_emoji",
+            Regex::new("[\u{1F300}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]").unwrap(),
+        ),
+        ("host_runtime", Regex::new(r"(?i)\bdevin\b").unwrap()),
     ]
 }
 
@@ -32,8 +38,8 @@ fn gate_mode() -> String {
             return m;
         }
     }
-    if let Ok(text) = std::fs::read_to_string(
-        paths::ciel_home().join("risk").join("attribution_gate"))
+    if let Ok(text) =
+        std::fs::read_to_string(paths::ciel_home().join("risk").join("attribution_gate"))
     {
         let m = text.trim().to_lowercase();
         if m == "shadow" || m == "enforce" {
@@ -46,8 +52,10 @@ fn gate_mode() -> String {
 fn allowlist() -> Vec<Regex> {
     let mut out = Vec::new();
     if let Ok(text) = std::fs::read_to_string(
-        paths::ciel_home().join("risk").join("attribution_allowlist.txt"))
-    {
+        paths::ciel_home()
+            .join("risk")
+            .join("attribution_allowlist.txt"),
+    ) {
         for line in text.lines() {
             let line = line.trim();
             if line.is_empty() || line.starts_with('#') {
@@ -94,13 +102,18 @@ fn collect_text(command: &str) -> Vec<(String, Vec<String>)> {
         }
     }
 
-    if Regex::new(r"\bgit\s+(push|tag)\b").unwrap().is_match(command) {
+    if Regex::new(r"\bgit\s+(push|tag)\b")
+        .unwrap()
+        .is_match(command)
+    {
         let log = git(&["log", "--format=%B%x00", "@{u}..HEAD"]);
         if !log.is_empty() {
             sources.push((
                 "unpushed_messages".to_string(),
-                log.split('\0').filter(|l| !l.trim().is_empty())
-                    .map(String::from).collect(),
+                log.split('\0')
+                    .filter(|l| !l.trim().is_empty())
+                    .map(String::from)
+                    .collect(),
             ));
         }
     }

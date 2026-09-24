@@ -65,9 +65,7 @@ fn expand(raw: &str, home: &Path) -> String {
             } else {
                 let start = i + 1;
                 let mut j = start;
-                while j < bytes.len()
-                    && (bytes[j].is_ascii_alphanumeric() || bytes[j] == b'_')
-                {
+                while j < bytes.len() && (bytes[j].is_ascii_alphanumeric() || bytes[j] == b'_') {
                     j += 1;
                 }
                 if j > start {
@@ -153,7 +151,11 @@ pub fn utc_now_iso() -> String {
 /// same way the Python hooks swallow OSError.
 pub fn activity_log(entry: &serde_json::Value) {
     let path = ciel_home().join("activity.log");
-    if let Ok(mut f) = std::fs::OpenOptions::new().create(true).append(true).open(&path) {
+    if let Ok(mut f) = std::fs::OpenOptions::new()
+        .create(true)
+        .append(true)
+        .open(&path)
+    {
         use std::io::Write;
         let _ = writeln!(f, "{}", serde_json::to_string(entry).unwrap_or_default());
     }

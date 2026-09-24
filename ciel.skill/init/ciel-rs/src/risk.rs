@@ -71,8 +71,7 @@ pub fn load_policy() -> (Vec<Value>, &'static str) {
             }
         }
     }
-    let rules = serde_json::from_str::<Vec<Value>>(FALLBACK_RULES)
-        .unwrap_or_default();
+    let rules = serde_json::from_str::<Vec<Value>>(FALLBACK_RULES).unwrap_or_default();
     (rules, "fallback")
 }
 
@@ -148,7 +147,11 @@ pub fn evaluate_in(
         if !rule_applies_to_tool(rule, tool) {
             continue;
         }
-        let subject = match rule.get("match").and_then(|m| m.as_str()).unwrap_or("command") {
+        let subject = match rule
+            .get("match")
+            .and_then(|m| m.as_str())
+            .unwrap_or("command")
+        {
             "path" => normalized_path.as_str(),
             _ => command,
         };
@@ -201,7 +204,11 @@ pub fn evaluate_in(
 
     let first = non_advisory[0];
     let overridden = ciel.join("allow_privileged").exists();
-    verdict["decision"] = json!(if overridden { "allow_overridden" } else { "deny" });
+    verdict["decision"] = json!(if overridden {
+        "allow_overridden"
+    } else {
+        "deny"
+    });
     verdict["rule_id"] = first.get("id").cloned().unwrap_or(Value::Null);
     verdict["tier"] = json!("soft");
     verdict["reason"] = first.get("reason").cloned().unwrap_or(json!(""));
@@ -290,7 +297,11 @@ pub fn eval_main() -> i32 {
 pub fn check_main() -> i32 {
     let (rules, source) = load_policy();
     println!("policy source={source} rules={}", rules.len());
-    if source == "file" && !rules.is_empty() { 0 } else { 1 }
+    if source == "file" && !rules.is_empty() {
+        0
+    } else {
+        1
+    }
 }
 
 /// `ciel grant-state`.
@@ -318,12 +329,20 @@ mod tests {
             std::fs::create_dir_all(d.join(".ciel")).unwrap();
             Sandbox(d)
         }
-        fn home(&self) -> &Path { &self.0 }
-        fn ciel(&self) -> PathBuf { self.0.join(".ciel") }
-        fn grant(&self) { let _ = std::fs::write(self.ciel().join("allow_privileged"), ""); }
+        fn home(&self) -> &Path {
+            &self.0
+        }
+        fn ciel(&self) -> PathBuf {
+            self.0.join(".ciel")
+        }
+        fn grant(&self) {
+            let _ = std::fs::write(self.ciel().join("allow_privileged"), "");
+        }
     }
     impl Drop for Sandbox {
-        fn drop(&mut self) { let _ = std::fs::remove_dir_all(&self.0); }
+        fn drop(&mut self) {
+            let _ = std::fs::remove_dir_all(&self.0);
+        }
     }
 
     fn eval_cmd(cmd: &str) -> (Value, Sandbox) {
@@ -342,8 +361,12 @@ mod tests {
 
     #[test]
     fn hard_denies() {
-        for c in ["rm -rf /", ":(){ :|:& };:", "mkfs.ext4 /dev/sda1",
-                  "dd if=x of=/dev/sda"] {
+        for c in [
+            "rm -rf /",
+            ":(){ :|:& };:",
+            "mkfs.ext4 /dev/sda1",
+            "dd if=x of=/dev/sda",
+        ] {
             let (v, _sb) = eval_cmd(c);
             assert_eq!("deny", v["decision"], "{c}");
         }
@@ -351,10 +374,12 @@ mod tests {
 
     #[test]
     fn grant_control_hard() {
-        for c in ["touch ~/.ciel/allow_privileged",
-                  "echo 1 > ~/.ciel/grants.log",
-                  "mkdir ~/.ciel/allow_privileged",
-                  "touch ${HOME}/.ciel/allow_privileged"] {
+        for c in [
+            "touch ~/.ciel/allow_privileged",
+            "echo 1 > ~/.ciel/grants.log",
+            "mkdir ~/.ciel/allow_privileged",
+            "touch ${HOME}/.ciel/allow_privileged",
+        ] {
             let sb = Sandbox::new();
             sb.grant();
             let v = evaluate_in("exec", c, "", sb.home(), &sb.ciel(), None, None);
@@ -365,8 +390,12 @@ mod tests {
 
     #[test]
     fn destructive_hard() {
-        for c in ["rm -rf ~/.ciel/risk", "rm -rf ~/.ciel", "rm -rf ~/.ssh",
-                  "find ~/.ciel -name x -delete"] {
+        for c in [
+            "rm -rf ~/.ciel/risk",
+            "rm -rf ~/.ciel",
+            "rm -rf ~/.ssh",
+            "find ~/.ciel -name x -delete",
+        ] {
             let sb = Sandbox::new();
             sb.grant();
             let v = evaluate_in("exec", c, "", sb.home(), &sb.ciel(), None, None);
@@ -378,12 +407,28 @@ mod tests {
     #[test]
     fn soft_deny_then_override() {
         let sb = Sandbox::new();
-        let v = evaluate_in("exec", "sudo apt update", "", sb.home(), &sb.ciel(), None, None);
+        let v = evaluate_in(
+            "exec",
+            "sudo apt update",
+            "",
+            sb.home(),
+            &sb.ciel(),
+            None,
+            None,
+        );
         assert_eq!("deny", v["decision"]);
         assert_eq!("soft", v["tier"]);
         assert_eq!("privilege_escalation", v["rule_id"]);
         sb.grant();
-        let v = evaluate_in("exec", "sudo apt update", "", sb.home(), &sb.ciel(), None, None);
+        let v = evaluate_in(
+            "exec",
+            "sudo apt update",
+            "",
+            sb.home(),
+            &sb.ciel(),
+            None,
+            None,
+        );
         assert_eq!("allow_overridden", v["decision"]);
     }
 
@@ -401,13 +446,20 @@ mod tests {
         assert!(search(p, "find /etc -name x -delete"));
         // the real policy rule, end to end
         let (rules, _) = load_policy();
-        let pat = rules.iter()
-            .find(|r| r["id"] == "find_delete_sensitive_path").unwrap()["pattern"]
-            .as_str().unwrap().to_string();
-        eprintln!("regex_ok={} fancy_ok={}",
-                  Regex::new(&format!("(?i){pat}")).is_ok(),
-                  fancy_regex::Regex::new(&format!("(?i){pat}"))
-                      .map_err(|e| eprintln!("fancy err: {e}")).is_ok());
+        let pat = rules
+            .iter()
+            .find(|r| r["id"] == "find_delete_sensitive_path")
+            .unwrap()["pattern"]
+            .as_str()
+            .unwrap()
+            .to_string();
+        eprintln!(
+            "regex_ok={} fancy_ok={}",
+            Regex::new(&format!("(?i){pat}")).is_ok(),
+            fancy_regex::Regex::new(&format!("(?i){pat}"))
+                .map_err(|e| eprintln!("fancy err: {e}"))
+                .is_ok()
+        );
         assert!(search(&pat, "find /etc -name x -delete"));
     }
 
@@ -415,7 +467,9 @@ mod tests {
     fn normalize_dot_segments() {
         let home = paths::home_dir();
         let n = paths::normalize_path(
-            &format!("{}/.ciel/./allow_privileged", home.display()), &home);
+            &format!("{}/.ciel/./allow_privileged", home.display()),
+            &home,
+        );
         assert_eq!("~/.ciel/allow_privileged", n);
     }
 }

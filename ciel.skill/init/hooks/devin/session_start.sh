@@ -1,6 +1,23 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+HOOK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Rust fast path — one process does attribution-flag heal, perms sweep,
+# grant-state, watchdog check, and log rotation. Falls back to the Python
+# bodies below on missing binary or nonzero exit.
+CIEL_BIN="${CIEL_BIN:-}"
+if [ -z "$CIEL_BIN" ]; then
+  for _c in "${HOME:-/nonexistent}/.ciel/bin/ciel" "$HOOK_DIR/../../bin/ciel"; do
+    if [ -x "$_c" ]; then CIEL_BIN="$_c"; break; fi
+  done
+fi
+if [ -n "$CIEL_BIN" ] && [ -x "$CIEL_BIN" ]; then
+  if "$CIEL_BIN" session-start --runtime devin; then
+    exit 0
+  fi
+fi
+
 # --- No-AI-attribution enforcement (verified each session start) -------------
 # The Devin harness injects "Generated with Devin" / "Co-Authored-By" trailers
 # into commits and PR bodies unless `attribution` is false in the user config.

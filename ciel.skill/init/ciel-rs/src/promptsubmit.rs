@@ -37,11 +37,14 @@ pub fn main_() -> i32 {
     } else {
         CANARY.to_string()
     };
-    println!("{}", json!({
-        "hookSpecificOutput": {
-            "hookEventName": "UserPromptSubmit",
-            "additionalContext": context,
-        }
-    }));
+    println!(
+        "{}",
+        json!({
+            "hookSpecificOutput": {
+                "hookEventName": "UserPromptSubmit",
+                "additionalContext": context,
+            }
+        })
+    );
     0
 }

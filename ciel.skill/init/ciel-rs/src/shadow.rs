@@ -16,15 +16,38 @@ const MAX_INFLIGHT: usize = 2;
 const INFLIGHT_STALE_S: u64 = 120;
 
 const READ_ONLY_TOOLS: [&str; 13] = [
-    "read", "grep", "find_file_by_name", "webfetch", "web_search",
-    "get_output", "mcp_read_resource", "mcp_list_tools", "mcp_list_servers",
-    "notebook_read", "skill", "read_subagent", "list_skills",
+    "read",
+    "grep",
+    "find_file_by_name",
+    "webfetch",
+    "web_search",
+    "get_output",
+    "mcp_read_resource",
+    "mcp_list_tools",
+    "mcp_list_servers",
+    "notebook_read",
+    "skill",
+    "read_subagent",
+    "list_skills",
 ];
 const WRITE_TOOLS: [&str; 3] = ["write", "edit", "notebook_edit"];
 const SENSITIVE_MARKERS: [&str; 17] = [
-    "/.ssh", "/.aws", "/.gnupg", "/.kube", "/.docker", "/.netrc",
-    "/.npmrc", "/.pypirc", "/.ciel/hooks", "/.ciel/risk",
-    "/.config/devin", "/etc/", "/usr/", "/bin/", "/sbin/", "/boot/",
+    "/.ssh",
+    "/.aws",
+    "/.gnupg",
+    "/.kube",
+    "/.docker",
+    "/.netrc",
+    "/.npmrc",
+    "/.pypirc",
+    "/.ciel/hooks",
+    "/.ciel/risk",
+    "/.config/devin",
+    "/etc/",
+    "/usr/",
+    "/bin/",
+    "/sbin/",
+    "/boot/",
     "/root/",
 ];
 
@@ -39,19 +62,27 @@ fn tool_state(tool: &str, command: &str, path: &str) -> Value {
     } else if WRITE_TOOLS.contains(&tool) || (!path.is_empty() && command.is_empty()) {
         state["action"] = json!(format!(
             "create or modify the file at {}",
-            if path.is_empty() { "(unknown path)" } else { path }));
-        state["reversibility"] = json!(
-            "reversible if the target is tracked by version control; destructive otherwise");
+            if path.is_empty() {
+                "(unknown path)"
+            } else {
+                path
+            }
+        ));
+        state["reversibility"] =
+            json!("reversible if the target is tracked by version control; destructive otherwise");
         side_effects.push("modifies the filesystem at the target path".into());
     } else if tool == "exec" || !command.is_empty() {
         let truncated: String = command.chars().take(200).collect();
         state["action"] = json!(format!("run shell command: {truncated}"));
         state["reversibility"] = json!(
             "depends on the command; writes, deletes, and package/system changes may be irreversible");
-        side_effects.push(
-            "runs a subprocess that may change files, network, or system state".into());
+        side_effects
+            .push("runs a subprocess that may change files, network, or system state".into());
     } else {
-        state["action"] = json!(format!("invoke {}", if tool.is_empty() { "a tool" } else { tool }));
+        state["action"] = json!(format!(
+            "invoke {}",
+            if tool.is_empty() { "a tool" } else { tool }
+        ));
         state["reversibility"] = json!("unknown");
     }
 
@@ -59,7 +90,8 @@ fn tool_state(tool: &str, command: &str, path: &str) -> Value {
     if SENSITIVE_MARKERS.iter().any(|m| haystack.contains(m)) {
         state["targets_sensitive_path"] = json!(true);
         side_effects.push(
-            "touches a credential store, agent configuration, or protected system path".into());
+            "touches a credential store, agent configuration, or protected system path".into(),
+        );
     }
     state["side_effects"] = json!(side_effects);
     state
@@ -111,8 +143,15 @@ fn inflight_count() -> usize {
 /// Fire-and-forget shadow ask — mirrors `system1.ask_async`: disabled env,
 /// saturation drop, marker file, detached `system1.py --ask` child fed the
 /// payload on stdin with `CIEL_SYSTEM1_MARKER` set.
-pub fn shadow_async(runtime: &str, ts: &str, tool: &str, command: &str,
-                    path: &str, regex_decision: &str, rule_id: &Value) {
+pub fn shadow_async(
+    runtime: &str,
+    ts: &str,
+    tool: &str,
+    command: &str,
+    path: &str,
+    regex_decision: &str,
+    rule_id: &Value,
+) {
     if env::var_os("CIEL_SYSTEM1_DISABLED").is_some() {
         return;
     }
@@ -156,13 +195,12 @@ pub fn shadow_async(runtime: &str, ts: &str, tool: &str, command: &str,
         use std::os::unix::process::CommandExt;
         cmd.process_group(0);
     }
-    let spawned = cmd.spawn()
-        .and_then(|mut child| {
-            if let Some(mut stdin) = child.stdin.take() {
-                let _ = stdin.write_all(payload.to_string().as_bytes());
-            }
-            Ok(())
-        });
+    let spawned = cmd.spawn().and_then(|mut child| {
+        if let Some(mut stdin) = child.stdin.take() {
+            let _ = stdin.write_all(payload.to_string().as_bytes());
+        }
+        Ok(())
+    });
     if spawned.is_err() {
         let _ = std::fs::remove_file(&marker);
     }

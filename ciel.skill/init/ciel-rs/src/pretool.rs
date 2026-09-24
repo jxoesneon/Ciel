@@ -71,8 +71,7 @@ pub fn main_(runtime: &str) -> i32 {
                     .unwrap_or("unknown")
                     .to_string(),
                 get_str(&input, &["command", "CommandLine"]).to_string(),
-                get_str(&input, &["file_path", "path", "notebook_path"])
-                    .to_string(),
+                get_str(&input, &["file_path", "path", "notebook_path"]).to_string(),
             )
         }
     };
@@ -99,14 +98,8 @@ pub fn main_(runtime: &str) -> i32 {
             .cloned()
             .unwrap_or(Value::Null);
     } else {
-        entry["session_id"] = payload
-            .get("session_id")
-            .cloned()
-            .unwrap_or(Value::Null);
-        entry["prompt_id"] = payload
-            .get("prompt_id")
-            .cloned()
-            .unwrap_or(Value::Null);
+        entry["session_id"] = payload.get("session_id").cloned().unwrap_or(Value::Null);
+        entry["prompt_id"] = payload.get("prompt_id").cloned().unwrap_or(Value::Null);
     }
     append_activity(&entry);
 
@@ -122,19 +115,14 @@ pub fn main_(runtime: &str) -> i32 {
     );
 
     // Advisory scans: devin hook dispatches `scan: attribution`.
-    if runtime != "antigravity"
-        && verdict["scan"].as_str() == Some("attribution")
-        && !denied
-    {
+    if runtime != "antigravity" && verdict["scan"].as_str() == Some("attribution") && !denied {
         let report = attribution::scan(&command);
         if report["result"].as_str() == Some("flagged") {
             let mut cats: Vec<String> = report["findings"]
                 .as_array()
                 .map(|fs| {
                     fs.iter()
-                        .filter_map(|f| {
-                            f["category"].as_str().map(String::from)
-                        })
+                        .filter_map(|f| f["category"].as_str().map(String::from))
                         .collect()
                 })
                 .unwrap_or_default();
@@ -169,7 +157,11 @@ pub fn main_(runtime: &str) -> i32 {
 
     if denied {
         let reason = verdict["reason"].as_str().unwrap_or("");
-        let reason = if reason.is_empty() { "critical risk" } else { reason };
+        let reason = if reason.is_empty() {
+            "critical risk"
+        } else {
+            reason
+        };
         if runtime == "antigravity" {
             out(&json!({
                 "decision": "deny",

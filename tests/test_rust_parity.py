@@ -26,6 +26,12 @@ import risk_policy  # noqa: E402
 import secret_scan  # noqa: E402
 import attribution_scan  # noqa: E402
 
+LIB_DIR = LIB
+STORE_PERMS = LIB / "store_perms.py"
+WATCHDOG = LIB / "session_watchdog.py"
+REQUIREMENTS = LIB / "requirements.py"
+LOG_ROTATE = LIB / "activity_log_rotate.py"
+
 FIXTURES = json.loads(
     (ROOT / "tests" / "fixtures" / "hook_redteam_cases.json").read_text()
 )["cases"]
@@ -232,6 +238,194 @@ class TestAttributionScanParity(unittest.TestCase):
             "attribution-scan", stdin="git commit -m 'Generated with x'",
             env=env)
         self.assertEqual(py["result"], json.loads(out)["result"])
+
+
+@unittest.skipUnless(
+    Path(CIEL_BIN).exists(), f"ciel binary not built at {CIEL_BIN}"
+)
+class TestSessionOpsParity(unittest.TestCase):
+    """Parity for the consolidated session-start batch: perms sweep,
+    ledger, watchdog check, log rotation."""
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp(prefix="ciel-sess-"))
+        self.ciel = self.tmp / ".ciel"
+        for d in (self.ciel, self.ciel / "checkpoints",
+                  self.ciel / "system1", self.ciel / "improvements",
+                  self.ciel / "logs", self.ciel / "backups",
+                  self.ciel / "archive"):
+            d.mkdir(parents=True, exist_ok=True)
+            d.chmod(0o700)
+        self.env = dict(os.environ)
+        self.env["HOME"] = str(self.tmp)
+        self.env["CIEL_HOME"] = str(self.ciel)
+        self.env.pop("CIEL_BIN", None)
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp, ignore_errors=True)
+
+    def _py(self, script: Path, *args: str):
+        proc = subprocess.run(
+            ["python3", str(script), *args],
+            capture_output=True, text=True, env=self.env, timeout=60,
+        )
+        return proc.returncode, proc.stdout
+
+    def test_store_perms_clean(self):
+        rc_py, out_py = self._py(STORE_PERMS)
+        rc_rs, out_rs = run_rust("store-perms", env=self.env)
+        self.assertEqual((rc_py, out_py), (rc_rs, out_rs))
+
+    def _drift_perms(self):
+        """Loosen every dir/file under the sandbox so a sweep has work."""
+        for p in [self.ciel, *self.ciel.rglob("*")]:
+            p.chmod(0o755 if p.is_dir() else 0o644)
+
+    def test_store_perms_repairs(self):
+        loose = self.ciel / "activity.log"
+        loose.write_text("{}\n")
+        self._drift_perms()
+        rc_py, out_py = self._py(STORE_PERMS)
+        # reset identical drift so the rust run sees the same world
+        self._drift_perms()
+        rc_rs, out_rs = run_rust("store-perms", env=self.env)
+        self.assertEqual(rc_py, rc_rs)
+        self.assertEqual(out_py, out_rs)
+        self.assertTrue(out_rs.startswith("repaired:"))
+        self.assertEqual(0o600, loose.stat().st_mode & 0o777)
+        self.assertEqual(0o700, (self.ciel / "logs").stat().st_mode & 0o777)
+
+    def test_ledger_add_pending_done(self):
+        # shared-ledger sequence: both engines see identical event flow
+        _, rid_py = self._py(REQUIREMENTS, "add", "write tests", "--session", "s1")
+        rid_py = rid_py.strip()
+        _, rid_rs = run_rust("ledger", "add", "deploy it", "--session", "s2",
+                             env=self.env)
+        rid_rs = rid_rs.strip()
+        _, pend_py = self._py(REQUIREMENTS, "pending")
+        _, pend_rs = run_rust("ledger", "pending", env=self.env)
+        self.assertEqual(pend_py, pend_rs)
+        _, done_py = self._py(REQUIREMENTS, "done", rid_py)
+        _, pend_rs2 = run_rust("ledger", "pending", env=self.env)
+        _, pend_py2 = self._py(REQUIREMENTS, "pending")
+        self.assertEqual(pend_py2, pend_rs2)
+        self.assertIn("resolved", done_py)
+        _, list_rs = run_rust("ledger", "list", "--session", "s2", env=self.env)
+        self.assertIn(rid_rs, list_rs)
+
+    def test_watchdog_check_clean(self):
+        # no ledger items, no transcripts → both engines print nothing
+        rc_py, out_py = self._py(WATCHDOG, "--check")
+        rc_rs, out_rs = run_rust("watchdog", env=self.env)
+        self.assertEqual(rc_py, rc_rs)
+        self.assertEqual(out_py, out_rs)
+
+    def test_watchdog_check_stalled_hint(self):
+        # seed a pending ledger item from a dead session + activity line
+        ledger = self.ciel / "checkpoints" / "requirements.jsonl"
+        ledger.write_text(json.dumps({
+            "op": "add", "id": "req-1", "text": "finish the thing",
+            "session": "deadbeef-dead-session", "ts": "2020-01-01T00:00:00+00:00",
+        }) + "\n")
+        rc_py, out_py = self._py(WATCHDOG, "--check")
+        # rust sees the same world (state file now written by python —
+        # reset so both evaluate identical inputs)
+        (self.ciel / "checkpoints" / "watchdog_state.json").unlink(
+            missing_ok=True)
+        (self.ciel / "checkpoints" / "resume_hint.json").unlink(
+            missing_ok=True)
+        rc_rs, out_rs = run_rust("watchdog", env=self.env)
+        self.assertEqual(rc_py, rc_rs)
+        self.assertEqual(out_py, out_rs)
+        self.assertIn("deadbeef", out_rs)
+        self.assertIn("unresolved ledger item", out_rs)
+
+    def test_watchdog_check_secret_sweep(self):
+        transcripts = (self.tmp / ".local" / "share" / "devin" / "cli"
+                       / "transcripts")
+        transcripts.mkdir(parents=True)
+        (transcripts / "t1.json").write_text(
+            '["msg ghp_abcdefghij0123456789ABCD end"]')
+        rc_py, out_py = self._py(WATCHDOG, "--check")
+        for f in (self.ciel / "checkpoints" / "watchdog_state.json",
+                  self.ciel / "checkpoints" / "resume_hint.json"):
+            f.unlink(missing_ok=True)
+        rc_rs, out_rs = run_rust("watchdog", env=self.env)
+        self.assertEqual(out_py, out_rs)
+        self.assertIn("secret", out_rs.lower())
+
+    def test_log_rotate_daily(self):
+        log = self.ciel / "activity.log"
+        log.write_text(
+            json.dumps({"ts": "2020-01-01T00:00:00+00:00",
+                        "event": "old"}) + "\n")
+        env_py = dict(self.env)
+        rc_py, out_py = self._py(LOG_ROTATE)
+        archives = list((self.ciel / "archive" / "logs").glob("activity-*"))
+        self.assertEqual(1, len(archives))
+        # reset identical world for rust
+        for a in archives:
+            a.unlink()
+        log.write_text(
+            json.dumps({"ts": "2020-01-01T00:00:00+00:00",
+                        "event": "old"}) + "\n")
+        rc_rs, out_rs = run_rust("log-rotate", env=self.env)
+        archives_rs = list((self.ciel / "archive" / "logs").glob("activity-*"))
+        self.assertEqual(1, len(archives_rs))
+        self.assertTrue(
+            archives_rs[0].name.endswith((".zst", ".gz")),
+            archives_rs[0].name)
+        marker = json.loads(log.read_text().strip().splitlines()[-1])
+        self.assertEqual("log_rotate", marker["op"])
+        self.assertEqual("daily", marker["reason"])
+
+    def test_log_rotate_none_needed(self):
+        log = self.ciel / "activity.log"
+        log.write_text(
+            json.dumps({"ts": "2999-01-01T00:00:00+00:00"}) + "\n")
+        rc_rs, out_rs = run_rust("log-rotate", env=self.env)
+        self.assertEqual(0, rc_rs)
+        self.assertFalse((self.ciel / "archive" / "logs").exists())
+
+    def test_session_start_json_shape(self):
+        rc, out = run_rust("session-start", "--runtime", "devin",
+                           env=self.env)
+        self.assertEqual(0, rc)
+        payload = json.loads(out)
+        ctx = payload["hookSpecificOutput"]["additionalContext"]
+        self.assertIn("Ciel is installed and active", ctx)
+        self.assertIn("Master", ctx)
+        self.assertIn("NO AI ATTRIBUTION", ctx)
+        # no config in the sandbox → the could-not-verify note
+        self.assertIn("config-absent", ctx)
+        # and repaired when present-but-wrong
+        cfg_dir = self.tmp / ".config" / "devin"
+        cfg_dir.mkdir(parents=True)
+        (cfg_dir / "config.json").write_text('{"attribution": true}')
+        rc, out = run_rust("session-start", "--runtime", "devin",
+                           env=self.env)
+        payload = json.loads(out)
+        self.assertIn(
+            "reset to false",
+            payload["hookSpecificOutput"]["additionalContext"])
+        self.assertEqual(
+            {"attribution": False},
+            json.loads((cfg_dir / "config.json").read_text()))
+
+    def test_session_start_antigravity(self):
+        rc, out = run_rust("session-start", "--runtime", "antigravity",
+                           env=self.env)
+        self.assertEqual(0, rc)
+        payload = json.loads(out)
+        self.assertIn("Antigravity",
+                      payload["injectSteps"][0]["ephemeralMessage"])
+
+    def test_grant_state_parity(self):
+        (self.ciel / "allow_privileged").touch()
+        rc, out = run_rust("grant-state", env=self.env)
+        rs = json.loads(out)
+        self.assertTrue(rs["active"])
+        self.assertIn(str(self.ciel / "allow_privileged"), rs["sentinel"])
 
 
 @unittest.skipUnless(

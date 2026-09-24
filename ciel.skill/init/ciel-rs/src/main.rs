@@ -1,10 +1,15 @@
 mod attribution;
+mod ledger;
 mod paths;
+mod perms;
 mod pretool;
 mod promptsubmit;
 mod risk;
+mod rotate;
 mod secretscan;
+mod sessionstart;
 mod shadow;
+mod watchdog;
 
 use std::env;
 use std::process::ExitCode;
@@ -16,6 +21,7 @@ USAGE:\n\
 HOOK BODIES (stdin JSON → stdout JSON):\n\
     pretool --runtime {devin|antigravity}   PreToolUse gate body\n\
     prompt-submit                            UserPromptSubmit scan + canary\n\
+    session-start --runtime {devin|antigravity}  SessionStart body (one process)\n\
 \n\
 PRIMITIVES (used by shell hooks and tests):\n\
     risk-eval        stdin {tool,command,path} → verdict JSON\n\
@@ -23,6 +29,12 @@ PRIMITIVES (used by shell hooks and tests):\n\
     grant-state      sentinel state + provenance JSON\n\
     secret-scan      stdin text → {hits, categories}\n\
     attribution-scan stdin command → {result, findings, mode}\n\
+\n\
+SESSION OPERATIONS:\n\
+    watchdog [--session ID|--resume [--dry]|--sanitize-pending]\n\
+    store-perms      owner-only permission sweep → ok|repaired:N\n\
+    ledger {add|done|list|pending} [arg] [--session ID]\n\
+    log-rotate       rotate activity.log per retention policy\n\
 \n\
 Fallback contract: on any error or unknown command the binary exits 2 and\n\
 the shell wrappers fall back to the Python implementations.\n";
@@ -41,6 +53,19 @@ fn main() -> ExitCode {
             pretool::main_(runtime)
         }
         "prompt-submit" => promptsubmit::main_(),
+        "session-start" => {
+            let runtime = args
+                .iter()
+                .position(|a| a == "--runtime")
+                .and_then(|i| args.get(i + 1))
+                .map(String::as_str)
+                .unwrap_or("devin");
+            sessionstart::main_(runtime)
+        }
+        "watchdog" => watchdog::main_(&args[1..]),
+        "store-perms" => perms::main_(),
+        "ledger" => ledger::main_(&args[1..]),
+        "log-rotate" => rotate::main_(),
         "risk-eval" => risk::eval_main(),
         "risk-check" => risk::check_main(),
         "grant-state" => risk::grant_state_main(),

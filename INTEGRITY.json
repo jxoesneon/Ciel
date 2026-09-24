@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "version": "1.0.0",
-  "last_verified": "2026-09-24T05:18:45.461592+00:00",
+  "last_verified": "2026-09-24T05:38:33.796910+00:00",
   "files": {
     ".PSScriptAnalyzerSettings.psd1": {
       "sha256": "aea7918ac3841e011c6c2eb0daa8c0d2b405d35e7e7779759d1c6068d61cc29f",
@@ -112,8 +112,8 @@
       "size": 2008
     },
     "ciel.skill/CHANGELOG.md": {
-      "sha256": "b7c4132cc07cf071794bf7e8dac298e19c9fef8c936c28bb3e21426789f46b91",
-      "size": 15991
+      "sha256": "1e87a921b05cb1b6a5fa58d8ba1e3ac05b9699a64123df3de353c78afd0ce178",
+      "size": 17353
     },
     "ciel.skill/MANIFEST.md": {
       "sha256": "d31840054fca7bf422466887033d1e38e07b694cfc0b995bd07c35e4624bc4d2",
@@ -607,6 +607,50 @@
       "sha256": "77fc8d2b27e193a50d988722782915223373ac403a1e6d2b05a2fb5082a4ef66",
       "size": 1523
     },
+    "ciel.skill/init/ciel-rs/.gitignore": {
+      "sha256": "44c92e3a70ad3307b7056871c2bdb096d8bfa9373f5bf06a79bb6324a20ff2fb",
+      "size": 8
+    },
+    "ciel.skill/init/ciel-rs/Cargo.lock": {
+      "sha256": "d93113903c1097726ec86fb26e178bf05316a368a2e37b2a658436aa932c6f14",
+      "size": 7103
+    },
+    "ciel.skill/init/ciel-rs/Cargo.toml": {
+      "sha256": "966e6f25a3e65b01b79a0810f8255f3fd909e854bdcda1a11c9071b11a2f160d",
+      "size": 676
+    },
+    "ciel.skill/init/ciel-rs/src/attribution.rs": {
+      "sha256": "969f7bdf5f51f319a1ffa73e6498d5c3a2ed9a465a28eeef5123127aa9e21b83",
+      "size": 5175
+    },
+    "ciel.skill/init/ciel-rs/src/main.rs": {
+      "sha256": "28ddaf7bcb098893c24a55d0f8200fb839145eec9c41b80ec53dfa0fc63f03b0",
+      "size": 3037
+    },
+    "ciel.skill/init/ciel-rs/src/paths.rs": {
+      "sha256": "ae18d303a3e6be5311525bb2630d6f93612cd512fef4447d16a1f781fa133ea6",
+      "size": 5399
+    },
+    "ciel.skill/init/ciel-rs/src/pretool.rs": {
+      "sha256": "1ab3fedd1eaecd65b74977cf591de230ac950dbb77dbb7632b58a59559206d84",
+      "size": 7207
+    },
+    "ciel.skill/init/ciel-rs/src/promptsubmit.rs": {
+      "sha256": "fab8b4a7007229d5449e4ec522458406b207dbcb79bea71918fe81b83b9103ae",
+      "size": 1513
+    },
+    "ciel.skill/init/ciel-rs/src/risk.rs": {
+      "sha256": "add0de31de401258f8160f100ef0de53fdaf707a8136827044b56fd509b67a49",
+      "size": 15225
+    },
+    "ciel.skill/init/ciel-rs/src/secretscan.rs": {
+      "sha256": "4031f3d7d04dc570aa883d7ebb2511f3bd1b3a6201d120e1a4e623d0652b925d",
+      "size": 2340
+    },
+    "ciel.skill/init/ciel-rs/src/shadow.rs": {
+      "sha256": "7788f5169c131e4b929a32d23ddc75811c0ad6c228b491665e8a9db00a2c865d",
+      "size": 6730
+    },
     "ciel.skill/init/commands/claude_code/ciel.md": {
       "sha256": "78131376b7b0772df28043a0c58540e3aaf8a36c719d8bd2f8f56f94a0bfba89",
       "size": 214
@@ -628,8 +672,8 @@
       "size": 809
     },
     "ciel.skill/init/hooks/antigravity/pre_invocation.sh": {
-      "sha256": "6817358d17c61dfcad95d885737f0cf5107abac91a54995fea014a30d8d47d3d",
-      "size": 765
+      "sha256": "5e92ce717d5be5450086403b43be61faf80c9034f7fc41d68b9258480f186abd",
+      "size": 1293
     },
     "ciel.skill/init/hooks/antigravity/pre_tool_use.sh": {
       "sha256": "586877f673e2830d85d747c222fd4fb430d735a35b57a093123d85c1109762cd",
@@ -664,8 +708,8 @@
       "size": 667
     },
     "ciel.skill/init/hooks/devin/session_start.sh": {
-      "sha256": "65e9074c24a685fef787ac66b41731ae9580c37d460eb53032877b508a4820c2",
-      "size": 4288
+      "sha256": "111e9671958c298891a7c3ae7c9d9622d6bc1daf063ef59a0f00ac2968930d4e",
+      "size": 4864
     },
     "ciel.skill/init/hooks/devin/stop.sh": {
       "sha256": "13846e9ca3c8239e2b97d5755373152055d906bbfe26eb74d083669169e01212",
@@ -3050,6 +3094,10 @@
     "tests/test_risk_policy.py": {
       "sha256": "052182ebb44be17988998dcaa55a5f894acfa7a31a0b042dffb2d6f2e42fd04e",
       "size": 20759
+    },
+    "tests/test_rust_parity.py": {
+      "sha256": "575444ebf7df2922ce8f2a23278509f8c95011635806ac3717ea8e270ae0af37",
+      "size": 17369
     },
     "tests/test_scan_skills.py": {
       "sha256": "73580c464e6b995d516af1055498e133bbad2edf233f5d91e4ffaff2d01529ad",
