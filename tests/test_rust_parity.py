@@ -125,6 +125,9 @@ class TestRiskEvalParity(unittest.TestCase):
             "~/./.ciel/risk",
             f"{home}/x/../.ciel/hooks",
             f"{home}//.ssh//id_rsa",
+            "/data/é/üñíçødé/../x",
+            "~root/.ssh/id_rsa",
+            "~ciel_no_such_user_9x/x",
         ]
         for raw in forms:
             with self.subTest(path=raw):
@@ -136,6 +139,41 @@ class TestRiskEvalParity(unittest.TestCase):
                     env=self.env,
                 )
                 self.assertEqual(py, json.loads(out), raw)
+
+    def test_var_injected_tilde_parity(self):
+        """expandvars runs before expanduser — a var carrying `~` must be
+        tilde-expanded identically in both engines."""
+        os.environ["CIEL_TEST_TILDE"] = "~/inner"
+        env = dict(self.env, CIEL_TEST_TILDE="~/inner")
+        try:
+            raw = "$CIEL_TEST_TILDE/x"
+            py = risk_policy.evaluate("write", "", raw)
+            rc, out = run_rust(
+                "risk-eval",
+                stdin=json.dumps(
+                    {"tool": "write", "command": "", "path": raw}),
+                env=env,
+            )
+            self.assertEqual(py, json.loads(out))
+        finally:
+            os.environ.pop("CIEL_TEST_TILDE", None)
+
+    def test_risk_check_lints_inert_patterns(self):
+        """A pattern compilable in neither engine warns on stderr; the
+        stdout contract `policy source=... rules=N` is unchanged."""
+        pol = self.tmp / "bad_policy.json"
+        pol.write_text(json.dumps({"rules": [{
+            "id": "inert_probe", "tier": "hard", "match": "command",
+            "pattern": "(((unclosed", "reason": "probe",
+        }]}))
+        env = dict(self.env, CIEL_POLICY=str(pol))
+        proc = subprocess.run(
+            [CIEL_BIN, "risk-check"], capture_output=True, text=True, env=env
+        )
+        self.assertEqual(0, proc.returncode)
+        self.assertEqual("policy source=file rules=1", proc.stdout.strip())
+        self.assertIn("inert_probe", proc.stderr)
+        self.assertIn("no engine", proc.stderr)
 
     def test_malformed_json_stdin(self):
         rc, out = run_rust("risk-eval", stdin="{not json", env=self.env)

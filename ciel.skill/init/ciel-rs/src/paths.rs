@@ -23,7 +23,48 @@ pub fn home_dir() -> PathBuf {
     dirs_fallback()
 }
 
+/// Thread-safe passwd entry lookup — `getpw*_r` write into caller buffers
+/// instead of racing on the shared static that `getpwnam`/`getpwuid` return.
+#[cfg(unix)]
+fn passwd_home_of(name: Option<&std::ffi::CStr>) -> Option<PathBuf> {
+    unsafe {
+        let mut pw: libc::passwd = std::mem::zeroed();
+        let mut buf = vec![0u8; 1024];
+        let mut result: *mut libc::passwd = std::ptr::null_mut();
+        let rc = match name {
+            Some(n) => libc::getpwnam_r(
+                n.as_ptr(),
+                &mut pw,
+                buf.as_mut_ptr() as _,
+                buf.len(),
+                &mut result,
+            ),
+            None => libc::getpwuid_r(
+                libc::getuid(),
+                &mut pw,
+                buf.as_mut_ptr() as _,
+                buf.len(),
+                &mut result,
+            ),
+        };
+        if rc != 0 || result.is_null() || pw.pw_dir.is_null() {
+            return None;
+        }
+        let dir = std::ffi::CStr::from_ptr(pw.pw_dir);
+        Some(PathBuf::from(dir.to_string_lossy().into_owned()))
+    }
+}
+
+#[cfg(unix)]
+fn passwd_home() -> Option<PathBuf> {
+    passwd_home_of(None)
+}
+
 fn dirs_fallback() -> PathBuf {
+    #[cfg(unix)]
+    if let Some(h) = passwd_home() {
+        return h;
+    }
     env::var_os("USERPROFILE")
         .map(PathBuf::from)
         .or_else(|| {
@@ -42,15 +83,7 @@ fn dirs_fallback() -> PathBuf {
 /// password database (getpwnam). Unknown users stay literal, like Python.
 #[cfg(unix)]
 fn user_home(name: &str) -> Option<PathBuf> {
-    let c = std::ffi::CString::new(name).ok()?;
-    unsafe {
-        let pw = libc::getpwnam(c.as_ptr());
-        if pw.is_null() {
-            return None;
-        }
-        let dir = std::ffi::CStr::from_ptr((*pw).pw_dir);
-        Some(PathBuf::from(dir.to_string_lossy().into_owned()))
-    }
+    passwd_home_of(Some(&std::ffi::CString::new(name).ok()?))
 }
 
 #[cfg(not(unix))]
@@ -95,8 +128,11 @@ fn expand(raw: &str, home: &Path) -> String {
                 }
             }
         }
-        s.push(bytes[i] as char);
-        i += 1;
+        // Push the whole char, not `byte as char` — the latter mangles
+        // multi-byte UTF-8 into Latin-1 (é → Ã©) and breaks path parity.
+        let ch_len = raw[i..].chars().next().map(|c| c.len_utf8()).unwrap_or(1);
+        s.push_str(&raw[i..i + ch_len]);
+        i += ch_len;
     }
     // expanduser second — a var may inject a leading `~`.
     if s == "~" {
@@ -184,6 +220,73 @@ pub fn utc_now_iso() -> String {
         now.second(),
         now.microsecond()
     )
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::path::Path;
+
+    #[test]
+    fn tilde_self_and_slash_expand() {
+        let home = Path::new("/home/tester");
+        assert_eq!(expand("~", home), "/home/tester");
+        assert_eq!(expand("~/x/y", home), "/home/tester/x/y");
+    }
+
+    #[test]
+    fn var_injecting_tilde_expands() {
+        // expandvars runs first, so a var carrying "~" is tilde-expanded.
+        env::set_var("CIEL_TEST_TILDE", "~/inner");
+        assert_eq!(expand("$CIEL_TEST_TILDE", Path::new("/h")), "/h/inner");
+        env::set_var("CIEL_TEST_BRACED", "~");
+        assert_eq!(expand("${CIEL_TEST_BRACED}/z", Path::new("/h")), "/h/z");
+    }
+
+    #[test]
+    fn unset_vars_stay_literal() {
+        env::remove_var("CIEL_NO_SUCH_VAR");
+        assert_eq!(
+            expand("$CIEL_NO_SUCH_VAR/x", Path::new("/h")),
+            "$CIEL_NO_SUCH_VAR/x"
+        );
+        assert_eq!(
+            expand("${CIEL_NO_SUCH_VAR}", Path::new("/h")),
+            "${CIEL_NO_SUCH_VAR}"
+        );
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn tilde_user_resolves_via_passwd() {
+        // `~root` is POSIX-universal; unknown users stay literal like Python.
+        let home = Path::new("/home/tester");
+        assert_eq!(expand("~root/x", home), "/root/x");
+        assert_eq!(
+            expand("~ciel_no_such_user_9x/x", home),
+            "~ciel_no_such_user_9x/x"
+        );
+        assert_eq!(
+            expand("~ciel_no_such_user_9x", home),
+            "~ciel_no_such_user_9x"
+        );
+    }
+
+    #[test]
+    fn non_ascii_path_survives_round_trip() {
+        // Byte-as-char widening used to mangle é → Ã©; the expander must
+        // preserve multi-byte UTF-8 untouched.
+        let home = Path::new("/home/tester");
+        assert_eq!(expand("/data/é/üñíçødé/f", home), "/data/é/üñíçødé/f");
+        assert_eq!(normalize_path("/data/é/../x", home), "/data/x");
+    }
+
+    #[test]
+    fn home_prefix_collapses_to_tilde() {
+        let home = Path::new("/home/tester");
+        assert_eq!(normalize_path("/home/tester/x", home), "~/x");
+        assert_eq!(normalize_path("/home/tester", home), "~");
+    }
 }
 
 /// Append one JSON line to `~/.ciel/activity.log`; errors are swallowed the

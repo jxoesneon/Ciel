@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "version": "1.0.0",
-  "last_verified": "2026-09-24T08:02:41.758777+00:00",
+  "last_verified": "2026-09-24T08:18:09.609805+00:00",
   "files": {
     ".PSScriptAnalyzerSettings.psd1": {
       "sha256": "aea7918ac3841e011c6c2eb0daa8c0d2b405d35e7e7779759d1c6068d61cc29f",
@@ -644,8 +644,8 @@
       "size": 3519
     },
     "ciel.skill/init/ciel-rs/src/paths.rs": {
-      "sha256": "f02e2706c179e99d3f9b6a94e6bb22b82772d9dc413d8fbb3e7be1bf547f1be9",
-      "size": 6748
+      "sha256": "bca48e3fa035da7343d343593bb273fe49d28e16c4a14fca79ef921a11c585e2",
+      "size": 10169
     },
     "ciel.skill/init/ciel-rs/src/perms.rs": {
       "sha256": "197294241cf83b0785654057a33c01f7536f8d2fcc6de9078eeb704b7cfebbce",
@@ -3136,8 +3136,8 @@
       "size": 20759
     },
     "tests/test_rust_parity.py": {
-      "sha256": "e2a3684384cb9e78b49089d505ae958992c6845eab1c491b56e98af17a7aba3f",
-      "size": 55030
+      "sha256": "83ea079e2a79f5247450d431cc0c3f75cc6748f95724790793c288c349252d88",
+      "size": 56670
     },
     "tests/test_scan_skills.py": {
       "sha256": "73580c464e6b995d516af1055498e133bbad2edf233f5d91e4ffaff2d01529ad",
