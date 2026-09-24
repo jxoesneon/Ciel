@@ -134,7 +134,7 @@ jobs:
         include:
           - { os: ubuntu-latest, plat: linux-x86_64 }
           - { os: ubuntu-24.04-arm, plat: linux-aarch64 }
-          - { os: macos-13, plat: darwin-x86_64 }
+          - { os: macos-15-intel, plat: darwin-x86_64 }
           - { os: macos-latest, plat: darwin-arm64 }
     steps:
       - name: Checkout
