@@ -27,6 +27,16 @@ All notable changes to Ciel are tracked here. Ciel appends an entry on every sel
 - **Antigravity `allow_privileged` parity**: `pre_tool_use.sh` honors the local override file like the devin gate.
 - **No-attribution enforcement**: install.sh sets `attribution: false` in the devin config and verify.sh re-checks it.
 - **Local lint script** (`scripts/lint.sh`) mirroring all CI gates.
+- **Store-permission self-heal** (`hooks/lib/store_perms.py`): session-start sweep asserting `0700`/`0600` across transcript, summary, log, conversation-database, `sessions.db`/`-wal`/`-shm`, and Ciel state stores — previously world-readable state-bearing files are tightened automatically and the repair is surfaced in session context.
+- **Secret-ingress scanner** (`hooks/lib/secret_scan.py` on `user_prompt_submit`): 12 deterministic, local-only pattern classes (GitHub/AWS/GCP/Slack/npm/crates tokens, JWTs, private-key blocks, password/secret assignments). Warns into session context and logs category names only — no matched content is persisted, and detection never blocks the prompt.
+- **Grant-state surfacing and provenance** (`risk_policy.py --grant-state`, `~/.ciel/grants.log`): the `allow_privileged` override is announced in session-start context when active, and first-seen/removed transitions are logged so an unexpected grant becomes visible instead of silent.
+- **Attribution gate** (`hooks/lib/attribution_scan.py` + `advisory` policy tier in `risk/policy.yaml`): scans publish-shaped commands, staged-diff additions, and unpushed messages for attribution trailers, identity tokens, and emoji. Compiled through the `policy.yaml → policy.json` path as a non-denying tier; `~/.ciel/risk/attribution_gate` selects shadow/deny mode, an allowlist file tunes false positives, and `CIEL_ATTRIBUTION_SKIP=1` is the documented bypass.
+- **Council-run enforcement** (`scripts/council_verify.py`, `adapters/devin/COUNCIL_INVOCATION.md`): a council verdict is verifiable only when each member ran as an isolated subagent — spawn receipts, per-member stage artifacts, and veto-consistency are checked, verdicts emit improvement signals, and inline fallbacks must declare `mode: "inline"` (flagged `unverified_member_isolation`, never silently verified).
+- **Requirement ledger + completion evidence** (`hooks/lib/requirements.py`, `COMPLETION_EVIDENCE.md`): session-scoped pending/done ledger on the checkpoints store, reconciled by the stop hook with a hard cap of 2 nudges per session; the evidence matrix binds each task class to its required fresh artifact (code → suite run, policy change → fired event, release → coverage + council sign-off).
+- **Session watchdog** (`hooks/lib/session_watchdog.py` + `ciel-watchdog.{service,timer}`): detects stalled sessions (pending ledger items past the idle threshold) and transcripts ending on API-shaped error signatures, surfaces resume hints at SessionStart, and supports bounded opt-in headless resume (`devin -c -p`, gated on `CIEL_WATCHDOG_AUTORESUME=1`, ≤1/session/day, ≤3/day, ≥30min backoff). Timer units are installed but deliberately not enabled.
+- **Transcript sanitizer** (`scripts/transcript_sanitize.py`): advisory scan plus in-place `[REDACTED:<category>]` redaction across transcript/summary stores, plain and `.gz` logs (decompress–redact–recompress), conversation databases (length-preserving byte substitution to protect length-delimited wire fields), and `sessions.db` via SQL-level updates (byte-level `instr()` needles so BLOB values are found, surrogateescape round-trip, `wal_checkpoint(TRUNCATE)` afterward). When the live database is write-locked it flags `sessions_db_sanitize_pending`, which the watchdog consumes at the next SessionStart or timer fire.
+- **Scheduled conversation audit** (`CONVERSATION_AUDIT.md`): monthly leg under `scheduled_sweep` — repeats the transcript/prompt audit method to catch recurring workflow drift, emitting findings into the improvement signal store.
+- **Release-gate diff coverage** (`tests/test_release_gate_coverage.py`): every line added or changed since v1.0.0 is exercised — CLI mains, subprocess entry points, error branches, and binary/SQLite edge paths — measured at 100% diff coverage via `coverage` + `diff-cover` against the last tag.
 
 ### Changed
 
@@ -36,6 +46,8 @@ All notable changes to Ciel are tracked here. Ciel appends an entry on every sel
 ### Fixed
 
 - Ruff auto-fixable findings across `scripts/` and `ciel.skill/init/scripts/` cleared.
+- `system1_review.py` no longer crashes on shadow events whose `answers` payload is a non-dict value.
+- `transcript_sanitize.py` sessions.db prefilter now reaches BLOB values (SQL `LIKE` never matches a blob operand and stops at embedded NULs — `CAST` plus byte-level `instr()` needles cover both cases).
 
 ### Removed
 

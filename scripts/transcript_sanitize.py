@@ -225,9 +225,37 @@ _TERMS = {"strict": PREFILTER_STRICT, "broad": PREFILTER_BROAD,
           "big": PREFILTER_STRICT + PREFILTER_ASSIGNMENT}
 
 
+def _literal_needle(term: str) -> str:
+    """Longest leading literal in a LIKE pattern — used as a byte-level
+    instr() needle so BLOB values (invisible to LIKE, which also stops at
+    embedded NULs) are still found."""
+    out = []
+    i, n = 0, len(term)
+    while i < n:
+        ch = term[i]
+        if ch == "\\" and i + 1 < n:
+            out.append(term[i + 1])
+            i += 2
+            continue
+        if ch in "%_":
+            if out:
+                break
+            i += 1
+            continue
+        out.append(ch)
+        i += 1
+    return "".join(out)
+
+
 def _prefilter_where(col: str, tier: str = "broad") -> str:
     terms = _TERMS[tier]
-    return " OR ".join(f"{col} LIKE '{p}' ESCAPE '\\'" for p in terms)
+    likes = [f"CAST({col} AS TEXT) LIKE '{p}' ESCAPE '\\'" for p in terms]
+    needles = {_literal_needle(p) for p in terms}
+    instrs = [
+        f"instr({col}, X'{n.encode().hex()}') > 0"
+        for n in sorted(needles) if n
+    ]
+    return " OR ".join(likes + instrs)
 
 
 def redact_sessions_db(dry: bool = False, retries: int = 6, wait: float = 5.0) -> dict:
@@ -278,8 +306,6 @@ def redact_sessions_db(dry: bool = False, retries: int = 6, wait: float = 5.0) -
             n = 0
             pending_updates = []
             for keyv, val in rows:
-                if val is None:
-                    continue
                 is_bytes = isinstance(val, bytes)
                 work = (val.decode("utf-8", errors="surrogateescape")
                         if is_bytes else val)

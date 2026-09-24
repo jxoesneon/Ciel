@@ -62,3 +62,9 @@ obsidian-brain/
 
 # Local archive of superseded skills (kept as .disabled/ in-tree instead)
 archive/
+
+# Coverage / test artifacts
+.venv/
+.coverage
+coverage.xml
+htmlcov/

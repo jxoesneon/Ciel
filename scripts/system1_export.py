@@ -48,8 +48,6 @@ def _pairs(rec: dict) -> list[dict]:
         rejected = [o for o in probs if o != truth] or [
             o for o in ("safe", "dangerous", "routine", "escalate")
             if o != truth]
-        if not rejected:
-            continue
         out.append({
             "surface": surface,
             "question_key": qkey,

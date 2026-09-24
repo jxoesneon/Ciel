@@ -52,6 +52,8 @@ def main() -> int:
         if not args.all and band == "pass":
             continue
         answers = ((rec.get("system1") or {}).get("answers") or {})
+        if not isinstance(answers, dict):
+            answers = {}
         detail = {
             k: {"choice": v.get("choice"), "confidence": v.get("confidence")}
             for k, v in answers.items() if isinstance(v, dict)
