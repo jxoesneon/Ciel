@@ -353,9 +353,9 @@ def redact_sessions_db(dry: bool = False, retries: int = 6, wait: float = 5.0) -
 def tighten_store_perms() -> int:
     n = 0
     for base, _ in STORES:
-        if not base.is_dir():
-            continue
         try:
+            if not base.is_dir():
+                continue
             if base.stat().st_mode & 0o077:
                 os.chmod(base, 0o700)
                 n += 1

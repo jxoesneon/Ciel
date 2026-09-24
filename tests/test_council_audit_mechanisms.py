@@ -440,11 +440,13 @@ class TestDeferredSanitize(unittest.TestCase):
             os.environ["CIEL_SESSIONS_DB"] = str(db_path)
             state = {"sessions_db_sanitize_pending": True}
             real_ciel = session_watchdog.CIEL
-            real_scripts = Path(session_watchdog.CIEL) / "scripts"
+            src = Path(session_watchdog.CIEL) / "scripts" / "transcript_sanitize.py"
+            if not src.is_file():
+                src = ROOT / "scripts" / "transcript_sanitize.py"
             session_watchdog.CIEL = Path(tmp)
             (Path(tmp) / "scripts").mkdir()
             import shutil
-            shutil.copy(real_scripts / "transcript_sanitize.py",
+            shutil.copy(src,
                         Path(tmp) / "scripts" / "transcript_sanitize.py")
             try:
                 msg = session_watchdog._sessions_db_sanitize(state)

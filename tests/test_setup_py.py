@@ -1,6 +1,7 @@
 """Smoke test for ciel.skill/init/scripts/setup.py in a sandboxed CIEL_HOME."""
 
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -15,7 +16,16 @@ class TestSetupPy(unittest.TestCase):
     def test_bootstrap_installs_hooks_and_policy(self):
         with tempfile.TemporaryDirectory() as tmp:
             home = Path(tmp) / "ciel-home"
-            env = dict(os.environ, CIEL_HOME=str(home))
+            # Stub PATH without cargo/mempalace-rs: a host with cargo but no
+            # mempalace-rs makes setup.py run a real `cargo install` that
+            # outlives the timeout.
+            stub_bin = Path(tmp) / "stub-bin"
+            stub_bin.mkdir()
+            for tool in ("bash", "git", "sqlite3"):
+                tool_path = shutil.which(tool)
+                if tool_path:
+                    os.symlink(tool_path, stub_bin / tool)
+            env = dict(os.environ, CIEL_HOME=str(home), PATH=str(stub_bin))
             proc = subprocess.run(
                 [sys.executable, str(SETUP)],
                 capture_output=True, text=True, env=env, timeout=120, check=False,
