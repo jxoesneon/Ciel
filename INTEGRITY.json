@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "version": "1.0.0",
-  "last_verified": "2026-09-24T05:56:04.675523+00:00",
+  "last_verified": "2026-09-24T06:06:57.048704+00:00",
   "files": {
     ".PSScriptAnalyzerSettings.psd1": {
       "sha256": "aea7918ac3841e011c6c2eb0daa8c0d2b405d35e7e7779759d1c6068d61cc29f",
@@ -112,12 +112,12 @@
       "size": 2008
     },
     "bin/ciel": {
-      "sha256": "8ae00440daf09a2adbecdbdcff58c4aed3c0bb2a08fd55fedcf2f015541e8eab",
-      "size": 5096672
+      "sha256": "810835e6390eeb20f327109eea4b28d5a55cc2ea4f0bd3ab68b9429a97547c77",
+      "size": 5186208
     },
     "ciel.skill/CHANGELOG.md": {
-      "sha256": "03e2bdbdc33d9a2e1388d9f357a23fce816f9638794cabf70aecf3c36f23a7cf",
-      "size": 18672
+      "sha256": "f410461100f5782d05f085cdeafc5b3e1ad0b1204d333fca6e303011695e1996",
+      "size": 19797
     },
     "ciel.skill/MANIFEST.md": {
       "sha256": "d31840054fca7bf422466887033d1e38e07b694cfc0b995bd07c35e4624bc4d2",
@@ -616,24 +616,32 @@
       "size": 8
     },
     "ciel.skill/init/ciel-rs/Cargo.lock": {
-      "sha256": "5aa3b3b9801881ff63f2de3a9fb8ee0a61eebf596373ae98ab400b4e6923859e",
-      "size": 12694
+      "sha256": "9a7723128edebaf0043fce36141a0896ca6410b9bc55f976d03741fb336e100e",
+      "size": 14768
     },
     "ciel.skill/init/ciel-rs/Cargo.toml": {
-      "sha256": "40a478a441b71b4bb2534ebef94840bcfcc60972e80a12feb756a87a7b54f6e9",
-      "size": 796
+      "sha256": "9e7856df6eff7ed428e689702b35238e867f7e6dd8b4ae9493114ba37e6caaa1",
+      "size": 831
     },
     "ciel.skill/init/ciel-rs/src/attribution.rs": {
       "sha256": "969f7bdf5f51f319a1ffa73e6498d5c3a2ed9a465a28eeef5123127aa9e21b83",
       "size": 5175
+    },
+    "ciel.skill/init/ciel-rs/src/compilepolicy.rs": {
+      "sha256": "e9b4fa3f1b26aa6c488a8138882a6cd002400ebd650bfd910b9fc2ad00ae2e3e",
+      "size": 5521
+    },
+    "ciel.skill/init/ciel-rs/src/councilverify.rs": {
+      "sha256": "a0d934871567cdda134443f462ac644d134977aa5c58d1bb7e82f5d4fd080740",
+      "size": 7552
     },
     "ciel.skill/init/ciel-rs/src/ledger.rs": {
       "sha256": "d2ee1bf5ad393f5a368f5cff0b0ff69ccea2392e46f858fc18b4bbd5efb8583a",
       "size": 5910
     },
     "ciel.skill/init/ciel-rs/src/main.rs": {
-      "sha256": "284edea5825d75dc2375147473c007d3c457a78933e49a0b352d9f5fdb70f247",
-      "size": 3508
+      "sha256": "aa1f2683f6891e8c4baaee14f9b45ad99c1fda0cfdb7d6b12aa1d930fd098559",
+      "size": 3646
     },
     "ciel.skill/init/ciel-rs/src/paths.rs": {
       "sha256": "ae18d303a3e6be5311525bb2630d6f93612cd512fef4447d16a1f781fa133ea6",
@@ -659,6 +667,10 @@
       "sha256": "3a0f0f8ce41753bff899ac8a962d55b5fc57034034aa07d60e28fcc96da7a198",
       "size": 5551
     },
+    "ciel.skill/init/ciel-rs/src/sanitize.rs": {
+      "sha256": "815ad51ca3d5c0a41df6e0471dbb389ec966d9a5a21a558b0314aff4087d8721",
+      "size": 24826
+    },
     "ciel.skill/init/ciel-rs/src/secretscan.rs": {
       "sha256": "14a3de1228b5c98844da5da414ac1c0be65e119b0f8df2e6197122b3aacd8aff",
       "size": 2344
@@ -668,8 +680,8 @@
       "size": 5387
     },
     "ciel.skill/init/ciel-rs/src/shadow.rs": {
-      "sha256": "7788f5169c131e4b929a32d23ddc75811c0ad6c228b491665e8a9db00a2c865d",
-      "size": 6730
+      "sha256": "807c402ab149a7b1c6611f5a1c4ff8fc7000e5f1dc3880bd9afe57e8385c7b2f",
+      "size": 1597
     },
     "ciel.skill/init/ciel-rs/src/watchdog.rs": {
       "sha256": "068f41ea35aae8b1c12184714e614176006a399b1dc8509aa27bf22295be96d3",
@@ -3120,8 +3132,8 @@
       "size": 20759
     },
     "tests/test_rust_parity.py": {
-      "sha256": "8711303e484094d9daf527593827e305c83c3fd63912c2c5d87fa7fbf2ca290f",
-      "size": 31264
+      "sha256": "2f6dfb616466eb5bbaa1d790403b7f80d7182d76a8ca2685786be40e5c26c611",
+      "size": 39542
     },
     "tests/test_scan_skills.py": {
       "sha256": "73580c464e6b995d516af1055498e133bbad2edf233f5d91e4ffaff2d01529ad",

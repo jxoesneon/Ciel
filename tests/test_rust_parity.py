@@ -734,6 +734,204 @@ class TestOperatorParity(unittest.TestCase):
         self.assertEqual(1, len(sigs))
 
 
+SYSTEM1_PY = LIB / "system1.py"
+
+
+@unittest.skipUnless(
+    Path(CIEL_BIN).exists(), f"ciel binary not built at {CIEL_BIN}"
+)
+class TestSystem1Parity(unittest.TestCase):
+    """Differential parity for `ciel system1 --ask|--decide`."""
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp(prefix="ciel-s1-"))
+        self.ciel = self.tmp / ".ciel"
+        (self.ciel / "system1" / "inflight").mkdir(parents=True)
+        self.env = dict(os.environ)
+        self.env["HOME"] = str(self.tmp)
+        self.env["CIEL_HOME"] = str(self.ciel)
+        self.env.pop("CIEL_BIN", None)
+        self.env.pop("CIEL_SYSTEM1_MARKER", None)
+        self.env.pop("CIEL_SYSTEM1_DISABLED", None)
+        self.payload = json.dumps({
+            "surface": "pre_tool_risk",
+            "state": {"tool": "exec", "command": "ls", "path": ""},
+            "questions": {"risk": {"type": "choice",
+                                   "instructions": "dangerous?",
+                                   "criteria": {"safe": "s", "dangerous": "d"}}},
+            "meta": {"ts": "2026-01-01T00:00:00Z", "runtime": "devin"},
+        })
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp, ignore_errors=True)
+
+    def _py(self, *args: str, stdin: str = ""):
+        proc = subprocess.run(
+            ["python3", str(SYSTEM1_PY), *args],
+            input=stdin, capture_output=True, text=True,
+            env=self.env, timeout=120,
+        )
+        return proc.returncode, proc.stdout
+
+    def _events(self):
+        log = self.ciel / "system1" / "events.jsonl"
+        if not log.exists():
+            return []
+        return [json.loads(l) for l in log.read_text().splitlines() if l.strip()]
+
+    def _event_tail(self):
+        (self.ciel / "system1" / "events.jsonl").unlink(missing_ok=True)
+
+    def test_decide_offline(self):
+        env = dict(self.env, CIEL_SYSTEM1_URL="http://127.0.0.1:1")
+        for runner in ("py", "rs"):
+            self._event_tail()
+            if runner == "py":
+                proc = subprocess.run(
+                    ["python3", str(SYSTEM1_PY), "--decide"],
+                    input=self.payload, capture_output=True, text=True,
+                    env=env, timeout=60)
+                out = proc.stdout
+            else:
+                _, out = run_rust("system1", "--decide",
+                                  stdin=self.payload, env=env)
+            self.assertEqual("null\n", out, runner)
+            ev = self._events()
+            self.assertEqual(1, len(ev), runner)
+            rec = ev[0]
+            self.assertIsNone(rec["system1"])
+            self.assertEqual("pass", rec["flag"])
+            self.assertFalse(rec["cache_hit"])
+            self.assertIn("latency_ms", rec)
+            self.assertEqual("pre_tool_risk", rec["surface"])
+
+    def test_decide_stub_verdict(self):
+        import http.server
+        import threading
+        body = json.dumps({
+            "answers": {"risk": {"choice": "dangerous",
+                                 "confidence": 0.91,
+                                 "probabilities": {"safe": 0.09,
+                                                   "dangerous": 0.91}}},
+            "routing": {"model": "stub-1"},
+        }).encode()
+
+        class H(http.server.BaseHTTPRequestHandler):
+            def do_POST(self):
+                n = int(self.headers.get("content-length", 0))
+                self.rfile.read(n)
+                self.send_response(200)
+                self.send_header("content-type", "application/json")
+                self.send_header("content-length", str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+
+            def log_message(self, *a):
+                pass
+
+        srv = http.server.HTTPServer(("127.0.0.1", 0), H)
+        port = srv.server_address[1]
+        threading.Thread(target=srv.serve_forever, daemon=True).start()
+        try:
+            env = dict(self.env,
+                       CIEL_SYSTEM1_URL=f"http://127.0.0.1:{port}")
+            outs = {}
+            for runner in ("py", "rs"):
+                self._event_tail()
+                cache = self.ciel / "system1" / "cache"
+                if cache.exists():
+                    shutil.rmtree(cache)
+                if runner == "py":
+                    proc = subprocess.run(
+                        ["python3", str(SYSTEM1_PY), "--decide"],
+                        input=self.payload, capture_output=True,
+                        text=True, env=env, timeout=60)
+                    outs[runner] = proc.stdout
+                else:
+                    _, outs[runner] = run_rust(
+                        "system1", "--decide", stdin=self.payload, env=env)
+            # identical verdict text (python json.dumps default separators)
+            self.assertEqual(outs["py"], outs["rs"])
+            self.assertIn('"dangerous"', outs["rs"])
+            # rust event record (fresh log, engine-independent shape)
+            ev = self._events()
+            self.assertEqual(1, len(ev))
+            rec = ev[0]
+            self.assertEqual("flag", rec["flag"])
+            self.assertEqual("stub-1", rec["system1"]["model"])
+            self.assertFalse(rec["cache_hit"])
+            self.assertIn("latency_ms", rec)
+            # cache file exists — the digest path proves canonical-serial
+            # parity when the python side resolves it below
+            caches = list((self.ciel / "system1" / "cache").glob("*.json"))
+            self.assertEqual(1, len(caches))
+            self.cache_digest = caches[0].stem
+        finally:
+            srv.shutdown()
+
+    def test_decide_cache_digest_parity(self):
+        # compute the python-side cache path for this payload, write a
+        # canned result there, then rust --decide must report cache_hit
+        sys.path.insert(0, str(LIB))
+        home_prev = os.environ.get("HOME")
+        ciel_prev = os.environ.get("CIEL_HOME")
+        os.environ["HOME"] = str(self.tmp)
+        os.environ["CIEL_HOME"] = str(self.ciel)
+        try:
+            import importlib
+            import system1 as s1
+            importlib.reload(s1)
+            payload = json.loads(self.payload)
+            cache_path = s1._cache_path(payload["state"],
+                                        payload["questions"])
+        finally:
+            if home_prev is None:
+                os.environ.pop("HOME", None)
+            else:
+                os.environ["HOME"] = home_prev
+            if ciel_prev is None:
+                os.environ.pop("CIEL_HOME", None)
+            else:
+                os.environ["CIEL_HOME"] = ciel_prev
+        cache_path.parent.mkdir(parents=True, exist_ok=True)
+        cache_path.write_text(json.dumps(
+            {"answers": {"risk": {"choice": "safe", "confidence": 0.99}},
+             "model": "cached"}))
+        env = dict(self.env, CIEL_SYSTEM1_URL="http://127.0.0.1:1")
+        _, out = run_rust("system1", "--decide", stdin=self.payload, env=env)
+        # hit the python-computed digest → canonical dumps parity proven
+        self.assertIn('"cached"', out)
+        ev = self._events()
+        self.assertTrue(ev[0]["cache_hit"])
+        self.assertNotIn("latency_ms", ev[0])
+
+    def test_ask_marker_cleanup(self):
+        marker = self.ciel / "system1" / "inflight" / "m.123"
+        marker.touch()
+        env = dict(self.env,
+                   CIEL_SYSTEM1_MARKER=str(marker),
+                   CIEL_SYSTEM1_URL="http://127.0.0.1:1")
+        rc, _ = run_rust("system1", "--ask", stdin=self.payload, env=env)
+        self.assertEqual(0, rc)
+        self.assertFalse(marker.exists())
+        self.assertEqual(1, len(self._events()))
+
+    def test_ask_disabled_records_null(self):
+        # --ask itself never checks the kill-switch (it lives inside ask) —
+        # a disabled run still appends the event with system1: null
+        env = dict(self.env, CIEL_SYSTEM1_DISABLED="1")
+        rc, _ = run_rust("system1", "--ask", stdin=self.payload, env=env)
+        self.assertEqual(0, rc)
+        ev = self._events()
+        self.assertEqual(1, len(ev))
+        self.assertIsNone(ev[0]["system1"])
+
+    def test_ask_empty_payload(self):
+        rc, _ = run_rust("system1", "--ask", stdin="{}", env=self.env)
+        self.assertEqual(0, rc)
+        self.assertEqual([], self._events())
+
+
 @unittest.skipUnless(
     Path(CIEL_BIN).exists(), f"ciel binary not built at {CIEL_BIN}"
 )

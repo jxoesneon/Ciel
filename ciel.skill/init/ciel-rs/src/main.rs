@@ -12,6 +12,7 @@ mod sanitize;
 mod secretscan;
 mod sessionstart;
 mod shadow;
+mod system1;
 mod watchdog;
 
 use std::env;
@@ -43,6 +44,7 @@ OPERATOR:\n\
     sanitize [--scan|--redact] [--dry] [--deep]  transcript-store redaction\n\
     compile-policy [--check]   policy.yaml → policy.json (byte-exact twin)\n\
     council-verify <run|dir>   council run artifact verification\n\
+    system1 --ask|--decide     detached shadow-ask / interactive verdict\n\
 \n\
 Fallback contract: on any error or unknown command the binary exits 2 and\n\
 the shell wrappers fall back to the Python implementations.\n";
@@ -77,6 +79,7 @@ fn main() -> ExitCode {
         "sanitize" => sanitize::main_(&args[1..]),
         "compile-policy" => compilepolicy::main_(&args[1..]),
         "council-verify" => councilverify::main_(&args[1..]),
+        "system1" => system1::main_(&args[1..]),
         "risk-eval" => risk::eval_main(),
         "risk-check" => risk::check_main(),
         "grant-state" => risk::grant_state_main(),
