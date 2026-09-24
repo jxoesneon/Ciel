@@ -587,57 +587,6 @@ fn tighten_store_perms(home: &Path, ciel: &Path) -> usize {
 
 /// `json.dumps(obj, indent=1)` equivalent — Python's indent is a space
 /// count, serde_json's pretty formatter is fixed at two; emit it manually.
-fn py_dumps(v: &Value, indent: usize) -> String {
-    fn inner(v: &Value, indent: usize, level: usize, out: &mut String) {
-        let pad = " ".repeat(indent * (level + 1));
-        let close = " ".repeat(indent * level);
-        match v {
-            Value::Object(m) => {
-                if m.is_empty() {
-                    out.push_str("{}");
-                    return;
-                }
-                out.push('{');
-                for (i, (k, val)) in m.iter().enumerate() {
-                    if i > 0 {
-                        out.push(',');
-                    }
-                    out.push('\n');
-                    out.push_str(&pad);
-                    out.push_str(&serde_json::to_string(k).unwrap());
-                    out.push_str(": ");
-                    inner(val, indent, level + 1, out);
-                }
-                out.push('\n');
-                out.push_str(&close);
-                out.push('}');
-            }
-            Value::Array(a) => {
-                if a.is_empty() {
-                    out.push_str("[]");
-                    return;
-                }
-                out.push('[');
-                for (i, val) in a.iter().enumerate() {
-                    if i > 0 {
-                        out.push(',');
-                    }
-                    out.push('\n');
-                    out.push_str(&pad);
-                    inner(val, indent, level + 1, out);
-                }
-                out.push('\n');
-                out.push_str(&close);
-                out.push(']');
-            }
-            _ => out.push_str(&serde_json::to_string(v).unwrap()),
-        }
-    }
-    let mut s = String::new();
-    inner(v, indent, 0, &mut s);
-    s
-}
-
 /// Set `sessions_db_sanitize_pending` in the watchdog state — same file the
 /// Python `session_watchdog._save` writes.
 fn flag_pending(ciel: &Path) {
@@ -650,8 +599,13 @@ fn flag_pending(ciel: &Path) {
     if let Some(parent) = sp.parent() {
         let _ = std::fs::create_dir_all(parent);
     }
-    if let Ok(t) = serde_json::to_string(&state) {
-        let _ = std::fs::write(&sp, t);
+    // Mirror session_watchdog._save: indent=1, ensure_ascii=False, chmod 0600.
+    if std::fs::write(&sp, crate::jsonfmt::dumps_indent(&state, 1)).is_ok() {
+        #[cfg(unix)]
+        {
+            use std::os::unix::fs::PermissionsExt;
+            let _ = std::fs::set_permissions(&sp, std::fs::Permissions::from_mode(0o600));
+        }
     }
 }
 
@@ -679,7 +633,7 @@ pub fn main_(args: &[String]) -> i32 {
         let tightened = tighten_store_perms(&home, &ciel);
         println!(
             "{}",
-            py_dumps(
+            crate::jsonfmt::dumps_indent(
                 &json!({
                     "mode": if dry { "dry" } else { "redact" },
                     "files_changed": results.len(),
@@ -705,7 +659,7 @@ pub fn main_(args: &[String]) -> i32 {
     }
     println!(
         "{}",
-        py_dumps(
+        crate::jsonfmt::dumps_indent(
             &json!({
                 "mode": "scan",
                 "files_with_hits": hits.len(),
@@ -755,13 +709,4 @@ mod tests {
         raw.clear();
     }
 
-    #[test]
-    fn py_dumps_indent_matches_python_shape() {
-        let v = json!({"a": 1, "b": [1, 2], "c": {"x": true}});
-        let s = py_dumps(&v, 1);
-        assert_eq!(
-            "{\n \"a\": 1,\n \"b\": [\n  1,\n  2\n ],\n \"c\": {\n  \"x\": true\n }\n}",
-            s
-        );
-    }
 }

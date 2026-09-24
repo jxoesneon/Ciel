@@ -27,7 +27,8 @@ fn append_activity(entry: &Value) {
 }
 
 fn out(v: &Value) {
-    let _ = writeln!(std::io::stdout(), "{v}");
+    // Python: print(json.dumps({...})) — spaced separators, ensure_ascii.
+    let _ = writeln!(std::io::stdout(), "{}", crate::jsonfmt::dumps(v));
 }
 
 pub fn main_(runtime: &str) -> i32 {
@@ -50,7 +51,8 @@ pub fn main_(runtime: &str) -> i32 {
             (
                 call.get("name")
                     .and_then(|n| n.as_str())
-                    .or_else(|| payload.get("toolName").and_then(|n| n.as_str()))
+                    .filter(|s| !s.is_empty())
+                    .or_else(|| payload.get("toolName").and_then(|n| n.as_str()).filter(|s| !s.is_empty()))
                     .unwrap_or("unknown")
                     .to_string(),
                 get_str(&args, &["CommandLine", "command"]).to_string(),
@@ -67,7 +69,8 @@ pub fn main_(runtime: &str) -> i32 {
                 payload
                     .get("tool_name")
                     .and_then(|n| n.as_str())
-                    .or_else(|| payload.get("toolName").and_then(|n| n.as_str()))
+                    .filter(|s| !s.is_empty())
+                    .or_else(|| payload.get("toolName").and_then(|n| n.as_str()).filter(|s| !s.is_empty()))
                     .unwrap_or("unknown")
                     .to_string(),
                 get_str(&input, &["command", "CommandLine"]).to_string(),

@@ -53,7 +53,8 @@ pub fn main_() -> i32 {
     let mut buf = String::new();
     use std::io::Read;
     let _ = std::io::stdin().read_to_string(&mut buf);
-    println!("{}", scan(&buf));
+    // Python: print(json.dumps(scan(text))) — spaced, ensure_ascii.
+    println!("{}", crate::jsonfmt::dumps(&scan(&buf)));
     0
 }
 

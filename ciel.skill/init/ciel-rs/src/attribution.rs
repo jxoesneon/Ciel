@@ -6,6 +6,7 @@ use regex::Regex;
 use serde_json::{json, Value};
 use std::env;
 use std::process::Command;
+use wait_timeout::ChildExt;
 
 use crate::paths;
 
@@ -70,13 +71,36 @@ fn allowlist() -> Vec<Regex> {
 }
 
 fn git(args: &[&str]) -> String {
-    Command::new("git")
+    // Python: subprocess.run(..., timeout=10) — keep the bound so a hung git
+    // can never stall the hook.
+    let mut child = match Command::new("git")
         .args(args)
-        .output()
-        .ok()
-        .filter(|o| o.status.success())
-        .map(|o| String::from_utf8_lossy(&o.stdout).into_owned())
-        .unwrap_or_default()
+        .stdout(std::process::Stdio::piped())
+        .stderr(std::process::Stdio::null())
+        .spawn()
+    {
+        Ok(c) => c,
+        Err(_) => return String::new(),
+    };
+    let status = match child
+        .wait_timeout(std::time::Duration::from_secs(10))
+    {
+        Ok(Some(s)) => s,
+        _ => {
+            let _ = child.kill();
+            let _ = child.wait();
+            return String::new();
+        }
+    };
+    if !status.success() {
+        return String::new();
+    }
+    let mut out = String::new();
+    if let Some(mut so) = child.stdout.take() {
+        use std::io::Read;
+        let _ = so.read_to_string(&mut out);
+    }
+    out
 }
 
 /// Return {source: [lines]} to scan for the given publish command.
@@ -122,7 +146,10 @@ fn collect_text(command: &str) -> Vec<(String, Vec<String>)> {
 
 /// Mirror of `attribution_scan.scan` — {result, findings, mode}.
 pub fn scan(command: &str) -> Value {
-    if command.contains(BYPASS_ENV) || env::var_os(BYPASS_ENV).is_some() {
+    // Python: `os.environ.get(BYPASS_ENV)` — truthy, so an empty value does
+    // NOT bypass; set-but-empty must behave the same.
+    let bypass_env = env::var(BYPASS_ENV).map(|v| !v.is_empty()).unwrap_or(false);
+    if command.contains(BYPASS_ENV) || bypass_env {
         return json!({"result": "bypass", "findings": [], "mode": gate_mode()});
     }
     let allow = allowlist();
@@ -154,7 +181,8 @@ pub fn main_() -> i32 {
     let mut buf = String::new();
     use std::io::Read;
     let _ = std::io::stdin().read_to_string(&mut buf);
-    println!("{}", scan(&buf));
+    // Python: print(json.dumps(scan(command), ensure_ascii=False)).
+    println!("{}", crate::jsonfmt::dumps_raw(&scan(&buf)));
     0
 }
 

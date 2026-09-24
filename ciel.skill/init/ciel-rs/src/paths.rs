@@ -47,9 +47,8 @@ fn expand(raw: &str, home: &Path) -> String {
     } else if let Some(rest) = s.strip_prefix("~/") {
         s = format!("{}/{}", home.to_string_lossy(), rest);
     }
-    // expandvars: $NAME and ${NAME}; unknown vars expand to empty like POSIX
-    // shells (Python leaves them literal — the hook payloads never rely on
-    // unknown vars, and expanding matches the shell semantics commands use).
+    // expandvars: $NAME and ${NAME}; os.path.expandvars leaves unset vars
+    // literal ($FOO stays "$FOO") — mirror that exactly.
     let mut out = String::with_capacity(s.len());
     let bytes = s.as_bytes();
     let mut i = 0;
@@ -58,7 +57,11 @@ fn expand(raw: &str, home: &Path) -> String {
             if i + 1 < bytes.len() && bytes[i + 1] == b'{' {
                 if let Some(end) = s[i + 2..].find('}') {
                     let name = &s[i + 2..i + 2 + end];
-                    out.push_str(&env::var(name).unwrap_or_default());
+                    // os.path.expandvars leaves unset vars literal.
+                    match env::var(name) {
+                        Ok(v) => out.push_str(&v),
+                        Err(_) => out.push_str(&s[i..i + 2 + end + 1]),
+                    }
                     i += 2 + end + 1;
                     continue;
                 }
@@ -69,7 +72,10 @@ fn expand(raw: &str, home: &Path) -> String {
                     j += 1;
                 }
                 if j > start {
-                    out.push_str(&env::var(&s[start..j]).unwrap_or_default());
+                    match env::var(&s[start..j]) {
+                        Ok(v) => out.push_str(&v),
+                        Err(_) => out.push_str(&s[i..j]),
+                    }
                     i = j;
                     continue;
                 }
@@ -157,6 +163,7 @@ pub fn activity_log(entry: &serde_json::Value) {
         .open(&path)
     {
         use std::io::Write;
-        let _ = writeln!(f, "{}", serde_json::to_string(entry).unwrap_or_default());
+        // Python: json.dumps(entry, ensure_ascii=False) — spaced, raw UTF-8.
+        let _ = writeln!(f, "{}", crate::jsonfmt::dumps_raw(entry));
     }
 }

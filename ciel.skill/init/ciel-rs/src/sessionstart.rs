@@ -56,13 +56,18 @@ fn grant_note(ciel: &Path) -> &'static str {
 }
 
 fn watchdog_note(home: &Path, ciel: &Path) -> String {
-    // cmd_check prints the hints line; capture by calling the pieces —
-    // simplest: run the same function but it prints to stdout. Refactor:
-    // watchdog exposes check_text() returning Option<String> plus side
-    // effects (state save, hint write, signals, detached spawn).
-    match watchdog::check_text(home, ciel, None) {
-        Some(line) => format!(" Watchdog: {line}"),
-        None => String::new(),
+    // The .sh wrapped the Python check in `timeout 4` — bound the in-process
+    // call the same way: a pathological transcript sweep cannot stall the
+    // session start. If the worker overruns, it is abandoned (the process
+    // exits normally; the thread is reclaimed on exit).
+    let (tx, rx) = std::sync::mpsc::channel();
+    let (h, c) = (home.to_path_buf(), ciel.to_path_buf());
+    std::thread::spawn(move || {
+        let _ = tx.send(watchdog::check_text(&h, &c, None));
+    });
+    match rx.recv_timeout(std::time::Duration::from_secs(4)) {
+        Ok(Some(line)) => format!(" Watchdog: {line}"),
+        _ => String::new(),
     }
 }
 
@@ -93,10 +98,13 @@ pub fn main_(runtime: &str) -> i32 {
     if runtime == "antigravity" {
         let _ = rotate::rotate(&ciel, &time::OffsetDateTime::now_utc());
         let msg = AGY_CANARY.replace("{HOME}", &home.to_string_lossy());
+        // Python leg: print(json.dumps({...})) — spaced, ensure_ascii.
         let _ = writeln!(
             std::io::stdout(),
             "{}",
-            json!({"injectSteps": [{"ephemeralMessage": msg}]})
+            crate::jsonfmt::dumps(
+                &json!({"injectSteps": [{"ephemeralMessage": msg}]})
+            )
         );
         return 0;
     }

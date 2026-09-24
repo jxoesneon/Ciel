@@ -154,7 +154,8 @@ pub fn rotate(ciel: &Path, now: &OffsetDateTime) -> Option<Value> {
         .append(true)
         .open(&log)
     {
-        let _ = writeln!(f, "{marker}");
+        // Python writes json.dumps(marker) — default separators, ensure_ascii.
+        let _ = writeln!(f, "{}", crate::jsonfmt::dumps(&marker));
     }
     Some(marker)
 }

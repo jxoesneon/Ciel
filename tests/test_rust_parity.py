@@ -157,6 +157,68 @@ class TestRiskEvalParity(unittest.TestCase):
         self.assertEqual(py["decision"], rs["decision"])
         self.assertEqual(py["policy"], rs["policy"])
 
+    def _with_policy_file(self, path: Path, fn):
+        """Run fn with CIEL_POLICY set for both engines."""
+        prev = os.environ.get("CIEL_POLICY")
+        os.environ["CIEL_POLICY"] = str(path)
+        env = dict(self.env, CIEL_POLICY=str(path))
+        try:
+            return fn(env)
+        finally:
+            if prev is None:
+                os.environ.pop("CIEL_POLICY", None)
+            else:
+                os.environ["CIEL_POLICY"] = prev
+
+    def test_empty_tools_rule_applies_to_all(self):
+        """A rule with `"tools": []` is applies-to-all in Python
+        (`if not matchers: return True`) — the Rust twin must agree."""
+        pol = self.tmp / "policy.json"
+        pol.write_text(json.dumps({"rules": [{
+            "id": "empty_tools_probe", "tier": "hard", "match": "command",
+            "pattern": "zzzdangerprobe", "tools": [], "reason": "probe",
+        }]}))
+        def check(env):
+            py = risk_policy.evaluate("exec", "run zzzdangerprobe now", "")
+            rc, out = run_rust(
+                "risk-eval",
+                stdin=json.dumps({
+                    "tool": "exec", "command": "run zzzdangerprobe now",
+                    "path": ""}),
+                env=env,
+            )
+            return py, json.loads(out)
+        py, rs = self._with_policy_file(pol, check)
+        self.assertEqual("deny", py["decision"])
+        self.assertEqual(py, rs)
+
+    def test_yaml_policy_source_parity(self):
+        """CIEL_POLICY may point at .yaml — Python loads it via yaml; the
+        Rust twin must dispatch on suffix the same way."""
+        pol = self.tmp / "policy.yaml"
+        pol.write_text(
+            "rules:\n"
+            "  - id: yaml_probe\n"
+            "    tier: hard\n"
+            "    match: command\n"
+            "    pattern: yyyyamlprobe\n"
+            "    reason: probe\n"
+        )
+        def check(env):
+            py = risk_policy.evaluate("exec", "run yyyyamlprobe now", "")
+            rc, out = run_rust(
+                "risk-eval",
+                stdin=json.dumps({
+                    "tool": "exec", "command": "run yyyyamlprobe now",
+                    "path": ""}),
+                env=env,
+            )
+            return py, json.loads(out)
+        py, rs = self._with_policy_file(pol, check)
+        self.assertEqual("deny", py["decision"])
+        self.assertEqual(py["decision"], rs["decision"])
+        self.assertEqual(py["rule_id"], rs["rule_id"])
+
 
 @unittest.skipUnless(
     Path(CIEL_BIN).exists(), f"ciel binary not built at {CIEL_BIN}"

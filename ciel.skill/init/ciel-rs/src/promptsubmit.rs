@@ -37,14 +37,15 @@ pub fn main_() -> i32 {
     } else {
         CANARY.to_string()
     };
+    // Python: print(json.dumps(result)) — spaced separators, ensure_ascii.
     println!(
         "{}",
-        json!({
+        crate::jsonfmt::dumps(&json!({
             "hookSpecificOutput": {
                 "hookEventName": "UserPromptSubmit",
                 "additionalContext": context,
             }
-        })
+        }))
     );
     0
 }

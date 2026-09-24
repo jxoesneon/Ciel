@@ -65,10 +65,22 @@ pub fn load_policy() -> (Vec<Value>, &'static str) {
         let Ok(text) = std::fs::read_to_string(&candidate) else {
             continue;
         };
-        if let Ok(data) = serde_json::from_str::<Value>(&text) {
-            if let Some(rules) = data.get("rules").and_then(|r| r.as_array()) {
-                return (rules.clone(), "file");
-            }
+        // Python dispatches on the file suffix: .yaml/.yml → yaml, else json.
+        let is_yaml = matches!(
+            candidate.extension().and_then(|e| e.to_str()),
+            Some("yaml") | Some("yml")
+        );
+        let data = if is_yaml {
+            serde_yaml::from_str::<Value>(&text).ok()
+        } else {
+            serde_json::from_str::<Value>(&text).ok()
+        };
+        if let Some(rules) = data
+            .as_ref()
+            .and_then(|d| d.get("rules"))
+            .and_then(|r| r.as_array())
+        {
+            return (rules.clone(), "file");
         }
     }
     let rules = serde_json::from_str::<Vec<Value>>(FALLBACK_RULES).unwrap_or_default();
@@ -76,12 +88,17 @@ pub fn load_policy() -> (Vec<Value>, &'static str) {
 }
 
 fn rule_applies_to_tool(rule: &Value, tool: &str) -> bool {
-    let Some(matchers) = rule.get("tools").and_then(|t| t.as_array()) else {
+    // Python: `matchers = rule.get("tools"); if not matchers: return True` —
+    // absent, null, or empty tools means applies-to-all.
+    let matchers: Vec<&str> = rule
+        .get("tools")
+        .and_then(|t| t.as_array())
+        .map(|a| a.iter().filter_map(|m| m.as_str()).collect())
+        .unwrap_or_default();
+    if matchers.is_empty() {
         return true;
-    };
-    matchers
-        .iter()
-        .any(|m| m.as_str().is_some_and(|p| search(p, tool)))
+    }
+    matchers.iter().any(|p| search(p, tool))
 }
 
 /// Dual-engine match: the `regex` crate rejects lookaround/backreferences
@@ -147,13 +164,16 @@ pub fn evaluate_in(
         if !rule_applies_to_tool(rule, tool) {
             continue;
         }
+        // Python: subjects.get(rule.get("match","command"), "") — an unknown
+        // match value yields an empty subject and the rule is skipped.
         let subject = match rule
             .get("match")
             .and_then(|m| m.as_str())
             .unwrap_or("command")
         {
             "path" => normalized_path.as_str(),
-            _ => command,
+            "command" => command,
+            _ => "",
         };
         if subject.is_empty() {
             continue;
@@ -246,7 +266,8 @@ pub fn grant_state() -> Value {
             .open(&grants_log)
         {
             use std::io::Write;
-            let _ = writeln!(f, "{event}");
+            // Python: json.dumps({...}) — default separators, ensure_ascii.
+            let _ = writeln!(f, "{}", crate::jsonfmt::dumps(&event));
         }
         let _ = std::fs::write(&state_file, now);
     }
@@ -289,7 +310,8 @@ pub fn eval_main() -> i32 {
         .unwrap_or_default();
     let get = |k: &str| payload.get(k).and_then(|v| v.as_str()).unwrap_or("");
     let verdict = evaluate(get("tool"), get("command"), get("path"), None, None);
-    println!("{verdict}");
+    // Python prints json.dumps(verdict, ensure_ascii=False).
+    println!("{}", crate::jsonfmt::dumps_raw(&verdict));
     0
 }
 
@@ -306,7 +328,8 @@ pub fn check_main() -> i32 {
 
 /// `ciel grant-state`.
 pub fn grant_state_main() -> i32 {
-    println!("{}", grant_state());
+    // Python prints json.dumps(grant_state(), ensure_ascii=False).
+    println!("{}", crate::jsonfmt::dumps_raw(&grant_state()));
     0
 }
 

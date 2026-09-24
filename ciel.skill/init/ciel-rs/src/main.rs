@@ -1,6 +1,7 @@
 mod attribution;
 mod compilepolicy;
 mod councilverify;
+mod jsonfmt;
 mod ledger;
 mod paths;
 mod perms;

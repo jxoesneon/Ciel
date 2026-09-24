@@ -9,3 +9,8 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+
+  - package-ecosystem: "cargo"
+    directory: "/ciel.skill/init/ciel-rs"
+    schedule:
+      interval: "weekly"

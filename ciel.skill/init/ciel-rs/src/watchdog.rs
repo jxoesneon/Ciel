@@ -68,7 +68,8 @@ fn save(path: &Path, data: &Value) {
     if let Some(parent) = path.parent() {
         let _ = std::fs::create_dir_all(parent);
     }
-    if std::fs::write(path, serde_json::to_string_pretty(data).unwrap_or_default()).is_ok() {
+    // Python _save: json.dumps(data, ensure_ascii=False, indent=1).
+    if std::fs::write(path, crate::jsonfmt::dumps_indent(data, 1)).is_ok() {
         #[cfg(unix)]
         {
             use std::os::unix::fs::PermissionsExt;
@@ -87,12 +88,10 @@ fn emit_signal(ciel: &Path, name: &str, payload: &Value) {
             "[year][month][day]T[hour][minute][second]Z"
         ))
         .unwrap_or_else(|_| "00000000T000000Z".into());
+    // Python _emit_signal: json.dumps(payload, ensure_ascii=False, indent=1).
     let _ = std::fs::write(
         dir.join(format!("{name}-{stamp}.json")),
-        format!(
-            "{}\n",
-            serde_json::to_string_pretty(payload).unwrap_or_default()
-        ),
+        format!("{}\n", crate::jsonfmt::dumps_indent(payload, 1)),
     );
 }
 

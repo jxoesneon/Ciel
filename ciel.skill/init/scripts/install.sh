@@ -181,12 +181,27 @@ install_ciel_bin() {
     url="$base/ciel-${CIEL_VERSION}-${plat}"
   fi
   if [ -n "$url" ] && need curl; then
-    if curl --proto '=https' --tlsv1.2 -fsSL "$url" -o "$CIEL_HOME/bin/ciel"; then
-      chmod 755 "$CIEL_HOME/bin/ciel"
-      say "ciel-rs prebuilt installed ($plat)."
-      return 0
+    local tmpbin tmpsum
+    tmpbin="$(mktemp)"; tmpsum="$(mktemp)"
+    if curl --proto '=https' --tlsv1.2 -fsSL "$url" -o "$tmpbin" \
+      && curl --proto '=https' --tlsv1.2 -fsSL "$url.sha256" -o "$tmpsum"; then
+      local expect actual
+      expect="$(awk '{print $1}' "$tmpsum")"
+      if need sha256sum; then actual="$(sha256sum "$tmpbin" | awk '{print $1}')"
+      elif need shasum; then actual="$(shasum -a 256 "$tmpbin" | awk '{print $1}')"
+      else actual=""; fi
+      if [ -n "$actual" ] && [ "$expect" = "$actual" ]; then
+        mv "$tmpbin" "$CIEL_HOME/bin/ciel"
+        chmod 755 "$CIEL_HOME/bin/ciel"
+        rm -f "$tmpsum"
+        say "ciel-rs prebuilt installed ($plat, sha256 verified)."
+        return 0
+      fi
+      warn "Checksum mismatch or no sha256 tool — refusing unverified binary."
+    else
+      warn "Prebuilt download failed for $plat."
     fi
-    warn "Prebuilt download failed for $plat."
+    rm -f "$tmpbin" "$tmpsum"
   fi
   warn "No ciel-rs binary available; hooks will use the Python fallback path."
   return 1

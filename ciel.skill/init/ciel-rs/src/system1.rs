@@ -553,82 +553,8 @@ pub fn route_choice(task: &str, options: &Value, k: usize, timeout_s: f64) -> Op
 
 // -------------------------------------------------------- cache + event log
 
-/// `json.dumps(obj, sort_keys=True)` — canonical form for the cache digest:
-/// recursively sorted keys, ", "/": " separators, ensure_ascii escaping
-/// (including surrogate pairs above BMP). Must match Python byte-exactly so
-/// both engines share one cache namespace.
-fn py_escape(s: &str, ascii_only: bool) -> String {
-    let mut out = String::with_capacity(s.len() + 2);
-    for c in s.chars() {
-        match c {
-            '"' => out.push_str("\\\""),
-            '\\' => out.push_str("\\\\"),
-            '\n' => out.push_str("\\n"),
-            '\r' => out.push_str("\\r"),
-            '\t' => out.push_str("\\t"),
-            '\u{08}' => out.push_str("\\b"),
-            '\u{0c}' => out.push_str("\\f"),
-            c if (c as u32) < 0x20 => out.push_str(&format!("\\u{:04x}", c as u32)),
-            c if !ascii_only || (c as u32) < 0x7f => out.push(c),
-            c => {
-                let n = c as u32;
-                if n > 0xffff {
-                    let v = n - 0x10000;
-                    out.push_str(&format!(
-                        "\\u{:04x}\\u{:04x}",
-                        0xd800 + (v >> 10),
-                        0xdc00 + (v & 0x3ff)
-                    ));
-                } else {
-                    out.push_str(&format!("\\u{:04x}", n));
-                }
-            }
-        }
-    }
-    out
-}
-
-/// `json.dumps` with Python's default `(', ', ': ')` separators.
-/// `sorted` → sort_keys=True (cache digest); `ascii` → ensure_ascii=True.
-fn py_dumps(v: &Value, sorted: bool, ascii: bool) -> String {
-    match v {
-        Value::Null => "null".into(),
-        Value::Bool(b) => b.to_string(),
-        Value::Number(n) => n.to_string(),
-        Value::String(s) => format!("\"{}\"", py_escape(s, ascii)),
-        Value::Array(a) => {
-            let items: Vec<String> = a.iter().map(|x| py_dumps(x, sorted, ascii)).collect();
-            format!("[{}]", items.join(", "))
-        }
-        Value::Object(m) => {
-            let keys: Vec<&String> = if sorted {
-                let mut k: Vec<&String> = m.keys().collect();
-                k.sort();
-                k
-            } else {
-                m.keys().collect()
-            };
-            let items: Vec<String> = keys
-                .into_iter()
-                .map(|k| {
-                    format!(
-                        "\"{}\": {}",
-                        py_escape(k, ascii),
-                        py_dumps(&m[k], sorted, ascii)
-                    )
-                })
-                .collect();
-            format!("{{{}}}", items.join(", "))
-        }
-    }
-}
-
-fn py_dumps_sorted(v: &Value) -> String {
-    py_dumps(v, true, true)
-}
-
 fn cache_path(state: &Value, questions: &Value) -> PathBuf {
-    let canonical = py_dumps_sorted(&json!({"s": state, "q": questions}));
+    let canonical = crate::jsonfmt::dumps_sorted(&json!({"s": state, "q": questions}));
     let digest = format!("{:x}", Sha256::digest(canonical.as_bytes()));
     paths::ciel_home()
         .join("system1")
@@ -647,7 +573,7 @@ fn cache_write(state: &Value, questions: &Value, result: &Value) {
     if let Some(parent) = path.parent() {
         let _ = std::fs::create_dir_all(parent);
     }
-    let _ = std::fs::write(&path, py_dumps(result, false, false));
+    let _ = std::fs::write(&path, crate::jsonfmt::dumps_raw(result));
 }
 
 fn append_event(record: &Value) {
@@ -667,7 +593,7 @@ fn append_event(record: &Value) {
         .append(true)
         .open(&log)
     {
-        let _ = writeln!(f, "{}", py_dumps(record, false, false));
+        let _ = writeln!(f, "{}", crate::jsonfmt::dumps_raw(record));
     }
 }
 
@@ -892,7 +818,7 @@ fn decide_main() -> i32 {
     println!(
         "{}",
         result
-            .map(|r| py_dumps(&r, false, false))
+            .map(|r| crate::jsonfmt::dumps_raw(&r))
             .unwrap_or_else(|| "null".into())
     );
     0
@@ -923,11 +849,11 @@ mod tests {
         let v = json!({"b": 1, "a": {"y": [true, null], "x": "héllo"}});
         assert_eq!(
             r#"{"a": {"x": "h\u00e9llo", "y": [true, null]}, "b": 1}"#,
-            py_dumps_sorted(&v)
+            crate::jsonfmt::dumps_sorted(&v)
         );
         // default separators, insertion order, raw unicode
         let v2 = json!({"b": "héllo", "a": 1});
-        assert_eq!(r#"{"b": "héllo", "a": 1}"#, py_dumps(&v2, false, false));
+        assert_eq!(r#"{"b": "héllo", "a": 1}"#, crate::jsonfmt::dumps_raw(&v2));
     }
 
     #[test]

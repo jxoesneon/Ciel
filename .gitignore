@@ -4,6 +4,10 @@ dist/
 *.zip
 !ciel.skill/
 
+# Rust build output / convenience binaries (get via cargo build or release assets)
+bin/ciel
+ciel.skill/init/ciel-rs/target/
+
 # OS
 .DS_Store
 Thumbs.db

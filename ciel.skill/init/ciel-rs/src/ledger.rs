@@ -33,7 +33,8 @@ fn append(event: &mut Value) {
         .open(&path)
     {
         use std::io::Write;
-        let _ = writeln!(f, "{event}");
+        // Python: json.dumps(event, ensure_ascii=False).
+        let _ = writeln!(f, "{}", crate::jsonfmt::dumps_raw(event));
     }
 }
 
@@ -52,7 +53,12 @@ pub fn pending_items(session: Option<&str>) -> Vec<Value> {
         match e.get("op").and_then(|v| v.as_str()) {
             Some("add") => {
                 if let Some(id) = e.get("id").and_then(|v| v.as_str()) {
-                    added.push((id.to_string(), e.clone()));
+                    // Python dict semantics: added[id] = e — last write wins,
+                    // first insertion position kept.
+                    match added.iter_mut().find(|(k, _)| k == id) {
+                        Some(slot) => slot.1 = e.clone(),
+                        None => added.push((id.to_string(), e.clone())),
+                    }
                 }
             }
             Some("done") => {
@@ -139,20 +145,17 @@ pub fn main_(args: &[String]) -> i32 {
                 .map(|d| d.as_millis() % 100_000_000)
                 .unwrap_or(0);
             let rid = format!("req-{ms}");
-            let mut ev = json!({"op": "add", "id": rid, "text": positional});
-            if let Some(s) = &session {
-                ev["session"] = json!(s);
-            }
+            // Python writes "session": args.session — null when unsupplied.
+            let mut ev = json!({"op": "add", "id": rid, "text": positional,
+                                "session": session.as_deref()});
             append(&mut ev);
             println!("{rid}");
             0
         }
         "done" => match resolve_id(&positional, session.as_deref()) {
             Some(rid) => {
-                let mut ev = json!({"op": "done", "id": rid});
-                if let Some(s) = &session {
-                    ev["session"] = json!(s);
-                }
+                let mut ev = json!({"op": "done", "id": rid,
+                                    "session": session.as_deref()});
                 append(&mut ev);
                 println!("resolved {rid}");
                 0

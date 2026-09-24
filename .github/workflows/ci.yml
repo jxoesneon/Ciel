@@ -127,6 +127,31 @@ jobs:
       - name: Run Python unit tests
         run: python3 -m unittest discover tests
 
+  rust:
+    name: ciel-rs build + parity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+      - name: Install test deps
+        run: pip install --quiet pyyaml
+      - name: cargo fmt check
+        run: cargo fmt --manifest-path ciel.skill/init/ciel-rs/Cargo.toml --check
+      - name: cargo clippy
+        run: cargo clippy --manifest-path ciel.skill/init/ciel-rs/Cargo.toml -- -D warnings
+      - name: cargo test
+        run: cargo test --manifest-path ciel.skill/init/ciel-rs/Cargo.toml
+      - name: Rust↔Python parity suite
+        env:
+          CIEL_RS_BIN: ${{ github.workspace }}/ciel.skill/init/ciel-rs/target/debug/ciel
+          CIEL_BIN: ${{ github.workspace }}/ciel.skill/init/ciel-rs/target/debug/ciel
+        run: |
+          python3 -m unittest tests.test_rust_parity -v
+          python3 -m unittest tests.test_hooks_redteam.TestHookRedTeam.test_corpus_rust_fastpath -v
+
   skill-scan:
     name: skillfrisk static scan
     runs-on: ubuntu-latest
