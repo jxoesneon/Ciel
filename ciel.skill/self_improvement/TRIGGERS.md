@@ -17,7 +17,7 @@ When a meaningful interaction graduates to an improvement signal.
 | `novel_context` | project signature differs > threshold | any |
 | `user_correction` | user rejected a proposal | any |
 | `user_escalation` | user escalated because Ciel missed | any |
-| `scheduled_sweep` | periodic | weekly |
+| `scheduled_sweep` | periodic | weekly (monthly leg: `CONVERSATION_AUDIT.md`) |
 | `capability_drift` | runtime or MCP behaviour changed | detected via probe diff |
 | `model_fallback` | repeated fallback to weaker model | > 5 in a session |
 | `context_pressure` | frequent eviction events | > 10/session |

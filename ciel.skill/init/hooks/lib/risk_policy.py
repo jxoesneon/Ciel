@@ -281,7 +281,19 @@ def evaluate(
         )
         return verdict
 
-    first = hits[0]
+    non_advisory = [r for r in hits if r.get("tier") != "advisory"]
+    if not non_advisory:
+        advisory = hits[0]
+        verdict.update(
+            decision="allow",
+            rule_id=advisory.get("id"),
+            tier="advisory",
+            reason=advisory.get("reason", ""),
+            scan=advisory.get("scan"),
+        )
+        return verdict
+
+    first = non_advisory[0]
     if (ciel_home() / "allow_privileged").exists():
         verdict.update(
             decision="allow_overridden",
@@ -299,7 +311,72 @@ def evaluate(
     return verdict
 
 
+def grant_state() -> dict:
+    """Current privileged-override state plus provenance.
+
+    The override sentinel is ``~/.ciel/allow_privileged``; provenance lives in
+    ``~/.ciel/grants.log`` as first-seen/removed transitions. A small state
+    file (``~/.ciel/.grant_state``) remembers the last observed presence so
+    each invocation can log transitions rather than just snapshots.
+    """
+    import time
+
+    home = ciel_home()
+    sentinel = home / "allow_privileged"
+    state_file = home / ".grant_state"
+    grants_log = home / "grants.log"
+    active = sentinel.exists()
+    mtime = sentinel.stat().st_mtime if active else None
+
+    prev = None
+    try:
+        prev = state_file.read_text().strip()
+    except OSError:
+        pass
+    now = "1" if active else "0"
+    if prev != now:
+        from datetime import datetime, timezone
+
+        try:
+            with grants_log.open("a", encoding="utf-8") as fh:
+                fh.write(json.dumps({
+                    "ts": datetime.now(timezone.utc).isoformat(),
+                    "event": "grant_first_seen" if active else "grant_removed",
+                    "sentinel_mtime": mtime,
+                }) + "\n")
+        except OSError:
+            pass
+        try:
+            state_file.write_text(now)
+        except OSError:
+            pass
+
+    first_seen = None
+    if grants_log.exists():
+        try:
+            for line in grants_log.read_text(encoding="utf-8").splitlines():
+                try:
+                    e = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                if e.get("event") == "grant_first_seen":
+                    first_seen = e.get("ts")
+        except OSError:
+            pass
+
+    return {
+        "active": active,
+        "sentinel": str(sentinel),
+        "sentinel_mtime": mtime,
+        "age_seconds": (time.time() - mtime) if mtime else None,
+        "first_seen": first_seen,
+    }
+
+
 def main() -> int:
+    if "--grant-state" in sys.argv:
+        print(json.dumps(grant_state(), ensure_ascii=False))
+        return 0
     if "--shadow" in sys.argv:
         return _shadow_main()
     if "--check" in sys.argv:

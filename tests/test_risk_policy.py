@@ -306,10 +306,12 @@ class TestPolicySync(unittest.TestCase):
         data = json.loads(POLICY_JSON.read_text(encoding="utf-8"))
         ids = set()
         for rule in data["rules"]:
-            self.assertIn(rule["tier"], {"hard", "soft"}, rule["id"])
+            self.assertIn(rule["tier"], {"hard", "soft", "advisory"}, rule["id"])
             self.assertIn(rule["match"], {"command", "path"}, rule["id"])
             self.assertTrue(rule["pattern"], rule["id"])
             self.assertTrue(rule["reason"], rule["id"])
+            if rule["tier"] == "advisory":
+                self.assertTrue(rule.get("scan"), rule["id"])
             self.assertNotIn(rule["id"], ids, "duplicate rule id")
             ids.add(rule["id"])
 

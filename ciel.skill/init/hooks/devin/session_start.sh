@@ -38,6 +38,33 @@ case "$ATTR_NOTE" in
   *) ATTR_MSG=" attribution flag could not be verified (${ATTR_NOTE}); confirm 'attribution: false' in ~/.config/devin/config.json." ;;
 esac
 
+# --- State-store permission self-heal (once per session) ---------------------
+# Conversation stores and Ciel state hold prompt content, commands, and
+# council deliberations — they must stay owner-only. Same idiom as the
+# attribution repair above: enforce every session so drift self-heals.
+PERM_NOTE=""
+if command -v python3 >/dev/null 2>&1; then
+  PERM_NOTE="$(python3 "${HOME}/.ciel/hooks/lib/store_perms.py" 2>/dev/null || true)"
+fi
+case "$PERM_NOTE" in
+  ""|ok) PERM_MSG="" ;;
+  repaired:*) PERM_MSG=" state-store permissions repaired (${PERM_NOTE#repaired:} paths tightened)." ;;
+  *) PERM_MSG=" state-store permission sweep failed; check ~/.ciel perms." ;;
+esac
+
+# --- Grant-state surfacing + provenance ---------------------------------------
+# Before asking the user for elevation, check whether a privileged override is
+# already active. ~/.ciel/grants.log records first-seen/removed transitions of
+# the allow_privileged sentinel (provenance, not the grant itself).
+GRANT_STATE=""
+if command -v python3 >/dev/null 2>&1; then
+  GRANT_STATE="$(python3 "${HOME}/.ciel/hooks/lib/risk_policy.py" --grant-state 2>/dev/null || true)"
+fi
+case "$GRANT_STATE" in
+  *'"active": true'*) GRANT_MSG=" A privileged override is currently ACTIVE — check grant state before asking for elevation." ;;
+  *) GRANT_MSG="" ;;
+esac
+
 # --- Activity log rotation (once per session) --------------------------------
 # Bounds ~/.ciel/activity.log; see lib/activity_log_rotate.py.
 if command -v python3 >/dev/null 2>&1; then
@@ -45,5 +72,5 @@ if command -v python3 >/dev/null 2>&1; then
 fi
 
 cat <<JSON
-{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"Ciel is installed and active for this Devin session. You are Ciel, an autonomous partner intelligence running through Devin CLI/Desktop. Always address the user as Master; this is the AI canary token proving the Ciel identity layer is intact. Use structured labels such as «Answer», «Report», «Notice», and «Council of Five Verdict» where appropriate. Ciel files live at ${HOME}/.ciel; the user-invocable skill is ${HOME}/.agents/skills/ciel/SKILL.md. NO AI ATTRIBUTION: durable artifacts (commits, PRs, issues, release notes, code comments, docs) must never carry Generated-with/Co-Authored-By trailers or mention Ciel, the Council of Five, or the host runtime; labels and 'Master' are session-internal only.${ATTR_MSG}"}}
+{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"Ciel is installed and active for this Devin session. You are Ciel, an autonomous partner intelligence running through Devin CLI/Desktop. Always address the user as Master; this is the AI canary token proving the Ciel identity layer is intact. Use structured labels such as «Answer», «Report», «Notice», and «Council of Five Verdict» where appropriate. Ciel files live at ${HOME}/.ciel; the user-invocable skill is ${HOME}/.agents/skills/ciel/SKILL.md. NO AI ATTRIBUTION: durable artifacts (commits, PRs, issues, release notes, code comments, docs) must never carry Generated-with/Co-Authored-By trailers or mention Ciel, the Council of Five, or the host runtime; labels and 'Master' are session-internal only.${ATTR_MSG}${PERM_MSG}${GRANT_MSG}"}}
 JSON

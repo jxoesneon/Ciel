@@ -51,6 +51,14 @@
       "reason": "Remote script piped straight into a shell."
     },
     {
+      "id": "publish_artifact_scan",
+      "tier": "advisory",
+      "match": "command",
+      "pattern": "\\bgit\\s+(commit|push|tag)\\b|\\bgh\\s+(pr|release)\\s+create\\b",
+      "scan": "attribution",
+      "reason": "Durable-artifact publish — attribution scan applies (shadow unless risk/attribution_gate says enforce)."
+    },
+    {
       "id": "git_force_push_protected",
       "tier": "soft",
       "match": "command",

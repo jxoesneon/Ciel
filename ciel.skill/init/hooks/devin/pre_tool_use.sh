@@ -61,6 +61,41 @@ risk_policy.system1_shadow_async({
     "rule_id": verdict.get("rule_id"),
 })
 
+# Advisory scans: policy rules with tier=advisory name a secondary scanner.
+if verdict.get("scan") == "attribution" and not denied:
+    try:
+        import attribution_scan
+        report = attribution_scan.scan(command)
+        if report["result"] == "flagged":
+            cats = sorted({f["category"] for f in report["findings"]})
+            entry["event"] = "PreToolUse+AttributionScan"
+            entry["attribution"] = {"categories": cats, "mode": report["mode"]}
+            try:
+                with log.open("a", encoding="utf-8") as fh:
+                    fh.write(json.dumps(entry, ensure_ascii=False) + "\n")
+            except OSError:
+                pass
+            if report["mode"] == "enforce":
+                print(json.dumps({
+                    "decision": "block",
+                    "reason": "Ciel attribution gate: durable artifact carries "
+                              f"forbidden patterns ({', '.join(cats)}). Remove "
+                              "them or set CIEL_ATTRIBUTION_SKIP=1 to bypass.",
+                }))
+            else:
+                print(json.dumps({
+                    "hookSpecificOutput": {
+                        "hookEventName": "PreToolUse",
+                        "additionalContext": (
+                            "Attribution scan flagged patterns "
+                            f"({', '.join(cats)}) in the staged artifact — "
+                            "verify no AI-attribution before publishing."
+                        ),
+                    }
+                }))
+    except Exception:
+        pass
+
 if denied:
     reason = verdict.get("reason") or "critical risk"
     print(json.dumps({

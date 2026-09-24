@@ -1,8 +1,10 @@
 # Ciel pre-flight risk policy — single source of truth for every runtime's
 # PreToolUse gate (hooks/*/pre_tool_use.sh via hooks/lib/risk_policy.py).
 #
-# tier: hard  -> always denied; cannot be overridden by ~/.ciel/allow_privileged
-# tier: soft  -> denied unless ~/.ciel/allow_privileged exists (then allowed, logged as overridden)
+# tier: hard     -> always denied; cannot be overridden by ~/.ciel/allow_privileged
+# tier: soft     -> denied unless ~/.ciel/allow_privileged exists (then allowed, logged as overridden)
+# tier: advisory -> never denied by evaluate(); verdict carries rule_id + scan
+#                   so the hook can run the named secondary scanner
 # match: command -> Python regex (re.IGNORECASE) against the shell command string
 # match: path    -> Python regex against the target file path, normalized so the
 #                   user's home directory collapses to "~" (e.g. /home/x/.ssh/id -> ~/.ssh/id)
@@ -51,6 +53,13 @@ rules:
     match: command
     pattern: '\b(curl|wget)\b[^\n|;]*\|\s*(sudo\s+)?(ba|z|da)?sh\b'
     reason: Remote script piped straight into a shell.
+
+  - id: publish_artifact_scan
+    tier: advisory
+    match: command
+    pattern: '\bgit\s+(commit|push|tag)\b|\bgh\s+(pr|release)\s+create\b'
+    scan: attribution
+    reason: Durable-artifact publish — attribution scan applies (shadow unless risk/attribution_gate says enforce).
 
   - id: git_force_push_protected
     tier: soft
