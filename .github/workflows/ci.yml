@@ -157,7 +157,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: astral-sh/setup-uv@v5
+      - uses: astral-sh/setup-uv@v7
       - name: Scan all skills
         run: python3 scripts/scan_skills.py --all --report scan-report.json
       - uses: actions/upload-artifact@v4
