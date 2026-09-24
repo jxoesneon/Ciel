@@ -512,6 +512,12 @@ class TestSystem1Review(unittest.TestCase):
             self.assertEqual(self.rv.main(), 0)
         self.assertIn("no events.jsonl", buf.getvalue())
 
+    def test_main_entrypoint(self):
+        exc, out = _runpy(SCRIPTS / "system1_review.py",
+                          ["--log", str(self.log)])
+        self.assertEqual(exc.code, 0)
+        self.assertIn('"t1"', out)
+
 
 class TestSystem1Embed(unittest.TestCase):
     def setUp(self):
@@ -3572,13 +3578,16 @@ class TestBatch6Residual(unittest.TestCase):
                 (wd.TRANSCRIPTS / f"e{i}.json").write_text(
                     '{"e":"rate_limit_error"}')
             self.assertEqual(len(wd._transcript_tail_errors()), 3)
-            # sanitize hint appended when a pending flag produces a message
+            # sanitize hint appended when a pending flag produces a message —
+            # detached spawn is mocked so no real child runs mid-suite
             wd.STATE.write_text(json.dumps(
                 {"sessions_db_sanitize_pending": True}))
             buf = io.StringIO()
-            with contextlib.redirect_stdout(buf):
-                wd.cmd_check("live")
-            self.assertIn("deferred", buf.getvalue())
+            with unittest.mock.patch.object(wd.subprocess, "Popen") as popen:
+                with contextlib.redirect_stdout(buf):
+                    wd.cmd_check("live")
+            self.assertIn("detached", buf.getvalue())
+            popen.assert_called_once()
             # HINT.unlink OSError tolerated on the no-hints path — clear the
             # error-tail transcripts first so the else-branch is reached
             for f in wd.TRANSCRIPTS.glob("*.json"):
@@ -3702,6 +3711,39 @@ class TestBatch6Residual(unittest.TestCase):
             self.assertEqual(exc.code, 1)
         finally:
             sys.modules.pop("sentence_transformers", None)
+
+
+class TestDetachedSanitize(unittest.TestCase):
+    """cmd_check must spawn the deferred sanitize detached — the synchronous
+    path cannot finish inside SessionStart's timeout-4 budget."""
+
+    def setUp(self):
+        self.wd = _src("session_watchdog")
+
+    def test_not_pending_returns_none(self):
+        self.assertIsNone(self.wd._detached_sanitize({}))
+        self.assertIsNone(self.wd._detached_sanitize(
+            {"sessions_db_sanitize_pending": False}))
+
+    def test_pending_spawns_detached_child(self):
+        state = {"sessions_db_sanitize_pending": True}
+        with unittest.mock.patch.object(
+                self.wd.subprocess, "Popen") as popen:
+            msg = self.wd._detached_sanitize(state)
+        self.assertIn("detached", msg)
+        popen.assert_called_once()
+        args, kwargs = popen.call_args
+        self.assertIn("--sanitize-pending", args[0])
+        self.assertTrue(kwargs.get("start_new_session"))
+        # flag stays set — the detached run clears it on completion
+        self.assertTrue(state["sessions_db_sanitize_pending"])
+
+    def test_spawn_failure_reports_deferred(self):
+        with unittest.mock.patch.object(
+                self.wd.subprocess, "Popen", side_effect=OSError("nope")):
+            msg = self.wd._detached_sanitize(
+                {"sessions_db_sanitize_pending": True})
+        self.assertIn("deferred", msg)
 
 
 if __name__ == "__main__":

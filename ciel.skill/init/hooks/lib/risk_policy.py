@@ -7,9 +7,11 @@ only the Python standard library (PyYAML is a dev-time dependency only).
 
 Policy resolution order:
   1. ``$CIEL_POLICY`` (explicit path to a policy.json/policy.yaml)
-  2. ancestors of this file containing ``risk/policy.json``
-     (covers both the source layout ``ciel.skill/init/hooks/lib`` and the
-      deployed layout ``~/.ciel/hooks/lib``)
+  2. ``risk/policy.json`` under a named-anchor ancestor of this file —
+     ``.ciel`` (deployed layout ``~/.ciel/hooks/lib``) or ``ciel.skill``
+     (source layout ``ciel.skill/init/hooks/lib``). Anchoring matters: an
+     unbounded ancestor walk lets a planted ``~/risk/policy.json`` silently
+     replace the deployed policy.
   3. ``$CIEL_HOME/risk/policy.json`` then ``~/.ciel/risk/policy.json``
 
 If no policy file loads, FALLBACK_RULES (a hard-tier catastrophic subset) is
@@ -76,6 +78,13 @@ def ciel_home() -> Path:
     return Path(override) if override else Path.home() / ".ciel"
 
 
+# Directory names that legitimately own a risk/policy.json: the deployed root
+# (~/.ciel) and the source skill dir (ciel.skill). Candidate generation stops
+# at the first matching ancestor so arbitrary ancestors (e.g. ~/risk) can
+# never supply the policy.
+_POLICY_DIR_ANCHORS = {".ciel", "ciel.skill"}
+
+
 def _candidate_policy_files() -> list[Path]:
     candidates = []
     explicit = os.environ.get("CIEL_POLICY")
@@ -83,7 +92,9 @@ def _candidate_policy_files() -> list[Path]:
         candidates.append(Path(explicit))
     here = Path(__file__).resolve()
     for ancestor in here.parents:
-        candidates.append(ancestor / "risk" / "policy.json")
+        if ancestor.name in _POLICY_DIR_ANCHORS:
+            candidates.append(ancestor / "risk" / "policy.json")
+            break
     candidates.append(ciel_home() / "risk" / "policy.json")
     return candidates
 

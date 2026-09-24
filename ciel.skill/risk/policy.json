@@ -106,10 +106,42 @@
       "reason": "Agent modification of its own safety hooks, risk policy, or host config."
     },
     {
+      "id": "grant_control_tamper",
+      "tier": "hard",
+      "match": "path",
+      "tools": [
+        "^(write|edit|notebook_edit|multi_?edit|write_to_file|replace_file_content|create|delete|move|rename)$",
+        "write|edit|delete|move|create"
+      ],
+      "pattern": "^~/\\.ciel/(allow_privileged|\\.grant_state|grants\\.log|risk/(attribution_gate|attribution_allowlist\\.txt))$",
+      "reason": "Agent modification of the privileged-override sentinel or grant provenance — human-held control surface."
+    },
+    {
+      "id": "grant_control_command",
+      "tier": "hard",
+      "match": "command",
+      "pattern": "(?:\\b(?:touch|cp|mv|install|rsync|scp|ln|tee|chmod|chown|truncate|rm|unlink|shred|rmdir)\\b[^\\n|;]*|\\bdd\\b[^\\n|;]*\\bof=|>{1,2}\\s*)(?:~|\\$HOME|\"\\$HOME\"|/home/[^\\s/]+|/root)/\\.ciel/(?:allow_privileged|\\.grant_state|grants\\.log|risk/(?:attribution_gate|attribution_allowlist\\.txt))(?:\\b|/)",
+      "reason": "Shell write/create/delete of the privileged-override sentinel or grant provenance."
+    },
+    {
+      "id": "destructive_sensitive_path",
+      "tier": "hard",
+      "match": "command",
+      "pattern": "\\b(?:rm|unlink|shred|rmdir)\\b[^\\n|;]*(?:(?:~|\\$HOME|\"\\$HOME\"|/home/[^\\s/]+|/root)/\\.(?:ssh|gnupg|aws|kube|docker|netrc|npmrc|pypirc)\\b|(?:~|\\$HOME|\"\\$HOME\"|/home/[^\\s/]+|/root)/\\.ciel(?:/(?:hooks|risk|allow_privileged|\\.grant_state|grants\\.log)\\b|/?(?:\\s|$))|(?:~|\\$HOME|\"\\$HOME\"|/home/[^\\s/]+|/root)/\\.config/devin\\b|(?<![\\w./~-])/(?:etc|usr|bin|sbin|boot|root)(?:/|\\b))",
+      "reason": "Destructive delete of a credential store, agent hook/policy dir, grant control, or protected system path."
+    },
+    {
+      "id": "find_delete_sensitive_path",
+      "tier": "hard",
+      "match": "command",
+      "pattern": "\\bfind\\b[^\\n|;]*(?:(?:~|\\$HOME|\"\\$HOME\"|/home/[^\\s/]+|/root)/\\.(?:ssh|gnupg|aws|kube|docker)\\b|(?:~|\\$HOME|\"\\$HOME\"|/home/[^\\s/]+|/root)/\\.ciel(?:/(?:hooks|risk)\\b|/?(?:\\s|$))|(?<![\\w./~-])/(?:etc|usr|bin|sbin|boot|root)(?:/|\\b))[^\\n|;]*-delete\\b",
+      "reason": "find -delete against a credential store, agent hook/policy dir, or protected system path."
+    },
+    {
       "id": "shell_sensitive_path_write",
       "tier": "soft",
       "match": "command",
-      "pattern": "(?:\\b(?:cp|mv|install|rsync|scp|ln|tee)\\b[^\\n|;]*|\\bdd\\b[^\\n|;]*\\bof=|>{1,2}\\s*)(?:(?:~|\\$HOME|\"\\$HOME\"|/home/[^\\s/]+|/root)?/\\.(?:ssh|gnupg|aws|kube|docker|netrc|npmrc|pypirc)\\b|(?:~|\\$HOME|\"\\$HOME\"|/home/[^\\s/]+|/root)/\\.ciel/(?:hooks|risk)\\b|(?:~|\\$HOME|\"\\$HOME\"|/home/[^\\s/]+|/root)/\\.config/devin\\b|(?<![\\w./~-])/(?:etc|usr|bin|sbin|boot|root)/)",
+      "pattern": "(?:\\b(?:cp|mv|install|rsync|scp|ln|tee|rm|unlink|shred|rmdir|truncate)\\b[^\\n|;]*|\\bdd\\b[^\\n|;]*\\bof=|>{1,2}\\s*)(?:(?:~|\\$HOME|\"\\$HOME\"|/home/[^\\s/]+|/root)?/\\.(?:ssh|gnupg|aws|kube|docker|netrc|npmrc|pypirc)\\b|(?:~|\\$HOME|\"\\$HOME\"|/home/[^\\s/]+|/root)/\\.ciel/(?:hooks|risk)\\b|(?:~|\\$HOME|\"\\$HOME\"|/home/[^\\s/]+|/root)/\\.config/devin\\b|(?<![\\w./~-])/(?:etc|usr|bin|sbin|boot|root)/)",
       "reason": "Shell copy/move/redirect into a credential store, agent hook/policy dir, or protected system path."
     }
   ]

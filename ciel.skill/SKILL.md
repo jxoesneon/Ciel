@@ -1,6 +1,6 @@
 ---
 name: ciel
-version: 1.0.0
+version: 1.1.0
 description: Ciel — self-improving, self-researching orchestration intelligence. A living skill graph that routes, acquires, integrates, and evolves capabilities across any skill-aware agent runtime.
 author: Ciel Project
 license: MIT
@@ -95,7 +95,7 @@ Ciel's identity layer is session-internal. The following hold for every durable 
 
 - After implementation and before any publish/tag/release, verify ~100% test coverage of new and changed code (diff-scoped). Close gaps with focused tests before releasing — do not publish with uncovered new lines.
 - **Publish requires Council of Five sign-off.** Before any tag/publish, convene the Council on the release diff (five lenses, Safety veto applies). Record the verdict; publish only on PASS.
-- Standard publish checklist: `dart analyze` clean, targeted + regression tests pass, `dart format --set-exit-if-changed` clean, diff-scoped coverage at ~100%, changelog + version bump committed.
+- Standard publish checklist: `python3 -m unittest discover -s tests -v` green, diff-scoped coverage at ~100% (`coverage` + `diff-cover` against the previous tag), policy.yaml/policy.json in sync, changelog + version bump committed.
 
 ## Domains
 

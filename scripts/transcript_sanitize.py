@@ -37,6 +37,13 @@ STORES = [
     (HOME / ".gemini" / "antigravity" / "conversations", "*.db"),
     (HOME / ".gemini" / "antigravity-ide" / "conversations", "*.db"),
     (HOME / ".gemini" / "antigravity-cli" / "conversations", "*.db"),
+    # Ciel's own state stores persist full command text (system1 events/RLCD
+    # pairs, activity/grant ledgers, requirement checkpoints) — a secret that
+    # passed through a tool call can land here too.
+    (HOME / ".ciel" / "system1", "*.jsonl"),
+    (HOME / ".ciel" / "checkpoints", "*.jsonl"),
+    (HOME / ".ciel", "activity.log"),
+    (HOME / ".ciel", "grants.log"),
 ]
 
 # sessions.db is handled separately — it is a live SQLite WAL database; raw

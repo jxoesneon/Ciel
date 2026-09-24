@@ -4,6 +4,12 @@
 
 All notable changes to Ciel are tracked here. Ciel appends an entry on every self-mutation commit. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) with SemVer.
 
+## [1.1.0] — 2026-09-24
+
+Policy-as-code pre-tool gate (hard/soft/advisory tiers) with hook red-team harness, System-1 advisory shadow tier with calibration + RLCD export, council-run verification, session watchdog, transcript sanitizer, store-permission self-heal, secret-ingress and attribution gates, requirement ledger with completion evidence, and 100% diff-scoped test coverage on changed code. Release-council hardening: grant-control files under non-overridable rules, destructive-verb coverage, anchored policy resolution, detached deferred sanitize, extended sanitizer store coverage.
+
+Full per-change detail: `ciel.skill/CHANGELOG.md` [1.1.0].
+
 ## [1.0.0] — Genesis
 
 ### Added

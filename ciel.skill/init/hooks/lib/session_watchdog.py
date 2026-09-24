@@ -175,6 +175,10 @@ def transcript_sweep(state: dict) -> dict:
         (SUMMARIES, "*.md"),
         (devin_cli / "logs", "*.log"),
         (devin_cli, "sessions.db*"),
+        (CIEL / "system1", "*.jsonl"),
+        (CIEL / "checkpoints", "*.jsonl"),
+        (CIEL, "activity.log"),
+        (CIEL, "grants.log"),
     ):
         if not base.is_dir():
             continue
@@ -270,8 +274,10 @@ def _sessions_db_sanitize(state: dict) -> str | None:
 
     sessions.db is write-locked while any devin session is live, so the
     sanitizer sets ``sessions_db_sanitize_pending`` and the flag is consumed
-    here — SessionStart of a *new* session runs after the previous one has
-    released the database.
+    here — in detached/timer context only. The redact retries the lock and
+    sweeps the multi-GB ``message_nodes`` table, so it must never run inside
+    SessionStart's ``timeout 4`` window: ``cmd_check`` spawns this path
+    detached instead (see ``_detached_sanitize``).
     """
     if not state.get("sessions_db_sanitize_pending"):
         return None
@@ -294,12 +300,35 @@ def _sessions_db_sanitize(state: dict) -> str | None:
     return "sessions.db sanitize ran clean (no hits)"
 
 
+def _detached_sanitize(state: dict) -> str | None:
+    """Kick off the deferred sanitize as a detached child and return at once.
+
+    SessionStart calls ``--check`` under ``timeout 4``; the redact alone can
+    burn that budget on lock retries before even touching the multi-GB
+    message_nodes table, so the synchronous path could never finish. A
+    detached ``--sanitize-pending`` run has no such cap — it flips the flag
+    and emits the ``sessions_db_sanitized`` signal on completion.
+    """
+    if not state.get("sessions_db_sanitize_pending"):
+        return None
+    try:
+        subprocess.Popen(
+            [sys.executable, str(Path(__file__).resolve()),
+             "--sanitize-pending"],
+            stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL, start_new_session=True,
+        )
+    except OSError as e:
+        return f"sessions.db sanitize deferred ({type(e).__name__})"
+    return "sessions.db sanitize pending — detached run started"
+
+
 # -------------------------------------------------------------------- main
 def cmd_check(current_session: str | None = None) -> int:
     state = _load(STATE, {})
     stall = find_stalled(current_session)
     sweep = transcript_sweep(state)
-    sanitize_msg = _sessions_db_sanitize(state)
+    sanitize_msg = _detached_sanitize(state)
     _save(STATE, state)
 
     hints: list[str] = []

@@ -5,7 +5,7 @@
 set -euo pipefail
 
 CIEL_HOME="${CIEL_HOME:-$HOME/.ciel}"
-CIEL_VERSION="${CIEL_VERSION:-1.0.0}"
+CIEL_VERSION="${CIEL_VERSION:-1.1.0}"
 LOG="$CIEL_HOME/bootstrap.log"
 
 say() { printf "\033[1;36m[ciel]\033[0m %s\n" "$*" | tee -a "$LOG"; }
@@ -146,6 +146,9 @@ RISK_SRC="$(cd "$(dirname "$0")/../../risk" 2>/dev/null && pwd || true)"
 if [ -n "$RISK_SRC" ] && [ -f "$RISK_SRC/policy.json" ]; then
   mkdir -p "$CIEL_HOME/risk"
   cp "$RISK_SRC/policy.yaml" "$RISK_SRC/policy.json" "$CIEL_HOME/risk/"
+  for seed in attribution_gate attribution_allowlist.txt; do
+    [ -f "$RISK_SRC/$seed" ] && cp "$RISK_SRC/$seed" "$CIEL_HOME/risk/"
+  done
   say "Risk policy installed."
 else
   warn "Risk policy payload not found; hooks will use built-in fallback rules."

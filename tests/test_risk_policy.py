@@ -33,6 +33,19 @@ class TestPolicyLoading(unittest.TestCase):
         self.assertEqual("fallback", source)
         self.assertTrue(all(r["tier"] == "hard" for r in rules))
 
+    def test_missing_explicit_candidate_falls_through(self):
+        old = os.environ.get("CIEL_POLICY")
+        os.environ["CIEL_POLICY"] = "/nonexistent/policy.json"
+        try:
+            rules, source = risk_policy.load_policy()
+        finally:
+            if old is None:
+                os.environ.pop("CIEL_POLICY", None)
+            else:
+                os.environ["CIEL_POLICY"] = old
+        self.assertEqual("file", source)
+        self.assertGreaterEqual(len(rules), 10)
+
 
 class TestEvaluate(unittest.TestCase):
     def setUp(self):
@@ -340,3 +353,139 @@ class TestCompilePolicy(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestGrantControlAndDestructiveRules(unittest.TestCase):
+    """Release-hardening rules: the escalation chain the council flagged.
+
+    The privileged-override sentinel is a human-held surface — creating,
+    modifying, or deleting it must be unreachable by a gated call, on both the
+    path and command vectors, even when the sentinel itself is present.
+    """
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.home = Path(self.tmp.name)
+        (self.home / ".ciel").mkdir()
+        self._old_home = os.environ.get("CIEL_HOME")
+        os.environ["CIEL_HOME"] = str(self.home / ".ciel")
+
+    def tearDown(self):
+        if self._old_home is None:
+            os.environ.pop("CIEL_HOME", None)
+        else:
+            os.environ["CIEL_HOME"] = self._old_home
+        self.tmp.cleanup()
+
+    def _eval(self, **kwargs):
+        return risk_policy.evaluate(home=self.home, **kwargs)
+
+    def test_sentinel_write_hard_denied_with_grant(self):
+        (self.home / ".ciel" / "allow_privileged").touch()
+        for path in (
+            "~/.ciel/allow_privileged", "~/.ciel/.grant_state",
+            "~/.ciel/grants.log", "~/.ciel/risk/attribution_gate",
+            "~/.ciel/risk/attribution_allowlist.txt",
+            str(self.home / ".ciel" / "allow_privileged"),
+        ):
+            v = self._eval(tool="write", path=path)
+            self.assertEqual("deny", v["decision"], path)
+            self.assertEqual("grant_control_tamper", v["rule_id"], path)
+            self.assertEqual("hard", v["tier"], path)
+
+    def test_sentinel_command_hard_denied_with_grant(self):
+        (self.home / ".ciel" / "allow_privileged").touch()
+        for cmd in (
+            "touch ~/.ciel/allow_privileged",
+            "echo 1 > ~/.ciel/allow_privileged",
+            "echo '{}' >> ~/.ciel/grants.log",
+            "rm ~/.ciel/allow_privileged",
+            "unlink ~/.ciel/allow_privileged",
+            "cp x ~/.ciel/risk/attribution_gate",
+            "chmod 644 ~/.ciel/grants.log",
+        ):
+            v = self._eval(tool="exec", command=cmd)
+            self.assertEqual("deny", v["decision"], cmd)
+            self.assertEqual("hard", v["tier"], cmd)
+
+    def test_destructive_verbs_hard_denied(self):
+        for cmd in (
+            "rm -rf ~/.ciel/risk", "rm -rf ~/.ciel/hooks",
+            "rm -rf ~/.ciel", "rm -rf ~/.ciel/",
+            "rm -rf ~/.ssh", "rmdir ~/.aws",
+            "shred -u ~/.gnupg/key", "unlink ~/.ciel/risk/policy.json",
+            "rm -rf /etc/cron.d", "rm -r $HOME/.docker",
+        ):
+            v = self._eval(tool="exec", command=cmd)
+            self.assertEqual("deny", v["decision"], cmd)
+            self.assertEqual("hard", v["tier"], cmd)
+
+    def test_find_delete_hard_denied(self):
+        for cmd in (
+            "find ~/.ciel -name '*.log' -delete",
+            "find ~/.ssh -type f -delete",
+            "find /etc/ssl -mtime +30 -delete",
+        ):
+            v = self._eval(tool="exec", command=cmd)
+            self.assertEqual("deny", v["decision"], cmd)
+            self.assertEqual("find_delete_sensitive_path", v["rule_id"], cmd)
+
+    def test_destructive_benign_paths_allowed(self):
+        for cmd in (
+            "rm -rf /tmp/build", "rm ~/.ciel/system1/cache_tmp",
+            "find /tmp -name '*.o' -delete", "rm ./node_modules",
+        ):
+            v = self._eval(tool="exec", command=cmd)
+            self.assertEqual("allow", v["decision"], cmd)
+
+    def test_soft_tier_still_functions(self):
+        v = self._eval(tool="exec", command="mv ~/.ciel/risk/policy.json /tmp/")
+        self.assertEqual("deny", v["decision"])
+        self.assertEqual("soft", v["tier"])
+        (self.home / ".ciel" / "allow_privileged").touch()
+        v = self._eval(tool="exec", command="mv ~/.ciel/risk/policy.json /tmp/")
+        self.assertEqual("allow_overridden", v["decision"])
+
+    def test_escalation_chain_closed(self):
+        """The council's chain: mint sentinel, delete policy, plant fallback —
+        every step must now be denied, grant present or not."""
+        (self.home / ".ciel" / "allow_privileged").touch()
+        steps = [
+            self._eval(tool="exec", command="touch ~/.ciel/allow_privileged"),
+            self._eval(tool="write", path="~/.ciel/allow_privileged"),
+            self._eval(tool="exec", command="rm -rf ~/.ciel/risk"),
+            self._eval(tool="exec", command="rm -rf ~/.ciel/hooks"),
+            self._eval(tool="exec", command="echo '{}' > ~/.ciel/grants.log"),
+        ]
+        for v in steps:
+            self.assertEqual("deny", v["decision"])
+            self.assertEqual("hard", v["tier"])
+
+
+class TestPolicyResolutionBound(unittest.TestCase):
+    """_candidate_policy_files must not accept arbitrary ancestors."""
+
+    def test_only_anchor_ancestors_supply_candidates(self):
+        cands = risk_policy._candidate_policy_files()
+        home = Path.home()
+        self.assertNotIn(home / "risk" / "policy.json", cands)
+        self.assertNotIn(Path("/risk/policy.json"), cands)
+        # deployed + source anchors are present
+        self.assertIn(home / ".ciel" / "risk" / "policy.json", cands)
+        anchored = [c for c in cands
+                    if c.parent.parent.name in {".ciel", "ciel.skill"}]
+        self.assertTrue(anchored)
+
+    def test_ancestor_walk_stops_at_anchor(self):
+        here = Path(risk_policy.__file__).resolve()
+        cands = risk_policy._candidate_policy_files()
+        # every ancestor-derived candidate must sit under an anchor dir
+        env = os.environ.get("CIEL_POLICY")
+        derived = [c for c in cands
+                   if str(c) != env
+                   and c != risk_policy.ciel_home() / "risk" / "policy.json"]
+        for c in derived:
+            self.assertIn(c.parent.parent.name, {".ciel", "ciel.skill"})
+        # and no candidate is an ancestor of home itself
+        for c in derived:
+            self.assertNotEqual(c, Path.home() / "risk" / "policy.json")

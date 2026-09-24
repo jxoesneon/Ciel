@@ -10,7 +10,7 @@
 ## Identity
 
 - **Name**: `ciel`
-- **Version**: `1.0.0`
+- **Version**: `1.1.0`
 - **Domain**: orchestration / meta-skill
 - **Chairman**: self (`council/CHAIRMAN.md`)
 
@@ -62,7 +62,14 @@ core/          router/         adapters/      council/
 registry/      acquisition/    memory/        init/
 self_improvement/  risk/       domains/       observability/
 configuration/  prompts/       seed_skills/   templates/
+ciel-antigravity-lookup/
 ```
+
+`ciel-antigravity-lookup/` is a bundled payload skill kept at the payload
+root (not under `seed_skills/` or the `skills/` registry) because it is a
+runtime-adapter utility — an Antigravity conversation locator — shipped with
+the payload rather than seeded into the user registry. It carries spec-pure
+frontmatter and no `ciel.yaml` sidecar by design.
 
 Total tracked files: **~246**.
  See each directory's index `*.md` for contents.

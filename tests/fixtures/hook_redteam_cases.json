@@ -364,6 +364,167 @@
       "command": "echo hi > /tmp/x",
       "override": false,
       "expect": "allow"
+    },
+    {
+      "id": "sentinel_touch",
+      "tool": "exec",
+      "command": "touch ~/.ciel/allow_privileged",
+      "override": false,
+      "expect": "deny"
+    },
+    {
+      "id": "sentinel_touch_override",
+      "tool": "exec",
+      "command": "touch ~/.ciel/allow_privileged",
+      "override": true,
+      "expect": "deny"
+    },
+    {
+      "id": "sentinel_write_tool",
+      "tool": "write",
+      "path": "$HOME/.ciel/allow_privileged",
+      "override": false,
+      "expect": "deny"
+    },
+    {
+      "id": "sentinel_write_tool_override",
+      "tool": "write",
+      "path": "$HOME/.ciel/allow_privileged",
+      "override": true,
+      "expect": "deny"
+    },
+    {
+      "id": "sentinel_redirect",
+      "tool": "exec",
+      "command": "echo 1 > ~/.ciel/allow_privileged",
+      "override": false,
+      "expect": "deny"
+    },
+    {
+      "id": "grants_log_redirect",
+      "tool": "exec",
+      "command": "echo '{}' >> ~/.ciel/grants.log",
+      "override": false,
+      "expect": "deny"
+    },
+    {
+      "id": "grant_state_write",
+      "tool": "write",
+      "path": "$HOME/.ciel/.grant_state",
+      "override": false,
+      "expect": "deny"
+    },
+    {
+      "id": "attribution_gate_write",
+      "tool": "write",
+      "path": "$HOME/.ciel/risk/attribution_gate",
+      "override": true,
+      "expect": "deny"
+    },
+    {
+      "id": "attribution_allowlist_write",
+      "tool": "write",
+      "path": "$HOME/.ciel/risk/attribution_allowlist.txt",
+      "override": false,
+      "expect": "deny"
+    },
+    {
+      "id": "rm_ciel_risk",
+      "tool": "exec",
+      "command": "rm -rf ~/.ciel/risk",
+      "override": false,
+      "expect": "deny"
+    },
+    {
+      "id": "rm_ciel_risk_override",
+      "tool": "exec",
+      "command": "rm -rf ~/.ciel/risk",
+      "override": true,
+      "expect": "deny"
+    },
+    {
+      "id": "rm_ciel_hooks",
+      "tool": "exec",
+      "command": "rm -rf ~/.ciel/hooks",
+      "override": true,
+      "expect": "deny"
+    },
+    {
+      "id": "rm_ciel_root",
+      "tool": "exec",
+      "command": "rm -rf ~/.ciel",
+      "override": true,
+      "expect": "deny"
+    },
+    {
+      "id": "rm_ssh_dir",
+      "tool": "exec",
+      "command": "rm -rf ~/.ssh",
+      "override": true,
+      "expect": "deny"
+    },
+    {
+      "id": "unlink_sentinel",
+      "tool": "exec",
+      "command": "unlink ~/.ciel/allow_privileged",
+      "override": true,
+      "expect": "deny"
+    },
+    {
+      "id": "shred_grants",
+      "tool": "exec",
+      "command": "shred -u ~/.ciel/grants.log",
+      "override": false,
+      "expect": "deny"
+    },
+    {
+      "id": "find_delete_ciel",
+      "tool": "exec",
+      "command": "find ~/.ciel -name '*.log' -delete",
+      "override": false,
+      "expect": "deny"
+    },
+    {
+      "id": "find_delete_ssh",
+      "tool": "exec",
+      "command": "find ~/.ssh -type f -delete",
+      "override": false,
+      "expect": "deny"
+    },
+    {
+      "id": "rm_etc_dir",
+      "tool": "exec",
+      "command": "rm -rf /etc/cron.d",
+      "override": true,
+      "expect": "deny"
+    },
+    {
+      "id": "rm_ciel_state_file",
+      "tool": "exec",
+      "command": "rm ~/.ciel/system1/cache_tmp",
+      "override": false,
+      "expect": "allow"
+    },
+    {
+      "id": "mv_risk_policy_soft",
+      "tool": "exec",
+      "command": "mv ~/.ciel/risk/policy.json /tmp/",
+      "override": false,
+      "expect": "deny"
+    },
+    {
+      "id": "mv_risk_policy_soft_override",
+      "tool": "exec",
+      "command": "mv ~/.ciel/risk/policy.json /tmp/",
+      "override": true,
+      "expect": "allow_overridden"
+    },
+    {
+      "id": "rm_tmp_build",
+      "tool": "exec",
+      "command": "rm -rf /tmp/build",
+      "override": false,
+      "expect": "allow"
     }
   ]
 }
