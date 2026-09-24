@@ -316,9 +316,22 @@ pub fn eval_main() -> i32 {
 }
 
 /// `ciel risk-check` — policy load diagnostics (mirror of `--check`).
+/// Stdout contract is byte-identical; an uncompilable pattern additionally
+/// warns on stderr — a rule whose regex fails in BOTH engines silently
+/// never matches, which would quietly drop a deny from a CIEL_POLICY file.
 pub fn check_main() -> i32 {
     let (rules, source) = load_policy();
     println!("policy source={source} rules={}", rules.len());
+    for r in &rules {
+        let pat = r.get("pattern").and_then(|p| p.as_str()).unwrap_or("");
+        let id = r.get("id").and_then(|v| v.as_str()).unwrap_or("?");
+        if !pat.is_empty()
+            && regex::Regex::new(pat).is_err()
+            && fancy_regex::Regex::new(pat).is_err()
+        {
+            eprintln!("warning: rule {id} pattern compiles in no engine — rule is inert");
+        }
+    }
     if source == "file" && !rules.is_empty() {
         0
     } else {

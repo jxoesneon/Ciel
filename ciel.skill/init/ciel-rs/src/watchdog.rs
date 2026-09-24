@@ -604,9 +604,6 @@ pub fn cmd_resume(home: &Path, ciel: &Path, dry: bool) -> i32 {
 pub fn main_(args: &[String]) -> i32 {
     let home = paths::home_dir();
     let ciel = paths::ciel_home();
-    if args.iter().any(|a| a == "--resume") {
-        return cmd_resume(&home, &ciel, args.iter().any(|a| a == "--dry"));
-    }
     if args.iter().any(|a| a == "--sanitize-pending") {
         let sp = state_path(&ciel);
         let mut state = load(&sp);
@@ -619,6 +616,9 @@ pub fn main_(args: &[String]) -> i32 {
             )
         );
         return 0;
+    }
+    if args.iter().any(|a| a == "--resume") {
+        return cmd_resume(&home, &ciel, args.iter().any(|a| a == "--dry"));
     }
     let session = args
         .iter()

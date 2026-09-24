@@ -64,14 +64,14 @@ fn inner(v: &Value, sorted: bool, ascii: bool) -> String {
     }
 }
 
-fn inner_indent(v: &Value, indent: usize, level: usize) -> String {
+fn inner_indent(v: &Value, indent: usize, level: usize, ascii: bool) -> String {
     let pad = " ".repeat(indent * (level + 1));
     let close_pad = " ".repeat(indent * level);
     match v {
         Value::Array(a) if !a.is_empty() => {
             let items: Vec<String> = a
                 .iter()
-                .map(|x| format!("{pad}{}", inner_indent(x, indent, level + 1)))
+                .map(|x| format!("{pad}{}", inner_indent(x, indent, level + 1, ascii)))
                 .collect();
             format!("[\n{}\n{close_pad}]", items.join(",\n"))
         }
@@ -81,14 +81,14 @@ fn inner_indent(v: &Value, indent: usize, level: usize) -> String {
                 .map(|k| {
                     format!(
                         "{pad}\"{}\": {}",
-                        escape(k, false),
-                        inner_indent(&m[k], indent, level + 1)
+                        escape(k, ascii),
+                        inner_indent(&m[k], indent, level + 1, ascii)
                     )
                 })
                 .collect();
             format!("{{\n{}\n{close_pad}}}", items.join(",\n"))
         }
-        other => inner(other, false, false),
+        other => inner(other, false, ascii),
     }
 }
 
@@ -109,7 +109,12 @@ pub fn dumps_sorted(v: &Value) -> String {
 
 /// `json.dumps(v, indent=n, ensure_ascii=False)` — state-file form.
 pub fn dumps_indent(v: &Value, indent: usize) -> String {
-    inner_indent(v, indent, 0)
+    inner_indent(v, indent, 0, false)
+}
+
+/// `json.dump(v, indent=n)` with Python's default `ensure_ascii=True`.
+pub fn dumps_indent_ascii(v: &Value, indent: usize) -> String {
+    inner_indent(v, indent, 0, true)
 }
 
 #[cfg(test)]

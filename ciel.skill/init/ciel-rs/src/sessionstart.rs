@@ -32,7 +32,8 @@ fn enforce_attribution(home: &Path) -> &'static str {
         "ok"
     } else {
         d["attribution"] = json!(false);
-        match std::fs::write(&cfg, serde_json::to_string_pretty(&d).unwrap_or_default()) {
+        // Python: json.dump(d, fh, indent=2) — ensure_ascii stays on.
+        match std::fs::write(&cfg, crate::jsonfmt::dumps_indent_ascii(&d, 2)) {
             Ok(_) => "repaired",
             Err(_) => "unreadable",
         }
@@ -98,11 +99,12 @@ pub fn main_(runtime: &str) -> i32 {
     if runtime == "antigravity" {
         let _ = rotate::rotate(&ciel, &time::OffsetDateTime::now_utc());
         let msg = AGY_CANARY.replace("{HOME}", &home.to_string_lossy());
-        // Python leg: print(json.dumps({...})) — spaced, ensure_ascii.
+        // The fallback is a compact shell heredoc with raw UTF-8 — match it
+        // byte-for-byte via serde_json Display (compact, unescaped «»).
         let _ = writeln!(
             std::io::stdout(),
             "{}",
-            crate::jsonfmt::dumps(&json!({"injectSteps": [{"ephemeralMessage": msg}]}))
+            json!({"injectSteps": [{"ephemeralMessage": msg}]})
         );
         return 0;
     }

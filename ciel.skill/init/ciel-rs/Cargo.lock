@@ -81,6 +81,7 @@ version = "1.1.0"
 dependencies = [
  "fancy-regex",
  "flate2",
+ "libc",
  "regex",
  "rusqlite",
  "serde_json",

@@ -118,6 +118,38 @@ fn resolve_id(needle: &str, session: Option<&str>) -> Option<String> {
     }
 }
 
+/// Minimal Python `repr()` for str — the stderr contract of `done` on a
+/// miss. Single quotes by default; double when the value has an apostrophe
+/// (and no double quote); escapes `\\`, the active quote, \n \r \t, and
+/// other C0/DEL bytes as \xNN. Non-ASCII printables stay raw, like repr.
+fn py_repr(s: &str) -> String {
+    let q = if s.contains('\'') && !s.contains('"') {
+        '"'
+    } else {
+        '\''
+    };
+    let mut out = String::with_capacity(s.len() + 2);
+    out.push(q);
+    for c in s.chars() {
+        match c {
+            '\\' => out.push_str("\\\\"),
+            '\n' => out.push_str("\\n"),
+            '\r' => out.push_str("\\r"),
+            '\t' => out.push_str("\\t"),
+            c if c == q => {
+                out.push('\\');
+                out.push(c);
+            }
+            c if (c as u32) < 0x20 || c as u32 == 0x7f => {
+                out.push_str(&format!("\\x{:02x}", c as u32));
+            }
+            c => out.push(c),
+        }
+    }
+    out.push(q);
+    out
+}
+
 /// `ciel ledger {add|done|list|pending} [arg] [--session ID]`.
 pub fn main_(args: &[String]) -> i32 {
     let op = args.first().map(String::as_str).unwrap_or("");
@@ -161,7 +193,10 @@ pub fn main_(args: &[String]) -> i32 {
                 0
             }
             None => {
-                eprintln!("no pending item matching '{positional}'");
+                // Python prints {args.arg!r} — repr quoting: single quotes,
+                // double when the value contains an apostrophe, \\ and
+                // control chars escaped.
+                eprintln!("no pending item matching {}", py_repr(&positional));
                 1
             }
         },
@@ -182,7 +217,10 @@ pub fn main_(args: &[String]) -> i32 {
                 println!(
                     "{} [{}] {}",
                     e["id"].as_str().unwrap_or(""),
-                    e["session"].as_str().unwrap_or("-"),
+                    e["session"]
+                        .as_str()
+                        .filter(|s| !s.is_empty())
+                        .unwrap_or("-"),
                     e["text"].as_str().unwrap_or("")
                 );
             }

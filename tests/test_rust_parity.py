@@ -766,6 +766,50 @@ class TestPretoolBodyParity(unittest.TestCase):
                 self.assertEqual(log_py, log_rs)
 
 
+@unittest.skipUnless(shutil.which("bash"), "bash required for hook wrappers")
+@unittest.skipUnless(
+    Path(CIEL_BIN).exists(), f"ciel binary not built at {CIEL_BIN}"
+)
+class TestSessionStartByteParity(unittest.TestCase):
+    """The session-start .sh fallback emits its canary via shell heredoc —
+    the Rust body must match it BYTE-FOR-BYTE on stdout (compact JSON, raw
+    UTF-8 «»), not just semantically."""
+
+    def _run(self, runtime: str, ciel_bin: str):
+        tmp = Path(tempfile.mkdtemp(prefix="ciel-ssb-"))
+        self.addCleanup(shutil.rmtree, tmp, True)
+        # Deployed-layout lib so the Python fallback legs resolve.
+        libdir = tmp / ".ciel" / "hooks" / "lib"
+        libdir.mkdir(parents=True)
+        for f in LIB_DIR.glob("*.py"):
+            (libdir / f.name).write_bytes(f.read_bytes())
+        env = dict(os.environ, HOME=str(tmp), CIEL_SYSTEM1_DISABLED="1",
+                   CIEL_BIN=ciel_bin)
+        env.pop("CIEL_HOME", None)
+        script = {"devin": HOOKS_DIR / "devin" / "session_start.sh",
+                  "antigravity": HOOKS_DIR / "antigravity" / "pre_invocation.sh"
+                  }[runtime]
+        proc = subprocess.run(["bash", str(script)], capture_output=True,
+                              text=True, env=env, timeout=60)
+        # The canary embeds $HOME literally — mask it so two engines on two
+        # sandboxes compare byte-for-byte on the actual contract.
+        return proc.returncode, proc.stdout.replace(str(tmp), "$HOME")
+
+    def test_devin_session_start_bytes(self):
+        rc_py, out_py = self._run("devin", "")
+        rc_rs, out_rs = self._run("devin", CIEL_BIN)
+        self.assertEqual(0, rc_py)
+        self.assertEqual(rc_py, rc_rs)
+        self.assertEqual(out_py, out_rs)
+
+    def test_antigravity_session_start_bytes(self):
+        rc_py, out_py = self._run("antigravity", "")
+        rc_rs, out_rs = self._run("antigravity", CIEL_BIN)
+        self.assertEqual(0, rc_py)
+        self.assertEqual(rc_py, rc_rs)
+        self.assertEqual(out_py, out_rs)
+
+
 @unittest.skipUnless(
     Path(CIEL_BIN).exists(), f"ciel binary not built at {CIEL_BIN}"
 )

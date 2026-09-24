@@ -26,6 +26,9 @@ rusqlite = { version = "0.32", features = ["bundled"] }
 sha2 = "0.10"
 wait-timeout = "0.2"
 
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"
+
 [profile.release]
 opt-level = 2
 lto = "thin"

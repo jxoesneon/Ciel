@@ -162,7 +162,9 @@ jobs:
           mkdir -p dist
           cp ciel.skill/init/ciel-rs/target/release/ciel \
              "dist/ciel-${v}-${{ matrix.plat }}"
-          (cd dist && sha256sum "ciel-${v}-${{ matrix.plat }}" \
+          # sha256sum is GNU-only; macOS runners carry shasum instead.
+          (cd dist && (sha256sum "ciel-${v}-${{ matrix.plat }}" 2>/dev/null \
+             || shasum -a 256 "ciel-${v}-${{ matrix.plat }}") \
              > "ciel-${v}-${{ matrix.plat }}.sha256")
           ls -l dist/
 

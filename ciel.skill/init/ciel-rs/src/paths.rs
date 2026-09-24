@@ -38,29 +38,43 @@ fn dirs_fallback() -> PathBuf {
         .unwrap_or_else(|| PathBuf::from("/"))
 }
 
-/// Expand `~`, `~user` (best-effort via HOME for `~` only), and `$VAR` /
-/// `${VAR}` environment references — mirrors expanduser+expandvars.
-fn expand(raw: &str, home: &Path) -> String {
-    let mut s = raw.to_string();
-    if s == "~" {
-        s = home.to_string_lossy().into_owned();
-    } else if let Some(rest) = s.strip_prefix("~/") {
-        s = format!("{}/{}", home.to_string_lossy(), rest);
+/// `~name` home lookup — mirrors `os.path.expanduser` which uses the
+/// password database (getpwnam). Unknown users stay literal, like Python.
+#[cfg(unix)]
+fn user_home(name: &str) -> Option<PathBuf> {
+    let c = std::ffi::CString::new(name).ok()?;
+    unsafe {
+        let pw = libc::getpwnam(c.as_ptr());
+        if pw.is_null() {
+            return None;
+        }
+        let dir = std::ffi::CStr::from_ptr((*pw).pw_dir);
+        Some(PathBuf::from(dir.to_string_lossy().into_owned()))
     }
+}
+
+#[cfg(not(unix))]
+fn user_home(_name: &str) -> Option<PathBuf> {
+    None
+}
+
+/// Mirror of `expanduser(expandvars(raw))`: environment references resolve
+/// FIRST so a `$VAR` holding `~/..` still gets tilde-expanded; then `~`,
+/// `~/x`, and `~user/x` expand (unknown users stay literal, like Python).
+fn expand(raw: &str, home: &Path) -> String {
     // expandvars: $NAME and ${NAME}; os.path.expandvars leaves unset vars
     // literal ($FOO stays "$FOO") — mirror that exactly.
-    let mut out = String::with_capacity(s.len());
-    let bytes = s.as_bytes();
+    let mut s = String::with_capacity(raw.len());
+    let bytes = raw.as_bytes();
     let mut i = 0;
     while i < bytes.len() {
         if bytes[i] == b'$' {
             if i + 1 < bytes.len() && bytes[i + 1] == b'{' {
-                if let Some(end) = s[i + 2..].find('}') {
-                    let name = &s[i + 2..i + 2 + end];
-                    // os.path.expandvars leaves unset vars literal.
+                if let Some(end) = raw[i + 2..].find('}') {
+                    let name = &raw[i + 2..i + 2 + end];
                     match env::var(name) {
-                        Ok(v) => out.push_str(&v),
-                        Err(_) => out.push_str(&s[i..i + 2 + end + 1]),
+                        Ok(v) => s.push_str(&v),
+                        Err(_) => s.push_str(&raw[i..i + 2 + end + 1]),
                     }
                     i += 2 + end + 1;
                     continue;
@@ -72,19 +86,38 @@ fn expand(raw: &str, home: &Path) -> String {
                     j += 1;
                 }
                 if j > start {
-                    match env::var(&s[start..j]) {
-                        Ok(v) => out.push_str(&v),
-                        Err(_) => out.push_str(&s[i..j]),
+                    match env::var(&raw[start..j]) {
+                        Ok(v) => s.push_str(&v),
+                        Err(_) => s.push_str(&raw[i..j]),
                     }
                     i = j;
                     continue;
                 }
             }
         }
-        out.push(bytes[i] as char);
+        s.push(bytes[i] as char);
         i += 1;
     }
-    out
+    // expanduser second — a var may inject a leading `~`.
+    if s == "~" {
+        return home.to_string_lossy().into_owned();
+    }
+    if let Some(rest) = s.strip_prefix("~/") {
+        return format!("{}/{}", home.to_string_lossy(), rest);
+    }
+    if let Some(user_part) = s.strip_prefix('~') {
+        if let Some(slash) = user_part.find('/') {
+            let name = &user_part[..slash];
+            if let Some(h) = user_home(name) {
+                return format!("{}{}", h.to_string_lossy(), &user_part[slash..]);
+            }
+        } else if !user_part.is_empty() {
+            if let Some(h) = user_home(user_part) {
+                return h.to_string_lossy().into_owned();
+            }
+        }
+    }
+    s
 }
 
 /// Lexical normpath: collapse `//`, `/./`, resolve `/../` without touching

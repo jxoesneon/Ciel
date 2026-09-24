@@ -71,8 +71,9 @@ fn allowlist() -> Vec<Regex> {
 }
 
 fn git(args: &[&str]) -> String {
-    // Python: subprocess.run(..., timeout=10) — keep the bound so a hung git
-    // can never stall the hook.
+    // Python: subprocess.run(..., timeout=10) drains stdout concurrently via
+    // communicate(). A piped child writing >64KiB deadlocks if we wait before
+    // reading, so drain on a reader thread while wait_timeout bounds the wait.
     let mut child = match Command::new("git")
         .args(args)
         .stdout(std::process::Stdio::piped())
@@ -82,23 +83,28 @@ fn git(args: &[&str]) -> String {
         Ok(c) => c,
         Err(_) => return String::new(),
     };
-    let status = match child.wait_timeout(std::time::Duration::from_secs(10)) {
-        Ok(Some(s)) => s,
+    use std::io::Read;
+    let reader = child.stdout.take().map(|mut so| {
+        std::thread::spawn(move || {
+            let mut buf = Vec::new();
+            let _ = so.read_to_end(&mut buf);
+            buf
+        })
+    });
+    match child.wait_timeout(std::time::Duration::from_secs(10)) {
+        Ok(Some(s)) if s.success() => reader
+            .and_then(|r| r.join().ok())
+            .map(|b| String::from_utf8_lossy(&b).into_owned())
+            .unwrap_or_default(),
         _ => {
             let _ = child.kill();
             let _ = child.wait();
-            return String::new();
+            if let Some(r) = reader {
+                let _ = r.join();
+            }
+            String::new()
         }
-    };
-    if !status.success() {
-        return String::new();
     }
-    let mut out = String::new();
-    if let Some(mut so) = child.stdout.take() {
-        use std::io::Read;
-        let _ = so.read_to_string(&mut out);
-    }
-    out
 }
 
 /// Return {source: [lines]} to scan for the given publish command.
