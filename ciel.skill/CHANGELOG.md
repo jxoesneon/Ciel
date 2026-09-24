@@ -4,7 +4,7 @@
 
 All notable changes to Ciel are tracked here. Ciel appends an entry on every self-mutation commit. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) with SemVer.
 
-## [Unreleased]
+## [1.2.0] — 2026-09-24
 
 ### Added
 

@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "version": "1.0.0",
-  "last_verified": "2026-09-24T08:18:09.609805+00:00",
+  "last_verified": "2026-09-24T08:33:22.349920+00:00",
   "files": {
     ".PSScriptAnalyzerSettings.psd1": {
       "sha256": "aea7918ac3841e011c6c2eb0daa8c0d2b405d35e7e7779759d1c6068d61cc29f",
@@ -48,8 +48,8 @@
       "size": 923
     },
     "CHANGELOG.md": {
-      "sha256": "28c80677300d7c6ef9e0cc27e9b99cea2d46aa7843643297b1033a031b4412ae",
-      "size": 2963
+      "sha256": "60317e847a8b34b61bc9f71291b31c60bc9149c96d1422c4aebb8d030347a19d",
+      "size": 4190
     },
     "CONTRIBUTING.md": {
       "sha256": "70e98a54ee1675e81c3dccb081a2ba2aa11d299299ba8dd95dd57943d14bc755",
@@ -64,7 +64,7 @@
       "size": 642
     },
     "README.md": {
-      "sha256": "2ccf82505164c067e565d35cf8e9ac114ee8c4d82d635f2e360a68436758aa85",
+      "sha256": "8e9c7c6bbaa2274e895eca01871e0865423cac259f2709faf7686ee48fda9056",
       "size": 5495
     },
     "agents/ciel-blockchain-guild.md": {
@@ -112,15 +112,15 @@
       "size": 2008
     },
     "ciel.skill/CHANGELOG.md": {
-      "sha256": "4bfacebd84f3deaa33342a97a2bd1497cf047a5aba63dc206e9fea728d9f9e88",
-      "size": 24937
+      "sha256": "4f51a9094eaf30f1edcb02131b2aaca8c28bf09b6b9dad39644115d067a925d0",
+      "size": 24947
     },
     "ciel.skill/MANIFEST.md": {
-      "sha256": "d31840054fca7bf422466887033d1e38e07b694cfc0b995bd07c35e4624bc4d2",
+      "sha256": "5107175c3c60c0ca4240ae530c3c418f5bf995358e5d716eaaf8eadc62ac5073",
       "size": 3143
     },
     "ciel.skill/SKILL.md": {
-      "sha256": "06569d51701406462a862a5238cbd856e91760d9e37173cd4631d637f6758839",
+      "sha256": "ec52eb4edb6d5f2192606f552b083f50205d21aba916eb8f978e561ea3beeadc",
       "size": 6139
     },
     "ciel.skill/acquisition/ACQUISITION.md": {
@@ -612,11 +612,11 @@
       "size": 18
     },
     "ciel.skill/init/ciel-rs/Cargo.lock": {
-      "sha256": "f6880ae709a4a37596c08a63bcbc768d1f7bf7a0e63eaa31c43682bdf9dfc134",
+      "sha256": "ae0961bcd40d160443d38dd4dd0ff8a78dd59ef34d625ed5ea9f10fef10ce1e7",
       "size": 14777
     },
     "ciel.skill/init/ciel-rs/Cargo.toml": {
-      "sha256": "ac224599df6ff83d013971aec6742db974cf4385d064df30e0b61e44ad37adce",
+      "sha256": "c196daebd30ca9331f2940f7107f916a50bf20b350f02d1b86c45f8b336d238c",
       "size": 879
     },
     "ciel.skill/init/ciel-rs/src/attribution.rs": {
@@ -824,11 +824,11 @@
       "size": 94
     },
     "ciel.skill/init/scripts/install.ps1": {
-      "sha256": "19586ec1746ceacb219e79f1c3fbdc99deefe1141bd87f10a5166c8c8388e3d4",
+      "sha256": "c888ab93d53ec21891aa7ee1e2ad06eef76d60a8e54f6348875535f22ae8c4af",
       "size": 5163
     },
     "ciel.skill/init/scripts/install.sh": {
-      "sha256": "9f7e81195cd6169cf52430606b1f4a0e56cce49b365d94311a602fd00c1f18ff",
+      "sha256": "ed08e19a7c32c215821f58db0b68e4037b6a119d6e2992196063fef774db1a58",
       "size": 8266
     },
     "ciel.skill/init/scripts/integrity.py": {

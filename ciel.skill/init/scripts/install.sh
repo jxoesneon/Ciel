@@ -5,7 +5,7 @@
 set -euo pipefail
 
 CIEL_HOME="${CIEL_HOME:-$HOME/.ciel}"
-CIEL_VERSION="${CIEL_VERSION:-1.1.0}"
+CIEL_VERSION="${CIEL_VERSION:-1.2.0}"
 LOG="$CIEL_HOME/bootstrap.log"
 
 say() { printf "\033[1;36m[ciel]\033[0m %s\n" "$*" | tee -a "$LOG"; }

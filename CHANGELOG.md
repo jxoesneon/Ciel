@@ -4,6 +4,12 @@
 
 All notable changes to Ciel are tracked here. Ciel appends an entry on every self-mutation commit. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) with SemVer.
 
+## [1.2.0] — 2026-09-24
+
+Comprehensive Rust migration: a single `ciel` binary (`init/ciel-rs/`) now carries every per-invocation hot path — `pretool`/`prompt-submit` hook bodies, consolidated `session-start`, and primitive subcommands (`risk-eval`, `risk-check`, `grant-state`, `secret-scan`, `attribution-scan`, `store-perms`, `ledger`, `watchdog`, `log-rotate`, `sanitize`, `compile-policy`, `council-verify`, `system1`). Shell hooks remain adapters resolving `$CIEL_BIN` → `~/.ciel/bin/ciel` → `~/.cargo/bin/ciel` → `init/bin/ciel` with byte-identical Python fallback. Measured ~2.7× faster per PreToolUse firing, ~4–7× per session start. Distribution: POSIX release matrix (linux/darwin × x86_64/arm64) with checksum-verified prebuilt downloads and `cargo install` support; `install.ps1` unchanged (Windows runs the Python fallback). 54-case Rust↔Python parity suite plus 85-case red-team corpus through the `.sh` wrappers in both engine modes; council review across four stages resolved all must-fix findings. Python remains need-basis: `system1_embed.py` (sentence-transformers), hook adapters, the fallback engine, and cold operator scripts.
+
+Full per-change detail: `ciel.skill/CHANGELOG.md` [1.2.0].
+
 ## [1.1.0] — 2026-09-24
 
 Policy-as-code pre-tool gate (hard/soft/advisory tiers) with hook red-team harness, System-1 advisory shadow tier with calibration + RLCD export, council-run verification, session watchdog, transcript sanitizer, store-permission self-heal, secret-ingress and attribution gates, requirement ledger with completion evidence, and 100% diff-scoped test coverage on changed code. Release-council hardening: grant-control files under non-overridable rules, destructive-verb coverage, anchored policy resolution, detached deferred sanitize, extended sanitizer store coverage.

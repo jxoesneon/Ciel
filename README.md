@@ -2,7 +2,7 @@
 
 ![Ciel Banner](ciel.skill/assets/images/banner.jpg)
 
-[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg?style=flat-square)](https://github.com/jxoesneon/Ciel/releases)
+[![Version](https://img.shields.io/badge/version-1.2.0-blue.svg?style=flat-square)](https://github.com/jxoesneon/Ciel/releases)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/jxoesneon/Ciel/ci.yml?branch=main&style=flat-square)](https://github.com/jxoesneon/Ciel/actions)
 [![License](https://img.shields.io/badge/license-Apache--2.0-green.svg?style=flat-square)](LICENSE)
 [![Format](https://img.shields.io/badge/format-skill%2F1.0-blueviolet.svg?style=flat-square)](ciel.skill/SKILL.md)
@@ -131,4 +131,4 @@ All CIEL operations are audited by the **Council of Five**, ensuring every actio
 - **[LICENSE](LICENSE)**: Apache 2.0 Licensed.
 
 ---
-**Status**: 1.1.0 Harmonized. **Verification**: [Passed](https://github.com/jxoesneon/Ciel/actions/workflows/ci.yml)
+**Status**: 1.2.0 Harmonized. **Verification**: [Passed](https://github.com/jxoesneon/Ciel/actions/workflows/ci.yml)

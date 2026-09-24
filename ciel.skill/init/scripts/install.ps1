@@ -4,7 +4,7 @@
 $ErrorActionPreference = "Stop"
 
 $CielHome    = if ($env:CIEL_HOME) { $env:CIEL_HOME } else { Join-Path $HOME ".ciel" }
-$CielVersion = if ($env:CIEL_VERSION) { $env:CIEL_VERSION } else { "1.0.0" }
+$CielVersion = if ($env:CIEL_VERSION) { $env:CIEL_VERSION } else { "1.2.0" }
 $Log         = Join-Path $CielHome "bootstrap.log"
 
 function Say($msg)  { Write-Host "[ciel] $msg" -ForegroundColor Cyan; Add-Content -Path $Log -Value "[ciel] $msg" }

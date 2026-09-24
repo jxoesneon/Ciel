@@ -1,6 +1,6 @@
 [package]
 name = "ciel"
-version = "1.1.0"
+version = "1.2.0"
 edition = "2021"
 rust-version = "1.75"
 description = "Ciel runtime binary — hot-path hook bodies and operator subcommands"
