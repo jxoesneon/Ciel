@@ -525,6 +525,76 @@
       "command": "rm -rf /tmp/build",
       "override": false,
       "expect": "allow"
+    },
+    {
+      "id": "sentinel_mkdir",
+      "tool": "exec",
+      "command": "mkdir ~/.ciel/allow_privileged",
+      "override": false,
+      "expect": "deny"
+    },
+    {
+      "id": "sentinel_mkdir_override",
+      "tool": "exec",
+      "command": "mkdir -p ~/.ciel/allow_privileged",
+      "override": true,
+      "expect": "deny"
+    },
+    {
+      "id": "sentinel_touch_brace_home",
+      "tool": "exec",
+      "command": "touch ${HOME}/.ciel/allow_privileged",
+      "override": false,
+      "expect": "deny"
+    },
+    {
+      "id": "rm_ciel_brace_home",
+      "tool": "exec",
+      "command": "rm -rf ${HOME}/.ciel",
+      "override": true,
+      "expect": "deny"
+    },
+    {
+      "id": "sentinel_dot_path",
+      "tool": "write",
+      "path": "$HOME/.ciel/./allow_privileged",
+      "override": false,
+      "expect": "deny"
+    },
+    {
+      "id": "sentinel_dotdot_path",
+      "tool": "write",
+      "path": "$HOME/.ciel/../.ciel/allow_privileged",
+      "override": false,
+      "expect": "deny"
+    },
+    {
+      "id": "ciel_root_mv_soft",
+      "tool": "exec",
+      "command": "mv ~/.ciel ~/.ciel.old",
+      "override": false,
+      "expect": "deny"
+    },
+    {
+      "id": "ciel_root_ln_soft",
+      "tool": "exec",
+      "command": "ln -s /tmp/planted ~/.ciel",
+      "override": false,
+      "expect": "deny"
+    },
+    {
+      "id": "grants_sed_inplace",
+      "tool": "exec",
+      "command": "sed -i 's/x/y/' ~/.ciel/grants.log",
+      "override": false,
+      "expect": "deny"
+    },
+    {
+      "id": "sentinel_python_write",
+      "tool": "exec",
+      "command": "python3 -c 'open(\"x\",\"w\")' ~/.ciel/allow_privileged",
+      "override": false,
+      "expect": "deny"
     }
   ]
 }

@@ -108,7 +108,7 @@ rules:
   - id: grant_control_command
     tier: hard
     match: command
-    pattern: '(?:\b(?:touch|cp|mv|install|rsync|scp|ln|tee|chmod|chown|truncate|rm|unlink|shred|rmdir)\b[^\n|;]*|\bdd\b[^\n|;]*\bof=|>{1,2}\s*)(?:~|\$HOME|"\$HOME"|/home/[^\s/]+|/root)/\.ciel/(?:allow_privileged|\.grant_state|grants\.log|risk/(?:attribution_gate|attribution_allowlist\.txt))(?:\b|/)'
+    pattern: '(?:\b(?:touch|mkdir|cp|mv|install|rsync|scp|ln|tee|chmod|chown|truncate|rm|unlink|shred|rmdir|sed|perl|python3?|ruby)\b[^\n|;]*|\bdd\b[^\n|;]*\bof=|>{1,2}\s*)(?:~|\$HOME|\$\{HOME\}|"\$HOME"|/home/[^\s/]+|/root)/\.ciel/(?:allow_privileged|\.grant_state|grants\.log|risk/(?:attribution_gate|attribution_allowlist\.txt))(?:\b|/)'
     reason: Shell write/create/delete of the privileged-override sentinel or grant provenance.
 
   # Destructive verbs on the stores the gate depends on. rm/unlink/shred/
@@ -117,13 +117,13 @@ rules:
   - id: destructive_sensitive_path
     tier: hard
     match: command
-    pattern: '\b(?:rm|unlink|shred|rmdir)\b[^\n|;]*(?:(?:~|\$HOME|"\$HOME"|/home/[^\s/]+|/root)/\.(?:ssh|gnupg|aws|kube|docker|netrc|npmrc|pypirc)\b|(?:~|\$HOME|"\$HOME"|/home/[^\s/]+|/root)/\.ciel(?:/(?:hooks|risk|allow_privileged|\.grant_state|grants\.log)\b|/?(?:\s|$))|(?:~|\$HOME|"\$HOME"|/home/[^\s/]+|/root)/\.config/devin\b|(?<![\w./~-])/(?:etc|usr|bin|sbin|boot|root)(?:/|\b))'
+    pattern: '\b(?:rm|unlink|shred|rmdir)\b[^\n|;]*(?:(?:~|\$HOME|\$\{HOME\}|"\$HOME"|/home/[^\s/]+|/root)/\.(?:ssh|gnupg|aws|kube|docker|netrc|npmrc|pypirc)\b|(?:~|\$HOME|\$\{HOME\}|"\$HOME"|/home/[^\s/]+|/root)/\.ciel(?:/(?:hooks|risk|allow_privileged|\.grant_state|grants\.log)\b|/?(?:\s|$))|(?:~|\$HOME|\$\{HOME\}|"\$HOME"|/home/[^\s/]+|/root)/\.config/devin\b|(?<![\w./~-])/(?:etc|usr|bin|sbin|boot|root)(?:/|\b))'
     reason: Destructive delete of a credential store, agent hook/policy dir, grant control, or protected system path.
 
   - id: find_delete_sensitive_path
     tier: hard
     match: command
-    pattern: '\bfind\b[^\n|;]*(?:(?:~|\$HOME|"\$HOME"|/home/[^\s/]+|/root)/\.(?:ssh|gnupg|aws|kube|docker)\b|(?:~|\$HOME|"\$HOME"|/home/[^\s/]+|/root)/\.ciel(?:/(?:hooks|risk)\b|/?(?:\s|$))|(?<![\w./~-])/(?:etc|usr|bin|sbin|boot|root)(?:/|\b))[^\n|;]*-delete\b'
+    pattern: '\bfind\b[^\n|;]*(?:(?:~|\$HOME|\$\{HOME\}|"\$HOME"|/home/[^\s/]+|/root)/\.(?:ssh|gnupg|aws|kube|docker)\b|(?:~|\$HOME|\$\{HOME\}|"\$HOME"|/home/[^\s/]+|/root)/\.ciel(?:/(?:hooks|risk)\b|/?(?:\s|$))|(?<![\w./~-])/(?:etc|usr|bin|sbin|boot|root)(?:/|\b))[^\n|;]*-delete\b'
     reason: find -delete against a credential store, agent hook/policy dir, or protected system path.
 
   # Command-side counterpart to the path-match rules: copy/move/install/
@@ -133,5 +133,5 @@ rules:
   - id: shell_sensitive_path_write
     tier: soft
     match: command
-    pattern: '(?:\b(?:cp|mv|install|rsync|scp|ln|tee|rm|unlink|shred|rmdir|truncate)\b[^\n|;]*|\bdd\b[^\n|;]*\bof=|>{1,2}\s*)(?:(?:~|\$HOME|"\$HOME"|/home/[^\s/]+|/root)?/\.(?:ssh|gnupg|aws|kube|docker|netrc|npmrc|pypirc)\b|(?:~|\$HOME|"\$HOME"|/home/[^\s/]+|/root)/\.ciel/(?:hooks|risk)\b|(?:~|\$HOME|"\$HOME"|/home/[^\s/]+|/root)/\.config/devin\b|(?<![\w./~-])/(?:etc|usr|bin|sbin|boot|root)/)'
+    pattern: '(?:\b(?:cp|mv|install|rsync|scp|ln|tee|rm|unlink|shred|rmdir|truncate)\b[^\n|;]*|\bdd\b[^\n|;]*\bof=|>{1,2}\s*)(?:(?:~|\$HOME|\$\{HOME\}|"\$HOME"|/home/[^\s/]+|/root)?/\.(?:ssh|gnupg|aws|kube|docker|netrc|npmrc|pypirc)\b|(?:~|\$HOME|\$\{HOME\}|"\$HOME"|/home/[^\s/]+|/root)/\.ciel(?:/(?:hooks|risk)\b|/?(?:\s|$))|(?:~|\$HOME|\$\{HOME\}|"\$HOME"|/home/[^\s/]+|/root)/\.config/devin\b|(?<![\w./~-])/(?:etc|usr|bin|sbin|boot|root)/)'
     reason: Shell copy/move/redirect into a credential store, agent hook/policy dir, or protected system path.

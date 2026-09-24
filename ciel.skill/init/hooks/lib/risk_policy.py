@@ -138,6 +138,9 @@ def _normalize_path(raw: str, home: Path) -> str:
     if not raw:
         return ""
     expanded = os.path.expanduser(os.path.expandvars(raw))
+    # Collapse //, /./ and /../ spellings so they can't slip past the path
+    # rules — "~/.ciel/./allow_privileged" must normalize to the sentinel.
+    expanded = os.path.normpath(expanded)
     for base in {str(home), str(Path.home())}:
         if expanded == base:
             return "~"
