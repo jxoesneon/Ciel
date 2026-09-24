@@ -43,8 +43,11 @@ pub fn main_(runtime: &str) -> i32 {
     let (tool, command, path) = match runtime {
         "antigravity" => {
             let call = payload.get("toolCall").cloned().unwrap_or(json!({}));
+            // Python `or` chain: an empty object is falsy — fall through.
+            let nonempty = |v: &Value| v.as_object().is_some_and(|m| !m.is_empty());
             let args = call
                 .get("args")
+                .filter(|v| nonempty(v))
                 .or_else(|| payload.get("toolInput"))
                 .cloned()
                 .unwrap_or(json!({}));
@@ -52,7 +55,12 @@ pub fn main_(runtime: &str) -> i32 {
                 call.get("name")
                     .and_then(|n| n.as_str())
                     .filter(|s| !s.is_empty())
-                    .or_else(|| payload.get("toolName").and_then(|n| n.as_str()).filter(|s| !s.is_empty()))
+                    .or_else(|| {
+                        payload
+                            .get("toolName")
+                            .and_then(|n| n.as_str())
+                            .filter(|s| !s.is_empty())
+                    })
                     .unwrap_or("unknown")
                     .to_string(),
                 get_str(&args, &["CommandLine", "command"]).to_string(),
@@ -62,6 +70,7 @@ pub fn main_(runtime: &str) -> i32 {
         _ => {
             let input = payload
                 .get("tool_input")
+                .filter(|v| v.as_object().is_some_and(|m| !m.is_empty()))
                 .or_else(|| payload.get("toolInput"))
                 .cloned()
                 .unwrap_or(json!({}));
@@ -70,7 +79,12 @@ pub fn main_(runtime: &str) -> i32 {
                     .get("tool_name")
                     .and_then(|n| n.as_str())
                     .filter(|s| !s.is_empty())
-                    .or_else(|| payload.get("toolName").and_then(|n| n.as_str()).filter(|s| !s.is_empty()))
+                    .or_else(|| {
+                        payload
+                            .get("toolName")
+                            .and_then(|n| n.as_str())
+                            .filter(|s| !s.is_empty())
+                    })
                     .unwrap_or("unknown")
                     .to_string(),
                 get_str(&input, &["command", "CommandLine"]).to_string(),

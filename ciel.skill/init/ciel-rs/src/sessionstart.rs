@@ -102,9 +102,7 @@ pub fn main_(runtime: &str) -> i32 {
         let _ = writeln!(
             std::io::stdout(),
             "{}",
-            crate::jsonfmt::dumps(
-                &json!({"injectSteps": [{"ephemeralMessage": msg}]})
-            )
+            crate::jsonfmt::dumps(&json!({"injectSteps": [{"ephemeralMessage": msg}]}))
         );
         return 0;
     }

@@ -37,15 +37,16 @@ pub fn main_() -> i32 {
     } else {
         CANARY.to_string()
     };
-    // Python: print(json.dumps(result)) — spaced separators, ensure_ascii.
+    // The .sh emits a compact literal via cat-heredoc, not json.dumps —
+    // match its exact spacing.
     println!(
         "{}",
-        crate::jsonfmt::dumps(&json!({
+        json!({
             "hookSpecificOutput": {
                 "hookEventName": "UserPromptSubmit",
                 "additionalContext": context,
             }
-        }))
+        })
     );
     0
 }

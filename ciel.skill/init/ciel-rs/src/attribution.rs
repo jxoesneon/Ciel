@@ -82,9 +82,7 @@ fn git(args: &[&str]) -> String {
         Ok(c) => c,
         Err(_) => return String::new(),
     };
-    let status = match child
-        .wait_timeout(std::time::Duration::from_secs(10))
-    {
+    let status = match child.wait_timeout(std::time::Duration::from_secs(10)) {
         Ok(Some(s)) => s,
         _ => {
             let _ = child.kill();

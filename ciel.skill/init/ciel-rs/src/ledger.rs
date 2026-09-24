@@ -161,7 +161,7 @@ pub fn main_(args: &[String]) -> i32 {
                 0
             }
             None => {
-                eprintln!("no pending item matching {positional:?}");
+                eprintln!("no pending item matching '{positional}'");
                 1
             }
         },

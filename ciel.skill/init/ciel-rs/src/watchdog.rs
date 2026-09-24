@@ -1,8 +1,8 @@
 //! Session watchdog — Rust port of `hooks/lib/session_watchdog.py`.
 //! Stall detection + resume hints + incremental transcript secret sweep.
-//! The deferred sessions.db sanitize still delegates to the deployed
-//! Python sanitizer until the Phase-3 port lands — the spawn contract
-//! (detached, `/dev/null` stdio, new session) is identical.
+//! The deferred sessions.db sanitize runs in-process via `sanitize` —
+//! SessionStart spawns `watchdog --sanitize-pending` detached so its
+//! bounded check window is never spent inside a SQLite redaction.
 
 use regex::Regex;
 use serde_json::{json, Map, Value};
@@ -10,7 +10,7 @@ use std::collections::BTreeMap;
 use std::os::unix::fs::MetadataExt;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
-use std::time::{SystemTime, UNIX_EPOCH};
+use std::time::{Duration, SystemTime, UNIX_EPOCH};
 use time::format_description::well_known::Rfc3339;
 use time::OffsetDateTime;
 
@@ -367,11 +367,28 @@ fn do_resume(ciel: &Path, session_hint: &str, reason: &str, dry: bool) -> Value 
         return json!({"fired": false, "reason": "dry-run",
             "would_run": "devin -c -p <resume prompt>"});
     }
-    // `timeout` provides the 1800s cap Python's subprocess timeout gave.
-    let fired = Command::new("timeout")
-        .args(["1800", "devin", "-c", "-p", prompt])
-        .output()
-        .is_ok_and(|o| o.status.success());
+    // Python's subprocess.run(timeout=1800) — kill on expiry, fired=false.
+    // wait_timeout keeps this portable (GNU `timeout` is absent on macOS).
+    use wait_timeout::ChildExt;
+    let fired = Command::new("devin")
+        .args(["-c", "-p", prompt])
+        .stdin(Stdio::null())
+        .stdout(Stdio::null())
+        .stderr(Stdio::null())
+        .spawn()
+        .ok()
+        .and_then(
+            |mut child| match child.wait_timeout(Duration::from_secs(1800)) {
+                Ok(Some(status)) => Some(status.success()),
+                Ok(None) => {
+                    let _ = child.kill();
+                    let _ = child.wait();
+                    Some(false)
+                }
+                Err(_) => None,
+            },
+        )
+        .unwrap_or(false);
 
     let mut attempts = state
         .get("resume_attempts")
@@ -390,14 +407,22 @@ fn do_resume(ciel: &Path, session_hint: &str, reason: &str, dry: bool) -> Value 
         "watchdog_resume",
         &json!({"session": session_hint, "reason": reason, "fired": fired}),
     );
-    let _ = Command::new("timeout")
+    // Python's subprocess.run(notify-send, timeout=5), portable form.
+    if let Ok(mut notify) = Command::new("notify-send")
         .args([
-            "5",
-            "notify-send",
             "Ciel watchdog",
             &format!("Auto-resumed stalled session ({reason})"),
         ])
-        .output();
+        .stdin(Stdio::null())
+        .stdout(Stdio::null())
+        .stderr(Stdio::null())
+        .spawn()
+    {
+        if matches!(notify.wait_timeout(Duration::from_secs(5)), Ok(None)) {
+            let _ = notify.kill();
+            let _ = notify.wait();
+        }
+    }
     json!({"fired": fired, "reason": reason})
 }
 
@@ -551,7 +576,10 @@ pub fn cmd_resume(home: &Path, ciel: &Path, dry: bool) -> i32 {
     let stalled = stall["stalled"].as_object().cloned().unwrap_or_default();
     let tails = stall["error_tails"].as_array().cloned().unwrap_or_default();
     if stalled.is_empty() && tails.is_empty() {
-        println!("{}", json!({"fired": false, "reason": "nothing stalled"}));
+        println!(
+            "{}",
+            crate::jsonfmt::dumps(&json!({"fired": false, "reason": "nothing stalled"}))
+        );
         return 0;
     }
     let hint = stalled
@@ -565,7 +593,10 @@ pub fn cmd_resume(home: &Path, ciel: &Path, dry: bool) -> i32 {
         stalled.len(),
         tails.len()
     );
-    println!("{}", do_resume(ciel, &hint, &reason, dry));
+    println!(
+        "{}",
+        crate::jsonfmt::dumps(&do_resume(ciel, &hint, &reason, dry))
+    );
     0
 }
 
@@ -583,7 +614,9 @@ pub fn main_(args: &[String]) -> i32 {
         save(&sp, &state);
         println!(
             "{}",
-            json!({"sanitize": msg.unwrap_or_else(|| "nothing pending".into())})
+            crate::jsonfmt::dumps(
+                &json!({"sanitize": msg.unwrap_or_else(|| "nothing pending".into())})
+            )
         );
         return 0;
     }

@@ -17,7 +17,7 @@
 //! genuinely not worth a vendored stack here. `system1_embed.py` stays
 //! Python (sentence-transformers) and is spawned exactly as before.
 
-use serde_json::{json, Map, Value};
+use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
 use std::io::{Read, Write};
 use std::net::{TcpStream, ToSocketAddrs};
@@ -218,10 +218,7 @@ fn http_post(url: &str, body: &[u8], auth: &str, timeout: Duration) -> Option<St
     // minimal dechunk: <hex>\r\n<data>\r\n ... 0\r\n\r\n
     let mut out = String::new();
     let mut rest = raw;
-    loop {
-        let Some((size_line, after)) = rest.split_once("\r\n") else {
-            break;
-        };
+    while let Some((size_line, after)) = rest.split_once("\r\n") {
         let Ok(size) = usize::from_str_radix(size_line.trim(), 16) else {
             break;
         };
@@ -305,251 +302,10 @@ pub fn ask(state: &Value, questions: &Value, timeout_s: f64) -> Option<Value> {
     Some(json!({"answers": answers, "model": model.unwrap_or(Value::Null)}))
 }
 
-/// One `choice` question — mirror of `ask_choice`.
-#[allow(dead_code)]
-pub fn ask_choice(
-    state: &Value,
-    key: &str,
-    instructions: &str,
-    options: &Value,
-    timeout_s: f64,
-) -> Option<Value> {
-    let result = ask(
-        state,
-        &json!({key: {"type": "choice", "instructions": instructions,
-                      "criteria": options}}),
-        timeout_s,
-    )?;
-    let answer = result["answers"].get(key)?;
-    if !answer.is_object() {
-        return None;
-    }
-    Some(json!({
-        "choice": answer.get("choice").cloned().unwrap_or(Value::Null),
-        "confidence": answer.get("confidence").cloned().unwrap_or(Value::Null),
-        "probabilities": answer.get("probabilities").cloned().unwrap_or(Value::Null),
-        "model": result.get("model").cloned().unwrap_or(Value::Null),
-    }))
-}
-
-// ------------------------------------------------------ shortlist (lexical)
-
-#[allow(dead_code)]
-fn stopwords() -> &'static std::collections::HashSet<&'static str> {
-    use std::sync::OnceLock;
-    static SW: OnceLock<std::collections::HashSet<&'static str>> = OnceLock::new();
-    SW.get_or_init(|| {
-        "in my and the a an to for of on is it me we i or be this that with out \
-         up do how what which should can could would your our at by from as \
-         into about before after just need want help please use using make get \
-         set new all any some no not if when then so than too very will are was \
-         were been has have had does did over again once here there where why \
-         who these those each few more most other own same only also now like \
-         through between both per via whether while during without within \
-         across upon off down along around among against step run write create \
-         add check see look take give go put let keep work thing things \
-         something anything lot kind type part way"
-            .split_whitespace()
-            .collect()
-    })
-}
-
-#[allow(dead_code)]
-fn alnum_tokens(text: &str) -> Vec<String> {
-    let mut out = Vec::new();
-    let mut cur = String::new();
-    for c in text.to_lowercase().chars() {
-        if c.is_ascii_alphanumeric() {
-            cur.push(c);
-        } else if !cur.is_empty() {
-            out.push(std::mem::take(&mut cur));
-        }
-    }
-    if !cur.is_empty() {
-        out.push(cur);
-    }
-    out
-}
-
-#[allow(dead_code)]
-fn tokens(text: &str) -> std::collections::HashSet<String> {
-    let sw = stopwords();
-    let mut out = std::collections::HashSet::new();
-    for tok in alnum_tokens(text) {
-        if sw.contains(tok.as_str()) {
-            continue;
-        }
-        out.insert(tok.clone());
-        if tok.len() > 3 && tok.ends_with('s') && !tok.ends_with("ss") {
-            out.insert(tok[..tok.len() - 1].to_string());
-        }
-    }
-    out
-}
-
-/// IDF-weighted token overlap — mirror of `_lexical_rank`.
-#[allow(dead_code)]
-fn lexical_rank(text: &str, options: &Map<String, Value>) -> Vec<(f64, String)> {
-    let query = tokens(text);
-    let docs: Vec<(String, std::collections::HashSet<String>)> = options
-        .iter()
-        .map(|(name, crit)| {
-            (
-                name.clone(),
-                tokens(&format!("{name} {}", crit.as_str().unwrap_or(""))),
-            )
-        })
-        .collect();
-    let mut df: std::collections::HashMap<String, usize> = std::collections::HashMap::new();
-    for (_, toks) in &docs {
-        for tok in toks {
-            *df.entry(tok.clone()).or_insert(0) += 1;
-        }
-    }
-    let n = docs.len().max(1) as f64;
-    let mut ranked: Vec<(f64, String)> = docs
-        .into_iter()
-        .map(|(name, toks)| {
-            let score: f64 = query
-                .intersection(&toks)
-                .map(|t| (n / (1 + df[t.as_str()]) as f64).ln() + 1.0)
-                .sum();
-            (score, name)
-        })
-        .collect();
-    ranked.sort_by(|a, b| {
-        b.0.partial_cmp(&a.0)
-            .unwrap_or(std::cmp::Ordering::Equal)
-            .then_with(|| a.1.cmp(&b.1))
-    });
-    ranked
-}
-
-/// Bi-encoder shortlist via the laya-venv helper subprocess —
-/// `system1_embed.py` stays Python (sentence-transformers). Same spawn
-/// contract as the Python caller.
-#[allow(dead_code)]
-fn semantic_rank(text: &str, options: &Value, k: usize) -> Vec<String> {
-    if std::env::var("CIEL_SYSTEM1_EMBED").ok().as_deref() == Some("0") {
-        return Vec::new();
-    }
-    let venv_py = paths::ciel_home()
-        .join("system1")
-        .join("venv")
-        .join("bin")
-        .join("python");
-    let lib = std::env::var_os("CIEL_HOOK_LIB")
-        .map(PathBuf::from)
-        .unwrap_or_else(|| paths::ciel_home().join("hooks").join("lib"));
-    let helper = lib.join("system1_embed.py");
-    if !(venv_py.is_file() && helper.is_file()) {
-        return Vec::new();
-    }
-    let payload = json!({"task": text, "candidates": options, "k": k});
-    let Ok(mut child) = Command::new(venv_py)
-        .arg(helper)
-        .stdin(Stdio::piped())
-        .stdout(Stdio::piped())
-        .stderr(Stdio::null())
-        .spawn()
-    else {
-        return Vec::new();
-    };
-    if let Some(mut stdin) = child.stdin.take() {
-        let _ = stdin.write_all(payload.to_string().as_bytes());
-    }
-    // mirror subprocess.run(timeout=60): kill on expiry, [] on any error
-    use wait_timeout::ChildExt;
-    let out = match child.wait_timeout(Duration::from_secs(60)) {
-        Ok(Some(_)) => {
-            let mut buf = Vec::new();
-            match child.stdout.take() {
-                Some(mut so) => {
-                    let _ = so.read_to_end(&mut buf);
-                    buf
-                }
-                None => return Vec::new(),
-            }
-        }
-        Ok(None) => {
-            let _ = child.kill();
-            let _ = child.wait();
-            return Vec::new();
-        }
-        Err(_) => return Vec::new(),
-    };
-    let text = String::from_utf8_lossy(&out);
-    serde_json::from_str::<Value>(&text)
-        .ok()
-        .and_then(|v| v.get("names").cloned())
-        .and_then(|n| n.as_array().cloned())
-        .map(|a| {
-            a.iter()
-                .filter_map(|x| x.as_str().map(String::from))
-                .collect()
-        })
-        .unwrap_or_default()
-}
-
-/// Coarse-to-fine candidate reduction — mirror of `shortlist_options`.
-#[allow(dead_code)]
-pub fn shortlist_options(text: &str, options: &Value, k: usize) -> Value {
-    let obj = options.as_object().cloned().unwrap_or_default();
-    if obj.len() <= k {
-        return Value::Object(obj);
-    }
-    let mut keep: Vec<String> = Vec::new();
-    for name in semantic_rank(text, options, k) {
-        if obj.contains_key(&name) && !keep.contains(&name) {
-            keep.push(name);
-        }
-    }
-    for (_, name) in lexical_rank(text, &obj).into_iter().take(5) {
-        if !keep.contains(&name) {
-            keep.push(name);
-        }
-    }
-    let task_tokens: std::collections::HashSet<String> = alnum_tokens(text).into_iter().collect();
-    for name in obj.keys() {
-        if !keep.contains(name) {
-            let name_tokens: std::collections::HashSet<String> =
-                alnum_tokens(name).into_iter().collect();
-            if !name_tokens.is_disjoint(&task_tokens) {
-                keep.push(name.clone());
-            }
-        }
-    }
-    let mut out = Map::new();
-    for name in keep.into_iter().take(k) {
-        if let Some(v) = obj.get(&name) {
-            out.insert(name, v.clone());
-        }
-    }
-    Value::Object(out)
-}
-
-/// Mirror of `route_choice`.
-#[allow(dead_code)]
-pub fn route_choice(task: &str, options: &Value, k: usize, timeout_s: f64) -> Option<Value> {
-    let obj = options.as_object().cloned().unwrap_or_default();
-    let candidates = if obj.len() <= k {
-        Value::Object(obj)
-    } else {
-        shortlist_options(task, options, k)
-    };
-    let mut sorted: Vec<String> = candidates
-        .as_object()
-        .map(|m| m.keys().cloned().collect())
-        .unwrap_or_default();
-    sorted.sort();
-    ask_choice(
-        &json!({"task": task, "candidates": sorted}),
-        "route",
-        "Which candidate best fits the task?",
-        &candidates,
-        timeout_s,
-    )
-}
+// The library-only helper surfaces (`ask_choice`, `route_choice`,
+// `shortlist_options`, `council_prescreen`, lexical/semantic ranking) have no
+// caller through the binary's subcommands — the Python fallback retains them
+// for in-process importers such as `risk_policy.py` and `system1_eval.py`.
 
 // -------------------------------------------------------- cache + event log
 
@@ -698,35 +454,14 @@ pub fn ask_async(payload: &Value) {
         use std::os::unix::process::CommandExt;
         cmd.process_group(0);
     }
-    let spawned = cmd.spawn().and_then(|mut child| {
+    let spawned = cmd.spawn().map(|mut child| {
         if let Some(mut stdin) = child.stdin.take() {
             let _ = stdin.write_all(payload.to_string().as_bytes());
         }
-        Ok(())
     });
     if spawned.is_err() {
         let _ = std::fs::remove_file(&marker);
     }
-}
-
-/// Detached council_prescreen shadow — mirror of `council_prescreen`.
-#[allow(dead_code)]
-pub fn council_prescreen(subject: &str, meta: &Value) {
-    ask_async(&json!({
-        "surface": "council_prescreen",
-        "state": {"event": subject},
-        "questions": {
-            "scope": {
-                "type": "choice",
-                "instructions": "Does this event require full multi-lens deliberation? When in doubt, escalate — an unnecessary review costs little; a skipped review of a sensitive change is dangerous.",
-                "criteria": {
-                    "routine": "only clearly low-risk, reversible, well-precedented actions",
-                    "escalate": "anything irreversible, security-relevant, self-modifying, trust-changing, or novel-scope — including when uncertain",
-                },
-            }
-        },
-        "meta": meta,
-    }));
 }
 
 // ------------------------------------------------------------ ask mains
@@ -854,16 +589,6 @@ mod tests {
         // default separators, insertion order, raw unicode
         let v2 = json!({"b": "héllo", "a": 1});
         assert_eq!(r#"{"b": "héllo", "a": 1}"#, crate::jsonfmt::dumps_raw(&v2));
-    }
-
-    #[test]
-    fn tokens_plural_strip() {
-        let t = tokens("run the tests on files");
-        assert!(t.contains("tests"));
-        assert!(t.contains("test"));
-        assert!(t.contains("files"));
-        assert!(t.contains("file"));
-        assert!(!t.contains("the"));
     }
 
     #[test]

@@ -119,7 +119,10 @@ mod tests {
 
     #[test]
     fn separators_and_ascii() {
-        assert_eq!(r#"{"a": 1, "b": [true, null]}"#, dumps(&json!({"a":1,"b":[true,null]})));
+        assert_eq!(
+            r#"{"a": 1, "b": [true, null]}"#,
+            dumps(&json!({"a":1,"b":[true,null]}))
+        );
         assert_eq!(r#"{"x": "é"}"#, dumps_raw(&json!({"x": "é"})));
         assert_eq!(r#"{"x": "\u00e9"}"#, dumps(&json!({"x": "é"})));
         assert_eq!(r#"{"x": "\ud83d\ude00"}"#, dumps(&json!({"x": "😀"})));

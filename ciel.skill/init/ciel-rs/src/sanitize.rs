@@ -708,5 +708,4 @@ mod tests {
         assert_eq!(raw.len(), out.len());
         raw.clear();
     }
-
 }

@@ -88,11 +88,7 @@ fn main() -> ExitCode {
         "attribution-scan" => attribution::main_(),
         "-h" | "--help" | "help" | "" => {
             print!("{USAGE}");
-            if cmd.is_empty() || cmd == "-h" || cmd == "--help" || cmd == "help" {
-                0
-            } else {
-                0
-            }
+            0
         }
         _ => {
             eprintln!("ciel: unknown command '{cmd}'");

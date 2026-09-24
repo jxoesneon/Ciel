@@ -251,6 +251,166 @@ class TestSecretScanParity(unittest.TestCase):
 @unittest.skipUnless(
     Path(CIEL_BIN).exists(), f"ciel binary not built at {CIEL_BIN}"
 )
+class TestPromptSubmitParity(unittest.TestCase):
+    """`ciel prompt-submit` — canary JSON + secret-flagged WARN path."""
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp(prefix="ciel-ps-"))
+        (self.tmp / ".ciel").mkdir(parents=True)
+        self.env = dict(
+            os.environ, HOME=str(self.tmp), CIEL_HOME=str(self.tmp / ".ciel")
+        )
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp, ignore_errors=True)
+
+    def _shape(self, out: str):
+        data = json.loads(out)
+        hook = data["hookSpecificOutput"]
+        self.assertEqual("UserPromptSubmit", hook["hookEventName"])
+        return hook["additionalContext"]
+
+    def test_clean_prompt(self):
+        rc, out = run_rust(
+            "prompt-submit",
+            stdin=json.dumps({"prompt": "hello world"}),
+            env=self.env,
+        )
+        self.assertEqual(0, rc)
+        ctx = self._shape(out)
+        self.assertIn("canary", ctx.lower())
+        self.assertNotIn("WARN", ctx)
+
+    def test_secret_prompt_warns(self):
+        rc, out = run_rust(
+            "prompt-submit",
+            stdin=json.dumps(
+                {"prompt": "here is ghp_abcdefghij0123456789ABCD ok"}
+            ),
+            env=self.env,
+        )
+        self.assertEqual(0, rc)
+        ctx = self._shape(out)
+        self.assertIn("credential material", ctx)
+        # The ingress event logs the category, not the secret text.
+        log = (self.tmp / ".ciel" / "activity.log").read_text()
+        self.assertIn("secret_ingress", log)
+        self.assertIn("github_token", log)
+
+
+@unittest.skipUnless(
+    Path(CIEL_BIN).exists(), f"ciel binary not built at {CIEL_BIN}"
+)
+class TestWatchdogResumeParity(unittest.TestCase):
+    """`ciel watchdog --resume --dry` — exercise the resume leg in-process."""
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp(prefix="ciel-wdr-"))
+        (self.tmp / ".ciel").mkdir(parents=True)
+        self.env = dict(
+            os.environ, HOME=str(self.tmp), CIEL_HOME=str(self.tmp / ".ciel")
+        )
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp, ignore_errors=True)
+
+    def test_resume_dry_no_session(self):
+        rc, out = run_rust(
+            "watchdog", "--resume", "--dry", env=self.env,
+        )
+        # No resumable session → fires nothing, exits clean.
+        self.assertEqual(0, rc)
+        data = json.loads(out)
+        self.assertIn("fired", data)
+        self.assertFalse(data["fired"])
+
+    def _seed_stalled(self):
+        """One pending ledger item owned by a dead session + an old
+        activity line → both engines see it as stalled."""
+        ckpt = self.tmp / ".ciel" / "checkpoints"
+        ckpt.mkdir(parents=True, exist_ok=True)
+        (ckpt / "requirements.jsonl").write_text(json.dumps({
+            "op": "add", "id": "req-dead", "text": "finish it",
+            "session": "deadbeef-dead-session",
+            "ts": "2020-01-01T00:00:00+00:00",
+        }) + "\n")
+        (self.tmp / ".ciel" / "activity.log").write_text(json.dumps({
+            "ts": "2020-01-01T00:00:00+00:00",
+            "session_id": "deadbeef-dead-session", "event": "PreToolUse",
+        }) + "\n")
+
+    def test_resume_dry_stalled(self):
+        self._seed_stalled()
+        env = dict(self.env, CIEL_WATCHDOG_AUTORESUME="1")
+        py = subprocess.run(
+            ["python3", str(WATCHDOG), "--resume", "--dry"],
+            capture_output=True, text=True, env=env, timeout=30)
+        rc_rs, out_rs = run_rust(
+            "watchdog", "--resume", "--dry", env=env)
+        self.assertEqual(0, py.returncode)
+        self.assertEqual(py.returncode, rc_rs)
+        self.assertEqual(py.stdout, out_rs)
+        self.assertIn("dry-run", out_rs)
+
+    def test_resume_capped(self):
+        self._seed_stalled()
+        # Exhaust the per-session cap before either engine runs. `_day`
+        # must be today or resume_capable resets the attempt map.
+        from datetime import datetime, timezone
+        today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        (self.tmp / ".ciel" / "checkpoints" /
+         "watchdog_state.json").write_text(json.dumps({
+            "resume_attempts": {"_day": today,
+                                "deadbeef-dead-session": 5},
+        }))
+        py = subprocess.run(
+            ["python3", str(WATCHDOG), "--resume", "--dry"],
+            capture_output=True, text=True, env=self.env, timeout=30)
+        rc_rs, out_rs = run_rust(
+            "watchdog", "--resume", "--dry", env=self.env)
+        self.assertEqual(py.returncode, rc_rs)
+        self.assertEqual(py.stdout, out_rs)
+        self.assertIn("cap", out_rs)
+
+    def test_resume_fires_stub_devin(self):
+        # A fake `devin` on PATH that exits 0 → both engines fire, emit the
+        # signal, and bump resume_attempts. notify-send absent → tolerated.
+        self._seed_stalled()
+        stub = self.tmp / "bin"
+        stub.mkdir()
+        fake = stub / "devin"
+        fake.write_text("#!/bin/sh\nexit 0\n")
+        fake.chmod(0o755)
+        env = dict(self.env, CIEL_WATCHDOG_AUTORESUME="1",
+                   PATH=f"{stub}:{os.environ.get('PATH', '')}")
+        py = subprocess.run(
+            ["python3", str(WATCHDOG), "--resume"],
+            capture_output=True, text=True, env=env, timeout=60)
+        self.assertEqual(0, py.returncode)
+        sigs = list((self.tmp / ".ciel" / "improvements" / "signals")
+                    .glob("watchdog_resume-*.json"))
+        self.assertTrue(sigs)
+        # reset identical world for the rust run
+        for s in sigs:
+            s.unlink()
+        (self.tmp / ".ciel" / "checkpoints" /
+         "watchdog_state.json").unlink(missing_ok=True)
+        rc_rs, out_rs = run_rust("watchdog", "--resume", env=env)
+        self.assertEqual(0, rc_rs)
+        self.assertEqual(py.stdout, out_rs)
+        self.assertIn('"fired": true', out_rs)
+        sigs_rs = list((self.tmp / ".ciel" / "improvements" / "signals")
+                       .glob("watchdog_resume-*.json"))
+        self.assertTrue(sigs_rs)
+        state = json.loads((self.tmp / ".ciel" / "checkpoints" /
+                            "watchdog_state.json").read_text())
+        self.assertEqual(1, state["resume_attempts"]
+                         .get("deadbeef-dead-session"))
+
+
+@unittest.skipUnless(
+    Path(CIEL_BIN).exists(), f"ciel binary not built at {CIEL_BIN}"
+)
 class TestAttributionScanParity(unittest.TestCase):
     def setUp(self):
         self.tmp = Path(tempfile.mkdtemp(prefix="ciel-attr-"))
@@ -441,6 +601,31 @@ class TestSessionOpsParity(unittest.TestCase):
         self.assertEqual("log_rotate", marker["op"])
         self.assertEqual("daily", marker["reason"])
 
+    def test_log_rotate_size_triggered(self):
+        # CIEL_LOG_MAX_BYTES override forces a same-day size rotation.
+        log = self.ciel / "activity.log"
+        log.write_text(
+            json.dumps({"ts": "2999-01-01T00:00:00+00:00"}) + "\n" + "x" * 300)
+        env = dict(self.env, CIEL_LOG_MAX_BYTES="128")
+        py = subprocess.run(
+            ["python3", str(LOG_ROTATE)], capture_output=True, text=True,
+            env=env, timeout=30)
+        rc_py = py.returncode
+        archives = list((self.ciel / "archive" / "logs").glob("activity-*"))
+        self.assertEqual(1, len(archives))
+        marker_py = json.loads(log.read_text().strip().splitlines()[-1])
+        for a in archives:
+            a.unlink()
+        log.write_text(
+            json.dumps({"ts": "2999-01-01T00:00:00+00:00"}) + "\n" + "x" * 300)
+        rc_rs, out_rs = run_rust("log-rotate", env=env)
+        archives_rs = list((self.ciel / "archive" / "logs").glob("activity-*"))
+        self.assertEqual(rc_py, rc_rs)
+        self.assertEqual(1, len(archives_rs))
+        marker_rs = json.loads(log.read_text().strip().splitlines()[-1])
+        self.assertEqual(marker_py["reason"], marker_rs["reason"])
+        self.assertEqual("size", marker_rs["reason"])
+
     def test_log_rotate_none_needed(self):
         log = self.ciel / "activity.log"
         log.write_text(
@@ -494,6 +679,91 @@ SCRIPTS = ROOT / "scripts"
 SANITIZE_PY = SCRIPTS / "transcript_sanitize.py"
 COMPILE_POLICY_PY = SCRIPTS / "compile_policy.py"
 COUNCIL_VERIFY_PY = SCRIPTS / "council_verify.py"
+
+HOOKS_DIR = ROOT / "ciel.skill" / "init" / "hooks"
+
+
+@unittest.skipUnless(shutil.which("bash"), "bash required for hook wrappers")
+@unittest.skipUnless(
+    Path(CIEL_BIN).exists(), f"ciel binary not built at {CIEL_BIN}"
+)
+class TestPretoolBodyParity(unittest.TestCase):
+    """Full-body parity: the .sh wrapper with CIEL_BIN set (Rust fast path)
+    vs all binary candidates masked (Python fallback). stdout must match
+    byte-for-byte modulo nothing, and the activity.log entries must match
+    modulo the `ts` field."""
+
+    PAYLOADS = {
+        "devin_allow": ("devin", {
+            "tool_name": "read",
+            "tool_input": {"file_path": "/tmp/x"},
+            "session_id": "par", "prompt_id": "p1",
+        }),
+        "devin_deny": ("devin", {
+            "tool_name": "exec",
+            "tool_input": {"command": "sudo apt-get install -y jq"},
+            "session_id": "par", "prompt_id": "p2",
+        }),
+        "devin_deny_override": ("devin", {
+            "tool_name": "exec",
+            "tool_input": {"command": "sudo apt-get install -y jq"},
+            "session_id": "par", "prompt_id": "p3",
+        }, True),
+        "agy_allow": ("antigravity", {
+            "toolCall": {"name": "read", "args": {"path": "/tmp/x"}},
+            "conversationId": "par",
+        }),
+        "agy_deny": ("antigravity", {
+            "toolCall": {"name": "exec",
+                         "args": {"CommandLine": "sudo apt-get install -y jq"}},
+            "conversationId": "par",
+        }),
+        "agy_deny_override": ("antigravity", {
+            "toolCall": {"name": "exec",
+                         "args": {"CommandLine": "sudo apt-get install -y jq"}},
+            "conversationId": "par",
+        }, True),
+    }
+
+    def _fire(self, runtime, payload, ciel_bin, override=False):
+        tmp = Path(tempfile.mkdtemp(prefix="ciel-ptb-"))
+        self.addCleanup(shutil.rmtree, tmp, True)
+        ciel = tmp / ".ciel"
+        ciel.mkdir()
+        if override:
+            (ciel / "allow_privileged").touch()
+        env = dict(os.environ, HOME=str(tmp), CIEL_SYSTEM1_DISABLED="1")
+        env.pop("CIEL_HOME", None)
+        env.pop("CIEL_POLICY", None)
+        if ciel_bin:
+            env["CIEL_BIN"] = ciel_bin
+        else:
+            env["CIEL_BIN"] = ""
+        proc = subprocess.run(
+            ["bash", str(HOOKS_DIR / runtime / "pre_tool_use.sh")],
+            input=json.dumps(payload), capture_output=True, text=True,
+            env=env, timeout=30)
+        log = ciel / "activity.log"
+        entries = []
+        if log.is_file():
+            for line in log.read_text().splitlines():
+                e = json.loads(line)
+                e.pop("ts", None)
+                entries.append(e)
+        return proc.returncode, proc.stdout, entries
+
+    def test_body_parity(self):
+        for name, spec in self.PAYLOADS.items():
+            runtime, payload = spec[0], spec[1]
+            override = spec[2] if len(spec) > 2 else False
+            with self.subTest(case=name):
+                rc_py, out_py, log_py = self._fire(
+                    runtime, payload, None, override)
+                rc_rs, out_rs, log_rs = self._fire(
+                    runtime, payload, CIEL_BIN, override)
+                self.assertEqual(rc_py, rc_rs)
+                self.assertEqual(out_py, out_rs)
+                self.assertEqual(log_py, log_rs)
 
 
 @unittest.skipUnless(
