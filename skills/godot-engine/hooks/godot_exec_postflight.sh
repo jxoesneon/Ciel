@@ -63,7 +63,7 @@ if [ "$KILLED_COUNT" -gt 0 ]; then
   done < <(ps aux | grep -iE 'Godot\.app/Contents/MacOS/Godot|/bin/godot' | grep -v 'grep')
 
   printf '{"ts":"%s","hook":"PostToolUse","skill":"godot-exec","action":"cleanup","count":%d}\n' \
-    "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$KILLED_COUNT" >> "$ACTIVITY_LOG" 2>/dev/null || true
+    "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$KILLED_COUNT" >>"$ACTIVITY_LOG" 2>/dev/null || true
 fi
 
 exit 0

@@ -1,9 +1,10 @@
 ---
 name: blender-hard-surface-modeling
-version: 1.0.0
 description: Hard surface modeling in Blender via blender-mcp — boolean/bevel workflow, point-to-point construction, Blender 5.x API gotchas, and agent operational pitfalls learned the hard way.
-author: Hermes/Ciel
-tags: [blender, hard-surface, mcp, bpy]
+license: MIT
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # Blender Hard Surface Modeling (agent-driven)

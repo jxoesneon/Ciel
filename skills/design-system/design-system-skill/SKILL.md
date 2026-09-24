@@ -53,7 +53,7 @@ When the system lives in Figma (common for native apps with no importable web co
 Probe each; record only what exists.
 
 | Foundation | Where it lives in code |
-|---|---|
+| --- | --- |
 | Color, spacing, sizing, radius, border, opacity, z-index — any single value + theming | CSS custom properties / Tailwind theme / tokens file (DTCG) / theme object |
 | Typography (family / size / weight / line-height) | Type-scale tokens / text components / typography utilities |
 | Elevation / shadow | Shadow / elevation tokens or utilities |
@@ -65,6 +65,7 @@ Probe each; record only what exists.
 ## Token tiers & theming
 
 Three tiers; theming lives in the middle one:
+
 1. **Primitive / global** — raw values (palette steps, base scale). Usually *not* consumed directly.
 2. **Semantic / alias** — roles (`bg-accent`, `text-primary`, `space-md`). **Consume these.** Theme switches (light / dark / brand / density) repoint them, so semantic-bound UI themes automatically.
 3. **Component** — per-component values; present in some systems, not all.
@@ -74,6 +75,7 @@ Theming is applied via a code switch: a `[data-theme]` attribute, a `dark:`-styl
 ## Components
 
 Two layers to every component:
+
 - **Selection axes** — which component to import and which discrete variants exist (size, role, emphasis, icon-only…). You pick by importing the right one.
 - **API** — its **props** (variant / boolean / value / slot). Read them from the component's TypeScript types, Storybook, or source. The same prop model applies across a family.
 

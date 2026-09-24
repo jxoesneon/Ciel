@@ -98,8 +98,8 @@ def collect_text(command: str) -> dict[str, list[str]]:
     if re.search(r"\bgit\s+commit\b", command):
         diff = _git(["diff", "--cached", "--unified=0"])
         added = [
-            l[1:] for l in diff.splitlines()
-            if l.startswith("+") and not l.startswith("+++")
+            line[1:] for line in diff.splitlines()
+            if line.startswith("+") and not line.startswith("+++")
         ]
         if added:
             sources["staged_diff"] = added
@@ -108,7 +108,7 @@ def collect_text(command: str) -> dict[str, list[str]]:
         log = _git(["log", "--format=%B%x00", "@{u}..HEAD"])
         if log:
             sources["unpushed_messages"] = [
-                l for l in log.split("\x00") if l.strip()
+                line for line in log.split("\x00") if line.strip()
             ]
 
     return sources

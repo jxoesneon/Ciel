@@ -1,0 +1,21 @@
+# Ciel skill extension — fields beyond the Agent Skills spec. SKILL.md stays spec-pure.
+schema: 1
+version: 1.0.0
+author: Hermes/Ciel
+runtimes:
+- claude_code
+- gemini_cli
+- windsurf
+- generic
+tags:
+- blender
+- organic
+- sculpting
+- retopology
+- rigging
+- mcp
+triggers:
+- pattern: blender.*(organic|sculpt|character|retopo|rig)
+  confidence: 0.85
+- pattern: (retopology|quad topology|edge flow|rigging).*(blender|mesh)
+  confidence: 0.8

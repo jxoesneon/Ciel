@@ -8,6 +8,7 @@
 ## 1. REAL-TIME SAFETY RULES (THE AUDIO THREAD CONTRACT)
 
 Inside the audio callback rendering loop, the code **MUST NEVER**:
+
 1. Call `malloc()`, `free()`, `new`, `delete`, or allocate dynamic memory.
 2. Acquire OS mutexes (`std::mutex`, `pthread_mutex_lock`), which cause priority inversion.
 3. Perform I/O operations (file writing, network calls, console logging).
@@ -18,7 +19,9 @@ Inside the audio callback rendering loop, the code **MUST NEVER**:
 ## 2. STEP-BY-STEP AUDITING PROCEDURE
 
 ### Step 1: Wrap Block Render Loops with Scoped FTZ/DAZ
+
 In C++ audio engines, include `scripts/bulletproof_procedural_dsp.h`:
+
 ```cpp
 #include "scripts/bulletproof_procedural_dsp.h"
 
@@ -33,7 +36,9 @@ void audio_render_callback(float* buffer, size_t num_frames) {
 ```
 
 ### Step 2: Thread Communication via Lock-Free SPSC Queues
+
 Pass commands from the game/UI thread to the audio thread via cache-line aligned SPSC ring buffers:
+
 ```cpp
 BulletproofDSP::SPSCQueue<AudioCommand, 1024> command_queue;
 
@@ -48,4 +53,5 @@ while (command_queue.pop(cmd)) {
 ```
 
 ### Step 3: Web AudioWorklet Zero-GC Deployment
+
 In browser environments, use `scripts/procedural_worklet_processor.js` registered as an `AudioWorkletProcessor` with pre-allocated voice pools. Never create dynamic Web Audio nodes on note triggers.

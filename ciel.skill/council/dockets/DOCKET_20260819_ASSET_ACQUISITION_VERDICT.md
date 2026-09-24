@@ -10,7 +10,7 @@
 ## Stage 1: Independent Member Scores (Summary)
 
 | # | Asset | Coherence | Capability | Safety | Efficiency | Evolution | Weighted | Majority | Verdict |
-|---|-------|-----------|------------|--------|------------|-----------|----------|----------|---------|
+| --- | ------- | ----------- | ------------ | -------- | ------------ | ----------- | ---------- | ---------- | --------- |
 | 1 | NeuralRegen | 8 | 9 | 8 | 8 | 7 | **8.00** | 5/5 | **PASS** |
 | 2 | Procedural Saver/Loader | 7 | 7 | 9 | 8 | 8 | **7.85** | 5/5 | **PASS** |
 | 3 | Debug API | 8 | 7 | 8 | 8 | 7 | **7.60** | 5/5 | **PASS** |
@@ -55,6 +55,7 @@
 ## Stage 3: Chairman Synthesis
 
 ### Safety Veto
+
 - **Procedural Symbiote/Fresnel**: CC BY-NC-SA 3.0 license = non-commercial. ABSOLUTE VETO under condition #5. Cannot be acquired for commercial use. May be studied as reference but code must not be incorporated.
 
 ### PASS — Acquire (11 assets)
@@ -87,15 +88,15 @@ These assets passed weighted threshold (≥6.5) with majority (≥3/5) and no Sa
 
 These assets have majority support but require specific integration mitigations:
 
-12. **Boujie Water Shader** (6.40) — Gerstner waves, infinite ocean, LOD. **Mitigation**: Acquire stripped — disable unused #define features to reduce GPU overhead. Use only for ocean planets.
+ 1. **Boujie Water Shader** (6.40) — Gerstner waves, infinite ocean, LOD. **Mitigation**: Acquire stripped — disable unused #define features to reduce GPU overhead. Use only for ocean planets.
 
-13. **Godot Shaders Library** (6.45) — 2000+ shader browser. **Mitigation**: Cherry-pick specific shaders only. Do not bundle all 2000+. Review each shader's license individually (some may be GPL v3).
+ 2. **Godot Shaders Library** (6.45) — 2000+ shader browser. **Mitigation**: Cherry-pick specific shaders only. Do not bundle all 2000+. Review each shader's license individually (some may be GPL v3).
 
-14. **LimboAI** (6.25) — Behavior trees + state machines, C++ GDExtension. **Mitigation**: Use as upgrade path for complex AI, not replacement for existing VoidFaunaDrone state machine. Requires GDExtension security audit. Existing AI works well for current 4 enemy classes.
+ 3. **LimboAI** (6.25) — Behavior trees + state machines, C++ GDExtension. **Mitigation**: Use as upgrade path for complex AI, not replacement for existing VoidFaunaDrone state machine. Requires GDExtension security audit. Existing AI works well for current 4 enemy classes.
 
-15. **Terrain3D** (5.90) — GPU clipmap terrain, C++ GDExtension. **Mitigation**: Use ONLY for near-field high-detail terrain on planetary surfaces. Do NOT replace existing PlanetTerrainGenerator for planetary-scale rendering. Requires GDExtension security audit. Coherence flagged conflict with existing floating origin system.
+ 4. **Terrain3D** (5.90) — GPU clipmap terrain, C++ GDExtension. **Mitigation**: Use ONLY for near-field high-detail terrain on planetary surfaces. Do NOT replace existing PlanetTerrainGenerator for planetary-scale rendering. Requires GDExtension security audit. Coherence flagged conflict with existing floating origin system.
 
-16. **GD Audio Analyzer** (6.05) — Real-time FFT, beat detection. **Mitigation**: Debug builds only. CPU overhead too high for production at 22050 Hz synthesis. Could drive audio-reactive VFX in debug.
+ 5. **GD Audio Analyzer** (6.05) — Real-time FFT, beat detection. **Mitigation**: Debug builds only. CPU overhead too high for production at 22050 Hz synthesis. Could drive audio-reactive VFX in debug.
 
 ### REFERENCE ONLY — Study but do not acquire (13 assets)
 
@@ -131,28 +132,32 @@ These assets have useful techniques but are redundant, too early-stage, or confl
 ## Integration Order (Recommended)
 
 ### Phase 1 — Foundation Tooling (Week 1-2)
+
 1. Debug API — performance profiling infrastructure
 2. Procedural Saver/Loader — procedural persistence layer
 3. Dialogue Manager 3 — narrative system autoload
 4. LocGuard Lite — localization QA
 
 ### Phase 2 — Visual Enhancement (Week 3-4)
-5. Extremely Fast Atmosphere — replace/augment atmosphere shaders
-6. Starlight — enhance starfield rendering
-7. NeuralRegen — biopunk self-healing materials
-8. Interactive Energy Shield — shield VFX enhancement
+
+1. Extremely Fast Atmosphere — replace/augment atmosphere shaders
+2. Starlight — enhance starfield rendering
+3. NeuralRegen — biopunk self-healing materials
+4. Interactive Energy Shield — shield VFX enhancement
 
 ### Phase 3 — Content Pipeline (Week 5-6)
-9. Procedural Texture Designer — procedural texture workflow
-10. Nexus Quest Weaver — quest system
-11. Juicee (stripped) — game-feel effects
+
+1. Procedural Texture Designer — procedural texture workflow
+2. Nexus Quest Weaver — quest system
+3. Juicee (stripped) — game-feel effects
 
 ### Phase 4 — Conditional Integration (Week 7-8)
-12. Boujie Water Shader (stripped) — ocean planets only
-13. Godot Shaders Library (cherry-picked) — select specific shaders
-14. LimboAI — AI upgrade path (requires GDExtension audit)
-15. Terrain3D — near-field terrain only (requires GDExtension audit)
-16. GD Audio Analyzer — debug builds only
+
+ 1. Boujie Water Shader (stripped) — ocean planets only
+ 2. Godot Shaders Library (cherry-picked) — select specific shaders
+ 3. LimboAI — AI upgrade path (requires GDExtension audit)
+ 4. Terrain3D — near-field terrain only (requires GDExtension audit)
+ 5. GD Audio Analyzer — debug builds only
 
 ---
 

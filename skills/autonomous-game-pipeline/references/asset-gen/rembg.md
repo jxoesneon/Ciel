@@ -11,7 +11,7 @@ Does NOT apply to: textures, backgrounds, 3D model references (Tripo3D needs the
 
 Pick a prompt bg color that is (1) **distinct from the subject** so the mask separates cleanly, and (2) **close to the expected in-game environment** so residual fringe blends. Forest → `dark-green`; sky/water → `steel-blue`; dungeon → `dark-gray`; generic → `medium-gray`. Avoid pure chromakey (`#00FF00`) — it leaves unnatural fringing.
 
-```
+```text
 {name}, {description}. Centered on a solid {bg_color} background.
 ```
 
@@ -20,9 +20,13 @@ Pick a prompt bg color that is (1) **distinct from the subject** so the mask sep
 Deps in `tools/requirements.txt` (`pip install rembg[gpu,cli]`, or `rembg[cpu,cli]`). The script auto-detects CUDA and falls back to CPU with a warning.
 
 ```bash
+
 # single image — always pass --preview
+
 python3 tools/rembg_matting.py img/car.png -o img/car_nobg.png --preview
+
 # batch (video frames): BiRefNet loads once, bg sampled per-frame for color drift
+
 python3 tools/rembg_matting.py --batch frames/ -o clean/
 ```
 
@@ -31,7 +35,7 @@ python3 tools/rembg_matting.py --batch frames/ -o clean/
 `-m auto` (default) selects by mask coverage:
 
 | Mode | Auto when | Behavior |
-|------|-----------|----------|
+| ------ | ----------- | ---------- |
 | `trust` | 5–70% mask fg | Keep all mask-fg pixels, aggressively remove bg |
 | `adapt` | >70% mask fg | Adaptive threshold — fg pixels can be removed if bg-colored |
 | `color` | <5% mask fg | Color matting only, no mask — rough fallback |

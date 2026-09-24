@@ -5,9 +5,10 @@
 ## 1. THE NEUROLOGY OF HEARING: WHY THE BRAIN CRAVES IMPERFECTION
 
 ### 1.1 Predictive Coding & The Auditory Uncanny Valley
+
 Human auditory perception is not a passive microphone recording the world. Under **Karl Friston’s Free Energy Principle**, the auditory cortex operates as a **hierarchical Bayesian prediction machine**.
 
-```
+```text
                            [SENSORY INPUT (Cochlea)]
                                       │
                                       ▼
@@ -24,10 +25,12 @@ Human auditory perception is not a passive microphone recording the world. Under
 ```
 
 1. **Why Static Audio Samples Cause Fatigue ("The Machine-Gun Effect")**:
+
    When a pre-recorded sample repeats—even with 5 or 10 round-robin variations—the higher auditory cortex rapidly learns the exact, static phase and spectral fingerprint. Once the prediction error drops to zero, the brain's sensory gating mechanisms flag the sound as **inanimate background noise** or **mechanical artificiality**. Attention collapses, and listener fatigue (cognitive irritation) sets in.
 
 2. **Why Procedural Audio Sounds "Alive"**:
-   A living physical system (a human voice, a wind gust, a cello string, a wooden door) never produces the exact same waveform twice. Temperature fluctuations, chaotic turbulence, non-linear hysteresis, and neuromuscular motor-unit twitches inject **bounded stochastic entropy**. 
+
+   A living physical system (a human voice, a wind gust, a cello string, a wooden door) never produces the exact same waveform twice. Temperature fluctuations, chaotic turbulence, non-linear hysteresis, and neuromuscular motor-unit twitches inject **bounded stochastic entropy**.
    Because every procedural iteration contains subtle, micro-structural variations within expected physical constraints, the brain's prediction error never collapses to zero, nor does it explode into chaotic noise. The auditory cortex remains perpetually engaged, recognizing the sound as an **active, organic entity**.
 
 ---
@@ -36,7 +39,7 @@ Human auditory perception is not a passive microphone recording the world. Under
 
 The human ear and nervous system evolved over millions of years inside natural acoustic landscapes. Frequency response is not an arbitrary engineering detail—it is an evolutionary survival map.
 
-```
+```text
        0 Hz       20 Hz                1 kHz      2.5 - 4.5 kHz       8 kHz       20 kHz
        ─────┴──────────┴────────────────────┴───────────────┴─────────────┴───────────┴─────
          INFRASOUND        ORGANIC WARMTH     SPEECH CORE    PRIMAL THREAT     AIR / LIGHT
@@ -45,11 +48,11 @@ The human ear and nervous system evolved over millions of years inside natural a
 
 | Frequency Band | Biological & Evolutionary Origin | Subconscious Neurological Impact |
 | :--- | :--- | :--- |
-| **Infrasound & Sub-Bass**<br>($10\text{ Hz} - 45\text{ Hz}$)| Earthquakes, volcanic tremors, approaching megafauna, thunder, collapsing terrain. | Triggers the vestibular system and sympathetic nervous system. Induces involuntary somatic dread, visceral gravity, and primal awe. |
-| **Warm Fundamental Core**<br>($80\text{ Hz} - 350\text{ Hz}$)| Mammalian heartbeats, chest resonance of calm biological vocalization, wooden shelter acoustics. | Activates the parasympathetic nervous system. Conveys grounding, security, warmth, physical weight, and safety. |
-| **Intelligibility Band**<br>($500\text{ Hz} - 2\text{ kHz}$)| Human speech formants, animal throat resonances, moving footsteps. | Focus of active intellectual attention, narrative comprehension, and spatial orientation. |
-| **The Threat Band**<br>($2.5\text{ kHz} - 4.5\text{ kHz}$)| Human infant distress cries, bone/tooth fractures, predator screams, tearing flesh. | **Maximum ear canal sensitivity** (quarter-wave outer ear canal resonance). Triggers instant cortisol release, pupil dilation, hyper-arousal, and reflex actions. |
-| **Crystalline Air**<br>($8\text{ kHz} - 20\text{ kHz}$)| Rustling dry leaves, snap of dry twigs, water mist, sunlight on water, bird flight. | Spatial awareness, proximity detection, openness, ethereal wonder, or predatory stealth tension. |
+| **Infrasound & Sub-Bass**<br>($10\text{ Hz} - 45\text{ Hz}$) | Earthquakes, volcanic tremors, approaching megafauna, thunder, collapsing terrain. | Triggers the vestibular system and sympathetic nervous system. Induces involuntary somatic dread, visceral gravity, and primal awe. |
+| **Warm Fundamental Core**<br>($80\text{ Hz} - 350\text{ Hz}$) | Mammalian heartbeats, chest resonance of calm biological vocalization, wooden shelter acoustics. | Activates the parasympathetic nervous system. Conveys grounding, security, warmth, physical weight, and safety. |
+| **Intelligibility Band**<br>($500\text{ Hz} - 2\text{ kHz}$) | Human speech formants, animal throat resonances, moving footsteps. | Focus of active intellectual attention, narrative comprehension, and spatial orientation. |
+| **The Threat Band**<br>($2.5\text{ kHz} - 4.5\text{ kHz}$) | Human infant distress cries, bone/tooth fractures, predator screams, tearing flesh. | **Maximum ear canal sensitivity** (quarter-wave outer ear canal resonance). Triggers instant cortisol release, pupil dilation, hyper-arousal, and reflex actions. |
+| **Crystalline Air**<br>($8\text{ kHz} - 20\text{ kHz}$) | Rustling dry leaves, snap of dry twigs, water mist, sunlight on water, bird flight. | Spatial awareness, proximity detection, openness, ethereal wonder, or predatory stealth tension. |
 
 ---
 
@@ -57,7 +60,7 @@ The human ear and nervous system evolved over millions of years inside natural a
 
 Why does a minor second or tritone feel painful, while a perfect fifth feels restful?
 
-```
+```text
                      CRITICAL BANDWIDTH (1.0 Bark)
                      ◄───────────────────────────►
                                Basilar Membrane
@@ -79,7 +82,7 @@ Why does a minor second or tritone feel painful, while a perfect fifth feels res
 
 Traditional game audio relies on playing back pre-recorded WAV/MP3 files. This model suffers from fatal conceptual flaws:
 
-```
+```text
 [TRADITIONAL SAMPLE PARADIGM]
 Physical Event (e.g. 50kg crate hits stone @ 12m/s)
    │
@@ -97,9 +100,11 @@ Physical Event (Mass m, Relative Velocity v, Stiffness k, Damping γ)
 ```
 
 1. **The Combinatorial Explosion Problem**:
+
    A single interactive screen with 5 materials, 10 collision velocities, 4 moisture levels, 3 room sizes, and 5 game tension states would require $5 \times 10 \times 4 \times 3 \times 5 = 3,000$ recorded audio assets. Procedural DSP generates all 3,000 states (and an infinite continuum in between) using **mathematical equations taking less than 50 KB of code memory**.
 
 2. **Semantic & Kinetic Truth**:
+
    When an audio engine synthesizes sound directly from velocity vectors, rigid body masses, and surface friction coefficients, the sound carries **physical causality**. The player's brain subconscious perceives the sound as real because the visual motion and auditory resonance obey identical laws of conservation of momentum and energy.
 
 ---
@@ -110,7 +115,7 @@ Physical Event (Mass m, Relative Velocity v, Stiffness k, Damping γ)
 
 Modes are not arbitrary scales; they represent different levels of **acoustic brightness and gravitational tension** relative to the fundamental overtone series.
 
-```
+```text
        LYDIAN (+#4)          IONIAN (Nat)        MIXOLYDIAN (b7)        DORIAN (b3, Nat 6)
     [Anti-Gravity Float]    [Pastoral Light]    [Open Horizon]         [Resolute Ground]
              │                     │                   │                       │
@@ -121,10 +126,15 @@ Modes are not arbitrary scales; they represent different levels of **acoustic br
 ```
 
 - **Why Lydian Evokes Wonder and Cosmic Ascent**:
+
   The raised 4th ($\sharp 4$) eliminates the sole unresolved tritone tension of the major scale (between degree 4 and 7) and raises it to an acoustic overtone that matches the 11th harmonic of the harmonic series. It feels completely free of downward melodic gravity.
+
 - **Why Phrygian Evokes Ancient Dread & Scorched Deserts**:
+
   The minor 2nd ($\flat 2$) hangs directly above the root tonic at 100 cents. The immense critical-band roughness between degree 1 and degree $\flat 2$ creates a downward gravitational pull that resists resolution, evoking ancient stone architecture, ritualistic tension, and arid heat.
+
 - **Why Locrian Evokes Abyssal Madness**:
+
   The diminished 5th ($\flat 5$) destroys the fundamental acoustic pillar of tonality: the perfect 5th ($3:2$ ratio). Without a stable fifth, the human brain cannot establish a resting tonal center, creating persistent psychological disorientation.
 
 ---
@@ -133,13 +143,14 @@ Modes are not arbitrary scales; they represent different levels of **acoustic br
 
 Why do **Neo-Riemannian transformations** ($P, L, R$) sound so emotionally profound in cinematic and interactive scoring?
 
-```
+```text
 C Major (C, E, G) ───[ L Transform ]───► E Minor (B, E, G)
 • Pitch Travel: Only 1 semitone moves (C -> B), while E and G remain anchored.
 • Cognitive Impact: Minimal neural processing effort + complete emotional re-contextualization.
 ```
 
 - **The Principle of Least Acoustic Action**:
+
   The human brain seeks maximum emotional transformation with minimal cognitive overhead. When chords transition by shifting only one voice by a half or whole step while retaining common tones, the brain retains its spatial-harmonic anchor while experiencing an abrupt shift in emotional color (Major $\to$ Minor).
 
 ---
@@ -148,7 +159,7 @@ C Major (C, E, G) ───[ L Transform ]───► E Minor (B, E, G)
 
 ### 4.1 Cross-Modal Cortical Binding (The Bouba/Kiki Phenomenon)
 
-```
+```text
         "KIKI" (Angular / High FM / Sharp Cutoff)      "BOUBA" (Curved / Low-Pass / Warm Sine)
                      /\                                          .---.
                     /  \  /\                                   .'     '.
@@ -170,6 +181,7 @@ C Major (C, E, G) ───[ L Transform ]───► E Minor (B, E, G)
 ## 5. SUMMARY: THE MISSION OF THE PROCEDURAL AUDIOGRAPHER
 
 When an AI agent is asked to **`"create the audio for this screen"`**, it does not merely write oscillators and play random notes. It:
+
 1. **Reads the Physics**: Translates mass, velocity, and materials into acoustic energy conservation.
 2. **Reads the Biology**: Respects critical bands, equal-loudness curves, and threat frequencies.
 3. **Reads the Psychology**: Chooses modes, Neo-Riemannian progressions, and dynamic tension indices to match the player's subconscious emotional state.

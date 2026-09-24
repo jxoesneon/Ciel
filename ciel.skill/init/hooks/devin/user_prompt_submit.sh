@@ -10,7 +10,10 @@ export CIEL_HOOK_LIB="$HOOK_DIR/../lib"
 CIEL_BIN="${CIEL_BIN:-}"
 if [ -z "$CIEL_BIN" ]; then
   for _c in "${HOME:-/nonexistent}/.ciel/bin/ciel" "${HOME:-/nonexistent}/.cargo/bin/ciel" "$HOOK_DIR/../../bin/ciel"; do
-    if [ -x "$_c" ]; then CIEL_BIN="$_c"; break; fi
+    if [ -x "$_c" ]; then
+      CIEL_BIN="$_c"
+      break
+    fi
   done
 fi
 if [ -n "$CIEL_BIN" ] && [ -x "$CIEL_BIN" ]; then
@@ -20,7 +23,8 @@ if [ -n "$CIEL_BIN" ] && [ -x "$CIEL_BIN" ]; then
 fi
 
 SCAN=""
-SCAN="$(INPUT_JSON="$input" python3 - <<'PY'
+SCAN="$(
+  INPUT_JSON="$input" python3 - <<'PY'
 import json
 import os
 import sys

@@ -1,5 +1,6 @@
 ---
 name: asset-gen
+license: MIT
 display_name: Asset Generator
 short_description: Generate game images, GLB 3D models, rigged characters, and animated sprites
 default_prompt: "Use asset-gen to generate images, 3D models, or animated sprites for this game."
@@ -14,10 +15,10 @@ Generate PNG images (Gemini or xAI Grok) and GLB 3D models (Tripo3D) from text p
 
 ## Models
 
-| Model | Flag | Cost | Best for |
-|-------|------|------|----------|
-| Gemini | `--model gemini` | 5¢ (512) · 7¢ (1K) · 10¢ (2K) · 15¢ (4K) | Precise prompt following — references, characters, 3D refs, exact layouts |
-| Grok | `--model grok` (default) | 2¢ | High quality but imprecise — textures, simple objects, item kits, scenic backgrounds |
+| Model   | Flag                     | Cost                                     | Best for                                                                             |
+|---------|--------------------------|------------------------------------------|--------------------------------------------------------------------------------------|
+| Gemini  | `--model gemini`         | 5¢ (512) · 7¢ (1K) · 10¢ (2K) · 15¢ (4K) | Precise prompt following — references, characters, 3D refs, exact layouts            |
+| Grok    | `--model grok` (default) | 2¢                                       | High quality but imprecise — textures, simple objects, item kits, scenic backgrounds |
 
 Grok produces great-looking output but often ignores specific instructions; reach for Gemini when the result must match what you described.
 
@@ -66,7 +67,7 @@ Source image for `glb`: 3/4 elevated angle, solid white/gray background, matte f
 
 Biped retarget presets (pass as `preset:biped:<name>`):
 
-```
+```text
 afraid agree angry_01/02/03 basketball_shot bow box_01/02/03 cast_a_spell cheer chop
 clap climb complain_01/02 cross_body_crunch crossover_dribble cry dance_01..06
 defeat_02/03 depressed dig dive dribble fall fire flee_01/02 flip fold_arms
@@ -82,9 +83,11 @@ victory_celebration volleyball wait walk warm_up wave_goodbye_01/02
 
 - Jobs routinely sit at 99% with empty output for minutes. Let the default timeout run.
 - A timeout in `glb`/`rig`/`retarget` does **not** mean server failure. The task id is already saved in the `<output>.tripo.json` sidecar. **Do not resubmit — that double-charges.** Resume for free instead:
+
   ```bash
   python3 tools/asset_gen.py resume -o model.glb
   ```
+
   Safe to re-run; it no-ops once complete. Delete the sidecar to force a cold start.
 
 ## Costs
@@ -119,6 +122,6 @@ Track every generated asset in `README.md` with an **in-game Size** column — w
 - Backgrounds: pixel size + behavior, e.g. `1920x1080, fullscreen`
 - Sprites: display pixels, e.g. `128x128 px`
 
-| Name | Description | Size | Path | Cost |
-|------|-------------|------|------|------|
-| car | sedan with spoiler | 4m long | assets/glb/car.glb | 37¢ |
+| Name   | Description        | Size    | Path               | Cost   |
+|--------|--------------------|---------|--------------------|--------|
+| car    | sedan with spoiler | 4m long | assets/glb/car.glb | 37¢    |

@@ -15,7 +15,7 @@ to determine where the 2,424 rendered objects actually are relative to the camer
 
 ### Visibility diagnostic (GPU profile, FLIGHT_IDLE entry, after Option K)
 
-```
+```text
 Camera: Camera3D at (0.0, -43.11, 14.22)
 Camera far: 5,000,000 m (5,000 km)
 Camera fov: 80.0
@@ -38,7 +38,7 @@ Farthest within-far object: 343 m
 ### Spatial scale mismatch
 
 | Scale | Value | In km |
-|---|---|---|
+| --- | --- | --- |
 | Camera far clip | 5,000,000 m | 5,000 km |
 | Near chunk size | 0.01 AU = 1,495,978,707 m | 1,495,979 km |
 | Near stream radius | 3 chunks = 0.03 AU | 4,487,936 km |
@@ -55,6 +55,7 @@ the far clip**. The camera physically cannot see any ChunkStreamManager asteroid
 ### What IS visible (within 5,000 km)
 
 The 26 objects within the far clip are:
+
 - **Host star**: StarSphere (4,224 prims) + corona shell (4,224 prims) + ~8 small MIs (32 prims each) — at ~45m from camera (ship spawns at origin, star is at origin)
 - **PlayerShip**: 4 MeshInstance3D (bio hull, shield, cockpit, fill light) — at 0-14m
 - **Small nearby objects**: ~14 MeshInstance3D at 100-343m (8 prims each — HUD markers, scanner elements, NoiseMapDebugOverlay)
@@ -67,32 +68,39 @@ The 26 objects within the far clip are:
 From Godot 4.7 documentation research:
 
 1. **`RENDER_TOTAL_PRIMITIVES_IN_FRAME` excludes culled objects** — the 2,424 objects
+
    are genuinely being rendered, not culled. Source:
-   https://docs.godotengine.org/en/4.7/classes/class_performance.html
+   <https://docs.godotengine.org/en/4.7/classes/class_performance.html>
 
 2. **The metric includes shadow and depth prepass** — "Due to the depth prepass and shadow
+
    passes, the number of primitives is always higher than the actual number of vertices in
    the scene (typically double or triple the original vertex count)."
+
    - 1.86M unique × 3 passes (color + depth + shadow) ≈ 5.59M — matches exactly.
 
 3. **Float32 precision at large distances** — Godot's large world coordinates doc warns:
+
    "Around 1 million units from the origin, large amounts of snapping and popping occur."
    Our near chunks are at 748 million meters. At that distance, float32 precision is ~64m.
    AABB calculations for frustum culling may be corrupted.
-   Source: https://docs.godotengine.org/en/stable/tutorials/physics/large_world_coordinates.html
+   Source: <https://docs.godotengine.org/en/stable/tutorials/physics/large_world_coordinates.html>
 
 4. **DirectionalLight3D shadow pass** — The sun light (`shadow_enabled = true`) renders
+
    the scene from the light's perspective. The shadow frustum may encompass objects beyond
    the camera's far clip. No `directional_shadow_max_distance` is set, so it defaults to
    the camera's far clip (5,000 km) — but the shadow PSSM splits may still render distant
    objects.
-   Source: https://docs.godotengine.org/en/4.4/tutorials/3d/lights_and_shadows.html
+   Source: <https://docs.godotengine.org/en/4.4/tutorials/3d/lights_and_shadows.html>
 
 5. **MultiMesh AABB** — Each far chunk MultiMesh has an AABB spanning the entire chunk
+
    (150 million km). If the AABB is corrupted by float precision, Godot may consider the
    entire MultiMesh "visible" and render all instances.
 
 6. **Occlusion culling** — `use_occlusion_culling=true` is set in project.godot, but there
+
    are no OccluderInstance3D nodes in the scene. Occlusion culling requires baked occluder
    geometry to function. With no occluders, it does nothing.
 
@@ -100,11 +108,14 @@ From Godot 4.7 documentation research:
 
 FlightController.gd has a floating origin system (`_apply_floating_origin()`) that shifts
 the world when the ship is >50km from origin. However:
+
 - The ship spawns at origin (48m from origin)
 - The floating origin threshold is 50km
 - The ship would need to fly 50km before the origin shifts
 - Even after shifting, the near chunks are at 748 million meters — shifting by 50km
+
   doesn't meaningfully reduce the coordinate magnitude
+
 - The floating origin addresses physics precision, not rendering culling
 
 ### Are galaxy-level objects rendering?
@@ -136,6 +147,7 @@ The ChunkStreamManager was designed around **astronomical distances** (0.01 AU n
 75,000 km, a 6m asteroid subtends 0.003 pixels — physically impossible to see.
 
 The chunk system is loading, spawning, and rendering hundreds of asteroids that are:
+
 1. Beyond the camera's far clip (invisible)
 2. Beyond float32 precision for reliable frustum culling
 3. Too small to see even if they were within view distance
@@ -148,7 +160,7 @@ The chunk system is loading, spawning, and rendering hundreds of asteroids that 
 The user asked whether we could use "scientific notation or something to fully utilize
 Godot's capabilities while keeping full accuracy." This maps to three real techniques:
 
-**1. Godot's double precision build (`precision=double`)**
+#### 1. Godot's double precision build (`precision=double`)
 
 Godot 4 can be compiled with `precision=double` which makes all `Vector3` types use
 64-bit doubles on the CPU. For GPU rendering, Godot uses "emulated double precision"
@@ -157,15 +169,17 @@ essentially mantissa + exponent in scientific notation terms) and reconstructs t
 precision on the GPU. This works on Metal (Apple Silicon) since it doesn't use actual
 GPU doubles.
 
-Source: https://godotengine.org/article/emulating-double-precision-gpu-render-large-worlds/
+Source: <https://godotengine.org/article/emulating-double-precision-gpu-render-large-worlds/>
 
 With the double build:
+
 - All AABB calculations use double precision → frustum culling works at AU distances
 - All physics use double precision → no jitter at any distance
 - GPU rendering uses emulated double → no vertex snapping at large coordinates
 - No floating origin needed (though still recommended for extreme distances)
 
 Limitations (from PR #66178):
+
 - Does NOT work with `skip_vertex_transform` or `world_vertex_coords` shader modes
 - World-space shader calculations still limited to float32
 - MultiMesh emulated double precision has reduced accuracy beyond ~1,000 km
@@ -173,14 +187,14 @@ Limitations (from PR #66178):
 - ~20% CPU performance penalty, ~2× memory for vectors
 - Requires scons + Python + Xcode (user has Xcode, needs scons)
 
-**2. Floating origin every frame (Outer Wilds approach)**
+#### 2. Floating origin every frame (Outer Wilds approach)
 
 Outer Wilds keeps the player at origin by applying an opposite force to every physics
 body every frame. The cost is trivial — "it doesn't actually really do anything to
 performance because we're already doing that. We're already applying forces to every
 object." (Alex Beachum, Outer Wilds director).
 
-Source: https://gamedev.stackexchange.com/questions/200945/moving-player-inside-of-moving-spaceship
+Source: <https://gamedev.stackexchange.com/questions/200945/moving-player-inside-of-moving-spaceship>
 
 For BioGenesis-X, the existing `_apply_floating_origin()` in FlightController.gd already
 shifts all `celestial_bodies` group nodes. The change is to run it every frame instead
@@ -189,14 +203,16 @@ of at a 50km threshold. Cost: ~600 Vector3 additions per frame = ~36,000 ops/sec
 correct).
 
 With per-frame floating origin:
+
 - All render coordinates stay within a few km of origin → frustum culling works
 - No custom Godot build needed
 - Full astronomical accuracy preserved in GDScript (floats are already 64-bit double)
 - The "true" position is `render_position + origin_offset` (stored as double in GDScript)
 
-**3. Split-position / chunk-local coordinates (manual scientific notation)**
+#### 3. Split-position / chunk-local coordinates (manual scientific notation)
 
 Store each object's position as two values:
+
 - `chunk_origin`: double-precision Vector3 (the coarse position, e.g. 1.5e11 m)
 - `local_offset`: float32 Vector3 (the fine position within the chunk, e.g. 0-1500 m)
 
@@ -217,7 +233,7 @@ culling. "The only drawback is that there is no screen or frustum culling possib
 individual instances. This means that millions of objects will be always or never drawn,
 depending on the visibility of the whole MultiMesh."
 
-Source: https://docs.godotengine.org/en/stable/tutorials/performance/using_multimesh.html
+Source: <https://docs.godotengine.org/en/stable/tutorials/performance/using_multimesh.html>
 
 Our 69 far-field MultiMesh nodes each span an entire 1-AU chunk (150M km). If the
 MultiMesh node's AABB intersects the frustum (which it does at large coordinates due to
@@ -274,6 +290,7 @@ the ship always at (0,0,0). This keeps all render coordinates within a few km of
 origin, where float32 precision is sufficient for frustum culling.
 
 **Implementation**:
+
 - Change `_FLOATING_ORIGIN_THRESHOLD_M` from 50,000 to 0 (shift every frame)
 - Or better: remove the threshold check entirely and always shift
 - The existing `_floating_origin_bodies` cache already handles `celestial_bodies` group
@@ -338,6 +355,7 @@ use 64-bit doubles on the CPU, and Godot's built-in emulated double precision ha
 GPU rendering.
 
 **Implementation**:
+
 - Install scons: `pip3 install scons`
 - Clone Godot: `git clone https://github.com/godotengine/godot.git -b 4.7-stable`
 - Build: `scons platform=macos arch=arm64 precision=double -j8`
@@ -345,12 +363,14 @@ GPU rendering.
 - All existing code works unchanged (Vector3 is just higher precision)
 
 **Estimated impact**:
+
 - Frustum culling works at AU distances (AABBs computed in double precision)
 - No vertex jitter at any distance (emulated double on GPU)
 - Physics precision is perfect at any distance
 - MultiMesh emulated double has reduced accuracy beyond ~1,000 km (PR #66178 note)
 - CPU performance: ~20% penalty for physics, small for rendering
 - Memory: ~2× for all Vector3 types
+
 **Complexity**: Medium — one-time build setup. Need to maintain custom binary.
 No code changes needed, but need to ensure all addons are compatible (JoltPhysics3D
 should be — it's a physics addon that benefits from double precision).
@@ -365,6 +385,7 @@ Run floating origin every frame (Option N) AND store true positions as separate
 double-precision GDScript variables for game logic accuracy.
 
 **Implementation**:
+
 - Floating origin shifts all Node3D positions every frame (render coordinates stay small)
 - Each celestial body stores `true_position: Vector3` (GDScript float = 64-bit double)
 - `true_position` is updated by `true_position += velocity * delta` (double precision)
@@ -390,6 +411,7 @@ Use the hybrid floating origin (Option S) for precision AND redesign chunk sizes
 (Option L) for visibility. This is the complete solution.
 
 **Implementation**:
+
 - Floating origin every frame with double-precision true positions (Option S)
 - Near chunks: 10 km × 10 km (Option L) — asteroids within 30 km of ship
 - Far chunks: 100 km × 100 km — asteroids within 300 km
@@ -408,27 +430,27 @@ drive and planet landing systems.
 
 ## Research sources
 
-- Godot 4.7 Performance monitors: https://docs.godotengine.org/en/4.7/classes/class_performance.html
-- Godot large world coordinates: https://docs.godotengine.org/en/stable/tutorials/physics/large_world_coordinates.html
-- Godot rendering at long distances (tracker): https://github.com/godotengine/godot/issues/98655
-- Emulating double precision on GPU: https://godotengine.org/article/emulating-double-precision-gpu-render-large-worlds/
-- Godot PR #66178 — emulated double precision for rendering: https://github.com/godotengine/godot/pull/66178
-- Godot issue #58516 — double precision build still jitters: https://github.com/godotengine/godot/issues/58516
-- Godot 3D lights and shadows: https://docs.godotengine.org/en/4.4/tutorials/3d/lights_and_shadows.html
-- Godot DirectionalLight3D: https://docs.godotengine.org/en/stable/classes/class_directionallight3d.html
-- Godot optimizing 3D performance: https://docs.godotengine.org/en/stable/tutorials/performance/optimizing_3d_performance.html
-- Godot visibility ranges: https://docs.godotengine.org/en/stable/tutorials/3d/visibility_ranges.html
-- Godot frustum culling + extra_cull_margin: https://docs.godotengine.org/en/stable/tutorials/shaders/advanced_postprocessing.html
-- Godot MultiMesh — no per-instance culling: https://docs.godotengine.org/en/stable/tutorials/performance/using_multimesh.html
-- Godot MultiMesh per-instance culling proposal: https://github.com/godotengine/godot-proposals/issues/10669
-- Godot mesh LOD and MultiMesh: https://docs.godotengine.org/en/stable/tutorials/3d/mesh_lod.html
-- Outer Wilds floating origin (Alex Beachum): https://gamedev.stackexchange.com/questions/200945/moving-player-inside-of-moving-spaceship
-- Unity HDRP camera-relative rendering: https://docs.unity3d.com/Packages/hdrp/manual/Camera-Relative-Rendering.html
-- Babylon.js floating origin: https://doc.babylonjs.com/features/featuresDeepDive/scene/large_world
-- Unreal Engine LWC + camera-relative: https://dev.epicgames.com/community/learning/tutorials/DdzL/unreal-engine-fortnite-efficient-materials-for-large-worlds
-- Gaia Sky precision at AU scale: https://tonisagrista.com/blog/2021/whats-new-gaiasky-31x/
-- Building Godot with precision=double on macOS: https://forum.longplay.games/t/building-godot-4-for-large-world-sizes-on-mac/398
-- Godot double precision builds proposal: https://github.com/godotengine/godot-proposals/issues/8843
+- Godot 4.7 Performance monitors: <https://docs.godotengine.org/en/4.7/classes/class_performance.html>
+- Godot large world coordinates: <https://docs.godotengine.org/en/stable/tutorials/physics/large_world_coordinates.html>
+- Godot rendering at long distances (tracker): <https://github.com/godotengine/godot/issues/98655>
+- Emulating double precision on GPU: <https://godotengine.org/article/emulating-double-precision-gpu-render-large-worlds/>
+- Godot PR #66178 — emulated double precision for rendering: <https://github.com/godotengine/godot/pull/66178>
+- Godot issue #58516 — double precision build still jitters: <https://github.com/godotengine/godot/issues/58516>
+- Godot 3D lights and shadows: <https://docs.godotengine.org/en/4.4/tutorials/3d/lights_and_shadows.html>
+- Godot DirectionalLight3D: <https://docs.godotengine.org/en/stable/classes/class_directionallight3d.html>
+- Godot optimizing 3D performance: <https://docs.godotengine.org/en/stable/tutorials/performance/optimizing_3d_performance.html>
+- Godot visibility ranges: <https://docs.godotengine.org/en/stable/tutorials/3d/visibility_ranges.html>
+- Godot frustum culling + extra_cull_margin: <https://docs.godotengine.org/en/stable/tutorials/shaders/advanced_postprocessing.html>
+- Godot MultiMesh — no per-instance culling: <https://docs.godotengine.org/en/stable/tutorials/performance/using_multimesh.html>
+- Godot MultiMesh per-instance culling proposal: <https://github.com/godotengine/godot-proposals/issues/10669>
+- Godot mesh LOD and MultiMesh: <https://docs.godotengine.org/en/stable/tutorials/3d/mesh_lod.html>
+- Outer Wilds floating origin (Alex Beachum): <https://gamedev.stackexchange.com/questions/200945/moving-player-inside-of-moving-spaceship>
+- Unity HDRP camera-relative rendering: <https://docs.unity3d.com/Packages/hdrp/manual/Camera-Relative-Rendering.html>
+- Babylon.js floating origin: <https://doc.babylonjs.com/features/featuresDeepDive/scene/large_world>
+- Unreal Engine LWC + camera-relative: <https://dev.epicgames.com/community/learning/tutorials/DdzL/unreal-engine-fortnite-efficient-materials-for-large-worlds>
+- Gaia Sky precision at AU scale: <https://tonisagrista.com/blog/2021/whats-new-gaiasky-31x/>
+- Building Godot with precision=double on macOS: <https://forum.longplay.games/t/building-godot-4-for-large-world-sizes-on-mac/398>
+- Godot double precision builds proposal: <https://github.com/godotengine/godot-proposals/issues/8843>
 
 ## Files involved
 

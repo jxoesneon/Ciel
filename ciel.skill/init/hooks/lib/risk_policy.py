@@ -24,6 +24,7 @@ decision is ``allow`` | ``deny`` | ``allow_overridden``. ``--check`` prints
 policy load diagnostics instead.
 """
 
+import contextlib
 import json
 import os
 import re
@@ -343,10 +344,8 @@ def grant_state() -> dict:
     mtime = sentinel.stat().st_mtime if active else None
 
     prev = None
-    try:
+    with contextlib.suppress(OSError):
         prev = state_file.read_text().strip()
-    except OSError:
-        pass
     now = "1" if active else "0"
     if prev != now:
         from datetime import datetime, timezone
@@ -360,10 +359,8 @@ def grant_state() -> dict:
                 }) + "\n")
         except OSError:
             pass
-        try:
+        with contextlib.suppress(OSError):
             state_file.write_text(now)
-        except OSError:
-            pass
 
     first_seen = None
     if grants_log.exists():

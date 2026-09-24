@@ -1,4 +1,5 @@
 # AUDIO-TO-TEXT & MULTIMODAL AUDIO ANALYSIS FOR LLMS
+
 **Theoretical Foundations, Diagnostic Audiograms for VLMs, and the 3-Tier `AudioStructuralManifest` Specification for Text-Only Models**
 
 ---
@@ -9,7 +10,7 @@ Large Language Models (LLMs) operate over discrete token vocabularies. Unlike na
 
 To enable these models to analyze, critique, diagnose, compose, and synthesize audio with professional precision, we establish a **dual-channel bridge**:
 
-```
+```text
                                   ┌───────────────────────────────┐
                                   │      RAW AUDIO WAVEFORM       │
                                   │   (.wav, .mp3, PCM buffers)   │
@@ -41,7 +42,7 @@ Vision-Language Models process images through Vision Transformer (ViT) patch tok
 
 ### 2.1 Multi-Panel Diagnostic Audiogram Architecture (300 DPI, Dark Mode `#0E1117`)
 
-```
+```text
 +──────────────────────────────────────────────────────────────────────────────────────────────────+
 |                                    COMPOSITE DIAGNOSTIC AUDIOGRAM                                |
 +──────────────────────────────────────────────────────────────────────────────────────────────────+
@@ -61,7 +62,8 @@ Vision-Language Models process images through Vision Transformer (ViT) patch tok
 +──────────────────────────────────────────────────────────────────────────────────────────────────+
 ```
 
-### 2.2 VLM Inspection Checklist:
+### 2.2 VLM Inspection Checklist
+
 1. **Frequency Masking & Buildup**: Inspect the blue-shaded $200\text{--}400\text{ Hz}$ band for continuous low-mid mud.
 2. **Resonant Peaks & Harshness**: Inspect the pink-shaded $2\text{--}5\text{ kHz}$ and $6\text{--}8.5\text{ kHz}$ zones for piercing horizontal lines.
 3. **Dynamics & Compression**: Inspect Crest Factor ($Peak - RMS$). A gap $<6\text{ dB}$ signals over-compression ("sausage master"); $>14\text{ dB}$ signals dynamic transient punch.
@@ -73,7 +75,7 @@ Vision-Language Models process images through Vision Transformer (ViT) patch tok
 
 To allow a text-only model to reason about audio, the physical signal is serialized into an ultra-compact (< 1,200 tokens), standardized JSON schema covering high-level semantics down to exact millisecond DSP moments.
 
-```
+```text
 +──────────────────────────────────────────────────────────────────────────────────────────────────+
 |                             3-TIER AUDIO STRUCTURAL MANIFEST ARCHITECTURE                        |
 +──────────────────────────────────────────────────────────────────────────────────────────────────+
@@ -117,6 +119,7 @@ When passing audio analysis data to a text-only model (e.g. Claude 3.5, GPT-4, L
 You are analyzing an audio clip via its calibrated 3-Tier AudioStructuralManifest JSON:
 
 ```json
+
 {
   "audio_metadata": { "duration_seconds": 1.15, "sample_rate": 44100, "channels": 1 },
   "tier_1_semantic_context": {
@@ -132,10 +135,13 @@ You are analyzing an audio clip via its calibrated 3-Tier AudioStructuralManifes
   },
   "tier_3_symbolic_music": { "detected_key": "N/A", "abc_notation": "X:1\nT:Crack\n[V:1] z4 |]" }
 }
-```
+
+```text
 
 [REASONING OBJECTIVE]:
+
 1. Evaluate the physical materials and collision mechanics based on Tier 2 Centroid (3450 Hz) and Attack Time (2.5 ms).
 2. Assess dynamic headroom and clipping safety from True Peak (-1.0 dBTP) and Crest Factor (19.8 dB).
 3. Diagnose whether EQ adjustment, saturation, or reverb modification is required for mix integration.
+
 ```

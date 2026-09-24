@@ -22,6 +22,7 @@ CLI: ``--ask`` reads one JSON record from stdin
 result to events.jsonl.
 """
 
+import contextlib
 import hashlib
 import json
 import math
@@ -224,16 +225,7 @@ def ask_choice(state: dict, key: str, instructions: str,
 
 
 _STOPWORDS = frozenset(
-    "in my and the a an to for of on is it me we i or be this that with out "
-    "up do how what which should can could would your our at by from as "
-    "into about before after just need want help please use using make get "
-    "set new all any some no not if when then so than too very will are was "
-    "were been has have had does did over again once here there where why "
-    "who these those each few more most other own same only also now like "
-    "through between both per via whether while during without within "
-    "across upon off down along around among against step run write create "
-    "add check see look take give go put let keep work thing things "
-    "something anything lot kind type part way".split())
+    ["in", "my", "and", "the", "a", "an", "to", "for", "of", "on", "is", "it", "me", "we", "i", "or", "be", "this", "that", "with", "out", "up", "do", "how", "what", "which", "should", "can", "could", "would", "your", "our", "at", "by", "from", "as", "into", "about", "before", "after", "just", "need", "want", "help", "please", "use", "using", "make", "get", "set", "new", "all", "any", "some", "no", "not", "if", "when", "then", "so", "than", "too", "very", "will", "are", "was", "were", "been", "has", "have", "had", "does", "did", "over", "again", "once", "here", "there", "where", "why", "who", "these", "those", "each", "few", "more", "most", "other", "own", "same", "only", "also", "now", "like", "through", "between", "both", "per", "via", "whether", "while", "during", "without", "within", "across", "upon", "off", "down", "along", "around", "among", "against", "step", "run", "write", "create", "add", "check", "see", "look", "take", "give", "go", "put", "let", "keep", "work", "thing", "things", "something", "anything", "lot", "kind", "type", "part", "way"])
 
 
 def _tokens(text: str) -> set:
@@ -446,10 +438,8 @@ def ask_async(payload: dict) -> None:
         proc.stdin.write(json.dumps(payload).encode())
         proc.stdin.close()
     except OSError:
-        try:
+        with contextlib.suppress(OSError):
             marker.unlink(missing_ok=True)
-        except OSError:
-            pass
 
 
 def _resolve(state: dict, questions: dict) -> tuple:
@@ -500,10 +490,8 @@ def _ask_main() -> int:
         return 0
     finally:
         if marker:
-            try:
+            with contextlib.suppress(OSError):
                 Path(marker).unlink(missing_ok=True)
-            except OSError:
-                pass
 
 
 def _decide_main() -> int:

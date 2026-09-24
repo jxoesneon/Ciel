@@ -4,16 +4,17 @@ This comprehensive master treatise deconstructs the world's most advanced proced
 
 ---
 
-# SECTION 1: BIO-ACOUSTIC CREATURE VOCALIZATION & ECOLOGY
-*Titles Analyzed: No Man's Sky (VocAlien), Red Dead Redemption 2, Alien: Isolation, Subnautica*
+## SECTION 1: BIO-ACOUSTIC CREATURE VOCALIZATION & ECOLOGY
+
+### Titles Analyzed: No Man's Sky (VocAlien), Red Dead Redemption 2, Alien: Isolation, Subnautica
 
 The following is a <SYSTEM_MESSAGE> not actually sent by the user. It is provided by the system as important information to pay attention to.
 
 <SYSTEM_MESSAGE>
 [Message] timestamp=2026-08-17T20:06:43Z sender=9a831fad-fa49-4787-a623-118168247b59 priority=MESSAGE_PRIORITY_HIGH content=# AAA Game Audio Engineering Deep-Dive: Procedural Creature Vocalization, Bio-Acoustic DSP & Acoustic AI Tracking
 
-**Author:** Audio Engineering & Bio-Acoustic DSP Research Unit  
-**Target Systems:** Godot 4.x / C++20 / WebAudio / Custom Game Engines  
+**Author:** Audio Engineering & Bio-Acoustic DSP Research Unit
+**Target Systems:** Godot 4.x / C++20 / WebAudio / Custom Game Engines
 **Audited Benchmark Titles:** *No Man's Sky*, *Red Dead Redemption 2*, *Alien: Isolation*, *Subnautica*
 
 ---
@@ -23,6 +24,7 @@ The following is a <SYSTEM_MESSAGE> not actually sent by the user. It is provide
 Traditional AAA game audio relies on static multi-gigabyte sample banks, which suffer from repetition fatigue, combinatorial explosion in memory, and an inability to dynamically reflect morphology (e.g., a procedural alien whose neck is 3× longer or whose body mass is 500 kg).
 
 The pioneer titles analyzed herein replaced or augmented static sample playback with **first-principles mathematical physics**:
+
 1. **Bio-Acoustic Physical Modeling** (*No Man's Sky*): Simulating the vocal tract as a series of connected cylindrical acoustic tubes (Kelly-Lochbaum waveguide) driven by non-linear glottal/syrinx dynamics exhibiting chaotic bifurcations.
 2. **Ecological Diurnal Field Generation** (*Red Dead Redemption 2*): Procedural stochastic Markov call-and-response graphs modulated by solar elevation, weather barometrics, foliage scattering, and temperature inversion acoustics.
 3. **Dual-Brain Acoustic Threat AI** (*Alien: Isolation*): Sensory hearing thresholds, acoustic portal transmission graphs, and psychoacoustic panic frequencies (infrasound, shear dissonance, sub-audible masking).
@@ -30,12 +32,13 @@ The pioneer titles analyzed herein replaced or augmented static sample playback 
 
 ---
 
-# 1. No Man's Sky: VocAlien Procedural Vocal System & Generative Engine
+## 1. No Man's Sky: VocAlien Procedural Vocal System & Generative Engine
 
 ### 1.1 Architecture of 'VocAlien' (Paul Weir / Hello Games)
+
 Paul Weir designed **VocAlien** as a real-time, memory-less physical modeling speech/vocalization synthesis engine. In *No Man's Sky*, every creature's sound is synthesized in real time on the audio DSP thread without loading a single animal WAV sample.
 
-```
+```text
 +--------------------------------------------------------------------------------------------------+
 |                                    VOCALIEN DSP ARCHITECTURE                                     |
 +--------------------------------------------------------------------------------------------------+
@@ -71,18 +74,22 @@ Paul Weir designed **VocAlien** as a real-time, memory-less physical modeling sp
 ### 1.2 Morphological Mapping Equations
 
 #### A. Fundamental Pitch ($f_0$) vs. Body Mass ($M$)
+
 Biomechanical allometry dictates that vocal fold length and thickness scale allometrically with animal mass:
 $$f_0(M) = f_{\text{ref}} \cdot \left(\frac{M_{\text{ref}}}{M}\right)^{0.38} \cdot e^{\Delta_{\text{arousal}}}$$
+
 - Small bird/rodent ($0.2\text{ kg}$): $f_0 \approx 2000 - 4500\text{ Hz}$
 - Medium predator ($40\text{ kg}$): $f_0 \approx 220 - 400\text{ Hz}$
 - Mega-fauna behemoth ($8000\text{ kg}$): $f_0 \approx 18 - 45\text{ Hz}$ (infrasound excitation)
 
 #### B. Formant Resonances ($F_n$) vs. Neck Length ($L_{\text{tract}}$)
+
 For an acoustic tube open at the lips and closed at the glottis:
 $$F_n = \frac{(2n - 1) \cdot c_{\text{air}}}{4 \cdot L_{\text{tract}}} \quad \text{where } L_{\text{tract}} = L_{\text{pharynx}} + L_{\text{neck}}$$
 When $L_{\text{tract}}$ increases (e.g., long-necked Diplodocus-style creatures in NMS), formant spacing shrinks ($\Delta F = \frac{c}{2L}$), producing deep, resonant, hollow, cathedral-like vocal timbres.
 
 #### C. Kelly-Lochbaum Scattering Junctions
+
 The vocal tract is discretized into $N$ cylindrical sections with cross-sectional areas $A_1, A_2, \dots, A_N$. At junction $m$:
 $$\text{Reflection Coefficient } r_m = \frac{A_{m+1} - A_m}{A_{m+1} + A_m}, \quad r_m \in (-1, 1)$$
 Forward ($u_m^+$) and backward ($u_m^-$) traveling volume velocity waves update as:
@@ -92,7 +99,9 @@ Radiation at the lips is modeled as a high-pass differentiator (acoustic dipole 
 $$y_{\text{rad}}[n] = u_N^+[n] - u_N^+[n-1]$$
 
 ### 1.3 Chaos Bifurcation & Roar Mechanics
+
 Animal distress calls, roars, and shrieks rely on **deterministic chaos** caused by non-linear vocal fold desynchronization under high subglottal lung pressure ($P_s$):
+
 1. **Normal Phonation (Limit Cycle)**: Symmetric harmonic oscillation at $f_0$.
 2. **Subharmonic Bifurcation ($P_s > P_{\text{bif1}}$)**: Period-doubling ($f_0 / 2, f_0 / 3$), creating harsh animal growls.
 3. **Full Chaos / Deterministic Turmoil ($P_s > P_{\text{crit}}$)**: Strange attractors emerge; energy smears across broad continuous frequency bands (visceral guttural roars and bloodcurdling screams).
@@ -103,12 +112,13 @@ $$\text{Bernoulli Pressure: } P_1 = P_s \cdot \left[1 - \left(\frac{a_{\text{min
 
 ---
 
-# 2. Red Dead Redemption 2: Ecological Soundscape & Topographic Propagation
+## 2. Red Dead Redemption 2: Ecological Soundscape & Topographic Propagation
 
 ### 2.1 Dynamic Ecological Wildlife Generator
+
 Rockstar Games structured RDR2's acoustic ecology as a hierarchical, multi-agent stochastic system running across regional biome grids.
 
-```
+```text
 +--------------------------------------------------------------------------------------------------+
 |                                    RDR2 ECOLOGICAL AUDIO GRAPH                                   |
 +--------------------------------------------------------------------------------------------------+
@@ -142,32 +152,39 @@ Rockstar Games structured RDR2's acoustic ecology as a hierarchical, multi-agent
 ### 2.2 Diurnal & Weather Acoustic Shift Equations
 
 #### A. Circadian Acoustic Density ($\lambda_{\text{acoustic}}$)
+
 The probability of acoustic emissions varies with diurnal photoperiods (e.g., the *Dawn Chorus* phenomenon):
 $$\lambda_{\text{dawn}}(t) = \lambda_0 \cdot \exp\left(-\frac{(t - 6.0)^2}{2 \cdot (1.2)^2}\right), \quad \lambda_{\text{dusk}}(t) = \lambda_1 \cdot \exp\left(-\frac{(t - 19.5)^2}{2 \cdot (1.5)^2}\right)$$
+
 - **Dawn (05:00 - 08:00)**: Avian calls peak in high frequencies ($2\text{ kHz} - 8\text{ kHz}$).
 - **Dusk/Night (20:00 - 04:00)**: Orthoptera (crickets, cicadas) and Anura (frogs) occupy specific spectral niches ($1.2\text{ kHz} - 4.5\text{ kHz}$ and $300\text{ Hz} - 900\text{ Hz}$).
 
 #### B. ISO 9613-1 Atmospheric Absorption
+
 Sound absorption in air over distance $d$ (in meters):
 $$\alpha(f) = 8.686 \cdot f^2 \cdot \left[ 1.84 \cdot 10^{-11} \left(\frac{T}{T_0}\right)^{1/2} \frac{p_a}{p_r} + \left(\frac{T}{T_0}\right)^{-5/2} \left( \frac{0.01275 e^{-2239.1/T} f_{r,O}}{f_{r,O}^2 + f^2} + \frac{0.1068 e^{-3352/T} f_{r,N}}{f_{r,N}^2 + f^2} \right) \right] \text{ dB/m}$$
+
 - High humidity ($RH > 80\%$) reduces high-frequency dampening in medium distances.
 - Arid environments (New Austin) sharply attenuate frequencies $> 4\text{ kHz}$, making distant gunshots and animal cries sound dull and low-passed.
 
 #### C. Nocturnal Temperature Inversion & Acoustic Ducting
+
 At night, the ground cools rapidly via radiational cooling, creating an inverted temperature gradient $\frac{dT}{dz} > 0$. Sound speed $c(z) \propto \sqrt{T(z)}$ increases with altitude:
 $$\text{Ray Curvature Radius: } R_{\text{ray}} = -\frac{c}{\frac{dc}{dz}}$$
 This causes sound waves propagating upward to refract back down toward the ground, forming an **atmospheric sound guide** where coyote howls and train whistles travel over $5\text{ km}$ across open plains.
 
 ---
 
-# 3. Alien: Isolation: Acoustic Threat AI, Portals & Psychoacoustics
+## 3. Alien: Isolation: Acoustic Threat AI, Portals & Psychoacoustics
 
 ### 3.1 Dual-Brain Acoustic AI Architecture (Creative Assembly)
+
 The AI system consists of two decoupled intelligence layers communicating asynchronously:
+
 1. **The Macro Director AI**: Manages overall dramatic pacing, tracks player stress metrics, and places dynamic interest points ("acoustic breadcrumbs") in the Xenomorph's vicinity without teleporting or cheating.
 2. **The Micro Xenomorph AI**: A state machine governed strictly by sensory raycasts and an **Acoustic Sensor Threshold System**.
 
-```
+```text
 +--------------------------------------------------------------------------------------------------+
 |                                  ALIEN: ISOLATION AI SENSORY SYSTEM                              |
 +--------------------------------------------------------------------------------------------------+
@@ -197,19 +214,21 @@ The AI system consists of two decoupled intelligence layers communicating asynch
 ### 3.2 Psychoacoustic Tension Mechanics
 
 #### A. Infrasound & Basilar Roughness (18 Hz - 35 Hz)
+
 Human vestibular and autonomic systems register low-frequency acoustic vibrations below the clear melodic hearing threshold ($< 35\text{ Hz}$) as impending mechanical or predatory danger:
 $$y_{\text{infrasound}}(t) = A_1 \sin(2\pi f_1 t) + A_2 \sin(2\pi f_2 t) \quad \text{where } |f_1 - f_2| \in [4, 8]\text{ Hz (Theta-band binaural beating)}$$
 
 #### B. Dynamic Acoustic Masking & Spectral Ducking
+
 When the Alien enters the "Hunting" radius ($< 12\text{ meters}$), ambient ship hums are ducked between $1.5\text{ kHz}$ and $6\text{ kHz}$ using high-order notch filters. This removes auditory masking, isolating the crisp, close-proximity high-frequency transients of the Alien's heavy footsteps, claws, and breathing.
 
 ---
 
-# 4. Subnautica: Hydro-Acoustic Physics & Deep Ocean Simulation
+## 4. Subnautica: Hydro-Acoustic Physics & Deep Ocean Simulation
 
 ### 4.1 Underwater Sound Propagation Equations
 
-```
+```text
 +--------------------------------------------------------------------------------------------------+
 |                                    SUBNAUTICA HYDRO-ACOUSTIC DSP                                 |
 +--------------------------------------------------------------------------------------------------+
@@ -243,21 +262,28 @@ When the Alien enters the "Hunting" radius ($< 12\text{ meters}$), ambient ship 
 ```
 
 ### 4.2 Francois-Garrison Seawater Attenuation Model
+
 $$\alpha(f) = \frac{A_1 P_1 f_1 f^2}{f_1^2 + f^2} + \frac{A_2 P_2 f_2 f^2}{f_2^2 + f^2} + A_3 P_3 f^2 \quad \text{[dB/km]}$$
+
 1. **Boric Acid ($B(OH)_3$)**: $f_1 \approx 0.78 \sqrt{\frac{S}{35}} e^{T / 26}\text{ kHz}$
 2. **Magnesium Sulfate ($MgSO_4$)**: $f_2 \approx 42 e^{T / 17}\text{ kHz}$
 3. **Deep Water Effect**: High frequencies ($> 5\text{ kHz}$) attenuate exponentially in seawater, while frequencies $< 100\text{ Hz}$ propagate virtually unattenuated. This is why the **Reaper** and **Sea Dragon** leviathan roars have massive sub-harmonic energy ($30 - 80\text{ Hz}$) that can be heard miles across biomes.
 
 ### 4.3 Minnaert & Rayleigh-Plesset Cavitation Bubble Dynamics
+
 Propeller blades and creature tail fins create violent cavitation voids that collapse and emit sharp explosive acoustic impulses.
+
 - **Minnaert Fundamental Bubble Resonance**:
+
   $$f_0 = \frac{1}{2\pi R_0} \sqrt{\frac{3\gamma P_\infty}{\rho_{\text{water}}}} \approx \frac{3.26 \sqrt{1 + 0.1 z}}{R_0} \text{ Hz}$$
+
 - **Rayleigh-Plesset Non-Linear Collapse Equation**:
+
   $$R \frac{d^2 R}{dt^2} + \frac{3}{2} \left(\frac{dR}{dt}\right)^2 = \frac{1}{\rho_w} \left[ \left(P_0 + \frac{2\sigma}{R_0}\right) \left(\frac{R_0}{R}\right)^{3\gamma} - \frac{2\sigma}{R} - \frac{4\mu}{R} \frac{dR}{dt} - P_\infty(t) \right]$$
 
 ---
 
-# 5. Comparative Master Parameter Table
+## 5. Comparative Master Parameter Table
 
 | Feature / Metric | No Man's Sky (VocAlien) | Red Dead Redemption 2 | Alien: Isolation | Subnautica |
 | :--- | :--- | :--- | :--- | :--- |
@@ -271,16 +297,19 @@ Propeller blades and creature tail fins create violent cavitation voids that col
 
 ---
 
-# 6. Production-Ready C++ / Python DSP Implementations
+## 6. Production-Ready C++ / Python DSP Implementations
 
 ### 6.1 Complete C++20 Header: `vocalien_bioacoustics.hpp`
+
 *Implements Kelly-Lochbaum Vocal Tract Waveguide + Ishizaka-Flanagan 2-Mass Non-Linear Glottal Oscillator + Chaotic Roar Bifurcation.*
 
 ```cpp
 /**
+
  * vocalien_bioacoustics.hpp
  * Zero-dependency C++20 Physical Modeling Bio-Acoustic Synthesizer
  * Inspired by Hello Games' VocAlien engine (Paul Weir).
+
  */
 
 #pragma once
@@ -305,7 +334,7 @@ class VocAlienSynthesizer {
 public:
     static constexpr size_t NUM_SECTIONS = 10;
 
-    VocAlienSynthesizer(float sample_rate = 48000.0f) 
+    VocAlienSynthesizer(float sample_rate = 48000.0f)
         : fs_(sample_rate), dt_(1.0f / sample_rate) {
         reset();
     }
@@ -322,7 +351,9 @@ public:
     }
 
     /**
+
      * Synthesizes one audio sample using 2-Mass Glottal Oscillation + Kelly-Lochbaum Waveguide.
+
      */
     float process_sample(const CreatureMorphology& morph) {
         // --- 1. BIOMECHANICAL PARAMETER SCALING ---
@@ -420,6 +451,7 @@ private:
 ---
 
 ### 6.2 Python Hydro-Acoustic & Sub-Surface Propagation Engine
+
 *Simulates seawater sound velocity, Francois-Garrison depth absorption, and SOFAR channel dispersion.*
 
 ```python
@@ -510,11 +542,11 @@ def apply_underwater_dsp_filter(
 
 ---
 
-# 7. Gap Analysis & Direct Roadmap for Upgrading `procedural-audio` Skill
+## 7. Gap Analysis & Direct Roadmap for Upgrading `procedural-audio` Skill
 
 Auditing our current `procedural-audio` repository (`procedural_dsp.h`, `procedural_audio_generator.py`, `SKILL.md`) against these AAA systems reveals specific architectural gaps that can be integrated:
 
-```
+```text
 +--------------------------------------------------------------------------------------------------+
 |                                SKILL GAP ANALYSIS & UPGRADE MATRIX                               |
 +--------------------------------------------------------------------------------------------------+
@@ -535,69 +567,82 @@ Auditing our current `procedural-audio` repository (`procedural_dsp.h`, `procedu
 +--------------------------------------------------------------------------------------------------+
 ```
 
-### Actionable Integration Tasks:
+### Actionable Integration Tasks
+
 1. **Bio-Acoustic Synthesizer Module**: Embed `vocalien_bioacoustics.hpp` into `scripts/procedural_dsp.h` to empower agents to synthesize procedural dinosaurs, insects, humanoids, and alien cries on demand with zero sample assets.
 2. **Hydro-Acoustic Filter Suite**: Add Francois-Garrison underwater spectral filtering and Minnaert cavitation pulse generation to `procedural_audio_generator.py`.
 3. **Acoustic Portal Engine for Godot**: Expand `godot_procedural_engine.gd` with dynamic `AcousticPortal` nodes that calculate real-time wall transmission loss ($TL$) and route enemy AI navigation directly to acoustic diffraction apertures.
 4. **Diurnal Markov Soundscape Node**: Add an autonomous ambient wildlife scheduler tracking day/night solar angles and weather barometrics to generate living open worlds.
+
 </SYSTEM_MESSAGE>
 
 ---
 
-# SECTION 2: PHYSICAL ACOUSTICS, HDR AUDIO & SPATIAL PROPAGATION
-*Titles Analyzed: Battlefield Series (Frostbite HDR), The Last of Us Part I/II & Uncharted 4 (Naughty Dog), Returnal (Housemarque / PS5 Tempest 3D)*
+## SECTION 2: PHYSICAL ACOUSTICS, HDR AUDIO & SPATIAL PROPAGATION
+
+### Titles Analyzed: Battlefield Series (Frostbite HDR), The Last of Us Part I/II & Uncharted 4 (Naughty Dog), Returnal (Housemarque / PS5 Tempest 3D)
 
 The following is a <SYSTEM_MESSAGE> not actually sent by the user. It is provided by the system as important information to pay attention to.
 
 <SYSTEM_MESSAGE>
 [Message] timestamp=2026-08-17T20:07:05Z sender=c5adb13e-8a57-4853-a26e-0afaa58ec261 priority=MESSAGE_PRIORITY_HIGH content=# AAA+ Physical Acoustics, HDR Audio Engines & Spatial Soundscapes
+
 ## Exhaustive Technical Investigation & DSP Reference Manual
 
 ---
 
 ### Executive Summary & Architectural Overview
 
-In modern AAA+ interactive entertainment, audio has transitioned from static playback of pre-baked PCM assets to **real-time physical simulation, acoustic raytracing, and psychoacoustic perception modeling**. 
+In modern AAA+ interactive entertainment, audio has transitioned from static playback of pre-baked PCM assets to **real-time physical simulation, acoustic raytracing, and psychoacoustic perception modeling**.
 
 This investigation examines the engineering breakthroughs of three pioneering studios:
+
 1. **DICE (Frostbite)**: High Dynamic Range (HDR) Audio and Supersonic Weapon Acoustics.
 2. **Naughty Dog (The Last of Us Part I/II, Uncharted 4)**: Geometric Raycast Diffraction (Biot-Tolstoy-Medwin approximation), Acoustic Portals, and Physical Material Reverberation.
 3. **Housemarque (Returnal)**: PS5 Tempest 3D Micro-Granular Particle Soundscapes and 3D Projectile Threat Prioritization.
 
 Following the analysis, we identify specific shortcomings in our current `procedural-audio` skill and provide concrete, production-ready C++ and Python DSP algorithms and parameter tables ready for integration.
 
-```
+```text
 ====================================================================================================
                                 AAA+ SPATIAL ACOUSTIC PIPELINE
 ====================================================================================================
  [PHYSICAL SIMULATION LAYER]
+
    - Supersonic Ballistics (Mach Cone Shockwave)
    - Particle Collision Dispatch (Micro-Granular Rain/Debris)
    - Geometric Acoustic Raycasting (Direct Ray, Edge Diffraction, Portal Pathfinding)
+
                                     │
                                     ▼
  [PSYCHOACOUSTIC & HDR TRIAGE LAYER]
+
    - Spatial Threat Prioritizer (Threat Score Vector Calculation & Voice Culling)
    - Floating HDR Exposure Window (Perceptual Loudness Windowing & Ballistic Decay)
    - Zwicker Spectral Masking (Upward Spread of Masking Triage)
+
                                     │
                                     ▼
  [DSP ACOUSTIC RENDERING LAYER]
+
    - BTM / Kurze-Anderson Edge Diffraction Low-Pass Filtering
    - ISO 9613-1 Atmospheric Air Absorption & Wall Transmission Loss
    - Eyring Material-Based Multi-Band FDN Reverb
    - 3D HRTF Binaural Filtering (ITD / ILD / Pinna Notches)
+
 ====================================================================================================
 ```
 
 ---
 
-# 1. DICE: Frostbite HDR Audio & Real-Time Weapon Acoustics
+## 1. DICE: Frostbite HDR Audio & Real-Time Weapon Acoustics
 
 ### 1.1 High Dynamic Range (HDR) Audio Architecture
 
 #### The Real-World Dynamic Range Problem
+
 In physical reality, acoustic sound pressure levels ($SPL$) span an immense dynamic range:
+
 - Threshold of human hearing ($0\text{ dB SPL}$): $20\text{ }\mu\text{Pa}$ ($2 \times 10^{-5}\text{ Pa}$)
 - Quiet room tone: $30\text{ dB SPL}$ ($6.32 \times 10^{-4}\text{ Pa}$)
 - Dialogue / Footsteps: $60\text{--}70\text{ dB SPL}$ ($0.02\text{--}0.063\text{ Pa}$)
@@ -607,18 +652,21 @@ In physical reality, acoustic sound pressure levels ($SPL$) span an immense dyna
 Total real-world dynamic range exceeds **$140\text{--}180\text{ dB}$**. However, typical consumer listening environments (living rooms, headphones) provide a usable linear dynamic range of only **$40\text{--}50\text{ dB}$** before quiet sounds sink below ambient room noise or loud sounds blow out speakers or cause hearing fatigue.
 
 Traditional game engines use **linear mixing and dynamic bus compression/ducking sidechains**. When dozens of weapons and explosions fire simultaneously, standard bus compressors cause:
+
 1. **Gain Pumping / Breathing**: The entire soundscape unnaturally dips and pumps as the compressor reacts.
 2. **Spectral Intermodulation Mud**: Soft detail sounds (footsteps, spent shell casings, breathing) are mixed with loud sounds, producing distortion and loss of intelligibility.
 3. **Static Pre-Mix Balance**: Audio designers must compromise between making a gunshot sound powerful and keeping dialogue audible.
 
 #### The Frostbite Floating HDR Window Concept
+
 DICE (led by Anders Clerwall and Stefan Strandberg) solved this by implementing **HDR Audio** based on photographic high-dynamic-range exposure:
+
 - Every sound event emits a physical, un-attenuated, un-compressed **emitted loudness value** $L_{\text{emit}}$ in decibels (dB), where $0\text{ dB}$ is the threshold of audibility and a massive explosion may be $+100\text{ dB}$.
 - The engine maintains a real-time **floating auditory window** of fixed dynamic width $W_{\text{HDR}}$ (typically $40\text{ to }50\text{ dB}$).
 - The window is defined by its top level $L_{\text{top}}[n]$ and bottom level $L_{\text{bottom}}[n] = L_{\text{top}}[n] - W_{\text{HDR}}$.
 - The instantaneous top level $L_{\text{top}}[n]$ tracks the loudest audible event in the scene with instantaneous attack ($\approx 0\text{ ms}$) and a non-linear ballistic release curve ($\tau \approx 200\text{ ms to } 1.5\text{ s}$).
 
-```
+```text
  Emitted Loudness (dB)
  +100 dB ─── Tank Explosion ────────────────────────────┐
   +90 dB                                                │  <-- Window jumps UP instantly
@@ -635,19 +683,22 @@ DICE (led by Anders Clerwall and Stefan Strandberg) solved this by implementing 
 ```
 
 #### Auditory Threshold Triage & Tone Mapping
+
 Any sound whose perceived loudness $L_{\text{perceived}}$ falls below $L_{\text{bottom}}[n]$ has a gain of zero in linear space:
-$$G_{\text{linear}} = \begin{cases} 
+$$G_{\text{linear}} = \begin{cases}
 0.0, & L_{\text{perceived}} \le L_{\text{bottom}} \\
 10^{\frac{L_{\text{perceived}} - L_{\text{top}}}{20}}, & L_{\text{bottom}} < L_{\text{perceived}} \le L_{\text{top}} \\
 1.0 + \text{tanh}\left(\frac{L_{\text{perceived}} - L_{\text{top}}}{10}\right) \times 0.2, & L_{\text{perceived}} > L_{\text{top}} \text{ (Soft Saturation)}
 \end{cases}$$
 
 This delivers three fundamental results:
+
 1. **Zero-Cost Voice Culling**: Sounds below $L_{\text{bottom}}$ do not need to be synthesized or processed by DSP, saving CPU cycles during chaotic battles.
 2. **Automatic Psychoacoustic Ducking**: When a tank shell detonates, the window jumps to $+100\text{ dB}$, immediately silencing ambient wind ($+5\text{ dB}$) and distant footsteps ($+20\text{ dB}$) without any hand-crafted ducking buses or sidechain matrices.
 3. **Auditory Recovery Illusion**: As the explosion sound decays, $L_{\text{top}}[n]$ slowly drops, allowing the ambient debris, ringing ears (tinnitus simulation), and wind to naturally emerge from the silence, mimicking the human ear's **acoustic reflex** (stapedius muscle relaxation).
 
 #### Frequency-Domain Triage (Zwicker Masking Spreading Functions)
+
 In addition to broadband windowing, Frostbite models the **upward spread of acoustic masking**. Low-frequency, high-energy sounds (explosions) mask higher frequencies more effectively than high frequencies mask low frequencies.
 Using the Bark scale $z = 13 \arctan(0.00076 f) + 3.5 \arctan((f/7500)^2)$:
 $$S(z) = \left[ 15.81 + 7.5(z + 0.474) - 17.5 \sqrt{1 + (z + 0.474)^2} \right]\text{ dB}$$
@@ -659,12 +710,14 @@ $$S_{\text{high}}(SPL) = -27 + 0.37 \cdot \max(SPL - 40, 0)\text{ dB/Bark}$$
 ### 1.2 Real-Time Weapon & Explosion Acoustics
 
 #### Weapon Sound Decomposition
+
 DICE established that weapon acoustics must be split into three distinct physical components rather than triggered as a single monolithic recording:
+
 1. **Muzzle Report**: Subsonic combustion shockwave expanding spherically from the barrel ($v \approx 343\text{ m/s}$).
 2. **Supersonic Bullet Crack (Mach Cone)**: High-pressure shockwave generated along the projectile path when projectile velocity $v_p > c_0$.
 3. **Environmental Acoustic Impulse Tail**: Reflections from surrounding buildings, hills, foliage, or indoor rooms.
 
-```
+```text
                   =======================================================
                              SUPERSONIC MACH CONE GEOMETRY
                   =======================================================
@@ -682,38 +735,47 @@ DICE established that weapon acoustics must be split into three distinct physica
 ```
 
 #### Supersonic Shockwave Physics & Arrival Times
+
 For a bullet moving at speed $v$ with Mach number $M = v / c_0 > 1$:
+
 - **Mach Cone Half-Angle**: $\theta_M = \arcsin\left(\frac{1}{M}\right)$
 - **Closest Point of Approach (CPA)**: The point along the bullet trajectory where the normal to the Mach cone intersects the listener.
 - **Propagation Geometry**: Let $d_{\perp}$ be the perpendicular distance from the listener to the trajectory line, and $x_{\text{travel}}$ be the distance the bullet traveled before emitting the shockwave that reaches the listener:
+
   $$x_{\text{travel}} = x_{\text{cpa}} - d_{\perp} \tan\theta_M = x_{\text{cpa}} - \frac{d_{\perp}}{\sqrt{M^2 - 1}}$$
+
 - **Time of Arrival of the Bullet Crack ($t_{\text{crack}}$)**:
+
   $$t_{\text{crack}} = \frac{x_{\text{travel}}}{v} + \frac{d_{\perp}}{\cos\theta_M \cdot c_0} = \frac{x_{\text{cpa}} - \frac{d_{\perp}}{\sqrt{M^2-1}}}{v} + \frac{d_{\perp} \cdot M}{c_0 \sqrt{M^2 - 1}}$$
+
 - **Time of Arrival of the Muzzle Blast ($t_{\text{muzzle}}$)**:
+
   $$t_{\text{muzzle}} = \frac{D_{\text{shooter}}}{c_0} = \frac{\sqrt{x_{\text{cpa}}^2 + d_{\perp}^2}}{c_0}$$
 
 Because $v > c_0$, when a bullet passes near a player, **$t_{\text{crack}} < t_{\text{muzzle}}$**. The player hears the sharp high-frequency whip-crack first, followed moments later by the low-frequency muzzle boom. The time interval $\Delta t = t_{\text{muzzle}} - t_{\text{crack}}$ allows experienced players to instinctively calculate the distance of the sniper:
 $$\Delta t \approx \frac{D_{\text{shooter}}}{c_0} \left( 1 - \frac{c_0}{v} \right)$$
 
 #### N-Wave Pressure Profile
+
 The pressure wave of a supersonic bullet is a classic **Whitham N-Wave**:
 $$p(t) = \begin{cases}
 P_{\text{max}} \left( 1 - \frac{2t}{T_0} \right), & 0 \le t \le T_0 \\
 0, & \text{otherwise}
 \end{cases}$$
 where:
+
 - Peak Overpressure: $P_{\text{max}} \propto \frac{p_0 (M^2 - 1)^{1/8}}{d_{\perp}^{3/4}} \cdot d_{\text{bullet}}$
 - Duration: $T_0 \approx 1.82 \cdot \frac{M \cdot d_{\text{bullet}}}{c_0} \cdot \left(\frac{d_{\perp}}{d_{\text{bullet}}}\right)^{1/4}$ (typically $100\text{ }\mu\text{s to } 500\text{ }\mu\text{s}$).
 
 ---
 
-# 2. NAUGHTY DOG: The Last of Us Part I/II & Uncharted 4
+## 2. NAUGHTY DOG: The Last of Us Part I/II & Uncharted 4
 
 ### 2.1 Acoustic Raycasting, Portals & Room Geometries
 
 Naughty Dog (pioneered by Robert Krekel, Beau Jimenez, and Jonathan Mayer) revolutionized stealth and cinematic immersion by abandoning traditional line-of-sight sound attenuation in favor of **Geometric Acoustic Pathfinding and Dynamic Portals**.
 
-```
+```text
 ====================================================================================================
                         NAUGHTY DOG ACOUSTIC PORTAL PROPAGATION
 ====================================================================================================
@@ -737,13 +799,16 @@ Naughty Dog (pioneered by Robert Krekel, Beau Jimenez, and Jonathan Mayer) revol
 ```
 
 #### Acoustic Portals vs Direct Path
+
 In real architecture, if an enemy is shouting in an adjacent room with thick concrete walls, the direct ray is completely blocked ($> 40\text{ dB}$ attenuation). The sound does **not** simply become muffled at the wall; it travels through the open doorway, bounces off the hallway walls, and enters the listener's ear **from the direction of the doorway**.
 
 Naughty Dog's pipeline executes the following on every tick:
+
 1. **Portal Graph Pathfinding**: If the direct ray between source and listener intersects geometry, a pathfinding search (Dijkstra / A*) traverses the acoustic portal connectivity graph.
 2. **Virtual Emitter Positioning**: The primary dry sound is panned as if it originates at the **closest open portal opening** along the acoustic path.
 3. **Total Acoustic Distance**: Distance attenuation $A_{\text{dist}} = \frac{1}{\sum d_i}$ and air absorption are calculated using the total piecewise path length along the portal route rather than the Euclidean distance through walls.
 4. **Portal Obstruction & Aperture**: The portal opening size (e.g. cracked door vs wide open doorway) modulates a dynamic low-pass filter:
+
    $$f_{c,\text{portal}} = f_{\text{open}} \cdot \left(\frac{\text{Area}_{\text{actual}}}{\text{Area}_{\text{max}}}\right)^{0.65}$$
 
 ---
@@ -753,13 +818,16 @@ Naughty Dog's pipeline executes the following on every tick:
 When sound encounters a sharp architectural edge (such as a pillar, wall corner, or doorway rim), it bends into the geometric shadow zone via **diffraction**.
 
 #### Physical Principle & Biot-Tolstoy-Medwin (BTM)
+
 The exact time-domain impulse response for diffraction around an infinite wedge of exterior angle $\theta_w$ (wedge index $\nu = \pi / \theta_w$) was derived by Biot, Tolstoy, and Medwin:
 $$h_d(t) = -\frac{c_0 \nu}{2\pi} \frac{\beta(t)}{r_s r_l \sinh\eta(t)} \sum_{i=1}^4 \frac{\sin(\nu \theta_i)}{\cosh(\nu \eta(t)) - \cos(\nu \theta_i)}$$
 
 #### Real-Time Engine Optimization (Kurze-Anderson / Fresnel Approximation)
+
 Full BTM convolution is computationally prohibitive for dozens of concurrent sources. Naughty Dog approximates edge diffraction using the **Fresnel Number** $N_F$:
 $$N_F = \frac{2}{\lambda} \delta = \frac{2 f}{c_0} (d_1 + d_2 - d_0)$$
 where:
+
 - $d_0$: Direct straight-line distance through the occluding obstacle.
 - $d_1$: Distance from emitter to the diffraction edge.
 - $d_2$: Distance from the diffraction edge to the listener.
@@ -781,16 +849,20 @@ $$f_{\text{diff\_cutoff}} = \frac{c_0}{2\pi \cdot \max(\delta, 0.02)}$$
 Naughty Dog dynamically estimates the reverberation parameters of every room by casting a **spherical ray bundle (16 to 64 rays)** from the room centroid or listener position to sample the enclosing geometry and physics materials.
 
 #### Sabine & Eyring Real-Time Acoustic Formulation
+
 - Room Volume $V$ is estimated via Monte Carlo raycast volume integration: $V \approx \frac{4\pi}{3} \left(\frac{1}{N}\sum_{i=1}^N d_i\right)^3$.
 - Total Surface Area $S \approx 4\pi \left(\frac{1}{N}\sum_{i=1}^N d_i\right)^2$.
 - Frequency-Dependent Absorption: Each hit surface returns a physics material with absorption coefficients across 3 acoustic bands (Low: $125\text{ Hz}$, Mid: $1\text{ kHz}$, High: $4\text{ kHz}$):
+
   $$\bar{\alpha}(f) = \frac{\sum_{i=1}^N d_i^2 \cdot \alpha_i(f)}{\sum_{i=1}^N d_i^2}$$
 
 #### Reverberation Time Calculation (Eyring Model)
+
 $$T_{60}(f) = \frac{0.161 \cdot V}{-S \ln(1 - \bar{\alpha}(f)) + 4 m(f) V}$$
 where $m(f)$ is the atmospheric air attenuation factor.
 
 #### Physical Material Absorption Matrix
+
 | Material Class | $\alpha(125\text{ Hz})$ (Low) | $\alpha(1000\text{ Hz})$ (Mid) | $\alpha(4000\text{ Hz})$ (High) | Scattering / Diffusion ($s$) |
 | :--- | :--- | :--- | :--- | :--- |
 | **Poured Concrete / Stone** | 0.01 | 0.02 | 0.03 | 0.05 |
@@ -805,13 +877,13 @@ These dynamically calculated $T_{60}(f)$ and $\bar{\alpha}(f)$ values are upload
 
 ---
 
-# 3. HOUSEMARQUE: Returnal (PS5 Tempest 3D & Granular Soundscapes)
+## 3. HOUSEMARQUE: Returnal (PS5 Tempest 3D & Granular Soundscapes)
 
 ### 3.1 Micro-Granular Procedural Raindrops
 
 Housemarque Audio Director Loic Couthier designed a groundbreaking procedural micro-granular audio pipeline for *Returnal* to render the perpetual alien downpours of Atropos.
 
-```
+```text
 ====================================================================================================
                         RETURNAL MICRO-GRANULAR RAIN DISPATCHER
 ====================================================================================================
@@ -835,13 +907,20 @@ Housemarque Audio Director Loic Couthier designed a groundbreaking procedural mi
 ```
 
 #### The Micro-Grain Synthesis Engine
+
 Instead of looping rain noise files or triggering standard audio voices, the engine synthesizes **hundreds of micro-grains per second ($3\text{--}12\text{ ms}$ duration)** directly mapped to player body mesh colliders:
+
 1. **Astronaut Helmet Visor**: High-frequency polycarbonate modal ring.
+
    $$y_{\text{visor}}(t) = e^{-\alpha_v t} \sin(2\pi f_v t), \quad f_v \approx 4800\text{ Hz}, \alpha_v \approx 450\text{ s}^{-1}$$
+
 2. **Kevlar / Polymer Armor Suit**: Low-frequency damped physical impulse.
+
    $$y_{\text{suit}}(t) = e^{-\alpha_s t} (1 - 2\pi f_s t) e^{-2\pi f_s t}, \quad f_s \approx 950\text{ Hz}, \alpha_s \approx 1200\text{ s}^{-1}$$
+
 3. **Alien Foliage / Wet Leaves**: Asymmetric droplet spread with leaf resonance.
 4. **Water Puddles (Minnaert Cavitation Acoustics)**:
+
    $$f(t) = f_0 \left(1 + 0.15 e^{-\frac{t}{0.003}}\right), \quad f_0 = \frac{3.0}{R_{\text{bubble}}\text{ (m)}}$$
 
 By distributing these micro-grains across local listener 3D coordinates (e.g. top of helmet, left shoulder, chest plate), the player perceives individual raindrops striking their suit in true 3D binaural space.
@@ -853,6 +932,7 @@ By distributing these micro-grains across local listener 3D coordinates (e.g. to
 During *Returnal*'s bullet-hell encounters, over **200 neon energy projectiles** can fill the screen simultaneously. If each projectile played full spatial audio, the mix would collapse into unlistenable digital distortion and exhaust CPU/DSP budgets.
 
 #### Spatial Threat Prioritization Equation
+
 Housemarque implemented a real-time **Dynamic Threat Vector Ranking** system evaluated at $60\text{ Hz}$:
 $$\text{ThreatScore}(P) = w_{\text{dist}} \left( \frac{1}{\max(d_{\text{min}}, d_P)} \right) + w_{\text{vel}} \left( \vec{v}_P \cdot \hat{u}_{\text{listener}} \right) + w_{\text{cpa}} \left( \frac{1}{\max(0.1, d_{\text{cpa}})} \right) + w_{\text{type}} K_{\text{projectile}}$$
 
@@ -864,20 +944,26 @@ $$\text{ThreatScore}(P) = w_{\text{dist}} \left( \frac{1}{\max(d_{\text{min}}, d
 | Projectile Threat Class | $w_{\text{type}}$ | 0.10 | Homing rockets / boss lasers vs standard plasma pellets |
 
 #### Voice Allocation Triage Tiers
+
 - **Tier 1 (Top 6-8 Highest Threat Projectiles)**: Full PS5 Tempest 3D HRTF spatialization, fractional Hermite delay Doppler pitch shift, and proximity sub-bass energy whiz-by.
 - **Tier 2 (Rank 9 to 24)**: Mid-tier Ambisonics (Higher-Order Ambisonics / HOA) directional bus with low-cost ITD/ILD panning.
 - **Tier 3 (Rank > 24)**: Voice culled from individual rendering; kinetic energy aggregated into a global directional battle-energy bed.
 
 #### Near-Miss Bullet-Whiz Doppler Synthesis
+
 When a projectile crosses the Closest Point of Approach within the near-miss radius ($d_{\text{cpa}} \le 2.5\text{ m}$):
+
 1. **Dynamic Doppler Frequency Ratio**:
+
    $$\frac{f_{\text{observed}}}{f_0} = \frac{c_0}{c_0 - (\vec{v}_P \cdot \hat{r}_{\text{rel}})}$$
+
 2. **Vortex Shedding (Aeolian Whistle / Karman Vortex Street)**:
+
    $$f_{\text{vortex}} = \text{St} \cdot \frac{\|\vec{v}_P\|}{D_{\text{projectile}}}, \quad \text{Strouhal Number } \text{St} \approx 0.21$$
 
 ---
 
-# 4. Critical Audit & Missing Capabilities in Our `procedural-audio` Skill
+## 4. Critical Audit & Missing Capabilities in Our `procedural-audio` Skill
 
 Comparing our current `procedural-audio` codebase (`SKILL.md`, `procedural_dsp.h`, and `CATALOG_MOODS_GENRES_EFFECTS.md`) against these AAA+ pipelines reveals several major architectural gaps:
 
@@ -894,7 +980,7 @@ Comparing our current `procedural-audio` codebase (`SKILL.md`, `procedural_dsp.h
 
 ---
 
-# 5. Production-Ready C++ and Python DSP Implementations
+## 5. Production-Ready C++ and Python DSP Implementations
 
 The following zero-dependency, production-ready modules provide the exact mathematical and physical algorithms needed to upgrade our procedural audio engine.
 
@@ -904,33 +990,48 @@ The following zero-dependency, production-ready modules provide the exact mathem
 
 ```cpp
 /**
+
  * aaa_physical_acoustics.h
- * 
+
+ *
+
  * Production-Grade AAA Physical Acoustics, HDR Audio, Diffraction,
  * Ballistic Shockwaves, and Granular Particle Soundscapes.
- * 
+
+ *
+
  * Architectures:
  * 1. DICE Frostbite: HDR Audio Floating Window & Zwicker Masking
  * 2. DICE Weapon Acoustics: Supersonic Mach Cone & Whitham N-Wave
  * 3. Naughty Dog: Kurze-Anderson Edge Diffraction & Eyring Material Reverberation
  * 4. Housemarque Returnal: Micro-Granular Rain Synthesizer & Spatial Threat Voice Triage
- * 
+
+ *
+
  * Zero external dependencies. C++17 standard.
  * License: MIT
+
  */
 
-#ifndef AAA_PHYSICAL_ACOUSTICS_H
-#define AAA_PHYSICAL_ACOUSTICS_H
+# ifndef AAA_PHYSICAL_ACOUSTICS_H
 
-#include <cmath>
-#include <vector>
-#include <algorithm>
-#include <cstring>
-#include <cstdint>
+# define AAA_PHYSICAL_ACOUSTICS_H
 
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
+# include <cmath>
+
+# include <vector>
+
+# include <algorithm>
+
+# include <cstring>
+
+# include <cstdint>
+
+# ifndef M_PI
+
+# define M_PI 3.14159265358979323846
+
+# endif
 
 namespace AAA_Acoustics {
 
@@ -960,7 +1061,7 @@ private:
     float target_top_db;      // Peak loudness in current frame
     float attack_coeff;       // ~0 ms (instantaneous)
     float release_coeff;      // Stapedius reflex ballistics (~300ms - 1.5s)
-    
+
 public:
     HDRAudioEngine(float sample_rate = 44100.0f, float window_width = 45.0f, float release_time_sec = 0.6f)
         : fs(sample_rate), window_width_db(window_width), top_level_db(20.0f), target_top_db(20.0f) {
@@ -1070,7 +1171,7 @@ public:
 
         info.has_supersonic_crack = true;
         info.cpa_point = shooter_pos + v_unit * x_travel;
-        
+
         // Propagation times
         info.time_crack_sec = (x_travel / bullet_speed_mps) + (d_perp / (std::cos(theta_m) * SOUND_SPEED));
         info.time_muzzle_sec = s_to_l.length() / SOUND_SPEED;
@@ -1134,7 +1235,7 @@ public:
         // Reference 1 kHz Fresnel Number for broadband shadow calculation
         float n_f = (2.0f * 1000.0f / SOUND_SPEED) * delta;
         float sqrt_2pi_n = std::sqrt(2.0f * static_cast<float>(M_PI) * n_f);
-        
+
         // Kurze-Anderson formulation
         float atten = 20.0f * std::log10(sqrt_2pi_n / std::tanh(std::max(0.01f, sqrt_2pi_n))) + 5.0f;
         out_atten_db = -std::clamp(atten, 0.0f, 35.0f);
@@ -1341,7 +1442,8 @@ public:
 
 } // namespace AAA_Acoustics
 
-#endif // AAA_PHYSICAL_ACOUSTICS_H
+# endif // AAA_PHYSICAL_ACOUSTICS_H
+
 ```
 
 ---
@@ -1349,14 +1451,18 @@ public:
 ### 5.2 Python Physical Acoustics & Verification Suite: `physical_acoustics_sim.py`
 
 ```python
-#!/usr/bin/env python3
+
+# !/usr/bin/env python3
+
 """
 physical_acoustics_sim.py
 Zero-dependency Python simulation and verification engine for AAA Physical Acoustics:
+
 1. Frostbite HDR Audio Window dynamics & tone mapping.
 2. Supersonic Mach Cone & Whitham N-Wave generation.
 3. Kurze-Anderson Edge Diffraction & Eyring Reverberation.
 4. Micro-Granular Particle Raindrops & Spatial Threat Prioritizer.
+
 """
 
 import math
@@ -1364,7 +1470,9 @@ import random
 import struct
 
 # =============================================================================
+
 # 1. FROSTBITE HDR AUDIO SIMULATOR
+
 # =============================================================================
 
 class HDRAudioSimulator:
@@ -1400,9 +1508,10 @@ class HDRAudioSimulator:
     def step_release(self):
         self.top_db = self.ambient_floor_db + self.release_coeff * (self.top_db - self.ambient_floor_db)
 
-
 # =============================================================================
+
 # 2. SUPERSONIC WEAPON ACOUSTICS (MACH CONE & N-WAVE)
+
 # =============================================================================
 
 def calculate_mach_cone_ballistics(shooter_pos, bullet_dir, bullet_speed_mps, caliber_m, listener_pos):
@@ -1448,9 +1557,10 @@ def calculate_mach_cone_ballistics(shooter_pos, bullet_dir, bullet_speed_mps, ca
         "duration_s": dur
     }
 
-
 # =============================================================================
+
 # 3. KURZE-ANDERSON EDGE DIFFRACTION & MATERIAL REVERB
+
 # =============================================================================
 
 def calculate_edge_diffraction(emitter, listener, edge):
@@ -1483,16 +1593,18 @@ NOTE: The output was truncated because it was too long. Use a more targeted quer
 ---
 
 # SECTION 3: GRANULAR MECHANICAL SYNTHESIS & VEHICLE PHYSICS
-*Titles Analyzed: Forza Motorsport / Horizon & Gran Turismo 7, Elite Dangerous, SOMA & Amnesia*
+
+### Titles Analyzed: Forza Motorsport / Horizon & Gran Turismo 7, Elite Dangerous, SOMA & Amnesia
 
 The following is a <SYSTEM_MESSAGE> not actually sent by the user. It is provided by the system as important information to pay attention to.
 
 <SYSTEM_MESSAGE>
 [Message] timestamp=2026-08-17T20:06:50Z sender=2dac2d76-e9c8-4b4c-88a0-0c5a344fd5a4 priority=MESSAGE_PRIORITY_HIGH content=# Exhaustive AAA Technical Investigation: Procedural Mechanical Synthesis, Vehicle Engines, Granular Friction & Sci-Fi Propulsion
 
-**Author**: Senior AAA Vehicle Audio Engineer, Granular Synthesis Expert & Mechanical Physics Specialist  
-**Target Architecture**: CIEL Procedural Audio Engine (`procedural-audio` v3.0 Specification)  
+**Author**: Senior AAA Vehicle Audio Engineer, Granular Synthesis Expert & Mechanical Physics Specialist
+**Target Architecture**: CIEL Procedural Audio Engine (`procedural-audio` v3.0 Specification)
 **Investigation Targets**:
+
 1. **Forza Motorsport / Horizon & Gran Turismo 7** (*Turn 10 Studios / Polyphony Digital*) — Physical Internal Combustion Engine (ICE) Modeling & Granular Pacejka Friction Acoustics.
 2. **Elite Dangerous** (*Frontier Developments / Jim Croft*) — Modular Sci-Fi Ship Propulsion, Gravitational Shearing & Hypersonic Plasma Re-Entry Aerothermodynamics.
 3. **SOMA & Amnesia: The Dark Descent** (*Frictional Games*) — Continuous Havok/Newton Contact Physics, Hertzian Non-Linear Impacts, Surface-Pair Scraping & Rolling Resonance.
@@ -1504,6 +1616,7 @@ The following is a <SYSTEM_MESSAGE> not actually sent by the user. It is provide
 ## 1.1 Physical Modeling of Internal Combustion Engines (ICE)
 
 ```
+
                        ENGINE ACOUSTIC SIGNAL FLOW
  +-------------------------------------------------------------------------+
  |                                                                         |
@@ -1525,9 +1638,11 @@ The following is a <SYSTEM_MESSAGE> not actually sent by the user. It is provide
  |  - Surge / Blow-Off Valve          - Triode Tube / Asymmetric Clipper   |
  |                                                                         |
  +-------------------------------------------------------------------------+
-```
+
+```text
 
 ### 1.1.1 Crankshaft Kinematics & Firing Angles
+
 For a four-stroke engine, one thermodynamic cycle spans $720^\circ$ ($4\pi\text{ rad}$) of crankshaft rotation. The instantaneous crankshaft angle $\theta(t)$ integrates angular velocity $\omega(t)$:
 $$\theta(t) = \left( \int_0^t 2\pi \cdot \frac{\text{RPM}(\tau)}{60} \, d\tau \right) \pmod{4\pi}$$
 
@@ -1537,7 +1652,8 @@ $$\Delta \theta_{\text{fire}} = \frac{720^\circ}{N_{\text{cyl}}} = \frac{4\pi}{N
 Each cylinder $k \in [0, N_{\text{cyl}}-1]$ has an offset determined by the physical firing order:
 $$\theta_k(t) = \left( \theta(t) + \text{firing\_order\_offset}[k] \right) \pmod{4\pi}$$
 
-#### Firing Order Offset Table:
+#### Firing Order Offset Table
+
 | Engine Configuration | Cylinder Count | Firing Order | Phase Offsets ($\Delta \theta_k$) | Acoustic Timbral Signature |
 | :--- | :--- | :--- | :--- | :--- |
 | **Inline-4 (I4)** | 4 | 1-3-4-2 | $0^\circ, 180^\circ, 360^\circ, 540^\circ$ | Pure 2nd engine order dominant; balanced, aggressive buzz |
@@ -1550,9 +1666,11 @@ $$\theta_k(t) = \left( \theta(t) + \text{firing\_order\_offset}[k] \right) \pmod
 ---
 
 ### 1.1.2 Combustion Chamber Pressure Pulse Equation
+
 The acoustic pressure generated by a single cylinder's power stroke is modeled via the double-exponential **Wiebe function approximation**:
 $$P_{\text{comb}}(\phi) = P_{\text{max}} \cdot \left[ \sin\left( \frac{\pi \phi}{\Phi_{\text{dur}}} \right) \right]^{\gamma} \cdot \exp\left( -\beta \frac{\phi}{\Phi_{\text{dur}}} \right) \quad \text{for } 0 \le \phi < \Phi_{\text{dur}}$$
 where:
+
 - $\phi = (\theta_k - \theta_{\text{TDC}}) \pmod{4\pi}$ (angle past Top Dead Center combustion stroke).
 - $\Phi_{\text{dur}} \approx \frac{\pi}{2}$ to $\frac{2\pi}{3}$ radians ($90^\circ - 120^\circ$).
 - $\gamma \approx 1.8 - 2.6$ (shape parameter controlling pressure rise steepness).
@@ -1562,18 +1680,21 @@ where:
 ---
 
 ### 1.1.3 Intake Manifold Acoustics (Helmholtz Resonance & Runner Dynamics)
+
 The intake tract acts as an acoustic Helmholtz resonator with variable acoustic impedance modulated by throttle angle $\alpha \in [0, 1]$:
 $$f_{\text{Helmholtz}} = \frac{c}{2\pi} \sqrt{\frac{A_{\text{runner}}}{V_{\text{plenum}} \cdot L_{\text{eff}}}}$$
 where $c \approx 343\text{ m/s}$ (speed of sound), $A_{\text{runner}}$ is runner cross-sectional area, $V_{\text{plenum}}$ is plenum volume, and $L_{\text{eff}} = L_{\text{physical}} + 0.6 \cdot r_{\text{runner}}$ (end correction).
 
 **Throttle Transmittance Transfer Function**:
 $$T_{\text{throttle}}(\alpha) = \sin^2\left(\frac{\pi}{2} \alpha\right)$$
+
 - At **Idle** ($\alpha \approx 0.02$): High acoustic manifold depression (vacuum); high frequencies attenuated, high-Q suction whistle ($2.8\text{ kHz}-4.5\text{ kHz}$).
 - At **WOT** ($\alpha = 1.0$): Full open pipe resonance; deep Helmholtz induction roar ($80\text{ Hz} - 280\text{ Hz}$) with high acoustic transfer gain ($+18\text{ dB}$).
 
 ---
 
 ### 1.1.4 Exhaust Backpressure, Digital Waveguide & Non-Linear Wave Steepening
+
 Exhaust gas leaves the port at temperatures $T_e \approx 650^\circ\text{C}-950^\circ\text{C}$ ($c_{\text{exhaust}} \approx 600-700\text{ m/s}$).
 The propagation along the exhaust pipe exhibits non-linear steepening (Burgers' equation phenomenon): pressure peaks travel faster than pressure troughs ($c(P) = c_0 + \frac{\gamma+1}{2\gamma} \frac{P}{\rho_0 c_0}$), transforming smooth pressure pulses into shock-like N-waves (producing the signature metallic "rasp" / "crack").
 
@@ -1588,20 +1709,26 @@ $$f_{\text{notch}, n} = \frac{(2n + 1) \cdot c_{\text{exhaust}}}{4 \cdot L_{\tex
 
 ### 1.1.5 Forced Induction: Turbocharger & Supercharger Physics
 
-#### Turbocharger Spool Whistle & Lag Differential Equation:
+#### Turbocharger Spool Whistle & Lag Differential Equation
+
 $$\tau_{\text{spool}} \frac{d\Omega_t}{dt} + \Omega_t = \Omega_{\text{max}} \cdot \left( \alpha \cdot \frac{\text{RPM}}{\text{RPM}_{\text{max}}} \cdot \text{Load} \right)$$
 where $\Omega_t$ is turbo shaft angular velocity ($0 - 240,000\text{ RPM}$).
+
 - **Blade Pass Frequency (BPF)**:
+
   $$f_{\text{BPF}}(t) = N_{\text{blades}} \cdot \frac{\Omega_t(t)}{60} \quad (\approx 1.2\text{ kHz} - 16.5\text{ kHz})$$
+
 - Synthesized via sine oscillator + dynamic narrow-bandpass filter ($Q \approx 25$) excited by turbulent compressor shear noise.
 
-#### Compressor Surge ("Stututu" Flutter):
+#### Compressor Surge ("Stututu" Flutter)
+
 When throttle closes abruptly during boost, mass flow drops below the surge line, causing cyclic acoustic flow reversal:
 $$f_{\text{surge}} = \frac{c}{4 L_{\text{charge\_pipe}}} \approx 12 - 28\text{ Hz}$$
 Modulates the trapped high-pressure boost cavity noise with an exponential decaying sawtooth envelope:
 $$A_{\text{surge}}(t) = \exp\left(-\frac{t}{\tau_{\text{surge}}}\right) \cdot \left| \sin(2\pi f_{\text{surge}} t) \right|^{1.5}$$
 
-#### Blow-Off Valve (BOV):
+#### Blow-Off Valve (BOV)
+
 Sharp acoustic transient burst modeled as bandpass noise ($f_c = 3.2\text{ kHz}, Q = 3.5$) with fast attack ($2\text{ ms}$) and dual exponential decay ($T_{\text{fast}} = 40\text{ ms}, T_{\text{slow}} = 220\text{ ms}$).
 
 ---
@@ -1609,6 +1736,7 @@ Sharp acoustic transient burst modeled as bandpass noise ($f_c = 3.2\text{ kHz},
 ## 1.2 Granular Tire Friction Model (Pacejka 'Magic Formula' $\to$ Acoustic Scrub Synthesis)
 
 ```
+
                             TIRE SLIP ACOUSTIC MAPPING
 +-----------------------------------------------------------------------------------+
 |  Vehicle Dynamics (V_x, V_y, omega, R, F_z)                                       |
@@ -1628,17 +1756,25 @@ Sharp acoustic transient burst modeled as bandpass noise ($f_c = 3.2\text{ kHz},
 |  - Carcass Modes: 850, 1300 Hz  - Grain Size d_g by Surface Type   - Contact patch  |
 |  - FM Chirp Spread              - Poisson-distributed pulses       damping          |
 +-----------------------------------------------------------------------------------+
-```
+
+```text
 
 ### 1.2.1 Pacejka Slip Kinematics
+
 - **Longitudinal Slip Ratio ($\kappa$)**:
+
   $$\kappa = \frac{R \cdot \omega_{\text{wheel}} - V_x}{\max(|V_x|, \epsilon)}$$
+
 - **Lateral Slip Angle ($\alpha$)**:
+
   $$\alpha = \arctan\left( \frac{V_y}{|V_x| + \epsilon} \right)$$
+
 - **Total Combined Slip Velocity Vector ($v_{\text{slip}}$)**:
+
   $$v_{\text{slip}} = \sqrt{(\kappa \cdot V_x)^2 + (V_x \cdot \tan\alpha)^2}$$
 
 - **Pacejka Friction Coefficient Curve $\mu(s)$**:
+
   $$\mu(s) = D \sin\left( C \arctan\left( B s - E \left( B s - \arctan(B s) \right) \right) \right)$$
   where $B$ is stiffness factor, $C$ is shape factor, $D$ is peak friction ($\mu_{\text{peak}} \approx 1.0 - 1.4$ on dry asphalt), and $E$ is curvature factor.
 
@@ -1661,6 +1797,7 @@ Sharp acoustic transient burst modeled as bandpass noise ($f_c = 3.2\text{ kHz},
 ## 2.1 Cockpit Modular Sci-Fi Synthesis & Spaceflight Acoustics
 
 ```
+
                       ELITE DANGEROUS COCKPIT SYNTHESIS
  +-------------------------------------------------------------------------+
  |                                                                         |
@@ -1683,11 +1820,14 @@ Sharp acoustic transient burst modeled as bandpass noise ($f_c = 3.2\text{ kHz},
  |  - Voss-McCartney 1/f noise burst AM modulation at 14 - 38 Hz           |
  |                                                                         |
  +-------------------------------------------------------------------------+
-```
+
+```text
 
 ### 2.1.1 6-DOF Thruster Hum Synthesis
+
 Frontier Developments synthesizes thruster mechanics using multi-carrier FM synthesis where pitch and harmonic richness track thruster stress:
 $$y_{\text{thruster}}(t) = A(t) \cdot \sin\left( 2\pi f_0 t + I_{\text{mod}}(t) \cdot \sin(2\pi f_{\text{mod}} t) + I_{\text{sub}}(t) \cdot \sin(2\pi f_{\text{sub}} t) \right)$$
+
 - Fundamental frequency: $f_0 = 42\text{ Hz} + 65\text{ Hz} \cdot \frac{\|\vec{F}_{6\text{DOF}}\|}{F_{\text{max}}}$.
 - Golden ratio modulation index: $f_{\text{mod}} = f_0 \cdot 1.61803398875$ (prevents static harmonic lock-in, generating a rich organic machine hum).
 - Sub-bass harmonic: $f_{\text{sub}} = f_0 \cdot 0.5$.
@@ -1696,10 +1836,15 @@ $$y_{\text{thruster}}(t) = A(t) \cdot \sin\left( 2\pi f_0 t + I_{\text{mod}}(t) 
 ---
 
 ### 2.1.2 Frame Shift Drive (FSD) Supercruise & Gravitational Shearing
+
 As the ship accelerates beyond $c$ in a spacetime bubble (Alcubierre metric representation):
+
 1. **Exponential Pitch Shearing**:
+
    $$f_{\text{FSD}}(t) = f_{\text{base}} \cdot \exp\left( \kappa \cdot \frac{v_{\text{warp}}}{c} \right)$$
+
 2. **Spacetime Metric Wavefolding**:
+
    When approaching large stellar masses, the gravitational gradient $\nabla \Phi = \frac{G M}{r^2}$ drives a multi-stage Buchla wavefolder:
    $$y_{\text{fold}}(x) = 4 \left( | \text{frac}(x \cdot G_{\text{grav}} + 0.25) - 0.5 | - 0.25 \right)$$
    This generates deep, terrifying sub-harmonic grinding without sample clipping.
@@ -1707,8 +1852,10 @@ As the ship accelerates beyond $c$ in a spacetime bubble (Alcubierre metric repr
 ---
 
 ### 2.1.3 Shield Activation & Relativistic Deflection Ring
+
 - **Impulse Excitation**: Dirac delta passing through dual resonant second-order bandpass filters ($f_1 = 3400\text{ Hz}, f_2 = 7200\text{ Hz}$).
 - **Chaotic Dispersion Ring-Down**: Modulated by a discrete chaotic Logistic Map $x_{n+1} = r \cdot x_n (1 - x_n)$ with $r = 3.92$:
+
   $$y_{\text{shield}}[n] = \sum_{k=1}^4 A_k e^{-\alpha_k n T_s} \sin\left( 2\pi f_k n T_s + 0.15 \cdot x_n \right)$$
 
 ---
@@ -1716,19 +1863,23 @@ As the ship accelerates beyond $c$ in a spacetime bubble (Alcubierre metric repr
 ## 2.2 Atmospheric Entry & Hypersonic Aero-Thermodynamics
 
 ### 2.2.1 Hypersonic Shockwave Stagnation & Plasma Roar
+
 At velocities $M > 5$, a bow shock forms ahead of the craft. Stagnation temperature causes atmospheric ionization into a glowing plasma sheath:
 $$T_{\text{stagnation}} = T_\infty \left(1 + \frac{\gamma - 1}{2} M^2\right)$$
 Dynamic pressure $q$:
 $$q(t) = \frac{1}{2} \rho(h) \cdot v^2(t) \quad \text{where } \rho(h) = \rho_0 e^{-\frac{h}{H_{\text{scale}}}}$$
 
 **Acoustic Plasma Transfer Function**:
+
 1. **Stochastic Source**: Wideband Brownian/Pink noise generator.
 2. **Ionization Formant Filter Bank**: Two resonant bandpasses representing the dissociated gas species ($N_2 \to 2N, O_2 \to 2O$ at $f_1 \approx 450\text{ Hz}, f_2 \approx 1850\text{ Hz}$).
 3. **Cockpit Radio Blackout & Acoustic Low-Pass Isolation**: As plasma density increases, external airborne propagation drops, leaving purely structure-borne hull vibrations ($f_{\text{cutoff}}$ sweeps from $20\text{ kHz} \to 280\text{ Hz}$).
 
 ### 2.2.2 Hull Stress Creak & Aeroelastic Flutter
+
 - **Hull Metal Groan**: Stick-slip structural relaxation oscillator. When dynamic pressure $q > q_{\text{yield}}$, stochastic structural creak bursts occur at rate $\lambda_{\text{creak}} \propto (q - q_{\text{yield}})$.
 - **Aeroelastic Wing Flutter**: Limit-cycle structural oscillation ($f_{\text{flutter}} \approx 18 - 32\text{ Hz}$) multiplying the broadband wind noise:
+
   $$y_{\text{cabin}}(t) = y_{\text{hull\_filtered}}(t) \cdot \left[ 1.0 + 0.45 \sin(2\pi f_{\text{flutter}} t) \right]$$
 
 ---
@@ -1738,6 +1889,7 @@ $$q(t) = \frac{1}{2} \rho(h) \cdot v^2(t) \quad \text{where } \rho(h) = \rho_0 e
 ## 3.1 Physics-Driven Object Interactions & Mechanical Resonance
 
 ```
+
                     CONTINUOUS CONTACT PHYSICS -> DSP
 +-----------------------------------------------------------------------------------+
 |  Physics Engine Contact Manifold (Havok / Newton Dynamics)                        |
@@ -1754,9 +1906,11 @@ $$q(t) = \frac{1}{2} \rho(h) \cdot v^2(t) \quad \text{where } \rho(h) = \rho_0 e
 |  - High-frequency damping alpha(f) = alpha_0 * f^2                                |
 |  - Bulkhead Boundary Cavity Resonances                                            |
 +-----------------------------------------------------------------------------------+
-```
+
+```text
 
 ### 3.1.1 Hertzian Non-Linear Contact Physics (Impacts)
+
 Standard linear audio systems use static impulse responses. SOMA/Amnesia-style realism uses **Hertzian Contact Mechanics**:
 When two elastic bodies collide with relative velocity $v_{\text{norm}}$, the contact force is non-linear:
 $$F_{\text{Hertz}}(t) = k_{\text{stiff}} \cdot \delta(t)^{3/2}$$
@@ -1767,18 +1921,25 @@ $$t_c \approx 2.87 \left( \frac{m_{\text{eff}}^2}{R_{\text{eff}} \cdot E_{\text{
 ---
 
 ### 3.1.2 Continuous Scraping, Dragging & Stick-Slip Dynamics
+
 When an object drags across a surface:
+
 1. **Normal Force Scaling**: Overall acoustic power $P_{\text{acoustic}} \propto F_N \cdot v_{\text{tan}}^2$.
 2. **Surface Roughness Convolution**: Surface profiles $h_1(x)$ and $h_2(x)$ create an excitation spectrum:
+
    $$S_{\text{scrape}}(f) = S_{\text{roughness}}\left( \frac{f}{v_{\text{tan}}} \right) \cdot |H_{\text{body1}}(f) \cdot H_{\text{body2}}(f)|^2$$
+
 3. **Stick-Slip Transition**: At low velocities ($v_{\text{tan}} < v_{\text{crit}}$), static friction locks and releases periodically (Coulomb-Stribeck stick-slip), producing high-pitched squeals and shuddering chortles.
 
 ---
 
 ### 3.1.3 Submerged Ocean Acoustics (SOMA PATHOS-II Hydrophone Environment)
+
 For underwater audio (speed of sound $c_{\text{water}} \approx 1480\text{ m/s}$, density $\rho \approx 1025\text{ kg/m}^3$):
+
 - Acoustic impedance $Z = \rho c \approx 1.5 \times 10^6\text{ Pa}\cdot\text{s/m}$ ($3600\times$ higher than air).
 - **Acoustic Transfer Correction**: Solids transfer acoustic energy into water with minimal loss; high-frequency absorption over distance $d$:
+
   $$\alpha(f) = \alpha_{\text{viscous}} \cdot f^2 \implies f_{\text{cutoff}}(d) = \frac{f_0}{\sqrt{1 + k_{\text{water}} \cdot d}}$$
 
 ---
@@ -1811,19 +1972,26 @@ For underwater audio (speed of sound $c_{\text{water}} \approx 1480\text{ m/s}$,
 ## 5.1 Production C++ Engine: Physical ICE & Granular Friction Synthesizer (`ProceduralVehicleDSP.hpp`)
 
 ```cpp
+
 /**
+
  * ProceduralVehicleDSP.hpp
  * Production-Grade AAA Vehicle Engine & Granular Tire Synthesis Engine
  * Zero allocations in audio thread | Header-only C++17
+
  */
 
-#ifndef PROCEDURAL_VEHICLE_DSP_HPP
-#define PROCEDURAL_VEHICLE_DSP_HPP
+## ifndef PROCEDURAL_VEHICLE_DSP_HPP
 
-#include <cmath>
-#include <cstdint>
-#include <array>
-#include <algorithm>
+## define PROCEDURAL_VEHICLE_DSP_HPP
+
+## include <cmath>
+
+## include <cstdint>
+
+## include <array>
+
+## include <algorithm>
 
 namespace ProceduralAudio {
 
@@ -1843,7 +2011,7 @@ inline float FastRandomFloat(uint32_t& state) {
 class BiquadFilter {
 public:
     enum class Type { LowPass, HighPass, BandPass, Notch };
-    
+
     void Configure(Type type, float cutoffHz, float Q, float sampleRate) {
         float omega = TWO_PI * std::clamp(cutoffHz, 10.0f, sampleRate * 0.49f) / sampleRate;
         float alpha = std::sin(omega) / (2.0f * std::max(0.01f, Q));
@@ -1923,7 +2091,7 @@ public:
         // 2. Multi-Cylinder Combustion Pressure Pulses
         for (size_t k = 0; k < config_.cylinderCount; ++k) {
             float phi = std::fmod(crankAngle_ + config_.firingOffsets[k], FOUR_PI);
-            
+
             // Combustion power stroke occurs between 0 and PI rad (180 deg)
             if (phi < 1.85f) { // ~106 deg burn duration
                 float normPhi = phi / 1.85f;
@@ -1945,7 +2113,7 @@ public:
         // 5. Turbocharger Spool Physics (Whistle + BOV)
         float targetTurbo = (currentRPM / config_.maxRPM) * engineLoad * 200000.0f; // RPM
         turboSpeed_ += (targetTurbo - turboSpeed_) * (dt * 3.5f); // First order lag
-        
+
         float turboBPF = 12.0f * (turboSpeed_ / 60.0f); // 12 compressor blades
         if (turboBPF > 200.0f) {
             turboBpf_.Configure(BiquadFilter::Type::BandPass, turboBPF, 18.0f, sampleRate_);
@@ -2067,14 +2235,16 @@ private:
 
 } // namespace ProceduralAudio
 
-#endif // PROCEDURAL_VEHICLE_DSP_HPP
-```
+## endif // PROCEDURAL_VEHICLE_DSP_HPP
+
+```text
 
 ---
 
 ## 5.2 Standalone Python Synthesis Engine: Sci-Fi Spacecraft & SOMA Continuous Physics (`mechanical_synthesis_engine.py`)
 
 ```python
+
 """
 mechanical_synthesis_engine.py
 Complete Sci-Fi Propulsion, Hypersonic Plasma & Continuous Contact Physics DSP Baker
@@ -2094,7 +2264,7 @@ def write_wav_file(filename: str, samples: list[float], sample_rate: int = SAMPL
         wav.setnchannels(1)
         wav.setsampwidth(2)
         wav.setframerate(sample_rate)
-        
+
         # Soft clip and pack to int16
         packed_frames = bytearray()
         for s in samples:
@@ -2105,9 +2275,12 @@ def write_wav_file(filename: str, samples: list[float], sample_rate: int = SAMPL
         wav.writeframes(packed_frames)
     print(f"[OK] Generated: {filename} ({len(samples)/sample_rate:.2f}s)")
 
-# =========================================================================
-# 1. ELITE DANGEROUS: 6-DOF SCI-FI SHIP THRUST & FSD WARP
-# =========================================================================
+## =========================================================================
+
+## 1. ELITE DANGEROUS: 6-DOF SCI-FI SHIP THRUST & FSD WARP
+
+## =========================================================================
+
 def synthesize_elite_thrusters(duration: float = 4.0, thruster_load: float = 0.85) -> list[float]:
     """
     Synthesizes Elite Dangerous style 6-DOF modular thruster hum using
@@ -2115,79 +2288,82 @@ def synthesize_elite_thrusters(duration: float = 4.0, thruster_load: float = 0.8
     """
     num_samples = int(duration * SAMPLE_RATE)
     samples = [0.0] * num_samples
-    
+
     phi_carrier = 0.0
     phi_mod = 0.0
     phi_sub = 0.0
-    
+
     f_carrier = 48.0 + 55.0 * thruster_load
     f_mod = f_carrier * 1.61803398875 # Golden Ratio modulation
     f_sub = f_carrier * 0.5
     i_mod = 1.2 + 3.8 * thruster_load # Modulation index
-    
+
     for n in range(num_samples):
         t = n / SAMPLE_RATE
         env = min(1.0, t * 8.0) * min(1.0, (duration - t) * 4.0) # Smooth in/out
-        
+
         phi_carrier += (2.0 * math.pi * f_carrier) / SAMPLE_RATE
         phi_mod += (2.0 * math.pi * f_mod) / SAMPLE_RATE
         phi_sub += (2.0 * math.pi * f_sub) / SAMPLE_RATE
-        
+
         # 4-Op FM calculation
         modulator = math.sin(phi_mod) * i_mod
         sub_osc = math.sin(phi_sub) * 0.45
         noise = (random.random() * 2.0 - 1.0) * 0.04 * thruster_load
-        
+
         carrier = math.sin(phi_carrier + modulator)
         out = (carrier * 0.6 + sub_osc + noise) * env * 0.75
         samples[n] = out
-        
+
     return samples
 
 def synthesize_hypersonic_reentry(duration: float = 5.0, mach_number: float = 18.0) -> list[float]:
     """
-    Synthesizes hypersonic boundary-layer plasma ionization roar and 
+    Synthesizes hypersonic boundary-layer plasma ionization roar and
     structural hull aeroelastic flutter.
     """
     num_samples = int(duration * SAMPLE_RATE)
     samples = [0.0] * num_samples
-    
+
     # State variables for 2-pole resonant bandpass filter (gas ionization)
     bpf_y1 = 0.0; bpf_y2 = 0.0
     flutter_phase = 0.0
-    
+
     # Gas ionization resonant mode
     f_center = 420.0 + mach_number * 15.0 # Hz
     q = 3.5
     omega = 2.0 * math.pi * f_center / SAMPLE_RATE
     alpha = math.sin(omega) / (2.0 * q)
     b0 = alpha; a0 = 1.0 + alpha; a1 = -2.0 * math.cos(omega); a2 = 1.0 - alpha
-    
+
     for n in range(num_samples):
         t = n / SAMPLE_RATE
         env = min(1.0, t * 2.0) * min(1.0, (duration - t) * 1.5)
-        
+
         # Pink/Brownian stochastic noise excitation
         noise_in = (random.random() * 2.0 - 1.0)
-        
+
         # 2-pole BPF
         bpf_out = (b0 / a0) * noise_in - (a1 / a0) * bpf_y1 - (a2 / a0) * bpf_y2
         bpf_y2 = bpf_y1
         bpf_y1 = bpf_out
-        
+
         # Aeroelastic hull flutter (24 Hz amplitude modulation)
         flutter_phase += (2.0 * math.pi * 24.0) / SAMPLE_RATE
         flutter_am = 1.0 + 0.45 * math.sin(flutter_phase)
-        
+
         # Non-linear plasma saturation
         plasma_roar = math.tanh(bpf_out * 3.5) * flutter_am
         samples[n] = plasma_roar * env * 0.8
-        
+
     return samples
 
-# =========================================================================
-# 2. SOMA / AMNESIA: CONTINUOUS PHYSICS SCRAPE & HERTZIAN IMPACT
-# =========================================================================
+## =========================================================================
+
+## 2. SOMA / AMNESIA: CONTINUOUS PHYSICS SCRAPE & HERTZIAN IMPACT
+
+## =========================================================================
+
 def synthesize_continuous_scrape(duration: float = 3.0, normal_force_n: float = 1200.0, velocity: float = 0.6) -> list[float]:
     """
     Synthesizes physical surface-pair scraping (Cast Iron on Concrete)
@@ -2195,31 +2371,31 @@ def synthesize_continuous_scrape(duration: float = 3.0, normal_force_n: float = 
     """
     num_samples = int(duration * SAMPLE_RATE)
     samples = [0.0] * num_samples
-    
+
     # 4 Dominant Structural Modes of Cast Iron [Hz, Decay Q]
     modes = [(140.0, 35.0), (380.0, 65.0), (890.0, 110.0), (1850.0, 180.0)]
     mode_states = [[0.0, 0.0] for _ in modes]
-    
+
     for n in range(num_samples):
         t = n / SAMPLE_RATE
         env = min(1.0, t * 10.0) * min(1.0, (duration - t) * 6.0)
-        
+
         # Roughness excitation rate ~ velocity
         asperity_noise = (random.random() * 2.0 - 1.0) * math.sqrt(normal_force_n / 1000.0) * (velocity ** 1.5)
-        
+
         modal_sum = 0.0
         for i, (f_mode, q_mode) in enumerate(modes):
             # Dynamic Doppler tracking of mode frequency with speed
             w = 2.0 * math.pi * (f_mode * (1.0 + 0.1 * velocity)) / SAMPLE_RATE
             r = math.exp(-w / (2.0 * q_mode))
-            
+
             y_new = 2.0 * r * math.cos(w) * mode_states[i][0] - (r * r) * mode_states[i][1] + asperity_noise * 0.1
             mode_states[i][1] = mode_states[i][0]
             mode_states[i][0] = y_new
             modal_sum += y_new
-            
+
         samples[n] = modal_sum * env * 0.65
-        
+
     return samples
 
 if __name__ == "__main__":
@@ -2228,7 +2404,8 @@ if __name__ == "__main__":
     write_wav_file("reentry_plasma.wav", synthesize_hypersonic_reentry(duration=4.0, mach_number=22.0))
     write_wav_file("soma_iron_scrape.wav", synthesize_continuous_scrape(duration=3.0, normal_force_n=2500.0, velocity=0.85))
     print("[SUCCESS] All AAA procedural audio benchmarks synthesized successfully.")
-```
+
+```text
 
 ---
 
@@ -2250,21 +2427,24 @@ To incorporate these findings directly into the master `procedural-audio` ecosys
 4. **Distribute `ProceduralVehicleDSP.hpp` & `mechanical_synthesis_engine.py`**:
    - Expose the C++ header in `skills/procedural-audio/include/` for direct zero-latency engine compilation.
    - Expose the Python baker in `skills/procedural-audio/scripts/` for assetless command-line audio baking.
+
 </SYSTEM_MESSAGE>
 
 ---
 
 # SECTION 4: DYNAMIC COMBAT DIRECTORS & BIOMETRIC TRAUMA ENGINES
-*Titles Analyzed: DOOM (2016) & DOOM Eternal, Red Dead Redemption 2, The Last of Us Part II, Spore & SimCity*
+
+### Titles Analyzed: DOOM (2016) & DOOM Eternal, Red Dead Redemption 2, The Last of Us Part II, Spore & SimCity
 
 The following is a <SYSTEM_MESSAGE> not actually sent by the user. It is provided by the system as important information to pay attention to.
 
 <SYSTEM_MESSAGE>
 [Message] timestamp=2026-08-17T20:07:00Z sender=a127255f-9b78-4f72-b399-212f7e32c774 priority=MESSAGE_PRIORITY_HIGH content=# AAA Interactive Audio & Dynamic Scoring Architectural Investigation
 
-**Authors / Specialist Persona**: AAA Dynamic Music Director, Interactive Scoring Architect & Bio-Feedback Audio Specialist  
-**Target Domain**: Procedural Audio Skill Architecture & AAA Dynamic Music Engine Evolution  
+**Authors / Specialist Persona**: AAA Dynamic Music Director, Interactive Scoring Architect & Bio-Feedback Audio Specialist
+**Target Domain**: Procedural Audio Skill Architecture & AAA Dynamic Music Engine Evolution
 **Systems Investigated**:
+
 1. **DOOM (2016) & DOOM Eternal** (id Software / Mick Gordon & Chad Mossholder) — *Dynamic Combat Music Director & Analog Synth/Drop-E Fusion*
 2. **Red Dead Redemption 2** (Rockstar Games / Woody Jackson) — *Honor, Velocity, Stamina & Threat Dynamic Multi-Tier Stems*
 3. **The Last of Us Part II** (Naughty Dog / Mac Quayle, Gustavo Santaolalla & Beau Anthony Jimenez) — *Dynamic Exertion, Trauma Audio & Biometric Threat Radar*
@@ -2277,6 +2457,7 @@ The following is a <SYSTEM_MESSAGE> not actually sent by the user. It is provide
 Interactive game scoring operates across three foundational paradigms, each solved differently by the investigated masterpieces:
 
 ```
+
 +========================================================================================================+
 |                                  AAA INTERACTIVE SCORING TAXONOMY                                      |
 +========================================================================================================+
@@ -2297,16 +2478,19 @@ Interactive game scoring operates across three foundational paradigms, each solv
 |     - Incommensurate prime-period stochastic loops, Markov transition trees, and cellular automata.    |
 |     - Real-time procedural composition reacting directly to creative and economic simulation graphs.   |
 +========================================================================================================+
-```
+
+```text
 
 ---
 
 ## 2. Deep-Dive Investigation 1: DOOM (2016) & DOOM Eternal
 
 ### 2.1 The Dynamic Combat Music Director Architecture
+
 In DOOM (2016) and DOOM Eternal, id Software's audio lead Chad Mossholder and composer Mick Gordon developed a hybrid vertical/horizontal dynamic conductor inside idTech.
 
 ```
+
 +----------------------------------------------------------------------------------------------------+
 |                                    DOOM COMBAT MUSIC DIRECTOR                                      |
 +----------------------------------------------------------------------------------------------------+
@@ -2335,17 +2519,21 @@ In DOOM (2016) and DOOM Eternal, id Software's audio lead Chad Mossholder and co
 |   - Glitched white noise    - Industrial 4/4 Kick       - Screaming Synths      | Master Limiter | |
 |   - Sine sub-waveforms      - 16th-note Hat Pulses      - Sub-Fundamental Pulse +----------------+ |
 +----------------------------------------------------------------------------------------------------+
-```
 
-#### Combat Intensity Index ($CII$) Derivation:
+```text
+
+#### Combat Intensity Index ($CII$) Derivation
+
 $$CII(t) = \text{clamp}\left( \sum_{i=1}^{N_{\text{active}}} W_i \cdot \frac{1}{\max(1.0, d_i)} + \alpha \cdot \text{DPS}_{\text{out}}(t) + \beta \cdot \text{DPS}_{\text{in}}(t) + \gamma \cdot K_{\text{streak}}(t), 0, 100 \right)$$
 Where:
+
 - $W_i$: Enemy threat weight (Zombie: 0.5, Imp: 1.5, Hell Knight: 5.0, Baron of Hell: 10.0, Tyrant/Marauder: 15.0).
 - $d_i$: Euclidean distance from Slayer to enemy $i$ (meters).
 - $\text{DPS}_{\text{out}}, \text{DPS}_{\text{in}}$: Exponentially smoothed rolling damage dealt and received over a sliding window $\tau = 1.5\text{ s}$.
 - $K_{\text{streak}}(t) = K_{\text{streak}}(t-1) \cdot e^{-\Delta t / 2.0} + \text{KillEvent} \cdot 12.0$.
 
-#### Sample-Accurate Quantization & Transition Protocol:
+#### Sample-Accurate Quantization & Transition Protocol
+
 1. **The Quantum Clock**: Combat tracks run at fixed grid tempos (typically $130.0\text{ BPM} \to 1\text{ beat} = 461.54\text{ ms}$, $1\text{ bar} = 1846.15\text{ ms}$).
 2. **Transition Rules**:
    - $CII < 25$: Ambient Explore stems loop with random glitch micro-bursts.
@@ -2354,16 +2542,21 @@ Where:
 3. **Tail Buffer Preservation**: Outgoing audio stems are never hard-cut. Their reverb and delay decay tails are routed to a dedicated auxiliary bus that rings out naturally ($T_{60} \approx 2.5\text{ s}$), preventing unnatural acoustic dropouts.
 
 ### 2.2 Glory Kill & Chainsaw Audio Sidechaining
+
 During a Glory Kill or Chainsaw execution, game time slows down or locks into animation ($0.8\text{ s} - 1.8\text{ s}$). The dynamic music director executes a frequency-split surgical ducking maneuver:
+
 - **Low Band ($< 120\text{ Hz}$)**: Ducked by only $-3\text{ dB}$ to maintain visceral weight and sub-punch.
 - **Mid Band ($250\text{ Hz} - 4.5\text{ kHz}$)**: Aggressively ducked by $-18\text{ dB}$ ($t_{\text{attack}} = 12\text{ ms}$, $t_{\text{release}} = 120\text{ ms}$) to make physical skull-crushes, blade tears, and bone breaks hyper-present.
 - **High Band ($> 6\text{ kHz}$)**: Modulated with an upward bandpass filter sweep ($1.2\text{ kHz} \to 8.0\text{ kHz}$) and psychoacoustic Shepard-tone riser, culminating in an explosive full-spectrum downbeat un-ducking when the demon splits.
 
 ### 2.3 The Polivoks / Analog Feedback Matrix
+
 Mick Gordon's signature sound uses no standard guitar amp simulations; rather, it combines:
+
 1. **9-String Drop-E / Drop-A Guitars** ($E_0 \approx 20.6\text{ Hz}$, $E_1 \approx 41.2\text{ Hz}$).
 2. **Soviet Polivoks VCF**: An OTA (Operational Transconductance Amplifier) filter without capacitors in the resonance feedback path, creating harsh, asymmetric, non-linear distortion where resonance does not attenuate low-end fundamentals.
 3. **4-Stage Recursive Feedback Loop**:
+
    $$x_{k+1}[n] = \mathcal{N}_k\left( x_k[n] + \gamma_k \cdot y_k[n - D_k] \right)$$
    Where $\mathcal{N}_k$ represents analog tape clipping, diode fuzz, and sub-harmonic dividers.
 
@@ -2372,9 +2565,11 @@ Mick Gordon's signature sound uses no standard guitar amp simulations; rather, i
 ## 3. Deep-Dive Investigation 2: Red Dead Redemption 2
 
 ### 3.1 Multi-Tier Interactive Scoring Architecture
+
 Woody Jackson and Rockstar Games engineered a monumental score spanning over 60 hours of interactive stems organized into a 3-Pillar / 4-Tier matrix:
 
 ```
+
 +========================================================================================================+
 |                                    RDR2 DYNAMIC STEM MATRIX                                            |
 +========================================================================================================+
@@ -2391,11 +2586,13 @@ Woody Jackson and Rockstar Games engineered a monumental score spanning over 60 
 | Tier 3: Rhythm      | Brushes on Snare, Horse-Trot Percussion, Claps    | Heavy Frame Drums, Warping Fuzz |
 | Tier 4: Lead/Stab   | Western Trumpet (Morricone), Pure Whistling       | Screaming Baritone Slide, Horns |
 +========================================================================================================+
-```
+
+```text
 
 ### 3.2 Telemetry Ingestion & Mathematical Mapping
 
 ```
+
                                   +-----------------------+
                                   |  PLAYER TELEMETRY     |
                                   |  - Honor: H in [-1, 1]|
@@ -2410,25 +2607,35 @@ Woody Jackson and Rockstar Games engineered a monumental score spanning over 60 
             [Honor Morph Matrix]    [Rhythmic Subdivider]    [Dynamic Stem Gating]
             Gain_High = (H+1)/2      v < 3.0 m/s: 4/4 Walk    T = 0: Tier 1 Drone
             Gain_Low  = (1-H)/2      v > 7.0 m/s: 12/8 Gallop T > 0.6: Full Tutti
-```
 
-#### Mathematical Telemetry Transfer Functions:
+```text
+
+#### Mathematical Telemetry Transfer Functions
+
 1. **Honor Cross-Morphing**:
+
    $$G_{\text{HighHonor}}(H) = \frac{1 + \text{clamp}(H, -1, 1)}{2}, \quad G_{\text{LowHonor}}(H) = \frac{1 - \text{clamp}(H, -1, 1)}{2}$$
+
 2. **Horseback Velocity to Tempo & Percussion Stems**:
+
    $$G_{\text{Percussion}}(v) = \text{smoothstep}(1.5, 8.0, v)$$
    When $v > 7.5\text{ m/s}$, the rhythmic stem switches from standard $4/4$ walking pulse to a $12/8$ galloping triplet subdivision with dynamic tambourine accents.
+
 3. **Stamina Exhaustion DSP Filter**:
+
    As player/horse stamina $S \to 0$:
    $$f_{\text{cutoff}}(S) = 450.0 + (19550.0) \cdot S^2 \quad (\text{Hz})$$
    A low-frequency resonant boost ($+4\text{ dB}$ at $55\text{ Hz}$) is introduced to emulate somatic blood pressure rushing through the ear canal.
 
 ### 3.3 Eliminating "Crossfade Mud"
+
 Traditional naive crossfading between two 8-track compositions produces phase cancellation, harmonic clashes, and washed-out muddy mixes. RDR2 avoids this via three strict architectural laws:
 
 1. **Harmonic Drone Anchoring**: Every stem set within an entire regional biome (e.g., Heartlands vs. Bayou NWA) is pre-composed around a universal harmonic tonal center (typically pedal $D$ or $A$ at $A=432\text{ Hz}$ or $440\text{ Hz}$). When stems are cross-faded, there are zero clashing root notes.
 2. **Bar-Synchronous Quantum Stem Un-Muting**: Stems are always running continuously in silent lock-step memory. Volume un-muting is scheduled strictly at bar downbeats ($1/1$) using an equal-power raised-cosine envelope:
+
    $$g(t) = \frac{1 - \cos(\pi \cdot t / \tau_{\text{fade}})}{2}$$
+
 3. **Musical Punctuation Stingers ("Masking Hits")**: When rapid transitions occur (e.g., sudden bandit ambush), the engine does not wait for a 4-second crossfade. It triggers an immediate high-transient gunshot/percussion stinger ($< 5\text{ ms}$ rise time) that psychoacoustically masks the underlying instantaneous stem re-routing during the first $150\text{ ms}$.
 
 ---
@@ -2436,9 +2643,11 @@ Traditional naive crossfading between two 8-track compositions produces phase ca
 ## 4. Deep-Dive Investigation 3: The Last of Us Part II
 
 ### 4.1 Dynamic Exertion & Trauma Audio Engine
+
 Naughty Dog's audio leads Beau Anthony Jimenez, Phil Kovats, and composers Gustavo Santaolalla and Mac Quayle pioneered a fully physiological biometric sound engine.
 
 ```
+
 +========================================================================================================+
 |                                    TLOU2 BIOMETRIC TRAUMA ENGINE                                       |
 +========================================================================================================+
@@ -2465,28 +2674,38 @@ Naughty Dog's audio leads Beau Anthony Jimenez, Phil Kovats, and composers Gusta
 |                         - PTSD Tinnitus Sine Generator (5.4 kHz)                                       |
 |                         - Ventricular Heartbeat Sidechain Thump                                        |
 +========================================================================================================+
-```
+
+```text
 
 ### 4.2 Parameter Formulations & Formant DSP
 
-#### Biometric State Equations:
+#### Biometric State Equations
+
 1. **Heart Rate Model ($HR \in [60, 185]\text{ BPM}$)**:
+
    $$\frac{d(HR)}{dt} = \frac{HR_{\text{target}}(v, T, \Pi) - HR}{\tau_{HR}}$$
    Where $HR_{\text{target}} = 60 + 55 \cdot (1 - S) + 40 \cdot \Pi + 30 \cdot T$.
+
 2. **Respiration Rate ($RR \in [12, 52]\text{ breaths/min}$)**:
+
    $$RR = 12.0 + 0.22 \cdot (HR - 60) + 10.0 \cdot \Pi$$
+
 3. **Inhale/Exhale Asymmetry**:
    - Resting: $\text{Ratio}_{\text{in:ex}} = 1.0 : 1.5$ (long, relaxed exhale).
    - Heavy Exertion / Panic: $\text{Ratio}_{\text{in:ex}} = 1.0 : 0.75$ (desperate short gasps).
 
-#### Vocal Formant Shift & Strain Modeling:
+#### Vocal Formant Shift & Strain Modeling
+
 Under physical constriction and panic, human vocal tract length effectively shortens due to larynx elevation and muscle tension, shifting vocal tract resonances upward:
 $$F_k' = F_k \cdot \left(1.0 + 0.18 \cdot \Pi + 0.12 \cdot (1 - S)\right)$$
+
 - Normal Inhale Formants: $F_1 = 450\text{ Hz}, F_2 = 1100\text{ Hz}, F_3 = 2800\text{ Hz}$.
 - Panicked Traumatized Gasp Formants: $F_1 = 585\text{ Hz}, F_2 = 1430\text{ Hz}, F_3 = 3640\text{ Hz}$.
 
 ### 4.3 PTSD Tinnitus & Acoustic Shock Simulation
+
 When health drops below $18\%$ or an explosion detonates nearby:
+
 1. **Master Bus Occlusion**: Instant low-pass filter drop to $f_c = 380\text{ Hz}$ ($Q = 0.5$).
 2. **Tinnitus Sine Injection**: Pure twin-sine oscillator at $f_1 = 5400\text{ Hz}$ and $f_2 = 5412\text{ Hz}$ ($12\text{ Hz}$ beating frequency emulating sensorineural acoustic trauma).
 3. **Pulsatile Ventricular Ducking**: Every heartbeat peak ($HR\text{ BPM}$) ducks the master mix by $-12\text{ dB}$ with a sub-bass thump ($48\text{ Hz}$) that decays exponentially over $180\text{ ms}$.
@@ -2496,9 +2715,11 @@ When health drops below $18\%$ or an explosion detonates nearby:
 ## 5. Deep-Dive Investigation 4: Spore & SimCity
 
 ### 5.1 Brian Eno's Pure Generative Music Paradigm
+
 Brian Eno, working with Will Wright and Kent Jolly at Maxis, discarded pre-recorded linear music in favor of **autonomous generative rule-sets**:
 
 ```
+
 +========================================================================================================+
 |                              BRIAN ENO GENERATIVE SYSTEM (SPORE / SIMCITY)                             |
 +========================================================================================================+
@@ -2519,12 +2740,15 @@ Brian Eno, working with Will Wright and Kent Jolly at Maxis, discarded pre-recor
 |           Perf4(4)  [ 0.15      0.25       0.05       0.40       0.10       0.05    ]                  |
 |           Perf5(5)  [ 0.40      0.10       0.20       0.05       0.15       0.10    ]                  |
 +========================================================================================================+
-```
+
+```text
 
 ### 5.2 SimCity Urban Zoning Generative Matrix
+
 In SimCity, Kent Jolly mapped player zoning and city metrics directly into the sound engine:
 
 ```
+
                                   +-----------------------------+
                                   |  CITY SIMULATION METRICS    |
                                   |  - Residential Density: RHO_R|
@@ -2541,14 +2765,21 @@ In SimCity, Kent Jolly mapped player zoning and city metrics directly into the s
                ETA > 0.8: Lydian / Ion  RHO_R: Flutes / Acoustic  J < 20: 8th Notes
                ETA < 0.3: Phrygian/Loc  RHO_C: Jazz Piano/Vibes   J > 80: 16th Note Swing
                                         RHO_I: Metallic / Sub-Saw
-```
 
-#### Mathematical Dynamic Zoning Formulas:
+```text
+
+#### Mathematical Dynamic Zoning Formulas
+
 1. **Instrument Weight Vector**:
+
    $$W_{\text{woodwinds}} = \frac{\rho_R}{\rho_R + \rho_C + \rho_I}, \quad W_{\text{jazz\_vibes}} = \frac{\rho_C}{\rho_R + \rho_C + \rho_I}, \quad W_{\text{industrial\_metal}} = \frac{\rho_I}{\rho_R + \rho_C + \rho_I}$$
+
 2. **City Traffic to Arpeggio Clock Subdivisions**:
+
    $$f_{\text{arpeggio}} = f_{\text{base}} \cdot \left(1 + \text{floor}\left(4.0 \cdot \frac{J}{J_{\text{max}}}\right)\right)$$
+
 3. **Cellular Automata Rhythm Generator**:
+
    A 1D Wolfram Elementary Cellular Automaton (Rule 30 or Rule 110) runs across 16 spatial grid cells representing power grid stability, generating evolving Euclidean polyrhythms with zero memory footprint.
 
 ---
@@ -2571,7 +2802,8 @@ In SimCity, Kent Jolly mapped player zoning and city metrics directly into the s
 
 Our current `procedural-audio` skill (v2.0.0) is remarkably strong in raw DSP building blocks (PolyBLEP, Moog TPT, Karplus-Strong, Modal Banks, FDN Reverb), but has **5 major architectural deficiencies** when measured against these AAA dynamic engines:
 
-### Deficiencies Identified:
+### Deficiencies Identified
+
 1. **Lack of a Quantized Horizontal Re-Sequencer**:
    - *Current State*: `godot_procedural_engine.gd` uses a basic 16-step modulo clock that changes note root immediately without transition queueing or tail preservation.
    - *Correction Needed*: Implement a **Bar/Beat Quantum Transition Queue** that schedules horizontal stem switches with pre-roll pickups and auxiliary reverb-tail preservation.
@@ -2595,24 +2827,33 @@ Our current `procedural-audio` skill (v2.0.0) is remarkably strong in raw DSP bu
 ### 8.1 Header-Only C++ Implementation: `aaa_dynamic_audio_director.h`
 
 ```cpp
+
 /**
+
  * aaa_dynamic_audio_director.h
  * High-Performance, Zero-Dependency C++17 Header-Only Library for AAA Dynamic Scoring:
  * 1. DOOM Combat Intensity Tracker & Frequency-Split Glory-Kill Sidechain
  * 2. RDR2 Harmonic Drone Stem Conductor & Quantum Grid Transition Engine
  * 3. TLOU2 Biometric Respiration & Vocal Formant Trauma Engine
  * 4. Brian Eno Prime-Period Markov Generative Matrix
+
  *
+
  * License: MIT
+
  */
 
-#pragma once
+## pragma once
 
-#include <cmath>
-#include <vector>
-#include <array>
-#include <cstdlib>
-#include <algorithm>
+## include <cmath>
+
+## include <vector>
+
+## include <array>
+
+## include <cstdlib>
+
+## include <algorithm>
 
 namespace AAADynamicAudio {
 
@@ -2636,13 +2877,13 @@ struct DoomCombatTracker {
     void update(float dt, float active_enemy_threat_sum, float dps_out, float dps_in, bool kill_event) {
         dps_out_smoothed += (dps_out - dps_out_smoothed) * (dt / 1.5f);
         dps_in_smoothed  += (dps_in - dps_in_smoothed) * (dt / 1.5f);
-        
+
         kill_streak_acc *= std::exp(-dt / 2.5f);
         if (kill_event) kill_streak_acc += 15.0f;
 
-        float raw_cii = active_enemy_threat_sum * 3.5f + 
-                        dps_out_smoothed * 0.4f + 
-                        dps_in_smoothed * 0.8f + 
+        float raw_cii = active_enemy_threat_sum * 3.5f +
+                        dps_out_smoothed * 0.4f +
+                        dps_in_smoothed * 0.8f +
                         kill_streak_acc;
         combat_intensity = clampf(raw_cii, 0.0f, 100.0f);
     }
@@ -2809,20 +3050,24 @@ public:
 };
 
 } // namespace AAADynamicAudio
-```
+
+```text
 
 ---
 
 ### 8.2 Production-Ready Python Dynamic Audio Conductor
 
 ```python
+
 """
 aaa_interactive_audio_conductor.py
 Comprehensive Python DSP Engine demonstrating:
+
 - DOOM Dynamic Combat Intensity & Frequency-Split Sidechaining
 - RDR2 Honor / Velocity Stem Cross-Morphing
 - TLOU2 Respiration Formant Tracking & PTSD Tinnitus Emulation
 - Brian Eno Prime-Loop Markov Composition
+
 """
 
 import numpy as np
@@ -2837,35 +3082,37 @@ class AAAInteractiveAudioConductor:
     def render_doom_glory_kill_ducking(self, music_signal: np.ndarray, is_executing: bool) -> np.ndarray:
         """
         Applies a 3-band surgical crossover ducking:
+
         - Lows (<120 Hz): Preserved at -3 dB (visceral weight)
         - Mids (120 Hz - 4.5 kHz): Crushed by -18 dB (clears room for skull breaks)
         - Highs (>4.5 kHz): Riser bandpass notch
+
         """
         n_samples = len(music_signal)
         t = np.linspace(0, n_samples / self.sr, n_samples, endpoint=False)
-        
+
         # Fast FFT filtering for demo purposes
         freqs = np.fft.rfftfreq(n_samples, 1.0 / self.sr)
         fft_data = np.fft.rfft(music_signal)
-        
+
         low_mask = freqs <= 120.0
         mid_mask = (freqs > 120.0) & (freqs <= 4500.0)
         high_mask = freqs > 4500.0
-        
+
         duck_mid = 0.125 if is_executing else 1.0  # -18 dB
         duck_low = 0.707 if is_executing else 1.0  # -3 dB
         duck_high = 0.500 if is_executing else 1.0 # -6 dB
-        
+
         fft_processed = fft_data * (low_mask * duck_low + mid_mask * duck_mid + high_mask * duck_high)
         processed_audio = np.fft.irfft(fft_processed, n_samples)
-        
+
         # If executing, inject an upward psychoacoustic Shepard riser in the high band
         if is_executing:
             riser_freq = np.linspace(1500.0, 7500.0, n_samples)
             riser_phase = 2.0 * np.pi * np.cumsum(riser_freq) / self.sr
             riser = np.sin(riser_phase) * 0.08 * np.linspace(0.1, 1.0, n_samples)
             processed_audio += riser
-            
+
         return processed_audio
 
     # =========================================================================
@@ -2874,9 +3121,11 @@ class AAAInteractiveAudioConductor:
     def compute_rdr2_stem_matrix(self, honor: float, velocity: float, threat: float) -> dict:
         """
         Computes dynamic multi-tier stem weights without crossfade mud.
+
         - honor: [-1.0 (Outlaw) -> +1.0 (Noble)]
         - velocity: [0.0 -> 10.0 m/s]
         - threat: [0.0 (Peaceful) -> 1.0 (Ambush)]
+
         """
         h_clamped = np.clip(honor, -1.0, 1.0)
         v_clamped = np.clip(velocity, 0.0, 10.0)
@@ -2904,25 +3153,27 @@ class AAAInteractiveAudioConductor:
     def synthesize_tlou2_trauma_frame(self, duration_sec: float, health_ratio: float, panic: float) -> np.ndarray:
         """
         Synthesizes near-death trauma audio:
+
         - Occlusion low-pass filter
         - 5400 Hz twin-sine beating tinnitus tone
         - Ventricular sub-bass heartbeat sidechain pulse
+
         """
         n_samples = int(self.sr * duration_sec)
         t = np.linspace(0, duration_sec, n_samples, endpoint=False)
-        
+
         # 1. Tinnitus twin sine with 12 Hz sensorineural beating
         f_tin = 5400.0
-        tin_sig = (np.sin(2.0 * np.pi * f_tin * t) * 0.5 + 
+        tin_sig = (np.sin(2.0 * np.pi * f_tin * t) * 0.5 +
                    np.sin(2.0 * np.pi * (f_tin + 12.0) * t) * 0.5)
         tin_env = (1.0 - np.clip(health_ratio, 0.0, 1.0)) * (0.15 + 0.15 * panic)
-        
+
         # 2. Ventricular Heartbeat Thump (48 Hz decaying sine pulse at 140 BPM)
         bpm = 60.0 + 90.0 * panic + 30.0 * (1.0 - health_ratio)
         beat_period = 60.0 / bpm
         phase_in_beat = (t % beat_period) / beat_period
         heart_env = np.exp(-phase_in_beat * 14.0) * np.sin(2.0 * np.pi * 48.0 * t)
-        
+
         output = (tin_sig * tin_env) + (heart_env * 0.35)
         return output
 
@@ -2940,7 +3191,8 @@ class AAAInteractiveAudioConductor:
             "loop_kalimba_29s": (elapsed_seconds % 29.0) / 29.0,
             "loop_ambient_pad_41s": (elapsed_seconds % 41.0) / 41.0
         }
-```
+
+```text
 
 ---
 

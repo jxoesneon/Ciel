@@ -44,7 +44,7 @@ case "$FILE_PATH" in
     IS_GODOT_FILE=1
     GUIDANCE_TYPE="resource"
     ;;
-  *.gdshader|*.gdshaderinc)
+  *.gdshader | *.gdshaderinc)
     IS_GODOT_FILE=1
     GUIDANCE_TYPE="shader"
     ;;
@@ -60,7 +60,7 @@ fi
 
 # Log activation
 printf '{"ts":"%s","hook":"PreToolUse","skill":"godot","tool":"%s","file":"%s","guidance":"%s","decision":"inject"}\n' \
-  "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$TOOL_NAME" "$FILE_PATH" "$GUIDANCE_TYPE" >> "$ACTIVITY_LOG"
+  "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$TOOL_NAME" "$FILE_PATH" "$GUIDANCE_TYPE" >>"$ACTIVITY_LOG"
 
 # Build context-specific guidance
 case "$GUIDANCE_TYPE" in

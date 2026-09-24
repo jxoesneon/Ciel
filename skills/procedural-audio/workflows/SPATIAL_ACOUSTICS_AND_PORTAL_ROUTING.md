@@ -1,21 +1,23 @@
 # WORKFLOW: 3D SPATIAL ACOUSTICS & PORTAL PROPAGATION
 
-**Execution Trigger**: `"setup spatial audio"`, `"higher order ambisonics"`, `"binaural hrtf"`, `"room acoustics occlusion"`  
-**Target Systems**: C++17 GDExtension, Web Audio API, Unity Native Audio  
+**Execution Trigger**: `"setup spatial audio"`, `"higher order ambisonics"`, `"binaural hrtf"`, `"room acoustics occlusion"`
+**Target Systems**: C++17 GDExtension, Web Audio API, Unity Native Audio
 **Primary Goal**: Implement 3rd-order HOA, 3D VBAP, near-field DVTF parallax ($r < 1\text{ m}$), Delany-Bazley ground reflections, and portal diffraction.
 
 ---
 
 ## 1. SPATIAL ACOUSTIC PIPELINE
 
-```
+```text
                                 [3D POINT SOURCE (r, theta, phi)]
                                                 │
                  ┌──────────────────────────────┼──────────────────────────────┐
                  ▼                              ▼                              ▼
     [HOA 3RD ORDER ENCODER]            [3D VBAP SPATIALIZER]         [NEAR-FIELD BINAURAL]
+
     - 16 Spherical Harmonics           - Delaunay Triangulation      - Ear Parallax Correction
     - Max-rE High-Freq Weighting       - L2 Energy Normalization     - DVTF Low-Shelf Bass Boost
+
                  │                              │                              │
                  ▼                              ▼                              ▼
     [WIGNER-D QUATERNION ROTATION]     [LOUDSPEAKER GAINS]           [FRACTIONAL ITD / ILD]

@@ -1,9 +1,10 @@
 ---
 name: blender-organic-modeling
-version: 1.0.0
 description: Organic/character modeling in Blender via blender-mcp — sculpt-first pipeline, quad topology & edge flow, retopology, rigging math that actually works, Blender 5.x animation API changes.
-author: Hermes/Ciel
-tags: [blender, organic, sculpting, retopology, rigging, mcp]
+license: MIT
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # Blender Organic Modeling (agent-driven)
@@ -28,6 +29,7 @@ Manual bone parenting was repeatedly wrong across many attempts (pose-vs-rest ma
 inherited armature rotations). DO NOT hand-compute `matrix_parent_inverse`.
 
 Correct approach:
+
 ```python
 # position child object at world pose first, select child then armature, then:
 bpy.ops.object.mode_set(mode='POSE')
@@ -35,9 +37,11 @@ bpy.context.view_layer.objects.active = armature_obj
 pbone.select = True          # Blender 5.x: selection is on POSE bones, bone.select removed
 bpy.ops.object.parent_set(type='BONE', keep_transform=True)
 ```
+
 This preserves world transforms exactly where every manual matrix formula drifted.
 
 More rigging rules learned from failures:
+
 - Define bones in WORLD space; do not parent the armature under a rotated root and expect local axes to line up — Y/Z get swapped and fold animations break. If you must rotate, rebuild bones world-space.
 - Bones default to QUATERNION rotation mode: keyframing/driving `rotation_euler` silently does NOTHING. Either set `bone.rotation_mode='XYZ'` or animate quaternions.
 - IK: targets beyond chain reach cause wild flailing; add pole targets to control elbow/knee direction; often simple FK keyframed rotations are MORE reliable for agent-built rigs than IK setups.

@@ -311,7 +311,10 @@ pub fn ask(state: &Value, questions: &Value, timeout_s: f64) -> Option<Value> {
 
 fn cache_path(state: &Value, questions: &Value) -> PathBuf {
     let canonical = crate::jsonfmt::dumps_sorted(&json!({"s": state, "q": questions}));
-    let digest = format!("{:x}", Sha256::digest(canonical.as_bytes()));
+    let digest: String = Sha256::digest(canonical.as_bytes())
+        .iter()
+        .map(|b| format!("{b:02x}"))
+        .collect();
     paths::ciel_home()
         .join("system1")
         .join("cache")

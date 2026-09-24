@@ -38,4 +38,5 @@ glide_freqs = [engine.continuous_meend_interpolation(raga_notes[1], raga_notes[2
 ---
 
 ## 3. REAL-TIME RETUNING ENGINE (HERMODE TUNING)
+
 For orchestral and synthesizer pads, deploy `scripts/advanced_humanizer.py` to dynamically adjust chord thirds by $-14\text{ cents}$ and fifths by $+2\text{ cents}$ in real time, eliminating all 12-TET sensory roughness.

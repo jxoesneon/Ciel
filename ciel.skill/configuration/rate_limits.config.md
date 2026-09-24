@@ -18,6 +18,7 @@ resource_awareness:
 ```
 
 ## Directives
+
 1. **Never** spawn a subagent per-file for repository-wide refactoring. Use single-shot automation scripts instead.
 2. **Double Agentic Loops** must stagger their inner loop invocations sequentially if the outer loop size exceeds 2.
 3. **Monitor Subagent State:** On `errored` states matching `RESOURCE_EXHAUSTED`, instantly trigger the fallback strategy.

@@ -68,7 +68,7 @@ if [ "$TIMEOUT" -gt 0 ]; then
       kill "$GODOT_PID" 2>/dev/null || true
       sleep 0.5
       kill -9 "$GODOT_PID" 2>/dev/null || true
-      EXIT_CODE=124  # timeout exit code
+      EXIT_CODE=124 # timeout exit code
       break
     fi
   done

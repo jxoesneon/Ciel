@@ -40,14 +40,16 @@ Sahil-SS9/hermes-Custom-CLI-Themes end-to-end style.
    quantize to ~8 colors). Derive: background (darkest), accent (most vivid),
    text (lightest), plus semantic ok/warn/error kept recognizable.
 3. **Convert — Option A: ascii-image-converter** (fast preview):
+
    ```bash
    brew install TheZoraiz/ascii-image-converter/ascii-image-converter
    ascii-image-converter ref.jpg -d 64,60 --save-txt out/
    ```
+
    Its color output is ANSI truecolor; Hermes banners need rich markup, so use
    Option B for the final artifact.
 4. **Convert — Option B: Pillow pipeline (recommended)**:
-   - Resize to W columns (~64) x round(W * h/w * 0.5) rows (terminal cells are ~2x tall).
+   - Resize to W columns (~64) x round(W *h/w* 0.5) rows (terminal cells are ~2x tall).
    - Quantize to 24 colors (`Image.quantize(method=MEDIANCUT)`) so run-length
      compression keeps the YAML compact (~26KB at 64x57).
    - Map luminance (0.2126R+0.7152G+0.0722B) onto ramp `" .:-=+*#%@"` — dark
@@ -58,6 +60,7 @@ Sahil-SS9/hermes-Custom-CLI-Themes end-to-end style.
    top-level `colors` key present, `background` set, `ui_accent` >= 4.5:1 vs
    background. Inject art under `banner_hero: |-` indented exactly 2 spaces.
 6. **Validate + activate.**
+
    ```bash
    python3 -c "import yaml; yaml.safe_load(open(skin_path))"
    hermes config set display.skin <name>   # never hand-edit config.yaml

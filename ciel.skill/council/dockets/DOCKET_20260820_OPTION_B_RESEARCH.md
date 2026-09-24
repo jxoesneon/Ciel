@@ -15,6 +15,7 @@ or 3 AU away — render at the same LOD level. Per-instance LOD is not supported
 open feature request (godot-proposals #10669, unresolved since 2023).
 
 However, **Option B can complement Option A** in three specific ways:
+
 1. Adding `generate_lods()` to the near-field mesh for automatic LOD when near chunks are distant
 2. Using Visibility Ranges (HLOD) to hide far-field MultiMesh chunks beyond a distance threshold
 3. Splitting far-field chunks into smaller MultiMesh nodes for per-chunk LOD selection
@@ -88,16 +89,21 @@ asteroids (individual RigidBody3D nodes) but NOT for far-field MultiMesh.
 on Viewport.**
 
 - `GeometryInstance3D.lod_bias` — per-node multiplier that makes LOD transitions happen
+
   sooner or later. Setting this high on far-field MultiMesh chunks would force lower LOD
   tiers, but ALL instances in the chunk would use that tier.
+
 - `Viewport.mesh_lod_threshold` — global threshold (default 1.0 pixel). Higher values make
+
   all LOD transitions happen sooner across the entire viewport.
 
 **Implication**: We could set `lod_bias` high on far-field MultiMeshInstance3D nodes to
 force them to use the lowest available LOD tier. This would work IF the mesh has LOD tiers
 generated via `generate_lods()`. Combined with Option A, this could provide a middle ground:
+
 - Far mesh = icosahedron (20 prims, always)
 - Near mesh with `generate_lods()` + high `lod_bias` = automatic degradation for distant
+
   near-field chunks
 
 ### 5. Impostor sprites / billboards for far-field
@@ -123,7 +129,7 @@ so the marginal gain is minimal.
 ### 6. Performance comparison: Option A vs Option B
 
 | Metric | Option A (dual-mesh) | Option B (Godot LOD) | Option A+B (combined) |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Far-field prims | 22,560 (icosahedron) | ~405K (sub_level=1, lowest auto-LOD) | 22,560 (icosahedron) |
 | Per-instance LOD | Yes (separate mesh) | No (all same level) | Yes for far, auto for near |
 | Draw calls | 57 (one per chunk) | 57 (same) | 57 (same) |
@@ -192,7 +198,9 @@ instead of a hard unload.
 
 1. **Option A (DONE)**: Dual-mesh tier with icosahedron far-field — 99.4% far-field reduction
 2. **Proposal B-1 (NEXT)**: `generate_lods()` on near-field mesh — estimated 30-50% near-field
+
    reduction for distant near-chunks
+
 3. **Proposal B-3 (FUTURE)**: Visibility Ranges for smooth far-field fade — quality improvement
 4. **Proposal B-2 (OPTIONAL)**: Per-chunk `lod_bias` tuning — marginal gain
 
@@ -201,7 +209,9 @@ instead of a hard unload.
 ## Implementation Sketch for Proposal B-1
 
 ```gdscript
-# In ChunkStreamManager._build_mesh_cache(), after building near mesh:
+
+# In ChunkStreamManager._build_mesh_cache(), after building near mesh
+
 if _asteroid_mesh_cache:
     # Generate automatic LOD tiers for the near-field mesh.
     # This creates lower-poly variants that Godot selects based on screen-space coverage.
@@ -219,15 +229,15 @@ chunks, ~40 of which are at the edge, this could reduce near-field prims from ~1
 
 ## Citations
 
-1. Godot 4.7 Mesh LOD docs: https://docs.godotengine.org/en/4.7/tutorials/3d/mesh_lod.html
-2. Godot 4.7 Visibility Ranges docs: https://docs.godotengine.org/en/stable/tutorials/3d/visibility_ranges.html
-3. godot-proposals #10669: https://github.com/godotengine/godot-proposals/issues/10669
-4. Godot issue #76436: https://github.com/godotengine/godot/issues/76436
-5. Godot issue #95948: https://github.com/godotengine/godot/issues/95948
-6. Godot PR #92290: https://github.com/godotengine/godot/pull/92290
-7. Godot 4.7 Optimizing 3D Performance: https://docs.godotengine.org/en/4.7/tutorials/performance/optimizing_3d_performance.html
-8. Godot ArrayMesh docs: https://docs.godotengine.org/en/stable/classes/class_arraymesh.html
-9. Godot MultiMesh performance: https://docs.godotengine.org/en/stable/tutorials/performance/using_multimesh.html
+1. Godot 4.7 Mesh LOD docs: <https://docs.godotengine.org/en/4.7/tutorials/3d/mesh_lod.html>
+2. Godot 4.7 Visibility Ranges docs: <https://docs.godotengine.org/en/stable/tutorials/3d/visibility_ranges.html>
+3. godot-proposals #10669: <https://github.com/godotengine/godot-proposals/issues/10669>
+4. Godot issue #76436: <https://github.com/godotengine/godot/issues/76436>
+5. Godot issue #95948: <https://github.com/godotengine/godot/issues/95948>
+6. Godot PR #92290: <https://github.com/godotengine/godot/pull/92290>
+7. Godot 4.7 Optimizing 3D Performance: <https://docs.godotengine.org/en/4.7/tutorials/performance/optimizing_3d_performance.html>
+8. Godot ArrayMesh docs: <https://docs.godotengine.org/en/stable/classes/class_arraymesh.html>
+9. Godot MultiMesh performance: <https://docs.godotengine.org/en/stable/tutorials/performance/using_multimesh.html>
 
 ---
 
@@ -242,7 +252,7 @@ inline synthesis across all five lenses as a fallback.
 #### Proposal B-1: `generate_lods()` on near-field mesh
 
 | Lens | Score | Weight | Weighted |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Coherence | 9 | 0.20 | 1.80 |
 | Capability | 8 | 0.20 | 1.60 |
 | Safety | 9 | 0.25 | 2.25 |
@@ -250,7 +260,7 @@ inline synthesis across all five lenses as a fallback.
 | Evolution | 8 | 0.20 | 1.60 |
 | **Total** | | | **8.60** |
 
-**Verdict: PASSED (5/5 passing, weighted 8.60 ≥ 6.5)**
+##### Verdict: PASSED (5/5 passing, weighted 8.60 ≥ 6.5)
 
 - Coherence (9): Fits the existing `_build_mesh_cache()` pattern — one extra API call.
 - Capability (8): Genuine expansion — adds automatic LOD for individual near-field asteroids.
@@ -261,7 +271,7 @@ inline synthesis across all five lenses as a fallback.
 #### Proposal B-2: Per-chunk `lod_bias` tuning
 
 | Lens | Score | Weight | Weighted |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Coherence | 7 | 0.20 | 1.40 |
 | Capability | 5 | 0.20 | 1.00 |
 | Safety | 9 | 0.25 | 2.25 |
@@ -280,7 +290,7 @@ inline synthesis across all five lenses as a fallback.
 #### Proposal B-3: Visibility Ranges for far-field fade
 
 | Lens | Score | Weight | Weighted |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Coherence | 8 | 0.20 | 1.60 |
 | Capability | 7 | 0.20 | 1.40 |
 | Safety | 9 | 0.25 | 2.25 |
@@ -288,7 +298,7 @@ inline synthesis across all five lenses as a fallback.
 | Evolution | 8 | 0.20 | 1.60 |
 | **Total** | | | **7.90** |
 
-**Verdict: PASSED (5/5 passing, weighted 7.90 ≥ 6.5)**
+##### Verdict: PASSED (5/5 passing, weighted 7.90 ≥ 6.5)
 
 - Coherence (8): Replaces hard chunk unload with smooth fade — fits streaming pattern.
 - Capability (7): Quality improvement — smooth transitions eliminate pop-in.
@@ -322,13 +332,14 @@ the GPU profile and primitive audit, then evaluate whether B-3 is needed for vis
 ### Implementation
 
 `generate_lods()` was called on the near-field mesh via `ImporterMesh` intermediate:
+
 - `ImporterMesh.from_mesh(_asteroid_mesh_cache)`
 - `imesh.generate_lods(40.0, 60.0, [])`
 - `_asteroid_mesh_cache = imesh.get_mesh(_asteroid_mesh_cache)`
 
 ### LOD tiers successfully generated
 
-```
+```text
 LOD 0: 1350 triangles (size=0.44)  — original detail
 LOD 1:  674 triangles (size=0.88)  — 50% reduction
 LOD 2:  336 triangles (size=1.88)  — 75% reduction
@@ -341,7 +352,7 @@ The meshoptimizer library successfully generated 5 LOD tiers with progressive de
 ### Measured performance impact (non-headless, Apple M4, ULTRA)
 
 | Metric | Option A only | B-1 implemented | Delta |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Flight idle FPS | 31.2 | 29.7 | **-1.5 (-4.8%)** |
 | Map open FPS | 46.0 | 44.2 | -1.8 (-3.9%) |
 | Warp FPS | 46.8 | 46.0 | -0.8 (-1.7%) |
@@ -352,27 +363,33 @@ The meshoptimizer library successfully generated 5 LOD tiers with progressive de
 ### Root cause of negative impact
 
 1. **Only 8 near chunks loaded** (not 81 as estimated). The near stream radius of 4 chunks
+
    produces a 9×9 grid in theory, but only 8 chunks were active during profiling. The total
    near-field primitive count is ~324K, not ~1.5M as estimated.
 
 2. **CPU LOD selection overhead**. Each near-field asteroid is an individual MeshInstance3D
+
    on a RigidBody3D. Godot performs per-frame LOD selection for each node. With ~120 near-field
    asteroids, the CPU cost of LOD selection outweighs the GPU savings from lower primitive counts.
 
 3. **Most near-field asteroids are close enough to use LOD 0**. The near stream radius is only
+
    0.04 AU (6M km), but the ship starts at the center of the near chunk grid. Most asteroids
    are within 1-2 chunks of the ship, close enough that Godot selects LOD 0 or LOD 1.
 
 4. **The 38K primitive reduction (12% of near-field)** came from the few asteroids at the edge
+
    of the near stream radius that qualified for LOD 2-4. This GPU saving was smaller than the
    CPU cost of per-frame LOD selection across all ~120 nodes.
 
 ### Council self-correction
 
 The council's estimated 30-50% near-field reduction was incorrect because:
+
 - The estimate assumed 81 near chunks; only 8 were active
 - The estimate did not account for CPU LOD selection overhead
 - The estimate assumed most near-field asteroids would use lower LOD tiers; in practice,
+
   most are close enough to the ship to use LOD 0
 
 ### Decision
@@ -383,10 +400,12 @@ The code change has been removed from `ChunkStreamManager.gd`.
 ### Revised next steps
 
 With B-1 rejected and B-2 deferred (marginal), the remaining viable optimization is:
+
 - **B-3 (Visibility Ranges for far-field fade)**: Quality improvement, not a primitive reduction
 - **Option C (reduce far stream radius from 3 to 2)**: Reduces far chunk count from ~57 to ~25
 - **Option D (reduce near stream radius from 4 to 3)**: Reduces near chunk count
 - **Near-field mesh simplification**: Reduce subdivision_level from 2 to 1 (~384 prims instead
+
   of ~2,700) — but this affects visual quality for close-range asteroids
 
 The current performance (31.2 FPS flight idle, 46+ FPS in map/warp) may be acceptable for

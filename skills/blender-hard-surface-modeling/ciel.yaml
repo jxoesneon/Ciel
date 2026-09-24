@@ -1,0 +1,19 @@
+# Ciel skill extension — fields beyond the Agent Skills spec. SKILL.md stays spec-pure.
+schema: 1
+version: 1.0.0
+author: Hermes/Ciel
+runtimes:
+- claude_code
+- gemini_cli
+- windsurf
+- generic
+tags:
+- blender
+- hard-surface
+- mcp
+- bpy
+triggers:
+- pattern: blender.*(hard.?surface|model|mesh)
+  confidence: 0.85
+- pattern: (boolean|bevel|bpy).*(blender|mesh)
+  confidence: 0.8

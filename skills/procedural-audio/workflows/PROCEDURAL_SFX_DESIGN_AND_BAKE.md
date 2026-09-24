@@ -23,23 +23,31 @@
 ## 2. STEP-BY-STEP BAKING PROCESS
 
 ### Step 1: Parameter Definition
+
 Configure physical parameters in CLI or code:
+
 - Sample Rate: $48000\text{ Hz}$ or $96000\text{ Hz}$.
 - Bit Depth: 24-bit PCM or 32-bit Float.
 - Material Properties: Density $\rho$, Young's Modulus $E$, Internal Damping $\alpha_k$.
 
 ### Step 2: Render & Normalization
+
 Execute synthesis script:
+
 ```bash
 python3 ~/.ciel/skills/procedural-audio/scripts/aaa_audio_generator.py --sfx bullet --format float32 --out /path/to/game/assets/audio/bullet_crack.wav
 ```
 
 ### Step 3: Post-Synthesis Verification Hook
+
 Run `hooks/post_synthesize_hook.py` to audit:
+
 ```bash
 python3 ~/.ciel/skills/procedural-audio/hooks/post_synthesize_hook.py /path/to/game/assets/audio/bullet_crack.wav
 ```
+
 Ensures:
+
 - Peak amplitude is constrained to $-1.0\text{ dBFS}$.
 - Integrated loudness matches intended category.
 - Zero DC offset.

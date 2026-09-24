@@ -8,7 +8,10 @@ HOOK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CIEL_BIN="${CIEL_BIN:-}"
 if [ -z "$CIEL_BIN" ]; then
   for _c in "${HOME:-/nonexistent}/.ciel/bin/ciel" "${HOME:-/nonexistent}/.cargo/bin/ciel" "$HOOK_DIR/../../bin/ciel"; do
-    if [ -x "$_c" ]; then CIEL_BIN="$_c"; break; fi
+    if [ -x "$_c" ]; then
+      CIEL_BIN="$_c"
+      break
+    fi
   done
 fi
 if [ -n "$CIEL_BIN" ] && [ -x "$CIEL_BIN" ]; then

@@ -9,7 +9,10 @@ HOOK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CIEL_BIN="${CIEL_BIN:-}"
 if [ -z "$CIEL_BIN" ]; then
   for _c in "${HOME:-/nonexistent}/.ciel/bin/ciel" "${HOME:-/nonexistent}/.cargo/bin/ciel" "$HOOK_DIR/../../bin/ciel"; do
-    if [ -x "$_c" ]; then CIEL_BIN="$_c"; break; fi
+    if [ -x "$_c" ]; then
+      CIEL_BIN="$_c"
+      break
+    fi
   done
 fi
 if [ -n "$CIEL_BIN" ] && [ -x "$CIEL_BIN" ]; then
@@ -64,7 +67,7 @@ if command -v python3 >/dev/null 2>&1; then
   PERM_NOTE="$(python3 "${HOME}/.ciel/hooks/lib/store_perms.py" 2>/dev/null || true)"
 fi
 case "$PERM_NOTE" in
-  ""|ok) PERM_MSG="" ;;
+  "" | ok) PERM_MSG="" ;;
   repaired:*) PERM_MSG=" state-store permissions repaired (${PERM_NOTE#repaired:} paths tightened)." ;;
   *) PERM_MSG=" state-store permission sweep failed; check ~/.ciel perms." ;;
 esac

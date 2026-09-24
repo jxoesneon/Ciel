@@ -28,7 +28,7 @@ if [ "$TOOL_NAME" != "write" ] && [ "$TOOL_NAME" != "edit" ]; then
 fi
 
 case "$FILE_PATH" in
-  *.gd|.tscn|.tres|.gdshader|.gdshaderinc|*/project.godot) ;;
+  *.gd | .tscn | .tres | .gdshader | .gdshaderinc | */project.godot) ;;
   *) exit 0 ;;
 esac
 
@@ -89,7 +89,7 @@ esac
 
 # === Shader checks ===
 case "$FILE_PATH" in
-  *.gdshader|*.gdshaderinc)
+  *.gdshader | *.gdshaderinc)
     # Check for buffer_get_data in hot shader paths (CPU readback penalty)
     if echo "$FILE_CONTENT" | grep -q 'buffer_get_data'; then
       WARNINGS="${WARNINGS}- [GPU PERF] buffer_get_data detected — this causes costly CPU readback. Keep compute results on GPU in StorageBuffers.\n"
@@ -118,7 +118,7 @@ if [ -n "$WARNINGS" ]; then
   printf '{"hookSpecificOutput":{"additionalContext":"GODOT AAA+ POST-EDIT VALIDATION:\\n%s"}}\n' "$CLEAN_WARNINGS"
 
   printf '{"ts":"%s","hook":"PostToolUse","skill":"godot","tool":"%s","file":"%s","warnings":"%s"}\n' \
-    "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$TOOL_NAME" "$FILE_PATH" "$(echo "$WARNINGS" | tr '\n' ';')" >> "$ACTIVITY_LOG"
+    "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$TOOL_NAME" "$FILE_PATH" "$(echo "$WARNINGS" | tr '\n' ';')" >>"$ACTIVITY_LOG"
 fi
 
 exit 0

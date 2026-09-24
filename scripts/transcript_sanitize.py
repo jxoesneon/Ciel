@@ -20,7 +20,6 @@ are re-asserted to 0600/0700 after any write.
 import argparse
 import json
 import os
-import re
 import sys
 from pathlib import Path
 
@@ -51,9 +50,9 @@ STORES = [
 SESSIONS_DB = Path(os.environ.get(
     "CIEL_SESSIONS_DB",
     str(HOME / ".local" / "share" / "devin" / "cli" / "sessions.db")))
-# (table, column, row-key, like-terms, deep_only). message_nodes is the
-# multi-GB message table — its LIKE evaluation alone costs minutes, so the
-# advisory scan skips it unless --deep; the deferred redact always covers it.
+# Each entry is: table, column, row-key, like-terms, deep_only. message_nodes
+# is the multi-GB message table — its LIKE evaluation alone costs minutes, so
+# the advisory scan skips it unless --deep; the deferred redact always covers it.
 SESSIONS_TABLES = [
     ("prompt_history", "content", "id", "broad", False),
     ("message_nodes", "chat_message", "row_id", "big", True),
@@ -111,8 +110,7 @@ def iter_files():
     for base, pattern in STORES:
         if not base.is_dir():
             continue
-        for f in sorted(base.glob(pattern)):
-            yield f
+        yield from sorted(base.glob(pattern))
 
 
 def _read_text(path: Path) -> str | None:
@@ -265,7 +263,7 @@ def _prefilter_where(col: str, tier: str = "broad") -> str:
     return " OR ".join(likes + instrs)
 
 
-def redact_sessions_db(dry: bool = False, retries: int = 6, wait: float = 5.0) -> dict:
+def redact_sessions_db(dry: bool = False, retries: int = 6, wait: float = 5.0) -> dict:  # noqa: PLR0912, PLR0915
     """SQL-level redact inside the live sessions.db WAL database.
 
     The DB is write-locked whenever a devin session is live, so this retries
@@ -321,7 +319,8 @@ def redact_sessions_db(dry: bool = False, retries: int = 6, wait: float = 5.0) -
                     if is_bytes:
                         # protobuf-in-BLOB: keep byte length identical
                         new = rx.sub(
-                            lambda m: _length_preserving(m.group(0), name), new)
+                            lambda m, name=name: _length_preserving(
+                                m.group(0), name), new)
                     else:
                         new = rx.sub(PLACEHOLDER.format(category=name), new)
                 if new != work:

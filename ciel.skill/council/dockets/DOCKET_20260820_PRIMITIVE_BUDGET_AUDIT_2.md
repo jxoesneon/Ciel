@@ -17,7 +17,7 @@ revealed the actual sources of the remaining primitives.
 ### Full per-node primitive breakdown (GPU profile, FLIGHT_IDLE entry)
 
 | System | MeshInstance3D | RigidBody3D | MultiMesh | Total prims | % |
-|---|---|---|---|---|---|
+| --- | --- | --- | --- | --- | --- |
 | ChunkStreamManager | 967 / 2.48M | 756 / 2.04M | 69 / 27.7K | 4.52M | 79% |
 | AsteroidField | 68 / 381K | 60 / 381K | 0 | 762K | 13% |
 | UniverseManager | 43 / 56K | 0 | 0 | 56K | 1% |
@@ -107,6 +107,7 @@ look like flat-shaded icosahedrons. Visual quality regression for the core gamep
 Disable AsteroidField + reduce near radius to 3 + reduce near count to 8.
 
 **Estimated impact**:
+
 - AsteroidField: -762K
 - Near radius: -864K
 - Near count: -540K (49 chunks × ~4 fewer × 2,700)
@@ -144,7 +145,7 @@ inline"), Chairman performed inline synthesis across all five lenses.
 ### Scoring Summary
 
 | Option | Description | Weighted | Passing | Verdict |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | **K** | Combine F+G+I | **8.30** | 5/5 | **PASS** |
 | F | Disable AsteroidField | 7.95 | 5/5 | PASS |
 | I | Reduce near count 15→8 | 7.80 | 5/5 | PASS |

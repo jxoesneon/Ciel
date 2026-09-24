@@ -20,10 +20,10 @@ serde_json = { version = "1", features = ["preserve_order"] }
 serde_yaml = "0.9"
 regex = "1"
 time = { version = "0.3", features = ["parsing", "formatting", "macros"] }
-fancy-regex = "0.16"
+fancy-regex = "0.19"
 flate2 = "1"
-rusqlite = { version = "0.32", features = ["bundled"] }
-sha2 = "0.10"
+rusqlite = { version = "0.40", features = ["bundled"] }
+sha2 = "0.11"
 wait-timeout = "0.2"
 
 [target.'cfg(unix)'.dependencies]

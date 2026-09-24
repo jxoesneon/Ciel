@@ -18,7 +18,7 @@ and rendering is ~28ms (84%). The primitive count is the dominant bottleneck.
 ### GPU Profile (non-headless, Apple M4, ULTRA tier)
 
 | Phase | FPS | Frame Time | Draw Calls | Objects | Primitives |
-|---|---|---|---|---|---|
+| --- | --- | --- | --- | --- | --- |
 | Boot | 89.9 | 18.4ms | 1 | 1 | 2 |
 | Main Menu | 118.9 | 15.2ms | 192 | 394 | 13,426 |
 | Loading Flight | 25.5 | 148.3ms | 195 | 2,267 | 5.17M |
@@ -78,6 +78,7 @@ or mesh-tier system for asteroids.
 ### Option A: Dual-mesh tier (recommended)
 
 Build two asteroid meshes:
+
 - **Near mesh**: subdivision_level=2 (current, ~2,700 prims) — for RigidBody3D
   near-field chunks where players can see detail
 - **Far mesh**: subdivision_level=1 (resolution=8, ~384 prims) or a simple
@@ -159,27 +160,32 @@ matters.
 ## Stage 1: Independent Member Evaluation
 
 ### 1. Coherence (`members/Coherence.md`)
+
 - **Score**: 9/10
 - **Rationale**: Option A perfectly extends the existing dual-tier architecture pattern in ChunkStreamManager.gd (lines 70-76: LOD enum, lines 33-40: far/near separation). The proposal adds `_asteroid_mesh_cache_far` alongside the existing `_asteroid_mesh_cache` (line 116), following the established dual-cache pattern already used for `_asteroid_collision_cache` (line 118). This mirrors the multi-variant caching pattern in AsteroidField.gd's `_cached_asteroid_meshes` array (line 10) and BioTextureGenerator's texture cache. The change is architecturally clean—far-field rendering logic remains isolated in `_mount_far_chunk_from_data()` (line 549) with no cross-contamination of near-field physics logic in `_spawn_physics_asteroid_from_data()` (line 652).
 - **Flags**: none
 
 ### 2. Capability (`members/Capability.md`)
+
 - **Score**: 9/10
 - **Rationale**: Option A adds genuine distance-based mesh selection capability that is NOT redundant with Godot's built-in LOD. Godot's MultiMesh LOD applies uniformly to all instances (docs confirm 'all instances will be drawn with the same LOD level'), so per-instance distance-based selection requires separate mesh tiers. The solution directly addresses the root cause (4.05M far-field prims using high-detail mesh at ChunkStreamManager.gd:544) with minimal scope—leveraging existing subdivision_level support (ProceduralAsteroidMesh.gd:50-51) and dual-tier architecture. Estimated 10-67× primitive reduction (4.05M → 405K/60K) directly targets the 5.75M bottleneck.
 - **Flags**: none
 
 ### 3. Safety (`members/Safety.md`) — Veto Authority
+
 - **Score**: 9/10
 - **Rationale**: Option A introduces minimal risk: one additional ArrayMesh resource (negligible memory footprint), no collision system impact (near-field chunks retain existing mesh at ChunkStreamManager.gd:652, collision derived from high-detail mesh at line 173), and mesh cache initialization is synchronous in _ready() at line 145 with no race conditions. The far/near mesh mismatch is acceptable because asteroids are sub-pixel specks at 1-3 AU distance, making visual popping imperceptible during the existing MultiMesh→RigidBody3D transition.
 - **Flags**: `visual_popping_far_near_transition`
 - **Veto**: No (score 9 > 3)
 
 ### 4. Efficiency (`members/Efficiency.md`)
+
 - **Score**: 8/10
 - **Rationale**: The proposal delivers a well-quantified 10× primitive reduction (4.05M → 405K far prims) with minimal code addition (~10 lines in ChunkStreamManager.gd lines 116, 161-174, 549). It directly addresses the root cause identified in the docket (lines 65-73): over-detailed far-field meshes at 1-3 AU distance where asteroids are sub-pixel. However, the icosahedron alternative (~20 prims, 67× reduction) would be more efficient than subdivision_level=1 (~384 prims) and should be the primary choice for far-field rendering.
 - **Flags**: `icosahedron more efficient than sub_level=1`, `consider icosahedron as primary far mesh`
 
 ### 5. Evolution (`members/Evolution.md`)
+
 - **Score**: 9/10
 - **Rationale**: Option A extends the existing dual-tier architecture (ChunkStreamManager.gd lines 32-41, 69-76) by adding a second mesh cache, which is additive and doesn't constrain future expansion. The LOD enum already defines 5 tiers (FULL_PHYSICS, SIMPLIFIED, MULTIMESH, BILLBOARD, INVISIBLE) with only 2 currently used, leaving room for 3+ tier extension later. The mesh generation system (ProceduralAsteroidMesh.gd line 50) already supports subdivision_level parameterization, making lower-poly variants straightforward to generate for future asteroid types, debris fields, or planetary rings.
 - **Flags**: none
@@ -189,17 +195,20 @@ matters.
 ## Stage 2: Cross-Review & Anonymized Delta Check
 
 ### Evolution (held → revised)
+
 - **Stage 1**: 9 → **Stage 2**: 8 (delta: -1)
 - **Rationale**: Peer D's technical observation about icosahedron (~20 prims, 67× reduction) being significantly more efficient than subdivision_level=1 (~384 prims) is valid and highlights that Option A does not select the optimal far-field mesh variant. While the architectural approach remains sound, the efficiency gap warrants a score reduction.
 - **Challenge of**: D (Efficiency)
 - **Flags**: `icosahedron_more_efficient_than_sub_level_1`
 
 ### Efficiency (held)
+
 - **Stage 1**: 8 → **Stage 2**: 8 (delta: 0)
 - **Rationale**: Peers A, B, C, and E provide strong architectural arguments for dual-tier consistency, extensibility, and risk mitigation, but none addressed the icosahedron efficiency concern. Since my flag remains unchallenged and the 67× primitive reduction advantage over subdivision_level=1 is material to the efficiency mandate, I hold at 8.
 - **Flags**: `icosahedron more efficient than sub_level=1`
 
 ### Coherence, Capability, Safety (held at 9)
+
 - No delta. All three maintained their Stage 1 scores. No challenges raised against their rationales.
 
 ---

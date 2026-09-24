@@ -18,9 +18,12 @@ source:
   hash: sha256:pending
 dependencies:
   skills:
+
     - godot/SKILL.md
+
   mcp: []
   system:
+
     - "Godot 4 (.NET build) on PATH for Godot projects"
     - "Python 3 with pip for asset generation tools"
     - "GOOGLE_API_KEY env var for Gemini image generation"
@@ -28,6 +31,7 @@ dependencies:
     - "TRIPO3D_API_KEY env var for Tripo3D 3D model generation"
     - "ffmpeg + imagemagick for video/frame processing"
     - "xvfb + vulkan-tools for headless capture on Linux"
+
 io_contract:
   input: "Natural language game description"
   output: "Complete game project (Godot/Bevy/Babylon) with assets + proof video"
@@ -39,7 +43,7 @@ Generate complete games from natural language descriptions. Supports Godot 4 (C#
 
 ## Pipeline
 
-```
+```text
 User request
  │
  ├─ Check if PLAN.md exists (resume check)
@@ -69,7 +73,7 @@ User request
 Read the appropriate engine guide before writing code:
 
 | Engine | Guide | Stack |
-|--------|-------|-------|
+| -------- | ------- | ------- |
 | Godot 4 | `engines/godot.md` | C#/.NET, Jolt Physics, build-time scene generation |
 | Bevy | `engines/bevy.md` | Rust, ECS, code-first scenes |
 | Babylon.js | `engines/babylon.md` | TypeScript/Vite, browser-served |
@@ -77,7 +81,7 @@ Read the appropriate engine guide before writing code:
 ## Sub-Files
 
 | File | Purpose | When to read |
-|------|---------|--------------|
+| ------ | --------- | -------------- |
 | `engines/godot.md` | Godot engine guide | Before writing Godot code |
 | `engines/bevy.md` | Bevy engine guide | Before writing Bevy code |
 | `engines/babylon.md` | Babylon.js engine guide | Before writing Babylon code |
@@ -90,7 +94,7 @@ Read the appropriate engine guide before writing code:
 Uses paid APIs — confirm spend with user before first generation:
 
 | Service | Use | Cost |
-|---------|-----|------|
+| --------- | ----- | ------ |
 | Gemini | Precise references, characters | 5-15¢ per image |
 | xAI Grok | Textures, simple objects | 2¢ per image |
 | Tripo3D | Image-to-3D GLB models | 30-60¢ per model |

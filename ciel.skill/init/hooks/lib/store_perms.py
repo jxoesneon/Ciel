@@ -12,7 +12,6 @@ venvs, and skill payloads keep normal executable perms.
 """
 
 import os
-import stat
 import sys
 from pathlib import Path
 

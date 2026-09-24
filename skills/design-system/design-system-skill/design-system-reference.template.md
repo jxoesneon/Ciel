@@ -9,37 +9,44 @@ The living reference for building **[product]** on this design system in code. T
 - **Theming:** [how themes switch — `[data-theme]` / `dark:` variant / ThemeProvider]
 - **Docs / references:** [Storybook, docs site, examples — link + 1-line each]
 - **Writable area:** [the dir(s)/files safe to modify]
-- _(All writes still require user confirmation per SKILL.md.)_
+- *(All writes still require user confirmation per SKILL.md.)*
 
 ## Foundations
 
 > Fill in only what exists. Note the tier (primitive / semantic / component) and reach-for-first names.
 
 ### Color
+
 - Semantic roles to reach for first: [e.g. `bg-surface`, `text-primary`, `border-default`, `accent`]
 - Raw palette (avoid for new work): [e.g. `blue-500`]
 - Notes / gotchas: [...]
 
 ### Spacing · sizing · radius · border
+
 - Scale: [...]   Radius: [...]   Control heights / icon sizes: [...]
 - Naming quirks: [...]
 
 ### Typography
+
 - Type scale / tokens, or text components: [...]
 - Families / weights: [...]
 - How to apply: [text component / token / utility class]
 
 ### Elevation / shadow
+
 - [names + when used]
 
 ### Breakpoints / layout
+
 - [breakpoints; layout & grid primitives]
 
 ### Icons
+
 - Source: [package] · naming: [convention] · sizes: [...]
 - How they slot into components: [...]
 
 ### Token binding pattern
+
 [the working snippet for this system — import path + how tokens are referenced (utility class / CSS var / theme key)]
 
 ## Components
@@ -47,6 +54,7 @@ The living reference for building **[product]** on this design system in code. T
 > One entry per **family**. Selection axes + key props + non-introspectable notes only. Introspect for live prop details.
 
 ### [Family name]
+
 - **Selection axes:** [which component to import + the discrete variants]
 - **Props (API):** [key props + 1-line on what each does]
 - **Import · version:** [`import { X } from '<pkg>'` · package version] (re-introspect if the version changed)

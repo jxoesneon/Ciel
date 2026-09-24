@@ -12,10 +12,11 @@ The following is a <SYSTEM_MESSAGE> not actually sent by the user. It is provide
 ## 1.1 Johann Sebastian Bach (1685–1750)
 
 ### Primary Pieces
+
 1. **Toccata and Fugue in D minor, BWV 565**
 2. **The Well-Tempered Clavier (WTC I), Prelude & Fugue No. 2 in C minor, BWV 847** (with comparative reference to Prelude No. 1 in C Major, BWV 846)
 
-```
+```text
         ========================================================================================
                                      BACH: BWV 565 OPENING TOCCATA
         ========================================================================================
@@ -36,16 +37,22 @@ The following is a <SYSTEM_MESSAGE> not actually sent by the user. It is provide
 ### A. Exact Intervallic Sequence & Melodic Contour
 
 #### 1. Toccata in D minor (BWV 565) — Opening Gestural Cell
+
 * **Measure 1 (Flourish):**
+
   $$\text{A4} \xrightarrow{-\text{m2}} \text{G4} \xrightarrow{+\text{m2}} \text{A4} \quad [\text{Pause / Fermenta}]$$
   $$\text{A4} \xrightarrow{-\text{P8}} \text{A3} \xrightarrow{-\text{m2}} \text{G3} \xrightarrow{-\text{M2}} \text{F3} \xrightarrow{-\text{m2}} \text{E3} \xrightarrow{-\text{M2}} \text{D3} \xrightarrow{-\text{m2}} \text{C}\sharp\text{3} \xrightarrow{+\text{m2}} \text{D3} \quad [\text{Pause}]$$
+
 * **Intervallic Delta Vector (Semitones):** $[-2, +2, -12, -2, -2, -1, -2, -1, +1]$.
 * **Contour Topology:** Rapid oscillating upper-neighbor mordent $\rightarrow$ precipitous octave plunge ($-12$ st) $\rightarrow$ strictly descending conjunct stepwise run to the leading tone ($C\sharp$) $\rightarrow$ half-step resolution to the tonic ($D$).
 * **Structural Repetition:** Recursive sequence down one octave ($A3 \rightarrow G3 \rightarrow A3 \dots$) and down another octave ending on the sub-bass pedal ($A1 \rightarrow D1$).
 
 #### 2. Fugue in C minor (BWV 847) — Subject
+
 * **Pitch Sequence:**
+
   $$\text{C4} \xrightarrow{-\text{m2}} \text{B3} \xrightarrow{+\text{m2}} \text{C4} \xrightarrow{+\text{m3}} \text{Eb4} \xrightarrow{-\text{m3}} \text{C4} \xrightarrow{+\text{m3}} \text{Eb4} \xrightarrow{-\text{P4}} \text{Bb3} \xrightarrow{+\text{P4}} \text{Eb4} \xrightarrow{-\text{m2}} \text{D4} \xrightarrow{+\text{m2}} \text{Eb4} \dots$$
+
 * **Intervallic Delta Vector (Semitones):** $[-1, +1, +3, -3, +3, -5, +5, -1, +1, +4, -4, +4, -6 \dots]$.
 * **Contour Topology:** Oscillating neighbor-tone anchor $\rightarrow$ ascending third leap $\rightarrow$ reciprocal drop $\rightarrow$ descending fourth baseline dip $\rightarrow$ second neighbor-tone loop. Creates a two-voice polyphonic illusion within a single monophonic line (Compound Melody).
 
@@ -54,6 +61,7 @@ The following is a <SYSTEM_MESSAGE> not actually sent by the user. It is provide
 ### B. Harmonic Progression & Voice-Leading Analysis
 
 #### BWV 565 Opening Cadence
+
 $$\text{D minor (Pedal: } D1\text{)} \longrightarrow \text{C}\sharp\text{dim7}/D \ (\text{vii}^{\circ7}\text{ over tonic pedal}) \longrightarrow \text{D minor}$$
 $$\text{Full Cadential Flourish: } \text{vii}^{\circ7}/\text{V} \ (\text{G}\sharp^{\circ7}) \longrightarrow \text{V}^{(4\text{--}3)} \ (\text{A Major}) \longrightarrow \text{i} \ (\text{D minor})$$
 
@@ -64,7 +72,7 @@ $$\text{Full Cadential Flourish: } \text{vii}^{\circ7}/\text{V} \ (\text{G}\shar
 
 ### C. The Cognitive / Neuroacoustic "Why"
 
-```
+```text
                      HURON'S ITPRA DYNAMICS IN BACH'S COUNTERPOINT
   Expectation Set (Predictive Model)
        |
@@ -115,7 +123,7 @@ class BachContrapuntalGenerator:
         # Pattern: [Anchor, UpperNeighbor, Anchor, HighLeap, Anchor, HighLeap, LowDip, HighResolve]
         degrees = [0, -1, 0, 3, 0, 3, -4, 3, 2, 3]
         durations = [0.25] * len(degrees)  # 16th notes
-        
+
         for deg in degrees:
             # Map scale degree to MIDI
             octave_shift = 0
@@ -124,7 +132,7 @@ class BachContrapuntalGenerator:
                 octave_shift = -12
             else:
                 pitch_class = self.harmonic_minor[deg % 7]
-            
+
             midi_pitch = self.root_midi + pitch_class + octave_shift
             subject.append(midi_pitch)
         return subject
@@ -165,10 +173,11 @@ class BachContrapuntalGenerator:
 ## 1.2 Ludwig van Beethoven (1770–1827)
 
 ### Primary Pieces
+
 1. **Symphony No. 5 in C minor, Op. 67 (Movement I: Allegro con brio)**
 2. **Symphony No. 9 in D minor, Op. 125 (Movement IV: "Ode to Joy")**
 
-```
+```text
         ========================================================================================
                                  BEETHOVEN: THE 4-NOTE CELLULAR ATOM
         ========================================================================================
@@ -187,6 +196,7 @@ class BachContrapuntalGenerator:
 ### A. Exact Intervallic Sequence & Melodic Contour
 
 #### 1. Symphony No. 5 (The 4-Note Atom)
+
 * **Motive $\alpha$:** $[\text{Rest}, \text{G4}, \text{G4}, \text{G4}, \text{E}\flat\text{4}]$
 * **Motive $\beta$ (Sequential Step-Down):** $[\text{Rest}, \text{F4}, \text{F4}, \text{F4}, \text{D4}]$
 * **Intervallic Delta Vector (Semitones):**
@@ -196,8 +206,11 @@ class BachContrapuntalGenerator:
 * **Thematic Economy:** The entire 502-measure movement is generated through permutations (inversion, diminution, augmentation, stretto fragmentation) of this 4-note kernel.
 
 #### 2. Symphony No. 9 ("Ode to Joy") — Conjunct Arch Contour
+
 * **Pitch Sequence (First 8 bars):**
+
   $$\text{F}\sharp4 \to \text{F}\sharp4 \to \text{G4} \to \text{A4} \mid \text{A4} \to \text{G4} \to \text{F}\sharp4 \to \text{E4} \mid \text{D4} \to \text{D4} \to \text{E4} \to \text{F}\sharp4 \mid \text{F}\sharp4 \cdot \to \text{E4}_{\text{16th}} \to \text{E4}_{\text{half}}$$
+
 * **Intervallic Delta Vector (Semitones):** $[0, +1, +2, 0, -2, -1, -2, -2, 0, +2, +2, 0, -2, 0]$.
 * **Contour Topology:** Perfect conjunct stepwise bell-arch ($\text{D4} \to \text{A4} \to \text{D4}$). Zero disjunct leaps; maximum Gestalt Good Continuation.
 
@@ -206,18 +219,20 @@ class BachContrapuntalGenerator:
 ### B. Harmonic Progression & Structural Tension
 
 #### Symphony No. 5 Opening
+
 $$\text{Measures 1--5: Unison / Octave Monophonic Texture (Ambiguous Key: } \text{E}\flat \text{ Major or C minor?)}$$
 $$\text{Measures 6--21: } \text{c: i} \ (\text{C minor}) \longrightarrow \text{iv} \ (\text{F minor}) \longrightarrow \text{vii}^{\circ6}/\text{V} \ (\text{F}\sharp^{\circ}/\text{A}) \longrightarrow \text{V} \ (\text{G Major})$$
 
 * **Harmonic Ambiguity as Hook:** The opening $[G\text{--}E\flat]$ contains no root $C$ or third $D/B\natural$. The brain cannot confirm whether the key is $E\flat\text{ Major}$ (with $G\text{--}E\flat$ as 3rd-to-tonic) or $C\text{ minor}$ (5th-to-3rd) until the lower strings enter with $C$ in bar 6.
 * **Schenkerian Urlinie in "Ode to Joy":**
+
   $$\hat{3} \ (\text{F}\sharp) \longrightarrow \hat{2} \ (\text{E}) \longrightarrow \hat{1} \ (\text{D}) \quad [\text{Interrupted at Half Cadence on } \hat{2} \ (\text{A Major}) \text{ then resolved}]$$
 
 ---
 
 ### C. The Cognitive / Neuroacoustic "Why"
 
-```
+```text
                          GESTALT COGNITIVE ECONOMY IN BEETHOVEN
   +-----------------------------------------------------------------------------------+
   |  1. ACOUSTIC ATOMIZATION:                                                        |
@@ -258,17 +273,17 @@ class BeethovenianMotifMutator:
         phrase = []
         # Statement 1: Original motif on Dominant (G)
         statement_1 = [tonic_midi + 7 + x for x in self.seed_cell]
-        
+
         # Statement 2: Sequential step-down (Subdominant F -> D)
         statement_2 = [tonic_midi + 5 + x for x in [0, 0, 0, -3]]
-        
+
         # Fragmentation: Take only the last 2 notes, double tempo (Diminution)
         fragment_1 = [tonic_midi + 7, tonic_midi + 3]
         fragment_2 = [tonic_midi + 5, tonic_midi + 2]
-        
+
         # Liquidation: Hammering single pitch (motoric drive)
         hammering = [tonic_midi + 7] * 4
-        
+
         return {
             "motive_alpha": statement_1,
             "motive_beta": statement_2,
@@ -300,10 +315,11 @@ class BeethovenianMotifMutator:
 ## 1.3 Claude Debussy (1862–1918) & Maurice Ravel (1875–1937)
 
 ### Primary Pieces
+
 1. **Debussy: *Clair de Lune* (Suite bergamasque) & *Voiles* (Préludes, Book 1)**
 2. **Ravel: *Boléro* & *Pavane pour une infante défunte***
 
-```
+```text
         ========================================================================================
                               DEBUSSY & RAVEL: IMPRESSIONIST VOICINGS
         ========================================================================================
@@ -313,7 +329,7 @@ class BeethovenianMotifMutator:
         Voice 3: [ F4 ] ====> [ Gb4 ] ====> [ Ab4 ] ====> [ Bb4]
         Voice 4: [ Db4] ====> [ Eb4 ] ====> [ F4  ] ====> [ Gb4]
         Voice 5: [ Bb3] ====> [ C4  ] ====> [ Db4 ] ====> [ Eb4]
-        
+
         Ravel Bolero Spectral Orchestration:
         Fundamental (C): Horn (C3)
         3rd Harmonic (G): Celesta + 2 Piccolos (G4 + G5) -> Generates Synthetic Organ Stop Timbre
@@ -326,18 +342,25 @@ class BeethovenianMotifMutator:
 ### A. Exact Intervallic Sequence & Melodic Contour
 
 #### 1. Debussy: *Clair de Lune* — Opening Theme (Db Major, 9/8 Meter)
+
 * **Pitch Sequence:**
+
   $$\text{F5} \xrightarrow{-\text{M3}} \text{Db5} \xrightarrow{-\text{M2}} \text{C5} \xrightarrow{-\text{m2}} \text{Bb4} \xrightarrow{+\text{m3}} \text{Db5} \xrightarrow{-\text{m2}} \text{C5} \xrightarrow{-\text{m2}} \text{Bb4} \xrightarrow{-\text{m3}} \text{G}\flat\text{4} \dots$$
+
 * **Intervallic Delta Vector (Semitones):** $[-4, -2, -1, +3, -1, -1, -4]$.
 * **Contour Topology:** Gentle, descending cascade floating over the barline (agogic accent on weak beats), lingering on unresolved 9ths ($Eb$) and major 7ths ($C$).
 
 #### 2. Debussy: *Voiles* — Whole-Tone Melody
+
 * **Pitch Set:** $\{C, D, E, F\sharp, G\sharp, A\sharp\}$ (Hexatonic Scale $6\text{-}35$).
 * **Intervallic Step Vector:** Strictly $[+2, +2, +2, +2, +2]$ semitones. Complete suspension of tonic pull; directional gravitational decay.
 
 #### 3. Ravel: *Boléro* — Theme A (C Major with Modal Infiltration)
+
 * **Pitch Sequence:**
+
   $$\text{C5} \to \text{B4} \to \text{A4} \to \text{B4} \to \text{C5} \to \text{A4} \to \text{C5} \to \text{A4} \dots$$
+
 * **Intervallic Delta Vector (Semitones):** $[-1, -2, +2, +1, -3, +3, -3]$.
 * **Contour Topology:** Hypnotic, winding arabesque revolving tightly around the tonic $C$, expanding down to $G4$, then leaping up to $E5$.
 
@@ -346,6 +369,7 @@ class BeethovenianMotifMutator:
 ### B. Harmonic Progression & Planar Voice Leading
 
 #### Clair de Lune (Measures 1–8)
+
 $$\text{D}\flat\text{maj7} \longrightarrow \text{E}\flat\text{m9} \longrightarrow \text{Fm7} \longrightarrow \text{G}\flat\text{maj7} \longrightarrow \text{B}\flat\text{m9} \longrightarrow \text{E}\flat\text{9} \longrightarrow \text{A}\flat\text{13}^{(\text{sus4})} \longrightarrow \text{D}\flat\text{maj9}$$
 
 * **Non-Functional Planar Parallelism (Parallel Chords):** Debussy uses *chord streaming* (parallel 5ths, 9ths, and 11ths moving in block formation). Chords lose their syntactical V $\to$ I tension-resolution duty and become timbral color washes.
@@ -406,16 +430,17 @@ class ImpressionistHarmonicEngine:
 ## 1.4 Igor Stravinsky (1882–1971)
 
 ### Primary Pieces
+
 1. **The Rite of Spring (*Le Sacre du printemps*), Part 1: "Augurs of Spring" & "Sacrificial Dance"**
 
-```
+```text
         ========================================================================================
                           STRAVINSKY: THE AUGURS POLYCHORD & ADDITIVE METER
         ========================================================================================
         Upper Polychord Unit:  [ Eb7 Triad: Eb - G - Bb - Db ]  (Strings / Brass)
                                  ============================
         Lower Polychord Unit:  [ Fb Major Triad: Fb - Ab - Cb]  (Cello / Bass Pizz)
-        
+
         Rhythmic Asymmetry (Accented Downbeats):
         Bar:    |  1  2  3  4  5  6  7  8  |  1  2  3  4  5  6  7  8  |
         Accent: |  >        >        >     |        >        >        |
@@ -428,15 +453,21 @@ class ImpressionistHarmonicEngine:
 ### A. Exact Intervallic Sequence & Melodic Contour
 
 #### 1. The Augurs of Spring — Melodic & Polychordal Construction
+
 * **The Augurs Polychord Construction:**
+
   $$\text{Polychord} = \frac{\text{E}\flat\text{ dominant 7th}}{\text{F}\flat\text{ Major}} = \frac{\text{E}\flat\text{--}\text{G}\text{--}\text{B}\flat\text{--}\text{D}\flat}{\text{F}\flat\text{--}\text{A}\flat\text{--}\text{C}\flat} \equiv \frac{\text{D}\sharp\text{--}\text{F}\mathbf{\times}\text{--}\text{A}\sharp\text{--}\text{C}\sharp}{\text{E}\text{--}\text{G}\sharp\text{--}\text{B}}$$
+
 * **Pitch Class Set:** $\{11, 0, 3, 4, 6, 7, 10\}$ (Forte Number: $7\text{-}32$).
 * **Folk Fragment Melodic Sequence (Bassoon / Cor Anglais):**
+
   $$\text{Bb4} \xrightarrow{+\text{m2}} \text{Cb5} \xrightarrow{-\text{m2}} \text{Bb4} \xrightarrow{-\text{M2}} \text{Ab4} \xrightarrow{+\text{M2}} \text{Bb4} \xrightarrow{-\text{m3}} \text{G4} \dots$$
+
 * **Intervallic Delta Vector (Semitones):** $[+1, -1, -2, +2, -3]$.
 * **Contour Topology:** Narrow, archaic Lithuanian folk contour constrained within a narrow perfect 4th ambitus.
 
 #### 2. Sacrificial Dance — Additive Asymmetric Meter Sequence
+
 * **Meter Stream:** $\frac{3}{16} \to \frac{5}{16} \to \frac{3}{16} \to \frac{4}{16} \to \frac{7}{16} \to \frac{3}{16} \to \frac{2}{16} \dots$
 * **Eighth-Note Groupings:** $3 \to (2+3) \to 3 \to (2+2) \to (2+2+3) \to 3 \to 2$.
 
@@ -454,7 +485,7 @@ class ImpressionistHarmonicEngine:
 
 ### C. The Cognitive / Neuroacoustic "Why"
 
-```
+```text
                     PREDICTIVE CODING DISRUPTION IN THE AUDITORY CORTEX
   Regular Beat Expectations (Isochronous Pulse Grid: 4/4)
        |
@@ -523,10 +554,11 @@ class StravinskyRhythmPolychordEngine:
 ## 1.5 Gustav Holst (1874–1934)
 
 ### Primary Pieces
+
 1. **The Planets, Op. 32 — "Mars, the Bringer of War"**
 2. **The Planets, Op. 32 — "Jupiter, the Bringer of Jollity"**
 
-```
+```text
         ========================================================================================
                                    HOLST: MARS VS. JUPITER POLARITY
         ========================================================================================
@@ -534,7 +566,7 @@ class StravinskyRhythmPolychordEngine:
         Beat:   |  1  .  2  .  |  3  .  |  4  .  |  5  .  |
         Rhythm: [Triplet: d-d-d] [Quarter] [Quarter] [Two 8ths] [Quarter]
         Chords: Root G minor Clashing with Db5 (Tritone Biamalgamation)
-        
+
         JUPITER: Modal Majesty (Thaxted Hymn in Eb Major)
         Melody: [ G4 ] -> [ Bb4 ] -> [ C5 ] -> [ Bb4 ] -> [ G4 ] -> [ F4 ] -> [ Eb4 ]
         Intervallic Flow: Pentatonic Stepwise Folk-Arch with Ascending Minor 3rd & Major 2nds
@@ -546,16 +578,24 @@ class StravinskyRhythmPolychordEngine:
 ### A. Exact Intervallic Sequence & Melodic Contour
 
 #### 1. Mars — The Relentless Ostinato & Tritone Fanfare
+
 * **Ostinato Rhythmic Unit (5/4 Meter):**
+
   $$\left[ \text{Quarter}_{\text{triplet}} \ \text{Quarter}_{\text{triplet}} \ \text{Quarter}_{\text{triplet}} \right] \ \text{Quarter} \ \text{Quarter} \ \left[ \text{8th} \ \text{8th} \right] \ \text{Quarter}$$
+
 * **Brass Fanfare Motif:**
+
   $$\text{G2} \xrightarrow{+\text{P5}} \text{D3} \xrightarrow{+\text{d5}} \text{A}\flat\text{3} \xrightarrow{-\text{m2}} \text{G3} \xrightarrow{-\text{m2}} \text{F}\sharp\text{3} \xrightarrow{-\text{M2}} \text{E3} \dots$$
+
 * **Intervallic Delta Vector (Semitones):** $[+7, +6, -1, -1, -2]$.
 * **Contour Topology:** Violent upward fifth thrust into an unstable tritone apex ($A\flat3$), followed by a relentless chromatic downward grind.
 
 #### 2. Jupiter — Hymn Theme ("Thaxted", Eb Major)
+
 * **Pitch Sequence:**
+
   $$\text{G4} \xrightarrow{+\text{m3}} \text{Bb4} \xrightarrow{+\text{M2}} \text{C5} \xrightarrow{-\text{M2}} \text{Bb4} \xrightarrow{-\text{m3}} \text{G4} \xrightarrow{-\text{M2}} \text{F4} \xrightarrow{-\text{M2}} \text{Eb4} \xrightarrow{+\text{M2}} \text{F4} \xrightarrow{+\text{M2}} \text{G4} \dots$$
+
 * **Intervallic Delta Vector (Semitones):** $[+3, +2, -2, -3, -2, -2, +2, +2]$.
 * **Contour Topology:** Expansive, major-pentatonic conjunct arch with symmetrical rising and falling balancing curves.
 
@@ -564,14 +604,17 @@ class StravinskyRhythmPolychordEngine:
 ### B. Harmonic Progression & Bitonality
 
 #### Mars Harmonic Clash
+
 $$\text{Static G-Pedal} \ \Big| \ \text{G minor} \ \longleftrightarrow \ \text{D}\flat\text{ Major / G} \quad (\text{Root clash: } G \longleftrightarrow D\flat \text{ Tritone Polychord})$$
 $$\text{Climactic 5/4 Chord: } \text{G} \ \text{augmented triad combined with } \text{C}\sharp \text{ diminished triad}$$
 
 * **Bitonal Friction:** Holst pits the root $G$ against the polar opposite harmonic field $D\flat / C\sharp$ (distance of 6 semitones). The two tonal centers cannot resolve; they coexist in violent acoustic collision.
 
 #### Jupiter Hymn Harmonic Structure
+
 $$\text{E}\flat \longrightarrow \text{B}\flat/\text{D} \longrightarrow \text{Cm} \longrightarrow \text{A}\flat \longrightarrow \text{E}\flat/\text{G} \longrightarrow \text{Fm7} \longrightarrow \text{B}\flat\text{7} \longrightarrow \text{E}\flat$$
 $$\text{Roman Numerals: } \text{I} \longrightarrow \text{V}^6 \longrightarrow \text{vi} \longrightarrow \text{IV} \longrightarrow \text{I}^6 \longrightarrow \text{ii}^7 \longrightarrow \text{V}^7 \longrightarrow \text{I}$$
+
 * **Noble Diatonic Progression:** Features stepwise descending bass voice leading ($E\flat \to D \to C \to B\flat \to A\flat \to G \to F \to E\flat$), maximizing harmonic stability.
 
 ---
@@ -635,11 +678,12 @@ class HolstianOrchestrator:
 ## 2.1 John Williams (1932–Present)
 
 ### Primary Pieces
+
 1. **Star Wars: Main Title (Luke’s Theme) & The Force Theme**
 2. **Jurassic Park: Main Theme**
 3. **Raiders of the Lost Ark: Raiders March**
 
-```
+```text
         ========================================================================================
                               JOHN WILLIAMS: HEROIC LEAP ARCHITECTURE
         ========================================================================================
@@ -660,8 +704,11 @@ class HolstianOrchestrator:
 ### A. Exact Intervallic Sequence & Melodic Contour
 
 #### 1. Star Wars Main Title (Luke’s Theme, Bb Major)
+
 * **Pitch Sequence (Measures 1–4):**
+
   $$\text{Bb3} \to (\text{Bb3}_{\text{16th}}\text{-}\text{Bb3}_{\text{16th}}\text{-}\text{Bb3}_{\text{16th}}) \xrightarrow{+\text{P5}} \text{F4} \xrightarrow{-\text{M2}} \text{Eb4} \xrightarrow{-\text{m2}} \text{D4} \xrightarrow{-\text{M2}} \text{C4} \xrightarrow{+\text{P8}} \text{Bb4} \xrightarrow{-\text{P5}} \text{F4} \dots$$
+
 * **Intervallic Delta Vector (Semitones):** $[0, 0, 0, +7, -2, -1, -2, +12, -7]$.
 * **Contour Topology:**
   1. Rhythmic motoric launch (triplet fanfare on tonic).
@@ -671,12 +718,16 @@ class HolstianOrchestrator:
   5. Centripetal drop back to dominant fifth.
 
 #### 2. The Force Theme (Binary Minor Mode / Aeolian-Dorian Inflection)
+
 * **Pitch Sequence (G minor):**
+
   $$\text{D4} \xrightarrow{+\text{P4}} \text{G4} \xrightarrow{+\text{m3}} \text{Bb4} \xrightarrow{+\text{M2}} \text{C5} \xrightarrow{+\text{m2}} \text{D5} \xrightarrow{+\text{m3}} \text{F5} \xrightarrow{-\text{M2}} \text{Eb5} \xrightarrow{-\text{m2}} \text{D5} \dots$$
+
 * **Intervallic Delta Vector (Semitones):** $[+5, +3, +2, +1, +3, -2, -1]$.
 * **Contour Topology:** Ascending fourth pickup $\to$ minor triad climb $\to$ reaching upward to the minor seventh ($F5$) $\to$ yearning stepwise descent.
 
 #### 3. Raiders March (Indiana Jones)
+
 * **Opening Flourish:** $[\text{E4}_{\text{dotted 8th}}, \text{F4}_{\text{16th}}, \text{G4}_{\text{8th}}] \xrightarrow{+\text{P8}} [\text{C5}_{\text{half}}] \quad \text{Intervallic jump: } +5\text{ st then } +5\text{ st} \implies \text{Octave expansion}$.
 
 ---
@@ -684,6 +735,7 @@ class HolstianOrchestrator:
 ### B. Harmonic Progression & Lydian / Mixolydian Coloration
 
 #### Star Wars Main Title Harmony
+
 $$\text{B}\flat \ (\text{I}) \longrightarrow \text{A}\flat/\text{B}\flat \ (\flat\text{VII}^{(\text{add9})}) \longrightarrow \text{E}\flat/\text{G} \ (\text{IV}^6) \longrightarrow \text{F7} \ (\text{V}^7) \longrightarrow \text{B}\flat \ (\text{I})$$
 
 * **Mixolydian Flat-VII Modal Interchange:** Williams injects $\flat\text{VII}$ ($\text{A}\flat\text{ Major}$) directly over the tonic pedal $\text{B}\flat$, circumventing academic V $\to$ I predictability and injecting cinematic space and heroism.
@@ -749,10 +801,11 @@ class WilliamsHeroicThemeGenerator:
 ## 2.2 Bernard Herrmann (1911–1975)
 
 ### Primary Pieces
+
 1. **Psycho (1960) — "Prelude" & "The Murder" (Shower Scene)**
 2. **Vertigo (1958) — "Prelude" & "Scene d'Amour"**
 
-```
+```text
         ========================================================================================
                               BERNARD HERRMANN: THE PSYCHOACOUSTIC HORROR
         ========================================================================================
@@ -762,7 +815,7 @@ class WilliamsHeroicThemeGenerator:
         Mid 1:  [ C4  ] (Minor 3rd)
         Bass:   [ A3  ] (Root)
         Interval Structure: [ Root + 3 st + 7 st + 11 st ] ===> Harmonic Tension: Unresolved
-        
+
         Psycho Shower Scene: Screeching Semitone Cluster
         Muted Violins (Sordino): [ Eb7 ] + [ E7 ] + [ F7 ] + [ F#7 ] -> Extreme Critical Band Chaos
         ========================================================================================
@@ -773,15 +826,21 @@ class WilliamsHeroicThemeGenerator:
 ### A. Exact Intervallic Sequence & Melodic Contour
 
 #### 1. The "Hitchcock Chord" (Minor-Major 7th Motif, *Psycho* Prelude)
+
 * **Chord Pitch Array (Strings):** $[\text{Bb3}, \text{D}\flat\text{4}, \text{F4}, \text{A4}]$ (Bb minor triad with an abrasive natural A natural on top).
 * **Intervallic Structure:** $\text{Root} \xrightarrow{+\text{m3}} \text{D}\flat \xrightarrow{+\text{M3}} \text{F} \xrightarrow{+\text{M3}} \text{A}$.
 * **Linear Ostinato Kernel:**
+
   $$\text{Bb3} \xrightarrow{+\text{m3}} \text{Db4} \xrightarrow{+\text{M3}} \text{F4} \xrightarrow{+\text{M3}} \text{A4} \xrightarrow{-\text{M7}} \text{Bb3} \dots$$
+
 * **Contour Topology:** Rapidly ascending arpeggiated sweep ending on a knife-edge dissonance, collapsing instantly down a major 7th.
 
 #### 2. "The Murder" (Shower Scene) — Semitone Cluster Stabs
+
 * **Pitch Array (Ultra-High Register, Violins *sordino, con tutta la forza*):**
+
   $$\{\text{E}\flat\text{7}, \text{E7}, \text{F7}, \text{F}\sharp\text{7}\} \quad (\text{Frequencies: } 2489\text{ Hz}, 2637\text{ Hz}, 2793\text{ Hz}, 2959\text{ Hz})$$
+
 * **Intervallic Delta:** Dense micro-clusters separated by single semitones ($100\text{ cents}$) and compound minor 2nds/major 7ths ($1100\text{ cents}, 1300\text{ cents}$).
 * **Contour:** Zero horizontal melody. Vertical, slashing rhythmic downward attacks imitating physical knife strikes.
 
@@ -790,16 +849,19 @@ class WilliamsHeroicThemeGenerator:
 ### B. Harmonic Progression & Cellular Ostinato Construction
 
 * **Non-Resolving Circular Harmonies (*Vertigo*):**
+
   $$\text{D minor/major 7th} \longleftrightarrow \text{E}\flat\text{ minor/major 7th} \longleftrightarrow \text{D}\text{m}^{(\text{maj7})}$$
+
   * Herrmann eliminates classical functional cadences. The chords oscillate back and forth symmetrically, trapping the listener in a musical labyrinth that mirrors psychological obsession and acrophobia.
 * **String-Only Palette (7-Part String Orchestra in *Psycho*):**
+
   Herrmann intentionally discarded woodwinds, brass, and percussion for *Psycho*, utilizing only violins, violas, cellos, and basses with mutes (*con sordino*), stripping the music of warmth and creating a black-and-white sonic texture.
 
 ---
 
 ### C. The Cognitive / Neuroacoustic "Why"
 
-```
+```text
                        NEUROACOUSTIC ACTIVATION IN HERRMANN'S CLUSTERS
   Acoustic Signal: High-Register Screech (2.5 kHz - 4.0 kHz)
        |
@@ -873,11 +935,12 @@ The following is a <SYSTEM_MESSAGE> not actually sent by the user. It is provide
 ## 2.3 Ennio Morricone (1928–2020)
 
 ### Primary Pieces
+
 1. **The Good, the Bad and the Ugly (*Il buono, il brutto, il cattivo*, 1966) — Main Title**
 2. **Cinema Paradiso (*Nuovo Cinema Paradiso*, 1988) — Love Theme**
 3. **Once Upon a Time in the West (*C'era una volta il West*, 1968) — "Man with a Harmonica" & "Jill's Theme"**
 
-```
+```text
         ========================================================================================
                               ENNIO MORRICONE: RADICAL TIMBRAL SEMIOTICS
         ========================================================================================
@@ -888,7 +951,7 @@ The following is a <SYSTEM_MESSAGE> not actually sent by the user. It is provide
         (Hold)               (Up P4)              (Down P4)              (m3)    (Up P8)
           |                    |                    |                      |        |
         [ Wah-Wah Sopranino Recorder / Vocal Grunt: 'Ay-ay-ay-ay-ah!' ]
-        
+
         Cinema Paradiso (Love Theme - Italian Neo-Romantic Arch):
         [ D4 ] -> (Up Major 6th: +9 st) ======> [ B4 ] -> [ A4 ] -> [ G4 ] -> [ F#4 ] -> [ E4 ]
                                                   |         |         |         |         |
@@ -902,22 +965,31 @@ The following is a <SYSTEM_MESSAGE> not actually sent by the user. It is provide
 ### A. Exact Intervallic Sequence & Melodic Contour
 
 #### 1. The Good, the Bad and the Ugly — The Coyote Cry
+
 * **Instrument Distribution:** Sopranino recorder in $F$ with wah-wah mute (Good / Blondie), human two-voice choir grunt (Bad / Angel Eyes), and acoustic ocarina (Ugly / Tuco).
 * **Melodic Note Sequence:**
+
   $$\text{A4} \xrightarrow{+\text{P4}} \text{D5} \xrightarrow{-\text{P4}} \text{A4} \quad [\text{Vocal Echo: 'Wah-wah-wah'}] \quad \text{F4} \xrightarrow{+\text{M2}} \text{G4} \xrightarrow{+\text{P5}} \text{D5}$$
+
 * **Intervallic Delta Vector (Semitones):** $[+5, -5, -4, +2, +7]$.
 * **Contour Topology:** Direct upward fourth stab $\to$ symmetrical recoil $\to$ lower minor-third drop $\to$ explosive leap to the tonic octave apex ($D5$).
 
 #### 2. Cinema Paradiso — Love Theme (*Tema d'Amore*)
+
 * **Key:** $D\text{ Major} \ (4/4\text{ Meter, Andante espressivo})$.
 * **Melodic Note Sequence:**
+
   $$\text{D4} \xrightarrow{+\text{M6}} \text{B4} \xrightarrow{-\text{M2}} \text{A4} \xrightarrow{-\text{M2}} \text{G4} \xrightarrow{-\text{m2}} \text{F}\sharp\text{4} \xrightarrow{-\text{M2}} \text{E4} \xrightarrow{+\text{m3}} \text{G4} \xrightarrow{-\text{m2}} \text{F}\sharp\text{4}$$
+
 * **Intervallic Delta Vector (Semitones):** $[+9, -2, -2, -1, -2, +3, -1]$.
 * **Contour Topology:** The theme opens with an expansive, emotionally charged leap of an **ascending Major 6th ($+9\text{ st}$)** from the tonic $D4$ to the submediant $B4$. This is immediately balanced by a continuous, conjunct stepwise descent through the entire diatonic scale ($B4 \to A4 \to G4 \to F\sharp4 \to E4$), ending with a tender lower-neighbor appoggiatura ($G4 \to F\sharp4$).
 
 #### 3. Once Upon a Time in the West — "Man with a Harmonica"
+
 * **Harmonica Solo Pitch Cell:**
+
   $$\text{E4} \xrightarrow{+\text{m2}} \text{F4} \xrightarrow{-\text{m2}} \text{E4} \xrightarrow{+\text{m2}} \text{F4} \xrightarrow{+\text{d5}} \text{B4} \xrightarrow{-\text{d5}} \text{E4}$$
+
 * **Intervallic Delta Vector (Semitones):** $[+1, -1, +1, +6, -6]$.
 * **Contour Topology:** Suffocating, microtonal bent semitone oscillation ($E4 \leftrightarrow F4$) ending in a violent tritone lunge ($+6\text{ st}$), mimicking a dying man's gasping breath.
 
@@ -926,22 +998,26 @@ The following is a <SYSTEM_MESSAGE> not actually sent by the user. It is provide
 ### B. Harmonic Progression & Voice Leading
 
 #### The Good, the Bad and the Ugly Harmonic Architecture
+
 $$\text{D minor (Dorian Pedal)} \longleftrightarrow \text{C Major} \ (\flat\text{VII}) \longleftrightarrow \text{G Major}/\text{B} \ (\text{IV}^6) \longleftrightarrow \text{D minor} \ (\text{i})$$
+
 * **Non-Diatonic Foley Integration:** Morricone treats real-world acoustic events as harmonic and rhythmic structural elements:
   * **Whipcracks & Gunshots:** Act as high-frequency explosive snare transients ($>10\text{ kHz}$).
   * **Alessandro Alessandroni’s Whistle:** Operates in the ultra-clear $2.0\text{ kHz to } 3.5\text{ kHz}$ band, penetrating dense reverberant spaces.
   * **Fuzz Electric Guitar (Fender Jaguar via 100W Marshall):** Delivers harmonic sustain and aggressive distortion.
 
 #### Cinema Paradiso Harmonic Progression
+
 $$\text{D} \ (\text{I}) \longrightarrow \text{Bm} \ (\text{vi}) \longrightarrow \text{G} \ (\text{IV}) \longrightarrow \text{A7sus4} \ (\text{V}^{\text{sus4}}) \longrightarrow \text{A7} \ (\text{V}^7)$$
 $$\text{F}\sharp\text{m} \ (\text{iii}) \longrightarrow \text{B7} \ (\text{V}^7/\text{ii}) \longrightarrow \text{Em7} \ (\text{ii}^7) \longrightarrow \text{A7} \ (\text{V}^7) \longrightarrow \text{D} \ (\text{I})$$
+
 * **Italian Neo-Romantic Voice Leading:** Morricone uses secondary dominants ($\text{B7} = \text{V}^7/\text{ii}$) resolving to $\text{Em7}$ ($\text{ii}^7$), producing descending chromatic inner lines ($D\sharp \to D\natural \to C\sharp$) reminiscent of Giacomo Puccini and Ennio's mentor Goffredo Petrassi.
 
 ---
 
 ### C. The Cognitive / Neuroacoustic "Why"
 
-```
+```text
                          MORRICONE'S CROSS-MODAL INTEGRATION MODEL
   Environmental Noise / Foley (Gunshot / Whip / Whistle)
        |
@@ -972,8 +1048,10 @@ import numpy as np
 class MorriconeCinematicEngine:
     """
     Procedural generation engine for Ennio Morricone's compositional archetypes:
+
     1. Spaghetti Western Foley-Groove Generator
     2. Italian Neo-Romantic Lyrical Melody Generator (Ascending 6th Arches)
+
     """
     def __init__(self, key="D_min"):
         self.key = key
@@ -1006,13 +1084,13 @@ class MorriconeCinematicEngine:
         melody.append({"pitch": tonic_midi + 9,  "dur": 2.0, "weight": "climax_leap"}) # +M6 (B4)
         melody.append({"pitch": tonic_midi + 7,  "dur": 0.5, "weight": "step_descend"}) # A4
         melody.append({"pitch": tonic_midi + 5,  "dur": 0.5, "weight": "step_descend"}) # G4
-        
+
         # Bar 2: Continuous conjunct descent
         melody.append({"pitch": tonic_midi + 4,  "dur": 1.0, "weight": "step_descend"}) # F#4
         melody.append({"pitch": tonic_midi + 2,  "dur": 1.0, "weight": "step_descend"}) # E4
         melody.append({"pitch": tonic_midi + 5,  "dur": 0.75, "weight": "appoggiatura"}) # G4
         melody.append({"pitch": tonic_midi + 4,  "dur": 1.25, "weight": "resolution"})  # F#4
-        
+
         return melody
 
     def generate_western_foley_rhythm_bed(self, num_bars=4, bpm=110):
@@ -1039,11 +1117,12 @@ class MorriconeCinematicEngine:
 ## 2.4 Hans Zimmer (1957–Present)
 
 ### Primary Pieces
+
 1. **Inception (2010) — "Time"**
 2. **Interstellar (2014) — "No Time for Caution" & "Cornfield Chase"**
 3. **Dunkirk (2017) — "Supermarine" & "The Mole"**
 
-```
+```text
         ========================================================================================
                                  HANS ZIMMER: SONIC ARCHITECTURE
         ========================================================================================
@@ -1051,7 +1130,7 @@ class MorriconeCinematicEngine:
         Bar 1-2: [ A minor ] ======> Bar 3-4: [ E minor / G ]
         Bar 5-6: [ F Major ] ======> Bar 7-8: [ C Major ] -> [ G Major ]
         Dynamic Arc: pp (Solo Piano) -> mf (Strings) -> fff (Massive Brass + Moog Sub-Bass)
-        
+
         Dunkirk Shepard-Risset Infinite Acoustic Glissando:
         f(t) = f_base * 2^((t * rate) mod N)
         Band 1 (High):   4000 Hz -> 8000 Hz (Fades out via Gaussian Window) ---|
@@ -1066,19 +1145,27 @@ class MorriconeCinematicEngine:
 ### A. Exact Intervallic Sequence & Melodic Contour
 
 #### 1. Inception: "Time" — Melodic Voice-Leading Matrix
+
 * **Key:** $A\text{ minor / C Major} \ (4/4\text{ Meter, Lento } d=60\text{ BPM})$.
 * **Soprano Voice Pitch Sequence:**
+
   $$\text{E4} \xrightarrow{0} \text{E4} \mid \text{B3} \xrightarrow{0} \text{B3} \mid \text{C4} \xrightarrow{0} \text{C4} \mid \text{G3} \xrightarrow{+\text{P5}} \text{D4}$$
+
 * **Intervallic Delta Vector (Semitones):** $[0, -5, 0, +1, 0, -5, +7]$.
 * **Contour Topology:** The soprano line is deeply restrained, holding stationary pitch centers that step down to chord tones before resolving upward with an open Perfect 5th leap ($G3 \to D4$) on the dominant $G\text{ Major}$.
 * **Bass Foundation Line (Stepwise Descending Architecture):**
+
   $$\text{A1} \xrightarrow{-\text{M2}} \text{G1} \xrightarrow{-\text{M2}} \text{F1} \xrightarrow{-\text{P4}} \text{C1} \xrightarrow{+\text{P5}} \text{G1}$$
+
   * Intervallic Delta Vector (Bass): $[-2, -2, -5, +7]$.
 
 #### 2. Interstellar: "Cornfield Chase" & "No Time for Caution"
+
 * **Organ Registration:** Harrison & Harrison 4-manual pipe organ at Temple Church, London.
 * **Rapid 16th-Note Motoric Arpeggio Pattern (3/4 Meter):**
+
   $$\text{Pattern: } [\text{A4}\text{--}\text{C5}\text{--}\text{E5}\text{--}\text{A5}] \longrightarrow [\text{G4}\text{--}\text{B4}\text{--}\text{D5}\text{--}\text{G5}] \longrightarrow [\text{F4}\text{--}\text{A4}\text{--}\text{C5}\text{--}\text{F5}] \longrightarrow [\text{E4}\text{--}\text{G4}\text{--}\text{B4}\text{--}\text{E5}]$$
+
 * **Intervallic Motion:** Strictly rising 4-note broken triads repeating at $160\text{ BPM}$, cycling continuously through the descending diatonic progression ($\text{Am} \to \text{G} \to \text{F} \to \text{Em}$).
 
 ---
@@ -1086,7 +1173,9 @@ class MorriconeCinematicEngine:
 ### B. Harmonic Progression & Sonic Layering
 
 #### Inception: "Time" Harmonic Structure
+
 $$\text{Am} \ (\text{i}) \longrightarrow \text{Em}/\text{G} \ (\text{v}^6) \longrightarrow \text{F} \ (\text{VI}) \longrightarrow \text{C} \ (\text{III}) \longrightarrow \text{G} \ (\text{VII})$$
+
 * **The 8-Bar Minimalist Additive Loop:**
   * **Pass 1 (0:00–0:45):** Solo upright piano + low cello drone.
   * **Pass 2 (0:45–1:30):** Chamber string quartet playing legato long tones.
@@ -1098,25 +1187,31 @@ $$\text{Am} \ (\text{i}) \longrightarrow \text{Em}/\text{G} \ (\text{v}^6) \long
 
 ### C. The Cognitive / Neuroacoustic "Why"
 
-```
+```text
                     NEUROACOUSTIC DRIVERS IN ZIMMER'S COMPOSITIONS
+
   1. Shepard-Risset Pitch Illusion (Dunkirk / The Dark Knight):
+
      Auditory Cortex (A1) computes constant positive derivative (df/dt > 0)
      --> Continuous anticipatory tension without tonal exhaustion.
-  
+
   2. Pacinian Corpuscle Infrasound Stimulation (30 Hz - 60 Hz):
+
      Sub-bass acoustic energy > 90 dB SPL stimulates somatic mechanoreceptors
      --> Physical, visceral perception of existential scale and dread.
-  
+
   3. Slow Additive Crescendo (Inception):
+
      Prefrontal cortex easily automates the 4-chord loop (low cognitive load)
      --> Nucleus Accumbens continuously ramps dopamine due to escalating timbral volume.
 ```
 
 1. **The Shepard-Risset Pitch Illusion:**
    * By summing $N$ octave-spaced sinusoids weighted by a stationary bell-shaped Gaussian spectral envelope:
+
      $$A(f) = \exp\left( -\frac{(\log_2(f) - \log_2(f_0))^2}{2 \sigma^2} \right)$$
      Zimmer creates a continuous upward frequency trajectory. As frequencies cross the high threshold, their amplitude smoothly approaches zero while new low components fade in. The auditory cortex computes **perpetual ascending pitch motion**, inducing acute claustrophobia and panic.
+
 2. **Sub-Bass Somatosensory Driving ($30\text{--}60\text{ Hz}$):**
    * Human hearing sensitivity drops at low frequencies (ISO 226 equal-loudness contours), but somatic mechanoreceptors (Pacinian corpuscles in the mesentery and skin) respond violently to high-amplitude infrasonic pressure waves. Zimmer uses massive sub-bass to create a tactile sensation of gravity and physical presence.
 
@@ -1128,8 +1223,10 @@ $$\text{Am} \ (\text{i}) \longrightarrow \text{Em}/\text{G} \ (\text{v}^6) \long
 class ZimmerianAcousticEngine:
     """
     Procedural DSP and composition engine for Hans Zimmer sound architectures:
+
     1. Mathematical Shepard Tone Infinite Tension Riser
     2. Additive Orchestral Dynamic Layering Engine ('Time')
+
     """
     def __init__(self, sample_rate=44100):
         self.sr = sample_rate
@@ -1144,9 +1241,9 @@ class ZimmerianAcousticEngine:
         num_octaves = 8
         f_center = 1000.0
         sigma = 1.5
-        
+
         output_buffer = np.zeros(num_samples)
-        
+
         for k in range(num_octaves):
             # Instantaneous phase calculation for ascending exponential chirp
             phase = np.zeros(num_samples)
@@ -1154,13 +1251,13 @@ class ZimmerianAcousticEngine:
                 # Octave position wrapped into [0, num_octaves)
                 octave_pos = (k + cur_t * sweep_rate_octaves_per_sec) % num_octaves
                 f_inst = base_freq * (2.0 ** octave_pos)
-                
+
                 # Gaussian amplitude envelope
                 log_ratio = np.log2(f_inst / f_center)
                 amp = np.exp(-0.5 * (log_ratio / sigma) ** 2)
-                
+
                 output_buffer[i] += amp * np.sin(2.0 * np.pi * f_inst * cur_t)
-                
+
         # Normalize buffer
         output_buffer = output_buffer / np.max(np.abs(output_buffer) + 1e-6)
         return output_buffer
@@ -1194,11 +1291,12 @@ class ZimmerianAcousticEngine:
 ## 3.1 Koji Kondo (1960–Present)
 
 ### Primary Pieces
+
 1. **Super Mario Bros. (1985) — Ground Theme (Overworld)**
 2. **The Legend of Zelda (1986) — Overworld Main Theme**
 3. **The Legend of Zelda: Ocarina of Time (1998) — Saria’s Song (Lost Woods) & Zelda’s Lullaby**
 
-```
+```text
         ========================================================================================
                                 KOJI KONDO: MICRO-MELODIC EARWORM ARCHITECTURE
         ========================================================================================
@@ -1211,7 +1309,7 @@ class ZimmerianAcousticEngine:
                                                                                     v
                                                                                   [ G4 ]
         Voice-Leading on NES 2A03: Pulse 1 (Lead), Pulse 2 (Stab Harmony), Triangle (Walking Bass)
-        
+
         Zelda's Lullaby (Noble Triple Meter in F Major):
         [ A4 ] -> (Up Perfect 4th: +5 st) =======> [ D5 ] -> [ C5 ] -> [ G4 ] -> [ F4 ] -> [ G4 ]
         Harmonic Field: F Major (I) -> Bb/F (IV) -> C/F (V) -> D minor (vi)
@@ -1223,23 +1321,32 @@ class ZimmerianAcousticEngine:
 ### A. Exact Intervallic Sequence & Melodic Contour
 
 #### 1. Super Mario Bros. Ground Theme — Opening Syncopated Earworm
+
 * **Key:** $C\text{ Major} \ (4/4\text{ Meter, Cut Time feel } \approx 100\text{ BPM})$.
 * **Pitch Sequence:**
+
   $$\text{E5} \to \text{E5} \to [\text{Rest}] \to \text{E5} \to [\text{Rest}] \to \text{C5} \to \text{E5} \xrightarrow{+\text{m3}} \text{G5} \xrightarrow{-\text{P8}} \text{G4}$$
+
 * **Intervallic Delta Vector (Semitones):** $[0, 0, 0, -4, +4, +3, -12]$.
 * **Contour Topology:** 3 identical syncopated stabs on the major third ($E5$) $\to$ rapid dip to tonic ($C5$) $\to$ spring back to $E5$ $\to$ leap to dominant apex ($G5$) $\to$ massive downward octave plunge ($-12\text{ st}$) landing on the low dominant anchor ($G4$).
 
 #### 2. The Legend of Zelda Overworld — Heroic March
+
 * **Key:** $B\flat\text{ Major} \ (4/4\text{ Meter, Allegro con brio } \approx 150\text{ BPM})$.
 * **Pitch Sequence:**
+
   $$\text{Bb3} \xrightarrow{+\text{P5}} \text{F4} \xrightarrow{0} \text{F4} \xrightarrow{0} \text{F4} \xrightarrow{+\text{m2}} \text{Gb4} \xrightarrow{+\text{M2}} \text{Ab4} \xrightarrow{+\text{M2}} \text{Bb4} \xrightarrow{-\text{P5}} \text{F4}$$
+
 * **Intervallic Delta Vector (Semitones):** $[+7, 0, 0, +1, +2, +2, -7]$.
 * **Contour Topology:** Direct upward fifth leap from tonic to dominant, followed by a galloping dotted-rhythm ascent through the minor/major scalar inflection before snapping back down a Perfect 5th.
 
 #### 3. Zelda’s Lullaby (*Ocarina of Time*)
+
 * **Key:** $F\text{ Major} \ (3/4\text{ Triple Meter, Andante Cantabile})$.
 * **Pitch Sequence:**
+
   $$\text{A4} \xrightarrow{+\text{P4}} \text{D5} \xrightarrow{-\text{M2}} \text{C5} \xrightarrow{-\text{P4}} \text{G4} \xrightarrow{-\text{M2}} \text{F4} \xrightarrow{+\text{M2}} \text{G4} \xrightarrow{+\text{M2}} \text{A4} \dots$$
+
 * **Intervallic Delta Vector (Semitones):** $[+5, -2, -5, -2, +2, +2]$.
 * **Contour Topology:** Gentle ascending 4th $\to$ minor 2nd sigh $\to$ descending 4th $\to$ conjunct stepwise cradle returning to the starting note $A4$.
 
@@ -1247,7 +1354,7 @@ class ZimmerianAcousticEngine:
 
 ### B. Harmonic Progression & NES 2A03 Chip Counterpoint
 
-```
+```text
                       RICOH 2A03 SOUND HARDWARE ARCHITECTURE (NES)
   +-----------------------------------------------------------------------------------+
   |  [ Pulse Channel 1 (50% Duty Cycle) ] : Main Syncopated Lead Line                 |
@@ -1261,8 +1368,10 @@ class ZimmerianAcousticEngine:
 ```
 
 #### Super Mario Bros. Harmonic Progression
+
 $$\text{C} \ (\text{I}) \longrightarrow \text{F}/\text{C} \ (\text{IV}^6_4) \longrightarrow \text{G7} \ (\text{V}^7) \longrightarrow \text{C} \ (\text{I})$$
 $$\text{Bridge Section: } \text{C7} \ (\text{V}^7/\text{IV}) \longrightarrow \text{F} \ (\text{IV}) \longrightarrow \text{D7} \ (\text{V}^7/\text{V}) \longrightarrow \text{G} \ (\text{V})$$
+
 * **Latin-Jazz Syncopated Calypso:** Kondo avoided traditional Western march tropes for Mario, drawing instead from Latin samba and calypso grooves (inspired by Sadao Watanabe). The bassline continuously outlines the root, 5th, and major 6th in syncopated swung eighths.
 
 ---
@@ -1283,9 +1392,11 @@ $$\text{Bridge Section: } \text{C7} \ (\text{V}^7/\text{IV}) \longrightarrow \te
 class KojiKondoProceduralEngine:
     """
     Procedural generation engine for Koji Kondo chiptune themes under NES 2A03 hardware constraints:
+
     - 2x Pulse Channels (Melody + Stabs)
     - 1x Triangle Channel (Walking Latin Bass)
     - 1x Noise Channel (Syncopated Percussion)
+
     """
     def __init__(self):
         self.c_major_scale = [0, 2, 4, 5, 7, 9, 11]
@@ -1304,7 +1415,7 @@ class KojiKondoProceduralEngine:
             {"t": 1.05, "pitch": root_midi + 19, "dur": 0.250}, # G5
             {"t": 1.55, "pitch": root_midi + 7,  "dur": 0.250}  # G4
         ]
-        
+
         # Pulse 2: Off-beat brassy stabs
         pulse2 = [
             {"t": 0.00, "pitch": root_midi + 7,  "dur": 0.125}, # G4
@@ -1315,7 +1426,7 @@ class KojiKondoProceduralEngine:
             {"t": 1.05, "pitch": root_midi + 12, "dur": 0.250}, # C5
             {"t": 1.55, "pitch": root_midi,      "dur": 0.250}  # C4
         ]
-        
+
         # Triangle: Latin walking bassline (Root -> 5th -> Octave)
         triangle_bass = [
             {"t": 0.00, "pitch": root_midi - 24, "dur": 0.25}, # C2
@@ -1323,7 +1434,7 @@ class KojiKondoProceduralEngine:
             {"t": 1.00, "pitch": root_midi - 12, "dur": 0.25}, # C3
             {"t": 1.50, "pitch": root_midi - 17, "dur": 0.25}  # G2
         ]
-        
+
         # Noise: Syncopated open/closed hi-hat pattern
         noise_drums = [
             {"t": 0.00, "type": "kick_noise", "dur": 0.08},
@@ -1334,7 +1445,7 @@ class KojiKondoProceduralEngine:
             {"t": 1.25, "type": "hat_noise",  "dur": 0.04},
             {"t": 1.50, "type": "snare_noise","dur": 0.12}
         ]
-        
+
         return {
             "pulse1_lead": pulse1,
             "pulse2_harmony": pulse2,
@@ -1348,10 +1459,11 @@ class KojiKondoProceduralEngine:
 ## 3.2 Nobuo Uematsu (1959–Present)
 
 ### Primary Pieces
+
 1. **Final Fantasy VII (1997) — "Aerith’s Theme" & "One-Winged Angel"**
 2. **Final Fantasy VI (1994) — "Dancing Mad" (*Tier 1 through Tier 4*)**
 
-```
+```text
         ========================================================================================
                               NOBUO UEMATSU: ROMANTIC OPERA & DARK PROG-ROCK
         ========================================================================================
@@ -1360,7 +1472,7 @@ class KojiKondoProceduralEngine:
                                                    |         |         |         |
                                                 (Peak)    (Step)    (Step)    (Step)
         Harmonic Field: D Major (I) -> G/D (IV) -> A/D (V) -> B minor (vi) -> F#m/A (iii)
-        
+
         One-Winged Angel (Stravinskian 7/4 Metal-Orchestral Ostinato):
         |  1  2  3  4  |  1  2  3  |  (Asymmetric 4+3 Pulse Grid in D minor/Octatonic)
         [ Distorted Heavy Guitar Riff ] + [ Latin Choir: 'Estuans interius ira vehementi' ]
@@ -1372,22 +1484,31 @@ class KojiKondoProceduralEngine:
 ### A. Exact Intervallic Sequence & Melodic Contour
 
 #### 1. Aerith’s Theme — Lyrical Melodic Profile
+
 * **Key:** $D\text{ Major} \ (4/4\text{ Meter, Andante espressivo})$.
 * **Pitch Sequence:**
+
   $$\text{F}\sharp\text{4} \xrightarrow{+\text{M6}} \text{D5} \xrightarrow{-\text{m2}} \text{C}\sharp\text{5} \xrightarrow{-\text{M2}} \text{B4} \xrightarrow{-\text{M2}} \text{A4} \xrightarrow{-\text{m3}} \text{F}\sharp\text{4} \xrightarrow{+\text{M2}} \text{G4} \dots$$
+
 * **Intervallic Delta Vector (Semitones):** $[+9, -1, -2, -2, -3, +2]$.
 * **Contour Topology:** Soaring upward leap of a Major 6th hitting the high tonic ($D5$), balanced by a gentle conjunct stepwise descent across the leading tone ($C\sharp$) and dominant ($A$).
 
 #### 2. One-Winged Angel — Stravinskian Battle Ostinato
+
 * **Key:** $D\text{ Octatonic} \ (7/4\text{ Meter } [4+3] \text{ and } 4/4\text{ Syncopation})$.
 * **Pitch Sequence (Heavy Strings / Distorted Bass):**
+
   $$\text{D3} \to \text{D3} \to \text{D}\sharp\text{3} \to \text{D3} \to \text{G}\sharp\text{3} \to \text{F3} \to \text{E3}$$
+
 * **Intervallic Delta Vector (Semitones):** $[0, +1, -1, +6, -3, -1]$.
 * **Contour Topology:** Aggressive chromatic oscillations around the root $D3$ followed by a violent tritone stab ($G\sharp3, +6\text{ st}$) and minor third collapse.
 
 #### 3. Dancing Mad (Movement 4: Final Battle Fugue)
+
 * **Counterpoint:** 3-part invertible polyphonic fugue played on synthesized pipe organ:
+
   $$\text{Subject: } \text{D4} \xrightarrow{+\text{m3}} \text{F4} \xrightarrow{-\text{m2}} \text{E4} \xrightarrow{+\text{m2}} \text{F4} \xrightarrow{+\text{P4}} \text{B}\flat\text{4} \xrightarrow{-\text{m2}} \text{A4} \xrightarrow{-\text{d5}} \text{D}\sharp\text{4}$$
+
 * **Intervallic Delta Vector (Semitones):** $[+3, -1, +1, +5, -1, -6]$.
 
 ---
@@ -1395,11 +1516,15 @@ class KojiKondoProceduralEngine:
 ### B. Harmonic Progression & Stylistic Synthesis
 
 #### Aerith’s Theme Harmonic Progression
+
 $$\text{D} \ (\text{I}) \longrightarrow \text{G}/\text{D} \ (\text{IV}^6_4) \longrightarrow \text{A}/\text{D} \ (\text{V}^6_4) \longrightarrow \text{D} \ (\text{I}) \longrightarrow \text{Bm} \ (\text{vi}) \longrightarrow \text{F}\sharp\text{m}/\text{A} \ (\text{iii}^6) \longrightarrow \text{G} \ (\text{IV}) \longrightarrow \text{A7} \ (\text{V}^7)$$
+
 * **Tonic Bass Invariance:** The bass sustains the low $D2$ across 4 measures while the harmonies shift above it ($\text{D} \to \text{G} \to \text{A}$), producing suspended 4ths and 9ths that soften harmonic transitions and evoke vulnerability.
 
 #### One-Winged Angel Octatonic Modulation Matrix
+
 $$\text{D}_{\text{octatonic}} \longleftrightarrow \text{A}\flat_{\text{octatonic}} \ (\text{Tritone Root Modulation}) \longleftrightarrow \text{F}_{\text{octatonic}}$$
+
 * **Carl Orff / Stravinsky Fusion:** Integrates Latin lyrics adapted from *Carmina Burana* (*"Estuans interius ira vehementi"*) over driving rock drum grooves and dissonant brass polychords.
 
 ---
@@ -1419,8 +1544,10 @@ $$\text{D}_{\text{octatonic}} \longleftrightarrow \text{A}\flat_{\text{octatonic
 class UematsuJRPGComposer:
     """
     Procedural generation engine for Nobuo Uematsu's dual styles:
+
     1. Sweeping Romantic JRPG Melodic Arches ('Aerith's Theme')
     2. Asymmetric 7/4 Octatonic Boss Battle Riffs ('One-Winged Angel')
+
     """
     def __init__(self):
         self.d_octatonic = [0, 1, 3, 4, 6, 7, 9, 10] # Half-Whole Diminished
@@ -1473,11 +1600,12 @@ class UematsuJRPGComposer:
 ## 3.3 Yoko Shimomura (1967–Present)
 
 ### Primary Pieces
+
 1. **Kingdom Hearts (2002) — "Dearly Beloved"**
 2. **Street Fighter II (1991) — "Guile’s Theme"**
 3. **Legend of Mana (1999) — "Hometown Domina"**
 
-```
+```text
         ========================================================================================
                               YOKO SHIMOMURA: PIANISTIC ARPEGGIO & FUNK COUNTERPOINT
         ========================================================================================
@@ -1485,7 +1613,7 @@ class UematsuJRPGComposer:
         Left Hand:  [ Eb2 ] -> [ Bb2 ] -> [ Eb3 ] -> [ G3 ] -> [ Bb3 ] -> [ C4 ] (Extended 9th/11th)
         Right Hand: [ Eb4 ] -> [ F4 ] -> [ G4 ] -> [ Bb4 ] -> [ C5 ] -> [ Eb5 ] (Pentatonic Cascade)
         Harmonic Field: Ebmaj9 -> Abmaj7(#11) -> Cm9 -> Bb(sus4) (Unresolved Suspended Yearning)
-        
+
         Guile's Theme (Driving Funk-Rock Aeolian/Dorian Groove in Eb minor):
         Bass:   16th-note syncopated slap groove (Eb1 -> Eb2 -> Db2 -> Eb2)
         Brass:  Syncopated punchy fourths/fifths leaping across the barline (+5 st, +7 st)
@@ -1497,16 +1625,22 @@ class UematsuJRPGComposer:
 ### A. Exact Intervallic Sequence & Melodic Contour
 
 #### 1. Dearly Beloved — Pentatonic Water Cascade
+
 * **Key:** $E\flat\text{ Major / C minor} \ (3/4\text{ Triple Meter, Moderato Cantabile})$.
 * **Pitch Sequence (Right Hand Arabesque):**
+
   $$\text{G4} \xrightarrow{+\text{m2}} \text{Ab4} \xrightarrow{+\text{M2}} \text{Bb4} \xrightarrow{+\text{M2}} \text{C5} \xrightarrow{+\text{m3}} \text{Eb5} \xrightarrow{-\text{m3}} \text{C5} \xrightarrow{-\text{M2}} \text{Bb4} \dots$$
+
 * **Intervallic Delta Vector (Semitones):** $[+1, +2, +2, +3, -3, -2]$.
 * **Contour Topology:** Ascending scalar wave rising through the pentatonic scale up to the high tonic $E\flat5$, then floating downward without landing on hard downbeat accents.
 
 #### 2. Guile’s Theme — Funk-Rock Brass Hook
+
 * **Key:** $E\flat\text{ minor / Dorian} \ (4/4\text{ Meter, Driving Rock } \approx 132\text{ BPM})$.
 * **Pitch Sequence:**
+
   $$\text{Eb4} \xrightarrow{+\text{P4}} \text{Ab4} \xrightarrow{-\text{m2}} \text{G4} \xrightarrow{+\text{m2}} \text{Ab4} \xrightarrow{+\text{P4}} \text{Db5} \xrightarrow{-\text{m2}} \text{C5} \xrightarrow{-\text{M2}} \text{Bb4}$$
+
 * **Intervallic Delta Vector (Semitones):** $[+5, -1, +1, +5, -1, -2]$.
 * **Contour Topology:** Energetic upward Perfect 4th leaps followed by chromatic neighbor snaps, driving forward momentum.
 
@@ -1515,8 +1649,10 @@ class UematsuJRPGComposer:
 ### B. Harmonic Progression & Pianistic Voice Leading
 
 #### Dearly Beloved Harmonic Progression
+
 $$\text{E}\flat\text{maj9} \longrightarrow \text{A}\flat\text{maj7}^{(\sharp11)} \longrightarrow \text{Cm9} \longrightarrow \text{B}\flat\text{sus4} \ (\text{Continuous Floating Loop})$$
 $$\text{Roman Numerals: } \text{I}^{\text{maj9}} \longrightarrow \text{IV}^{\text{maj7}(\sharp11)} \longrightarrow \text{vi}^9 \longrightarrow \text{V}^{\text{sus4}}$$
+
 * **The Suspended Lydian Subdominant ($\text{IV}^{\sharp11}$):** Shimomura uses the Lydian subdominant chord ($\text{A}\flat\text{maj7}^{(\sharp11)}$ featuring $D\natural$), avoiding standard functional V $\to$ I cadential closures. The progression loops indefinitely in a state of suspended, peaceful nostalgia.
 
 ---
@@ -1579,19 +1715,19 @@ class ShimomuraProceduralEngine:
 
 ## 3.4 Mick Gordon, Austin Wintory & Disasterpeace
 
-```
+```text
         ========================================================================================
                     MODERN PROCEDURAL & DYNAMIC INTERACTIVE GAME SCORING
         ========================================================================================
         MICK GORDON (DOOM):
         [ 9-String Drop-E Guitar ] -> [ Soviet Polivoks Analog Synth ] -> [ 4x Tube Distortion Cascade ]
         Process: Extreme dynamic compression + recursive feedback loops + 7/8 glitch sidechaining.
-        
+
         AUSTIN WINTORY (JOURNEY):
         [ Solo Cello Micro-Pitch Glissando ] ---> Dynamic Orchestration Scale:
         Player at Low Altitude: Solo Cello (Sparse, Microtonal, Intimate)
         Player Soaring with Companion: Full Symphonic Tutti + Harp Glissandi + Choir
-        
+
         DISASTERPEACE (FEZ):
         [ Chiptune Square Wave ] -> [ Bitcrusher (8-bit) ] -> [ Tape Wow/Flutter ] -> [ 24-bit Shimmer Reverb ]
         Harmonic Strategy: Impressionistic Modal Jazz Chords (Maj9#11, m11) voiced on pure retro waves.
@@ -1603,25 +1739,34 @@ class ShimomuraProceduralEngine:
 ### A. Individual Deep-Dive Analyses
 
 #### 1. Mick Gordon (DOOM 2016 / Eternal — "BFG Division" & "Rip & Tear")
+
 * **Acoustic & DSP Architecture:**
   * Uses a 9-string guitar tuned to **Drop-E ($E0 = 20.6\text{ Hz} \text{ to } E1 = 41.2\text{ Hz}$)**.
   * Routes signal through Soviet Polivoks analog filters, 4-stage vacuum tube distortion preamps, and feedback compression sidechained to 130 BPM kick transients.
 * **Intervallic Profile:**
+
   $$\text{E1} \xrightarrow{+\text{m2}} \text{F1} \xrightarrow{-\text{m2}} \text{E1} \xrightarrow{+\text{d5}} \text{B}\flat\text{1} \xrightarrow{-\text{d5}} \text{E1}$$
+
   * Relies on low-frequency minor 2nd grinding ($100\text{ cents}$) and tritone stabs ($600\text{ cents}$).
 
 #### 2. Austin Wintory (Journey — "Nascence" & "Apotheosis")
+
 * **Acoustic & Procedural Scoring Architecture:**
   * Centered on a **Solo Cello (Tina Guo)** surrounded by an interactive dynamic orchestra that adapts in real time to player gameplay telemetry (altitude, companion proximity, scarf length).
 * **Intervallic Sequence ("Nascence" Theme):**
+
   $$\text{A3} \xrightarrow{+\text{m3}} \text{C4} \xrightarrow{+\text{M2}} \text{D4} \xrightarrow{+\text{m2}} \text{E}\flat\text{4} \xrightarrow{-\text{m2}} \text{D4} \xrightarrow{-\text{M2}} \text{C4} \xrightarrow{-\text{m3}} \text{A3}$$
+
   * Uses Ukrainian Dorian / Freygish minor scales with microtonal finger slides (*portamento*), evoking ancient desert solitude.
 
 #### 3. Disasterpeace / Rich Vreeland (FEZ — "Continuum" & "Compass")
+
 * **Acoustic & DSP Architecture:**
   * Pure 8-bit square and triangle chiptune waveforms generated via software synthesis, processed through **analog tape emulation (wow, flutter, saturation)** and spacious algorithmic reverbs ($T_{60} > 6.0\text{ seconds}$).
 * **Harmonic Voicings:**
+
   $$\text{F}\sharp\text{maj9}^{(\sharp11)} \longrightarrow \text{E}\flat\text{m11} \longrightarrow \text{B}\text{maj9} \longrightarrow \text{C}\sharp\text{sus4}^{(\text{add9})}$$
+
   * Blends 8-bit chiptune textures with complex 20th-century impressionist jazz voicings.
 
 ---
@@ -1643,9 +1788,11 @@ class ShimomuraProceduralEngine:
 class ModernInteractiveGameAudioEngine:
     """
     Unified procedural engine for modern dynamic game audio architectures:
+
     1. Mick Gordon Non-Linear Distortion & Drop-E DSP Waveshaper
     2. Austin Wintory Interactive Telemetry Cello/Orchestra Mixer
     3. Disasterpeace Impressionist Chiptune Ambient Generator
+
     """
     def __init__(self, sample_rate=44100):
         self.sr = sample_rate
@@ -1656,26 +1803,28 @@ class ModernInteractiveGameAudioEngine:
         """
         # 1. Hyperbolic tangent saturation
         driven = np.tanh(signal_in * (1.0 + drive * 15.0))
-        
+
         # 2. Asymmetric polynomial tube warmth
         asym = np.where(driven > 0, driven / (1.0 + 0.3 * np.abs(driven)), driven * 0.85)
-        
+
         # 3. Sub-octave 41.2 Hz fundamental reinforcement
         t = np.linspace(0, len(signal_in) / self.sr, len(signal_in), endpoint=False)
         sub_sine = np.sin(2.0 * np.pi * 41.2 * t) * 0.7
-        
+
         output = (asym * 0.7) + (sub_sine * 0.3)
         return output
 
     def compute_journey_interactive_mix(self, altitude_ratio, companion_proximity):
         """
         Computes dynamic stem volume matrix from real-time gameplay parameters.
+
         - altitude_ratio: [0.0 (Ground) -> 1.0 (Summit)]
         - companion_proximity: [0.0 (Solo) -> 1.0 (Touching)]
+
         """
         alt = np.clip(altitude_ratio, 0.0, 1.0)
         prox = np.clip(companion_proximity, 0.0, 1.0)
-        
+
         mix_matrix = {
             "stem_solo_cello": float(1.0 - (alt * 0.4)),
             "stem_symphonic_strings": float(np.clip(alt * 1.3, 0.0, 1.0)),
@@ -1708,7 +1857,4 @@ class ModernInteractiveGameAudioEngine:
 | Composer | Domain | Intervallic Signature | Harmonic Progression | Neuroacoustic Engine | Procedural Encoding Pattern |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Ennio Morricone** | Film / Western / Drama | Ascending Major 6th ($+9\text{ st}$) & Coyote 4th ($\pm 5\text{ st}$) | Dorian vamp ($\text{i} \leftrightarrow \flat\text{VII}$) + Italian $\text{V}^7/\text{ii} \to \text{ii}^7$ | Foley-melody cross-modal integration; vmPFC nostalgia arc | Interleaved foley rhythm bed + Puccinian lyrical arch generator |
-| **Hans Zimmer** | Hybrid Film / Sci-Fi | Minimalist conjunct steps ($[-5, +1, -5\text{ st}]$) | 4-chord minimalist loops; Additive timbral crescendos | Shepard-Risset infinite pitch illusion; $30\text{--}60\text{ Hz}$ sub-bass Pacinian drive | Continuous Shepard tone DSP integrator + Additive 
-<truncated 3010 bytes>
-
-NOTE: The output was truncated because it was too long. Use a more targeted query or a smaller range to get the information you need.
+| **Hans Zimmer** | Hybrid Film / Sci-Fi | Minimalist conjunct steps ($[-5, +1, -5\text{ st}]$) | 4-chord minimalist loops; Additive timbral crescendos | Shepard-Risset infinite pitch illusion; $30\text{--}60\text{ Hz}$ sub-bass Pacinian drive | Continuous Shepard tone DSP integrator + Additive … |

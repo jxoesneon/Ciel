@@ -2,6 +2,7 @@
 schema: 1
 version: 1.0.0
 format: skill/1.0
+author: Hermes Agent (user-local skill)
 runtimes:
 - claude_code
 - gemini_cli
@@ -11,6 +12,10 @@ tags:
 - ciel
 - harmonized
 - domain:ops
+- devin
+- acp
+- session-history
+- recovery
 triggers:
 - pattern: (recover|find|extract|locate).*(devin|conversation|session|acp)
   confidence: 0.9

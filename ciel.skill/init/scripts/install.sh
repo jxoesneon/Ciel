@@ -165,7 +165,7 @@ install_ciel_bin() {
   if [ -n "$RS_SRC" ] && need cargo; then
     say "Building ciel-rs (cargo build --release)…"
     if cargo build --release --manifest-path "$RS_SRC/Cargo.toml" \
-         --quiet; then
+      --quiet; then
       cp "$RS_SRC/target/release/ciel" "$CIEL_HOME/bin/ciel"
       chmod 755 "$CIEL_HOME/bin/ciel"
       say "ciel-rs installed to $CIEL_HOME/bin/ciel"
@@ -182,13 +182,16 @@ install_ciel_bin() {
   fi
   if [ -n "$url" ] && need curl; then
     local tmpbin tmpsum
-    tmpbin="$(mktemp)"; tmpsum="$(mktemp)"
-    if curl --proto '=https' --tlsv1.2 -fsSL "$url" -o "$tmpbin" \
-      && curl --proto '=https' --tlsv1.2 -fsSL "$url.sha256" -o "$tmpsum"; then
+    tmpbin="$(mktemp)"
+    tmpsum="$(mktemp)"
+    if curl --proto '=https' --tlsv1.2 -fsSL "$url" -o "$tmpbin" &&
+      curl --proto '=https' --tlsv1.2 -fsSL "$url.sha256" -o "$tmpsum"; then
       local expect actual
       expect="$(awk '{print $1}' "$tmpsum")"
-      if need sha256sum; then actual="$(sha256sum "$tmpbin" | awk '{print $1}')"
-      elif need shasum; then actual="$(shasum -a 256 "$tmpbin" | awk '{print $1}')"
+      if need sha256sum; then
+        actual="$(sha256sum "$tmpbin" | awk '{print $1}')"
+      elif need shasum; then
+        actual="$(shasum -a 256 "$tmpbin" | awk '{print $1}')"
       else actual=""; fi
       if [ -n "$actual" ] && [ "$expect" = "$actual" ]; then
         mv "$tmpbin" "$CIEL_HOME/bin/ciel"

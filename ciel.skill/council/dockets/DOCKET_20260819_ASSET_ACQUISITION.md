@@ -7,6 +7,7 @@
 ## Project Context
 
 BioGenesis-X is an AAA 3D biopunk starship builder and void-flight combat simulator built with Godot 4.7.1, Forward+ renderer, JoltPhysics3D. Key systems already implemented:
+
 - Procedural biological starships, planets, asteroids, star systems
 - 6-DOF Newtonian flight with mouse tethered controls
 - Wave Engine (Alcubierre-like) for in-system transit
@@ -22,7 +23,7 @@ BioGenesis-X is an AAA 3D biopunk starship builder and void-flight combat simula
 ### TIER 1 — HIGH RELEVANCE (Directly addresses known gaps)
 
 | # | Asset | ID | Author | License | Godot Ver | Category | Relevance |
-|---|-------|-----|---------|---------|-----------|----------|-----------|
+| --- | ------- | ----- | --------- | --------- | ----------- | ---------- | ----------- |
 | 1 | Terrain3D | 3134 | TokisanGames | MIT | 4.3-4.6+ | 3D Tools | GPU clipmap terrain, 65km², LOD, foliage — planetary surfaces |
 | 2 | Extremely Fast Atmosphere | 4218 | fbcosentino | unspecified | 4.4 | Shaders | Non-raymarching atmosphere, Forward+ compatible, StandardMaterial3D perf |
 | 3 | 3D Planet Generator | 1615 | naejimer | unspecified | 4.0-4.5 | Shaders | Planet body + clouds + atmosphere shaders, 7 planet types |
@@ -62,7 +63,7 @@ BioGenesis-X is an AAA 3D biopunk starship builder and void-flight combat simula
 ### TIER 2 — MEDIUM RELEVANCE (Useful but not critical)
 
 | # | Asset | ID | Author | License | Godot Ver | Category | Relevance |
-|---|-------|-----|---------|---------|-----------|----------|-----------|
+| --- | ------- | ----- | --------- | --------- | ----------- | ---------- | ----------- |
 | 36 | FlexCam | 4590 | unspecified | unspecified | 4.5 | 3D Tools | FPV/follow/observer camera modes |
 | 37 | 3D Controls Toolkit | 3297 | unspecified | unspecified | 4.3-4.5 | 3D Tools | FP/TP/side-scroll/top-down controllers |
 | 38 | Quality First Person Controller v2 | 2418 | Colormatic | MIT | 4.7 | 3D Tools | FPS controller with headbob, swim, fly modes |
@@ -92,7 +93,7 @@ BioGenesis-X is an AAA 3D biopunk starship builder and void-flight combat simula
 ### TIER 3 — LOW RELEVANCE (Nice-to-have or redundant)
 
 | # | Asset | ID | Relevance |
-|---|-------|-----|-----------|
+| --- | ------- | ----- | ----------- |
 | 61 | GDT Terrain Generator | 5160 | Redundant with Terrain3D |
 | 62 | TerrainCrafter | 3173 | Redundant with Terrain3D |
 | 63 | PGodot | 4144 | Redundant with Gaea + existing noise systems |

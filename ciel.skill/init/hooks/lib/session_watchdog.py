@@ -20,6 +20,7 @@ CLI:
     session_watchdog.py --resume [--dry]   # fire headless resume if warranted+capped
 """
 
+import contextlib
 import json
 import os
 import re
@@ -64,10 +65,8 @@ def _save(path: Path, data) -> None:
     try:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(data, ensure_ascii=False, indent=1))
-        try:
+        with contextlib.suppress(OSError):
             os.chmod(path, 0o600)
-        except OSError:
-            pass
     except OSError:
         pass
 
@@ -151,7 +150,7 @@ def find_stalled(current_session: str | None = None) -> dict:
     now = time.time()
     stalled = {}
     for sid, count in pending.items():
-        if sid == current_session or sid == "unknown":
+        if sid in (current_session, "unknown"):
             continue
         last = last_seen.get(sid, 0)
         if now - last > STALL_AGE_S:
@@ -241,7 +240,7 @@ def do_resume(session_hint: str, reason: str, dry: bool = False) -> dict:
         "resume them; verify progress before declaring completion."
     )
     if dry:
-        return {"fired": False, "reason": "dry-run", "would_run": f"devin -c -p <resume prompt>"}
+        return {"fired": False, "reason": "dry-run", "would_run": "devin -c -p <resume prompt>"}
     try:
         proc = subprocess.run(
             ["devin", "-c", "-p", prompt],
@@ -258,13 +257,11 @@ def do_resume(session_hint: str, reason: str, dry: bool = False) -> dict:
     _emit_signal("watchdog_resume", {
         "session": session_hint, "reason": reason, "fired": fired,
     })
-    try:
+    with contextlib.suppress(OSError, subprocess.TimeoutExpired):
         subprocess.run(
             ["notify-send", "Ciel watchdog", f"Auto-resumed stalled session ({reason})"],
             capture_output=True, timeout=5,
         )
-    except (OSError, subprocess.TimeoutExpired):
-        pass
     return {"fired": fired, "reason": reason}
 
 
@@ -363,10 +360,8 @@ def cmd_check(current_session: str | None = None) -> int:
         _save(HINT, {"ts": datetime.now(timezone.utc).isoformat(), "hints": hints})
         print("; ".join(hints))
     else:
-        try:
+        with contextlib.suppress(OSError):
             HINT.unlink(missing_ok=True)
-        except OSError:
-            pass
     return 0
 
 
