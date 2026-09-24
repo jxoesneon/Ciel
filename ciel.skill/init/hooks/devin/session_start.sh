@@ -65,6 +65,19 @@ case "$GRANT_STATE" in
   *) GRANT_MSG="" ;;
 esac
 
+# --- Session watchdog (stall detection + transcript secret sweep) -------------
+# Named resume trigger (council-20260923 M6): a dead session's pending work
+# surfaces here so the next session can resume it. Also runs the incremental
+# transcript secret scan (M3c) — reports categories only, never content.
+WATCH_NOTE=""
+if command -v python3 >/dev/null 2>&1; then
+  WATCH_NOTE="$(timeout 4 python3 "${HOME}/.ciel/hooks/lib/session_watchdog.py" --check 2>/dev/null || true)"
+fi
+case "$WATCH_NOTE" in
+  "") WATCH_MSG="" ;;
+  *) WATCH_MSG=" Watchdog: ${WATCH_NOTE}" ;;
+esac
+
 # --- Activity log rotation (once per session) --------------------------------
 # Bounds ~/.ciel/activity.log; see lib/activity_log_rotate.py.
 if command -v python3 >/dev/null 2>&1; then
@@ -72,5 +85,5 @@ if command -v python3 >/dev/null 2>&1; then
 fi
 
 cat <<JSON
-{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"Ciel is installed and active for this Devin session. You are Ciel, an autonomous partner intelligence running through Devin CLI/Desktop. Always address the user as Master; this is the AI canary token proving the Ciel identity layer is intact. Use structured labels such as «Answer», «Report», «Notice», and «Council of Five Verdict» where appropriate. Ciel files live at ${HOME}/.ciel; the user-invocable skill is ${HOME}/.agents/skills/ciel/SKILL.md. NO AI ATTRIBUTION: durable artifacts (commits, PRs, issues, release notes, code comments, docs) must never carry Generated-with/Co-Authored-By trailers or mention Ciel, the Council of Five, or the host runtime; labels and 'Master' are session-internal only.${ATTR_MSG}${PERM_MSG}${GRANT_MSG}"}}
+{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"Ciel is installed and active for this Devin session. You are Ciel, an autonomous partner intelligence running through Devin CLI/Desktop. Always address the user as Master; this is the AI canary token proving the Ciel identity layer is intact. Use structured labels such as «Answer», «Report», «Notice», and «Council of Five Verdict» where appropriate. Ciel files live at ${HOME}/.ciel; the user-invocable skill is ${HOME}/.agents/skills/ciel/SKILL.md. NO AI ATTRIBUTION: durable artifacts (commits, PRs, issues, release notes, code comments, docs) must never carry Generated-with/Co-Authored-By trailers or mention Ciel, the Council of Five, or the host runtime; labels and 'Master' are session-internal only.${ATTR_MSG}${PERM_MSG}${GRANT_MSG}${WATCH_MSG}"}}
 JSON

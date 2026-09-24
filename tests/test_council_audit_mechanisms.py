@@ -274,3 +274,93 @@ class TestCouncilVerify(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestSessionWatchdog(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.home = Path(self.tmp.name)
+        sys.path.insert(0, str(LIB))
+        import session_watchdog
+        self.mod = session_watchdog
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def test_resume_caps_session(self):
+        m = self.mod
+        today = __import__("datetime").datetime.now(
+            __import__("datetime").timezone.utc).strftime("%Y-%m-%d")
+        state = {"resume_attempts": {"_day": today, "s1": 1}}
+        ok, why = m.resume_capable(state, "s1")
+        self.assertFalse(ok)
+        self.assertIn("session cap", why)
+
+    def test_resume_caps_daily(self):
+        m = self.mod
+        today = __import__("datetime").datetime.now(
+            __import__("datetime").timezone.utc).strftime("%Y-%m-%d")
+        state = {"resume_attempts": {"_day": today, "a": 1, "b": 1, "c": 1}}
+        ok, why = m.resume_capable(state, "d")
+        self.assertFalse(ok)
+        self.assertIn("daily cap", why)
+
+    def test_resume_backoff(self):
+        m = self.mod
+        state = {"resume_attempts": {"_day": "x"}, "last_resume": __import__("time").time()}
+        ok, why = m.resume_capable(state, "new")
+        self.assertFalse(ok)
+        self.assertIn("backoff", why)
+
+    def test_autoresume_gate(self):
+        m = self.mod
+        self.assertFalse(os.environ.get("CIEL_WATCHDOG_AUTORESUME"))
+        # do_resume without the env must refuse regardless of caps
+        orig_state = m.STATE
+        m.STATE = self.home / "state.json"
+        try:
+            r = m.do_resume("s1", "test", dry=False)
+        finally:
+            m.STATE = orig_state
+        self.assertFalse(r["fired"])
+        self.assertIn("disabled", r["reason"])
+
+    def test_dry_resume(self):
+        m = self.mod
+        os.environ["CIEL_WATCHDOG_AUTORESUME"] = "1"
+        orig_state = m.STATE
+        m.STATE = self.home / "state.json"
+        try:
+            r = m.do_resume("s1", "test", dry=True)
+        finally:
+            m.STATE = orig_state
+            os.environ.pop("CIEL_WATCHDOG_AUTORESUME")
+        self.assertFalse(r["fired"])
+        self.assertIn("devin -c", r.get("would_run", ""))
+
+
+class TestTranscriptSanitize(unittest.TestCase):
+    def test_redact_replaces_with_placeholder(self):
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import transcript_sanitize
+        with tempfile.TemporaryDirectory() as tmp:
+            f = Path(tmp) / "t.json"
+            f.write_text('{"text": "the sudo password is hunter2 now"}')
+            r = transcript_sanitize.redact_file(f, dry=False)
+            self.assertTrue(r["changed"])
+            self.assertGreaterEqual(r["replacements"], 1)
+            out = f.read_text()
+            self.assertIn("[REDACTED:", out)
+            self.assertNotIn("hunter2", out)
+            self.assertTrue(f.with_suffix(".json.bak").is_file())
+            self.assertEqual(0o600, f.stat().st_mode & 0o777)
+
+    def test_clean_file_untouched(self):
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import transcript_sanitize
+        with tempfile.TemporaryDirectory() as tmp:
+            f = Path(tmp) / "t.json"
+            f.write_text('{"text": "fix the tests please"}')
+            r = transcript_sanitize.redact_file(f, dry=False)
+            self.assertFalse(r["changed"])
+            self.assertFalse(f.with_suffix(".json.bak").exists())
