@@ -5,6 +5,20 @@ input="$(cat)"
 HOOK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 export CIEL_HOOK_LIB="$HOOK_DIR/../lib"
 
+# Rust fast path — one process does the scan, the ingress log, and the
+# canary JSON. Falls back to the Python body on any failure.
+CIEL_BIN="${CIEL_BIN:-}"
+if [ -z "$CIEL_BIN" ]; then
+  for _c in "${HOME:-/nonexistent}/.ciel/bin/ciel" "$HOOK_DIR/../../bin/ciel"; do
+    if [ -x "$_c" ]; then CIEL_BIN="$_c"; break; fi
+  done
+fi
+if [ -n "$CIEL_BIN" ] && [ -x "$CIEL_BIN" ]; then
+  if printf '%s' "$input" | "$CIEL_BIN" prompt-submit; then
+    exit 0
+  fi
+fi
+
 SCAN=""
 SCAN="$(INPUT_JSON="$input" python3 - <<'PY'
 import json

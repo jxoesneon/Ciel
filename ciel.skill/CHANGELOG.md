@@ -4,6 +4,14 @@
 
 All notable changes to Ciel are tracked here. Ciel appends an entry on every self-mutation commit. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) with SemVer.
 
+## [Unreleased]
+
+### Added
+
+- **`ciel` Rust binary** (`init/ciel-rs/`): single-binary port of the per-invocation hook bodies — `pretool --runtime {devin|antigravity}` (payload parse → policy evaluate → activity append → detached System-1 shadow spawn → advisory attribution dispatch → decision emit) and `prompt-submit` (secret ingress scan + canary context), plus primitive subcommands `risk-eval`, `risk-check`, `grant-state`, `secret-scan`, `attribution-scan`. Dual-engine regex: `regex` fast path with `fancy-regex` fallback for the policy's `(?<!...)` lookbehind rules (a `[^C]`-rewrite was rejected — it cannot fire on `of=/etc` where the predecessor char is locked inside `\bof=`). Hook `.sh` adapters resolve `$CIEL_BIN` → `~/.ciel/bin/ciel` → `init/bin/ciel` and fall through to the Python bodies on missing binary or nonzero exit. Measured ~2.7× faster per PreToolUse firing (~134ms vs ~360ms end-to-end, ~90ms vs ~366ms evaluator-only); Python remains the fallback until parity is proven everywhere.
+- **Rust↔Python parity suite** (`tests/test_rust_parity.py`): differential tests feeding identical inputs through `risk_policy.evaluate`/`secret_scan.scan`/`attribution_scan.scan` and the binary — the full 85-case red-team corpus under both override states, path normalization forms, malformed JSON, fallback-policy source, and CLI contract. `test_hooks_redteam.py` gained `test_corpus_rust_fastpath` — the same corpus through the `.sh` wrappers with `CIEL_BIN` set.
+- **§9c install step** (`init/scripts/install.sh`): builds `init/ciel-rs` with cargo when the toolchain is present, honors `CIEL_BIN_URL`/`CIEL_RELEASE_BASE` for prebuilt artifacts, and warns-skips to the Python fallback otherwise — the binary is never an install blocker.
+
 ## [1.1.0] — 2026-09-24
 
 ### Added

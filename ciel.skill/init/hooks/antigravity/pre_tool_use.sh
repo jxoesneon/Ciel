@@ -4,6 +4,21 @@ set -euo pipefail
 input="$(cat)"
 HOOK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 export CIEL_HOOK_LIB="$HOOK_DIR/../lib"
+
+# Rust fast path — single process for evaluate+log+shadow. Any failure
+# (missing binary, nonzero exit) falls through to the Python body below.
+CIEL_BIN="${CIEL_BIN:-}"
+if [ -z "$CIEL_BIN" ]; then
+  for _c in "${HOME:-/nonexistent}/.ciel/bin/ciel" "$HOOK_DIR/../../bin/ciel"; do
+    if [ -x "$_c" ]; then CIEL_BIN="$_c"; break; fi
+  done
+fi
+if [ -n "$CIEL_BIN" ] && [ -x "$CIEL_BIN" ]; then
+  if printf '%s' "$input" | "$CIEL_BIN" pretool --runtime antigravity; then
+    exit 0
+  fi
+fi
+
 INPUT_JSON="$input" python3 - <<'PY'
 import json
 import os

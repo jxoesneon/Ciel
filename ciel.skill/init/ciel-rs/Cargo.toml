@@ -1,0 +1,27 @@
+[package]
+name = "ciel"
+version = "1.1.0"
+edition = "2021"
+rust-version = "1.75"
+description = "Ciel runtime binary — hot-path hook bodies and operator subcommands"
+license = "MIT"
+repository = "https://github.com/jxoesneon/Ciel"
+homepage = "https://github.com/jxoesneon/Ciel"
+keywords = ["agent", "runtime", "policy", "hooks", "safety"]
+categories = ["command-line-utilities", "os::unix-apis"]
+exclude = ["/target"]
+
+[[bin]]
+name = "ciel"
+path = "src/main.rs"
+
+[dependencies]
+serde_json = "1"
+regex = "1"
+time = "0.3"
+fancy-regex = "0.16"
+
+[profile.release]
+opt-level = 2
+lto = "thin"
+strip = true

@@ -154,6 +154,44 @@ else
   warn "Risk policy payload not found; hooks will use built-in fallback rules."
 fi
 
+# --- 9c. ciel-rs binary --------------------------------------------------------
+# Optional fast path: the hooks prefer $CIEL_HOME/bin/ciel and fall back to
+# the embedded Python bodies when it is absent — so this step never blocks
+# the install. Resolution order: cargo build from bundled source → prebuilt
+# download (CIEL_BIN_URL override) → Python fallback.
+RS_SRC="$(cd "$(dirname "$0")/../ciel-rs" 2>/dev/null && pwd || true)"
+install_ciel_bin() {
+  mkdir -p "$CIEL_HOME/bin"
+  if [ -n "$RS_SRC" ] && need cargo; then
+    say "Building ciel-rs (cargo build --release)…"
+    if cargo build --release --manifest-path "$RS_SRC/Cargo.toml" \
+         --quiet; then
+      cp "$RS_SRC/target/release/ciel" "$CIEL_HOME/bin/ciel"
+      chmod 755 "$CIEL_HOME/bin/ciel"
+      say "ciel-rs installed to $CIEL_HOME/bin/ciel"
+      return 0
+    fi
+    warn "cargo build failed; trying prebuilt artifact."
+  fi
+  local url="${CIEL_BIN_URL:-}"
+  local plat
+  plat="$(uname -s | tr '[:upper:]' '[:lower:]')-$(uname -m)"
+  if [ -z "$url" ] && [ -n "${CIEL_RELEASE_BASE:-}" ]; then
+    url="$CIEL_RELEASE_BASE/ciel-${CIEL_VERSION}-${plat}"
+  fi
+  if [ -n "$url" ] && need curl; then
+    if curl --proto '=https' --tlsv1.2 -fsSL "$url" -o "$CIEL_HOME/bin/ciel"; then
+      chmod 755 "$CIEL_HOME/bin/ciel"
+      say "ciel-rs prebuilt installed ($plat)."
+      return 0
+    fi
+    warn "Prebuilt download failed for $plat."
+  fi
+  warn "No ciel-rs binary available; hooks will use the Python fallback path."
+  return 1
+}
+install_ciel_bin || true
+
 # --- 10. Verify ---------------------------------------------------------------
 say "Running verification…"
 bash "$(dirname "$0")/verify.sh" || die "Verification failed; see $LOG"

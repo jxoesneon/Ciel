@@ -49,11 +49,22 @@ RUNTIMES = {
 }
 
 
-def _run_hook(script: Path, payload: dict, home: Path) -> tuple[str, bool]:
+CIEL_BIN = os.environ.get(
+    "CIEL_RS_BIN",
+    str(ROOT / "ciel.skill" / "init" / "ciel-rs" / "target" / "release" / "ciel"),
+)
+
+
+def _run_hook(script: Path, payload: dict, home: Path,
+              ciel_bin: str | None = None) -> tuple[str, bool]:
     """Return (decision, overridden) for one firing of the hook."""
     env = dict(os.environ, HOME=str(home), CIEL_SYSTEM1_DISABLED="1")
     env.pop("CIEL_HOME", None)
     env.pop("CIEL_POLICY", None)
+    if ciel_bin:
+        env["CIEL_BIN"] = ciel_bin
+    else:
+        env.pop("CIEL_BIN", None)
     proc = subprocess.run(
         ["bash", str(script)],
         input=json.dumps(payload),
@@ -84,29 +95,42 @@ def _run_hook(script: Path, payload: dict, home: Path) -> tuple[str, bool]:
 class TestHookRedTeam(unittest.TestCase):
     maxDiff = None
 
-    def _fire(self, runtime: str, case: dict) -> str:
+    def _fire(self, runtime: str, case: dict,
+              ciel_bin: str | None = None) -> str:
         script, payload_fn = RUNTIMES[runtime]
         with tempfile.TemporaryDirectory() as tmp:
             home = Path(tmp)
             (home / ".ciel").mkdir()
             if case.get("override"):
                 (home / ".ciel" / "allow_privileged").touch()
-            decision, overridden = _run_hook(script, payload_fn(case), home)
+            decision, overridden = _run_hook(
+                script, payload_fn(case), home, ciel_bin=ciel_bin)
         if decision == "deny":
             return "deny"
         return "allow_overridden" if overridden else "allow"
 
-    def test_corpus(self):
+    def _corpus(self, ciel_bin: str | None = None) -> list[str]:
         cases = json.loads(FIXTURE.read_text(encoding="utf-8"))["cases"]
         mismatches = []
         for runtime in RUNTIMES:
             for case in cases:
-                got = self._fire(runtime, case)
+                got = self._fire(runtime, case, ciel_bin=ciel_bin)
                 if got != case["expect"]:
                     mismatches.append(
                         f"{runtime}/{case['id']}: expected {case['expect']}, got {got}"
                     )
-        self.assertEqual([], mismatches)
+        return mismatches
+
+    def test_corpus(self):
+        self.assertEqual([], self._corpus())
+
+    @unittest.skipUnless(
+        Path(CIEL_BIN).exists(), f"ciel binary not built at {CIEL_BIN}"
+    )
+    def test_corpus_rust_fastpath(self):
+        """Same corpus through the .sh wrappers with CIEL_BIN set — the
+        Rust fast path must produce identical hook outcomes."""
+        self.assertEqual([], self._corpus(ciel_bin=CIEL_BIN))
 
 
 if __name__ == "__main__":

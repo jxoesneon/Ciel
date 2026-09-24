@@ -1,11 +1,15 @@
 {
   "schema": 1,
   "version": "1.0.0",
-  "last_verified": "2026-09-24T02:35:11.950310+00:00",
+  "last_verified": "2026-09-24T05:18:45.461592+00:00",
   "files": {
     ".PSScriptAnalyzerSettings.psd1": {
       "sha256": "aea7918ac3841e011c6c2eb0daa8c0d2b405d35e7e7779759d1c6068d61cc29f",
       "size": 480
+    },
+    ".coveragerc": {
+      "sha256": "cfff0a1c1b87222a9b9029c75fd542c4a13af63a5af7a69969ee728b0fb062d6",
+      "size": 92
     },
     ".gitattributes": {
       "sha256": "86bb06c2d99fbb94c485ddee199d66d19369322fbd59771bd0375838720b0ae6",
@@ -36,16 +40,16 @@
       "size": 6339
     },
     ".gitignore": {
-      "sha256": "6dcb8020a8626b1dbba4d339dfe7dfee01cebb4c98c135bd4c8bf7a40512aad4",
-      "size": 1059
+      "sha256": "1ae6e9309a70b565051e762c482f03c7aa30dcf8b17e558098b5e398e8dd121b",
+      "size": 1127
     },
     ".markdownlint-cli2.jsonc": {
       "sha256": "17aec8323cfbf68aa1b80080e15146b99ac03a05d7e62b52cdb5230edbe4a5e1",
       "size": 923
     },
     "CHANGELOG.md": {
-      "sha256": "cd9c544f3989603ec89b6f3a554dd3dfafcaf058506326d8b5afb2b10a96ac8f",
-      "size": 2306
+      "sha256": "28c80677300d7c6ef9e0cc27e9b99cea2d46aa7843643297b1033a031b4412ae",
+      "size": 2963
     },
     "CONTRIBUTING.md": {
       "sha256": "70e98a54ee1675e81c3dccb081a2ba2aa11d299299ba8dd95dd57943d14bc755",
@@ -60,7 +64,7 @@
       "size": 642
     },
     "README.md": {
-      "sha256": "af11845883d24124d1708725b69bb5be6ac9287e887ffd6076ecb443f19fac8e",
+      "sha256": "1762c5cdd1ffd4ebe5872c85436f6705fa8209bb69b5a9900729f67f23bba973",
       "size": 4639
     },
     "agents/ciel-blockchain-guild.md": {
@@ -108,16 +112,16 @@
       "size": 2008
     },
     "ciel.skill/CHANGELOG.md": {
-      "sha256": "d03b730ab7051401600f7141dcfe310407689612acab2f5a2c3a5a300ef51858",
-      "size": 7811
+      "sha256": "b7c4132cc07cf071794bf7e8dac298e19c9fef8c936c28bb3e21426789f46b91",
+      "size": 15991
     },
     "ciel.skill/MANIFEST.md": {
-      "sha256": "ebc71dfa8ed7ec81765cf1a473525dcf0ee86238667761d0dda26f313a475bc4",
-      "size": 2762
+      "sha256": "d31840054fca7bf422466887033d1e38e07b694cfc0b995bd07c35e4624bc4d2",
+      "size": 3143
     },
     "ciel.skill/SKILL.md": {
-      "sha256": "28a0cab1a00e097336f6338487001c62135d71a6e70fedbe7ab8c5d70fd829a5",
-      "size": 6102
+      "sha256": "06569d51701406462a862a5238cbd856e91760d9e37173cd4631d637f6758839",
+      "size": 6139
     },
     "ciel.skill/acquisition/ACQUISITION.md": {
       "sha256": "aa4a4de3c8bc42b0fa0a72dd1b29fb5d17a5100c5f5a48c7ad41502256d71c1a",
@@ -628,8 +632,8 @@
       "size": 765
     },
     "ciel.skill/init/hooks/antigravity/pre_tool_use.sh": {
-      "sha256": "a96454395fca8e0e3704ad0664fd70210c22ff5db8941b325c6c18f69ec92ab3",
-      "size": 2330
+      "sha256": "586877f673e2830d85d747c222fd4fb430d735a35b57a093123d85c1109762cd",
+      "size": 2820
     },
     "ciel.skill/init/hooks/antigravity/stop.sh": {
       "sha256": "3e52202150b42341d1145f5d89bfabdd06ef2739a3da64efa24cc764b40b8881",
@@ -652,8 +656,8 @@
       "size": 906
     },
     "ciel.skill/init/hooks/devin/pre_tool_use.sh": {
-      "sha256": "c6a99a21112f33ac96e05417192f3f8bde925a5afd7bba261126856997b64354",
-      "size": 3823
+      "sha256": "1544040008ce34c056117091ebeb0de5d46dbda2baec820f5c4de731e4e31596",
+      "size": 4312
     },
     "ciel.skill/init/hooks/devin/session_end.sh": {
       "sha256": "a147a98ee73aaecff5d327f974fa5ca6cb0d5b26e8049e2127347a3d637350dc",
@@ -668,8 +672,8 @@
       "size": 2340
     },
     "ciel.skill/init/hooks/devin/user_prompt_submit.sh": {
-      "sha256": "91090390fed832df5d7e51b4538d0230173f7ed9183ffb9d6a90b9fc8c9491f4",
-      "size": 1561
+      "sha256": "d78e7b2631fb225963625a44908fc0c9706c73d8c4a9fafd64bfd8b835b41572",
+      "size": 2022
     },
     "ciel.skill/init/hooks/gemini_cli/ciel_auto_activate.ps1": {
       "sha256": "e3abfefd8d85d230db91c2d89fc756524690dd8e35ed7ea55a1693d335050526",
@@ -700,16 +704,16 @@
       "size": 3436
     },
     "ciel.skill/init/hooks/lib/risk_policy.py": {
-      "sha256": "05b1253806b6bd3c40ac4349f9dc0d9ef63826db1e779c832bbc40ac507aa457",
-      "size": 12509
+      "sha256": "7ca47a09aeef153ff74960cf0d3e02557095797d5ba344bc8e119f8479f4dafe",
+      "size": 13230
     },
     "ciel.skill/init/hooks/lib/secret_scan.py": {
       "sha256": "f823c6506cd465bfe229e728a6ca75702b8806cd60b98b66b53278ce99b82dc3",
       "size": 1927
     },
     "ciel.skill/init/hooks/lib/session_watchdog.py": {
-      "sha256": "b3a7ceabd12e267ed715d4e31d4f881afa2bf37a1fb1dcb01160ed340ab1cf74",
-      "size": 13550
+      "sha256": "a4d62ed2d314c6f605a2aa4af85e36055ee37b789e65fe415b5e163ae29d8ac5",
+      "size": 14871
     },
     "ciel.skill/init/hooks/lib/store_perms.py": {
       "sha256": "699b6f0fbee5be2e346dc6291636a92168a47254e4914705476a1b157e060072",
@@ -740,8 +744,8 @@
       "size": 5163
     },
     "ciel.skill/init/scripts/install.sh": {
-      "sha256": "d7b32984bb9ad1362fc072a5eec36d336a0f48d9a9fc7d149935e9df2d10dd99",
-      "size": 5853
+      "sha256": "f0d01d135e704e5a8323c18a746de5e553246d23e7aacb28265383a8cb44e74d",
+      "size": 7534
     },
     "ciel.skill/init/scripts/integrity.py": {
       "sha256": "2ce99befe7f1e422ec23e868e4a049e3fa8d382eac80191bd43c3d73ddda92bd",
@@ -1044,12 +1048,12 @@
       "size": 7
     },
     "ciel.skill/risk/policy.json": {
-      "sha256": "83c983cbbec07fa3df6a3736fd7f27329cf36304341e667b63ed3bf05da94dee",
-      "size": 4353
+      "sha256": "748797dbf44e5fb80fda04ef591b19e3a453624294c35d83a9bf98415f441fd0",
+      "size": 6755
     },
     "ciel.skill/risk/policy.yaml": {
-      "sha256": "d3db67619c08c5f1061368cea7662c343468147e9b26f2951b16508133d63074",
-      "size": 4655
+      "sha256": "eceb3a06fe2ff5a49451500a9d00315568cbbd5a30248573a1546b4be226daa0",
+      "size": 7287
     },
     "ciel.skill/risk/skill_scan_baseline.json": {
       "sha256": "ea50198eb5cde385f0e9b43a5b4078899f0cf321a713b073fb1dcc89401c0946",
@@ -1444,16 +1448,16 @@
       "size": 12677
     },
     "scripts/system1_export.py": {
-      "sha256": "93a6ea31f86ae953a1ac960df380085e49d1026aac44e54cbdca945cd04f62ec",
-      "size": 3635
+      "sha256": "0c2707648c4f18a1fa6ed543665ba49a701b0b3faacbf0397329e29dbcf0a013",
+      "size": 3589
     },
     "scripts/system1_review.py": {
-      "sha256": "69056a768ce3d2da89cb3a12b381c049bbeabefed224600db2497736c444e56d",
-      "size": 2541
+      "sha256": "2168b62641bd17c460c007a4ed41e7bf15f323c1ac90496355aed51e066daeaf",
+      "size": 2608
     },
     "scripts/transcript_sanitize.py": {
-      "sha256": "21ae7fd7949058404e2e701cbaeb0797279bbd45e8f47219dc88d7872170e0ab",
-      "size": 14236
+      "sha256": "a02a117a9ad2b7ae963544cd7abdc0d3eafa3a309a07adadfd0b86e3c14cb029",
+      "size": 15338
     },
     "scripts/validate-frontmatter.ps1": {
       "sha256": "c0662fc53fec3274a6ff6f51c48316626dc66bfde1abe8025c302f1749d7f72c",
@@ -2996,8 +3000,8 @@
       "size": 57
     },
     "tests/fixtures/hook_redteam_cases.json": {
-      "sha256": "3cbbc99e3ff0c0a10963e35dac140cc9b318a4fb0226405733bb56f4ed0c5d90",
-      "size": 8659
+      "sha256": "b02f1fc7f200ba9760f893ae74ff340896528439ad8586bf20d36f9eaf84eae5",
+      "size": 14130
     },
     "tests/fixtures/system1_prescreen_cases.json": {
       "sha256": "d7488261f449cfae5cc6207570c392531895136479a9cd7c5f0f9f8ad97690dd",
@@ -3020,8 +3024,8 @@
       "size": 2355
     },
     "tests/test_hooks_redteam.py": {
-      "sha256": "cb1c7a75ed1f354fd46e537b84bed86fead88e419b1469de617aa4613d012208",
-      "size": 3526
+      "sha256": "ece86bd9d7f677704b9d0b9030c14756f666c10f5e34281a40cf70e78fba7865",
+      "size": 4338
     },
     "tests/test_integrity.py": {
       "sha256": "1c1d3cf421b630a8f2a5f884938367dc7d39c1b3cc91d9fce7b8496474a3624a",
@@ -3039,9 +3043,13 @@
       "sha256": "c55ab92c46a9fcdfa57d61741ab704ddd591a2bc811ee99b1ad6524d94751c78",
       "size": 3974
     },
+    "tests/test_release_gate_coverage.py": {
+      "sha256": "ed7d53320c34effc3305220cf01a348956ed6b1bd1aea516915294929feb3672",
+      "size": 149475
+    },
     "tests/test_risk_policy.py": {
-      "sha256": "47340bf1f9b323c9851d4d15dab6635153b09bfea8a8555f2a3661413ae9f1cd",
-      "size": 14293
+      "sha256": "052182ebb44be17988998dcaa55a5f894acfa7a31a0b042dffb2d6f2e42fd04e",
+      "size": 20759
     },
     "tests/test_scan_skills.py": {
       "sha256": "73580c464e6b995d516af1055498e133bbad2edf233f5d91e4ffaff2d01529ad",
