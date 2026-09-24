@@ -176,8 +176,9 @@ install_ciel_bin() {
   local url="${CIEL_BIN_URL:-}"
   local plat
   plat="$(uname -s | tr '[:upper:]' '[:lower:]')-$(uname -m)"
-  if [ -z "$url" ] && [ -n "${CIEL_RELEASE_BASE:-}" ]; then
-    url="$CIEL_RELEASE_BASE/ciel-${CIEL_VERSION}-${plat}"
+  local base="${CIEL_RELEASE_BASE:-https://github.com/jxoesneon/Ciel/releases/download/v${CIEL_VERSION}}"
+  if [ -z "$url" ]; then
+    url="$base/ciel-${CIEL_VERSION}-${plat}"
   fi
   if [ -n "$url" ] && need curl; then
     if curl --proto '=https' --tlsv1.2 -fsSL "$url" -o "$CIEL_HOME/bin/ciel"; then

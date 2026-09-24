@@ -9,7 +9,7 @@ export CIEL_HOOK_LIB="$HOOK_DIR/../lib"
 # (missing binary, nonzero exit) falls through to the Python body below.
 CIEL_BIN="${CIEL_BIN:-}"
 if [ -z "$CIEL_BIN" ]; then
-  for _c in "${HOME:-/nonexistent}/.ciel/bin/ciel" "$HOOK_DIR/../../bin/ciel"; do
+  for _c in "${HOME:-/nonexistent}/.ciel/bin/ciel" "${HOME:-/nonexistent}/.cargo/bin/ciel" "$HOOK_DIR/../../bin/ciel"; do
     if [ -x "$_c" ]; then CIEL_BIN="$_c"; break; fi
   done
 fi

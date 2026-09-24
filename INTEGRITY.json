@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "version": "1.0.0",
-  "last_verified": "2026-09-24T06:06:57.048704+00:00",
+  "last_verified": "2026-09-24T06:16:08.970085+00:00",
   "files": {
     ".PSScriptAnalyzerSettings.psd1": {
       "sha256": "aea7918ac3841e011c6c2eb0daa8c0d2b405d35e7e7779759d1c6068d61cc29f",
@@ -36,8 +36,8 @@
       "size": 8294
     },
     ".github/workflows/release.yml": {
-      "sha256": "4256dc715974226c97e0a8f62d2f3c2f3922ce2d9be0552eb2e772c92b5866e2",
-      "size": 6339
+      "sha256": "963326ec0b08fa16df10252e76fdf3bc0391b2b6c9cbd0d54946c2351750a066",
+      "size": 8119
     },
     ".gitignore": {
       "sha256": "1ae6e9309a70b565051e762c482f03c7aa30dcf8b17e558098b5e398e8dd121b",
@@ -64,8 +64,8 @@
       "size": 642
     },
     "README.md": {
-      "sha256": "1762c5cdd1ffd4ebe5872c85436f6705fa8209bb69b5a9900729f67f23bba973",
-      "size": 4639
+      "sha256": "2ccf82505164c067e565d35cf8e9ac114ee8c4d82d635f2e360a68436758aa85",
+      "size": 5495
     },
     "agents/ciel-blockchain-guild.md": {
       "sha256": "9e93d8faa784524da64419d7cc3679f55f34c38593e669cb725fcffc00106aae",
@@ -116,8 +116,8 @@
       "size": 5186208
     },
     "ciel.skill/CHANGELOG.md": {
-      "sha256": "f410461100f5782d05f085cdeafc5b3e1ad0b1204d333fca6e303011695e1996",
-      "size": 19797
+      "sha256": "de30302625b7880b7db52e1dec1500d6924efa638da16c95395549ce6f875666",
+      "size": 21244
     },
     "ciel.skill/MANIFEST.md": {
       "sha256": "d31840054fca7bf422466887033d1e38e07b694cfc0b995bd07c35e4624bc4d2",
@@ -683,6 +683,10 @@
       "sha256": "807c402ab149a7b1c6611f5a1c4ff8fc7000e5f1dc3880bd9afe57e8385c7b2f",
       "size": 1597
     },
+    "ciel.skill/init/ciel-rs/src/system1.rs": {
+      "sha256": "3a482efbb6829d47aa93eb38827bab9251ce314a99f07a3e38174054a2dc59a3",
+      "size": 32199
+    },
     "ciel.skill/init/ciel-rs/src/watchdog.rs": {
       "sha256": "068f41ea35aae8b1c12184714e614176006a399b1dc8509aa27bf22295be96d3",
       "size": 20654
@@ -708,12 +712,12 @@
       "size": 809
     },
     "ciel.skill/init/hooks/antigravity/pre_invocation.sh": {
-      "sha256": "5e92ce717d5be5450086403b43be61faf80c9034f7fc41d68b9258480f186abd",
-      "size": 1293
+      "sha256": "8ad89e812c770287e40e0b2d43f0092eb7f2f7f26d5a82d9582277e948a8ddda",
+      "size": 1333
     },
     "ciel.skill/init/hooks/antigravity/pre_tool_use.sh": {
-      "sha256": "586877f673e2830d85d747c222fd4fb430d735a35b57a093123d85c1109762cd",
-      "size": 2820
+      "sha256": "b5793dfff2034b09e3eece8fb2826c9c430086a7a89147efefc84d1678e0b974",
+      "size": 2860
     },
     "ciel.skill/init/hooks/antigravity/stop.sh": {
       "sha256": "3e52202150b42341d1145f5d89bfabdd06ef2739a3da64efa24cc764b40b8881",
@@ -736,24 +740,24 @@
       "size": 906
     },
     "ciel.skill/init/hooks/devin/pre_tool_use.sh": {
-      "sha256": "1544040008ce34c056117091ebeb0de5d46dbda2baec820f5c4de731e4e31596",
-      "size": 4312
+      "sha256": "b2fad32c022f0aad9e170f47e127672998fa32db22ab871682d61673380edde1",
+      "size": 4352
     },
     "ciel.skill/init/hooks/devin/session_end.sh": {
       "sha256": "a147a98ee73aaecff5d327f974fa5ca6cb0d5b26e8049e2127347a3d637350dc",
       "size": 667
     },
     "ciel.skill/init/hooks/devin/session_start.sh": {
-      "sha256": "111e9671958c298891a7c3ae7c9d9622d6bc1daf063ef59a0f00ac2968930d4e",
-      "size": 4864
+      "sha256": "dbcde0e6c79d9799920b0e8518ab5ddcd07ca10727fce07ebb5fe11e45c46aa4",
+      "size": 4904
     },
     "ciel.skill/init/hooks/devin/stop.sh": {
       "sha256": "13846e9ca3c8239e2b97d5755373152055d906bbfe26eb74d083669169e01212",
       "size": 2340
     },
     "ciel.skill/init/hooks/devin/user_prompt_submit.sh": {
-      "sha256": "d78e7b2631fb225963625a44908fc0c9706c73d8c4a9fafd64bfd8b835b41572",
-      "size": 2022
+      "sha256": "745675b58eff67b6b1f97b33752a87a0976d60ab0ae573dfd650789e3c2d8f9b",
+      "size": 2062
     },
     "ciel.skill/init/hooks/gemini_cli/ciel_auto_activate.ps1": {
       "sha256": "e3abfefd8d85d230db91c2d89fc756524690dd8e35ed7ea55a1693d335050526",
@@ -824,8 +828,8 @@
       "size": 5163
     },
     "ciel.skill/init/scripts/install.sh": {
-      "sha256": "f0d01d135e704e5a8323c18a746de5e553246d23e7aacb28265383a8cb44e74d",
-      "size": 7534
+      "sha256": "c67d4a763a0fe9538757c821e42e591151080790218674462e7b3dc9a35d9d16",
+      "size": 7592
     },
     "ciel.skill/init/scripts/integrity.py": {
       "sha256": "2ce99befe7f1e422ec23e868e4a049e3fa8d382eac80191bd43c3d73ddda92bd",

@@ -48,6 +48,21 @@ cd Ciel
 .\ciel.skill\init\scripts\install.ps1
 ```
 
+### Optional: `ciel` fast-path binary (Rust)
+
+The hooks prefer a compiled `ciel` binary (~3–7× faster per invocation) and fall
+back to the embedded Python bodies when it is absent — installing it is never a
+blocker. Three ways to get it:
+
+- **Automatic** — `install.sh` builds `ciel.skill/init/ciel-rs` with cargo when
+  a Rust toolchain is present, else downloads a prebuilt artifact for
+  `linux-x86_64`, `linux-aarch64`, `darwin-x86_64`, or `darwin-arm64` from the
+  matching GitHub release (override with `CIEL_BIN_URL`/`CIEL_RELEASE_BASE`).
+- **cargo install** — `cargo install --path ciel.skill/init/ciel-rs` puts `ciel`
+  on `~/.cargo/bin`, which the hooks resolve after `~/.ciel/bin/ciel`.
+- **Manual** — `cargo build --release --manifest-path ciel.skill/init/ciel-rs/Cargo.toml`
+  and copy `target/release/ciel` to `~/.ciel/bin/ciel`.
+
 ---
 
 ## 🧠 System Architecture

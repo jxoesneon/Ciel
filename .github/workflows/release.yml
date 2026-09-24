@@ -124,9 +124,58 @@ jobs:
             dist/SHA256SUMS
           if-no-files-found: error
 
+  build-bin:
+    name: Build ciel binary (${{ matrix.plat }})
+    needs: build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: ubuntu-latest, plat: linux-x86_64 }
+          - { os: ubuntu-24.04-arm, plat: linux-aarch64 }
+          - { os: macos-13, plat: darwin-x86_64 }
+          - { os: macos-latest, plat: darwin-arm64 }
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache cargo build
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            ciel.skill/init/ciel-rs/target
+          key: ${{ runner.os }}-ciel-rs-${{ hashFiles('ciel.skill/init/ciel-rs/Cargo.toml', 'ciel.skill/init/ciel-rs/Cargo.lock') }}
+
+      - name: Build release binary
+        run: cargo build --release --manifest-path ciel.skill/init/ciel-rs/Cargo.toml
+
+      - name: Stage artifact
+        shell: bash
+        run: |
+          v="${{ needs.build.outputs.version }}"
+          mkdir -p dist
+          cp ciel.skill/init/ciel-rs/target/release/ciel \
+             "dist/ciel-${v}-${{ matrix.plat }}"
+          (cd dist && sha256sum "ciel-${v}-${{ matrix.plat }}" \
+             > "ciel-${v}-${{ matrix.plat }}.sha256")
+          ls -l dist/
+
+      - name: Upload binary artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: ciel-bin-${{ matrix.plat }}
+          path: dist/
+          if-no-files-found: error
+
   release:
     name: Publish GitHub Release
-    needs: build
+    needs: [build, build-bin]
     if: startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     permissions:
@@ -142,6 +191,13 @@ jobs:
         with:
           name: ciel-skill-${{ needs.build.outputs.version }}
           path: dist
+
+      - name: Download binary artifacts
+        uses: actions/download-artifact@v8
+        with:
+          pattern: ciel-bin-*
+          path: dist
+          merge-multiple: true
 
       - name: Extract CHANGELOG entry for this version
         id: notes
@@ -174,6 +230,7 @@ jobs:
             dist/${{ needs.build.outputs.artifact }}
             dist/${{ needs.build.outputs.artifact }}.sha256
             dist/SHA256SUMS
+            dist/ciel-*
           generate_release_notes: true
           draft: ${{ inputs.draft == 'true' }}
           prerelease: ${{ contains(needs.build.outputs.version, '-') }}
