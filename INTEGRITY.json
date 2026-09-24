@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "version": "1.0.0",
-  "last_verified": "2026-09-24T05:38:33.796910+00:00",
+  "last_verified": "2026-09-24T05:56:04.675523+00:00",
   "files": {
     ".PSScriptAnalyzerSettings.psd1": {
       "sha256": "aea7918ac3841e011c6c2eb0daa8c0d2b405d35e7e7779759d1c6068d61cc29f",
@@ -111,9 +111,13 @@
       "sha256": "7a45bf9a221c785f2ab7b299fc14fa88a24dbe87f4e4ac4333483aa4c967dc49",
       "size": 2008
     },
+    "bin/ciel": {
+      "sha256": "8ae00440daf09a2adbecdbdcff58c4aed3c0bb2a08fd55fedcf2f015541e8eab",
+      "size": 5096672
+    },
     "ciel.skill/CHANGELOG.md": {
-      "sha256": "1e87a921b05cb1b6a5fa58d8ba1e3ac05b9699a64123df3de353c78afd0ce178",
-      "size": 17353
+      "sha256": "03e2bdbdc33d9a2e1388d9f357a23fce816f9638794cabf70aecf3c36f23a7cf",
+      "size": 18672
     },
     "ciel.skill/MANIFEST.md": {
       "sha256": "d31840054fca7bf422466887033d1e38e07b694cfc0b995bd07c35e4624bc4d2",
@@ -612,24 +616,32 @@
       "size": 8
     },
     "ciel.skill/init/ciel-rs/Cargo.lock": {
-      "sha256": "d93113903c1097726ec86fb26e178bf05316a368a2e37b2a658436aa932c6f14",
-      "size": 7103
+      "sha256": "5aa3b3b9801881ff63f2de3a9fb8ee0a61eebf596373ae98ab400b4e6923859e",
+      "size": 12694
     },
     "ciel.skill/init/ciel-rs/Cargo.toml": {
-      "sha256": "966e6f25a3e65b01b79a0810f8255f3fd909e854bdcda1a11c9071b11a2f160d",
-      "size": 676
+      "sha256": "40a478a441b71b4bb2534ebef94840bcfcc60972e80a12feb756a87a7b54f6e9",
+      "size": 796
     },
     "ciel.skill/init/ciel-rs/src/attribution.rs": {
       "sha256": "969f7bdf5f51f319a1ffa73e6498d5c3a2ed9a465a28eeef5123127aa9e21b83",
       "size": 5175
     },
+    "ciel.skill/init/ciel-rs/src/ledger.rs": {
+      "sha256": "d2ee1bf5ad393f5a368f5cff0b0ff69ccea2392e46f858fc18b4bbd5efb8583a",
+      "size": 5910
+    },
     "ciel.skill/init/ciel-rs/src/main.rs": {
-      "sha256": "28ddaf7bcb098893c24a55d0f8200fb839145eec9c41b80ec53dfa0fc63f03b0",
-      "size": 3037
+      "sha256": "284edea5825d75dc2375147473c007d3c457a78933e49a0b352d9f5fdb70f247",
+      "size": 3508
     },
     "ciel.skill/init/ciel-rs/src/paths.rs": {
       "sha256": "ae18d303a3e6be5311525bb2630d6f93612cd512fef4447d16a1f781fa133ea6",
       "size": 5399
+    },
+    "ciel.skill/init/ciel-rs/src/perms.rs": {
+      "sha256": "197294241cf83b0785654057a33c01f7536f8d2fcc6de9078eeb704b7cfebbce",
+      "size": 5376
     },
     "ciel.skill/init/ciel-rs/src/pretool.rs": {
       "sha256": "1ab3fedd1eaecd65b74977cf591de230ac950dbb77dbb7632b58a59559206d84",
@@ -643,13 +655,25 @@
       "sha256": "add0de31de401258f8160f100ef0de53fdaf707a8136827044b56fd509b67a49",
       "size": 15225
     },
+    "ciel.skill/init/ciel-rs/src/rotate.rs": {
+      "sha256": "3a0f0f8ce41753bff899ac8a962d55b5fc57034034aa07d60e28fcc96da7a198",
+      "size": 5551
+    },
     "ciel.skill/init/ciel-rs/src/secretscan.rs": {
-      "sha256": "4031f3d7d04dc570aa883d7ebb2511f3bd1b3a6201d120e1a4e623d0652b925d",
-      "size": 2340
+      "sha256": "14a3de1228b5c98844da5da414ac1c0be65e119b0f8df2e6197122b3aacd8aff",
+      "size": 2344
+    },
+    "ciel.skill/init/ciel-rs/src/sessionstart.rs": {
+      "sha256": "c030f46dfb149978fd4eebde7b8c985695cf6f01d2dbdd41fb63bdeb45b5f05c",
+      "size": 5387
     },
     "ciel.skill/init/ciel-rs/src/shadow.rs": {
       "sha256": "7788f5169c131e4b929a32d23ddc75811c0ad6c228b491665e8a9db00a2c865d",
       "size": 6730
+    },
+    "ciel.skill/init/ciel-rs/src/watchdog.rs": {
+      "sha256": "068f41ea35aae8b1c12184714e614176006a399b1dc8509aa27bf22295be96d3",
+      "size": 20654
     },
     "ciel.skill/init/commands/claude_code/ciel.md": {
       "sha256": "78131376b7b0772df28043a0c58540e3aaf8a36c719d8bd2f8f56f94a0bfba89",
@@ -3096,8 +3120,8 @@
       "size": 20759
     },
     "tests/test_rust_parity.py": {
-      "sha256": "575444ebf7df2922ce8f2a23278509f8c95011635806ac3717ea8e270ae0af37",
-      "size": 17369
+      "sha256": "8711303e484094d9daf527593827e305c83c3fd63912c2c5d87fa7fbf2ca290f",
+      "size": 31264
     },
     "tests/test_scan_skills.py": {
       "sha256": "73580c464e6b995d516af1055498e133bbad2edf233f5d91e4ffaff2d01529ad",

@@ -428,6 +428,312 @@ class TestSessionOpsParity(unittest.TestCase):
         self.assertIn(str(self.ciel / "allow_privileged"), rs["sentinel"])
 
 
+SCRIPTS = ROOT / "scripts"
+SANITIZE_PY = SCRIPTS / "transcript_sanitize.py"
+COMPILE_POLICY_PY = SCRIPTS / "compile_policy.py"
+COUNCIL_VERIFY_PY = SCRIPTS / "council_verify.py"
+
+
+@unittest.skipUnless(
+    Path(CIEL_BIN).exists(), f"ciel binary not built at {CIEL_BIN}"
+)
+class TestOperatorParity(unittest.TestCase):
+    """Differential parity for the Phase-3 operator ports."""
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp(prefix="ciel-op-"))
+        self.ciel = self.tmp / ".ciel"
+        (self.ciel / "checkpoints").mkdir(parents=True)
+        (self.ciel / "improvements" / "signals").mkdir(parents=True)
+        self.env = dict(os.environ)
+        self.env["HOME"] = str(self.tmp)
+        self.env["CIEL_HOME"] = str(self.ciel)
+        self.env.pop("CIEL_BIN", None)
+        self.env.pop("CIEL_SESSIONS_DB", None)
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp, ignore_errors=True)
+
+    def _py(self, script: Path, *args: str):
+        proc = subprocess.run(
+            ["python3", str(script), *args],
+            capture_output=True, text=True, env=self.env, timeout=120,
+        )
+        return proc.returncode, proc.stdout
+
+    # ------------------------------------------------------- compile-policy
+
+    def test_compile_policy_check_parity(self):
+        rc_py, out_py = self._py(COMPILE_POLICY_PY, "--check")
+        rc_rs, out_rs = run_rust("compile-policy", "--check", env=self.env)
+        self.assertEqual(rc_py, rc_rs)
+        self.assertEqual(out_py, out_rs)
+
+    def test_compile_policy_write_byte_exact(self):
+        # python --check proves the repo twin was rendered by json.dumps;
+        # rust renders the same yaml into a scratch dir — bytes must match
+        src = ROOT / "ciel.skill" / "risk"
+        rc_py, _ = self._py(COMPILE_POLICY_PY, "--check")
+        self.assertEqual(0, rc_py)
+        risk_rs = self.tmp / "risk-rs"
+        shutil.copytree(src, risk_rs)
+        (risk_rs / "policy.json").unlink()
+        env_rs = dict(self.env, CIEL_POLICY_DIR=str(risk_rs))
+        rc_rs, out_rs = run_rust("compile-policy", env=env_rs)
+        self.assertEqual(0, rc_rs)
+        self.assertIn("rules)", out_rs)
+        self.assertEqual(
+            (src / "policy.json").read_text(),
+            (risk_rs / "policy.json").read_text())
+
+    def _py_env(self, script: Path, env: dict, *args: str):
+        proc = subprocess.run(
+            ["python3", str(script), *args],
+            capture_output=True, text=True, env=env, timeout=120,
+        )
+        return proc.returncode, proc.stdout
+
+    # ------------------------------------------------------- council-verify
+
+    def _make_run(self, verdict="pass", safety=7, mode="subagent",
+                  missing=()) -> Path:
+        run = self.tmp / "council" / "council-test-run"
+        (run / "members").mkdir(parents=True)
+        (run / "spawn_receipts.json").write_text(
+            json.dumps({"mode": mode, "members": {}}))
+        members = ["coherence", "capability", "safety",
+                   "efficiency", "evolution"]
+        for m in members:
+            for st in (1, 2):
+                if f"{m}.stage{st}" in missing:
+                    continue
+                (run / "members" / f"{m}.stage{st}.json").write_text(
+                    json.dumps({"member": m, "stage": st,
+                                "score": safety if m == "safety" else 7}))
+        (run / "verdict.json").write_text(json.dumps({
+            "verdict": verdict,
+            "votes": {m: (safety if m == "safety" else 7) for m in members},
+        }))
+        return run
+
+    def _verify_both(self, run: Path):
+        rc_py, out_py = self._py(COUNCIL_VERIFY_PY, str(run))
+        # remove the python-emitted signal so rust sees the same world
+        for s in (self.ciel / "improvements" / "signals").glob("council-*"):
+            s.unlink()
+        rc_rs, out_rs = run_rust("council-verify", str(run), env=self.env)
+        return (rc_py, out_py), (rc_rs, out_rs)
+
+    def test_council_verify_pass(self):
+        (rc_py, out_py), (rc_rs, out_rs) = self._verify_both(self._make_run())
+        self.assertEqual(rc_py, rc_rs)
+        self.assertEqual(out_py, out_rs)
+        self.assertEqual(0, rc_rs)
+        self.assertIn("VERIFIED", out_rs)
+
+    def test_council_verify_safety_veto(self):
+        (rc_py, out_py), (rc_rs, out_rs) = self._verify_both(
+            self._make_run(safety=2))
+        self.assertEqual(out_py, out_rs)
+        self.assertEqual(1, rc_rs)
+        self.assertIn("safety <= 3", out_rs)
+
+    def test_council_verify_missing_member(self):
+        (rc_py, out_py), (rc_rs, out_rs) = self._verify_both(
+            self._make_run(missing=("safety.stage2",)))
+        self.assertEqual(out_py, out_rs)
+        self.assertEqual(1, rc_rs)
+
+    def test_council_verify_inline_mode(self):
+        (rc_py, out_py), (rc_rs, out_rs) = self._verify_both(
+            self._make_run(mode="inline"))
+        self.assertEqual(out_py, out_rs)
+        self.assertEqual(0, rc_rs)
+        self.assertIn("unverified_member_isolation", out_rs)
+
+    # ------------------------------------------------------------- sanitize
+
+    def _seed_stores(self, root: Path):
+        """Identical store trees under two homes for mutation parity."""
+        transcripts = (root / ".local" / "share" / "devin" / "cli"
+                       / "transcripts")
+        transcripts.mkdir(parents=True)
+        (transcripts / "t1.json").write_text(
+            '["msg ghp_abcdefghij0123456789ABCD end"]')
+        (transcripts / "clean.json").write_text('["nothing here"]')
+        logs = root / ".local" / "share" / "devin" / "cli" / "logs"
+        logs.mkdir(parents=True)
+        import gzip as _gz
+        (logs / "s.log.gz").write_bytes(
+            _gz.compress(b"log AKIAABCDEFGHIJKLMNOP end\n"))
+
+    def test_sanitize_scan_parity(self):
+        self._seed_stores(self.tmp)
+        rc_py, out_py = self._py(SANITIZE_PY, "--scan")
+        rc_rs, out_rs = run_rust("sanitize", "--scan", env=self.env)
+        self.assertEqual(rc_py, rc_rs)
+        self.assertEqual(json.loads(out_py), json.loads(out_rs))
+        self.assertEqual(1, rc_rs)
+
+    def test_sanitize_redact_dry_parity(self):
+        self._seed_stores(self.tmp)
+        rc_py, out_py = self._py(SANITIZE_PY, "--redact", "--dry")
+        # python's pass tightened store-dir perms — restore the drift so the
+        # rust run reports the same count
+        for d in (self.tmp / ".local/share/devin/cli/transcripts",
+                  self.tmp / ".local/share/devin/cli/logs",
+                  self.ciel / "checkpoints", self.ciel):
+            d.chmod(0o755)
+        rc_rs, out_rs = run_rust("sanitize", "--redact", "--dry", env=self.env)
+        self.assertEqual(json.loads(out_py), json.loads(out_rs))
+        self.assertEqual(0, rc_rs)
+
+    def test_sanitize_redact_bytes_identical(self):
+        # two identical homes — python redacts one, rust the other; compare
+        # every resulting byte + backup + perms
+        home_py = self.tmp / "h-py"
+        home_rs = self.tmp / "h-rs"
+        for h in (home_py, home_rs):
+            (h / ".ciel" / "checkpoints").mkdir(parents=True)
+            self._seed_stores(h)
+        env_py = dict(self.env, HOME=str(home_py),
+                      CIEL_HOME=str(home_py / ".ciel"))
+        env_rs = dict(self.env, HOME=str(home_rs),
+                      CIEL_HOME=str(home_rs / ".ciel"))
+        rc_py, out_py = self._py_env(SANITIZE_PY, env_py, "--redact")
+        rc_rs, out_rs = run_rust("sanitize", "--redact", env=env_rs)
+        self.assertEqual(0, rc_py)
+        self.assertEqual(0, rc_rs)
+        j_py, j_rs = json.loads(out_py), json.loads(out_rs)
+        # same files changed, same replacement counts (paths differ by home)
+        self.assertEqual(j_py["files_changed"], j_rs["files_changed"])
+        self.assertEqual(j_py["perms_tightened"], j_rs["perms_tightened"])
+        for r_py, r_rs in zip(j_py["results"], j_rs["results"]):
+            self.assertEqual(Path(r_py["file"]).name,
+                             Path(r_rs["file"]).name)
+            self.assertEqual(r_py["replacements"], r_rs["replacements"])
+            self.assertEqual(r_py["categories"], r_rs["categories"])
+        # byte-identical outcomes under both trees
+        t_py = home_py / ".local/share/devin/cli/transcripts/t1.json"
+        t_rs = home_rs / ".local/share/devin/cli/transcripts/t1.json"
+        self.assertEqual(t_py.read_bytes(), t_rs.read_bytes())
+        self.assertIn(b"[REDACTED:github_token]", t_rs.read_bytes())
+        self.assertTrue(Path(str(t_rs) + ".bak").is_file())
+        self.assertEqual(0o600, t_rs.stat().st_mode & 0o777)
+        import gzip as _gz
+        g_py = _gz.decompress(
+            (home_py / ".local/share/devin/cli/logs/s.log.gz").read_bytes())
+        g_rs = _gz.decompress(
+            (home_rs / ".local/share/devin/cli/logs/s.log.gz").read_bytes())
+        self.assertEqual(g_py, g_rs)
+        self.assertIn(b"[REDACTED:aws_access_key]", g_rs)
+
+    def _make_sessions_db(self, path: Path):
+        import sqlite3
+        path.parent.mkdir(parents=True, exist_ok=True)
+        db = sqlite3.connect(path)
+        db.execute("CREATE TABLE prompt_history "
+                   "(id INTEGER PRIMARY KEY, content TEXT)")
+        db.execute("CREATE TABLE message_nodes "
+                   "(row_id INTEGER PRIMARY KEY, chat_message BLOB)")
+        db.execute("CREATE TABLE sessions (id TEXT PRIMARY KEY, "
+                   "metadata TEXT, cogs_json TEXT, title TEXT)")
+        db.execute("INSERT INTO prompt_history VALUES (1, ?)",
+                   ("run it ghp_abcdefghij0123456789ABCD now",))
+        db.execute("INSERT INTO message_nodes VALUES (1, ?)",
+                   (sqlite3.Binary(
+                       b"\x00\xffmsg AKIAABCDEFGHIJKLMNOP end"),))
+        db.execute("INSERT INTO sessions VALUES ('s1', '{}', '{}', 'clean')")
+        db.commit()
+        db.close()
+
+    def test_sanitize_sessions_db_scan_and_redact(self):
+        for tag, runner in (("py", "py"), ("rs", "rs")):
+            db = self.tmp / f"sessions-{tag}.db"
+            self._make_sessions_db(db)
+            env = dict(self.env, CIEL_SESSIONS_DB=str(db))
+            if runner == "py":
+                rc, out = self._py_env(SANITIZE_PY, env, "--scan", "--deep")
+            else:
+                rc, out = run_rust("sanitize", "--scan", "--deep", env=env)
+            hits = json.loads(out)["hits"]
+            self.assertIn("sessions.db", hits, f"{tag}: {out}")
+            self.assertIn("github_token", hits["sessions.db"])
+            self.assertIn("aws_access_key", hits["sessions.db"])
+            self.assertEqual(1, rc)
+            # redact, then confirm the rows hold no live pattern
+            if runner == "py":
+                rc, out = self._py_env(SANITIZE_PY, env, "--redact")
+            else:
+                rc, out = run_rust("sanitize", "--redact", env=env)
+            self.assertEqual(0, rc)
+            body = json.loads(out)
+            sdb = body["sessions_db"]
+            self.assertTrue(sdb["changed"], f"{tag}: {sdb}")
+            self.assertGreaterEqual(
+                sdb["tables"].get("prompt_history", 0), 1)
+            self.assertGreaterEqual(
+                sdb["tables"].get("message_nodes", 0), 1)
+            import sqlite3
+            chk = sqlite3.connect(db)
+            row = chk.execute(
+                "SELECT content FROM prompt_history WHERE id=1").fetchone()
+            self.assertIn("[REDACTED:github_token]", row[0])
+            blob = chk.execute(
+                "SELECT chat_message FROM message_nodes WHERE row_id=1"
+            ).fetchone()[0]
+            self.assertIsInstance(blob, bytes)
+            # 20-char match < 21-char tag → all-stars length-preserving
+            # placeholder (identical for both engines); the token is gone
+            # and the byte length is unchanged
+            self.assertNotIn(b"AKIA", blob)
+            self.assertIn(b"****", blob)
+            self.assertEqual(30, len(blob))
+            self.assertIn(b"\x00\xff", blob)  # invalid bytes verbatim
+            chk.close()
+
+    def test_sanitize_sessions_db_locked_flag(self):
+        import sqlite3
+        db = self.tmp / "sessions-locked.db"
+        self._make_sessions_db(db)
+        env = dict(self.env, CIEL_SESSIONS_DB=str(db))
+        # hold an exclusive write lock from this process
+        holder = sqlite3.connect(db)
+        holder.execute("BEGIN IMMEDIATE")
+        holder.execute("INSERT INTO sessions VALUES ('lock', '', '', '')")
+        try:
+            rc_rs, out_rs = run_rust(
+                "sanitize", "--redact", env=env)
+            self.assertEqual(0, rc_rs)
+            sdb = json.loads(out_rs)["sessions_db"]
+            self.assertTrue(sdb["locked"])
+            self.assertIn("deferred", sdb)
+            state = json.loads(
+                (self.ciel / "checkpoints" / "watchdog_state.json")
+                .read_text())
+            self.assertTrue(state["sessions_db_sanitize_pending"])
+        finally:
+            holder.rollback()
+            holder.close()
+
+    def test_watchdog_sanitize_pending_inprocess(self):
+        # flag set + unlocked db → consume in-process, clear flag, signal
+        db = self.tmp / "sessions-p.db"
+        self._make_sessions_db(db)
+        env = dict(self.env, CIEL_SESSIONS_DB=str(db))
+        state = self.ciel / "checkpoints" / "watchdog_state.json"
+        state.write_text(json.dumps({"sessions_db_sanitize_pending": True}))
+        rc, out = run_rust("watchdog", "--sanitize-pending", env=env)
+        self.assertEqual(0, rc)
+        msg = json.loads(out)["sanitize"]
+        self.assertIn("sanitized", msg)
+        self.assertFalse(
+            json.loads(state.read_text())["sessions_db_sanitize_pending"])
+        sigs = list((self.ciel / "improvements" / "signals").glob(
+            "sessions_db_sanitized-*"))
+        self.assertEqual(1, len(sigs))
+
+
 @unittest.skipUnless(
     Path(CIEL_BIN).exists(), f"ciel binary not built at {CIEL_BIN}"
 )

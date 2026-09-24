@@ -1,4 +1,6 @@
 mod attribution;
+mod compilepolicy;
+mod councilverify;
 mod ledger;
 mod paths;
 mod perms;
@@ -6,6 +8,7 @@ mod pretool;
 mod promptsubmit;
 mod risk;
 mod rotate;
+mod sanitize;
 mod secretscan;
 mod sessionstart;
 mod shadow;
@@ -35,6 +38,11 @@ SESSION OPERATIONS:\n\
     store-perms      owner-only permission sweep → ok|repaired:N\n\
     ledger {add|done|list|pending} [arg] [--session ID]\n\
     log-rotate       rotate activity.log per retention policy\n\
+\n\
+OPERATOR:\n\
+    sanitize [--scan|--redact] [--dry] [--deep]  transcript-store redaction\n\
+    compile-policy [--check]   policy.yaml → policy.json (byte-exact twin)\n\
+    council-verify <run|dir>   council run artifact verification\n\
 \n\
 Fallback contract: on any error or unknown command the binary exits 2 and\n\
 the shell wrappers fall back to the Python implementations.\n";
@@ -66,6 +74,9 @@ fn main() -> ExitCode {
         "store-perms" => perms::main_(),
         "ledger" => ledger::main_(&args[1..]),
         "log-rotate" => rotate::main_(),
+        "sanitize" => sanitize::main_(&args[1..]),
+        "compile-policy" => compilepolicy::main_(&args[1..]),
+        "council-verify" => councilverify::main_(&args[1..]),
         "risk-eval" => risk::eval_main(),
         "risk-check" => risk::check_main(),
         "grant-state" => risk::grant_state_main(),

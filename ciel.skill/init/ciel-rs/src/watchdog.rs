@@ -14,7 +14,7 @@ use std::time::{SystemTime, UNIX_EPOCH};
 use time::format_description::well_known::Rfc3339;
 use time::OffsetDateTime;
 
-use crate::{ledger, paths, secretscan};
+use crate::{ledger, paths, sanitize, secretscan};
 
 const MAX_RESUME_PER_SESSION: usize = 1;
 const MAX_RESUME_PER_DAY: usize = 3;
@@ -403,20 +403,46 @@ fn do_resume(ciel: &Path, session_hint: &str, reason: &str, dry: bool) -> Value 
 }
 
 // ------------------------------------------------- deferred sanitize
-/// Kick off the deferred sanitize as a detached child — identical spawn
-/// contract to the Python (`/dev/null` stdio, new session, never waited).
-/// Delegates to the deployed Python watchdog until the Phase-3 sanitizer
-/// port lands; resolves via CIEL_HOOK_LIB then `~/.ciel/hooks/lib`.
-fn detached_sanitize(ciel: &Path, state: &Value) -> Option<String> {
+/// Consume the pending flag in-process — mirror of `_sessions_db_sanitize`:
+/// redact with a short retry budget, keep the flag while locked, clear it
+/// and emit the `sessions_db_sanitized` signal on success.
+fn sessions_db_sanitize(home: &Path, ciel: &Path, state: &mut Value) -> Option<String> {
     if state.get("sessions_db_sanitize_pending") != Some(&json!(true)) {
         return None;
     }
-    let lib = std::env::var_os("CIEL_HOOK_LIB")
+    let r = sanitize::redact_sessions_db(home, false, 2, 3);
+    if r["locked"].as_bool().unwrap_or(false) {
+        return Some("sessions.db still locked — sanitize stays pending".into());
+    }
+    state["sessions_db_sanitize_pending"] = json!(false);
+    let tables = &r["tables"];
+    if r["changed"].as_bool().unwrap_or(false) {
+        emit_signal(ciel, "sessions_db_sanitized", &json!({"tables": tables}));
+        let n: u64 = tables
+            .as_object()
+            .map(|m| m.values().filter_map(|v| v.as_u64()).sum())
+            .unwrap_or(0);
+        return Some(format!("sessions.db sanitized ({n} rows redacted)"));
+    }
+    Some("sessions.db sanitize ran clean (no hits)".into())
+}
+
+/// Kick off the deferred sanitize as a detached child — identical spawn
+/// contract to the Python (`/dev/null` stdio, new session, never waited).
+/// Re-execs this binary (`watchdog --sanitize-pending`), which consumes the
+/// flag in-process with no retry cap from SessionStart's timeout window.
+fn detached_sanitize(_ciel: &Path, state: &Value) -> Option<String> {
+    if state.get("sessions_db_sanitize_pending") != Some(&json!(true)) {
+        return None;
+    }
+    let exe = std::env::var_os("CIEL_BIN")
         .map(PathBuf::from)
-        .unwrap_or_else(|| ciel.join("hooks").join("lib"));
-    let script = lib.join("session_watchdog.py");
-    let mut cmd = Command::new("python3");
-    cmd.arg(&script)
+        .or_else(|| std::env::current_exe().ok());
+    let Some(exe) = exe else {
+        return Some("sessions.db sanitize deferred (no binary)".into());
+    };
+    let mut cmd = Command::new(exe);
+    cmd.arg("watchdog")
         .arg("--sanitize-pending")
         .stdin(Stdio::null())
         .stdout(Stdio::null())
@@ -552,17 +578,15 @@ pub fn main_(args: &[String]) -> i32 {
         return cmd_resume(&home, &ciel, args.iter().any(|a| a == "--dry"));
     }
     if args.iter().any(|a| a == "--sanitize-pending") {
-        // Delegated: the deployed Python watchdog owns this path until the
-        // Phase-3 sanitizer port. Proxy its exit code.
-        let lib = std::env::var_os("CIEL_HOOK_LIB")
-            .map(PathBuf::from)
-            .unwrap_or_else(|| ciel.join("hooks").join("lib"));
-        return Command::new("python3")
-            .arg(lib.join("session_watchdog.py"))
-            .arg("--sanitize-pending")
-            .status()
-            .map(|s| s.code().unwrap_or(1))
-            .unwrap_or(1);
+        let sp = state_path(&ciel);
+        let mut state = load(&sp);
+        let msg = sessions_db_sanitize(&home, &ciel, &mut state);
+        save(&sp, &state);
+        println!(
+            "{}",
+            json!({"sanitize": msg.unwrap_or_else(|| "nothing pending".into())})
+        );
+        return 0;
     }
     let session = args
         .iter()

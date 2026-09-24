@@ -16,11 +16,13 @@ name = "ciel"
 path = "src/main.rs"
 
 [dependencies]
-serde_json = "1"
+serde_json = { version = "1", features = ["preserve_order"] }
+serde_yaml = "0.9"
 regex = "1"
 time = { version = "0.3", features = ["parsing", "formatting", "macros"] }
 fancy-regex = "0.16"
 flate2 = "1"
+rusqlite = { version = "0.32", features = ["bundled"] }
 
 [profile.release]
 opt-level = 2

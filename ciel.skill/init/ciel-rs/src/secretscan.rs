@@ -4,7 +4,7 @@
 use regex::Regex;
 use serde_json::{json, Value};
 
-const PATTERNS: [(&str, &str); 12] = [
+pub const PATTERNS: [(&str, &str); 12] = [
     (
         "github_token",
         r"\b(?:ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9]{20,}\b|\bgithub_pat_[A-Za-z0-9_]{20,}\b",
