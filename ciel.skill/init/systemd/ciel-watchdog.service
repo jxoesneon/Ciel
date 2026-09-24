@@ -4,6 +4,7 @@ Description=Ciel session watchdog — stall detection + opt-in headless resume
 [Service]
 Type=oneshot
 ExecStart=%h/.ciel/hooks/lib/session_watchdog.py --resume
+ExecStart=%h/.ciel/hooks/lib/session_watchdog.py --sanitize-pending
 # Auto-resume is opt-in and hard-capped (<=1/session, <=3/day, >=30min
 # backoff). Enable by exporting CIEL_WATCHDOG_AUTORESUME=1 via a drop-in:
 #   systemctl --user edit ciel-watchdog.service

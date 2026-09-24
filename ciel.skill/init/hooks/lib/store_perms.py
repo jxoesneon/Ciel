@@ -37,6 +37,7 @@ DIR_TARGETS = [
     CIEL / "ciel.skill" / "memory",
     DEVIN_CLI / "transcripts",
     DEVIN_CLI / "summaries",
+    DEVIN_CLI / "logs",
 ]
 # Subtrees whose internals are code, not state — never swept.
 SKIP_PREFIXES = [CIEL / "system1" / "venv"]
@@ -51,11 +52,16 @@ STATE_FILES = [
     CIEL / "allow_privileged",
     CIEL / "grants.log",
     CIEL / "system1" / "events.jsonl",
+    DEVIN_CLI / "sessions.db",
+    DEVIN_CLI / "sessions.db-wal",
+    DEVIN_CLI / "sessions.db-shm",
 ]
 
 FILE_GLOBS = [
     (DEVIN_CLI / "transcripts", "*.json"),
     (DEVIN_CLI / "summaries", "*.md"),
+    (DEVIN_CLI / "logs", "*.log"),
+    (DEVIN_CLI / "logs", "*.log.gz"),
     (CIEL / "council", "**/*.json"),
     (CIEL / "system1" / "cache", "**/*"),
     (CIEL / "system1" / "inflight", "**/*"),

@@ -169,7 +169,13 @@ def transcript_sweep(state: dict) -> dict:
     prev = state.get("transcript_mtimes", {})
     hits = {}
     scanned = 0
-    for base, pattern in ((TRANSCRIPTS, "*.json"), (SUMMARIES, "*.md")):
+    devin_cli = TRANSCRIPTS.parent
+    for base, pattern in (
+        (TRANSCRIPTS, "*.json"),
+        (SUMMARIES, "*.md"),
+        (devin_cli / "logs", "*.log"),
+        (devin_cli, "sessions.db*"),
+    ):
         if not base.is_dir():
             continue
         for f in base.glob(pattern):
@@ -258,14 +264,47 @@ def do_resume(session_hint: str, reason: str, dry: bool = False) -> dict:
     return {"fired": fired, "reason": reason}
 
 
+# ------------------------------------------------- deferred sessions.db sanitize
+def _sessions_db_sanitize(state: dict) -> str | None:
+    """Run the deferred sessions.db redaction when flagged and the DB is free.
+
+    sessions.db is write-locked while any devin session is live, so the
+    sanitizer sets ``sessions_db_sanitize_pending`` and the flag is consumed
+    here — SessionStart of a *new* session runs after the previous one has
+    released the database.
+    """
+    if not state.get("sessions_db_sanitize_pending"):
+        return None
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "transcript_sanitize", CIEL / "scripts" / "transcript_sanitize.py")
+    mod = importlib.util.module_from_spec(spec)
+    try:
+        spec.loader.exec_module(mod)
+        r = mod.redact_sessions_db(dry=False, retries=2, wait=3.0)
+    except Exception as e:
+        return f"sessions.db sanitize deferred ({type(e).__name__})"
+    if r.get("locked"):
+        return "sessions.db still locked — sanitize stays pending"
+    state["sessions_db_sanitize_pending"] = False
+    tables = r.get("tables", {})
+    if r.get("changed"):
+        _emit_signal("sessions_db_sanitized", {"tables": tables})
+        return f"sessions.db sanitized ({sum(tables.values())} rows redacted)"
+    return "sessions.db sanitize ran clean (no hits)"
+
+
 # -------------------------------------------------------------------- main
 def cmd_check(current_session: str | None = None) -> int:
     state = _load(STATE, {})
     stall = find_stalled(current_session)
     sweep = transcript_sweep(state)
+    sanitize_msg = _sessions_db_sanitize(state)
     _save(STATE, state)
 
     hints: list[str] = []
+    if sanitize_msg:
+        hints.append(sanitize_msg)
     for sid, info in stall["stalled"].items():
         hints.append(
             f"session {sid[:8]}… ended with {info['pending']} unresolved "
@@ -302,6 +341,15 @@ def cmd_check(current_session: str | None = None) -> int:
     return 0
 
 
+def cmd_sanitize_pending() -> int:
+    """Consume the pending sessions.db sanitize flag (timer/idle context)."""
+    state = _load(STATE, {})
+    msg = _sessions_db_sanitize(state)
+    _save(STATE, state)
+    print(json.dumps({"sanitize": msg or "nothing pending"}))
+    return 0
+
+
 def cmd_resume(dry: bool = False) -> int:
     stall = find_stalled()
     if not stall["stalled"] and not stall["error_tails"]:
@@ -315,6 +363,8 @@ def cmd_resume(dry: bool = False) -> int:
 
 def main() -> int:
     args = sys.argv[1:]
+    if "--sanitize-pending" in args:
+        return cmd_sanitize_pending()
     if "--resume" in args:
         return cmd_resume(dry="--dry" in args)
     session = None

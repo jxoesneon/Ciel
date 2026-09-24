@@ -364,3 +364,99 @@ class TestTranscriptSanitize(unittest.TestCase):
             r = transcript_sanitize.redact_file(f, dry=False)
             self.assertFalse(r["changed"])
             self.assertFalse(f.with_suffix(".json.bak").exists())
+
+    def test_gz_roundtrip(self):
+        import gzip
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import transcript_sanitize
+        with tempfile.TemporaryDirectory() as tmp:
+            f = Path(tmp) / "t.log.gz"
+            f.write_bytes(gzip.compress(b"log: password is hunter2 done\n"))
+            r = transcript_sanitize.redact_file(f, dry=False)
+            self.assertTrue(r["changed"])
+            out = gzip.decompress(f.read_bytes()).decode()
+            self.assertIn("[REDACTED:", out)
+            self.assertNotIn("hunter2", out)
+            self.assertEqual(0o600, f.stat().st_mode & 0o777)
+
+    def test_sessions_db_sql_redact(self):
+        import sqlite3
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import transcript_sanitize
+        with tempfile.TemporaryDirectory() as tmp:
+            db_path = Path(tmp) / "sessions.db"
+            db = sqlite3.connect(db_path)
+            db.execute("CREATE TABLE prompt_history (id INTEGER PRIMARY KEY, content TEXT)")
+            db.execute("INSERT INTO prompt_history VALUES (1, 'token ghp_abcdefghij0123456789ABCD here')")
+            db.execute("INSERT INTO prompt_history VALUES (2, 'clean prompt')")
+            db.commit()
+            db.close()
+            orig = transcript_sanitize.SESSIONS_DB
+            tables = transcript_sanitize.SESSIONS_TABLES
+            try:
+                transcript_sanitize.SESSIONS_DB = db_path
+                transcript_sanitize.SESSIONS_TABLES = [
+                    ("prompt_history", "content", "id", "broad", False)]
+                r = transcript_sanitize.redact_sessions_db(dry=False, retries=1, wait=0.1)
+            finally:
+                transcript_sanitize.SESSIONS_DB = orig
+                transcript_sanitize.SESSIONS_TABLES = tables
+            self.assertTrue(r["changed"])
+            self.assertEqual(r["tables"].get("prompt_history"), 1)
+            db = sqlite3.connect(db_path)
+            rows = [r[0] for r in db.execute("SELECT content FROM prompt_history ORDER BY id")]
+            db.close()
+            self.assertIn("[REDACTED:", rows[0])
+            self.assertNotIn("ghp_", rows[0])
+            self.assertEqual(rows[1], "clean prompt")
+
+    def test_sessions_db_locked_reports(self):
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import transcript_sanitize
+        with tempfile.TemporaryDirectory() as tmp:
+            missing = Path(tmp) / "absent.db"
+            orig = transcript_sanitize.SESSIONS_DB
+            try:
+                transcript_sanitize.SESSIONS_DB = missing
+                r = transcript_sanitize.redact_sessions_db(retries=1, wait=0.1)
+            finally:
+                transcript_sanitize.SESSIONS_DB = orig
+            self.assertFalse(r["changed"])
+            self.assertEqual(r.get("reason"), "absent")
+
+
+class TestDeferredSanitize(unittest.TestCase):
+    def test_pending_flag_consumed(self):
+        import importlib
+        import session_watchdog
+        importlib.reload(session_watchdog)
+        with tempfile.TemporaryDirectory() as tmp:
+            import sqlite3
+            db_path = Path(tmp) / "sessions.db"
+            db = sqlite3.connect(db_path)
+            db.execute("CREATE TABLE t (id INTEGER PRIMARY KEY, c TEXT)")
+            db.commit()
+            db.close()
+            os.environ["CIEL_SESSIONS_DB"] = str(db_path)
+            state = {"sessions_db_sanitize_pending": True}
+            real_ciel = session_watchdog.CIEL
+            real_scripts = Path(session_watchdog.CIEL) / "scripts"
+            session_watchdog.CIEL = Path(tmp)
+            (Path(tmp) / "scripts").mkdir()
+            import shutil
+            shutil.copy(real_scripts / "transcript_sanitize.py",
+                        Path(tmp) / "scripts" / "transcript_sanitize.py")
+            try:
+                msg = session_watchdog._sessions_db_sanitize(state)
+            finally:
+                session_watchdog.CIEL = real_ciel
+                os.environ.pop("CIEL_SESSIONS_DB", None)
+            self.assertIsNotNone(msg)
+            self.assertFalse(state["sessions_db_sanitize_pending"])
+
+    def test_no_pending_noop(self):
+        import importlib
+        import session_watchdog
+        importlib.reload(session_watchdog)
+        state = {}
+        self.assertIsNone(session_watchdog._sessions_db_sanitize(state))
