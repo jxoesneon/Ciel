@@ -2,7 +2,7 @@ import os
 import re
 
 
-def fix_markdown(content):  # noqa: PLR0912, PLR0915
+def fix_markdown(content):
     if not content.strip():
         return content
 

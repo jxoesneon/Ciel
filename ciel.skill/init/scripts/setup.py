@@ -38,7 +38,7 @@ def run(cmd: list[str], cwd: Path | None = None, check: bool = True) -> subproce
             die(f"Command failed: {' '.join(cmd)}\n{e.stderr}")
         return e
 
-def main():  # noqa: PLR0912, PLR0915
+def main():
     CIEL_HOME.mkdir(parents=True, exist_ok=True)
     with open(LOG_FILE, "w", encoding="utf-8") as f:
         f.write(f"--- Ciel Bootstrap {datetime.datetime.now(datetime.timezone.utc).isoformat()} ---\n")

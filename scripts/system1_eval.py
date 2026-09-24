@@ -31,8 +31,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "ciel.skill" / "init" / "hooks" / "lib"))
 
-import risk_policy  # noqa: E402
-import system1  # noqa: E402
+import risk_policy
+import system1
 
 OUT = ROOT / "ciel.skill" / "risk" / "system1_calibration.json"
 FIXTURES = ROOT / "tests" / "fixtures"
@@ -170,7 +170,7 @@ def _confidence(answers: dict) -> float:
     return max(confs) if confs else 0.0
 
 
-def evaluate_surface(name: str, spec: dict, timeout: float) -> dict:  # noqa: PLR0912, PLR0915
+def evaluate_surface(name: str, spec: dict, timeout: float) -> dict:
     corpus = json.loads(spec["corpus"].read_text(encoding="utf-8"))
     cases = corpus["cases"] if isinstance(corpus, dict) else corpus
     questions_for_case = spec.get("questions_for_case")

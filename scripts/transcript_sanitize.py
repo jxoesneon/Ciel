@@ -26,7 +26,7 @@ from pathlib import Path
 HOME = Path.home()
 sys.path.insert(0, str(HOME / ".ciel" / "hooks" / "lib"))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "ciel.skill" / "init" / "hooks" / "lib"))
-import secret_scan  # noqa: E402
+import secret_scan
 
 STORES = [
     (HOME / ".local" / "share" / "devin" / "cli" / "transcripts", "*.json"),
@@ -263,7 +263,7 @@ def _prefilter_where(col: str, tier: str = "broad") -> str:
     return " OR ".join(likes + instrs)
 
 
-def redact_sessions_db(dry: bool = False, retries: int = 6, wait: float = 5.0) -> dict:  # noqa: PLR0912, PLR0915
+def redact_sessions_db(dry: bool = False, retries: int = 6, wait: float = 5.0) -> dict:
     """SQL-level redact inside the live sessions.db WAL database.
 
     The DB is write-locked whenever a devin session is live, so this retries
@@ -387,7 +387,7 @@ def main() -> int:
                 st["sessions_db_sanitize_pending"] = True
                 session_watchdog._save(session_watchdog.STATE, st)
                 sdb["deferred"] = "flagged for next SessionStart"
-            except Exception:
+            except Exception:  # noqa: BLE001, S110 - deferred flag is best-effort
                 pass
         tightened = tighten_store_perms()
         print(json.dumps({

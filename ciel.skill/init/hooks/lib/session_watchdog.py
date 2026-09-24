@@ -244,7 +244,7 @@ def do_resume(session_hint: str, reason: str, dry: bool = False) -> dict:
     try:
         proc = subprocess.run(
             ["devin", "-c", "-p", prompt],
-            capture_output=True, text=True, timeout=1800,
+            capture_output=True, text=True, timeout=1800, check=False,
         )
         fired = proc.returncode == 0
     except (OSError, subprocess.TimeoutExpired):
@@ -260,7 +260,7 @@ def do_resume(session_hint: str, reason: str, dry: bool = False) -> dict:
     with contextlib.suppress(OSError, subprocess.TimeoutExpired):
         subprocess.run(
             ["notify-send", "Ciel watchdog", f"Auto-resumed stalled session ({reason})"],
-            capture_output=True, timeout=5,
+            capture_output=True, timeout=5, check=False,
         )
     return {"fired": fired, "reason": reason}
 
@@ -285,7 +285,7 @@ def _sessions_db_sanitize(state: dict) -> str | None:
     try:
         spec.loader.exec_module(mod)
         r = mod.redact_sessions_db(dry=False, retries=2, wait=3.0)
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - deferred sanitize must never crash the hook
         return f"sessions.db sanitize deferred ({type(e).__name__})"
     if r.get("locked"):
         return "sessions.db still locked — sanitize stays pending"

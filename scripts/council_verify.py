@@ -35,7 +35,7 @@ def _load_json(path: Path) -> dict | None:
         return None
 
 
-def verify(run_dir: Path) -> dict:  # noqa: PLR0912
+def verify(run_dir: Path) -> dict:
     problems: list[str] = []
     warnings: list[str] = []
 

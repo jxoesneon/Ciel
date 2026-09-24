@@ -31,7 +31,7 @@ def main() -> int:
         order = sims.argsort()[::-1][:k]
         print(json.dumps({"names": [names[i] for i in order]}))
         return 0
-    except Exception:
+    except Exception:  # noqa: BLE001 - embedding backend is best-effort
         return 1
 
 
