@@ -5,7 +5,7 @@
 # <anchor:start>
 
 memory:
-  backend: mempalace           # mempalace|sqlite|filesystem|custom
+  backend: mempalace           # mempalace|obsidian|sqlite|filesystem|custom
   auto_update: true
   version_pin: null
   reinstall_check_days: 7
@@ -13,6 +13,11 @@ memory:
   isolation_strict: true       # Constitutional: locked true
   partition_size_limit_mb: 1024
   fallback_snapshot_retention_days: 30
+  obsidian:
+    vault_path: null           # Default: ~/.ciel/vaults/default
+    brain_folder: ".ciel-brain"
+    sanitize_paths: true       # Security: strict key/partition validation (prevents directory traversal)
+    search_mode: hybrid        # hybrid|ripgrep|api
   custom:
     entry: null
     runtime: null

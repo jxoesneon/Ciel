@@ -1,23 +1,25 @@
-# HEALTH_CHECK — MemPalace-rs
+# HEALTH_CHECK — Memory Backend Health Verification
 
-Startup verification + corruption recovery for the memory backend.
+Startup verification + corruption recovery for the active memory backend (MemPalace, Obsidian, or fallbacks).
 
 ## Checks
 
-1. **Binary present & runnable** — `mempalace-rs --version` succeeds.
-2. **Schema version** — `get ciel-global meta/schema_version` matches expected (or upgradable).
-3. **Partitions listed** — `ciel-global` and current project's partition both present.
-4. **RW self-test** — put a throw-away key, read back, delete. Expect no errors.
-5. **Checksum of recent entries** — verify last 10 non-archive entries parseable.
+1. **Backend Availability** — Active binary runnable (`mempalace-rs`) OR vault directory accessible & writeable (`.ciel-brain/`).
+2. **Schema Version** — `meta/schema_version` matches expected schema (or auto-upgradable).
+3. **Partitions Verification** — `ciel-global` and active project partitions present.
+4. **RW Self-Test** — Put throw-away key, read back, verify frontmatter/data, delete. Expect no errors.
+5. **Path Security Guard** — Verify key and partition sanitization rules are active (`PathTraversalError` check).
+6. **Checksum of Recent Entries** — Verify last 10 non-archive entries parseable.
 
 ## On Failure
 
 | Failure | Action |
 | --- | --- |
-| Binary missing | Attempt `INSTALL.md`; on failure → fallback. |
-| Schema mismatch | Attempt auto-migration; on failure → fallback. |
-| Partitions missing | Attempt restore from latest backup; on failure → recreate empty + escalate. |
-| RW self-test fails | Fallback. Run corruption diagnostic in the background. |
+| Binary / Vault path missing | Attempt setup / reconnect; on failure → trigger fallback. |
+| Path security check failure | Reject operation, log security audit entry, quarantine invalid path. |
+| Schema mismatch | Attempt auto-migration; on failure → trigger fallback. |
+| Partitions missing | Attempt restore from latest snapshot; on failure → recreate empty + escalate. |
+| RW self-test fails | Trigger fallback. Run corruption diagnostic in the background. |
 | Checksum failure | Move corrupt entries to `~/.ciel/.attic/corrupt/<ts>/`, reindex, continue. |
 
 ## Scheduling

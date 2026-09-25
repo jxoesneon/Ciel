@@ -41,4 +41,4 @@ io_contract:
 
 - Partition scoping enforced — cross-scope reads require `with_project()` or `lift()`.
 - Constitutional invariant: `isolation_strict` cannot be disabled.
-- Selects backend via `memory.config.backend` (mempalace|sqlite|filesystem|custom).
+- Selects backend via `memory.config.backend` (mempalace|obsidian|sqlite|filesystem|custom).

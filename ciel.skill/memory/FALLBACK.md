@@ -1,19 +1,21 @@
 # FALLBACK — Memory Backends
 
-Triggers and order when MemPalace-rs is unavailable.
+Triggers and order when the primary memory backend is unavailable.
 
 ## Triggers
 
-1. `cargo install mempalace-rs` fails after retry.
-2. `HEALTH_CHECK.md` reports critical failure (corrupt index, API mismatch).
+1. Primary backend binary/service or vault path is unavailable.
+2. `HEALTH_CHECK.md` reports critical failure.
 3. User explicitly configures a different backend.
 4. Schema migration fails irreparably.
 
 ## Order
 
-1. **SQLite** (`backends/SQLITE.md`) — single-file, ubiquitous, reliable. No semantic search.
-2. **Filesystem KV** (`backends/FILESYSTEM.md`) — key-per-file; simple; no embeddings.
-3. **Custom** (`backends/CUSTOM.md`) — only if user supplies an adapter implementing the abstract API.
+1. **MemPalace** — vector-search primary store (when configured as primary).
+2. **Obsidian** (`backends/OBSIDIAN.md`) — Markdown vault store with hybrid/lexical search.
+3. **SQLite** (`backends/SQLITE.md`) — single-file, ubiquitous, reliable. FTS5 fallback.
+4. **Filesystem KV** (`backends/FILESYSTEM.md`) — key-per-file; simple; no embeddings.
+5. **Custom** (`backends/CUSTOM.md`) — user-supplied adapter implementing abstract memory API.
 
 ## Semantic Search in Fallback
 
