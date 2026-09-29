@@ -18,7 +18,7 @@
 
 ## 🎬 Launch Trailer
 
-[![Ciel launch trailer — poster](ciel.skill/assets/media/ciel-launch-trailer.jpg)](ciel.skill/assets/media/ciel-launch-trailer.mp4)
+[![Ciel launch trailer — poster](ciel.skill/assets/media/ciel-launch-trailer.jpg)](https://youtu.be/oeH9XKYUKn4)
 
 *Watch the 111-second trailer — produced by Ciel itself.*
 
