@@ -207,3 +207,16 @@ is the finale.
 - SFX retimed: hit-title → 80.75, tag ticks → 82.5/83.6/84.7,
   hit-punch → 91.65, hit-url → 96.55
 - Poster = finale frame (t≈104) baked as frame 0
+
+## Dip-removal pass (v4)
+
+Per Master's note: the pre-title beat of silence read as a false ending
+at ~1:20 now that the title card sits mid-flow. Removed it.
+
+- Music duck deleted — automation is now only intro fade + tail fade
+- Title card moved onto the 78.56 cue: poly blooms 77.6 under the
+  runtime handoff, CIEL wordmark 78.56, URL 79.2, tags 80.75/81.85/82.95,
+  meta 84.1, credit 84.9, fade 87.8
+- SFX: hit-title → 78.56; tag ticks → 80.75/81.85/82.9
+- Verified: no volume dip at 78–82s (−16 dB sustained), wordmark
+  visible by t=80, poster re-baked

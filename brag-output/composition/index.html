@@ -345,9 +345,9 @@
     </div>
   </section>
 
-  <!-- music (ducked for the pre-title silence, faded at the tail) -->
+  <!-- music (faded at the tail) -->
   <audio id="bgm" src="assets/music/happy-beats-business-moves-vol-12-by-ende-dot-app.mp3" data-start="0" data-duration="111" data-track-index="10" data-volume="0.3"
-    data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":0},{"t":0.8,"v":1},{"t":78.2,"v":1},{"t":79.7,"v":0.16},{"t":80.5,"v":0.16},{"t":80.7,"v":1},{"t":109.0,"v":1},{"t":110.6,"v":0}]}]}'></audio>
+    data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":0},{"t":0.8,"v":1},{"t":109.0,"v":1},{"t":110.6,"v":0}]}]}'></audio>
 
   <!-- hook keystrokes -->
   <audio id="k1" src="assets/sfx/keyboard/keypress-001.wav" data-start="0.38" data-track-index="11" data-volume="0.4"></audio>
@@ -412,10 +412,10 @@
   <audio id="r5" src="assets/sfx/ui/click5.ogg" data-start="76.38" data-track-index="74" data-volume="0.5"></audio>
 
   <!-- punchline + title card + button -->
-  <audio id="hit-title" src="assets/sfx/impact/impactBell_heavy_003.ogg" data-start="80.75" data-track-index="77" data-volume="0.85"></audio>
-  <audio id="b1" src="assets/sfx/ui/switch20.ogg" data-start="82.5" data-track-index="78" data-volume="0.45"></audio>
-  <audio id="b2" src="assets/sfx/ui/switch20.ogg" data-start="83.6" data-track-index="79" data-volume="0.45"></audio>
-  <audio id="b3" src="assets/sfx/ui/switch20.ogg" data-start="84.7" data-track-index="80" data-volume="0.45"></audio>
+  <audio id="hit-title" src="assets/sfx/impact/impactBell_heavy_003.ogg" data-start="78.56" data-track-index="77" data-volume="0.85"></audio>
+  <audio id="b1" src="assets/sfx/ui/switch20.ogg" data-start="80.75" data-track-index="78" data-volume="0.45"></audio>
+  <audio id="b2" src="assets/sfx/ui/switch20.ogg" data-start="81.85" data-track-index="79" data-volume="0.45"></audio>
+  <audio id="b3" src="assets/sfx/ui/switch20.ogg" data-start="82.9" data-track-index="80" data-volume="0.45"></audio>
   <audio id="hit-punch" src="assets/sfx/impact/impactBell_heavy_000.ogg" data-start="91.65" data-track-index="75" data-volume="0.7"></audio>
   <audio id="hit-url" src="assets/sfx/impact/impactSoft_medium_001.ogg" data-start="96.55" data-track-index="76" data-volume="0.5"></audio>
 </div>
@@ -540,18 +540,18 @@ rt.forEach(function (p, idx) {
 tl.to("#s11-inner", { opacity: 0, duration: 0.35 }, 78.0);
 
 /* ---------- S13: title card (within the flow, after the duck) ---------- */
-tl.fromTo("#s13-poly", { scale: 1.12, opacity: 0 }, { scale: 1.0, opacity: 0.32, duration: 1.6, ease: "power2.out" }, 77.5);
-tl.fromTo("#s13-word", { opacity: 0, scale: 1.25 }, { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.6)" }, 80.75);
-tl.fromTo("#s13-url", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 81.4);
+tl.fromTo("#s13-poly", { scale: 1.12, opacity: 0 }, { scale: 1.0, opacity: 0.32, duration: 1.4, ease: "power2.out" }, 77.6);
+tl.fromTo("#s13-word", { opacity: 0, scale: 1.25 }, { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.6)" }, 78.56);
+tl.fromTo("#s13-url", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 79.2);
 
 /* ---------- S14: button tags (on the title card) ---------- */
 var tags = document.querySelectorAll("#s14-row .s14-tag");
-var tagTimes = [82.5, 83.6, 84.7];
+var tagTimes = [80.75, 81.85, 82.95];
 tags.forEach(function (t, idx) {
   tl.fromTo(t, { opacity: 0, y: 24, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "back.out(2)" }, tagTimes[idx]);
 });
-tl.fromTo("#s14-meta", { opacity: 0 }, { opacity: 1, duration: 0.6 }, 85.4);
-tl.fromTo("#s13-credit", { opacity: 0 }, { opacity: 1, duration: 0.6 }, 86.1);
+tl.fromTo("#s14-meta", { opacity: 0 }, { opacity: 1, duration: 0.6 }, 84.1);
+tl.fromTo("#s13-credit", { opacity: 0 }, { opacity: 1, duration: 0.6 }, 84.9);
 tl.to("#s13-inner", { opacity: 0, duration: 0.4 }, 87.8);
 
 /* ---------- S12: punchline (finale) ---------- */
