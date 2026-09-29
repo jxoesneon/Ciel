@@ -16,6 +16,14 @@
 
 ---
 
+## 🎬 Launch Trailer
+
+[![Ciel launch trailer — poster](ciel.skill/assets/media/ciel-launch-trailer.jpg)](ciel.skill/assets/media/ciel-launch-trailer.mp4)
+
+*Watch the 111-second trailer — produced by Ciel itself.*
+
+---
+
 ## 🚀 Quick Start
 
 CIEL 1.0 is designed for seamless integration into modern agentic runtimes.
