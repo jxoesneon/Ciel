@@ -3,7 +3,7 @@ name: ciel
 version: 1.2.0
 description: Ciel — self-improving, self-researching orchestration intelligence. A living skill graph that routes, acquires, integrates, and evolves capabilities across any skill-aware agent runtime.
 author: Ciel Project
-license: MIT
+license: Apache-2.0
 tags: ["ciel", "harmonized", "domain:ai"]
 entrypoint: router/ROUTER.md
 format: skill/1.0
