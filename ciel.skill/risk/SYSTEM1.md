@@ -73,10 +73,34 @@ LAYA_PRELOAD=1
 LAYA_MODELS=english,typed-decisions   # both resident (~1.6GB); typed-decisions is the calibrated default
 LAYA_THREADS=4
 LAYA_API_KEY=<openssl rand -hex 24>
+CIEL_SYSTEM1_MODEL=typed-decisions    # pin the calibrated checkpoint for all asks
 ```
 
-`~/.ciel/system1/serve.sh` sources `env` and execs `venv/bin/laya-serve`;
-a systemd user unit (`ciel-system1.service`) keeps it resident.
+`~/.ciel/system1/serve.sh` sources `env` and execs `venv/bin/laya-serve`
+(template: `init/system1/serve.sh`, env template: `init/system1/env.example`).
+The tier is meant to be on by default, so the supervisor must keep it
+resident and self-healing — platform specifics:
+
+| Platform | Supervisor | Unit (repo template) | Self-heal |
+| --- | --- | --- | --- |
+| Linux | systemd user unit | `init/systemd/ciel-system1.service` → `~/.config/systemd/user/` | `Restart=always` |
+| macOS | launchd agent | `init/launchd/com.ciel.system1.plist` (`__HOME__` token) → `~/Library/LaunchAgents/` | `KeepAlive=true` + `RunAtLoad=true` + `ThrottleInterval=10` |
+
+macOS install (verified):
+
+```bash
+plutil -lint ~/Library/LaunchAgents/com.ciel.system1.plist
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.ciel.system1.plist
+launchctl print gui/$(id -u)/com.ciel.system1   # state = running
+```
+
+The plist runs `serve.sh` directly, logs to `~/.ciel/system1/serve.{out,err}.log`,
+and respawns the server within `ThrottleInterval` seconds of any exit. If the
+HF hub rate-limits unauthenticated model pulls, add `HF_TOKEN=` to `env`.
+
+macOS note: `LAYA_DEVICE` auto-selects `mps` (Apple GPU) when available —
+checkpoints do not stay on CPU. `/health` reports `loaded`, `revisions`,
+`device`, and per-checkpoint `cpu_fallbacks`.
 
 ## Record format (events.jsonl)
 

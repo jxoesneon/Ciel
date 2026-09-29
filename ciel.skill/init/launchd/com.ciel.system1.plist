@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Ciel System-1 launchd agent — laya-serve Jev endpoint (127.0.0.1:8765).
+  Install: substitute __HOME__ with the real home directory, then
+    plutil -lint ~/Library/LaunchAgents/com.ciel.system1.plist
+    launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.ciel.system1.plist
+  KeepAlive + RunAtLoad keep the tier on by default and self-healing.
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.ciel.system1</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>__HOME__/.ciel/system1/serve.sh</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+    <key>ThrottleInterval</key>
+    <integer>10</integer>
+    <key>StandardOutPath</key>
+    <string>__HOME__/.ciel/system1/serve.out.log</string>
+    <key>StandardErrorPath</key>
+    <string>__HOME__/.ciel/system1/serve.err.log</string>
+    <key>WorkingDirectory</key>
+    <string>__HOME__/.ciel/system1</string>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>HOME</key>
+        <string>__HOME__</string>
+    </dict>
+</dict>
+</plist>

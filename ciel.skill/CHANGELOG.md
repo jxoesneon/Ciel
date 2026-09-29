@@ -4,6 +4,12 @@
 
 All notable changes to Ciel are tracked here. Ciel appends an entry on every self-mutation commit. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) with SemVer.
 
+## [Unreleased]
+
+### Added
+
+- **System-1 platform packaging** (`init/system1/`, `init/launchd/`, `init/systemd/`): the laya-serve tier now ships its install assets — `init/system1/serve.sh` (env-sourcing launcher), `init/system1/env.example` (all `LAYA_*` vars + `CIEL_SYSTEM1_MODEL=typed-decisions` pin), `init/launchd/com.ciel.system1.plist` (macOS agent with `RunAtLoad` + `KeepAlive` + `ThrottleInterval=10` — on by default, respawns on exit, `__HOME__` token substitution) and `init/systemd/ciel-system1.service` (Linux user unit, `Restart=always`). `risk/SYSTEM1.md` documents the platform table, the verified `launchctl bootstrap` install flow, MPS auto-device selection on Apple Silicon, and the `HF_TOKEN` rate-limit escape hatch.
+
 ## [1.2.0] — 2026-09-24
 
 ### Added

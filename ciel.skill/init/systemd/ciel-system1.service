@@ -1,0 +1,11 @@
+[Unit]
+Description=Ciel System-1 — local laya-serve Jev endpoint (127.0.0.1:8765)
+After=network-online.target
+
+[Service]
+ExecStart=%h/.ciel/system1/serve.sh
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=default.target
