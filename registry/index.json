@@ -1,8 +1,8 @@
 {
  "schema": 1,
- "built": "2026-09-29T02:25:12.841952+00:00",
+ "built": "2026-09-29T02:28:31.292736+00:00",
  "skills_dir": "/Users/meilynlopezcubero/.ciel/skills",
- "count": 179,
+ "count": 180,
  "skills": {
   "agent-eval": {
    "id": "agent-eval",
@@ -1572,6 +1572,30 @@
     "system": []
    },
    "runtimes": []
+  },
+  "design-system": {
+   "id": "design-system",
+   "version": "1.0.0",
+   "description": "Use when building UI in a frontend codebase on top of an existing design system or component library. Discovers tokens and components, reuses them correctly, and binds to semantic tokens instead of hardcoding. Works with ANY system (MUI, Chakra, shadcn, Radix, internal @org/ui, local components, or Figma).",
+   "triggers": [],
+   "tags": [
+    "frontend",
+    "design-system",
+    "ui",
+    "scope:local",
+    "runtime:any",
+    "risk:low"
+   ],
+   "license": "MIT",
+   "source": {
+    "tier": 0,
+    "origin": "local"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/design-system/",
+   "state": "validated",
+   "checksum": "sha256:bde298b526bf88096b365ef113bae299b477978541d5c435e58eff3f3db39cc1",
+   "created": "2026-09-29T01:22:06.216093+00:00",
+   "last_updated": "2026-09-29T01:22:06.216093+00:00"
   },
   "design-token-architecture": {
    "id": "design-token-architecture",
