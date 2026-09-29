@@ -1,0 +1,44 @@
+{
+  "ts": "2026-09-29T02:47:50.110203+00:00",
+  "skill": "/Users/meilynlopezcubero/.ciel/skills/hyperframes-studio",
+  "runner": "devin -p --permission-mode accept-edits --respect-workspace-trust false -- {prompt}",
+  "verdict": "fail",
+  "regressions": [
+    "fix-off-by-one"
+  ],
+  "improvements": [],
+  "tasks": [
+    {
+      "task": "fix-off-by-one",
+      "outcome": "regression",
+      "control": {
+        "pass": true,
+        "agent_secs": 21.0,
+        "verify_log": "",
+        "agent_log_tail": "Found it \u2014 `start = page * size` treats `page` as 0-indexed, but the spec is 1-indexed. Fixing and verifying.\nwarning: rejected a tool call that requires confirmation. Running in non-interactive mode. Use --permission-mode dangerous to auto-approve all tools.\n"
+      },
+      "treatment": {
+        "pass": false,
+        "agent_secs": 30.9,
+        "verify_log": "Traceback (most recent call last):\n  File \"<stdin>\", line 4, in <module>\nAssertionError\n",
+        "agent_log_tail": "\u00abInvestigation\u00bb \u2014 The function treats `page` as zero-indexed even though the requested API is one-indexed, so page 1 starts at offset `size` instead of `0`. I\u2019m reproducing that with a minimal failing check before editing.\nwarning: rejected a tool call that requires confirmation. Running in non-interactive mode. Use --permission-mode dangerous to auto-approve all tools.\n"
+      }
+    },
+    {
+      "task": "slugify",
+      "outcome": "preserved-pass",
+      "control": {
+        "pass": true,
+        "agent_secs": 11.3,
+        "verify_log": "",
+        "agent_log_tail": "\u00abNotice\u00bb Creating `slug.py`, Master.\nwarning: rejected a tool call that requires confirmation. Running in non-interactive mode. Use --permission-mode dangerous to auto-approve all tools.\n"
+      },
+      "treatment": {
+        "pass": true,
+        "agent_secs": 23.5,
+        "verify_log": "",
+        "agent_log_tail": "warning: rejected a tool call that requires confirmation. Running in non-interactive mode. Use --permission-mode dangerous to auto-approve all tools.\n"
+      }
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "ts": "2026-09-29T02:46:23.265004+00:00",
+  "skill": "/Users/meilynlopezcubero/.ciel/skills/hyperframes-registry",
+  "runner": "devin -p --permission-mode accept-edits --respect-workspace-trust false -- {prompt}",
+  "verdict": "pass",
+  "regressions": [],
+  "improvements": [],
+  "tasks": [
+    {
+      "task": "fix-off-by-one",
+      "outcome": "preserved-pass",
+      "control": {
+        "pass": true,
+        "agent_secs": 18.8,
+        "verify_log": "",
+        "agent_log_tail": "I'll look at the file first.\u00abNotice\u00bb Master \u2014 `paginate.py` computes `start = page * size`, which treats `page` as 0-indexed. With 1-indexed pages, page 1 skips the first `size` items.Quick verification:\nwarning: rejected a tool call that requires confirmation. Running in non-interactive mode. Use --permission-mode dangerous to auto-approve all tools.\n"
+      },
+      "treatment": {
+        "pass": true,
+        "agent_secs": 16.4,
+        "verify_log": "",
+        "agent_log_tail": "I'll read `paginate.py` and fix the bug.Off-by-one: `page * size` makes page 1 skip the first `size` items. It should be `(page - 1) * size`.Verifying with a quick check:\nwarning: rejected a tool call that requires confirmation. Running in non-interactive mode. Use --permission-mode dangerous to auto-approve all tools.\n"
+      }
+    },
+    {
+      "task": "slugify",
+      "outcome": "preserved-pass",
+      "control": {
+        "pass": true,
+        "agent_secs": 19.9,
+        "verify_log": "",
+        "agent_log_tail": "\u00abNotice\u00bb Master, creating `slug.py` now.Verifying behavior:\nwarning: rejected a tool call that requires confirmation. Running in non-interactive mode. Use --permission-mode dangerous to auto-approve all tools.\n"
+      },
+      "treatment": {
+        "pass": true,
+        "agent_secs": 15.2,
+        "verify_log": "",
+        "agent_log_tail": "warning: rejected a tool call that requires confirmation. Running in non-interactive mode. Use --permission-mode dangerous to auto-approve all tools.\n"
+      }
+    }
+  ]
+}

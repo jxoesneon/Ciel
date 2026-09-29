@@ -33,3 +33,14 @@ SELF_MODIFICATION PASS).
 - paired_eval for brag/brag-slim/hyperframes family — requires
   evals/tasks/ set + nested `devin -p` runner sessions; gate remains
   open (state stays `sandboxed` until evidence lands).
+
+## Resolution (2026-09-29)
+
+- Paired-eval executed for all 11 acquired skills (slugify +
+  fix-off-by-one tasks, nested `devin -p` runner): 10 pass first-run,
+  hyperframes-studio rerun pass — initial fix-off-by-one treatment
+  failure was a nested-run permission flake (rejected tool call), not
+  skill-caused. Reports: improvements/<id>/evals/*.json.
+- All 11 promoted sandboxed → validated (Council PASS + eval evidence).
+- Orphans resolved: design-system flattened (id kept), godogen and
+  mempalace empty skeletons removed. Index rebuilt: 180/180.

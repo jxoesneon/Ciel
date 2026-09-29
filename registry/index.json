@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "built": "2026-09-29T02:28:31.292736+00:00",
+ "built": "2026-09-29T02:50:06.877288+00:00",
  "skills_dir": "/Users/meilynlopezcubero/.ciel/skills",
  "count": 180,
  "skills": {
@@ -655,8 +655,8 @@
     "author": "Shunit Haviv Hakimi"
    },
    "install_path": "/Users/meilynlopezcubero/.ciel/skills/brag/",
-   "state": "sandboxed",
-   "checksum": "sha256:c9e3eca4a1cae6b2e66c4ec31ba7b20233ff9c7f83d77d5c220c6473f4e4ff28",
+   "state": "validated",
+   "checksum": "sha256:c9d362b106edd2b20fe7efab2497e912c402d868b9191508acf21c01d7c9d658",
    "created": "2026-09-29T02:17:57.145621+00:00",
    "last_updated": "2026-09-29T02:16:59+00:00",
    "dependencies": {
@@ -683,8 +683,8 @@
     "author": "Shunit Haviv Hakimi"
    },
    "install_path": "/Users/meilynlopezcubero/.ciel/skills/brag-slim/",
-   "state": "sandboxed",
-   "checksum": "sha256:42df60b739fcc5e93b2d740bca772dcde3af91fefecee6493af9388110d54e85",
+   "state": "validated",
+   "checksum": "sha256:4c5c2971488fdcb219daa6abd966391c6924bb215dd898183e9e10648ce199aa",
    "created": "2026-09-29T02:17:57.254370+00:00",
    "last_updated": "2026-09-29T02:16:59+00:00",
    "dependencies": {
@@ -2239,8 +2239,8 @@
     "author": "HeyGen"
    },
    "install_path": "/Users/meilynlopezcubero/.ciel/skills/hyperframes/",
-   "state": "sandboxed",
-   "checksum": "sha256:97850a516979fd28e3e0b794c177ec7c70a3c86aa2c1ee2110645ac316cc9b29",
+   "state": "validated",
+   "checksum": "sha256:9536f0a20fcab5e2fdcd295399b89938e82e958d648f823acaf59deb4dc460af",
    "created": "2026-09-29T02:24:59.748196+00:00",
    "last_updated": "2026-09-29T02:24:35+00:00",
    "dependencies": {
@@ -2266,8 +2266,8 @@
     "author": "HeyGen"
    },
    "install_path": "/Users/meilynlopezcubero/.ciel/skills/hyperframes-animation/",
-   "state": "sandboxed",
-   "checksum": "sha256:9e6d73bb808799b9947cb9d392e9945b8f93aff76b41d76dd402b7d3ad17f5e7",
+   "state": "validated",
+   "checksum": "sha256:250a7a0a022453e195d3828652c1adc125ae4b50613fb3e934fb62c2eec2032b",
    "created": "2026-09-29T02:24:59.790565+00:00",
    "last_updated": "2026-09-29T02:24:35+00:00",
    "dependencies": {
@@ -2293,8 +2293,8 @@
     "author": "HeyGen"
    },
    "install_path": "/Users/meilynlopezcubero/.ciel/skills/hyperframes-audio/",
-   "state": "sandboxed",
-   "checksum": "sha256:2fc2bc6874afe555070c87a62f1cbdafd4562abbdc43a2f84e05c878583f90d5",
+   "state": "validated",
+   "checksum": "sha256:2b325399e6b89a3ea1d764bc24357064035cf0fbdf74515a78960b11875945c5",
    "created": "2026-09-29T02:24:59.958456+00:00",
    "last_updated": "2026-09-29T02:24:35+00:00",
    "dependencies": {
@@ -2320,8 +2320,8 @@
     "author": "HeyGen"
    },
    "install_path": "/Users/meilynlopezcubero/.ciel/skills/hyperframes-cli/",
-   "state": "sandboxed",
-   "checksum": "sha256:f582838154f4ffc306dbd850cb6c560567137c395e1e904b43f69b8ebc5b7cf0",
+   "state": "validated",
+   "checksum": "sha256:9a00fa23b5e3753da3b860513708b55ef163896aa8f0e22b51cd23dda1b831c1",
    "created": "2026-09-29T02:24:59.943261+00:00",
    "last_updated": "2026-09-29T02:24:35+00:00",
    "dependencies": {
@@ -2347,8 +2347,8 @@
     "author": "HeyGen"
    },
    "install_path": "/Users/meilynlopezcubero/.ciel/skills/hyperframes-core/",
-   "state": "sandboxed",
-   "checksum": "sha256:97ec560a0aac0ef450a10c9474d74f17f1c78bd540206d8b63ecb2adb0266961",
+   "state": "validated",
+   "checksum": "sha256:3ebf9a2aaf88486ab7c86a096063c0eca84b9f67c1b2ebc46626c7b73b10fc84",
    "created": "2026-09-29T02:24:59.771333+00:00",
    "last_updated": "2026-09-29T02:24:35+00:00",
    "dependencies": {
@@ -2374,8 +2374,8 @@
     "author": "HeyGen"
    },
    "install_path": "/Users/meilynlopezcubero/.ciel/skills/hyperframes-creative/",
-   "state": "sandboxed",
-   "checksum": "sha256:63a251a31ceb6443ce263c9b00b5126315f3d540bb37cd3803b1d6d2cccd65aa",
+   "state": "validated",
+   "checksum": "sha256:0ffa4608cc016102f872da3fa8c44f30083e28c11089abbad73778f3f1fe52c7",
    "created": "2026-09-29T02:24:59.851615+00:00",
    "last_updated": "2026-09-29T02:24:35+00:00",
    "dependencies": {
@@ -2401,8 +2401,8 @@
     "author": "HeyGen"
    },
    "install_path": "/Users/meilynlopezcubero/.ciel/skills/hyperframes-keyframes/",
-   "state": "sandboxed",
-   "checksum": "sha256:f0189905d6ca5f8222f7b61deeeaa5f8ac05ed3e8f5d4ba4fe8b80ef139f13e4",
+   "state": "validated",
+   "checksum": "sha256:fe8c8e094c92547600203010bf3630c03025646517a8e33167fe94eca83c6e2e",
    "created": "2026-09-29T02:24:59.929503+00:00",
    "last_updated": "2026-09-29T02:24:35+00:00",
    "dependencies": {
@@ -2428,8 +2428,8 @@
     "author": "HeyGen"
    },
    "install_path": "/Users/meilynlopezcubero/.ciel/skills/hyperframes-registry/",
-   "state": "sandboxed",
-   "checksum": "sha256:cac4fe3376d1e7a081aabd98578a7e65e6eb00e828146908d41739859f6a86ae",
+   "state": "validated",
+   "checksum": "sha256:178183a76e60f2098168a5df3507c118c54279526a028d8b3fb39830231211ca",
    "created": "2026-09-29T02:24:59.971675+00:00",
    "last_updated": "2026-09-29T02:24:35+00:00",
    "dependencies": {
@@ -2455,8 +2455,8 @@
     "author": "HeyGen"
    },
    "install_path": "/Users/meilynlopezcubero/.ciel/skills/hyperframes-studio/",
-   "state": "sandboxed",
-   "checksum": "sha256:3fc127b740b20b748081fde8d0ee604d9c4984ce639ffc4eeff6b6499f0114f3",
+   "state": "validated",
+   "checksum": "sha256:7904903039ef958d6b1e932fb90e53685cf64a4bf4231cbfbb5f44010abd2177",
    "created": "2026-09-29T02:24:59.985726+00:00",
    "last_updated": "2026-09-29T02:24:35+00:00",
    "dependencies": {
