@@ -1,0 +1,38 @@
+# Ciel skill extension — fields beyond the Agent Skills spec. SKILL.md stays spec-pure.
+schema: 1
+version: 0.4.0
+format: skill/1.0
+runtimes:
+- claude_code
+- devin_for_terminal
+- gemini_cli
+- codex_cli
+- opencode
+- generic
+tags:
+- ciel
+- harmonized
+- domain:video
+- domain:media
+triggers:
+- pattern: (/brag|let's brag|brag about|launch video|turn this into a video)
+  confidence: 0.95
+- pattern: (make|create|render).*(launch|promo|shareable).*video
+  confidence: 0.8
+source:
+  tier: 3
+  origin: https://github.com/latent-spaces/brag
+  commit: c893c5ed52aed84e3e2ee56787de869fccdae6b0
+  license: MIT
+  author: Shunit Haviv Hakimi
+dependencies:
+  skills: []
+  mcp: []
+  system:
+  - node>=22
+  - ffmpeg
+  - "npx hyperframes (full workflow; brag-slim fallback bundled as slim.md)"
+  - "python+librosa (optional: cue analysis for non-bundled tracks)"
+side_effects:
+- writes brag-output/ (or timestamped variant) in cwd
+- invokes external Hyperframes service for composition/render; Kokoro narration only on explicit --voice

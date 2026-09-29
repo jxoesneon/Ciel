@@ -1,0 +1,36 @@
+# Ciel skill extension — fields beyond the Agent Skills spec. SKILL.md stays spec-pure.
+schema: 1
+version: 0.4.0
+format: skill/1.0
+runtimes:
+- claude_code
+- devin_for_terminal
+- gemini_cli
+- codex_cli
+- opencode
+- generic
+tags:
+- ciel
+- harmonized
+- domain:video
+- domain:media
+triggers:
+- pattern: (/brag-slim|brag about https?://|launch video)
+  confidence: 0.9
+- pattern: (make|create|render).*(launch|promo|shareable).*video
+  confidence: 0.75
+source:
+  tier: 3
+  origin: https://github.com/latent-spaces/brag
+  commit: c893c5ed52aed84e3e2ee56787de869fccdae6b0
+  license: MIT
+  author: Shunit Haviv Hakimi
+dependencies:
+  skills: []
+  mcp: []
+  system:
+  - ffmpeg
+  - "headless browser (only when input is a URL)"
+side_effects:
+- writes brag-output/ (or timestamped variant) in cwd
+- fetches the target site when invoked with a URL
