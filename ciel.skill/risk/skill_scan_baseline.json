@@ -47,6 +47,18 @@
       "skill": "security-review",
       "rule_id": "SECRET_ACCESS",
       "justification": "Documentation recommending process.env / secrets managers; prose about correct secret handling."
+    },
+    {
+      "skill": "hyperframes-creative",
+      "rule_id": "REMOTE_CODE_EXEC",
+      "path": "references/typography.md",
+      "justification": "Documented one-liner downloads public Google Fonts metadata JSON to a file; the consuming script is fully disclosed inline in the same doc and only parses the JSON for font selection. Data fetch feeding a disclosed local parser \u2014 no remote code executed."
+    },
+    {
+      "skill": "hyperframes-cli",
+      "rule_id": "SECRET_ACCESS",
+      "path": "references/lambda.md",
+      "justification": "Documentation prerequisites list for an explicitly user-invoked `hyperframes lambda deploy`, citing the standard AWS credential chain; the skill itself reads no secrets."
     }
   ]
 }

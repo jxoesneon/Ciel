@@ -1,0 +1,29 @@
+# Ciel skill extension — fields beyond the Agent Skills spec. SKILL.md stays spec-pure.
+schema: 1
+version: 1.0.0
+format: skill/1.0
+runtimes:
+- claude_code
+- devin_for_terminal
+- gemini_cli
+- windsurf
+- generic
+tags:
+- ciel
+- core
+- domain:governance
+triggers:
+- pattern: (council|convene).*(five|deliberation|decision)
+  confidence: 0.9
+- pattern: (council.gated|council of five)
+  confidence: 1.0
+source:
+  tier: 0
+  origin: ciel.skill/council
+  license: MIT
+dependencies:
+  skills: []
+  mcp: []
+  system: []
+side_effects:
+- appends ~/.ciel/logs/council.log

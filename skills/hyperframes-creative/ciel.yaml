@@ -1,0 +1,33 @@
+# Ciel skill extension — fields beyond the Agent Skills spec. SKILL.md stays spec-pure.
+schema: 1
+version: 0.1.0
+format: skill/1.0
+runtimes:
+- claude_code
+- devin_for_terminal
+- gemini_cli
+- generic
+tags:
+- ciel
+- harmonized
+- domain:video
+- domain:media
+triggers:
+- pattern: "(hyperframes|video).*(design|palette|typograph|font|narration|brand)"
+  confidence: 0.85
+source:
+  tier: 3
+  origin: https://github.com/heygen-com/hyperframes
+  commit: ea4893602a868c3a3f4c486d1dc978dcaf047427
+  license: Apache-2.0
+  author: HeyGen
+state: sandboxed
+dependencies:
+  skills: []
+  mcp: []
+  system:
+  - node>=22
+  - "npx hyperframes"
+side_effects:
+- writes composition/render artifacts in cwd project dirs
+- invokes HyperFrames CLI (local render) and optionally cloud services

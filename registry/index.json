@@ -1,0 +1,4183 @@
+{
+ "schema": 1,
+ "built": "2026-09-29T02:25:12.841952+00:00",
+ "skills_dir": "/Users/meilynlopezcubero/.ciel/skills",
+ "count": 179,
+ "skills": {
+  "agent-eval": {
+   "id": "agent-eval",
+   "version": "1.0.0",
+   "description": "Benchmarking and evaluation tool for comparing different AI agents and models against CIEL's codebase tasks.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/agent-eval/",
+   "state": "validated",
+   "checksum": "sha256:5d63d23dab77e4f76191bca157bec6b223f18e62b2beee6e4f0b0b83e8cc88b6",
+   "created": "2026-09-24T15:13:10.652800+00:00",
+   "last_updated": "2026-09-24T15:13:10.652800+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "agent-harness-construction": {
+   "id": "agent-harness-construction",
+   "version": "1.0.0",
+   "description": "Architecture and optimization guidelines for designing agent tool-sets, action spaces, and recovery paths.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/agent-harness-construction/",
+   "state": "validated",
+   "checksum": "sha256:31a810432b7e9b552f6018c26cf45d01be7fc149f0dffb78093337fe86996127",
+   "created": "2026-09-24T15:13:10.652932+00:00",
+   "last_updated": "2026-09-24T15:13:10.652932+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "agent-introspection-debugging": {
+   "id": "agent-introspection-debugging",
+   "version": "1.0.0",
+   "description": "A structured self-debugging protocol for resolving agentic loops, failures, and reasoning drift.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/agent-introspection-debugging/",
+   "state": "validated",
+   "checksum": "sha256:dd4a57d4ff59da6d9a45b23d2a5ab9dd57ed4f6eb193ccbefd63328e242750ea",
+   "created": "2026-09-24T15:13:10.653178+00:00",
+   "last_updated": "2026-09-24T15:13:10.653178+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "agent-payment-x402": {
+   "id": "agent-payment-x402",
+   "version": "1.0.0",
+   "description": "Protocol and tools for autonomous agent payments using x402, featuring strict spending policies and non-custodial wallets.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/agent-payment-x402/",
+   "state": "validated",
+   "checksum": "sha256:6710923262a6d2e1624e6dd29c4445fa7b0a177ae78443fb8efcc26db104faa0",
+   "created": "2026-09-24T15:13:10.653304+00:00",
+   "last_updated": "2026-09-24T15:13:10.653304+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "agent-retrieval-and-context": {
+   "id": "agent-retrieval-and-context",
+   "version": "1.0.0",
+   "description": "CIEL's framework for iterative context retrieval and subagent context optimization.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/agent-retrieval-and-context/",
+   "state": "validated",
+   "checksum": "sha256:19208724dac48edd83021b6289a6813a6a9e2d009afe31e617bfe78af8e88585",
+   "created": "2026-09-24T15:13:10.653421+00:00",
+   "last_updated": "2026-09-24T15:13:10.653421+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "agent-sort": {
+   "id": "agent-sort",
+   "version": "1.0.0",
+   "description": "Evidence-backed skill classification and context optimization.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/agent-sort/",
+   "state": "validated",
+   "checksum": "sha256:5cd215bc7468259ee539f8780d2659ebb59d87702159603df311e6f386736f27",
+   "created": "2026-09-24T15:13:10.653548+00:00",
+   "last_updated": "2026-09-24T15:13:10.653548+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "agent-systems-and-harnesses": {
+   "id": "agent-systems-and-harnesses",
+   "version": "1.0.0",
+   "description": "CIEL's framework for long-lived agents, adversarial harnesses, and headless orchestration.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/agent-systems-and-harnesses/",
+   "state": "validated",
+   "checksum": "sha256:587b94930bddceb11dfa9c57135c0f5dbafb90b92baf89040c5b30bd18b66905",
+   "created": "2026-09-24T15:13:10.653780+00:00",
+   "last_updated": "2026-09-24T15:13:10.653780+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "agentic-engineering": {
+   "id": "agentic-engineering",
+   "version": "1.0.0",
+   "description": "Ciel's operational framework for agent-led engineering and cost-aware routing.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/agentic-engineering/",
+   "state": "validated",
+   "checksum": "sha256:ae8a15cfb574a7f09ffc96315cd12abe5e0a70cb9a62796c3f76ef2810a6fabb",
+   "created": "2026-09-24T15:13:10.653916+00:00",
+   "last_updated": "2026-09-24T15:13:10.653916+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "ai-first-engineering": {
+   "id": "ai-first-engineering",
+   "version": "1.0.0",
+   "description": "Ciel's operating model for AI-native engineering and agent-friendly architecture.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/ai-first-engineering/",
+   "state": "validated",
+   "checksum": "sha256:3efe92866edc8e43ba659590760b1c676f72aae12246461e344e63dedd82d266",
+   "created": "2026-09-24T15:13:10.654197+00:00",
+   "last_updated": "2026-09-24T15:13:10.654197+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "ai-regression-testing": {
+   "id": "ai-regression-testing",
+   "version": "1.0.0",
+   "description": "Specialized regression testing for AI-assisted development and blind spot mitigation.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/ai-regression-testing/",
+   "state": "validated",
+   "checksum": "sha256:72ae2815371e45bea957e5bad1b7e07d15bad47d838286f9a867791d9f4801b8",
+   "created": "2026-09-24T15:13:10.654314+00:00",
+   "last_updated": "2026-09-24T15:13:10.654314+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "analytical-data-ops": {
+   "id": "analytical-data-ops",
+   "version": "1.0.0",
+   "description": "ClickHouse analytics patterns, OLAP optimization, and data pipelines.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/analytical-data-ops/",
+   "state": "validated",
+   "checksum": "sha256:7776741e309c1870c77ba857366577f34d907c0ee6103850c94876139e7dcc1a",
+   "created": "2026-09-24T15:13:10.654532+00:00",
+   "last_updated": "2026-09-24T15:13:10.654532+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "android-kmp-architecture": {
+   "id": "android-kmp-architecture",
+   "version": "1.0.0",
+   "description": "CIEL's framework for Android and Kotlin Multiplatform (KMP) architecture, module boundaries, and dependency inversion.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/android-kmp-architecture/",
+   "state": "validated",
+   "checksum": "sha256:257baae7c84d28dbaf97aace29f2219323570e6d46d6969e819cd4ac50983d0e",
+   "created": "2026-09-24T15:13:10.654641+00:00",
+   "last_updated": "2026-09-24T15:13:10.654641+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "animation-framework-integration": {
+   "id": "animation-framework-integration",
+   "version": "1.0.0",
+   "description": "Standards for integrating GSAP into React, Vue, and Svelte while ensuring clean memory management.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/animation-framework-integration/",
+   "state": "validated",
+   "checksum": "sha256:5b908fc5b5e7f05b8304dff0dbf1bbbf131aee9ba9635aed271a57a70e67d7ee",
+   "created": "2026-09-24T15:13:10.654758+00:00",
+   "last_updated": "2026-09-24T15:13:10.654758+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "animation-performance-utils": {
+   "id": "animation-performance-utils",
+   "version": "1.0.0",
+   "description": "Performance optimization and math utilities for high-performance JS animations.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/animation-performance-utils/",
+   "state": "validated",
+   "checksum": "sha256:67f6ae5951a3e02ea3fbeec2239fb8eb87229e2717ec0c20b83ac07eb4f5911b",
+   "created": "2026-09-24T15:13:10.654880+00:00",
+   "last_updated": "2026-09-24T15:13:10.654880+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "api-backend-development": {
+   "id": "api-backend-development",
+   "version": "1.0.0",
+   "description": "CIEL's standards for REST API design, backend architecture, and server-side patterns.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/api-backend-development/",
+   "state": "validated",
+   "checksum": "sha256:12261bcc4513a2bd8946d89db1e6633277f005cc7fa6d6fbb93060bf649ae01e",
+   "created": "2026-09-24T15:13:10.654997+00:00",
+   "last_updated": "2026-09-24T15:13:10.654997+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "architecture-decision-records": {
+   "id": "architecture-decision-records",
+   "version": "1.0.0",
+   "description": "Structured architectural decision capturing and lifecycle management.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/architecture-decision-records/",
+   "state": "validated",
+   "checksum": "sha256:3448fc22489bb8440a6cfcdab5f72c8483508a473bd9b7c58157661bf977a5c3",
+   "created": "2026-09-24T15:13:10.655172+00:00",
+   "last_updated": "2026-09-24T15:13:10.655172+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "article-writing": {
+   "id": "article-writing",
+   "version": "1.0.0",
+   "description": "Voice-aligned long-form content creation (blog posts, tutorials, newsletters).",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/article-writing/",
+   "state": "validated",
+   "checksum": "sha256:1862fc7403666b6ab7987032bf9c59da59b59a207310a382d7b6e74d59fe4fce",
+   "created": "2026-09-24T15:13:10.655402+00:00",
+   "last_updated": "2026-09-24T15:13:10.655402+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "asset-design": {
+   "id": "asset-design",
+   "version": "1.0.0",
+   "description": "CIEL's unified design hub for Logo generation, Banners, Icons, and Corporate Identity (CIP).",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/asset-design/",
+   "state": "validated",
+   "checksum": "sha256:1089e4c39531cc3de35471a206372c48e41a9561a78272bea129b503598c4dd2",
+   "created": "2026-09-24T15:13:10.655575+00:00",
+   "last_updated": "2026-09-24T15:13:10.655575+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "automation-audit-ops": {
+   "id": "automation-audit-ops",
+   "version": "1.0.0",
+   "description": "An evidence-first audit protocol for inventorying, classifying, and rationalizing workspace automations.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/automation-audit-ops/",
+   "state": "validated",
+   "checksum": "sha256:c65fbae2bdef84ff8ea55129bc652253c442691d2460f8d889f60dfbf2b4bcea",
+   "created": "2026-09-24T15:13:10.655750+00:00",
+   "last_updated": "2026-09-24T15:13:10.655750+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "autonomous-3d-studio": {
+   "id": "autonomous-3d-studio",
+   "version": "2.0.0",
+   "description": "CIEL's autonomous AAA+ studio-grade 3D modeling, sculpting, retopology, UV unwrapping, PBR/MaterialX texturing, baking, procedural generation, USD composition, and engine integration engine.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/autonomous-3d-studio/",
+   "state": "validated",
+   "checksum": "sha256:39968c52c565b7ff9dd0f843c43390e819c3e1aea1f3fb792a29b90ae0100cb5",
+   "created": "2026-09-24T15:13:10.656104+00:00",
+   "last_updated": "2026-09-24T15:13:10.656104+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "autonomous-game-pipeline": {
+   "id": "autonomous-game-pipeline",
+   "version": "1.0.0",
+   "description": "CIEL's framework for autonomous game generation from natural language descriptions across Godot 4, Bevy, and Babylon.js. Builds complete games with assets and proof video.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "3",
+    "origin": "https://github.com/htdt/godogen"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/autonomous-game-pipeline/",
+   "state": "validated",
+   "checksum": "sha256:6518de3105ac5c4aa8f6408e76d7608dec33523561739591fb388fce75893066",
+   "created": "2026-09-24T15:13:10.659954+00:00",
+   "last_updated": "2026-09-24T15:13:10.659954+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "autonomous-loops": {
+   "id": "autonomous-loops",
+   "version": "1.0.0",
+   "description": "Architectural patterns for continuous, autonomous agent loops within CIEL. Defines acceptable patterns from simple sequential pipelines to DAG-driven orchestration.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/autonomous-loops/",
+   "state": "validated",
+   "checksum": "sha256:5cf93883724eb54a9486955d61a2901d7c564c952f4a246c3eed0c94fc2e2f2e",
+   "created": "2026-09-24T15:13:10.660077+00:00",
+   "last_updated": "2026-09-24T15:13:10.660077+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "autonomous-orchestration": {
+   "id": "autonomous-orchestration",
+   "version": "1.0.0",
+   "description": "CIEL's framework for multi-agent orchestration, crons, and isolated worktree execution.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/autonomous-orchestration/",
+   "state": "validated",
+   "checksum": "sha256:07c3fd4383e3316e78e6760fc91a1c0882ac209d70522f817fa570c64edc1ce5",
+   "created": "2026-09-24T15:13:10.660186+00:00",
+   "last_updated": "2026-09-24T15:13:10.660186+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "billing-and-burn-ops": {
+   "id": "billing-and-burn-ops",
+   "version": "1.0.0",
+   "description": "CIEL's framework for revenue truth and token-burn auditing.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/billing-and-burn-ops/",
+   "state": "validated",
+   "checksum": "sha256:73c9f918608f7e6740c95ae9710a05d80e50bdec27de1fe33c6af5f321d56331",
+   "created": "2026-09-24T15:13:10.660289+00:00",
+   "last_updated": "2026-09-24T15:13:10.660289+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "billing-and-monitoring": {
+   "id": "billing-and-monitoring",
+   "version": "1.0.0",
+   "description": "CIEL's framework for customer billing remediation and operational dashboards.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/billing-and-monitoring/",
+   "state": "validated",
+   "checksum": "sha256:fa30048dcfe7cd9e84f6cb13111e1fe89406d93df77c69d7bb49b37cd697f09a",
+   "created": "2026-09-24T15:13:10.660407+00:00",
+   "last_updated": "2026-09-24T15:13:10.660407+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "blender-hard-surface-modeling": {
+   "id": "blender-hard-surface-modeling",
+   "version": "1.0.0",
+   "description": "Hard surface modeling in Blender via blender-mcp — boolean/bevel workflow, point-to-point construction, Blender 5.x API gotchas, and agent operational pitfalls learned the hard way.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": 0,
+    "origin": "local"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/blender-hard-surface-modeling/",
+   "state": "validated",
+   "checksum": "sha256:face2f8ec729909c1eaab091d12b3a60a20522829041da59e6910abd0ab7a81c",
+   "created": "2026-09-29T01:22:06.215163+00:00",
+   "last_updated": "2026-09-29T01:22:06.215163+00:00",
+   "runtimes": []
+  },
+  "blender-organic-modeling": {
+   "id": "blender-organic-modeling",
+   "version": "1.0.0",
+   "description": "Organic/character modeling in Blender via blender-mcp — sculpt-first pipeline, quad topology & edge flow, retopology, rigging math that actually works, Blender 5.x animation API changes.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": 0,
+    "origin": "local"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/blender-organic-modeling/",
+   "state": "validated",
+   "checksum": "sha256:60fa66d9a3e1979f81d73a96f9979fea068a8ff95707c6c356a9dff8e58abf2a",
+   "created": "2026-09-29T01:22:06.215333+00:00",
+   "last_updated": "2026-09-29T01:22:06.215333+00:00",
+   "runtimes": []
+  },
+  "blueprint": {
+   "id": "blueprint",
+   "version": "1.0.0",
+   "description": "CIEL's framework for multi-session construction planning. Turns a one-line objective into a step-by-step plan with adversarial review gates, dependency graphs, parallel step detection, and self-contained per-step context briefs.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "blueprint"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/blueprint/",
+   "state": "validated",
+   "checksum": "sha256:cc0ca5305ff88c718df0915a3fdf9bf91d61b480f00e0e143134931504746467",
+   "created": "2026-09-24T15:13:10.660752+00:00",
+   "last_updated": "2026-09-24T15:13:10.660752+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "brag": {
+   "id": "brag",
+   "version": "0.4.0",
+   "description": "Turn the current project website into a short, polished, shareable launch video using Hyperframes. Use when someone says \"/brag\", \"let's brag about this\", \"make a launch video\", \"turn this into a video\", or wants to share what they built. Reads the project code directly — no live URL or screenshots needed.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "3",
+    "origin": "https://github.com/latent-spaces/brag",
+    "commit": "c893c5ed52aed84e3e2ee56787de869fccdae6b0",
+    "license": "MIT",
+    "author": "Shunit Haviv Hakimi"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/brag/",
+   "state": "sandboxed",
+   "checksum": "sha256:c9e3eca4a1cae6b2e66c4ec31ba7b20233ff9c7f83d77d5c220c6473f4e4ff28",
+   "created": "2026-09-29T02:17:57.145621+00:00",
+   "last_updated": "2026-09-29T02:16:59+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": [],
+    "- \"python+librosa (optional": "cue analysis for non-bundled tracks)"
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "brag-slim": {
+   "id": "brag-slim",
+   "version": "0.4.0",
+   "description": "Turn a project directory or a website URL into a short, shareable launch video with music, motion, and share copy. One file, no bundled assets — built entirely by the model with the tools already on the machine. Use when someone says \"/brag-slim\", \"let's /brag about this\", \"brag about <url>\", \"make a launch video\", or wants to show off what they built. If the /brag skill is also installed, let /brag handle those phrases; it hands off here on Opus 5.5.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "3",
+    "origin": "https://github.com/latent-spaces/brag",
+    "commit": "c893c5ed52aed84e3e2ee56787de869fccdae6b0",
+    "license": "MIT",
+    "author": "Shunit Haviv Hakimi"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/brag-slim/",
+   "state": "sandboxed",
+   "checksum": "sha256:42df60b739fcc5e93b2d740bca772dcde3af91fefecee6493af9388110d54e85",
+   "created": "2026-09-29T02:17:57.254370+00:00",
+   "last_updated": "2026-09-29T02:16:59+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "brainstorming": {
+   "id": "brainstorming",
+   "version": "1.0.0",
+   "description": "Pre-implementation exploration of intent, requirements, and architectural design.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/brainstorming/",
+   "state": "validated",
+   "checksum": "sha256:a98c13c4f53ddeffbd6c0134b47e590c66acd25e39845fb51efce5798274467b",
+   "created": "2026-09-24T15:13:10.660874+00:00",
+   "last_updated": "2026-09-24T15:13:10.660874+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "brand-identity": {
+   "id": "brand-identity",
+   "version": "1.0.0",
+   "description": "CIEL's framework for brand voice, visual identity standards, and asset management.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/brand-identity/",
+   "state": "validated",
+   "checksum": "sha256:70405ddcb252092a7ebe5593946f3117873854f6e654ea485e56b0b36e84a3f9",
+   "created": "2026-09-24T15:13:10.660992+00:00",
+   "last_updated": "2026-09-24T15:13:10.660992+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "ciel": {
+   "id": "ciel",
+   "version": "1.0.0",
+   "description": "Autonomous partner intelligence and master cognitive orchestration layer for software engineering, deep research, AAA+ 3D spatial modeling, and multi-agent coordination. Use when orchestrating complex workflows, architecting multi-domain systems, routing tasks through specialized specialist guilds, conducting rigorous self-improvement and verification, managing long-term memory, or deliberating decisions with the Council of Five.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "ciel"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/ciel/",
+   "state": "validated",
+   "checksum": "sha256:a33f07489d658a86ea891a110787a853633e388796fcd5af1d40ae8ff21f4b22",
+   "created": "2026-09-24T15:13:10.663467+00:00",
+   "last_updated": "2026-09-24T15:13:10.663467+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "ciel-artifact-management": {
+   "id": "ciel-artifact-management",
+   "version": "1.0.0",
+   "description": "CIEL's framework for isolated, structured storage of plans, audits, and ephemeral reasoning data.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/ciel-artifact-management/",
+   "state": "validated",
+   "checksum": "sha256:56328cbcfc3f0052600deb661aa8d7ba90b6b03ff14bc41115d936a4b9fa322a",
+   "created": "2026-09-24T15:13:10.661220+00:00",
+   "last_updated": "2026-09-24T15:13:10.661220+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "ciel-documentation-engine": {
+   "id": "ciel-documentation-engine",
+   "version": "1.0.0",
+   "description": "CIEL's framework for high-integrity documentation generation, validation, and semantic indexing.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/ciel-documentation-engine/",
+   "state": "validated",
+   "checksum": "sha256:4865d5440c72069bc873927deb0ec6527be62344ea23eb283f36c17f8e66480f",
+   "created": "2026-09-24T15:13:10.661335+00:00",
+   "last_updated": "2026-09-24T15:13:10.661335+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "ciel-frontend-and-hooks": {
+   "id": "ciel-frontend-and-hooks",
+   "version": "1.0.0",
+   "description": "CIEL's framework for React patterns and local rule enforcement via Hookify.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/ciel-frontend-and-hooks/",
+   "state": "validated",
+   "checksum": "sha256:5bb2786e016a5973c96823e0998f7b1073564bca5d993579e24380cebab74c4d",
+   "created": "2026-09-24T15:13:10.661441+00:00",
+   "last_updated": "2026-09-24T15:13:10.661441+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "ciel-hitl-protocol": {
+   "id": "ciel-hitl-protocol",
+   "version": "1.0.0",
+   "description": "CIEL's framework for Human-in-the-Loop escalation, risk assessment, and decision gating.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/ciel-hitl-protocol/",
+   "state": "validated",
+   "checksum": "sha256:fff8723610c5a3281f3ce2e3bec134b9edc482b818b2554a061a6b54fe77140b",
+   "created": "2026-09-24T15:13:10.661560+00:00",
+   "last_updated": "2026-09-24T15:13:10.661560+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "ciel-internal-ops": {
+   "id": "ciel-internal-ops",
+   "version": "1.0.0",
+   "description": "Meta-operations for CIEL configuration, LLM cost management, and parallel workflows.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/ciel-internal-ops/",
+   "state": "validated",
+   "checksum": "sha256:4d1f008d06045ef10ed8adc5e1c52729d2a725ecd5c4f3d8ad530be72d74eef4",
+   "created": "2026-09-24T15:13:10.661666+00:00",
+   "last_updated": "2026-09-24T15:13:10.661666+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "ciel-knowledge-and-memory": {
+   "id": "ciel-knowledge-and-memory",
+   "version": "1.0.0",
+   "description": "CIEL's framework for multi-layer knowledge ingestion, semantic memory search, and structural code exploration.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/ciel-knowledge-and-memory/",
+   "state": "validated",
+   "checksum": "sha256:aaef4aedac2c0faca76a65c9645f9c8f076b4808a6483f22e4f6f0777da2fbaa",
+   "created": "2026-09-24T15:13:10.661894+00:00",
+   "last_updated": "2026-09-24T15:13:10.661894+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "ciel-meta-and-utility": {
+   "id": "ciel-meta-and-utility",
+   "version": "1.0.0",
+   "description": "CIEL's framework for skill discovery, worktrees, and capability auditing.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/ciel-meta-and-utility/",
+   "state": "validated",
+   "checksum": "sha256:b754e56b8fb297f857d4febd120a228e855c3ef4f53a987205082654bf1806cd",
+   "created": "2026-09-24T15:13:10.661999+00:00",
+   "last_updated": "2026-09-24T15:13:10.661999+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "ciel-meta-operations": {
+   "id": "ciel-meta-operations",
+   "version": "1.0.0",
+   "description": "CIEL's framework for API standards, UI state auditing, and system configuration.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/ciel-meta-operations/",
+   "state": "validated",
+   "checksum": "sha256:ca1ccdfa3af5e6db3888b7e402e28127b0231ce345447030fbce62967f9bdb7b",
+   "created": "2026-09-24T15:13:10.662106+00:00",
+   "last_updated": "2026-09-24T15:13:10.662106+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "ciel-ml-and-data-patterns": {
+   "id": "ciel-ml-and-data-patterns",
+   "version": "1.0.0",
+   "description": "CIEL's framework for PyTorch ML patterns and Postgres data optimization.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/ciel-ml-and-data-patterns/",
+   "state": "validated",
+   "checksum": "sha256:8bc67fe037d88227869903705634368d926b2c5cd2c482721a666022a6dd816b",
+   "created": "2026-09-24T15:13:10.662211+00:00",
+   "last_updated": "2026-09-24T15:13:10.662211+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "ciel-orchestration-and-routing": {
+   "id": "ciel-orchestration-and-routing",
+   "version": "1.0.0",
+   "description": "CIEL's master routing layer for task classification and multi-agent specialist access.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/ciel-orchestration-and-routing/",
+   "state": "validated",
+   "checksum": "sha256:09e3d8880aaa197d6944d19a81f6333fd2912104db5828a305b969e419f33df5",
+   "created": "2026-09-24T15:13:10.662320+00:00",
+   "last_updated": "2026-09-24T15:13:10.662320+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "ciel-project-scaffolder": {
+   "id": "ciel-project-scaffolder",
+   "version": "1.0.0",
+   "description": "CIEL's framework for standardized project initialization, module creation, and boilerplate management.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/ciel-project-scaffolder/",
+   "state": "validated",
+   "checksum": "sha256:995f5f21db03429039a70ba77f3350aae4b9a97e562432271629a61d72fe9228",
+   "created": "2026-09-24T15:13:10.662424+00:00",
+   "last_updated": "2026-09-24T15:13:10.662424+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "ciel-quality-and-verification": {
+   "id": "ciel-quality-and-verification",
+   "version": "1.0.0",
+   "description": "CIEL's framework for evidence-first verification, TDD, and write-time quality enforcement.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/ciel-quality-and-verification/",
+   "state": "validated",
+   "checksum": "sha256:448ae097fe359ba8e03614e2111f9db6a4cea33df3b270cd67aa2c789d254d73",
+   "created": "2026-09-24T15:13:10.662659+00:00",
+   "last_updated": "2026-09-24T15:13:10.662659+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "ciel-review-and-adversarial": {
+   "id": "ciel-review-and-adversarial",
+   "version": "1.0.0",
+   "description": "CIEL's adversarial review framework for rigorous code review, security auditing, and adversarial testing.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/ciel-review-and-adversarial/",
+   "state": "validated",
+   "checksum": "sha256:742fccc797f8310039479011b32f15c2a14545f0798d42c0b351a414a0322409",
+   "created": "2026-09-24T15:13:10.662779+00:00",
+   "last_updated": "2026-09-24T15:13:10.662779+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "ciel-root-cause-debugger": {
+   "id": "ciel-root-cause-debugger",
+   "version": "1.0.0",
+   "description": "CIEL's framework for systematic error tracing, log analysis, and empirical bug fixing.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/ciel-root-cause-debugger/",
+   "state": "validated",
+   "checksum": "sha256:43676f7816b73abb8d40b210bf54e6a24661e3631648f643b8adf8e224426fae",
+   "created": "2026-09-24T15:13:10.662893+00:00",
+   "last_updated": "2026-09-24T15:13:10.662893+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "ciel-security-and-design": {
+   "id": "ciel-security-and-design",
+   "version": "1.0.0",
+   "description": "CIEL's framework for Solidity security and visual design systems.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/ciel-security-and-design/",
+   "state": "validated",
+   "checksum": "sha256:c22fc465d60b7d0c5806b54e8639d585f05a6dfddad791690a0e301578753fbb",
+   "created": "2026-09-24T15:13:10.662997+00:00",
+   "last_updated": "2026-09-24T15:13:10.662997+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "ciel-skill-engineering": {
+   "id": "ciel-skill-engineering",
+   "version": "1.0.0",
+   "description": "CIEL's meta-framework for skill creation, writing standards, and self-reproduction.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/ciel-skill-engineering/",
+   "state": "validated",
+   "checksum": "sha256:477f72f563baec3d05a3146e7c28806524d9b126a651fb526c362a7a70efa8ea",
+   "created": "2026-09-24T15:13:10.663112+00:00",
+   "last_updated": "2026-09-24T15:13:10.663112+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "ciel-swarm-orchestration": {
+   "id": "ciel-swarm-orchestration",
+   "version": "1.0.0",
+   "description": "CIEL's framework for multi-agent coordination, task decomposition, and parallel execution.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/ciel-swarm-orchestration/",
+   "state": "validated",
+   "checksum": "sha256:c8ee58c54a5986b3c7697b6c8b58c1d0ece8ae04fef16bbdefad6b15e6f453ed",
+   "created": "2026-09-24T15:13:10.663231+00:00",
+   "last_updated": "2026-09-24T15:13:10.663231+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "ciel-swift-and-ios-standards": {
+   "id": "ciel-swift-and-ios-standards",
+   "version": "1.0.0",
+   "description": "CIEL's framework for Swift 6.2 concurrency, actor-based persistence, and Liquid Glass design.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/ciel-swift-and-ios-standards/",
+   "state": "validated",
+   "checksum": "sha256:c1172260334086eafd7e55ffa2b1970542978e290b8c4d51217dd7eb818ce227",
+   "created": "2026-09-24T15:13:10.663343+00:00",
+   "last_updated": "2026-09-24T15:13:10.663343+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "codebase-onboarding": {
+   "id": "codebase-onboarding",
+   "version": "1.0.0",
+   "description": "Systematically maps an unfamiliar codebase and generates a starter CLAUDE.md to guide future agents.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/codebase-onboarding/",
+   "state": "validated",
+   "checksum": "sha256:f90b56e8a5f57401343a810aa3df2d5db6e0257480a7c095ede5c3b8e5a898da",
+   "created": "2026-09-24T15:13:10.664167+00:00",
+   "last_updated": "2026-09-24T15:13:10.664167+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "coding-standards": {
+   "id": "coding-standards",
+   "version": "1.0.0",
+   "description": "Baseline cross-project engineering conventions for readability, immutability, and architecture.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/coding-standards/",
+   "state": "validated",
+   "checksum": "sha256:ea551ea1522b32641b03e10cfb597e7d0ede804078fd37ea6c6bea8517648947",
+   "created": "2026-09-24T15:13:10.664297+00:00",
+   "last_updated": "2026-09-24T15:13:10.664297+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "compose-multiplatform": {
+   "id": "compose-multiplatform",
+   "version": "1.0.0",
+   "description": "Shared UI patterns for Android, iOS, Desktop, and Web using Compose Multiplatform.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/compose-multiplatform/",
+   "state": "validated",
+   "checksum": "sha256:f0e96136fed17857ca56064fe92e58b39fdd0307b0782358d758bf887a8e4a5e",
+   "created": "2026-09-24T15:13:10.664406+00:00",
+   "last_updated": "2026-09-24T15:13:10.664406+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "container-and-deployment": {
+   "id": "container-and-deployment",
+   "version": "1.0.0",
+   "description": "CIEL's framework for Docker containerization and CI/CD deployment strategies.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/container-and-deployment/",
+   "state": "validated",
+   "checksum": "sha256:3f3c33d59e91dfb3ca9d6130bcde249d17cba2e4ffc0e7845e51e347c2e4e3d4",
+   "created": "2026-09-24T15:13:10.664517+00:00",
+   "last_updated": "2026-09-24T15:13:10.664517+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "content-distribution-ops": {
+   "id": "content-distribution-ops",
+   "version": "1.0.0",
+   "description": "CIEL's framework for social graph optimization, content creation, and cross-platform distribution.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/content-distribution-ops/",
+   "state": "validated",
+   "checksum": "sha256:935f81e67cf957f95e2146749c6827c8e4970acda50d8d41283dc11185b6acce",
+   "created": "2026-09-24T15:13:10.664629+00:00",
+   "last_updated": "2026-09-24T15:13:10.664629+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "content-hash-cache-pattern": {
+   "id": "content-hash-cache-pattern",
+   "version": "1.0.0",
+   "description": "An architectural pattern for caching expensive file processing results using SHA-256 content hashes.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/content-hash-cache-pattern/",
+   "state": "validated",
+   "checksum": "sha256:6b2a2de29d02d2b522648a0970ed44f3c3fceb4082bef9ac4d6cd99b1ade9771",
+   "created": "2026-09-24T15:13:10.664751+00:00",
+   "last_updated": "2026-09-24T15:13:10.664751+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "context-and-memory-ops": {
+   "id": "context-and-memory-ops",
+   "version": "1.0.0",
+   "description": "CIEL's framework for project context, voice modeling, and codebase walkthroughs.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/context-and-memory-ops/",
+   "state": "validated",
+   "checksum": "sha256:fe506fed7b5c938d84bd983c2f12f9e11fb95d6c176cf5cf065c44f902f37569",
+   "created": "2026-09-24T15:13:10.664869+00:00",
+   "last_updated": "2026-09-24T15:13:10.664869+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "context-budget": {
+   "id": "context-budget",
+   "version": "1.0.0",
+   "description": "A proactive audit tool for monitoring and optimizing token overhead across agents, skills, and MCP servers.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/context-budget/",
+   "state": "validated",
+   "checksum": "sha256:118ac4714a0d59652cf58f2bf14f0f9b86fc43327aa7c10005340850b4788e5e",
+   "created": "2026-09-24T15:13:10.664988+00:00",
+   "last_updated": "2026-09-24T15:13:10.664988+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "continuous-agent-loop": {
+   "id": "continuous-agent-loop",
+   "version": "1.0.0",
+   "description": "CIEL's canonical loop patterns for autonomous execution with quality gates and recovery controls.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/continuous-agent-loop/",
+   "state": "validated",
+   "checksum": "sha256:24003225689e3f2ca0ab9b1fa49e14a491658798c50b6a5d3aa02e065d58041f",
+   "created": "2026-09-24T15:13:10.665100+00:00",
+   "last_updated": "2026-09-24T15:13:10.665100+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "continuous-learning-v2": {
+   "id": "continuous-learning-v2",
+   "version": "1.0.0",
+   "description": "CIEL's primary evolution engine. Uses hook-driven \"Instincts\" with confidence scoring to learn project-specific and global patterns.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/continuous-learning-v2/",
+   "state": "validated",
+   "checksum": "sha256:a23ebd1c31f783964011ad8388142a94f82f88e50a4a7f45428d463e4224698d",
+   "created": "2026-09-24T15:13:10.665293+00:00",
+   "last_updated": "2026-09-24T15:13:10.665293+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "convoy-orchestration": {
+   "id": "convoy-orchestration",
+   "version": "1.0.0",
+   "description": "CIEL's framework for dependency-graph-based task distribution across parallel agent crews. Manages inter-task dependencies, checkpoints, and synthesis.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/convoy-orchestration/",
+   "state": "validated",
+   "checksum": "sha256:0319151db976d0ac1821f42146c98dc99bab7e3071bcce27ae621d08edc774d8",
+   "created": "2026-09-24T15:13:10.665423+00:00",
+   "last_updated": "2026-09-24T15:13:10.665423+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "council": {
+   "id": "council",
+   "version": "1.0.0",
+   "description": "Ciel's primary decision-making and evaluation body. Convene the Council of Five for evaluation, triage, and high-stakes decisions.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/council/",
+   "state": "validated",
+   "checksum": "sha256:bc4329052210ef8ccdfddc96364b46ea255179a7a751f2f8a29f9f2511f13de2",
+   "created": "2026-09-24T15:13:10.665568+00:00",
+   "last_updated": "2026-09-24T15:13:10.665568+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "council_runner": {
+   "id": "council_runner",
+   "version": "1.0.0",
+   "description": "Inline Council of Five deliberation runner. Load when a council-gated decision is needed — skill integration, self-modification, promotion, high-risk ops. Contains the five member personas (Coherence, Capability, Safety, Efficiency, Evolution), the Chairman synthesizer, scoring rubric, and veto conditions.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "0",
+    "origin": "ciel.skill/council",
+    "license": "MIT"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/council_runner/",
+   "state": "validated",
+   "checksum": "sha256:9bffcba9db0cbe2657c2e094301e699c5f30d1a716001c4b318d1cc01d9d7b6b",
+   "created": "2026-09-29T02:24:07.957575+00:00",
+   "last_updated": "2026-09-29T02:24:07.957575+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "cpp-development": {
+   "id": "cpp-development",
+   "version": "1.0.0",
+   "description": "Modern C++ (17/20+) standards based on Core Guidelines, RAII, and GoogleTest.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/cpp-development/",
+   "state": "validated",
+   "checksum": "sha256:b4a606a77aae963836c76556fa0b612c44601b11b5cb60a9679cfd6717936e4f",
+   "created": "2026-09-24T15:13:10.665696+00:00",
+   "last_updated": "2026-09-24T15:13:10.665696+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "crypto-and-trading-security": {
+   "id": "crypto-and-trading-security",
+   "version": "1.0.0",
+   "description": "CIEL's framework for trading agent safety, spend limits, and Solidity integrity.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/crypto-and-trading-security/",
+   "state": "validated",
+   "checksum": "sha256:01f347a4f8e50132fceea80b8d682b4e201c57c7690d778f3db27658d728df09",
+   "created": "2026-09-24T15:13:10.665826+00:00",
+   "last_updated": "2026-09-24T15:13:10.665826+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "customs-compliance": {
+   "id": "customs-compliance",
+   "version": "1.0.0",
+   "description": "Tariff classification, documentation standards, and regulatory screening for international trade.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/customs-compliance/",
+   "state": "validated",
+   "checksum": "sha256:f66f7c19853c8b1924455b5f588206ea70c197f40c669f4de44af9d0bc3d51c7",
+   "created": "2026-09-24T15:13:10.665954+00:00",
+   "last_updated": "2026-09-24T15:13:10.665954+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "database-migrations": {
+   "id": "database-migrations",
+   "version": "1.0.0",
+   "description": "Safe, zero-downtime database schema changes and data backfills.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/database-migrations/",
+   "state": "validated",
+   "checksum": "sha256:28b89c0820de6693ac9151f1d6856eef12f87878629153f0f6af5b2ee1816416",
+   "created": "2026-09-24T15:13:10.666089+00:00",
+   "last_updated": "2026-09-24T15:13:10.666089+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "design-token-architecture": {
+   "id": "design-token-architecture",
+   "version": "1.0.0",
+   "description": "CIEL's framework for three-layer design token systems (primitive→semantic→component) with CSS variables and naming conventions. Advisory only.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/design-token-architecture/",
+   "state": "validated",
+   "checksum": "sha256:ba6b8c1ffec6dec98670cb083753207ab1940744772d7a9b254bbea657fc579f",
+   "created": "2026-09-24T15:13:10.666225+00:00",
+   "last_updated": "2026-09-24T15:13:10.666225+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "dev-browser": {
+   "id": "dev-browser",
+   "version": "1.0.0",
+   "description": "CIEL's framework for browser automation with persistent page state. Navigates URLs, fills forms, takes screenshots, scrapes data, and tests web apps via sandboxed JavaScript scripts.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/dev-browser/",
+   "state": "validated",
+   "checksum": "sha256:10d238a4028a542b2cbc98006d55760132e9add33c943a71ec962033fe3b1503",
+   "created": "2026-09-24T15:13:10.666356+00:00",
+   "last_updated": "2026-09-24T15:13:10.666356+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "devin-conversation-recovery": {
+   "id": "devin-conversation-recovery",
+   "version": "1.0.0",
+   "description": "Locate and extract past Devin CLI/ACP conversations from local storage.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "2",
+    "origin": "devin-conversation-recovery"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/devin-conversation-recovery/",
+   "state": "validated",
+   "checksum": "sha256:cc320a5f53b2b700cb6f070ebf8fab5d937aede923e9c11ead57692783ee6522",
+   "created": "2026-09-29T01:22:06.216310+00:00",
+   "last_updated": "2026-09-29T01:22:06.216310+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "dispatching-parallel-agents": {
+   "id": "dispatching-parallel-agents",
+   "version": "1.0.0",
+   "description": "Core orchestration pattern for executing multiple independent tasks concurrently using isolated sub-agents.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/dispatching-parallel-agents/",
+   "state": "validated",
+   "checksum": "sha256:7a07c3b9d16c5c16d75cd6a1c98c45980961ce21af2d1c572db08940337984ad",
+   "created": "2026-09-24T15:13:10.666743+00:00",
+   "last_updated": "2026-09-24T15:13:10.666743+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "django-development": {
+   "id": "django-development",
+   "version": "1.0.0",
+   "description": "CIEL's framework for Django and DRF development, security, TDD, and CI verification.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/django-development/",
+   "state": "validated",
+   "checksum": "sha256:2bd65c9066fc5ce5a46f17473c8ad173b5cba669108cc6eff9b732b970983fb1",
+   "created": "2026-09-24T15:13:10.666852+00:00",
+   "last_updated": "2026-09-24T15:13:10.666852+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "do": {
+   "id": "do",
+   "version": "1.0.0",
+   "description": "Orchestrated, multi-agent execution of phased implementation plans.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/do/",
+   "state": "validated",
+   "checksum": "sha256:32571d40c6b870c68aab567cd9da31cadc687bbd7e82b855bf1d427e43b1e248",
+   "created": "2026-09-24T15:13:10.666967+00:00",
+   "last_updated": "2026-09-24T15:13:10.666967+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "document-and-video-intelligence": {
+   "id": "document-and-video-intelligence",
+   "version": "1.0.0",
+   "description": "Document conversion/OCR via Nutrient and technical video explainers via Manim.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/document-and-video-intelligence/",
+   "state": "validated",
+   "checksum": "sha256:7cc0c1c52758280dcbdfcd7f1be35e962f147dd6050158a3cae610217626e178",
+   "created": "2026-09-24T15:13:10.667083+00:00",
+   "last_updated": "2026-09-24T15:13:10.667083+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "dotnet-development": {
+   "id": "dotnet-development",
+   "version": "1.0.0",
+   "description": "CIEL's framework for modern .NET/C# development, dependency injection, and xUnit testing.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/dotnet-development/",
+   "state": "validated",
+   "checksum": "sha256:e936616ef29bbeb984641ac7c4ff833f8d683ead00adcfbcacbf9977acd252d4",
+   "created": "2026-09-24T15:13:10.667200+00:00",
+   "last_updated": "2026-09-24T15:13:10.667200+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "double-loop": {
+   "id": "double-loop",
+   "version": "1.0.0",
+   "description": "Double agentic loop — an outer supervisor loop (decompose, packetize, dispatch, independently verify, correct, replan) driving a bounded pool of hot-swappable inner worker loops. Use for worklists too large for one context, especially \"implement every remaining issue\" mandates.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/double-loop/",
+   "state": "validated",
+   "checksum": "sha256:41223460933d74bdd6c1f067e6e35b0570615551b5d48b056a61c4ae7b8217cd",
+   "created": "2026-09-24T15:13:10.667328+00:00",
+   "last_updated": "2026-09-24T15:13:10.667328+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "e2e-and-visual-verification": {
+   "id": "e2e-and-visual-verification",
+   "version": "1.0.0",
+   "description": "CIEL's framework for Playwright E2E testing and intentional frontend design.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/e2e-and-visual-verification/",
+   "state": "validated",
+   "checksum": "sha256:3e1d9a31d3a2f9cb28b4cc481bdc2230b9d5a83090e3f07ab8831495d8311623",
+   "created": "2026-09-24T15:13:10.667454+00:00",
+   "last_updated": "2026-09-24T15:13:10.667454+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "email-ops": {
+   "id": "email-ops",
+   "version": "1.0.0",
+   "description": "Evidence-first mailbox triage, drafting, and send-verification workflow.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/email-ops/",
+   "state": "validated",
+   "checksum": "sha256:64513045bcb7aa46874b4e36fea94fdfb91d68605dc4255f5d406d00d385d360",
+   "created": "2026-09-24T15:13:10.667574+00:00",
+   "last_updated": "2026-09-24T15:13:10.667574+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "energy-procurement": {
+   "id": "energy-procurement",
+   "version": "1.0.0",
+   "description": "C&I energy spend management, tariff optimization, and PPA evaluation.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/energy-procurement/",
+   "state": "validated",
+   "checksum": "sha256:8ea0af2257094f93dd97324d393cf7981e697bf601a64afbd14f7d02176aac59",
+   "created": "2026-09-24T15:13:10.667703+00:00",
+   "last_updated": "2026-09-24T15:13:10.667703+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "eval-harness": {
+   "id": "eval-harness",
+   "version": "1.0.0",
+   "description": "Formal evaluation framework for CIEL sessions implementing Eval-Driven Development (EDD) principles for autonomous agents.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/eval-harness/",
+   "state": "validated",
+   "checksum": "sha256:f55d30eec8cac870985d3a2f15d496482aff532771d9331c808388f962089370",
+   "created": "2026-09-24T15:13:10.667828+00:00",
+   "last_updated": "2026-09-24T15:13:10.667828+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "everything-claude-code-conventions": {
+   "id": "everything-claude-code-conventions",
+   "version": "1.0.0",
+   "description": "Core repository standards for naming, structure, commits, and workflows.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/everything-claude-code-conventions/",
+   "state": "validated",
+   "checksum": "sha256:5114183c4ce629ad36d48680a03389d6953bd68d5bd625acb1ce82da5e49411d",
+   "created": "2026-09-24T15:13:10.667946+00:00",
+   "last_updated": "2026-09-24T15:13:10.667946+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "executing-plans": {
+   "id": "executing-plans",
+   "version": "1.0.0",
+   "description": "The Orchestrator's high-level checklist for loading, reviewing, and tracking multi-step implementation plans.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/executing-plans/",
+   "state": "validated",
+   "checksum": "sha256:d0f9ec23b60a4f665255a32d6cb11cc695d346241d0877a9446e86334b6fe1f7",
+   "created": "2026-09-24T15:13:10.668066+00:00",
+   "last_updated": "2026-09-24T15:13:10.668066+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "find-skills": {
+   "id": "find-skills",
+   "version": "1.0.0",
+   "description": "Discovery and installation of agent skills from the open ecosystem.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/find-skills/",
+   "state": "validated",
+   "checksum": "sha256:85cfbf414ac02f79c3ee3e3df56015b02a34cf87ee204721633e39e28f76de75",
+   "created": "2026-09-24T15:13:10.668184+00:00",
+   "last_updated": "2026-09-24T15:13:10.668184+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "finishing-a-development-branch": {
+   "id": "finishing-a-development-branch",
+   "version": "1.0.0",
+   "description": "The Finality Layer for CIEL orchestration. Guides the completion of an epic by enforcing global verification, presenting integration options, and handling Git cleanup.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/finishing-a-development-branch/",
+   "state": "validated",
+   "checksum": "sha256:b6da759d21ce1445e544ce9aa14aa81fd1c9154bb08dee5beb61a4e8afdc608c",
+   "created": "2026-09-24T15:13:10.668307+00:00",
+   "last_updated": "2026-09-24T15:13:10.668307+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "flutter-development": {
+   "id": "flutter-development",
+   "version": "1.0.0",
+   "description": "Production-ready Dart and Flutter patterns, state management, and code review standards.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/flutter-development/",
+   "state": "validated",
+   "checksum": "sha256:81728089a17c98f772d0564e60b446cf04e842ad12a22aa366dbd420c388457f",
+   "created": "2026-09-24T15:13:10.668420+00:00",
+   "last_updated": "2026-09-24T15:13:10.668420+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "gastown-orchestration": {
+   "id": "gastown-orchestration",
+   "version": "1.0.0",
+   "description": "CIEL's framework for CLI-toolchain multi-agent orchestration via the gt/bd command suite. Manages agent lifecycles, work slinging, and crash recovery.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/gastown-orchestration/",
+   "state": "validated",
+   "checksum": "sha256:bc52c129af907886250945e7ece62a600da146434f131dae1b0e4d21ef63c4c4",
+   "created": "2026-09-24T15:13:10.668536+00:00",
+   "last_updated": "2026-09-24T15:13:10.668536+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "go-development": {
+   "id": "go-development",
+   "version": "1.0.0",
+   "description": "CIEL's framework for idiomatic Go development, table-driven testing, and performance benchmarking.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/go-development/",
+   "state": "validated",
+   "checksum": "sha256:1cabb0cc656d45f50100391a8d61d91857069d4d35ba397fd563153b06c163d2",
+   "created": "2026-09-24T15:13:10.668753+00:00",
+   "last_updated": "2026-09-24T15:13:10.668753+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "godot-engine": {
+   "id": "godot-engine",
+   "version": "1.0.0",
+   "description": "CIEL's framework for Godot 4.x engine architecture, node systems, signals, scene management, and AAA rendering patterns. Advisory and design guidance only.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "self-synthesized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/godot-engine/",
+   "state": "validated",
+   "checksum": "sha256:1902a3dc5042cfdfea254e0055666674a6e624c5fdf17a2c6414e12e82de5792",
+   "created": "2026-09-24T15:13:10.668920+00:00",
+   "last_updated": "2026-09-24T15:13:10.668920+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "godot-mcp": {
+   "id": "godot-mcp",
+   "version": "1.0.0",
+   "description": "CIEL's framework for Godot 4 MCP editor bridging, visual screenshot verification, live GDScript execution, and runtime error telemetry. Bridges LLM reasoning with live editor execution.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "self-synthesized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/godot-mcp/",
+   "state": "validated",
+   "checksum": "sha256:d48dc56a3dbb526db86f13e921b6a9db13cad7a3ec8c78c0ef1e69f1f26f82d8",
+   "created": "2026-09-24T15:13:10.669273+00:00",
+   "last_updated": "2026-09-24T15:13:10.669273+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "google-workspace-management": {
+   "id": "google-workspace-management",
+   "version": "1.0.0",
+   "description": "CIEL's framework for managing Google Drive, Docs, Sheets, and Slides via CLI and MCP tools.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/google-workspace-management/",
+   "state": "validated",
+   "checksum": "sha256:790f08ae525f961230202035f19de2f54aeb34a5da51f0d7134cfa00770531ec",
+   "created": "2026-09-24T15:13:10.669393+00:00",
+   "last_updated": "2026-09-24T15:13:10.669393+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "gsap-animation-suite": {
+   "id": "gsap-animation-suite",
+   "version": "1.0.0",
+   "description": "CIEL's unified framework for high-performance GSAP animations, timelines, and plugins.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/gsap-animation-suite/",
+   "state": "validated",
+   "checksum": "sha256:2c31c531267e768929fd39825bf05fb4c0b7ec6f9035f1f1ac2eec0aa8bb4b8f",
+   "created": "2026-09-24T15:13:10.669596+00:00",
+   "last_updated": "2026-09-24T15:13:10.669596+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "healthcare-compliance": {
+   "id": "healthcare-compliance",
+   "version": "1.0.0",
+   "description": "CIEL's framework for HIPAA (US), GDPR (EU), and PHI/PII compliance in healthcare environments.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/healthcare-compliance/",
+   "state": "validated",
+   "checksum": "sha256:34b240daf397d8659247252213815dd582659103389b32ec11eb25f5667e2b79",
+   "created": "2026-09-24T15:13:10.669695+00:00",
+   "last_updated": "2026-09-24T15:13:10.669695+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "healthcare-systems": {
+   "id": "healthcare-systems",
+   "version": "1.0.0",
+   "description": "EMR/EHR encounter workflows and Clinical Decision Support (CDSS) engine patterns.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/healthcare-systems/",
+   "state": "validated",
+   "checksum": "sha256:134b4e20c19481e2d3148381bd39bf603fd4edd1a18546fca015407df55c7eb6",
+   "created": "2026-09-24T15:13:10.669786+00:00",
+   "last_updated": "2026-09-24T15:13:10.669786+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "hermes-cli-skinning": {
+   "id": "hermes-cli-skinning",
+   "version": "1.0.0",
+   "description": "CIEL's framework for CLI theming via image-to-ASCII banner conversion. Turns any reference image into a complete CLI skin with rich-markup pictorial banner art.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "3",
+    "origin": "https://github.com/Sahil-SS9/hermes-Custom-CLI-Themes"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/hermes-cli-skinning/",
+   "state": "validated",
+   "checksum": "sha256:0ecaa1dfc97af8f6b7f5c213fe86087e422ab5c174b2c2f0a61c5dcbee097ee8",
+   "created": "2026-09-24T15:13:10.669942+00:00",
+   "last_updated": "2026-09-24T15:13:10.669942+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "hyperframes": {
+   "id": "hyperframes",
+   "version": "0.1.0",
+   "description": ">",
+   "triggers": [],
+   "tags": [],
+   "license": "Apache-2.0",
+   "source": {
+    "tier": "3",
+    "origin": "https://github.com/heygen-com/hyperframes",
+    "commit": "ea4893602a868c3a3f4c486d1dc978dcaf047427",
+    "license": "Apache-2.0",
+    "author": "HeyGen"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/hyperframes/",
+   "state": "sandboxed",
+   "checksum": "sha256:97850a516979fd28e3e0b794c177ec7c70a3c86aa2c1ee2110645ac316cc9b29",
+   "created": "2026-09-29T02:24:59.748196+00:00",
+   "last_updated": "2026-09-29T02:24:35+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "hyperframes-animation": {
+   "id": "hyperframes-animation",
+   "version": "0.1.0",
+   "description": "All animation knowledge for HyperFrames — atomic motion rules, multi-phase scene blueprints, scene transitions, broader motion-design techniques, AND the seven runtime adapters (GSAP default, plus Lottie, Three.js, Anime.js, CSS keyframes, Web Animations API, TypeGPU). Use for any motion or animation task: pick 2-4 rules and compose, or load a blueprint, or look up runtime-specific API (e.g. GSAP eases / Lottie player / Three.js mixer). Also covers auditing an existing composition's choreography (animation map) and 24 named text-animation effects. HyperFrames-native: single paused timeline, seek-safe, deterministic.",
+   "triggers": [],
+   "tags": [],
+   "license": "Apache-2.0",
+   "source": {
+    "tier": "3",
+    "origin": "https://github.com/heygen-com/hyperframes",
+    "commit": "ea4893602a868c3a3f4c486d1dc978dcaf047427",
+    "license": "Apache-2.0",
+    "author": "HeyGen"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/hyperframes-animation/",
+   "state": "sandboxed",
+   "checksum": "sha256:9e6d73bb808799b9947cb9d392e9945b8f93aff76b41d76dd402b7d3ad17f5e7",
+   "created": "2026-09-29T02:24:59.790565+00:00",
+   "last_updated": "2026-09-29T02:24:35+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "hyperframes-audio": {
+   "id": "hyperframes-audio",
+   "version": "0.1.0",
+   "description": ">",
+   "triggers": [],
+   "tags": [],
+   "license": "Apache-2.0",
+   "source": {
+    "tier": "3",
+    "origin": "https://github.com/heygen-com/hyperframes",
+    "commit": "ea4893602a868c3a3f4c486d1dc978dcaf047427",
+    "license": "Apache-2.0",
+    "author": "HeyGen"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/hyperframes-audio/",
+   "state": "sandboxed",
+   "checksum": "sha256:2fc2bc6874afe555070c87a62f1cbdafd4562abbdc43a2f84e05c878583f90d5",
+   "created": "2026-09-29T02:24:59.958456+00:00",
+   "last_updated": "2026-09-29T02:24:35+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "hyperframes-cli": {
+   "id": "hyperframes-cli",
+   "version": "0.1.0",
+   "description": ">",
+   "triggers": [],
+   "tags": [],
+   "license": "Apache-2.0",
+   "source": {
+    "tier": "3",
+    "origin": "https://github.com/heygen-com/hyperframes",
+    "commit": "ea4893602a868c3a3f4c486d1dc978dcaf047427",
+    "license": "Apache-2.0",
+    "author": "HeyGen"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/hyperframes-cli/",
+   "state": "sandboxed",
+   "checksum": "sha256:f582838154f4ffc306dbd850cb6c560567137c395e1e904b43f69b8ebc5b7cf0",
+   "created": "2026-09-29T02:24:59.943261+00:00",
+   "last_updated": "2026-09-29T02:24:35+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "hyperframes-core": {
+   "id": "hyperframes-core",
+   "version": "0.1.0",
+   "description": "The HyperFrames composition contract — build one renderable project. Use for composition structure, the `data-*` timing attributes, `class=\"clip\"`, tracks, sub-compositions, variables, framework-owned media playback, deterministic-render rules, and validation. Read before writing composition HTML.",
+   "triggers": [],
+   "tags": [],
+   "license": "Apache-2.0",
+   "source": {
+    "tier": "3",
+    "origin": "https://github.com/heygen-com/hyperframes",
+    "commit": "ea4893602a868c3a3f4c486d1dc978dcaf047427",
+    "license": "Apache-2.0",
+    "author": "HeyGen"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/hyperframes-core/",
+   "state": "sandboxed",
+   "checksum": "sha256:97ec560a0aac0ef450a10c9474d74f17f1c78bd540206d8b63ecb2adb0266961",
+   "created": "2026-09-29T02:24:59.771333+00:00",
+   "last_updated": "2026-09-29T02:24:35+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "hyperframes-creative": {
+   "id": "hyperframes-creative",
+   "version": "0.1.0",
+   "description": "Non-animation creative direction for HyperFrames videos. Use for design spec (frame.md / design.md) handling, palettes, typography, narration, beat planning, audio-reactive visuals, composition patterns, and brand / style decisions. For atomic motion patterns and scene blueprints, use `hyperframes-animation`.",
+   "triggers": [],
+   "tags": [],
+   "license": "Apache-2.0",
+   "source": {
+    "tier": "3",
+    "origin": "https://github.com/heygen-com/hyperframes",
+    "commit": "ea4893602a868c3a3f4c486d1dc978dcaf047427",
+    "license": "Apache-2.0",
+    "author": "HeyGen"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/hyperframes-creative/",
+   "state": "sandboxed",
+   "checksum": "sha256:63a251a31ceb6443ce263c9b00b5126315f3d540bb37cd3803b1d6d2cccd65aa",
+   "created": "2026-09-29T02:24:59.851615+00:00",
+   "last_updated": "2026-09-29T02:24:35+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "hyperframes-keyframes": {
+   "id": "hyperframes-keyframes",
+   "version": "0.1.0",
+   "description": ">",
+   "triggers": [],
+   "tags": [],
+   "license": "Apache-2.0",
+   "source": {
+    "tier": "3",
+    "origin": "https://github.com/heygen-com/hyperframes",
+    "commit": "ea4893602a868c3a3f4c486d1dc978dcaf047427",
+    "license": "Apache-2.0",
+    "author": "HeyGen"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/hyperframes-keyframes/",
+   "state": "sandboxed",
+   "checksum": "sha256:f0189905d6ca5f8222f7b61deeeaa5f8ac05ed3e8f5d4ba4fe8b80ef139f13e4",
+   "created": "2026-09-29T02:24:59.929503+00:00",
+   "last_updated": "2026-09-29T02:24:35+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "hyperframes-registry": {
+   "id": "hyperframes-registry",
+   "version": "0.1.0",
+   "description": "Search, install, and wire registry blocks and components into HyperFrames compositions. Use BEFORE hand-building any named visual — whenever a brief, a user, or a storyboard names a look, effect, treatment, or transition such as CRT scanlines, glitch, chromatic aberration, film grain, a shimmer sweep, a chart, a code or terminal window, a map, or a confetti burst — because roughly 400 hosted items already cover many of them and the search ranks all of them with nothing installed, no project, and no account. Also use when running hyperframes add or hyperframes catalog, installing one item or every block matching a tag, wiring an installed item into index.html, or working with hyperframes.json. Covers discovery, install locations, block sub-composition wiring, component snippet merging, and authoring a new block or component to contribute upstream (idea → scaffold → validate → PR).",
+   "triggers": [],
+   "tags": [],
+   "license": "Apache-2.0",
+   "source": {
+    "tier": "3",
+    "origin": "https://github.com/heygen-com/hyperframes",
+    "commit": "ea4893602a868c3a3f4c486d1dc978dcaf047427",
+    "license": "Apache-2.0",
+    "author": "HeyGen"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/hyperframes-registry/",
+   "state": "sandboxed",
+   "checksum": "sha256:cac4fe3376d1e7a081aabd98578a7e65e6eb00e828146908d41739859f6a86ae",
+   "created": "2026-09-29T02:24:59.971675+00:00",
+   "last_updated": "2026-09-29T02:24:35+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "hyperframes-studio": {
+   "id": "hyperframes-studio",
+   "version": "0.1.0",
+   "description": ">",
+   "triggers": [],
+   "tags": [],
+   "license": "Apache-2.0",
+   "source": {
+    "tier": "3",
+    "origin": "https://github.com/heygen-com/hyperframes",
+    "commit": "ea4893602a868c3a3f4c486d1dc978dcaf047427",
+    "license": "Apache-2.0",
+    "author": "HeyGen"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/hyperframes-studio/",
+   "state": "sandboxed",
+   "checksum": "sha256:3fc127b740b20b748081fde8d0ee604d9c4984ce639ffc4eeff6b6499f0114f3",
+   "created": "2026-09-29T02:24:59.985726+00:00",
+   "last_updated": "2026-09-29T02:24:35+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "investor-relations": {
+   "id": "investor-relations",
+   "version": "1.0.0",
+   "description": "Managing investor outreach, communications, and fundraising materials with high credibility.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/investor-relations/",
+   "state": "validated",
+   "checksum": "sha256:44d4f1352f339b714377ce371392956912b75627221cc8f30d6d3f336e4608e1",
+   "created": "2026-09-24T15:13:10.670056+00:00",
+   "last_updated": "2026-09-24T15:13:10.670056+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "java-springboot-development": {
+   "id": "java-springboot-development",
+   "version": "1.0.0",
+   "description": "CIEL's framework for Java 17+ and Spring Boot 3+ development, security, and TDD.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/java-springboot-development/",
+   "state": "validated",
+   "checksum": "sha256:850afbf28e9672a2c503cc7ae727a3f99004e6fd1e81bba67015c5b31f4c1e22",
+   "created": "2026-09-24T15:13:10.670167+00:00",
+   "last_updated": "2026-09-24T15:13:10.670167+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "jira-integration": {
+   "id": "jira-integration",
+   "version": "1.0.0",
+   "description": "CIEL's protocol for interacting with Jira issues, sprints, and development information.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/jira-integration/",
+   "state": "validated",
+   "checksum": "sha256:9f31eca205de9df09e711b4e061f80a14d5e48fc7b175b4f2989de917c2deec4",
+   "created": "2026-09-24T15:13:10.670281+00:00",
+   "last_updated": "2026-09-24T15:13:10.670281+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "json-canvas": {
+   "id": "json-canvas",
+   "version": "1.0.0",
+   "description": "CIEL's framework for JSON Canvas (.canvas) files. Build visual canvases, mind maps, and flowcharts with nodes, edges, and groups per the JSON Canvas Spec 1.0.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/json-canvas/",
+   "state": "validated",
+   "checksum": "sha256:38247aa4a445082b5f6cd5729e4dcf696bc2273b88b326039226edccc40e6e35",
+   "created": "2026-09-24T15:13:10.670459+00:00",
+   "last_updated": "2026-09-24T15:13:10.670459+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "jvm-ci-verification": {
+   "id": "jvm-ci-verification",
+   "version": "1.0.0",
+   "description": "The formal verification loop for JVM (Java/Kotlin) projects using Maven or Gradle.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/jvm-ci-verification/",
+   "state": "validated",
+   "checksum": "sha256:6859bb8219b5f8c2d0290628e76d6ed4b5a5a8527493c9a1210ca452d4cff874",
+   "created": "2026-09-24T15:13:10.670553+00:00",
+   "last_updated": "2026-09-24T15:13:10.670553+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "jvm-server-frameworks": {
+   "id": "jvm-server-frameworks",
+   "version": "1.0.0",
+   "description": "CIEL's framework for Ktor servers, Exposed ORM, and database lifecycle management.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/jvm-server-frameworks/",
+   "state": "validated",
+   "checksum": "sha256:77a496747aa905becc98a5c9eb5c36a4cbd3fa857404ed12207b14c074216d9f",
+   "created": "2026-09-24T15:13:10.670757+00:00",
+   "last_updated": "2026-09-24T15:13:10.670757+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "kotlin-development": {
+   "id": "kotlin-development",
+   "version": "1.0.0",
+   "description": "Idiomatic Kotlin patterns, structured concurrency (Coroutines/Flow), and Kotest/MockK testing.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/kotlin-development/",
+   "state": "validated",
+   "checksum": "sha256:92c8ab5327df431b6d064e5d41b2f7b0cda25d81f6dd0a452b58af9e4c8a89d1",
+   "created": "2026-09-24T15:13:10.670857+00:00",
+   "last_updated": "2026-09-24T15:13:10.670857+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "laravel-development": {
+   "id": "laravel-development",
+   "version": "1.0.0",
+   "description": "CIEL's framework for Laravel development, security, TDD, and CI verification.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/laravel-development/",
+   "state": "validated",
+   "checksum": "sha256:cd767d9c88aac0abf4312f6f6657705b5e073fd271b46e10da240134ea6cd4a4",
+   "created": "2026-09-24T15:13:10.670991+00:00",
+   "last_updated": "2026-09-24T15:13:10.670991+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "laravel-plugin-discovery": {
+   "id": "laravel-plugin-discovery",
+   "version": "1.0.0",
+   "description": "CIEL's framework for MCP-based package discovery and health evaluation. Finds, filters, and assesses Laravel packages via LaraPlugins.io MCP with health scoring and version compatibility checks.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "2",
+    "origin": "laravel-plugin-discovery"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/laravel-plugin-discovery/",
+   "state": "validated",
+   "checksum": "sha256:fccc204ec4b2b5b384c0664ac8a15402e05cb41778cb7145a639253c2d5568e2",
+   "created": "2026-09-24T15:13:10.671191+00:00",
+   "last_updated": "2026-09-24T15:13:10.671191+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "logistics-management": {
+   "id": "logistics-management",
+   "version": "1.0.0",
+   "description": "Managing freight exceptions, carrier portfolios, and rate negotiations with evidence-first resolution.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/logistics-management/",
+   "state": "validated",
+   "checksum": "sha256:56b184da521b92d3824dec19a8fd9b63337c44dbbe7db196a2c541294b7607dc",
+   "created": "2026-09-24T15:13:10.671286+00:00",
+   "last_updated": "2026-09-24T15:13:10.671286+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "make-plan": {
+   "id": "make-plan",
+   "version": "1.0.0",
+   "description": "Structured, LLM-friendly implementation planning based on approved design specs.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/make-plan/",
+   "state": "validated",
+   "checksum": "sha256:cfedbff8147adde5fb8eecb595273eaeeeb8ee17afd8373088b6cd65e08e6469",
+   "created": "2026-09-24T15:13:10.671394+00:00",
+   "last_updated": "2026-09-24T15:13:10.671394+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "market-research": {
+   "id": "market-research",
+   "version": "1.0.0",
+   "description": "Evidence-first research for competitive analysis, fund diligence, and market sizing.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/market-research/",
+   "state": "validated",
+   "checksum": "sha256:d79f9194d6fa1c2f3309aa4eb8dd66225c409c7abbaf12cb0a14de82a690b120",
+   "created": "2026-09-24T15:13:10.671500+00:00",
+   "last_updated": "2026-09-24T15:13:10.671500+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "mcp-server-patterns": {
+   "id": "mcp-server-patterns",
+   "version": "1.0.0",
+   "description": "Ciel's integration layer for Model Context Protocol (MCP) development.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/mcp-server-patterns/",
+   "state": "validated",
+   "checksum": "sha256:9eced220cce6fb03e3f8957879dbb2e12193879f2a758e705456a3dfd8309476",
+   "created": "2026-09-24T15:13:10.671639+00:00",
+   "last_updated": "2026-09-24T15:13:10.671639+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "mempalace-rs": {
+   "id": "mempalace-rs",
+   "version": "1.0.0",
+   "description": "Ciel's persistent memory and knowledge graph system (Rust-native).",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/mempalace-rs/",
+   "state": "validated",
+   "checksum": "sha256:ec4ba584e2022fa5cdee07686c39b923c1f988814862d201510b96786a5996be",
+   "created": "2026-09-24T15:13:10.671776+00:00",
+   "last_updated": "2026-09-24T15:13:10.671776+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "messages-ops": {
+   "id": "messages-ops",
+   "version": "1.0.0",
+   "description": "Evidence-first retrieval and thread management for instant messaging surfaces (iMessage, DMs, OTPs).",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/messages-ops/",
+   "state": "validated",
+   "checksum": "sha256:88d76f0b331ee2c6c4300fb272ca89ed14dffa132f95dd01ae4afd54f0e28dd3",
+   "created": "2026-09-24T15:13:10.671987+00:00",
+   "last_updated": "2026-09-24T15:13:10.671987+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "modern-js-runtimes": {
+   "id": "modern-js-runtimes",
+   "version": "1.0.0",
+   "description": "Fast JS/TS development using Bun and specialized hashing safety for Ethereum.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/modern-js-runtimes/",
+   "state": "validated",
+   "checksum": "sha256:3eec886afbbd9bce3653071021d694387b6db403ebf50c7ce6a534065b0ead78",
+   "created": "2026-09-24T15:13:10.672079+00:00",
+   "last_updated": "2026-09-24T15:13:10.672079+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "nanoclaw-repl": {
+   "id": "nanoclaw-repl",
+   "version": "1.0.0",
+   "description": "CIEL's framework for operating and extending NanoClaw, a zero-dependency session-aware REPL built on claude -p subprocesses. Manages persistent sessions, branching, and skill loading.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/nanoclaw-repl/",
+   "state": "validated",
+   "checksum": "sha256:5a1eb5e57c034b0c3963f5bf602dff53585301d609c13941e1de217125cb9983",
+   "created": "2026-09-24T15:13:10.672184+00:00",
+   "last_updated": "2026-09-24T15:13:10.672184+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "nestjs-backend-development": {
+   "id": "nestjs-backend-development",
+   "version": "1.0.0",
+   "description": "Modular NestJS architecture, DTO validation, Guards, and Type-Safe backend patterns.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/nestjs-backend-development/",
+   "state": "validated",
+   "checksum": "sha256:ceaf032aa39ef820be6886eb3487533fdcc8c1213e836e3a894b083f292522ba",
+   "created": "2026-09-24T15:13:10.672278+00:00",
+   "last_updated": "2026-09-24T15:13:10.672278+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "neural-intelligence-generation": {
+   "id": "neural-intelligence-generation",
+   "version": "1.0.0",
+   "description": "Neural search via Exa and multimodal generation via fal.ai.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/neural-intelligence-generation/",
+   "state": "validated",
+   "checksum": "sha256:8c1746c1f6f96e5bed767ad7654939a252049f0a7c4749388144bf4e7563878c",
+   "created": "2026-09-24T15:13:10.672378+00:00",
+   "last_updated": "2026-09-24T15:13:10.672378+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "nextjs-development": {
+   "id": "nextjs-development",
+   "version": "1.0.0",
+   "description": "Next.js 16+ development using Turbopack, Server Components, and bundle optimization.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/nextjs-development/",
+   "state": "validated",
+   "checksum": "sha256:b5b27a34c4ff57278f8860d19be1be52c48d7a5008d8b385d0227d8cc43a5f67",
+   "created": "2026-09-24T15:13:10.672749+00:00",
+   "last_updated": "2026-09-24T15:13:10.672749+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "nuxt-development": {
+   "id": "nuxt-development",
+   "version": "1.0.0",
+   "description": "CIEL's framework for Nuxt 4 development, hydration safety, and route-level rendering.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/nuxt-development/",
+   "state": "validated",
+   "checksum": "sha256:cdf9d8361497f14b53e1b306e4c99e939012420863c2b970b3b742d6079c4684",
+   "created": "2026-09-24T15:13:10.672838+00:00",
+   "last_updated": "2026-09-24T15:13:10.672838+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "obsidian-bases": {
+   "id": "obsidian-bases",
+   "version": "1.0.0",
+   "description": "CIEL's framework for Obsidian Bases (.base files). Build database-like views of notes with filters, formulas, summaries, and table/cards/list/map layouts.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/obsidian-bases/",
+   "state": "validated",
+   "checksum": "sha256:0f114ce7fb1e6108e5a8e9f6709ed626f9661d4cd9e52221c55ad5106aad98b1",
+   "created": "2026-09-24T15:13:10.672944+00:00",
+   "last_updated": "2026-09-24T15:13:10.672944+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "obsidian-markdown": {
+   "id": "obsidian-markdown",
+   "version": "1.0.0",
+   "description": "CIEL's framework for Obsidian Flavored Markdown. Author and edit wikilinks, embeds, callouts, properties, tags, and math/diagram syntax that extends CommonMark and GFM.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/obsidian-markdown/",
+   "state": "validated",
+   "checksum": "sha256:4bcdee7ec8bc732f6963fedb106429ce0dbb6aa6c4a26c1467c466ab30049fe9",
+   "created": "2026-09-24T15:13:10.673367+00:00",
+   "last_updated": "2026-09-24T15:13:10.673367+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "obsidian-vault-ops": {
+   "id": "obsidian-vault-ops",
+   "version": "1.0.0",
+   "description": "CIEL's framework for Obsidian vault operations via the obsidian CLI. Read, create, search, and manage notes, tasks, properties, and plugin development through a running Obsidian instance.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/obsidian-vault-ops/",
+   "state": "validated",
+   "checksum": "sha256:80f308467a6b900c21fa001eff80f20529b906678bf88d298d68e1665949fb2f",
+   "created": "2026-09-24T15:13:10.673560+00:00",
+   "last_updated": "2026-09-24T15:13:10.673560+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "openclaw-persona-forge": {
+   "id": "openclaw-persona-forge",
+   "version": "1.0.0",
+   "description": "CIEL's framework for AI persona generation. Forges complete character identities with soul descriptions, boundary rules, names, and avatar prompts via guided or gacha-random modes.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "2",
+    "origin": "openclaw-persona-forge"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/openclaw-persona-forge/",
+   "state": "validated",
+   "checksum": "sha256:0671379c0d5684331ccf638081bb3af54c6fb6ef50c1053a05418e7bee746adf",
+   "created": "2026-09-24T15:13:10.673807+00:00",
+   "last_updated": "2026-09-24T15:13:10.673807+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "opensource-and-repo-ops": {
+   "id": "opensource-and-repo-ops",
+   "version": "1.0.0",
+   "description": "CIEL's framework for public release pipelines and cross-stack repo scanning.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/opensource-and-repo-ops/",
+   "state": "validated",
+   "checksum": "sha256:2a7c4992551057f896eb41600325755392d3ab175b5be64ae817c771bf97d5b9",
+   "created": "2026-09-24T15:13:10.674019+00:00",
+   "last_updated": "2026-09-24T15:13:10.674019+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "operations-planning": {
+   "id": "operations-planning",
+   "version": "1.0.0",
+   "description": "CIEL's framework for demand forecasting, inventory replenishment, and production scheduling.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/operations-planning/",
+   "state": "validated",
+   "checksum": "sha256:6ce3943e49d754568c13df6a8cceaa7c8c161527b88e89a344b2ee5e660f6949",
+   "created": "2026-09-24T15:13:10.674189+00:00",
+   "last_updated": "2026-09-24T15:13:10.674189+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "orchestration": {
+   "id": "orchestration",
+   "version": "1.0.0",
+   "description": "High-level task decomposition, planning, and multi-agent coordination.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/orchestration/",
+   "state": "validated",
+   "checksum": "sha256:2b224fc272b5f490d1c5f8108a91dfc945b0e38b3306e725a839e86b90518a2e",
+   "created": "2026-09-24T15:13:10.674295+00:00",
+   "last_updated": "2026-09-24T15:13:10.674295+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "performance-and-qa-ops": {
+   "id": "performance-and-qa-ops",
+   "version": "1.0.0",
+   "description": "CIEL's framework for benchmarking, automated browser testing, and post-deploy monitoring.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/performance-and-qa-ops/",
+   "state": "validated",
+   "checksum": "sha256:df0816b8db530b80b2a017b9b428b32319714709c092f47895b8429ff1030c87",
+   "created": "2026-09-24T15:13:10.674394+00:00",
+   "last_updated": "2026-09-24T15:13:10.674394+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "perl-development": {
+   "id": "perl-development",
+   "version": "1.0.0",
+   "description": "Modern Perl 5.36+ idioms, taint-aware security, and Test2::V0 testing.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/perl-development/",
+   "state": "validated",
+   "checksum": "sha256:b7c368e2462e485c3248ca0ff91ce35f17f6f5808a0e43085f7578110d47d1d8",
+   "created": "2026-09-24T15:13:10.674538+00:00",
+   "last_updated": "2026-09-24T15:13:10.674538+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "plugin-release-ops": {
+   "id": "plugin-release-ops",
+   "version": "1.0.0",
+   "description": "CIEL's framework for Claude Code plugin marketplace releases. Handles version bumping across marketplace.json, plugin.json, and package.json with build verification, git tagging, and GitHub release creation.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "2",
+    "origin": "claude-code-plugin-release"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/plugin-release-ops/",
+   "state": "validated",
+   "checksum": "sha256:50abd42f5de51d6722b80104a5588ed666ea19a8463457f763762a6f7cd867f5",
+   "created": "2026-09-24T15:13:10.674805+00:00",
+   "last_updated": "2026-09-24T15:13:10.674805+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "presentation-design": {
+   "id": "presentation-design",
+   "version": "1.0.0",
+   "description": "Create zero-dependency, animation-rich HTML presentations and pitch decks from specs or PPTX.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/presentation-design/",
+   "state": "validated",
+   "checksum": "sha256:e4440945d5bf6100f9dd8d20bfbae14b6f637795c6fad7d9f309561c884cff84",
+   "created": "2026-09-24T15:13:10.675058+00:00",
+   "last_updated": "2026-09-24T15:13:10.675058+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "procedural-audio": {
+   "id": "procedural-audio",
+   "version": "1.0.0",
+   "description": "CIEL's framework for procedural audio synthesis, spatial acoustics, and generative soundscapes from scene graphs. Zero static sample dependencies — pure DSP code emission.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "0",
+    "origin": "seed"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/procedural-audio/",
+   "state": "validated",
+   "checksum": "sha256:ecc46365244189905c22cffcdf860f7565dcb2257e6f8e8a586a70f79fa82718",
+   "created": "2026-09-24T15:13:10.675195+00:00",
+   "last_updated": "2026-09-24T15:13:10.675195+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "product-capability": {
+   "id": "product-capability",
+   "version": "1.0.0",
+   "description": "Translates high-level product intent into engineering-ready capability contracts and invariants.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/product-capability/",
+   "state": "validated",
+   "checksum": "sha256:fdcab5ed3b1ff10e97e6ca29b84d21d1be2feb7699837c1c5e967ef23e837140",
+   "created": "2026-09-24T15:13:10.675298+00:00",
+   "last_updated": "2026-09-24T15:13:10.675298+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "product-lens": {
+   "id": "product-lens",
+   "version": "1.0.0",
+   "description": "A diagnostic framework for validating product direction and feature viability before engineering begins.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/product-lens/",
+   "state": "validated",
+   "checksum": "sha256:1613d9cdbba8eeb950e6d9839bf063c724f70293eb3a9666ba1435474bcbbbb0",
+   "created": "2026-09-24T15:13:10.675400+00:00",
+   "last_updated": "2026-09-24T15:13:10.675400+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "project-flow-ops": {
+   "id": "project-flow-ops",
+   "version": "1.0.0",
+   "description": "CIEL's coordination layer for triaging issues, PRs, and tasks across GitHub and internal tracking systems (e.g., Linear).",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/project-flow-ops/",
+   "state": "validated",
+   "checksum": "sha256:60febad3997c5e7bb771483dc9e0f4086e1727fc4895ea8e42632f8faa270c91",
+   "created": "2026-09-24T15:13:10.675591+00:00",
+   "last_updated": "2026-09-24T15:13:10.675591+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "prompt-and-session-engineering": {
+   "id": "prompt-and-session-engineering",
+   "version": "1.0.0",
+   "description": "CIEL's framework for prompt optimization and session management.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/prompt-and-session-engineering/",
+   "state": "validated",
+   "checksum": "sha256:06ec8db70ccf9e1db176a38f7bee016a282f56226d1cc309f03e6e9bb5150fa8",
+   "created": "2026-09-24T15:13:10.675694+00:00",
+   "last_updated": "2026-09-24T15:13:10.675694+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "python-development": {
+   "id": "python-development",
+   "version": "1.0.0",
+   "description": "Idiomatic Python patterns, modern type hints, and pytest-driven development.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/python-development/",
+   "state": "validated",
+   "checksum": "sha256:bd55ff57d9f0445180804fd9e77dcf1fd8df3ccb1719bca2e4c4933409e559e9",
+   "created": "2026-09-24T15:13:10.675785+00:00",
+   "last_updated": "2026-09-24T15:13:10.675785+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "quality-and-returns": {
+   "id": "quality-and-returns",
+   "version": "1.0.0",
+   "description": "CIEL's framework for manufacturing quality (NCR/CAPA) and reverse logistics (Returns/Grading).",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/quality-and-returns/",
+   "state": "validated",
+   "checksum": "sha256:ee805a57208f6faef4397b4b8de6f6e32d34be265e56dff2a4981339892f9077",
+   "created": "2026-09-24T15:13:10.675971+00:00",
+   "last_updated": "2026-09-24T15:13:10.675971+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "regex-vs-llm-structured-text": {
+   "id": "regex-vs-llm-structured-text",
+   "version": "1.0.0",
+   "description": "A cost-optimization framework for choosing the right tool (Regex vs. LLM) for structured text parsing.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/regex-vs-llm-structured-text/",
+   "state": "validated",
+   "checksum": "sha256:5a790f2c57c9883894ebbb6d5e04a53ed86ee8374553072a5dd29b1c0e3f47a6",
+   "created": "2026-09-24T15:13:10.676078+00:00",
+   "last_updated": "2026-09-24T15:13:10.676078+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "remotion-video-creation": {
+   "id": "remotion-video-creation",
+   "version": "1.0.0",
+   "description": "Best practices for programmable video creation using Remotion and React.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/remotion-video-creation/",
+   "state": "validated",
+   "checksum": "sha256:60a8a9fdfc76eee043150773c75c45a14f94a3c3d373bb9c742ecf7396298ca4",
+   "created": "2026-09-24T15:13:10.676558+00:00",
+   "last_updated": "2026-09-24T15:13:10.676558+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "requesting-code-review": {
+   "id": "requesting-code-review",
+   "version": "1.0.0",
+   "description": "The formal protocol for requesting and processing peer code reviews from the Auditor sub-agent during CIEL execution.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/requesting-code-review/",
+   "state": "validated",
+   "checksum": "sha256:008ecec958309c19c4c9942353eca6561108111eebf923eadd2981890b9640b3",
+   "created": "2026-09-24T15:13:10.676672+00:00",
+   "last_updated": "2026-09-24T15:13:10.676672+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "research-and-intelligence": {
+   "id": "research-and-intelligence",
+   "version": "1.0.0",
+   "description": "CIEL's framework for AI-powered scraping, deep research reports, and live documentation lookup.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/research-and-intelligence/",
+   "state": "validated",
+   "checksum": "sha256:e07af9cbf5cab436192f19ffb57d63895e73d79f3429dd0db49c4e14596bb6a8",
+   "created": "2026-09-24T15:13:10.676766+00:00",
+   "last_updated": "2026-09-24T15:13:10.676766+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "research-ops": {
+   "id": "research-ops",
+   "version": "1.0.0",
+   "description": "Ciel's evidence-first research and discovery orchestration.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/research-ops/",
+   "state": "validated",
+   "checksum": "sha256:fdcfc9ac204666d77947dfdede3b92af19e560a8f6a0caf8fcfec0799678ec8d",
+   "created": "2026-09-24T15:13:10.676870+00:00",
+   "last_updated": "2026-09-24T15:13:10.676870+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "rfc-and-unit-orchestration": {
+   "id": "rfc-and-unit-orchestration",
+   "version": "1.0.0",
+   "description": "CIEL's framework for RFC-driven feature implementation and unit-based orchestration.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/rfc-and-unit-orchestration/",
+   "state": "validated",
+   "checksum": "sha256:a78624d930089b525ed1a60787fbd1da348c4491ae17d9bf463d2dbc4d9bb921",
+   "created": "2026-09-24T15:13:10.677113+00:00",
+   "last_updated": "2026-09-24T15:13:10.677113+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "rules-distill": {
+   "id": "rules-distill",
+   "version": "1.0.0",
+   "description": "The protocol for extracting cross-cutting principles from skills and distilling them into global workspace rules.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/rules-distill/",
+   "state": "validated",
+   "checksum": "sha256:db80abf8550b4435649dd454ad7b59f56125ae13cec929478da2c8cc7ba522bd",
+   "created": "2026-09-24T15:13:10.677228+00:00",
+   "last_updated": "2026-09-24T15:13:10.677228+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "rust-development": {
+   "id": "rust-development",
+   "version": "1.0.0",
+   "description": "CIEL's framework for idiomatic Rust, zero-cost abstractions, and robust error handling.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/rust-development/",
+   "state": "validated",
+   "checksum": "sha256:f92754f4580505c175b4e5d52746fe60febe5d3a9b7520540febe8f936ba838f",
+   "created": "2026-09-24T15:13:10.677611+00:00",
+   "last_updated": "2026-09-24T15:13:10.677611+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "safety-guard": {
+   "id": "safety-guard",
+   "version": "1.0.0",
+   "description": "Primary operational failsafe. Intercepts destructive commands and enforces directory-level write freezing during autonomous orchestration.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/safety-guard/",
+   "state": "validated",
+   "checksum": "sha256:efd0441bb06872ee61a5bb726ab96678af7e17eb1442d9a5bddeab005f2fb8fd",
+   "created": "2026-09-24T15:13:10.677731+00:00",
+   "last_updated": "2026-09-24T15:13:10.677731+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "scroll-driven-animation": {
+   "id": "scroll-driven-animation",
+   "version": "1.0.0",
+   "description": "GSAP ScrollTrigger standards for scroll-linked animations, pinning, and parallax.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/scroll-driven-animation/",
+   "state": "validated",
+   "checksum": "sha256:69923c228c478875349d6ae93336fd7c348bb2a6f5993eafc552ef40aea782ff",
+   "created": "2026-09-24T15:13:10.677846+00:00",
+   "last_updated": "2026-09-24T15:13:10.677846+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "search-first": {
+   "id": "search-first",
+   "version": "1.0.0",
+   "description": "CIEL's mandated 'Research-Before-Strategy' workflow. Enforces the discovery of existing solutions, MCPs, and libraries before writing net-new code.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/search-first/",
+   "state": "validated",
+   "checksum": "sha256:28c4cd865f48634d5a4a4e2c9cb39a69a81ec1dbbe7d4feb517a25ff72295f80",
+   "created": "2026-09-24T15:13:10.677962+00:00",
+   "last_updated": "2026-09-24T15:13:10.677962+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "security-bounty-hunter": {
+   "id": "security-bounty-hunter",
+   "version": "1.0.0",
+   "description": "An offensive security framework for discovering exploitable, bounty-worthy vulnerabilities in reachable surfaces.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/security-bounty-hunter/",
+   "state": "validated",
+   "checksum": "sha256:864ecf73b36de77cb2599008b4ac887672c39a89a34a16b043a74714c4990766",
+   "created": "2026-09-24T15:13:10.678081+00:00",
+   "last_updated": "2026-09-24T15:13:10.678081+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "security-review": {
+   "id": "security-review",
+   "version": "1.0.0",
+   "description": "A comprehensive security checklist and architectural patterns for CIEL development.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/security-review/",
+   "state": "validated",
+   "checksum": "sha256:c9ade3e221d227721253189f528acc2c605630128ade14100b21eea0e05d90db",
+   "created": "2026-09-24T15:13:10.678191+00:00",
+   "last_updated": "2026-09-24T15:13:10.678191+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "security-scan": {
+   "id": "security-scan",
+   "version": "1.0.0",
+   "description": "Audits CIEL configuration for misconfigurations and prompt injection risks using AgentShield.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/security-scan/",
+   "state": "validated",
+   "checksum": "sha256:cb6704a3e3b70286fc5debdcfbe20248318e6233bcdaa512d9434b935aa81494",
+   "created": "2026-09-24T15:13:10.678315+00:00",
+   "last_updated": "2026-09-24T15:13:10.678315+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "seo-optimization": {
+   "id": "seo-optimization",
+   "version": "1.0.0",
+   "description": "Search visibility through technical correctness, performance, and intent-based keyword mapping.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/seo-optimization/",
+   "state": "validated",
+   "checksum": "sha256:1e43dc48b8ceff92387c409e7689699d58ad1f774ae2f0f8db7feb3d7ecb9a31",
+   "created": "2026-09-24T15:13:10.678435+00:00",
+   "last_updated": "2026-09-24T15:13:10.678435+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "skill-comply": {
+   "id": "skill-comply",
+   "version": "1.0.0",
+   "description": "Automated compliance measurement to verify if agents and sub-agents are actually following established skills and rules.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/skill-comply/",
+   "state": "validated",
+   "checksum": "sha256:12afebb2084bf9cacfe96b426a60abb4cdc6e802c4cabd1ba6ca6a4725ba7080",
+   "created": "2026-09-24T15:13:10.678566+00:00",
+   "last_updated": "2026-09-24T15:13:10.678566+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "social-and-lead-intelligence": {
+   "id": "social-and-lead-intelligence",
+   "version": "1.0.0",
+   "description": "CIEL's framework for lead scoring, social graph analysis, and warm-path outreach.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/social-and-lead-intelligence/",
+   "state": "validated",
+   "checksum": "sha256:58090357e364884485cd5b7d568476ccdf024bace75634128c07b2c8f66965fa",
+   "created": "2026-09-24T15:13:10.678730+00:00",
+   "last_updated": "2026-09-24T15:13:10.678730+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "social-media-automation": {
+   "id": "social-media-automation",
+   "version": "1.0.0",
+   "description": "Programmatic interaction with X (Twitter) and cross-platform content distribution.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/social-media-automation/",
+   "state": "validated",
+   "checksum": "sha256:a81e656332a70854ee0d831c224a601b3700307de601425717ade4a3a1381d63",
+   "created": "2026-09-24T15:13:10.678840+00:00",
+   "last_updated": "2026-09-24T15:13:10.678840+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "strategic-compact": {
+   "id": "strategic-compact",
+   "version": "1.0.0",
+   "description": "A phase-aware context management strategy that suggests manual compaction at logical task boundaries.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/strategic-compact/",
+   "state": "validated",
+   "checksum": "sha256:714770fb4173bdb2ef29fc55266e6c27461df1ae09bfa19e52ff49df6eef1d00",
+   "created": "2026-09-24T15:13:10.679034+00:00",
+   "last_updated": "2026-09-24T15:13:10.679034+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "subagent-driven-development": {
+   "id": "subagent-driven-development",
+   "version": "1.0.0",
+   "description": "Core CIEL orchestration pattern for delegating complex, multi-step implementation plans to ephemeral, specialized sub-agents.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/subagent-driven-development/",
+   "state": "validated",
+   "checksum": "sha256:89f532ca25fd516a5b1aa78e9b69087acedd31d61a7f1becf101d8f134fa7d6a",
+   "created": "2026-09-24T15:13:10.679336+00:00",
+   "last_updated": "2026-09-24T15:13:10.679336+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "swiftui-patterns": {
+   "id": "swiftui-patterns",
+   "version": "1.0.0",
+   "description": "Modern SwiftUI architecture, state management with @Observable, and view composition best practices.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/swiftui-patterns/",
+   "state": "validated",
+   "checksum": "sha256:a29de9e6187d6c3dd6c8ca35eb9c7abaeb1e0fbba71c58185d901479c71d0317",
+   "created": "2026-09-24T15:13:10.679451+00:00",
+   "last_updated": "2026-09-24T15:13:10.679451+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "system-integration": {
+   "id": "system-integration",
+   "version": "1.0.0",
+   "description": "Decoupling business logic using Hexagonal Architecture and building repo-native API connectors.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/system-integration/",
+   "state": "validated",
+   "checksum": "sha256:ad3052eb7b9cdf3f8c3550a9555b2c6b340814bfa004d0695ecd427c6fabb18a",
+   "created": "2026-09-24T15:13:10.679555+00:00",
+   "last_updated": "2026-09-24T15:13:10.679555+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "systematic-debugging": {
+   "id": "systematic-debugging",
+   "version": "1.0.0",
+   "description": "Ciel's core diagnostic mandate — root cause investigation before any fix.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/systematic-debugging/",
+   "state": "validated",
+   "checksum": "sha256:31ab65d86cd1ee6c7224c27fa3d0c91e245ad8ef37ae26d79b048132174aaf82",
+   "created": "2026-09-24T15:13:10.679671+00:00",
+   "last_updated": "2026-09-24T15:13:10.679671+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "team-builder": {
+   "id": "team-builder",
+   "version": "1.0.0",
+   "description": "CIEL's framework for interactive agent-team composition by capability profile. Provides a browsing and selection UX for composing ad-hoc teams from available agent personas.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/team-builder/",
+   "state": "validated",
+   "checksum": "sha256:ce5706d14bc19625253c9fc78ed2b496b030797e90a0de7d78330dcefb46a812",
+   "created": "2026-09-24T15:13:10.679781+00:00",
+   "last_updated": "2026-09-24T15:13:10.679781+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  },
+  "test-driven-development": {
+   "id": "test-driven-development",
+   "version": "1.0.0",
+   "description": "Ciel's core engineering mandate — red-green-refactor for all behavioral changes.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/test-driven-development/",
+   "state": "validated",
+   "checksum": "sha256:bf44fe6574c14b385147cabb85fc76e6d02e8ea29cb1e9fdffc8004fd5e162b1",
+   "created": "2026-09-24T15:13:10.679890+00:00",
+   "last_updated": "2026-09-24T15:13:10.679890+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "timeline-report": {
+   "id": "timeline-report",
+   "version": "1.0.0",
+   "description": "Generates a narrative history of a project's evolution using claude-mem observations.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/timeline-report/",
+   "state": "validated",
+   "checksum": "sha256:938fd879a9571f8831139594fe299518ca37dc837e4ec965a1bc7e1cd5474614",
+   "created": "2026-09-24T15:13:10.680143+00:00",
+   "last_updated": "2026-09-24T15:13:10.680143+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "token-budget-advisor": {
+   "id": "token-budget-advisor",
+   "version": "1.0.0",
+   "description": "A user-facing depth control that offers choices regarding response length and token expenditure before answering.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/token-budget-advisor/",
+   "state": "validated",
+   "checksum": "sha256:8b2c0671d9f4f6c77b153b9d39d1f5f563f8ceba433a82c8b34673d814429881",
+   "created": "2026-09-24T15:13:10.680268+00:00",
+   "last_updated": "2026-09-24T15:13:10.680268+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "ui-component-implementation": {
+   "id": "ui-component-implementation",
+   "version": "1.0.0",
+   "description": "CIEL's framework for implementing accessible UI components with shadcn/ui, Radix primitives, and Tailwind utilities. Advisory and code-generation only.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/ui-component-implementation/",
+   "state": "validated",
+   "checksum": "sha256:03bdce9d19353b973a284b1f4a52f11125c9d80e21a4fe24ec11a54ddb4ddcd4",
+   "created": "2026-09-24T15:13:10.680396+00:00",
+   "last_updated": "2026-09-24T15:13:10.680396+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "ui-demo-recording": {
+   "id": "ui-demo-recording",
+   "version": "1.0.0",
+   "description": "A protocol for recording polished UI demo videos using Playwright with injected cursors and subtitles.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/ui-demo-recording/",
+   "state": "validated",
+   "checksum": "sha256:61e94a478c2279481ed8f22cc85476a0a153fc54a2c7a4cf6b97b457357f5491",
+   "created": "2026-09-24T15:13:10.680509+00:00",
+   "last_updated": "2026-09-24T15:13:10.680509+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "ui-ux-design": {
+   "id": "ui-ux-design",
+   "version": "1.0.0",
+   "description": "CIEL's design intelligence for web and mobile. Provides style selection, UX guidelines, and accessibility standards.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/ui-ux-design/",
+   "state": "validated",
+   "checksum": "sha256:bcc2d6c8b7a6f038d02b549c3db7892f2d07abdd6cf768f1fc9421a3831d803a",
+   "created": "2026-09-24T15:13:10.680623+00:00",
+   "last_updated": "2026-09-24T15:13:10.680623+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "unified-notifications-ops": {
+   "id": "unified-notifications-ops",
+   "version": "1.0.0",
+   "description": "A hub for consolidating, classifying, and routing system and human notifications across multiple surfaces.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/unified-notifications-ops/",
+   "state": "validated",
+   "checksum": "sha256:82fc86d477766e17a1323d926a96577b2903a11f32145ca7bb6bb16637b6dbae",
+   "created": "2026-09-24T15:13:10.680838+00:00",
+   "last_updated": "2026-09-24T15:13:10.680838+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "verification-loop": {
+   "id": "verification-loop",
+   "version": "1.0.0",
+   "description": "Comprehensive E2E validation and quality gate enforcement.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/verification-loop/",
+   "state": "validated",
+   "checksum": "sha256:05f950e9a6b9470aeac7bdcbf3324809ddb0079852504b31e0e4ee26f9797e16",
+   "created": "2026-09-24T15:13:10.680957+00:00",
+   "last_updated": "2026-09-24T15:13:10.680957+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "video-operations": {
+   "id": "video-operations",
+   "version": "1.0.0",
+   "description": "CIEL's framework for AI-assisted video editing, perception, and server-side processing.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/video-operations/",
+   "state": "validated",
+   "checksum": "sha256:6bda23c313fb56dc57e787a792a61a4b4bdb6f9ffcfd3c69b0e7f728ad5d078c",
+   "created": "2026-09-24T15:13:10.681080+00:00",
+   "last_updated": "2026-09-24T15:13:10.681080+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "vulnerability-and-safety-gates": {
+   "id": "vulnerability-and-safety-gates",
+   "version": "1.0.0",
+   "description": "CIEL's framework for patient safety and cryptographic decimal integrity.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/vulnerability-and-safety-gates/",
+   "state": "validated",
+   "checksum": "sha256:837fbb70d3971cfbfe449025b0d96af07cf355487546c17176a5cbaae31c2371",
+   "created": "2026-09-24T15:13:10.681247+00:00",
+   "last_updated": "2026-09-24T15:13:10.681247+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "workflow-and-platform-ops": {
+   "id": "workflow-and-platform-ops",
+   "version": "1.0.0",
+   "description": "CIEL's framework for Git workflows, GitHub operations, and on-device LLM patterns.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "1",
+    "origin": "harmonized"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/workflow-and-platform-ops/",
+   "state": "validated",
+   "checksum": "sha256:008f8408afad62fbd712edc76e1029813338cc6c004f108f7297f07f016bb69e",
+   "created": "2026-09-24T15:13:10.681357+00:00",
+   "last_updated": "2026-09-24T15:13:10.681357+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "runtimes": []
+  },
+  "zai-cli": {
+   "id": "zai-cli",
+   "version": "1.0.0",
+   "description": "CIEL's framework for Z.AI CLI integration. Provides vision analysis, real-time web search, page reading, and GitHub code exploration via a single npx-based tool.",
+   "triggers": [],
+   "tags": [],
+   "license": "MIT",
+   "source": {
+    "tier": "2",
+    "origin": "zai-cli"
+   },
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/zai-cli/",
+   "state": "validated",
+   "checksum": "sha256:e518eb0447dec076ba2616b1435cee128acaaf4f6662ef3bd5cb8e9135e22f90",
+   "created": "2026-09-24T15:13:10.681567+00:00",
+   "last_updated": "2026-09-24T15:13:10.681567+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": []
+   },
+   "side_effects": [],
+   "runtimes": []
+  }
+ }
+}

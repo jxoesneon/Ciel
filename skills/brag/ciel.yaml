@@ -19,6 +19,7 @@ triggers:
   confidence: 0.95
 - pattern: (make|create|render).*(launch|promo|shareable).*video
   confidence: 0.8
+state: sandboxed
 source:
   tier: 3
   origin: https://github.com/latent-spaces/brag
