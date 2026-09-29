@@ -191,3 +191,19 @@ Weighted 7.25 — PASS with corrections. Applied:
 - S3 fade 13.85→14.5 · S5 fade 28.55→29.4 · S6 title 29.2→30.9
 - S13: duck moved to 87.6→91.8 (≈4s silent approach); CC-BY credit line at 102.6; fadeout 109.4 → **runtime 111s**
 - Music license verified: Happy Beats & Business Moves Vol. 12 — Sascha Ende, ende.app, CC BY 4.0 (attribution on-card + share copy)
+
+## Re-order pass (v3)
+
+Per Master's direction: the title card no longer closes the film — it now
+plays *within* the flow right after the runtime scene, and the punchline
+is the finale.
+
+- S13 title card moved to 77.3–88.3: poly bloom 77.5, duck 78.2→80.7,
+  CIEL wordmark on the 80.75 cue, URL 81.4, tags 82.5/83.6/84.7,
+  meta 85.4, credit 86.1, fade 87.8
+- S12 punchline is now the last scene, 87.6→111: poly bloom 88.0,
+  "This video? Ciel made it." lands on the 91.65 cue, URL on 96.55,
+  holds to fadeout 109.4
+- SFX retimed: hit-title → 80.75, tag ticks → 82.5/83.6/84.7,
+  hit-punch → 91.65, hit-url → 96.55
+- Poster = finale frame (t≈104) baked as frame 0
