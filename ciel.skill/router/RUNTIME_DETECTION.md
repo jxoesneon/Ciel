@@ -9,11 +9,13 @@ Fingerprint the host runtime on every invocation. Cache the result per session.
     - `GEMINI_CLI_VERSION` / `GEMINI_API_KEY` + CLI binary present → **gemini_cli**
     - `WINDSURF_VERSION` / `WINDSURF_WORKSPACE_ID` → **windsurf**
     - `DEVIN_VERSION` / `DEVIN_CLI=1` / `DEVIN_API_KEY` → **devin-for-terminal**
+    - Xcode Coding Assistant tool surface present (`xcode-tools` MCP server) → **xcode**
 2. **Filesystem fingerprints**
     - `.claude/` directory, `~/.claude/settings.json` → claude-code
     - `.gemini/` directory, `~/.gemini/settings.json` → gemini-cli
     - `.devin/` directory, `~/.config/devin/config.json` → devin-for-terminal
     - Presence of `devin` binary + Windsurf app bundle → devin-for-terminal (Windsurf channel)
+    - `.xcodeproj` / `.xcworkspace` plus Xcode tool surface → xcode
     - `AGENTS.md` at project root + `.devin/` → strong devin-for-terminal signal
 3. **Binary probes** (if `seed_skills/shell/SKILL.md` available)
     - `claude --version` success → claude-code
@@ -26,7 +28,7 @@ Fingerprint the host runtime on every invocation. Cache the result per session.
 
 ```yaml
 runtime:
-  id: claude-code | gemini-cli | windsurf | devin-for-terminal | generic
+  id: claude-code | gemini-cli | windsurf | devin-for-terminal | xcode | generic
   version: "..."
   features:
     hooks: true

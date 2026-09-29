@@ -6,6 +6,7 @@ runtimes:
 - claude_code
 - gemini_cli
 - windsurf
+- xcode
 - generic
 tags:
 - ciel

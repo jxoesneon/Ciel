@@ -22,6 +22,7 @@
 | Gemini CLI | `adapters/gemini_cli/` | full |
 | Windsurf | `adapters/windsurf/` | full |
 | Devin CLI | `adapters/devin/` | full |
+| Xcode Coding Assistant | `adapters/xcode/` | full |
 | Generic | `adapters/generic/` | probe-and-adapt |
 
 ## Runtime Dependencies

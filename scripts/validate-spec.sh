@@ -13,6 +13,8 @@ set -uo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 SKILL="$ROOT/ciel.skill"
 FAILED=0
+TMPDIR_VALIDATE="$(mktemp -d -t ciel-validate.XXXXXX)"
+trap 'rm -rf "$TMPDIR_VALIDATE"' EXIT
 
 say() { printf "\033[1;36m[validate]\033[0m %s\n" "$*"; }
 fail() {
@@ -82,6 +84,11 @@ EXPECTED_FILES=(
   "adapters/windsurf/SPACES.md"
   "adapters/windsurf/SUBAGENTS.md"
   "adapters/windsurf/WORKFLOWS.md"
+  "adapters/xcode/ADAPTER.md"
+  "adapters/xcode/CONTEXT_FILES.md"
+  "adapters/xcode/COUNCIL_INVOCATION.md"
+  "adapters/xcode/HOOKS.md"
+  "adapters/xcode/MCP.md"
   "assets/images/banner.jpg"
   "configuration/CONFIGURATION.md"
   "configuration/DEFAULTS.md"
@@ -291,26 +298,26 @@ done
 say "Checking seed-skill frontmatter..."
 for f in "$SKILL"/seed_skills/*/SKILL.md; do
   [[ -f "$f" ]] || continue
-  head -n 30 "$f" >"$f.head.$$"
+  head_file="$TMPDIR_VALIDATE/$(basename "$(dirname "$f")").seed.head"
+  head -n 30 "$f" >"$head_file"
   for key in name version description triggers tags runtimes license; do
-    if ! grep -qE "^${key}:" "$f.head.$$"; then
+    if ! grep -qE "^${key}:" "$head_file"; then
       fail "$(realpath --relative-to="$SKILL" "$f" 2>/dev/null || echo "$f"): missing frontmatter key '${key}'"
     fi
   done
-  rm -f "$f.head.$$"
 done
 
 # ---------------------------------------------------------------- External skills frontmatter
 say "Checking external skills frontmatter..."
 for f in "$ROOT"/skills/*/SKILL.md; do
   [[ -f "$f" ]] || continue
-  head -n 30 "$f" >"$f.head.$$"
+  head_file="$TMPDIR_VALIDATE/$(basename "$(dirname "$f")").external.head"
+  head -n 30 "$f" >"$head_file"
   for key in name description license; do
-    if ! grep -qE "^${key}:" "$f.head.$$"; then
+    if ! grep -qE "^${key}:" "$head_file"; then
       fail "$(realpath --relative-to="$ROOT" "$f" 2>/dev/null || echo "$f"): missing frontmatter key '${key}'"
     fi
   done
-  rm -f "$f.head.$$"
   # Ciel extension fields live in the sidecar, keeping SKILL.md spec-pure.
   sidecar="$(dirname "$f")/ciel.yaml"
   if [[ ! -f "$sidecar" ]]; then
@@ -338,13 +345,13 @@ fi
 say "Checking agents frontmatter..."
 for f in "$ROOT"/agents/*.md; do
   [[ -f "$f" ]] || continue
-  head -n 30 "$f" >"$f.head.$$"
+  head_file="$TMPDIR_VALIDATE/$(basename "$f").agent.head"
+  head -n 30 "$f" >"$head_file"
   for key in name version description; do
-    if ! grep -qE "^${key}:" "$f.head.$$"; then
+    if ! grep -qE "^${key}:" "$head_file"; then
       fail "$(realpath --relative-to="$ROOT" "$f" 2>/dev/null || echo "$f"): missing frontmatter key '${key}'"
     fi
   done
-  rm -f "$f.head.$$"
 done
 
 # ---------------------------------------------------------------- SKILL.md frontmatter (root)
