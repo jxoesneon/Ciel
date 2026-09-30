@@ -8,7 +8,7 @@ use serde_json::{json, Value};
 
 use crate::system1;
 
-fn questions() -> Value {
+pub fn questions() -> Value {
     json!({
         "risk": {
             "type": "choice",

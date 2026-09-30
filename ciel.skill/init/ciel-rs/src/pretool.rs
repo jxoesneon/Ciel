@@ -8,7 +8,7 @@
 use serde_json::{json, Map, Value};
 use std::io::{Read, Write};
 
-use crate::{attribution, paths, risk, shadow};
+use crate::{attribution, paths, risk, shadow, system1};
 
 fn get_str<'a>(v: &'a Value, keys: &[&str]) -> &'a str {
     for k in keys {
@@ -120,8 +120,8 @@ pub fn main_(runtime: &str) -> i32 {
     }
     append_activity(&entry);
 
-    // Shadow tier: detached semantic check — zero added latency.
-    shadow::shadow_async(
+    // Active System-1 pipeline integration: evaluate semantic risk in the pipeline
+    let s1_verdict = system1::evaluate_risk(
         runtime,
         &ts,
         &tool,
@@ -129,7 +129,21 @@ pub fn main_(runtime: &str) -> i32 {
         &path,
         verdict["decision"].as_str().unwrap_or("allow"),
         &verdict["rule_id"],
+        1.5,
     );
+
+    // If active check was skipped (shadow mode or offline fallback), dispatch detached shadow
+    if s1_verdict.is_none() {
+        shadow::shadow_async(
+            runtime,
+            &ts,
+            &tool,
+            &command,
+            &path,
+            verdict["decision"].as_str().unwrap_or("allow"),
+            &verdict["rule_id"],
+        );
+    }
 
     // Advisory scans: devin hook dispatches `scan: attribution`.
     if runtime != "antigravity" && verdict["scan"].as_str() == Some("attribution") && !denied {
@@ -172,29 +186,57 @@ pub fn main_(runtime: &str) -> i32 {
         }
     }
 
-    if denied {
-        let reason = verdict["reason"].as_str().unwrap_or("");
-        let reason = if reason.is_empty() {
-            "critical risk"
+    let s1_intercept = if let Some((ref choice, conf, b)) = s1_verdict {
+        b == "flag" && choice == "dangerous" && conf >= 0.20
+    } else {
+        false
+    };
+
+    if denied || s1_intercept {
+        let is_s1 = !denied && s1_intercept;
+        let reason = if is_s1 {
+            let (ref choice, conf, _) = s1_verdict.as_ref().unwrap();
+            format!("System-1 (Laya) semantic risk intercept: flagged as {choice} ({:.0}% confidence)", conf * 100.0)
         } else {
-            reason
+            let r = verdict["reason"].as_str().unwrap_or("");
+            if r.is_empty() { "critical risk".to_string() } else { r.to_string() }
         };
+
+        if is_s1 && override_ {
+            entry["event"] = json!("PreToolUse+System1Override");
+            entry["system1_override"] = json!(true);
+            append_activity(&entry);
+            if runtime == "antigravity" {
+                out(&json!({
+                    "decision": "allow",
+                    "reason": "Ciel: System-1 semantic warning overridden by allow_privileged.",
+                }));
+            }
+            return 0;
+        }
+
+        entry["risk"] = json!("critical");
+        if is_s1 {
+            entry["event"] = json!("PreToolUse+System1Intercept");
+            entry["system1"] = json!({"choice": "dangerous", "action": "intercept"});
+        }
+        append_activity(&entry);
+
+        let rule_tag = if is_s1 { "system1_semantic_risk" } else { verdict["rule_id"].as_str().unwrap_or("") };
         if runtime == "antigravity" {
             out(&json!({
                 "decision": "deny",
-                "reason": format!(
-                    "Ciel safety gate [{}]: {reason}",
-                    verdict["rule_id"].as_str().unwrap_or("")),
+                "reason": format!("Ciel safety gate [{rule_tag}]: {reason}"),
             }));
         } else {
             out(&json!({
                 "decision": "block",
                 "reason": format!(
-                    "Ciel safety gate [{}]: {reason} Run it manually outside \
-                     the agent or narrow the operation before retrying.",
-                    verdict["rule_id"].as_str().unwrap_or("")),
+                    "Ciel safety gate [{rule_tag}]: {reason} Run it manually outside the agent or set allow_privileged to override."
+                ),
             }));
         }
+        return 0;
     } else if runtime == "antigravity" {
         if override_ {
             out(&json!({

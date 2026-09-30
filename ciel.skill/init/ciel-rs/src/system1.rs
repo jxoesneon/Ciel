@@ -518,6 +518,65 @@ fn event_record(payload: &Value, result: Option<&Value>, hit: bool, latency_ms: 
     record
 }
 
+/// Synchronous pipeline evaluation of tool risk — active intercept tier.
+/// Returns Some((choice, confidence, band)) if System-1 returned an answer,
+/// or None if disabled, offline, or timed out (fail-open).
+pub fn evaluate_risk(
+    runtime: &str,
+    ts: &str,
+    tool: &str,
+    command: &str,
+    path: &str,
+    regex_decision: &str,
+    rule_id: &Value,
+    timeout_s: f64,
+) -> Option<(String, f64, &'static str)> {
+    if disabled() {
+        return None;
+    }
+    let mode = std::env::var("CIEL_SYSTEM1_MODE").unwrap_or_else(|_| "active".into());
+    if mode == "shadow" || mode == "off" {
+        return None;
+    }
+
+    let state = tool_state(tool, command, path);
+    let questions = crate::shadow::questions();
+
+    // Fast-path: consult response cache first
+    let (result, hit, latency_ms) = if let Some(cached) = cache_read(&state, &questions) {
+        (Some(cached), true, 0)
+    } else {
+        let started = Instant::now();
+        let r = ask(&state, &questions, timeout_s);
+        let elapsed = started.elapsed().as_millis() as u64;
+        if let Some(ref val) = r {
+            cache_write(&state, &questions, val);
+        }
+        (r, false, elapsed)
+    };
+
+    let payload = json!({
+        "surface": "pre_tool_risk",
+        "state": state,
+        "questions": questions,
+        "meta": {
+            "ts": ts,
+            "runtime": runtime,
+            "regex_decision": regex_decision,
+            "rule_id": rule_id,
+            "pipeline": "active",
+        }
+    });
+    append_event(&event_record(&payload, result.as_ref(), hit, latency_ms));
+
+    let r = result?;
+    let risk_answer = r.get("answers")?.get("risk")?;
+    let choice = risk_answer.get("choice")?.as_str()?.to_string();
+    let conf = risk_answer.get("confidence")?.as_f64().unwrap_or(0.0);
+    let b = band("pre_tool_risk", &r["answers"]);
+    Some((choice, conf, b))
+}
+
 fn read_stdin_payload() -> Value {
     let mut buf = String::new();
     let _ = std::io::stdin().read_to_string(&mut buf);

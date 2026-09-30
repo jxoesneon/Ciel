@@ -1,24 +1,29 @@
-# SYSTEM1 — shadow semantic tier for the pre-tool gate
+# SYSTEM1 — Integrated Decision Tier (Laya / Jev Protocol)
 
-`hooks/lib/system1.py` is the shared client for a System-1 decision model
-speaking the Jev protocol (`POST /v1/systemone`): typed `choice`/`noul`/
-`score` questions over a compact state, answered with probabilities in a
-single forward pass. No text generation. `hooks/lib/risk_policy.py` is its
-first consumer; see `architecture/ADR_20260923_SYSTEM1_DEEP_INTEGRATION.md`
-for the multi-surface lattice design.
+`system1` is the shared client for a System-1 decision model speaking the
+Jev protocol (`POST /v1/systemone`): typed `choice`/`noul`/`score` questions
+over a compact state, answered with probabilities in a single forward pass.
+No text generation.
 
-## Design: shadow first
+## Integration: Active Pipeline Tier
 
-The base checkpoints are near-chance zero-shot on this domain, so the tier is
-**strictly advisory**: it never influences `evaluate()`'s decision. Each
-pre-tool hook fires a detached `system1.py --ask` subprocess (zero added
-latency — CPU inference can take seconds; bounded to 2 in-flight with a
-response cache) that appends the verdict to
-`~/.ciel/system1/events.jsonl`, correlated to `activity.log` by `meta.ts`.
+System-1 is **fully integrated into the live execution pipeline**:
+1. **PreToolUse Safety Gate**: Synchronously evaluates semantic risk in the
+   hot path. If deterministic regex policy allows an operation but System-1
+   detects destructive, privilege-escalating, or sensitive-path danger
+   (`dangerous` choice with confidence $\ge \tau$), it **actively intercepts
+   and blocks/denies** the operation (unless overridden by `allow_privileged`).
+2. **Router**: Provides coarse-to-fine candidate ranking (`route_choice`)
+   on ambiguous or multi-skill matches before LLM reasoning fallback.
+3. **Completion Verification**: Powers `completion_check` surface to verify
+   empirical evidence against deliverables.
+4. **Council Prescreen**: Triage for council-scoped events.
 
-Promotion path: shadow → `scripts/system1_eval.py` produces
-`risk/system1_calibration.json` → fine-tune a domain checkpoint (RLCD) →
-advisory tier → confirm escalation, each step gated by the Council.
+Operating modes via `CIEL_SYSTEM1_MODE`:
+- `active` (default): Synchronous active evaluation in the pipeline with
+  fail-open protection when offline.
+- `shadow`: Detached background logging only (`events.jsonl`).
+- `off`: Completely disabled.
 
 ## Backends
 

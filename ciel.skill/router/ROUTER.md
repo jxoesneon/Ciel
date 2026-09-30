@@ -41,6 +41,12 @@ attempt FAST_PATH (legacy tag-based):
   if hit with confidence >= router.config.fast_path_floor: route, execute, score
   else fallthrough
 
+attempt SYSTEM1_ROUTE (active neural candidate ranking):
+  when trigger match is ambiguous or novel:
+    invoke System-1 route_choice(task, candidate_options)
+    if candidate selected with margin > tau: route, execute, score
+    else fallthrough
+
 attempt REASONING_PATH:
   if composable with confidence >= reasoning_floor: route, execute, score
   else fallthrough
