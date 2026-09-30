@@ -83,6 +83,91 @@ routing: it shortlists high-cardinality candidate sets lexically
 (`shortlist_options`, k=10) before the choice call — the documented
 coarse-to-fine pattern once options exceed ~20.
 
+## CLI Governance Commands
+
+### `ciel route-choice`
+
+Reads a JSON payload from stdin and outputs a `RouteVerdict` JSON:
+
+```bash
+echo '{"task": "deploy the container", "options": ["docker", "kubernetes", "podman"]}' \
+  | ciel route-choice
+```
+
+Input fields: `task` (string), `options` (array), optional `k` (shortlist size,
+default 10), optional `timeout` (seconds, default 5).
+
+Output: `{"status": "ok", "degraded": false, "choice": "docker",
+"confidence": 0.41, "margin": 0.17, "shortlist": ["docker","kubernetes","podman"],
+"model": "typed-decisions"}`.
+
+When System-1 is offline: `{"status": "ok", "degraded": true, "choice": "<first option>", ...}`.
+
+### `ciel verify-completion`
+
+Verifies that empirical evidence satisfies a stated objective:
+
+```bash
+ciel verify-completion \
+  --objective "All 43 Rust tests pass" \
+  --evidence "cargo test output: 43 passed; 0 failed" \
+  --gate enforce
+```
+
+Or via stdin JSON: `{"objective": "...", "evidence": "...", "task_class": "code_change"}`.
+
+Exit codes: `0` = pass, `2` = deny (enforce mode only), `1` = error.
+
+Output includes `status`, `degraded`, `decision` (pass/deny/fail_open_pass),
+`verified` (bool), `score` (1–5), `band`, `confidence`.
+
+### `ciel system1 --surface <name>`
+
+Override the evaluation surface for ad-hoc `--ask` / `--decide` invocations:
+
+```bash
+echo '{"state": {...}, "questions": {...}}' \
+  | ciel system1 --surface completion_check --decide
+```
+
+This selects the per-surface threshold from the calibration lattice instead of
+the default `pre_tool_risk` tau.
+
+## Multi-Surface Threshold Lattice
+
+Each evaluation surface has an independent confidence threshold (τ). The
+threshold is resolved with **4-tier precedence** (highest wins):
+
+1. **Environment per-surface**: `CIEL_SYSTEM1_TAU_PRE_TOOL_RISK=0.60`
+2. **Environment global**: `CIEL_SYSTEM1_TAU=0.70`
+3. **Policy config** (`policy.json` → `system1_thresholds`, or
+   `system1_calibration.json` → `threshold_lattice`)
+4. **Built-in defaults**:
+
+| Surface | Default τ | Purpose |
+|---------|-----------|---------|
+| `pre_tool_risk` | 0.65 | PreToolUse safety gate |
+| `router` | 0.82 | Skill routing confidence floor |
+| `completion_check` | 0.75 | Completion verification |
+| `council_prescreen` | 0.70 | Council event triage |
+
+The `_band()` function in both Rust and Python calls `surface_tau(surface)` to
+resolve the threshold, then classifies the confidence into `high` / `moderate` /
+`low` bands relative to that per-surface τ.
+
+## Fail-Open Network Hardening
+
+All HTTP calls to the System-1 endpoint use bounded connect timeouts to
+prevent pipeline stalls:
+
+- **Loopback** (127.0.0.1 / localhost): 10ms connect timeout
+- **Remote**: 50ms connect timeout
+- **curl fallback**: `--connect-timeout 0.05`
+
+When the endpoint is unreachable, the tier returns `None` (Rust) or `null`
+(Python), the `degraded` flag is set, and the pipeline proceeds — hard deny
+rules in `risk.rs` are never affected by System-1 availability.
+
 ## Local setup (laya)
 
 ```bash
@@ -134,5 +219,15 @@ checkpoints do not stay on CPU. `/health` reports `loaded`, `revisions`,
           "rule_id": null},
  "system1": {"answers": {"risk": {"choice": "dangerous",
              "confidence": 0.41}}, "model": "english"},
- "cache_hit": false, "latency_ms": 1966}
+ "cache_hit": false, "latency_ms": 1966, "degraded": false}
+```
+
+Completion verification events include `score` and `decision`:
+
+```json
+{"ts": "...", "surface": "completion_check",
+ "system1": {"answers": {"done": {"choice": "complete", "confidence": 0.88},
+             "evidence_score": {"score": 5, "confidence": 0.76}},
+             "model": "typed-decisions"},
+ "decision": "pass", "degraded": false, "latency_ms": 342}
 ```
