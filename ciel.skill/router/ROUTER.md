@@ -67,7 +67,8 @@ after execution:
 
 | Failure | Response |
 | --- | --- |
-| Fast path miss (< floor) | Fall through to reasoning. |
+| Fast path miss (< floor) | Fall through to System-1 candidate ranking (`SYSTEM1_ROUTE`). |
+| System-1 route miss (< tau, margin, or offline) | Fall through to reasoning path (`REASONING_PATH.md`). |
 | Reasoning path low confidence | Fall through to acquisition. |
 | Acquisition tier-1 miss | Tier 2, then 3. |
 | All tiers miss | Escalate to user with research summary. |

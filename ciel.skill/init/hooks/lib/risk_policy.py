@@ -193,6 +193,44 @@ def system1_verdict(tool: str, command: str, path: str,
     return answer
 
 
+def system1_evaluate_risk(
+    tool: str,
+    command: str,
+    path: str,
+    *,
+    runtime: str = "antigravity",
+    ts: str | None = None,
+    regex_decision: str = "allow",
+    rule_id: str | None = None,
+    timeout: float = 1.5,
+) -> tuple[str, float, str] | None:
+    """Synchronous pipeline evaluation of tool risk — active intercept tier.
+    Returns (choice, confidence, band) or None if disabled, offline, or timed out (fail-open)."""
+    if system1 is None:
+        return None
+    if hasattr(system1, "evaluate_risk"):
+        return system1.evaluate_risk(
+            tool,
+            command,
+            path,
+            runtime=runtime,
+            ts=ts,
+            regex_decision=regex_decision,
+            rule_id=rule_id,
+            timeout=timeout,
+        )
+    answer = system1_verdict(tool, command, path, timeout=timeout)
+    if not answer:
+        return None
+    choice = answer.get("choice")
+    try:
+        conf = float(answer.get("confidence") or 0.0)
+    except (ValueError, TypeError):
+        conf = 0.0
+    band = "flag" if choice == "dangerous" else ("pass" if conf >= 0.2 else "uncertain")
+    return (choice, conf, band)
+
+
 def system1_shadow_async(payload: dict) -> None:
     """Fire-and-forget: detached shadow evaluation via system1.ask_async so
     the hook never waits on model inference. The verdict lands in
@@ -309,7 +347,8 @@ def evaluate(
         return verdict
 
     first = non_advisory[0]
-    if (ciel_home() / "allow_privileged").exists():
+    gs = grant_state()
+    if gs.get("active"):
         verdict.update(
             decision="allow_overridden",
             rule_id=first.get("id"),

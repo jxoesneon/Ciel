@@ -1,6 +1,7 @@
 """Tests for scripts/paired_eval.py using deterministic stub runners."""
 
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -20,7 +21,7 @@ def _skill_dir(base: Path) -> Path:
     return skill
 
 
-def _run_eval(skill: Path, runner: str, *extra: str) -> tuple[int, dict]:
+def _run_eval(skill: Path, runner: str, *extra: str, env_extra: dict | None = None) -> tuple[int, dict]:
     report = skill.parent / "report.json"
     cmd = [
         sys.executable, str(PAIRED_EVAL),
@@ -30,7 +31,10 @@ def _run_eval(skill: Path, runner: str, *extra: str) -> tuple[int, dict]:
         "--report", str(report),
         *extra,
     ]
-    proc = subprocess.run(cmd, capture_output=True, text=True, check=False)
+    env = dict(os.environ)
+    if env_extra:
+        env.update(env_extra)
+    proc = subprocess.run(cmd, env=env, capture_output=True, text=True, check=False)
     return proc.returncode, json.loads(report.read_text(encoding="utf-8"))
 
 
@@ -91,6 +95,95 @@ class TestPairedEval(unittest.TestCase):
             self.assertEqual("T\n", (kept / "treatment" / "arm.txt").read_text())
             self.assertTrue((kept / "treatment" / ".devin" / "skills" / "cand-skill" / "SKILL.md").is_file())
             shutil.rmtree(kept, ignore_errors=True)
+
+    def test_completion_gate_shadow_records(self):
+        import http.server
+        import threading
+        class H(http.server.BaseHTTPRequestHandler):
+            def do_POST(self):
+                self.send_response(200)
+                self.send_header("content-type", "application/json")
+                self.end_headers()
+                self.wfile.write(json.dumps({
+                    "answers": {"done": {"type": "choice", "choice": "complete", "confidence": 0.95}},
+                    "model": "stub"
+                }).encode())
+            def log_message(self, *a):
+                pass
+        srv = http.server.HTTPServer(("127.0.0.1", 0), H)
+        threading.Thread(target=srv.serve_forever, daemon=True).start()
+        self.addCleanup(srv.shutdown)
+
+        with tempfile.TemporaryDirectory() as tmp:
+            skill = _skill_dir(Path(tmp))
+            rc, report = _run_eval(
+                skill, "touch marker.txt", "--completion-gate", "shadow",
+                env_extra={
+                    "CIEL_HOME": str(Path(tmp) / ".ciel"),
+                    "CIEL_SYSTEM1_URL": f"http://127.0.0.1:{srv.server_port}",
+                    "CIEL_SYSTEM1_KEY": "k",
+                }
+            )
+            self.assertEqual(0, rc)
+            self.assertEqual("shadow", report["completion_gate"])
+            ctrl_check = report["tasks"][0]["control"].get("completion_check")
+            self.assertIsNotNone(ctrl_check)
+            self.assertEqual("complete", ctrl_check["choice"])
+
+    def test_completion_gate_enforce_catches_false_pass(self):
+        import http.server
+        import threading
+        class H(http.server.BaseHTTPRequestHandler):
+            def do_POST(self):
+                self.send_response(200)
+                self.send_header("content-type", "application/json")
+                self.end_headers()
+                self.wfile.write(json.dumps({
+                    "answers": {"done": {"type": "choice", "choice": "incomplete", "confidence": 0.9}},
+                    "model": "stub"
+                }).encode())
+            def log_message(self, *a):
+                pass
+        srv = http.server.HTTPServer(("127.0.0.1", 0), H)
+        threading.Thread(target=srv.serve_forever, daemon=True).start()
+        self.addCleanup(srv.shutdown)
+
+        with tempfile.TemporaryDirectory() as tmp:
+            skill = _skill_dir(Path(tmp))
+            # verify.sh succeeds because runner touches marker.txt, but System-1 returns incomplete
+            rc, report = _run_eval(
+                skill, "touch marker.txt", "--completion-gate", "enforce",
+                env_extra={
+                    "CIEL_HOME": str(Path(tmp) / ".ciel"),
+                    "CIEL_SYSTEM1_URL": f"http://127.0.0.1:{srv.server_port}",
+                    "CIEL_SYSTEM1_KEY": "k",
+                }
+            )
+            # False pass was intercepted: verify_pass was True, but arm pass flipped to False
+            self.assertEqual(2, rc)
+            self.assertEqual("fail", report["verdict"])
+            ctrl = report["tasks"][0]["control"]
+            self.assertTrue(ctrl["verify_pass"])
+            self.assertFalse(ctrl["pass"])
+            self.assertTrue(ctrl.get("false_pass_detected"))
+
+    def test_completion_gate_fail_open_offline(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            skill = _skill_dir(Path(tmp))
+            # System1 pointing to unreachable port with enforce gate
+            rc, report = _run_eval(
+                skill, "touch marker.txt", "--completion-gate", "enforce",
+                env_extra={
+                    "CIEL_HOME": str(Path(tmp) / ".ciel"),
+                    "CIEL_SYSTEM1_URL": "http://127.0.0.1:9",
+                    "CIEL_SYSTEM1_TIMEOUT": "0.2",
+                }
+            )
+            # Fails open: returns pass because deterministic verify.sh passed
+            self.assertEqual(0, rc)
+            self.assertEqual("pass", report["verdict"])
+            ctrl = report["tasks"][0]["control"]
+            self.assertTrue(ctrl["pass"])
 
 
 if __name__ == "__main__":

@@ -96,6 +96,8 @@ pub fn main_(runtime: &str) -> i32 {
     let verdict = risk::evaluate(&tool, &command, &path, None, None);
     let denied = verdict["decision"] == "deny";
     let override_ = verdict["decision"] == "allow_overridden";
+    let grant = risk::grant_state();
+    let privileged = override_ || grant["active"].as_bool().unwrap_or(false);
     let ts = paths::utc_now_iso();
 
     let mut entry = json!({
@@ -132,8 +134,9 @@ pub fn main_(runtime: &str) -> i32 {
         1.5,
     );
 
-    // If active check was skipped (shadow mode or offline fallback), dispatch detached shadow
-    if s1_verdict.is_none() {
+    // In shadow mode, dispatch detached shadow (active evaluation was skipped)
+    let s1_mode = system1::mode();
+    if s1_mode == "shadow" && !system1::disabled() {
         shadow::shadow_async(
             runtime,
             &ts,
@@ -186,8 +189,13 @@ pub fn main_(runtime: &str) -> i32 {
         }
     }
 
+    let tau = std::env::var("CIEL_SYSTEM1_TAU")
+        .ok()
+        .and_then(|v| v.parse::<f64>().ok())
+        .unwrap_or(0.20);
+
     let s1_intercept = if let Some((ref choice, conf, b)) = s1_verdict {
-        b == "flag" && choice == "dangerous" && conf >= 0.20
+        b == "flag" && choice == "dangerous" && conf >= tau
     } else {
         false
     };
@@ -202,7 +210,7 @@ pub fn main_(runtime: &str) -> i32 {
             if r.is_empty() { "critical risk".to_string() } else { r.to_string() }
         };
 
-        if is_s1 && override_ {
+        if is_s1 && privileged {
             entry["event"] = json!("PreToolUse+System1Override");
             entry["system1_override"] = json!(true);
             append_activity(&entry);
@@ -215,12 +223,12 @@ pub fn main_(runtime: &str) -> i32 {
             return 0;
         }
 
-        entry["risk"] = json!("critical");
         if is_s1 {
+            entry["risk"] = json!("critical");
             entry["event"] = json!("PreToolUse+System1Intercept");
             entry["system1"] = json!({"choice": "dangerous", "action": "intercept"});
+            append_activity(&entry);
         }
-        append_activity(&entry);
 
         let rule_tag = if is_s1 { "system1_semantic_risk" } else { verdict["rule_id"].as_str().unwrap_or("") };
         if runtime == "antigravity" {
@@ -232,7 +240,7 @@ pub fn main_(runtime: &str) -> i32 {
             out(&json!({
                 "decision": "block",
                 "reason": format!(
-                    "Ciel safety gate [{rule_tag}]: {reason} Run it manually outside the agent or set allow_privileged to override."
+                    "Ciel safety gate [{rule_tag}]: {reason} Run it manually outside the agent or narrow the operation before retrying."
                 ),
             }));
         }

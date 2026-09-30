@@ -145,7 +145,9 @@ fn expand(raw: &str, home: &Path) -> String {
         if let Some(slash) = user_part.find('/') {
             let name = &user_part[..slash];
             if let Some(h) = user_home(name) {
-                return format!("{}{}", h.to_string_lossy(), &user_part[slash..]);
+                let h_str = h.to_string_lossy();
+                let trimmed = h_str.trim_end_matches('/');
+                return format!("{}{}", trimmed, &user_part[slash..]);
             }
         } else if !user_part.is_empty() {
             if let Some(h) = user_home(user_part) {
@@ -261,7 +263,13 @@ mod tests {
     fn tilde_user_resolves_via_passwd() {
         // `~root` is POSIX-universal; unknown users stay literal like Python.
         let home = Path::new("/home/tester");
-        assert_eq!(expand("~root/x", home), "/root/x");
+        let root_home = user_home("root").expect("root user exists");
+        let expected = if root_home == Path::new("/") {
+            "/x".to_string()
+        } else {
+            format!("{}/x", root_home.to_string_lossy().trim_end_matches('/'))
+        };
+        assert_eq!(expand("~root/x", home), expected);
         assert_eq!(
             expand("~ciel_no_such_user_9x/x", home),
             "~ciel_no_such_user_9x/x"

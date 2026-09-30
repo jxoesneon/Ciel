@@ -70,18 +70,21 @@ request
 │ router/ROUTER.md   │
 └────────┬───────────┘
          │
-   ┌─────┴─────────────────────────────┐
-   ▼                                    ▼
-FAST_PATH (registry hit)     REASONING_PATH (novel / ambiguous)
-                                    │
-                                    ▼
-                             ACQUISITION_PATH (gap detected)
-                                    │
-                                    ▼
-                             Council of Five (integration triage)
-                                    │
-                                    ▼
-                             Registry promote + git commit
+   ┌─────┴──────────────────────────────────────────┐
+   ▼                                                ▼
+FAST_PATH (exact/tag match)                SYSTEM1_ROUTE (neural candidate ranking)
+                                                    │ (confidence < tau or ambiguous)
+                                                    ▼
+                                           REASONING_PATH (multi-step composition)
+                                                    │
+                                                    ▼
+                                           ACQUISITION_PATH (gap detected)
+                                                    │
+                                                    ▼
+                                           Council of Five (integration triage)
+                                                    │
+                                                    ▼
+                                           Registry promote + git commit
 ```
 
 ## No AI Attribution

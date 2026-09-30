@@ -2,6 +2,12 @@
   "generated": "2026-09-23T22:58:37Z",
   "endpoint": "http://127.0.0.1:8765",
   "model": "typed-decisions",
+  "threshold_lattice": {
+    "pre_tool_risk": 0.65,
+    "router": 0.82,
+    "completion_check": 0.75,
+    "council_prescreen": 0.70
+  },
   "surfaces": {
     "pre_tool_risk": {
       "surface": "pre_tool_risk",

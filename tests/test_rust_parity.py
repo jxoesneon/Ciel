@@ -991,13 +991,19 @@ class TestOperatorParity(unittest.TestCase):
 
     def test_sanitize_redact_dry_parity(self):
         self._seed_stores(self.tmp)
+        for d in (self.tmp / ".local/share/devin/cli/transcripts",
+                  self.tmp / ".local/share/devin/cli/logs",
+                  self.ciel / "checkpoints", self.ciel):
+            if d.exists():
+                d.chmod(0o755)
         rc_py, out_py = self._py(SANITIZE_PY, "--redact", "--dry")
         # python's pass tightened store-dir perms — restore the drift so the
         # rust run reports the same count
         for d in (self.tmp / ".local/share/devin/cli/transcripts",
                   self.tmp / ".local/share/devin/cli/logs",
                   self.ciel / "checkpoints", self.ciel):
-            d.chmod(0o755)
+            if d.exists():
+                d.chmod(0o755)
         rc_rs, out_rs = run_rust("sanitize", "--redact", "--dry", env=self.env)
         self.assertEqual(json.loads(out_py), json.loads(out_rs))
         self.assertEqual(0, rc_rs)

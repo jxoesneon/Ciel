@@ -352,5 +352,90 @@ class TestDecideMain(System1TestCase):
         self.assertEqual(proc.stdout.strip(), "null")
 
 
+class TestCompletionCheck(System1TestCase):
+    def test_completion_check_complete_with_score(self):
+        srv = _serve({
+            "answers": {
+                "done": {
+                    "type": "choice",
+                    "choice": "complete",
+                    "confidence": 0.95,
+                    "probabilities": {"complete": 0.95, "incomplete": 0.05},
+                },
+                "evidence_score": {
+                    "type": "score",
+                    "score": 5,
+                    "probabilities": {"5": 0.9, "4": 0.1},
+                },
+            },
+            "model": "typed-decisions",
+        })
+        self.addCleanup(srv.shutdown)
+        os.environ["CIEL_SYSTEM1_URL"] = f"http://127.0.0.1:{srv.server_port}"
+        os.environ["CIEL_SYSTEM1_KEY"] = "k"
+
+        res = system1.completion_check(
+            objective="fix bug and run full test suite",
+            evidence="pytest passed: 100% tests green",
+            task_class="code_change",
+            with_score=True,
+            timeout=5.0,
+        )
+        self.assertIsNotNone(res)
+        self.assertEqual("complete", res["choice"])
+        self.assertEqual("pass", res["band"])
+        self.assertEqual(5, res["score"])
+        self.assertGreaterEqual(res["confidence"], 0.9)
+        self.assertEqual("typed-decisions", res["model"])
+
+        # Check logged to events.jsonl
+        log = Path(self.tmp.name) / "system1" / "events.jsonl"
+        events = [json.loads(l) for l in log.read_text().splitlines()]
+        self.assertEqual("completion_check", events[-1]["surface"])
+        self.assertEqual("pass", events[-1]["flag"])
+
+    def test_completion_check_incomplete_flags(self):
+        srv = _serve({
+            "answers": {
+                "done": {
+                    "type": "choice",
+                    "choice": "incomplete",
+                    "confidence": 0.88,
+                },
+            },
+            "model": "typed-decisions",
+        })
+        self.addCleanup(srv.shutdown)
+        os.environ["CIEL_SYSTEM1_URL"] = f"http://127.0.0.1:{srv.server_port}"
+        os.environ["CIEL_SYSTEM1_KEY"] = "k"
+
+        res = system1.completion_check(
+            objective="implement auth token validation",
+            evidence="claim: should work now, no test run",
+            task_class="code_change",
+            timeout=5.0,
+        )
+        self.assertIsNotNone(res)
+        self.assertEqual("incomplete", res["choice"])
+        self.assertEqual("flag", res["band"])
+
+    def test_completion_check_disabled_fail_open(self):
+        os.environ["CIEL_SYSTEM1_DISABLED"] = "1"
+        res = system1.completion_check(
+            objective="obj",
+            evidence="ev",
+        )
+        self.assertIsNone(res)
+
+    def test_completion_check_offline_fail_open(self):
+        os.environ["CIEL_SYSTEM1_URL"] = "http://127.0.0.1:9"
+        res = system1.completion_check(
+            objective="obj",
+            evidence="ev",
+            timeout=0.2,
+        )
+        self.assertIsNone(res)
+
+
 if __name__ == "__main__":
     unittest.main()

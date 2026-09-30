@@ -1,6 +1,6 @@
 # REASONING_PATH
 
-LLM-driven composition for novel or ambiguous requests. Invoked when the fast path misses.
+LLM-driven composition for novel or ambiguous requests. Invoked when fast path and System-1 neural candidate ranking miss or fall through.
 
 ## Goal
 

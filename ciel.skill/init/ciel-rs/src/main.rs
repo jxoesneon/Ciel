@@ -34,6 +34,8 @@ PRIMITIVES (used by shell hooks and tests):\n\
     grant-state      sentinel state + provenance JSON\n\
     secret-scan      stdin text → {hits, categories}\n\
     attribution-scan stdin command → {result, findings, mode}\n\
+    route-choice     stdin {task, options} → verdict JSON\n\
+    verify-completion [--objective ..] [--evidence ..] → verification JSON\n\
 \n\
 SESSION OPERATIONS:\n\
     watchdog [--session ID|--resume [--dry]|--sanitize-pending]\n\
@@ -86,6 +88,8 @@ fn main() -> ExitCode {
         "grant-state" => risk::grant_state_main(),
         "secret-scan" => secretscan::main_(),
         "attribution-scan" => attribution::main_(),
+        "route-choice" => system1::route_choice_main(),
+        "verify-completion" => system1::verify_completion_main(&args[1..]),
         "-h" | "--help" | "help" | "" => {
             print!("{USAGE}");
             0

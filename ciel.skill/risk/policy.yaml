@@ -11,6 +11,11 @@
 # tools: optional list of tool-name regexes (re.search, IGNORECASE); rule applies
 #        if any matches. Default: all tools.
 schema: 1
+system1_thresholds:
+  pre_tool_risk: 0.65
+  router: 0.82
+  completion_check: 0.75
+  council_prescreen: 0.70
 rules:
   - id: fork_bomb
     tier: hard

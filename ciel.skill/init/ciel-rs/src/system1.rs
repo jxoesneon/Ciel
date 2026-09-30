@@ -19,6 +19,7 @@
 
 use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
+use std::collections::HashMap;
 use std::io::{Read, Write};
 use std::net::{TcpStream, ToSocketAddrs};
 use std::path::{Path, PathBuf};
@@ -33,6 +34,77 @@ const MAX_INFLIGHT: usize = 2;
 const INFLIGHT_STALE_S: u64 = 120;
 const ASK_TIMEOUT_S: f64 = 30.0;
 const DEFAULT_TAU: f64 = 0.2;
+
+static THRESHOLDS_CACHE: std::sync::RwLock<Option<HashMap<String, f64>>> =
+    std::sync::RwLock::new(None);
+
+fn load_policy_thresholds() -> HashMap<String, f64> {
+    {
+        if let Ok(lock) = THRESHOLDS_CACHE.read() {
+            if let Some(ref m) = *lock {
+                return m.clone();
+            }
+        }
+    }
+    let mut map = HashMap::new();
+    let candidates = [
+        paths::ciel_home().join("risk").join("policy.json"),
+        paths::ciel_home().join("risk").join("system1_calibration.json"),
+    ];
+    for p in &candidates {
+        if let Ok(text) = std::fs::read_to_string(p) {
+            if let Ok(val) = serde_json::from_str::<Value>(&text) {
+                if let Some(obj) = val
+                    .get("system1_thresholds")
+                    .or_else(|| val.get("threshold_lattice"))
+                    .and_then(|v| v.as_object())
+                {
+                    for (k, v) in obj {
+                        if let Some(num) = v.as_f64() {
+                            map.insert(k.clone(), num);
+                        }
+                    }
+                    if !map.is_empty() {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    if let Ok(mut lock) = THRESHOLDS_CACHE.write() {
+        *lock = Some(map.clone());
+    }
+    map
+}
+
+pub fn surface_tau(surface: &str) -> f64 {
+    // 1. Surface-specific override: CIEL_SYSTEM1_TAU_<SURFACE>
+    let env_name = format!("CIEL_SYSTEM1_TAU_{}", surface.to_ascii_uppercase());
+    if let Ok(val) = std::env::var(&env_name) {
+        if let Ok(f) = val.parse::<f64>() {
+            return f;
+        }
+    }
+    // 2. Global override: CIEL_SYSTEM1_TAU
+    if let Ok(val) = std::env::var("CIEL_SYSTEM1_TAU") {
+        if let Ok(f) = val.parse::<f64>() {
+            return f;
+        }
+    }
+    // 3. Declarative policy.json / system1_calibration.json single source of truth
+    let thresh = load_policy_thresholds();
+    if let Some(&val) = thresh.get(surface) {
+        return val;
+    }
+    // 4. Calibrated default lattice constants
+    match surface {
+        "pre_tool_risk" => 0.65,
+        "router" | "router_selection" => 0.82,
+        "completion_check" => 0.75,
+        "council_prescreen" => 0.70,
+        _ => DEFAULT_TAU,
+    }
+}
 
 // Advisory banding per surface — mirror of SURFACE_FLAGS.
 fn surface_flag(surface: &str) -> &'static [&'static str] {
@@ -126,50 +198,206 @@ pub fn tool_state(tool: &str, command: &str, path: &str) -> Value {
     state
 }
 
-fn disabled() -> bool {
-    std::env::var_os("CIEL_SYSTEM1_DISABLED").is_some()
+pub fn disabled() -> bool {
+    if std::env::var_os("CIEL_SYSTEM1_DISABLED").is_some() {
+        return true;
+    }
+    mode() == "off"
 }
+
+struct EnvCacheEntry {
+    path: PathBuf,
+    mtime: Option<SystemTime>,
+    pairs: Vec<(String, String)>,
+    last_check: Instant,
+}
+
+static ENV_CACHE: std::sync::RwLock<Option<EnvCacheEntry>> = std::sync::RwLock::new(None);
 
 fn env_file_value(names: &[&str]) -> String {
     let env_file = paths::ciel_home().join("system1").join("env");
-    if let Ok(text) = std::fs::read_to_string(env_file) {
-        for line in text.lines() {
-            for name in names {
-                if let Some(rest) = line.strip_prefix(&format!("{name}=")) {
-                    return rest.trim().to_string();
+    let now = Instant::now();
+
+    // Fast path: if checked within the last 1000ms, reuse cache without touching filesystem metadata
+    {
+        if let Ok(lock) = ENV_CACHE.read() {
+            if let Some(ref entry) = *lock {
+                if entry.path == env_file && now.duration_since(entry.last_check) < Duration::from_millis(1000) {
+                    for name in names {
+                        for (k, v) in &entry.pairs {
+                            if k == *name {
+                                return v.clone();
+                            }
+                        }
+                    }
+                    return String::new();
                 }
+            }
+        }
+    }
+
+    let current_mtime = env_file.metadata().ok().and_then(|m| m.modified().ok());
+
+    {
+        if let Ok(lock) = ENV_CACHE.read() {
+            if let Some(ref entry) = *lock {
+                if entry.path == env_file && entry.mtime == current_mtime {
+                    for name in names {
+                        for (k, v) in &entry.pairs {
+                            if k == *name {
+                                return v.clone();
+                            }
+                        }
+                    }
+                    return String::new();
+                }
+            }
+        }
+    }
+
+    let mut lock = ENV_CACHE.write().unwrap_or_else(|e| e.into_inner());
+    if let Some(ref entry) = *lock {
+        if entry.path == env_file && entry.mtime == current_mtime {
+            for name in names {
+                for (k, v) in &entry.pairs {
+                    if k == *name {
+                        return v.clone();
+                    }
+                }
+            }
+            return String::new();
+        }
+    }
+
+    let new_pairs = if let Ok(text) = std::fs::read_to_string(&env_file) {
+        text.lines()
+            .filter_map(|line| {
+                let trimmed = line.trim();
+                if trimmed.starts_with('#') || trimmed.is_empty() {
+                    return None;
+                }
+                let (k, v) = trimmed.split_once('=')?;
+                Some((
+                    k.trim().to_string(),
+                    v.trim().trim_matches('"').trim_matches('\'').to_string(),
+                ))
+            })
+            .collect()
+    } else {
+        Vec::new()
+    };
+    *lock = Some(EnvCacheEntry {
+        path: env_file,
+        mtime: current_mtime,
+        pairs: new_pairs.clone(),
+        last_check: now,
+    });
+
+    for name in names {
+        for (k, v) in &new_pairs {
+            if k == *name {
+                return v.clone();
             }
         }
     }
     String::new()
 }
 
+pub fn mode() -> String {
+    std::env::var("CIEL_SYSTEM1_MODE")
+        .ok()
+        .filter(|s| !s.trim().is_empty())
+        .unwrap_or_else(|| {
+            let m = env_file_value(&["CIEL_SYSTEM1_MODE"]);
+            if m.is_empty() {
+                "active".into()
+            } else {
+                m
+            }
+        })
+}
+
 fn key() -> String {
     std::env::var("CIEL_SYSTEM1_KEY")
         .ok()
-        .filter(|s| !s.is_empty())
+        .filter(|s| !s.trim().is_empty())
         .unwrap_or_else(|| env_file_value(&["CIEL_SYSTEM1_KEY", "LAYA_API_KEY"]))
 }
 
 fn url() -> String {
-    std::env::var("CIEL_SYSTEM1_URL")
-        .unwrap_or_else(|_| "http://127.0.0.1:8765".into())
-        .trim_end_matches('/')
-        .to_string()
+    let direct = std::env::var("CIEL_SYSTEM1_URL")
+        .ok()
+        .filter(|s| !s.trim().is_empty());
+    if let Some(u) = direct {
+        return u.trim_end_matches('/').to_string();
+    }
+    let file_url = env_file_value(&["CIEL_SYSTEM1_URL"]);
+    if !file_url.is_empty() {
+        return file_url.trim_end_matches('/').to_string();
+    }
+    let host = env_file_value(&["LAYA_HOST"]);
+    let port = env_file_value(&["LAYA_PORT"]);
+    if !host.is_empty() || !port.is_empty() {
+        let h = if host.is_empty() { "127.0.0.1" } else { &host };
+        let p = if port.is_empty() { "8765" } else { &port };
+        return format!("http://{h}:{p}");
+    }
+    "http://127.0.0.1:8765".into()
 }
 
 fn model() -> String {
     let direct = std::env::var("CIEL_SYSTEM1_MODEL")
-        .unwrap_or_default()
-        .trim()
-        .to_string();
-    if !direct.is_empty() {
-        return direct;
+        .ok()
+        .filter(|s| !s.trim().is_empty());
+    if let Some(m) = direct {
+        return m;
     }
-    env_file_value(&["CIEL_SYSTEM1_MODEL"])
+    env_file_value(&["CIEL_SYSTEM1_MODEL", "LAYA_MODEL"])
 }
 
 // -------------------------------------------------------------- HTTP layer
+
+fn find_header_split(bytes: &[u8]) -> Option<(usize, usize)> {
+    if let Some(pos) = bytes.windows(4).position(|w| w == b"\r\n\r\n") {
+        return Some((pos, pos + 4));
+    }
+    if let Some(pos) = bytes.windows(2).position(|w| w == b"\n\n") {
+        return Some((pos, pos + 2));
+    }
+    None
+}
+
+fn dechunk(raw: &str) -> String {
+    let mut out = String::new();
+    let mut rest = raw;
+    let mut saw_zero = false;
+    while let Some((size_line, after)) = rest.split_once("\r\n").or_else(|| rest.split_once('\n')) {
+        let hex_part = size_line.split(';').next().unwrap_or("").trim();
+        let Ok(size) = usize::from_str_radix(hex_part, 16) else {
+            break;
+        };
+        if size == 0 {
+            saw_zero = true;
+            break;
+        }
+        if after.len() < size {
+            break;
+        }
+        out.push_str(&after[..size]);
+        let remaining = &after[size..];
+        if let Some(stripped) = remaining.strip_prefix("\r\n") {
+            rest = stripped;
+        } else if let Some(stripped) = remaining.strip_prefix('\n') {
+            rest = stripped;
+        } else {
+            rest = remaining;
+        }
+    }
+    if !saw_zero {
+        return String::new();
+    }
+    out
+}
 
 /// Minimal HTTP/1.1 POST for `http://` endpoints — connection: close,
 /// read-to-end, chunked-decode when the server uses it. `https://` goes
@@ -188,20 +416,95 @@ fn http_post(url: &str, body: &[u8], auth: &str, timeout: Duration) -> Option<St
     } else {
         format!("{authority}:80")
     };
-    let sock = addr.to_socket_addrs().ok()?.next()?;
-    let mut stream = TcpStream::connect_timeout(&sock, timeout).ok()?;
+    let addrs = addr.to_socket_addrs().ok()?;
+    let connect_timeout = if authority.starts_with("127.0.0.1") || authority.starts_with("localhost") {
+        Duration::from_millis(10).min(timeout)
+    } else {
+        Duration::from_millis(50).min(timeout)
+    };
+    let mut stream = None;
+    for sock in addrs {
+        if let Ok(s) = TcpStream::connect_timeout(&sock, connect_timeout) {
+            stream = Some(s);
+            break;
+        }
+    }
+    let mut stream = stream?;
     let _ = stream.set_read_timeout(Some(timeout));
     let _ = stream.set_write_timeout(Some(timeout));
+
+    let auth_header = if !auth.trim().is_empty() {
+        format!("authorization: Bearer {}\r\n", auth.trim())
+    } else {
+        String::new()
+    };
+
     let req = format!(
-        "POST {path} HTTP/1.1\r\nHost: {authority}\r\ncontent-type: application/json\r\nauthorization: Bearer {auth}\r\ncontent-length: {}\r\nconnection: close\r\n\r\n",
+        "POST {path} HTTP/1.1\r\nHost: {authority}\r\ncontent-type: application/json\r\n{auth_header}content-length: {}\r\nconnection: close\r\n\r\n",
         body.len()
     );
     stream.write_all(req.as_bytes()).ok()?;
     stream.write_all(body).ok()?;
+
     let mut resp = Vec::new();
-    stream.read_to_end(&mut resp).ok()?;
-    let text = String::from_utf8_lossy(&resp);
-    let (head, raw) = text.split_once("\r\n\r\n")?;
+    let mut buf = [0u8; 4096];
+    let mut header_body_split: Option<(usize, usize)> = None;
+    let mut content_len: Option<usize> = None;
+    let mut is_chunked = false;
+
+    while let Ok(n) = stream.read(&mut buf) {
+        if n == 0 {
+            break;
+        }
+        resp.extend_from_slice(&buf[..n]);
+
+        if header_body_split.is_none() {
+            if let Some((hend, bstart)) = find_header_split(&resp) {
+                header_body_split = Some((hend, bstart));
+                let head_str = String::from_utf8_lossy(&resp[..hend]);
+                for line in head_str.lines() {
+                    let l = line.to_ascii_lowercase();
+                    if l.starts_with("content-length:") {
+                        if let Some(val) = line
+                            .split_once(':')
+                            .and_then(|(_, v)| v.trim().parse::<usize>().ok())
+                        {
+                            content_len = Some(val);
+                        }
+                    }
+                    if l.starts_with("transfer-encoding:") && l.contains("chunked") {
+                        is_chunked = true;
+                    }
+                }
+            }
+        }
+
+        if let Some((_, bstart)) = header_body_split {
+            if let Some(clen) = content_len {
+                if resp.len() >= bstart + clen {
+                    break;
+                }
+            } else if is_chunked {
+                let body_slice = &resp[bstart..];
+                if body_slice.ends_with(b"\r\n0\r\n\r\n")
+                    || body_slice.ends_with(b"\n0\n\n")
+                    || body_slice.ends_with(b"\r\n0\n\n")
+                    || body_slice == b"0\r\n\r\n"
+                    || body_slice == b"0\n\n"
+                {
+                    break;
+                }
+            }
+        }
+    }
+
+    if resp.is_empty() {
+        return None;
+    }
+
+    let (hend, bstart) = header_body_split.or_else(|| find_header_split(&resp))?;
+    let head = String::from_utf8_lossy(&resp[..hend]);
+
     let status_ok = head
         .lines()
         .next()
@@ -211,46 +514,58 @@ fn http_post(url: &str, body: &[u8], auth: &str, timeout: Duration) -> Option<St
     if !status_ok {
         return None;
     }
-    let chunked = head.to_lowercase().contains("transfer-encoding: chunked");
-    if !chunked {
-        return Some(raw.to_string());
-    }
-    // minimal dechunk: <hex>\r\n<data>\r\n ... 0\r\n\r\n
-    let mut out = String::new();
-    let mut rest = raw;
-    while let Some((size_line, after)) = rest.split_once("\r\n") {
-        let Ok(size) = usize::from_str_radix(size_line.trim(), 16) else {
-            break;
-        };
-        if size == 0 {
-            break;
+
+    let chunked = is_chunked
+        || head.lines().any(|l| {
+            let lower = l.to_ascii_lowercase();
+            lower.starts_with("transfer-encoding:") && lower.contains("chunked")
+        });
+
+    if chunked {
+        let raw = String::from_utf8_lossy(&resp[bstart..]);
+        let decoded = dechunk(&raw);
+        if decoded.is_empty() && raw.trim() != "0" {
+            return None;
         }
-        if after.len() < size + 2 {
-            out.push_str(&after[..after.len().min(size)]);
-            break;
-        }
-        out.push_str(&after[..size]);
-        rest = &after[size + 2..];
+        return Some(decoded);
     }
-    Some(out)
+
+    let body_bytes = if let Some(clen) = content_len {
+        if resp.len() < bstart + clen {
+            // Premature EOF before full body received
+            return None;
+        }
+        &resp[bstart..bstart + clen]
+    } else {
+        &resp[bstart..]
+    };
+
+    Some(String::from_utf8_lossy(body_bytes).to_string())
 }
 
 fn curl_post(url: &str, body: &[u8], auth: &str, timeout: Duration) -> Option<String> {
-    let out = Command::new("curl")
-        .args([
-            "-sS",
-            "-X",
-            "POST",
-            "-H",
-            "content-type: application/json",
-            "-H",
-            &format!("authorization: Bearer {auth}"),
-            "--max-time",
-            &format!("{}", timeout.as_secs_f64()),
-            "--data-binary",
-            "@-",
-            url,
-        ])
+    let mut cmd = Command::new("curl");
+    cmd.args([
+        "-sS",
+        "--fail",
+        "--connect-timeout",
+        "0.05",
+        "-X",
+        "POST",
+        "-H",
+        "content-type: application/json",
+    ]);
+    if !auth.trim().is_empty() {
+        cmd.args(["-H", &format!("authorization: Bearer {}", auth.trim())]);
+    }
+    cmd.args([
+        "--max-time",
+        &format!("{:.3}", timeout.as_secs_f64().max(0.05)),
+        "--data-binary",
+        "@-",
+        url,
+    ]);
+    let out = cmd
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())
         .stderr(Stdio::null())
@@ -338,48 +653,60 @@ fn cache_write(state: &Value, questions: &Value, result: &Value) {
 fn append_event(record: &Value) {
     let log = paths::ciel_home().join("system1").join("events.jsonl");
     if let Some(parent) = log.parent() {
-        let _ = std::fs::create_dir_all(parent);
-    }
-    if log
-        .metadata()
-        .map(|m| m.len() > EVENTS_LOG_MAX)
-        .unwrap_or(false)
-    {
-        let _ = std::fs::rename(&log, log.with_extension("jsonl.1"));
+        if !parent.is_dir() {
+            let _ = std::fs::create_dir_all(parent);
+        }
     }
     if let Ok(mut f) = std::fs::OpenOptions::new()
         .create(true)
         .append(true)
         .open(&log)
     {
+        if let Ok(meta) = f.metadata() {
+            if meta.len() > EVENTS_LOG_MAX {
+                drop(f);
+                let _ = std::fs::rename(&log, log.with_extension("jsonl.1"));
+                if let Ok(mut f2) = std::fs::OpenOptions::new()
+                    .create(true)
+                    .append(true)
+                    .open(&log)
+                {
+                    let _ = writeln!(f2, "{}", crate::jsonfmt::dumps_raw(record));
+                }
+                return;
+            }
+        }
         let _ = writeln!(f, "{}", crate::jsonfmt::dumps_raw(record));
     }
 }
 
 fn band(surface: &str, answers: &Value) -> &'static str {
     let flag_set = surface_flag(surface);
-    let tau = std::env::var("CIEL_SYSTEM1_TAU")
-        .ok()
-        .and_then(|v| v.parse::<f64>().ok())
-        .unwrap_or(DEFAULT_TAU);
+    let tau = surface_tau(surface);
     let mut worst = "pass";
     if let Some(obj) = answers.as_object() {
-        for answer in obj.values() {
+        for (qname, answer) in obj {
             let Some(a) = answer.as_object() else {
                 continue;
             };
-            if a.get("choice")
-                .and_then(|c| c.as_str())
-                .is_some_and(|c| flag_set.contains(&c))
-            {
-                return "flag";
+            if let Some(choice) = a.get("choice").and_then(|c| c.as_str()) {
+                if flag_set.contains(&choice) {
+                    return "flag";
+                }
+                let conf_ok = a
+                    .get("confidence")
+                    .and_then(|c| c.as_f64())
+                    .is_some_and(|c| c >= tau);
+                if !conf_ok {
+                    worst = "uncertain";
+                }
             }
-            let conf_ok = a
-                .get("confidence")
-                .and_then(|c| c.as_f64())
-                .is_some_and(|c| c >= tau);
-            if !conf_ok {
-                worst = "uncertain";
+            if surface == "completion_check" && qname == "evidence_score" {
+                if let Some(score) = a.get("score").and_then(|s| s.as_i64()) {
+                    if score < 4 {
+                        worst = "uncertain";
+                    }
+                }
             }
         }
     }
@@ -521,6 +848,7 @@ fn event_record(payload: &Value, result: Option<&Value>, hit: bool, latency_ms: 
 /// Synchronous pipeline evaluation of tool risk — active intercept tier.
 /// Returns Some((choice, confidence, band)) if System-1 returned an answer,
 /// or None if disabled, offline, or timed out (fail-open).
+#[allow(clippy::too_many_arguments)]
 pub fn evaluate_risk(
     runtime: &str,
     ts: &str,
@@ -534,8 +862,8 @@ pub fn evaluate_risk(
     if disabled() {
         return None;
     }
-    let mode = std::env::var("CIEL_SYSTEM1_MODE").unwrap_or_else(|_| "active".into());
-    if mode == "shadow" || mode == "off" {
+    let m = mode();
+    if m == "shadow" || m == "off" {
         return None;
     }
 
@@ -577,16 +905,416 @@ pub fn evaluate_risk(
     Some((choice, conf, b))
 }
 
+#[derive(Debug, Clone, PartialEq)]
+pub struct CompletionVerdict {
+    pub choice: String,
+    pub confidence: f64,
+    pub band: &'static str,
+    pub score: Option<i64>,
+}
+
+/// Typed questions for the completion_check surface.
+#[allow(dead_code)]
+pub fn completion_questions() -> Value {
+    completion_questions_with_score(true)
+}
+
+/// Typed questions with optional quality score for completion_check.
+pub fn completion_questions_with_score(with_score: bool) -> Value {
+    let mut q = json!({
+        "done": {
+            "type": "choice",
+            "instructions": "Evaluate whether the objective is verifiably satisfied by the provided empirical evidence. When in doubt, mark incomplete if claims lack empirical verification artifacts (tests, execution logs, diffs, live probes).",
+            "criteria": {
+                "complete": "objective is fully satisfied with direct empirical proof and verification artifacts",
+                "incomplete": "objective is unverified, missing required artifacts, failed verification, or asserts claims without evidence"
+            }
+        }
+    });
+    if with_score {
+        q["evidence_score"] = json!({
+            "type": "score",
+            "instructions": "Rate how well empirical evidence substantiates the completion claim (1=unverified/pure claim, 5=complete empirical proof).",
+            "rubric": {
+                "1": "no evidence or contradictory evidence (pure assertion/hallucination)",
+                "2": "partial evidence with major unverified claims or failing tests",
+                "3": "indirect or ambiguous evidence without target-state verification",
+                "4": "direct empirical evidence verifying primary claims",
+                "5": "exhaustive empirical verification of all claims and task-class artifacts"
+            }
+        });
+    }
+    q
+}
+
+/// Synchronous pipeline evaluation of completion evidence — verification tier.
+/// Returns Some(CompletionVerdict) if System-1 returned an answer,
+/// or None if disabled, offline, or timed out (fail-open).
+pub fn evaluate_completion(
+    objective: &str,
+    evidence: &str,
+    task_class: &str,
+    timeout_s: f64,
+) -> Option<CompletionVerdict> {
+    if disabled() {
+        return None;
+    }
+    let m = mode();
+    if m == "shadow" || m == "off" {
+        return None;
+    }
+
+    let mut state = json!({
+        "objective": objective,
+        "evidence": evidence,
+    });
+    if !task_class.is_empty() {
+        state["task_class"] = json!(task_class);
+    }
+    let questions = completion_questions_with_score(true);
+
+    // Fast-path: consult response cache first
+    let (result, hit, latency_ms) = if let Some(cached) = cache_read(&state, &questions) {
+        (Some(cached), true, 0)
+    } else {
+        let started = Instant::now();
+        let r = ask(&state, &questions, timeout_s);
+        let elapsed = started.elapsed().as_millis() as u64;
+        if let Some(ref val) = r {
+            cache_write(&state, &questions, val);
+        }
+        (r, false, elapsed)
+    };
+
+    let payload = json!({
+        "surface": "completion_check",
+        "state": state,
+        "questions": questions,
+        "meta": {
+            "pipeline": "completion_verification",
+        }
+    });
+    append_event(&event_record(&payload, result.as_ref(), hit, latency_ms));
+
+    let r = result?;
+    let done_answer = r.get("answers")?.get("done")?;
+    let choice = done_answer.get("choice")?.as_str()?.to_string();
+    let conf = done_answer.get("confidence")?.as_f64().unwrap_or(0.0);
+    let b = band("completion_check", &r["answers"]);
+    let score = r
+        .get("answers")
+        .and_then(|a| a.get("evidence_score"))
+        .and_then(|s| s.get("score"))
+        .and_then(|s| s.as_i64());
+
+    Some(CompletionVerdict {
+        choice,
+        confidence: conf,
+        band: b,
+        score,
+    })
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct RouteVerdict {
+    pub status: String,
+    pub degraded: bool,
+    pub choice: Option<String>,
+    pub confidence: Option<f64>,
+    pub margin: Option<f64>,
+    pub shortlist: Vec<String>,
+    pub model: Option<String>,
+}
+
+impl RouteVerdict {
+    pub fn to_json(&self) -> Value {
+        json!({
+            "status": self.status,
+            "degraded": self.degraded,
+            "choice": self.choice,
+            "confidence": self.confidence,
+            "margin": self.margin,
+            "shortlist": self.shortlist,
+            "model": self.model,
+        })
+    }
+}
+
+pub fn route_choice(
+    task: &str,
+    options: &serde_json::Map<String, Value>,
+    k: usize,
+    timeout_s: f64,
+) -> RouteVerdict {
+    let mut candidate_keys: Vec<String> = options.keys().cloned().collect();
+    candidate_keys.sort();
+
+    let shortlist_keys: Vec<String> = if candidate_keys.len() <= k {
+        candidate_keys
+    } else {
+        let task_lower = task.to_ascii_lowercase();
+        let task_words: std::collections::HashSet<&str> =
+            task_lower.split_whitespace().collect();
+        let mut matched = Vec::new();
+        for key in &candidate_keys {
+            if task_words.contains(key.to_ascii_lowercase().as_str())
+                || task_lower.contains(&key.to_ascii_lowercase())
+            {
+                matched.push(key.clone());
+            }
+        }
+        for key in &candidate_keys {
+            if !matched.contains(key) && matched.len() < k {
+                matched.push(key.clone());
+            }
+        }
+        matched
+    };
+
+    let mut criteria_obj = serde_json::Map::new();
+    for key in &shortlist_keys {
+        if let Some(val) = options.get(key) {
+            criteria_obj.insert(key.clone(), val.clone());
+        }
+    }
+
+    let questions = json!({
+        "route": {
+            "type": "choice",
+            "instructions": "Which candidate best fits the task?",
+            "criteria": criteria_obj
+        }
+    });
+
+    let state = json!({
+        "task": task,
+        "candidates": shortlist_keys
+    });
+
+    let payload = json!({
+        "surface": "router",
+        "state": state,
+        "questions": questions,
+        "meta": {
+            "pipeline": "router_selection"
+        }
+    });
+
+    let (result, hit, latency_ms) = if let Some(cached) = cache_read(&state, &questions) {
+        (Some(cached), true, 0)
+    } else {
+        let started = Instant::now();
+        let r = ask(&state, &questions, timeout_s);
+        let elapsed = started.elapsed().as_millis() as u64;
+        if let Some(ref val) = r {
+            cache_write(&state, &questions, val);
+        }
+        (r, false, elapsed)
+    };
+    append_event(&event_record(&payload, result.as_ref(), hit, latency_ms));
+
+    if let Some(r) = result {
+        if let Some(answer) = r.get("answers").and_then(|a| a.get("route")) {
+            let choice = answer
+                .get("choice")
+                .and_then(|c| c.as_str())
+                .map(ToString::to_string);
+            let confidence = answer.get("confidence").and_then(|c| c.as_f64());
+            let mut margin = None;
+            if let Some(probs) = answer.get("probabilities").and_then(|p| p.as_object()) {
+                let mut vals: Vec<f64> = probs.values().filter_map(|v| v.as_f64()).collect();
+                vals.sort_by(|a, b| b.partial_cmp(a).unwrap_or(std::cmp::Ordering::Equal));
+                if vals.len() >= 2 {
+                    margin = Some(vals[0] - vals[1]);
+                }
+            }
+            let model = r
+                .get("model")
+                .and_then(|m| m.as_str())
+                .map(ToString::to_string);
+            return RouteVerdict {
+                status: "evaluated".into(),
+                degraded: false,
+                choice,
+                confidence,
+                margin,
+                shortlist: shortlist_keys,
+                model,
+            };
+        }
+    }
+
+    RouteVerdict {
+        status: "fail_open".into(),
+        degraded: true,
+        choice: None,
+        confidence: None,
+        margin: None,
+        shortlist: shortlist_keys,
+        model: None,
+    }
+}
+
+pub fn route_choice_main() -> i32 {
+    let payload = read_stdin_payload();
+    let task = payload
+        .get("task")
+        .or_else(|| payload.get("prompt"))
+        .or_else(|| payload.get("objective"))
+        .and_then(|v| v.as_str())
+        .unwrap_or("");
+    let empty_map = serde_json::Map::new();
+    let options = payload
+        .get("options")
+        .or_else(|| payload.get("candidates"))
+        .and_then(|v| v.as_object())
+        .unwrap_or(&empty_map);
+    let k = payload.get("k").and_then(|v| v.as_u64()).unwrap_or(10) as usize;
+    let timeout = payload
+        .get("timeout")
+        .and_then(|v| v.as_f64())
+        .unwrap_or(0.9);
+
+    let verdict = route_choice(task, options, k, timeout);
+    println!(
+        "{}",
+        crate::jsonfmt::dumps_raw(&verdict.to_json())
+    );
+    0
+}
+
+pub fn verify_completion_main(args: &[String]) -> i32 {
+    let mut objective = String::new();
+    let mut evidence = String::new();
+    let mut task_class = "code_change".to_string();
+    let mut gate = "enforce".to_string();
+    let mut timeout = 5.0;
+
+    let mut i = 0;
+    while i < args.len() {
+        match args[i].as_str() {
+            "--objective" if i + 1 < args.len() => {
+                objective = args[i + 1].clone();
+                i += 2;
+            }
+            "--evidence" if i + 1 < args.len() => {
+                evidence = args[i + 1].clone();
+                i += 2;
+            }
+            "--task-class" if i + 1 < args.len() => {
+                task_class = args[i + 1].clone();
+                i += 2;
+            }
+            "--gate" if i + 1 < args.len() => {
+                gate = args[i + 1].clone();
+                i += 2;
+            }
+            "--timeout" if i + 1 < args.len() => {
+                if let Ok(t) = args[i + 1].parse::<f64>() {
+                    timeout = t;
+                }
+                i += 2;
+            }
+            _ => {
+                i += 1;
+            }
+        }
+    }
+
+    if objective.is_empty() {
+        let payload = read_stdin_payload();
+        if let Some(obj) = payload.get("objective").and_then(|v| v.as_str()) {
+            objective = obj.to_string();
+        }
+        if let Some(ev) = payload.get("evidence").and_then(|v| v.as_str()) {
+            evidence = ev.to_string();
+        }
+        if let Some(tc) = payload.get("task_class").and_then(|v| v.as_str()) {
+            task_class = tc.to_string();
+        }
+        if let Some(g) = payload.get("gate").and_then(|v| v.as_str()) {
+            gate = g.to_string();
+        }
+        if let Some(t) = payload.get("timeout").and_then(|v| v.as_f64()) {
+            timeout = t;
+        }
+    }
+
+    let verdict = evaluate_completion(&objective, &evidence, &task_class, timeout);
+    match verdict {
+        None => {
+            let out = json!({
+                "status": "fail_open_pass",
+                "degraded": true,
+                "decision": "allow",
+                "verified": true,
+                "choice": Value::Null,
+                "score": Value::Null,
+                "band": "pass",
+                "confidence": Value::Null,
+                "reason": "System-1 decision tier is offline or disabled; failing open."
+            });
+            println!("{}", crate::jsonfmt::dumps_raw(&out));
+            0
+        }
+        Some(v) => {
+            let tau = surface_tau("completion_check");
+            let score_ok = v.score.map(|s| s >= 4).unwrap_or(true);
+            let conf_ok = v.confidence >= tau;
+            let is_complete = v.choice == "complete" && v.band == "pass" && score_ok && conf_ok;
+            let is_false_pass = !is_complete
+                || v.choice == "incomplete"
+                || v.band == "flag"
+                || v.score.map(|s| s < 4).unwrap_or(false);
+
+            let (decision, verified, reason, exit_code) = if is_false_pass {
+                let dec = if gate == "enforce" { "deny" } else { "allow" };
+                let r = format!(
+                    "System-1 flagged completion as incomplete (confidence {:.2}, score {:?}/5)",
+                    v.confidence,
+                    v.score.unwrap_or(0)
+                );
+                let code = if gate == "enforce" { 2 } else { 0 };
+                (dec, false, r, code)
+            } else {
+                let r = format!(
+                    "System-1 verified completion (confidence {:.2}, score {:?}/5)",
+                    v.confidence,
+                    v.score.unwrap_or(0)
+                );
+                ("allow", true, r, 0)
+            };
+
+            let out = json!({
+                "status": "evaluated",
+                "degraded": false,
+                "decision": decision,
+                "verified": verified,
+                "choice": v.choice,
+                "score": v.score,
+                "band": v.band,
+                "confidence": v.confidence,
+                "reason": reason
+            });
+            println!("{}", crate::jsonfmt::dumps_raw(&out));
+            exit_code
+        }
+    }
+}
+
 fn read_stdin_payload() -> Value {
     let mut buf = String::new();
     let _ = std::io::stdin().read_to_string(&mut buf);
     serde_json::from_str(&buf).unwrap_or_else(|_| json!({}))
 }
 
-fn ask_main() -> i32 {
+fn ask_main(surface_override: Option<&str>) -> i32 {
     let marker = std::env::var("CIEL_SYSTEM1_MARKER").ok();
-    let payload = read_stdin_payload();
+    let mut payload = read_stdin_payload();
     if payload.is_object() && !payload.as_object().unwrap().is_empty() {
+        if let Some(surf) = surface_override {
+            payload["surface"] = json!(surf);
+        }
         let empty = json!({});
         let (result, hit, latency_ms) = resolve(
             payload.get("state").unwrap_or(&empty),
@@ -600,11 +1328,14 @@ fn ask_main() -> i32 {
     0
 }
 
-fn decide_main() -> i32 {
-    let payload = read_stdin_payload();
+fn decide_main(surface_override: Option<&str>) -> i32 {
+    let mut payload = read_stdin_payload();
     if !payload.is_object() || payload.as_object().unwrap().is_empty() {
         println!("null");
         return 0;
+    }
+    if let Some(surf) = surface_override {
+        payload["surface"] = json!(surf);
     }
     let empty = json!({});
     let (result, hit, latency_ms) = resolve(
@@ -621,16 +1352,27 @@ fn decide_main() -> i32 {
     0
 }
 
-/// `ciel system1 --ask | --decide`.
+/// `ciel system1 [--surface <name>] --ask | --decide`.
 pub fn main_(args: &[String]) -> i32 {
+    let mut surface_override = None;
+    let mut i = 0;
+    while i < args.len() {
+        if args[i] == "--surface" && i + 1 < args.len() {
+            surface_override = Some(args[i + 1].as_str());
+            i += 2;
+            continue;
+        }
+        i += 1;
+    }
+
     if args.iter().any(|a| a == "--ask") {
-        return ask_main();
+        return ask_main(surface_override);
     }
     if args.iter().any(|a| a == "--decide") {
-        return decide_main();
+        return decide_main(surface_override);
     }
     eprintln!(
-        "usage: ciel system1 --ask | --decide  (reads JSON payload on stdin; \
+        "usage: ciel system1 [--surface <name>] --ask | --decide  (reads JSON payload on stdin; \
          --decide prints the verdict)"
     );
     2
@@ -675,4 +1417,309 @@ mod tests {
         let cached = event_record(&p, None, true, 0);
         assert!(cached.get("latency_ms").is_none());
     }
+
+    #[test]
+    fn header_split_crlf_and_lf() {
+        let crlf = b"HTTP/1.1 200 OK\r\nContent-Length: 5\r\n\r\nhello";
+        let (hend, bstart) = find_header_split(crlf).expect("crlf split");
+        assert_eq!(&crlf[..hend], b"HTTP/1.1 200 OK\r\nContent-Length: 5");
+        assert_eq!(&crlf[bstart..], b"hello");
+
+        let lf = b"HTTP/1.1 200 OK\nContent-Length: 5\n\nhello";
+        let (hend2, bstart2) = find_header_split(lf).expect("lf split");
+        assert_eq!(&lf[..hend2], b"HTTP/1.1 200 OK\nContent-Length: 5");
+        assert_eq!(&lf[bstart2..], b"hello");
+
+        let malformed = b"HTTP/1.1 200 OK incomplete";
+        assert!(find_header_split(malformed).is_none());
+    }
+
+    #[test]
+    fn dechunk_standard_and_extensions() {
+        let standard = "5\r\nhello\r\n6\r\n world\r\n0\r\n\r\n";
+        assert_eq!("hello world", dechunk(standard));
+
+        let with_ext = "5;ext=val\r\nhello\r\n6;another=1\r\n world\r\n0\r\n\r\n";
+        assert_eq!("hello world", dechunk(with_ext));
+
+        let lf_only = "5\nhello\n6\n world\n0\n\n";
+        assert_eq!("hello world", dechunk(lf_only));
+
+        let zero_only = "0\r\n\r\n";
+        assert_eq!("", dechunk(zero_only));
+
+        let malformed = "xyz\r\ncorrupt";
+        assert_eq!("", dechunk(malformed));
+    }
+
+    #[test]
+    fn env_variable_handling() {
+        // Test default url
+        assert!(url().starts_with("http://"));
+
+        // Mode defaults to active if unset
+        assert_eq!(mode(), "active");
+
+        unsafe {
+            // URL override
+            std::env::set_var("CIEL_SYSTEM1_URL", "http://custom-host:9999/");
+            assert_eq!(url(), "http://custom-host:9999");
+            std::env::remove_var("CIEL_SYSTEM1_URL");
+
+            // Key override
+            std::env::set_var("CIEL_SYSTEM1_KEY", "test-secret-key-123");
+            assert_eq!(key(), "test-secret-key-123");
+            std::env::remove_var("CIEL_SYSTEM1_KEY");
+
+            // Model override
+            std::env::set_var("CIEL_SYSTEM1_MODEL", "typed-decisions");
+            assert_eq!(model(), "typed-decisions");
+            std::env::remove_var("CIEL_SYSTEM1_MODEL");
+
+            // Mode override (shadow, off, active)
+            std::env::set_var("CIEL_SYSTEM1_MODE", "shadow");
+            assert_eq!(mode(), "shadow");
+            std::env::set_var("CIEL_SYSTEM1_MODE", "off");
+            assert_eq!(mode(), "off");
+            assert!(disabled());
+            std::env::remove_var("CIEL_SYSTEM1_MODE");
+
+            // Disabled flag
+            std::env::set_var("CIEL_SYSTEM1_DISABLED", "1");
+            assert!(disabled());
+            std::env::remove_var("CIEL_SYSTEM1_DISABLED");
+        }
+    }
+
+    #[test]
+    fn completion_check_questions_and_fail_open() {
+        let q = completion_questions();
+        assert!(q.get("done").is_some());
+        let criteria = q["done"].get("criteria").unwrap();
+        assert!(criteria.get("complete").is_some());
+        assert!(criteria.get("incomplete").is_some());
+
+        // When disabled, evaluate_completion returns None (fail-open)
+        unsafe {
+            std::env::set_var("CIEL_SYSTEM1_DISABLED", "1");
+        }
+        let res = evaluate_completion("fix bug", "test passed", "code_change", 0.1);
+        assert!(res.is_none());
+        unsafe {
+            std::env::remove_var("CIEL_SYSTEM1_DISABLED");
+        }
+    }
+
+    #[test]
+    fn http_post_mock_tcp_roundtrip() {
+        let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        let port = listener.local_addr().unwrap().port();
+        let handle = std::thread::spawn(move || {
+            let (mut stream, _) = listener.accept().unwrap();
+            let mut buf = [0u8; 1024];
+            let _ = stream.read(&mut buf);
+            let resp = "HTTP/1.1 200 OK\r\nContent-Length: 15\r\nConnection: close\r\n\r\n{\"status\":\"ok\"}";
+            let _ = stream.write_all(resp.as_bytes());
+            let _ = stream.flush();
+            let _ = stream.shutdown(std::net::Shutdown::Write);
+            let _ = stream.read(&mut buf);
+        });
+
+        let url = format!("http://127.0.0.1:{port}/v1/test");
+        let resp = http_post(&url, b"{}", "", Duration::from_secs(2));
+        handle.join().unwrap();
+        assert_eq!(resp, Some("{\"status\":\"ok\"}".to_string()));
+    }
+
+    #[test]
+    fn http_post_mock_chunked_roundtrip() {
+        let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        let port = listener.local_addr().unwrap().port();
+        let handle = std::thread::spawn(move || {
+            let (mut stream, _) = listener.accept().unwrap();
+            let mut buf = [0u8; 1024];
+            let _ = stream.read(&mut buf);
+            let resp = "HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\nConnection: close\r\n\r\n9\r\n{\"status\"\r\n6\r\n:\"ok\"}\r\n0\r\n\r\n";
+            let _ = stream.write_all(resp.as_bytes());
+            let _ = stream.flush();
+            let _ = stream.shutdown(std::net::Shutdown::Write);
+            let _ = stream.read(&mut buf);
+        });
+
+        let url = format!("http://127.0.0.1:{port}/v1/chunked");
+        let resp = http_post(&url, b"{}", "", Duration::from_secs(2));
+        handle.join().unwrap();
+        assert_eq!(resp, Some("{\"status\":\"ok\"}".to_string()));
+    }
+
+    #[test]
+    fn http_post_mock_500_error_returns_none() {
+        let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        let port = listener.local_addr().unwrap().port();
+        let handle = std::thread::spawn(move || {
+            let (mut stream, _) = listener.accept().unwrap();
+            let mut buf = [0u8; 1024];
+            let _ = stream.read(&mut buf);
+            let resp = "HTTP/1.1 500 Internal Server Error\r\nContent-Length: 5\r\nConnection: close\r\n\r\nerror";
+            let _ = stream.write_all(resp.as_bytes());
+        });
+
+        let url = format!("http://127.0.0.1:{port}/v1/err");
+        let resp = http_post(&url, b"{}", "", Duration::from_secs(2));
+        handle.join().unwrap();
+        assert!(resp.is_none());
+    }
+
+    #[test]
+    fn http_post_mock_truncated_content_length_returns_none() {
+        let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        let port = listener.local_addr().unwrap().port();
+        let handle = std::thread::spawn(move || {
+            let (mut stream, _) = listener.accept().unwrap();
+            let mut buf = [0u8; 1024];
+            let _ = stream.read(&mut buf);
+            // Declares 50 bytes but only sends 5 before closing connection
+            let resp = "HTTP/1.1 200 OK\r\nContent-Length: 50\r\nConnection: close\r\n\r\nshort";
+            let _ = stream.write_all(resp.as_bytes());
+        });
+
+        let url = format!("http://127.0.0.1:{port}/v1/truncated");
+        let resp = http_post(&url, b"{}", "", Duration::from_secs(2));
+        handle.join().unwrap();
+        assert!(resp.is_none());
+    }
+
+    #[test]
+    fn http_post_mock_truncated_chunked_returns_none() {
+        let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        let port = listener.local_addr().unwrap().port();
+        let handle = std::thread::spawn(move || {
+            let (mut stream, _) = listener.accept().unwrap();
+            let mut buf = [0u8; 1024];
+            let _ = stream.read(&mut buf);
+            // Missing terminal zero chunk "0\r\n\r\n"
+            let resp = "HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\nConnection: close\r\n\r\n5\r\nhello\r\n";
+            let _ = stream.write_all(resp.as_bytes());
+        });
+
+        let url = format!("http://127.0.0.1:{port}/v1/bad-chunk");
+        let resp = http_post(&url, b"{}", "", Duration::from_secs(2));
+        handle.join().unwrap();
+        assert!(resp.is_none());
+    }
+
+    #[test]
+    fn http_post_mock_malformed_header_returns_none() {
+        let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        let port = listener.local_addr().unwrap().port();
+        let handle = std::thread::spawn(move || {
+            let (mut stream, _) = listener.accept().unwrap();
+            let mut buf = [0u8; 1024];
+            let _ = stream.read(&mut buf);
+            // Non-HTTP garbage
+            let resp = "NOT-HTTP GARBAGE DATA WITH NO DELIMITER";
+            let _ = stream.write_all(resp.as_bytes());
+        });
+
+        let url = format!("http://127.0.0.1:{port}/v1/garbage");
+        let resp = http_post(&url, b"{}", "", Duration::from_secs(2));
+        handle.join().unwrap();
+        assert!(resp.is_none());
+    }
+
+    #[test]
+    fn http_post_closed_port_returns_none() {
+        // Pick an unbound port by binding and immediately dropping listener
+        let port = {
+            let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+            listener.local_addr().unwrap().port()
+        };
+        let url = format!("http://127.0.0.1:{port}/v1/unbound");
+        let resp = http_post(&url, b"{}", "", Duration::from_millis(100));
+        assert!(resp.is_none());
+    }
+
+    #[test]
+    fn curl_post_invalid_https_returns_none() {
+        // Tests curl HTTPS fallback on an unreachable/invalid endpoint
+        let resp = curl_post(
+            "https://127.0.0.1:49999/v1/systemone",
+            b"{}",
+            "",
+            Duration::from_millis(200),
+        );
+        assert!(resp.is_none());
+    }
+
+    #[test]
+    fn evaluate_risk_offline_latency_under_5ms() {
+        let mut min_elapsed = Duration::from_secs(10);
+        let mut res = None;
+        for _ in 0..5 {
+            let t0 = Instant::now();
+            res = evaluate_risk(
+                "antigravity",
+                "2026-09-30T00:00:00Z",
+                "exec",
+                "ls -la",
+                "",
+                "allow",
+                &serde_json::Value::Null,
+                0.05,
+            );
+            let elapsed = t0.elapsed();
+            if elapsed < min_elapsed {
+                min_elapsed = elapsed;
+            }
+        }
+        println!("evaluate_risk offline min latency: {:?}", min_elapsed);
+        assert!(res.is_none());
+        assert!(
+            min_elapsed < Duration::from_millis(5),
+            "evaluate_risk offline took {:?}",
+            min_elapsed
+        );
+    }
+
+    #[test]
+    fn surface_tau_lattice_and_overrides() {
+        // Defaults from lattice
+        assert!((surface_tau("pre_tool_risk") - 0.65).abs() < 1e-4);
+        assert!((surface_tau("router") - 0.82).abs() < 1e-4);
+        assert!((surface_tau("completion_check") - 0.75).abs() < 1e-4);
+        assert!((surface_tau("council_prescreen") - 0.70).abs() < 1e-4);
+        assert!((surface_tau("unknown_surface") - 0.20).abs() < 1e-4);
+
+        // Global override
+        unsafe {
+            std::env::set_var("CIEL_SYSTEM1_TAU", "0.42");
+        }
+        assert!((surface_tau("pre_tool_risk") - 0.42).abs() < 1e-4);
+        assert!((surface_tau("router") - 0.42).abs() < 1e-4);
+
+        // Surface-specific override takes precedence
+        unsafe {
+            std::env::set_var("CIEL_SYSTEM1_TAU_PRE_TOOL_RISK", "0.99");
+        }
+        assert!((surface_tau("pre_tool_risk") - 0.99).abs() < 1e-4);
+        assert!((surface_tau("router") - 0.42).abs() < 1e-4);
+
+        unsafe {
+            std::env::remove_var("CIEL_SYSTEM1_TAU_PRE_TOOL_RISK");
+            std::env::remove_var("CIEL_SYSTEM1_TAU");
+        }
+    }
+
+    #[test]
+    fn route_choice_fail_open_offline() {
+        let mut options = serde_json::Map::new();
+        options.insert("git".into(), json!("git operations"));
+        options.insert("docker".into(), json!("container operations"));
+        let verdict = route_choice("commit my changes", &options, 10, 0.05);
+        assert_eq!(verdict.status, "fail_open");
+        assert!(verdict.degraded);
+        assert_eq!(verdict.shortlist, vec!["docker", "git"]);
+    }
 }
+
+

@@ -16,7 +16,10 @@ System-1 is **fully integrated into the live execution pipeline**:
 2. **Router**: Provides coarse-to-fine candidate ranking (`route_choice`)
    on ambiguous or multi-skill matches before LLM reasoning fallback.
 3. **Completion Verification**: Powers `completion_check` surface to verify
-   empirical evidence against deliverables.
+   empirical evidence against deliverables. Intercepts false passes in
+   `paired_eval.py` (`--completion-gate [shadow|enforce]`), post-task scripts
+   (`scripts/verify_completion.py`, `skills/ciel/scripts/verify_evidence.sh`),
+   and `system1.rs` (`evaluate_completion`) using typed choices and 1–5 rubric scores.
 4. **Council Prescreen**: Triage for council-scoped events.
 
 Operating modes via `CIEL_SYSTEM1_MODE`:
@@ -39,6 +42,22 @@ turns the tier off entirely. `CIEL_SYSTEM1_MODEL` (env or the same env
 file) pins the request `model` — a laya checkpoint name
 (`english`, `multilingual`, `typed-decisions`) or `jev-latest` on hosted
 Jev.
+
+## Completion Verification Pipeline
+
+System-1 evaluates objective deliverables vs. empirical evidence artifacts
+(defined in `COMPLETION_EVIDENCE.md`) using typed questions:
+
+1. **Typed Choice (`done`)**: `complete` ("objective is fully satisfied with direct empirical proof and verification artifacts") vs. `incomplete` ("objective is unverified, missing required artifacts, failed verification, or asserts claims without evidence"). Flagged choices (`incomplete`) trigger active gate intercepts in `enforce` mode.
+2. **Typed Score (`evidence_score`)**: 1–5 quality rubric ranging from `1` (pure assertion/contradictory) to `5` (complete reproducible empirical verification of all task-class artifacts).
+
+Invocation methods:
+- **Python Library**: `system1.completion_check(objective, evidence, task_class, with_score=True)`
+- **Rust Client**: `system1::evaluate_completion(objective, evidence, task_class, timeout_s)`
+- **CLI Gate**: `python3 scripts/verify_completion.py --objective "..." --evidence "..." --task-class code_change --gate enforce`
+- **Eval Pipeline**: `python3 scripts/paired_eval.py --skill <dir> --completion-gate enforce`
+
+All verification points adhere strictly to **fail-open semantics**: if the System-1 endpoint is unreachable, offline, times out, or disabled, the gate passes through the deterministic test runner verdict without blocking.
 
 ## On-demand asks (`--decide`)
 

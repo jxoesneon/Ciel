@@ -1,5 +1,11 @@
 {
   "schema": 1,
+  "system1_thresholds": {
+    "pre_tool_risk": 0.65,
+    "router": 0.82,
+    "completion_check": 0.75,
+    "council_prescreen": 0.7
+  },
   "rules": [
     {
       "id": "fork_bomb",

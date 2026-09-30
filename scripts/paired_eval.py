@@ -42,6 +42,7 @@ from pathlib import Path
 
 DEFAULT_RUNNER = "devin -p --permission-mode accept-edits --respect-workspace-trust false -- {prompt}"
 REPO_TASKS = Path(__file__).resolve().parent.parent / "evals" / "tasks"
+LIB_DIR = Path(__file__).resolve().parent.parent / "ciel.skill" / "init" / "hooks" / "lib"
 
 
 def _load_task(task_dir: Path) -> dict | None:
@@ -79,7 +80,7 @@ def _prepare_workspace(task: dict, dest: Path, skill: Path | None) -> None:
 
 
 def _run_arm(task: dict, runner: str, workspace: Path, timeout: int,
-             skill: Path | None) -> dict:
+             skill: Path | None, completion_gate: str = "off") -> dict:
     _prepare_workspace(task, workspace, skill)
     env = dict(os.environ)
     env["CIEL_EVAL_ARM"] = "treatment" if skill else "control"
@@ -101,12 +102,54 @@ def _run_arm(task: dict, runner: str, workspace: Path, timeout: int,
         ["bash", str(task["verify"])], cwd=workspace, env=env,
         capture_output=True, text=True, timeout=120, check=False,
     )
-    return {
-        "pass": verify.returncode == 0,
+    verify_pass = (verify.returncode == 0)
+    verify_log = (verify.stdout + verify.stderr)[-1000:]
+
+    completion_info = None
+    false_pass = False
+    arm_pass = verify_pass
+
+    if completion_gate in ("shadow", "enforce"):
+        evidence = (
+            f"exit_code: {verify.returncode}\n"
+            f"verify_output:\n{verify_log}\n"
+            f"agent_output_tail:\n{agent_log}\n"
+        )
+        try:
+            if str(LIB_DIR) not in sys.path:
+                sys.path.insert(0, str(LIB_DIR))
+            import system1
+            completion_info = system1.completion_check(
+                objective=task["prompt"],
+                evidence=evidence,
+                task_class="code_change",
+                with_score=True,
+                timeout=float(os.environ.get("CIEL_SYSTEM1_TIMEOUT", "2.0")),
+            )
+        except Exception:
+            completion_info = None
+
+        if completion_info:
+            # False pass: verify passed deterministically, but System-1 flags incomplete
+            if verify_pass and completion_info.get("band") == "flag":
+                false_pass = True
+                if completion_gate == "enforce":
+                    arm_pass = False
+        # Fail-open: if completion_info is None, arm_pass remains verify_pass unchanged
+
+    arm_result = {
+        "pass": arm_pass,
+        "verify_pass": verify_pass,
         "agent_secs": agent_secs,
-        "verify_log": (verify.stdout + verify.stderr)[-1000:],
+        "verify_log": verify_log,
         "agent_log_tail": agent_log,
     }
+    if completion_info is not None:
+        arm_result["completion_check"] = completion_info
+    if false_pass:
+        arm_result["false_pass_detected"] = True
+
+    return arm_result
 
 
 def _outcome(control: bool, treatment: bool) -> str:
@@ -129,6 +172,9 @@ def main() -> int:
                         help="shell template; {prompt} and {skill_dir} are substituted")
     parser.add_argument("--timeout", type=int, default=300,
                         help="per-arm runner timeout in seconds")
+    parser.add_argument("--completion-gate", choices=["off", "shadow", "enforce"],
+                        default=os.environ.get("CIEL_COMPLETION_GATE", "off"),
+                        help="System-1 completion verification gate (off|shadow|enforce)")
     parser.add_argument("--report", type=Path, help="write JSON evidence report")
     parser.add_argument("--require-improvement", action="store_true",
                         help="fail unless at least one task shows improvement")
@@ -154,8 +200,10 @@ def main() -> int:
             treatment_ws = Path(tmp) / "treatment"
             control_ws.mkdir()
             treatment_ws.mkdir()
-            control = _run_arm(task, args.runner, control_ws, args.timeout, None)
-            treatment = _run_arm(task, args.runner, treatment_ws, args.timeout, skill)
+            control = _run_arm(task, args.runner, control_ws, args.timeout, None,
+                               completion_gate=args.completion_gate)
+            treatment = _run_arm(task, args.runner, treatment_ws, args.timeout, skill,
+                                 completion_gate=args.completion_gate)
             outcome = _outcome(control["pass"], treatment["pass"])
             results.append({
                 "task": task["id"],
@@ -163,11 +211,14 @@ def main() -> int:
                 "control": control,
                 "treatment": treatment,
             })
+            fp_flag = ""
+            if control.get("false_pass_detected") or treatment.get("false_pass_detected"):
+                fp_flag = " [FALSE PASS INTERCEPTED BY SYSTEM-1]" if args.completion_gate == "enforce" else " [SYSTEM-1 FLAGGED INCOMPLETE]"
             print(f"[eval] {task['id']}: {outcome} "
                   f"(control {'pass' if control['pass'] else 'fail'} "
                   f"{control['agent_secs']}s, "
                   f"treatment {'pass' if treatment['pass'] else 'fail'} "
-                  f"{treatment['agent_secs']}s)")
+                  f"{treatment['agent_secs']}s){fp_flag}")
             if args.keep_workspaces:
                 keep = Path(tempfile.gettempdir()) / f"ciel-eval-{task['id']}"
                 shutil.rmtree(keep, ignore_errors=True)
@@ -176,7 +227,8 @@ def main() -> int:
 
     regressions = [r["task"] for r in results if r["outcome"] == "regression"]
     improvements = [r["task"] for r in results if r["outcome"] == "improvement"]
-    verdict = "fail" if regressions else "pass"
+    false_passes = [r["task"] for r in results if r["control"].get("false_pass_detected") or r["treatment"].get("false_pass_detected")]
+    verdict = "fail" if (regressions or (args.completion_gate == "enforce" and false_passes)) else "pass"
     if args.require_improvement and not improvements:
         verdict = "fail"
 
@@ -184,9 +236,11 @@ def main() -> int:
         "ts": datetime.now(timezone.utc).isoformat(),
         "skill": str(skill),
         "runner": args.runner,
+        "completion_gate": args.completion_gate,
         "verdict": verdict,
         "regressions": regressions,
         "improvements": improvements,
+        "false_passes": false_passes,
         "tasks": results,
     }
     if args.report:
