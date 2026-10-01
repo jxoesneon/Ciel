@@ -17,6 +17,7 @@
 //! genuinely not worth a vendored stack here. `system1_embed.py` stays
 //! Python (sentence-transformers) and is spawned exactly as before.
 
+
 use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
 use std::collections::HashMap;
@@ -26,6 +27,34 @@ use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 use time::OffsetDateTime;
+use std::sync::OnceLock;
+use regex::Regex;
+
+struct Redactor {
+    cat: &'static str,
+    re: Regex,
+}
+
+fn redactors() -> &'static [Redactor] {
+    static REDACTORS: OnceLock<Vec<Redactor>> = OnceLock::new();
+    REDACTORS.get_or_init(|| {
+        vec![
+            Redactor { cat: "github_token", re: Regex::new(r"\b(?:ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9]{20,}\b|\bgithub_pat_[A-Za-z0-9_]{20,}\b").unwrap() },
+            Redactor { cat: "aws_access_key", re: Regex::new(r"\bAKIA[0-9A-Z]{16}\b").unwrap() },
+            Redactor { cat: "api_key_prefixed", re: Regex::new(r"\b(?:sk|pk|key|api|tok)_[A-Za-z0-9_-]{20,}\b|\bsk-[A-Za-z0-9_-]{20,}\b").unwrap() },
+            Redactor { cat: "private_key_block", re: Regex::new(r"-----BEGIN [A-Z ]*PRIVATE KEY").unwrap() },
+            Redactor { cat: "slack_token", re: Regex::new(r"\bxox[baprs]-[0-9A-Za-z-]{10,}\b").unwrap() },
+            Redactor { cat: "gcp_api_key", re: Regex::new(r"\bAIza[0-9A-Za-z_-]{35}\b").unwrap() },
+            Redactor { cat: "jwt", re: Regex::new(r"\beyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\b").unwrap() },
+            Redactor { cat: "npm_token", re: Regex::new(r"\bnpm_[A-Za-z0-9]{36}\b").unwrap() },
+            Redactor { cat: "crates_token", re: Regex::new(r"\bcio[0-9A-Za-z]{25,}\b").unwrap() },
+            Redactor { cat: "password_assignment", re: Regex::new(r#"(?i)\b(?:sudo\s+)?(?:password|passwd|passphrase)\s*(?:is|:|=)\s*['"]?[^\s'"]{4,}"#).unwrap() },
+            Redactor { cat: "secret_assignment", re: Regex::new(r#"(?i)\b(?:api[_-]?key|access[_-]?token|auth[_-]?token|secret[_-]?key|client[_-]?secret)\s*[:=]\s*['"]?[A-Za-z0-9_\-]{8,}"#).unwrap() },
+            Redactor { cat: "generic_secret_kv", re: Regex::new(r#"(?i)\b(?:token|secret)\s+is\s+['"]?[A-Za-z0-9_\-]{8,}"#).unwrap() },
+        ]
+    })
+}
+
 
 use crate::paths;
 
@@ -650,8 +679,31 @@ fn cache_write(state: &Value, questions: &Value, result: &Value) {
     let _ = std::fs::write(&path, crate::jsonfmt::dumps_raw(result));
 }
 
-fn append_event(record: &Value) {
+
+
+fn redact_string(s: &str) -> String {
+    let mut out = s.to_string();
+    for r in redactors() {
+        out = r.re.replace_all(&out, format!("[REDACTED:{}]", r.cat).as_str()).into_owned();
+    }
+    out
+}
+
+fn redact_value(val: &mut Value) {
+    match val {
+        Value::String(s) => *s = redact_string(s),
+        Value::Array(arr) => arr.iter_mut().for_each(redact_value),
+        Value::Object(obj) => obj.values_mut().for_each(redact_value),
+        _ => {}
+    }
+}
+
+fn append_event
+(record: &Value) {
+    let mut record = record.clone();
+    redact_value(&mut record);
     let log = paths::ciel_home().join("system1").join("events.jsonl");
+
     if let Some(parent) = log.parent() {
         if !parent.is_dir() {
             let _ = std::fs::create_dir_all(parent);
@@ -671,12 +723,12 @@ fn append_event(record: &Value) {
                     .append(true)
                     .open(&log)
                 {
-                    let _ = writeln!(f2, "{}", crate::jsonfmt::dumps_raw(record));
+                    let _ = writeln!(f2, "{}", crate::jsonfmt::dumps_raw(&record));
                 }
                 return;
             }
         }
-        let _ = writeln!(f, "{}", crate::jsonfmt::dumps_raw(record));
+        let _ = writeln!(f, "{}", crate::jsonfmt::dumps_raw(&record));
     }
 }
 
@@ -1653,6 +1705,7 @@ mod tests {
 
     #[test]
     fn evaluate_risk_offline_latency_under_5ms() {
+        std::env::set_var("CIEL_SYSTEM1_URL", "http://127.0.0.1:54321");
         let mut min_elapsed = Duration::from_secs(10);
         let mut res = None;
         for _ in 0..5 {
@@ -1672,6 +1725,7 @@ mod tests {
                 min_elapsed = elapsed;
             }
         }
+        std::env::remove_var("CIEL_SYSTEM1_URL");
         println!("evaluate_risk offline min latency: {:?}", min_elapsed);
         assert!(res.is_none());
         assert!(

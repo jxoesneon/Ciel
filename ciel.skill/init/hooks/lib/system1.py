@@ -31,8 +31,19 @@ import re
 import subprocess
 import sys
 import time
+
 import urllib.request
 from pathlib import Path
+
+try:
+    import secret_scan
+except ImportError:
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import secret_scan
+    except ImportError:
+        secret_scan = None
+
 
 EVENTS_LOG_MAX = 4 * 1024 * 1024
 MAX_INFLIGHT = 2
@@ -443,8 +454,27 @@ def _cache_write(state: dict, questions: dict, result: dict) -> None:
         pass
 
 
+
+def _redact_string(text: str) -> str:
+    if not text or secret_scan is None:
+        return text
+    for cat, rx in secret_scan._COMPILED.items():
+        text = rx.sub(f"[REDACTED:{cat}]", text)
+    return text
+
+def _redact(obj):
+    if isinstance(obj, str):
+        return _redact_string(obj)
+    elif isinstance(obj, dict):
+        return {k: _redact(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [_redact(v) for v in obj]
+    return obj
+
 def _append_event(record: dict) -> None:
+    record = _redact(record)
     log = ciel_home() / "system1" / "events.jsonl"
+
     try:
         log.parent.mkdir(parents=True, exist_ok=True)
         if log.is_file() and log.stat().st_size > EVENTS_LOG_MAX:

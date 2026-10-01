@@ -179,8 +179,9 @@ python3 -m venv ~/.ciel/system1/venv
 LAYA_HOST=127.0.0.1
 LAYA_PORT=8765
 LAYA_PRELOAD=1
-LAYA_MODELS=english,typed-decisions   # both resident (~1.6GB); typed-decisions is the calibrated default
-LAYA_THREADS=4
+LAYA_MODELS=typed-decisions         # single resident model (< 1.5 GB RSS; calibrated default)
+LAYA_MAX_LOADED=1                   # cap resident models to 1 under Termux memory limits
+LAYA_THREADS=4                      # torch intra-op CPU threads (2 or 4 for mobile cores)
 LAYA_API_KEY=<openssl rand -hex 24>
 CIEL_SYSTEM1_MODEL=typed-decisions    # pin the calibrated checkpoint for all asks
 ```

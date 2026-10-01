@@ -290,6 +290,38 @@ def evaluate(
     rules: list[dict] | None = None,
     policy_source: str | None = None,
 ) -> dict:
+    def _apply_failsafe(v):
+        import os
+        from system1 import tool_state
+        m = os.environ.get("CIEL_SYSTEM1_MODE") or "active"
+        if m != "active" or system1 is None or os.environ.get("CIEL_SYSTEM1_DISABLED"):
+            return v
+        if v.get("decision") == "allow_overridden" or grant_state().get("active") or (ciel_home() / "allow_privileged").exists():
+            return v
+            
+        cmd_lower = command.lower()
+        cmd_dest = any(c in cmd_lower for c in ["rm ", "mkfs", "dd ", "sudo ", "chmod 777"]) or ("curl" in cmd_lower and "bash" in cmd_lower) or cmd_lower == "rm"
+        state = tool_state(tool, command, path)
+        sensitive = state.get("targets_sensitive_path")
+        is_write = tool in ["write", "edit", "notebook_edit"] or (path and not command)
+        path_dest = sensitive and is_write
+        
+        is_destructive = cmd_dest or path_dest
+        if not is_destructive:
+            return v
+            
+        s1 = system1_evaluate_risk(tool, command, path, timeout=1.5)
+        if s1 is None:
+            return {
+                "decision": "deny",
+                "rule_id": "system1_offline_failsafe",
+                "tier": "hard",
+                "reason": "System-1 daemon offline or timed out; destructive command held under fail-safe policy. Start laya-serve or set allow_privileged.",
+                "policy": policy_source,
+                "path": _normalize_path(path, home or Path.home()) or None,
+            }
+        return v
+
     """Evaluate a tool call against the policy. Returns the verdict dict."""
     home = home or Path.home()
     if rules is None:
@@ -322,7 +354,7 @@ def evaluate(
         "path": normalized_path or None,
     }
     if not hits:
-        return verdict
+        return _apply_failsafe(verdict)
 
     hard = next((r for r in hits if r.get("tier") == "hard"), None)
     if hard is not None:
@@ -332,7 +364,7 @@ def evaluate(
             tier="hard",
             reason=hard.get("reason", ""),
         )
-        return verdict
+        return _apply_failsafe(verdict)
 
     non_advisory = [r for r in hits if r.get("tier") != "advisory"]
     if not non_advisory:
@@ -344,7 +376,7 @@ def evaluate(
             reason=advisory.get("reason", ""),
             scan=advisory.get("scan"),
         )
-        return verdict
+        return _apply_failsafe(verdict)
 
     first = non_advisory[0]
     gs = grant_state()
@@ -362,7 +394,7 @@ def evaluate(
             tier="soft",
             reason=first.get("reason", ""),
         )
-    return verdict
+    return _apply_failsafe(verdict)
 
 
 def grant_state() -> dict:

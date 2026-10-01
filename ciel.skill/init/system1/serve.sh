@@ -3,6 +3,12 @@
 #
 # Supports booting real laya-serve (when installed in venv) or zero-dependency
 # local mock runner (mock_server.py) for development, testing, and offline modes.
+#
+# M3-EFFICIENCY:
+# - LAYA_MODELS=typed-decisions (default): restricts RAM to < 1.5 GB RSS by keeping
+#   a single calibrated ModernBERT model in memory rather than multi-model residency.
+# - LAYA_MAX_LOADED=1: prevents concurrent checkpoint accumulation under Termux.
+# - LAYA_THREADS=2 or 4: bounds torch intra-op CPU concurrency on mobile cores.
 
 set -euo pipefail
 
@@ -20,13 +26,18 @@ init_env() {
         rand_key=$(python3 -c 'import secrets; print(secrets.token_hex(24))')
         cat <<EOF > "$ENV_FILE"
 # Local Laya / System-1 configuration (machine-local, chmod 600)
+# M3-EFFICIENCY: Single ModernBERT model resident (< 1.5 GB RSS)
 LAYA_HOST=127.0.0.1
 LAYA_PORT=8765
 LAYA_PRELOAD=1
-LAYA_MODELS=english,typed-decisions
+LAYA_MODELS=typed-decisions
+LAYA_MAX_LOADED=1
+# Intra-op CPU threads: capped to 2 or 4 for mobile Termux
 LAYA_THREADS=4
 LAYA_API_KEY=${rand_key}
 CIEL_SYSTEM1_MODE=active
+CIEL_SYSTEM1_MODEL=typed-decisions
+LD_PRELOAD=/data/data/com.termux/files/usr/lib/libpython3.14.so
 EOF
         chmod 600 "$ENV_FILE"
         echo "[serve.sh] Created $ENV_FILE (mode 600)"
@@ -43,8 +54,11 @@ set +a
 
 LAYA_HOST="${LAYA_HOST:-127.0.0.1}"
 LAYA_PORT="${LAYA_PORT:-8765}"
+LAYA_MODELS="${LAYA_MODELS:-typed-decisions}"
+LAYA_MAX_LOADED="${LAYA_MAX_LOADED:-1}"
+LAYA_THREADS="${LAYA_THREADS:-4}"
 LAYA_API_KEY="${LAYA_API_KEY:-}"
-export LAYA_HOST LAYA_PORT LAYA_API_KEY CIEL_SYSTEM1_KEY="${CIEL_SYSTEM1_KEY:-$LAYA_API_KEY}"
+export LAYA_HOST LAYA_PORT LAYA_API_KEY CIEL_SYSTEM1_KEY="${CIEL_SYSTEM1_KEY:-$LAYA_API_KEY}" LAYA_MODELS LAYA_MAX_LOADED LAYA_THREADS CIEL_SYSTEM1_MODEL="${CIEL_SYSTEM1_MODEL:-typed-decisions}"
 
 is_port_listening() {
     python3 -c "
