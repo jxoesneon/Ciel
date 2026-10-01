@@ -18,17 +18,25 @@ triggers:
       confidence: 1.0
       type: exact_name
 
-    - pattern: "^orchestrate$"
+    - pattern: "^(taste|taste.?skill|anti.?slop)$"
+      skill: taste
+      confidence: 1.0
+      type: exact_name
 
-      skill: ciel
+    - pattern: "(taste|anti.?slop|clean.?ui|design.?dials|redesign.?ui)"
+      skill: taste
       confidence: 0.95
       type: alias
 
   # Functional triggers - what the skill does
   functional:
+    - pattern: "(audit|redesign|improve|enhance).*(frontend|ui|css|landing|portfolio)"
+      skill: taste
+      confidence: 0.9
+      type: capability
+      examples: ["redesign this frontend", "audit this page for slop", "set design dials"]
 
     - pattern: "(route|orchestrate|coordinate|manage).*(skill|agent|task)"
-
       skill: ciel
       confidence: 0.9
       type: capability
@@ -36,9 +44,12 @@ triggers:
 
   # Domain triggers - subject area
   domain:
+    - pattern: "(frontend|design|typography|anti.?slop|tailwind|ui.?taste)"
+      skill: taste
+      confidence: 0.85
+      type: intent
 
     - pattern: "(skill|capability|tool).*(find|search|discover|get|acquire)"
-
       skill: ciel
       confidence: 0.85
       type: intent

@@ -23,6 +23,22 @@ avg_confidence: 0.86
 avg_ms: 18
 success_rate: 0.97
 notes: "..."
+
+# Active Registered Route: taste
+route_id: route_taste_domain_v1
+matcher:
+  triggers: ["taste", "anti-slop", "frontend taste", "ui taste", "redesign ui"]
+  compiled_pattern: "^(taste|taste.?skill|anti.?slop|clean.?ui|design.?dials|redesign.?ui)$"
+  tags: ["frontend", "design", "ui", "ux", "anti-slop", "accessibility"]
+target_skill: taste
+trigger_confidence: 0.95
+path_used: fast
+hits: 1
+last_hit: 2026-10-01T22:30:00Z
+avg_confidence: 0.95
+avg_ms: 5
+success_rate: 1.00
+notes: "Anti-slop frontend engineering directive registered via dual council pass"
 ```
 
 Stored in MemPalace partition `ciel/route_registry/` keyed by `route_id`. Indexed by `target_skill` and by tag.
