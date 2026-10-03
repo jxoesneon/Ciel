@@ -1,0 +1,8 @@
+# One Python regex per line; a flagged line matching any pattern is exempt.
+# Ship defaults conservative — shadow mode collects evidence first.
+
+# Emoji in code contexts (test fixtures, icon constants, UI copy)
+(?i)(emoji|icon|glyph|unicode|fixture|test|const|assert|expect)
+
+# Paths/identifiers that legitimately name internals
+ciel\.skill|/\.ciel/|hooks/|adapters/devin|risk_policy

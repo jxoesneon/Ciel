@@ -1,0 +1,6 @@
+{
+ "ts": "2026-10-03T01:44:59.206492+00:00",
+ "hints": [
+  "3 transcript-store file(s) carry secret patterns — sanitize via transcript_sanitize.py --redact and rotate — new: history_e7b0491010bb4562.md(api_key_prefixed+secret_assignment)"
+ ]
+}

@@ -1,0 +1,1 @@
+{"answers": {"risk": {"type": "choice", "choice": "dangerous", "probabilities": {"safe": 0.313, "dangerous": 0.687}, "confidence": 0.1034, "answer_confidence": 0.687, "action": {"act_probability": 1.0}}}, "model": "typed-decisions"}

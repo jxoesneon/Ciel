@@ -72,3 +72,5 @@ archive/
 .coverage
 coverage.xml
 htmlcov/
+system1/env
+backups/

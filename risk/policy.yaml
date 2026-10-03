@@ -1,0 +1,142 @@
+# Ciel pre-flight risk policy — single source of truth for every runtime's
+# PreToolUse gate (hooks/*/pre_tool_use.sh via hooks/lib/risk_policy.py).
+#
+# tier: hard     -> always denied; cannot be overridden by ~/.ciel/allow_privileged
+# tier: soft     -> denied unless ~/.ciel/allow_privileged exists (then allowed, logged as overridden)
+# tier: advisory -> never denied by evaluate(); verdict carries rule_id + scan
+#                   so the hook can run the named secondary scanner
+# match: command -> Python regex (re.IGNORECASE) against the shell command string
+# match: path    -> Python regex against the target file path, normalized so the
+#                   user's home directory collapses to "~" (e.g. /home/x/.ssh/id -> ~/.ssh/id)
+# tools: optional list of tool-name regexes (re.search, IGNORECASE); rule applies
+#        if any matches. Default: all tools.
+schema: 1
+system1_thresholds:
+  pre_tool_risk: 0.65
+  router: 0.82
+  completion_check: 0.75
+  council_prescreen: 0.70
+rules:
+  - id: fork_bomb
+    tier: hard
+    match: command
+    pattern: ':\s*\(\s*\)\s*\{\s*:\s*\|\s*:\s*&\s*\}\s*;\s*:'
+    reason: Fork bomb.
+
+  - id: mkfs
+    tier: hard
+    match: command
+    pattern: '\bmkfs(\.[a-z0-9]+)?\b'
+    reason: Filesystem format.
+
+  - id: dd_to_device
+    tier: hard
+    match: command
+    pattern: '\bdd\b[^\n|;&]*\bof=/dev/'
+    reason: Raw write to a block device.
+
+  - id: rm_root_or_home
+    tier: hard
+    match: command
+    pattern: '\brm\s+(-[a-z]*\s+)*(-[a-z]*[rf][a-z]*\s+)+(/|~|\$HOME|"\$HOME"|/\*)(/?\s|/?$|/\*)'
+    reason: Recursive delete of / or the home directory.
+
+  - id: privilege_escalation
+    tier: soft
+    match: command
+    pattern: '(^|[\s;&|(])(sudo|doas|pkexec)\s+[^\s|;&]'
+    reason: Privilege escalation.
+
+  - id: power_state
+    tier: soft
+    match: command
+    pattern: '(^|[\s;&|(])(shutdown|reboot|poweroff|halt|systemctl\s+(poweroff|reboot|halt))\b'
+    reason: Host power-state change.
+
+  - id: pipe_to_shell
+    tier: soft
+    match: command
+    pattern: '\b(curl|wget)\b[^\n|;]*\|\s*(sudo\s+)?(ba|z|da)?sh\b'
+    reason: Remote script piped straight into a shell.
+
+  - id: publish_artifact_scan
+    tier: advisory
+    match: command
+    pattern: '\bgit\s+(commit|push|tag)\b|\bgh\s+(pr|release)\s+create\b'
+    scan: attribution
+    reason: Durable-artifact publish — attribution scan applies (shadow unless risk/attribution_gate says enforce).
+
+  - id: git_force_push_protected
+    tier: soft
+    match: command
+    pattern: '\bgit\s+push\b[^\n;&|]*(--force\b|-f\b|\+refs/|\s\+[a-z])[^\n;&|]*\b(main|master|trunk|release)\b|\bgit\s+push\b[^\n;&|]*\b(main|master|trunk|release)\b[^\n;&|]*(--force\b|-f\b)'
+    reason: Force-push to a protected branch.
+
+  - id: git_history_rewrite_push
+    tier: soft
+    match: command
+    pattern: '\bgit\s+push\b[^\n;&|]*--force-with-lease\b[^\n;&|]*\b(main|master)\b'
+    reason: History rewrite on a protected branch.
+
+  - id: protected_system_path_write
+    tier: soft
+    match: path
+    tools: ['^(write|edit|notebook_edit|multi_?edit|write_to_file|replace_file_content|create|delete|move|rename)$', 'write|edit|delete|move|create']
+    pattern: '^/(etc|usr|opt|bin|sbin|boot|root)(/|$)'
+    reason: Write into a protected system path.
+
+  - id: secret_store_write
+    tier: soft
+    match: path
+    tools: ['^(write|edit|notebook_edit|multi_?edit|write_to_file|replace_file_content|create|delete|move|rename)$', 'write|edit|delete|move|create']
+    pattern: '^~/\.(ssh|gnupg|aws|kube|docker)(/|$)|^~/\.(netrc|npmrc|pypirc)$'
+    reason: Write into a credential store.
+
+  - id: hook_self_tamper
+    tier: soft
+    match: path
+    tools: ['^(write|edit|notebook_edit|multi_?edit|write_to_file|replace_file_content|create|delete|move|rename)$', 'write|edit|delete|move|create']
+    pattern: '^~/\.ciel/(hooks|risk)(/|$)|^~/\.config/devin/config\.json$'
+    reason: Agent modification of its own safety hooks, risk policy, or host config.
+
+  # Non-overridable: the privileged-override sentinel, its provenance, and the
+  # advisory-gate controls are a human-held surface. If the agent could create
+  # or remove ~/.ciel/allow_privileged itself, every soft rule — including
+  # hook_self_tamper — becomes overridable, so these must stay hard.
+  - id: grant_control_tamper
+    tier: hard
+    match: path
+    tools: ['^(write|edit|notebook_edit|multi_?edit|write_to_file|replace_file_content|create|delete|move|rename)$', 'write|edit|delete|move|create']
+    pattern: '^~/\.ciel/(allow_privileged|\.grant_state|grants\.log|risk/(attribution_gate|attribution_allowlist\.txt))$'
+    reason: Agent modification of the privileged-override sentinel or grant provenance — human-held control surface.
+
+  - id: grant_control_command
+    tier: hard
+    match: command
+    pattern: '(?:\b(?:touch|mkdir|cp|mv|install|rsync|scp|ln|tee|chmod|chown|truncate|rm|unlink|shred|rmdir|sed|perl|python3?|ruby)\b[^\n|;]*|\bdd\b[^\n|;]*\bof=|>{1,2}\s*)(?:~|\$HOME|\$\{HOME\}|"\$HOME"|/home/[^\s/]+|/root)/\.ciel/(?:allow_privileged|\.grant_state|grants\.log|risk/(?:attribution_gate|attribution_allowlist\.txt))(?:\b|/)'
+    reason: Shell write/create/delete of the privileged-override sentinel or grant provenance.
+
+  # Destructive verbs on the stores the gate depends on. rm/unlink/shred/
+  # rmdir of a credential store, the hook/policy dir, or a system path is
+  # catastrophic and unguarded otherwise — rm_root_or_home only covers / and ~.
+  - id: destructive_sensitive_path
+    tier: hard
+    match: command
+    pattern: '\b(?:rm|unlink|shred|rmdir)\b[^\n|;]*(?:(?:~|\$HOME|\$\{HOME\}|"\$HOME"|/home/[^\s/]+|/root)/\.(?:ssh|gnupg|aws|kube|docker|netrc|npmrc|pypirc)\b|(?:~|\$HOME|\$\{HOME\}|"\$HOME"|/home/[^\s/]+|/root)/\.ciel(?:/(?:hooks|risk|allow_privileged|\.grant_state|grants\.log)\b|/?(?:\s|$))|(?:~|\$HOME|\$\{HOME\}|"\$HOME"|/home/[^\s/]+|/root)/\.config/devin\b|(?<![\w./~-])/(?:etc|usr|bin|sbin|boot|root)(?:/|\b))'
+    reason: Destructive delete of a credential store, agent hook/policy dir, grant control, or protected system path.
+
+  - id: find_delete_sensitive_path
+    tier: hard
+    match: command
+    pattern: '\bfind\b[^\n|;]*(?:(?:~|\$HOME|\$\{HOME\}|"\$HOME"|/home/[^\s/]+|/root)/\.(?:ssh|gnupg|aws|kube|docker)\b|(?:~|\$HOME|\$\{HOME\}|"\$HOME"|/home/[^\s/]+|/root)/\.ciel(?:/(?:hooks|risk)\b|/?(?:\s|$))|(?<![\w./~-])/(?:etc|usr|bin|sbin|boot|root)(?:/|\b))[^\n|;]*-delete\b'
+    reason: find -delete against a credential store, agent hook/policy dir, or protected system path.
+
+  # Command-side counterpart to the path-match rules: copy/move/install/
+  # redirect vectors embed the destination inside the command string, where
+  # match:path rules cannot see it. Sources count too — cp FROM a credential
+  # store is the exfil side of the same vector.
+  - id: shell_sensitive_path_write
+    tier: soft
+    match: command
+    pattern: '(?:\b(?:cp|mv|install|rsync|scp|ln|tee|rm|unlink|shred|rmdir|truncate)\b[^\n|;]*|\bdd\b[^\n|;]*\bof=|>{1,2}\s*)(?:(?:~|\$HOME|\$\{HOME\}|"\$HOME"|/home/[^\s/]+|/root)?/\.(?:ssh|gnupg|aws|kube|docker|netrc|npmrc|pypirc)\b|(?:~|\$HOME|\$\{HOME\}|"\$HOME"|/home/[^\s/]+|/root)/\.ciel(?:/(?:hooks|risk)\b|/?(?:\s|$))|(?:~|\$HOME|\$\{HOME\}|"\$HOME"|/home/[^\s/]+|/root)/\.config/devin\b|(?<![\w./~-])/(?:etc|usr|bin|sbin|boot|root)/)'
+    reason: Shell copy/move/redirect into a credential store, agent hook/policy dir, or protected system path.
