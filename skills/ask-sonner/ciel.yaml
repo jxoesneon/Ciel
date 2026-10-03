@@ -22,3 +22,8 @@ source:
   origin: https://github.com/emilkowalski/skills
   author: Emil Kowalski
   license: MIT
+state: sandboxed
+trust_evidence:
+  approved_by: master
+  approved_at: '2026-10-03'
+  basis: same-origin family (emilkowalski/skills, MIT); prompt-only skill, skillfrisk clean; family representative eval passed (emil-design-eng, animate). Promote to validated on individual paired-eval.

@@ -27,3 +27,16 @@ source:
   origin: https://github.com/emilkowalski/skills
   author: Emil Kowalski
   license: MIT
+state: validated
+trust_evidence:
+  approved_by: master
+  approved_at: '2026-10-03'
+  paired_eval:
+    report: ~/.ciel/acquisition/evidence/paired_eval_animate.json
+    verdict: pass
+    regressions: 0
+    arms: control pass + treatment pass on all tasks
+  checks:
+  - skillfrisk clean (findings baselined where flagged)
+  - spec-pure frontmatter + sidecar conformant
+  - skills-ref validation passed

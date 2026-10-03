@@ -30,3 +30,16 @@ source:
   author: Next Level Builder
   license: MIT
 notes: Ships local searchable data/ queried via scripts/search.py (BM25, offline, no network).
+state: validated
+trust_evidence:
+  approved_by: master
+  approved_at: '2026-10-03'
+  paired_eval:
+    report: ~/.ciel/acquisition/evidence/paired_eval_ui-ux-pro-max.json
+    verdict: pass
+    regressions: 0
+    arms: control pass + treatment pass on all tasks
+  checks:
+  - skillfrisk clean (findings baselined where flagged)
+  - spec-pure frontmatter + sidecar conformant
+  - skills-ref validation passed

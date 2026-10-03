@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "built": "2026-10-03T06:20:33.219508+00:00",
+ "built": "2026-10-03T06:21:01.311451+00:00",
  "skills_dir": "skills",
  "count": 197,
  "skills": {
@@ -464,7 +464,7 @@
    },
    "install_path": "skills/animate/",
    "state": "validated",
-   "checksum": "sha256:4f720528569f590d93cf1673973a6869ea739643f6912c1128c933073b36b3a3",
+   "checksum": "sha256:f8b4a536f5895783c0ba54f5183d35afb97366e6caf8730705ff5055f3a90f06",
    "created": "2026-10-03T05:52:24.409192+00:00",
    "last_updated": "2026-10-03T05:52:24.409192+00:00",
    "runtimes": [
@@ -503,8 +503,8 @@
     "license": "MIT"
    },
    "install_path": "skills/animate-expo/",
-   "state": "validated",
-   "checksum": "sha256:9d101dafd1f058431871ae96959c0a376f799178ad744cc04f3d1ccd896bf834",
+   "state": "sandboxed",
+   "checksum": "sha256:490595a1a2264038704fded9acef9e5fb6c93f30d7dd339ef2869e6533e4f5fd",
    "created": "2026-10-03T05:52:24.412190+00:00",
    "last_updated": "2026-10-03T05:52:24.412190+00:00",
    "runtimes": [
@@ -611,8 +611,8 @@
     "license": "MIT"
    },
    "install_path": "skills/animation-vocabulary/",
-   "state": "validated",
-   "checksum": "sha256:b2f70aa4c17eb46ff295899faf88d1e9290355c41581a5d5869870bf61234a9e",
+   "state": "sandboxed",
+   "checksum": "sha256:65c0bf476173def94f4da961099fcc6da19171b2df1ffba219657163fe7b097f",
    "created": "2026-10-03T05:52:24.418681+00:00",
    "last_updated": "2026-10-03T05:52:24.418681+00:00",
    "runtimes": [
@@ -687,8 +687,8 @@
     "license": "MIT"
    },
    "install_path": "skills/apple-design/",
-   "state": "validated",
-   "checksum": "sha256:4ecd9ef2025203f1d3d310d7d11546e43419826b1760ae2754a0faf0fa3b2333",
+   "state": "sandboxed",
+   "checksum": "sha256:8557f7358db4a764ac56b1b7adf3ae927272dcbd03000bf6fbedbd3a668a94fc",
    "created": "2026-10-03T05:52:24.423278+00:00",
    "last_updated": "2026-10-03T05:52:24.423278+00:00",
    "runtimes": [
@@ -795,8 +795,8 @@
     "license": "MIT"
    },
    "install_path": "skills/ask-sonner/",
-   "state": "validated",
-   "checksum": "sha256:a9d8aaf1f48250f90a41e1033d92cd50bac54f89f1db63bae564df343f1ee8e0",
+   "state": "sandboxed",
+   "checksum": "sha256:2633e382833de9ae2e532f1579c9b7bc1c85124e8952bbd379812316b2b33f50",
    "created": "2026-10-03T05:52:24.429152+00:00",
    "last_updated": "2026-10-03T05:52:24.429152+00:00",
    "runtimes": [
@@ -1429,8 +1429,8 @@
     "license": "MIT"
    },
    "install_path": "skills/break-ui/",
-   "state": "validated",
-   "checksum": "sha256:8dda4ad3559b5b65ef1ac2e59933fdcfdb2b5a39da236bafdbe26b1589e315b0",
+   "state": "sandboxed",
+   "checksum": "sha256:7eeafd2338b34af3fec53fb5c6c3285de15fdc474d861ca873be5ba205a2009e",
    "created": "2026-10-03T05:52:24.456105+00:00",
    "last_updated": "2026-10-03T05:52:24.456105+00:00",
    "runtimes": [
@@ -3204,7 +3204,7 @@
    },
    "install_path": "skills/emil-design-eng/",
    "state": "validated",
-   "checksum": "sha256:3a8bcdf04e50abce24111934c56a589ba921affb37f944683de0243cb95e523c",
+   "checksum": "sha256:ffca7cc6e78ac004eb12c5b8cafe39616ab7e13e70f4e8a533f3e97461a779b4",
    "created": "2026-10-03T05:52:24.487308+00:00",
    "last_updated": "2026-10-03T05:52:24.487308+00:00",
    "runtimes": [
@@ -3382,8 +3382,8 @@
     "license": "MIT"
    },
    "install_path": "skills/find-animation-opportunities/",
-   "state": "validated",
-   "checksum": "sha256:0b96966543c66521277ffd75f2701b470e56cfebf659ed1e9c785da0230991b9",
+   "state": "sandboxed",
+   "checksum": "sha256:a8c0291f4e43a15282319ae395450a104a80510b0330ef8770ada2d8944c8153",
    "created": "2026-10-03T05:52:24.491195+00:00",
    "last_updated": "2026-10-03T05:52:24.491195+00:00",
    "runtimes": [
@@ -3529,7 +3529,7 @@
    },
    "install_path": "skills/frontend-design/",
    "state": "validated",
-   "checksum": "sha256:292922da948dcd0e5e3891ad7e704f8ba8b92c371f9434bd44630fbf9484147d",
+   "checksum": "sha256:54c71c68490b60d69e0befce0e0794afaa65bbd5a87fb7fc7a58ced1e5258afd",
    "created": "2026-10-03T05:52:24.494466+00:00",
    "last_updated": "2026-10-03T05:52:24.494466+00:00",
    "runtimes": [
@@ -4361,8 +4361,8 @@
     "license": "MIT"
    },
    "install_path": "skills/improve-animations/",
-   "state": "validated",
-   "checksum": "sha256:8cb70f65f27ec380e245ccf8389629a835131ebb3c4ddfe5a78a78653015450e",
+   "state": "sandboxed",
+   "checksum": "sha256:2ceeff607517314c234000d87b97eac4e8dfc1193ed733e203991cba52bbea7d",
    "created": "2026-10-03T05:52:24.521241+00:00",
    "last_updated": "2026-10-03T05:52:24.521241+00:00",
    "runtimes": [
@@ -4938,8 +4938,8 @@
     "license": "MIT"
    },
    "install_path": "skills/mobile-native/",
-   "state": "validated",
-   "checksum": "sha256:054348d0113441c7d5dca1e5a013ef1d212eb91450db5e28e50bcbe6a63f42d4",
+   "state": "sandboxed",
+   "checksum": "sha256:f760934957e3df65c8075c74f9b7343aac8d0705040fa0df8facb505e2f55c1a",
    "created": "2026-10-03T05:52:24.535725+00:00",
    "last_updated": "2026-10-03T05:52:24.535725+00:00",
    "runtimes": [
@@ -5523,8 +5523,8 @@
     "license": "MIT"
    },
    "install_path": "skills/pick-ui-library/",
-   "state": "validated",
-   "checksum": "sha256:66f00cc005caeb1484155c7f671218274e7d78660ac59f4a2f0787fedb96dd86",
+   "state": "sandboxed",
+   "checksum": "sha256:30b6928b459cb39edf037a0050a2214a7221a19bb9bef4cdcb2dbb50583de8aa",
    "created": "2026-10-03T05:52:24.553489+00:00",
    "last_updated": "2026-10-03T05:52:24.553489+00:00",
    "runtimes": [
@@ -5824,8 +5824,8 @@
     "license": "MIT"
    },
    "install_path": "skills/prototype/",
-   "state": "validated",
-   "checksum": "sha256:20a0b99a81c21e059977ac24567654eca00a70911f0d09b3cdb716eefa0d2518",
+   "state": "sandboxed",
+   "checksum": "sha256:e8168902e0e8eb5f3fbff15a308f5c8764cc4f49063b13cb7b6fed6f21062aa8",
    "created": "2026-10-03T05:52:24.563663+00:00",
    "last_updated": "2026-10-03T05:52:24.563663+00:00",
    "runtimes": [
@@ -6108,8 +6108,8 @@
     "license": "MIT"
    },
    "install_path": "skills/review-animations/",
-   "state": "validated",
-   "checksum": "sha256:65586f72bf7970f95bf99c87d2bf20ec9fb66f2d9af30fbb46413d0293a0d8dd",
+   "state": "sandboxed",
+   "checksum": "sha256:c379fb43d0db69809cae3557665dd3a44b03864e8711804104f0ad8bc99a0ff2",
    "created": "2026-10-03T05:52:24.569578+00:00",
    "last_updated": "2026-10-03T05:52:24.569578+00:00",
    "runtimes": [
@@ -7035,7 +7035,7 @@
    },
    "install_path": "skills/ui-ux-pro-max/",
    "state": "validated",
-   "checksum": "sha256:3a5fec255aca90a473323c3b2b3a9b7e4466c89577f1c2cb20fddf7f49d3b7c1",
+   "checksum": "sha256:df345c55797b0bb4771a5e477b2a27c12f6f2cccb92b8311ed467805c5aaab9d",
    "created": "2026-10-03T05:52:24.588781+00:00",
    "last_updated": "2026-10-03T05:52:24.588781+00:00",
    "runtimes": [
@@ -7248,8 +7248,8 @@
     "license": "MIT"
    },
    "install_path": "skills/write-swift/",
-   "state": "validated",
-   "checksum": "sha256:fd862460db8411960851c251fafbb46c99c57565fad2e1ad73afef9d9d0e89da",
+   "state": "sandboxed",
+   "checksum": "sha256:d3c9e938473e8ed255fcab97bcffd378777b0d63f22aad430ee2dbab4d1e0f12",
    "created": "2026-10-03T05:52:24.598694+00:00",
    "last_updated": "2026-10-03T05:52:24.598694+00:00",
    "runtimes": [
