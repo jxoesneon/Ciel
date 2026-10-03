@@ -139,6 +139,12 @@ High-impact actions, promotions, and skill mutations are triaged across five len
 
 - **Post-Run Audit**: Run `post_tool_hook.sh` after operations to record telemetry.
 
+## Antigravity (`agy`) Conversation Access
+
+- **Read, don't spawn**: Requests like "ready/read/show agy conversation `--conversation=<id>`" mean *read the stored conversation from disk* — run `scripts/read_agy_conversation.js <id>` (accepts a unique ID prefix; no arg lists all conversations). NEVER launch `agy` for read-only inspection; the interactive TUI cannot be hosted headlessly and spawning it creates an unwanted live session.
+- Transcripts live under `~/.gemini/antigravity-cli/brain/<id>/.system_generated/logs/` (`transcript_full.jsonl` preferred). See `references/antigravity_conversations.md` for the full storage layout and fallbacks.
+- Only spawn `agy --conversation=<id>` when the user explicitly asks for a live interactive session (Windows: via `Start-Process` for a real console window).
+
 ## Gotchas and Best Practices
 
 - Always produce fresh verification logs before reporting task completion.
