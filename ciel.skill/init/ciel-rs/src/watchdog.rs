@@ -7,14 +7,44 @@
 use regex::Regex;
 use serde_json::{json, Map, Value};
 use std::collections::BTreeMap;
-use std::os::unix::fs::MetadataExt;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
+
 use time::format_description::well_known::Rfc3339;
 use time::OffsetDateTime;
 
 use crate::{ledger, paths, sanitize, secretscan};
+
+#[cfg(unix)]
+fn meta_mtime_secs(md: &std::fs::Metadata) -> i64 {
+    use std::os::unix::fs::MetadataExt;
+    md.mtime()
+}
+
+#[cfg(not(unix))]
+fn meta_mtime_secs(md: &std::fs::Metadata) -> i64 {
+    md.modified()
+        .ok()
+        .and_then(|t| t.duration_since(UNIX_EPOCH).ok())
+        .map(|d| d.as_secs() as i64)
+        .unwrap_or(0)
+}
+
+#[cfg(unix)]
+fn meta_mtime_f64(md: &std::fs::Metadata) -> f64 {
+    use std::os::unix::fs::MetadataExt;
+    md.mtime() as f64 + md.mtime_nsec() as f64 / 1e9
+}
+
+#[cfg(not(unix))]
+fn meta_mtime_f64(md: &std::fs::Metadata) -> f64 {
+    md.modified()
+        .ok()
+        .and_then(|t| t.duration_since(UNIX_EPOCH).ok())
+        .map(|d| d.as_secs() as f64 + f64::from(d.subsec_nanos()) / 1e9)
+        .unwrap_or(0.0)
+}
 
 const MAX_RESUME_PER_SESSION: usize = 1;
 const MAX_RESUME_PER_DAY: usize = 3;
@@ -138,7 +168,7 @@ fn transcript_tail_errors(home: &Path) -> Vec<String> {
                 continue;
             }
             if let Ok(md) = p.metadata() {
-                files.push((md.mtime() as u64, p));
+                files.push((meta_mtime_secs(&md) as u64, p));
             }
         }
     }
@@ -151,7 +181,7 @@ fn transcript_tail_errors(home: &Path) -> Vec<String> {
     let mut flagged = Vec::new();
     for (_, f) in files.iter().skip(files.len().saturating_sub(5)) {
         let Ok(md) = f.metadata() else { continue };
-        if now.saturating_sub(md.mtime() as u64) > (STALL_AGE_S * 6.0) as u64 {
+        if now.saturating_sub(meta_mtime_secs(&md) as u64) > (STALL_AGE_S * 6.0) as u64 {
             continue;
         }
         let Ok(bytes) = std::fs::read(f) else {
@@ -242,7 +272,7 @@ fn transcript_sweep(home: &Path, ciel: &Path, state: &mut Value) -> Value {
                 continue;
             }
             let Ok(md) = f.metadata() else { continue };
-            let mtime = md.mtime() as f64 + md.mtime_nsec() as f64 / 1e9;
+            let mtime = meta_mtime_f64(&md);
             let key = f.to_string_lossy().into_owned();
             if prev.get(&key).and_then(|v| v.as_f64()) == Some(mtime) {
                 continue;

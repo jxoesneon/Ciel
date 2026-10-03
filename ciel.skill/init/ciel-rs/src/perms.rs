@@ -129,6 +129,14 @@ fn chmod(p: &Path, mode: u32) {
     let _ = fs::set_permissions(p, fs::Permissions::from_mode(mode));
 }
 
+#[cfg(not(unix))]
+fn mode_of(_p: &Path) -> Option<u32> {
+    None
+}
+
+#[cfg(not(unix))]
+fn chmod(_p: &Path, _mode: u32) {}
+
 fn fix_file(p: &Path, ciel: &Path, repaired: &mut Vec<PathBuf>) {
     if p.is_file() && !skipped(p, ciel) && mode_of(p).is_some_and(|m| m & 0o077 != 0) {
         chmod(p, 0o600);
