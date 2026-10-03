@@ -1,0 +1,26 @@
+# Ciel skill extension — fields beyond the Agent Skills spec. SKILL.md stays spec-pure.
+schema: 1
+version: 1.0.0
+triggers:
+- pick ui library
+- ui library
+- component library
+- which ui library
+- choose component library
+tags:
+- design
+- frontend
+- components
+- decision
+- scope:local
+- runtime:any
+- risk:low
+runtimes:
+- claude_code
+- devin_for_terminal
+- generic
+source:
+  tier: 3
+  origin: https://github.com/emilkowalski/skills
+  author: Emil Kowalski
+  license: MIT

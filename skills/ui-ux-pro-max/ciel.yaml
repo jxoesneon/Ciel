@@ -1,0 +1,32 @@
+# Ciel skill extension — fields beyond the Agent Skills spec. SKILL.md stays spec-pure.
+schema: 1
+version: 1.0.0
+triggers:
+- ui ux
+- design intelligence
+- color palette
+- font pairing
+- ux guidelines
+- chart type
+- ui style
+- design recommendation
+- stack ui
+tags:
+- design
+- frontend
+- ui
+- ux
+- reference-data
+- scope:local
+- runtime:any
+- risk:low
+runtimes:
+- claude_code
+- devin_for_terminal
+- generic
+source:
+  tier: 3
+  origin: https://github.com/nextlevelbuilder/ui-ux-pro-max-skill
+  author: Next Level Builder
+  license: MIT
+notes: Ships local searchable data/ queried via scripts/search.py (BM25, offline, no network).

@@ -39,6 +39,66 @@ avg_confidence: 0.95
 avg_ms: 5
 success_rate: 1.00
 notes: "Anti-slop frontend engineering directive registered via dual council pass"
+
+# Active Registered Route: impeccable
+route_id: route_impeccable_domain_v1
+matcher:
+  triggers: ["impeccable", "design audit", "design critique", "polish ui", "harden ui", "design review"]
+  compiled_pattern: "^(impeccable|design.?audit|design.?critique|polish.?ui|harden.?ui|design.?review)$"
+  tags: ["design", "frontend", "ui", "ux", "anti-slop", "audit"]
+target_skill: impeccable
+trigger_confidence: 0.95
+path_used: fast
+hits: 0
+avg_confidence: 0.95
+avg_ms: 0
+success_rate: 1.00
+notes: "Anti-slop design-quality layer acquired from pbakaus/impeccable (Apache-2.0); trust state untrusted pending paired eval"
+
+# Active Registered Route: frontend-design
+route_id: route_frontend_design_domain_v1
+matcher:
+  triggers: ["frontend design", "visual design", "design direction", "aesthetic direction", "ui aesthetics"]
+  compiled_pattern: "^(frontend.?design|visual.?design|design.?direction|aesthetic.?direction|ui.?aesthetics)$"
+  tags: ["design", "frontend", "ui", "aesthetics"]
+target_skill: frontend-design
+trigger_confidence: 0.95
+path_used: fast
+hits: 0
+avg_confidence: 0.95
+avg_ms: 0
+success_rate: 1.00
+notes: "Anthropic official frontend-design skill (Apache-2.0)"
+
+# Active Registered Route: ui-ux-pro-max
+route_id: route_ui_ux_pro_max_domain_v1
+matcher:
+  triggers: ["ui ux", "design intelligence", "color palette", "font pairing", "ux guidelines", "chart type", "ui style"]
+  compiled_pattern: "^(ui.?ux.?pro.?max|uipro|design.?intelligence|color.?palette|font.?pairing|ux.?guidelines|chart.?type|ui.?style)$"
+  tags: ["design", "frontend", "ui", "ux", "reference-data"]
+target_skill: ui-ux-pro-max
+trigger_confidence: 0.95
+path_used: fast
+hits: 0
+avg_confidence: 0.95
+avg_ms: 0
+success_rate: 1.00
+notes: "UI/UX design intelligence with local searchable data (MIT); trust state untrusted pending paired eval"
+
+# Active Registered Route: emil-design-eng (motion family hub)
+route_id: route_emil_motion_family_v1
+matcher:
+  triggers: ["animate", "animation", "motion", "micro-interaction", "spring", "gesture", "easing", "review animations", "improve animations", "find animation opportunities", "animation vocabulary", "apple design", "emil design eng"]
+  compiled_pattern: "^(animate|animate.?expo|animation.?vocabulary|apple.?design|emil.?design.?eng|find.?animation.?opportunities|improve.?animations|review.?animations|motion|spring|gesture|easing)$"
+  tags: ["motion", "animation", "design-engineering", "frontend", "ui"]
+target_skill: emil-design-eng
+trigger_confidence: 0.90
+path_used: fast
+hits: 0
+avg_confidence: 0.90
+avg_ms: 0
+success_rate: 1.00
+notes: "Emil Kowalski motion/interaction family hub; sub-skills dispatch by name (animate, review-animations, improve-animations, find-animation-opportunities, animation-vocabulary, apple-design, animate-expo)"
 ```
 
 Stored in MemPalace partition `ciel/route_registry/` keyed by `route_id`. Indexed by `target_skill` and by tag.

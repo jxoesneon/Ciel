@@ -28,6 +28,26 @@ triggers:
       confidence: 0.95
       type: alias
 
+    - pattern: "^(impeccable)$"
+      skill: impeccable
+      confidence: 1.0
+      type: exact_name
+
+    - pattern: "^(frontend.?design)$"
+      skill: frontend-design
+      confidence: 1.0
+      type: exact_name
+
+    - pattern: "^(ui.?ux.?pro.?max|uipro)$"
+      skill: ui-ux-pro-max
+      confidence: 1.0
+      type: exact_name
+
+    - pattern: "^(animate|animate.?expo|animation.?vocabulary|apple.?design|ask.?sonner|break.?ui|emil.?design.?eng|find.?animation.?opportunities|improve.?animations|mobile.?native|pick.?ui.?library|prototype|review.?animations|write.?swift)$"
+      skill: emil-design-eng
+      confidence: 1.0
+      type: exact_name
+
   # Functional triggers - what the skill does
   functional:
     - pattern: "(audit|redesign|improve|enhance).*(frontend|ui|css|landing|portfolio)"
@@ -46,6 +66,21 @@ triggers:
   domain:
     - pattern: "(frontend|design|typography|anti.?slop|tailwind|ui.?taste)"
       skill: taste
+      confidence: 0.85
+      type: intent
+
+    - pattern: "(design.?audit|design.?critique|polish.?ui|harden.?ui|design.?review)"
+      skill: impeccable
+      confidence: 0.85
+      type: intent
+
+    - pattern: "(color.?palette|font.?pairing|ux.?guideline|chart.?type|ui.?style|design.?intelligence)"
+      skill: ui-ux-pro-max
+      confidence: 0.85
+      type: intent
+
+    - pattern: "(animate|animation|motion|transition|micro.?interaction|spring|gesture|easing)"
+      skill: emil-design-eng
       confidence: 0.85
       type: intent
 

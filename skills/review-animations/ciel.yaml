@@ -1,0 +1,25 @@
+# Ciel skill extension — fields beyond the Agent Skills spec. SKILL.md stays spec-pure.
+schema: 1
+version: 1.0.0
+triggers:
+- review animations
+- animation review
+- critique animation
+- review motion
+tags:
+- motion
+- animation
+- review
+- audit
+- scope:local
+- runtime:any
+- risk:low
+runtimes:
+- claude_code
+- devin_for_terminal
+- generic
+source:
+  tier: 3
+  origin: https://github.com/emilkowalski/skills
+  author: Emil Kowalski
+  license: MIT
