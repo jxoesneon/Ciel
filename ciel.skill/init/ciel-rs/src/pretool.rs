@@ -194,7 +194,6 @@ pub fn main_(runtime: &str) -> i32 {
         .and_then(|v| v.parse::<f64>().ok())
         .unwrap_or(0.20);
 
-
     let s1_intercept = if let Some((ref choice, conf, b)) = s1_verdict {
         b == "flag" && choice == "dangerous" && conf >= tau
     } else {
@@ -202,14 +201,27 @@ pub fn main_(runtime: &str) -> i32 {
     };
 
     let s1_mode = system1::mode();
-    let is_failsafe = if !privileged && s1_mode == "active" && s1_verdict.is_none() && !system1::disabled() {
+    let is_failsafe = if !denied
+        && !privileged
+        && s1_mode == "active"
+        && s1_verdict.is_none()
+        && !system1::disabled()
+    {
         let cmd = command.to_lowercase();
-        let cmd_dest = ["rm ", "mkfs", "dd ", "sudo ", "chmod 777"].iter().any(|&c| cmd.contains(c))
+        let cmd_dest = ["rm ", "mkfs", "dd ", "sudo ", "chmod 777"]
+            .iter()
+            .any(|&c| cmd.contains(c))
             || (cmd.contains("curl") && cmd.contains("bash"))
             || cmd == "rm";
         let state = system1::tool_state(&tool, &command, &path);
-        let sensitive = state.get("targets_sensitive_path").and_then(|v| v.as_bool()).unwrap_or(false);
-        let is_write = tool == "write" || tool == "edit" || tool == "notebook_edit" || (!path.is_empty() && command.is_empty());
+        let sensitive = state
+            .get("targets_sensitive_path")
+            .and_then(|v| v.as_bool())
+            .unwrap_or(false);
+        let is_write = tool == "write"
+            || tool == "edit"
+            || tool == "notebook_edit"
+            || (!path.is_empty() && command.is_empty());
         let path_dest = sensitive && is_write;
         cmd_dest || path_dest
     } else {
@@ -235,14 +247,20 @@ pub fn main_(runtime: &str) -> i32 {
     }
 
     if denied || s1_intercept {
-
         let is_s1 = !denied && s1_intercept;
         let reason = if is_s1 {
             let (ref choice, conf, _) = s1_verdict.as_ref().unwrap();
-            format!("System-1 (Laya) semantic risk intercept: flagged as {choice} ({:.0}% confidence)", conf * 100.0)
+            format!(
+                "System-1 (Laya) semantic risk intercept: flagged as {choice} ({:.0}% confidence)",
+                conf * 100.0
+            )
         } else {
             let r = verdict["reason"].as_str().unwrap_or("");
-            if r.is_empty() { "critical risk".to_string() } else { r.to_string() }
+            if r.is_empty() {
+                "critical risk".to_string()
+            } else {
+                r.to_string()
+            }
         };
 
         if is_s1 && privileged {
@@ -265,7 +283,11 @@ pub fn main_(runtime: &str) -> i32 {
             append_activity(&entry);
         }
 
-        let rule_tag = if is_s1 { "system1_semantic_risk" } else { verdict["rule_id"].as_str().unwrap_or("") };
+        let rule_tag = if is_s1 {
+            "system1_semantic_risk"
+        } else {
+            verdict["rule_id"].as_str().unwrap_or("")
+        };
         if runtime == "antigravity" {
             out(&json!({
                 "decision": "deny",

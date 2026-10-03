@@ -50,6 +50,7 @@ path = str(
 )
 
 verdict = risk_policy.evaluate(tool=tool, command=command, path=path)
+verdict = risk_policy.system1_failsafe(verdict, tool=tool, command=command, path=path)
 denied = verdict["decision"] == "deny"
 override = verdict["decision"] == "allow_overridden"
 entry = {

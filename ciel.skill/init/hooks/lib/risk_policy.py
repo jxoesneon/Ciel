@@ -281,6 +281,61 @@ def _shadow_main() -> int:
     return 0
 
 
+def system1_failsafe(
+    verdict: dict,
+    tool: str = "",
+    command: str = "",
+    path: str = "",
+    *,
+    home: Path | None = None,
+) -> dict:
+    """M1 fail-safe for the active System-1 tier — applied at the hook
+    boundary, not inside ``evaluate`` (which must stay a pure regex verdict
+    for Rust parity).
+
+    When the System-1 mode is ``active`` and the call is destructive
+    (destructive command shape, or a write/edit to a sensitive path) but the
+    daemon is offline or timed out — i.e. ``evaluate_risk`` returns None —
+    the verdict is hardened to a ``system1_offline_failsafe`` deny. Verdicts
+    that are already denies keep their original rule attribution, and
+    privileged overrides (``allow_overridden``, grant active,
+    ``allow_privileged`` sentinel) bypass the failsafe entirely.
+    """
+    if system1 is None:
+        return verdict
+    m = (os.environ.get("CIEL_SYSTEM1_MODE")
+         or system1._env_file_value("CIEL_SYSTEM1_MODE") or "active")
+    if m != "active" or os.environ.get("CIEL_SYSTEM1_DISABLED"):
+        return verdict
+    if verdict.get("decision") in ("deny", "allow_overridden"):
+        return verdict
+    if grant_state().get("active") or (ciel_home() / "allow_privileged").exists():
+        return verdict
+
+    cmd_lower = command.lower()
+    cmd_dest = (any(c in cmd_lower for c in
+                    ["rm ", "mkfs", "dd ", "sudo ", "chmod 777"])
+                or ("curl" in cmd_lower and "bash" in cmd_lower)
+                or cmd_lower == "rm")
+    state = system1.tool_state(tool, command, path)
+    sensitive = state.get("targets_sensitive_path")
+    is_write = tool in ["write", "edit", "notebook_edit"] or (path and not command)
+    is_destructive = cmd_dest or bool(sensitive and is_write)
+    if not is_destructive:
+        return verdict
+
+    if system1_evaluate_risk(tool, command, path, timeout=1.5) is None:
+        return {
+            "decision": "deny",
+            "rule_id": "system1_offline_failsafe",
+            "tier": "hard",
+            "reason": "System-1 daemon offline or timed out; destructive command held under fail-safe policy. Start laya-serve or set allow_privileged.",
+            "policy": verdict.get("policy"),
+            "path": _normalize_path(path, home or Path.home()) or None,
+        }
+    return verdict
+
+
 def evaluate(
     tool: str = "",
     command: str = "",
@@ -290,38 +345,6 @@ def evaluate(
     rules: list[dict] | None = None,
     policy_source: str | None = None,
 ) -> dict:
-    def _apply_failsafe(v):
-        import os
-        from system1 import tool_state
-        m = os.environ.get("CIEL_SYSTEM1_MODE") or "active"
-        if m != "active" or system1 is None or os.environ.get("CIEL_SYSTEM1_DISABLED"):
-            return v
-        if v.get("decision") == "allow_overridden" or grant_state().get("active") or (ciel_home() / "allow_privileged").exists():
-            return v
-            
-        cmd_lower = command.lower()
-        cmd_dest = any(c in cmd_lower for c in ["rm ", "mkfs", "dd ", "sudo ", "chmod 777"]) or ("curl" in cmd_lower and "bash" in cmd_lower) or cmd_lower == "rm"
-        state = tool_state(tool, command, path)
-        sensitive = state.get("targets_sensitive_path")
-        is_write = tool in ["write", "edit", "notebook_edit"] or (path and not command)
-        path_dest = sensitive and is_write
-        
-        is_destructive = cmd_dest or path_dest
-        if not is_destructive:
-            return v
-            
-        s1 = system1_evaluate_risk(tool, command, path, timeout=1.5)
-        if s1 is None:
-            return {
-                "decision": "deny",
-                "rule_id": "system1_offline_failsafe",
-                "tier": "hard",
-                "reason": "System-1 daemon offline or timed out; destructive command held under fail-safe policy. Start laya-serve or set allow_privileged.",
-                "policy": policy_source,
-                "path": _normalize_path(path, home or Path.home()) or None,
-            }
-        return v
-
     """Evaluate a tool call against the policy. Returns the verdict dict."""
     home = home or Path.home()
     if rules is None:
@@ -354,7 +377,7 @@ def evaluate(
         "path": normalized_path or None,
     }
     if not hits:
-        return _apply_failsafe(verdict)
+        return verdict
 
     hard = next((r for r in hits if r.get("tier") == "hard"), None)
     if hard is not None:
@@ -364,7 +387,7 @@ def evaluate(
             tier="hard",
             reason=hard.get("reason", ""),
         )
-        return _apply_failsafe(verdict)
+        return verdict
 
     non_advisory = [r for r in hits if r.get("tier") != "advisory"]
     if not non_advisory:
@@ -376,7 +399,7 @@ def evaluate(
             reason=advisory.get("reason", ""),
             scan=advisory.get("scan"),
         )
-        return _apply_failsafe(verdict)
+        return verdict
 
     first = non_advisory[0]
     gs = grant_state()
@@ -394,7 +417,7 @@ def evaluate(
             tier="soft",
             reason=first.get("reason", ""),
         )
-    return _apply_failsafe(verdict)
+    return verdict
 
 
 def grant_state() -> dict:

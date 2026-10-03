@@ -44,6 +44,7 @@ command = str(args.get("CommandLine") or args.get("command") or "")
 path = str(args.get("path") or args.get("file_path") or args.get("filePath") or "")
 
 verdict = risk_policy.evaluate(tool=tool, command=command, path=path)
+verdict = risk_policy.system1_failsafe(verdict, tool=tool, command=command, path=path)
 denied = verdict["decision"] == "deny"
 override = verdict["decision"] == "allow_overridden"
 entry = {

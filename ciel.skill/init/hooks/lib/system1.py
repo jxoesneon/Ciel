@@ -31,7 +31,6 @@ import re
 import subprocess
 import sys
 import time
-
 import urllib.request
 from pathlib import Path
 
@@ -84,7 +83,7 @@ def _load_policy_thresholds() -> dict:
                     if isinstance(t, dict):
                         _POLICY_THRESHOLDS = {k: float(v) for k, v in t.items()}
                         return _POLICY_THRESHOLDS
-        except Exception:
+        except (OSError, ValueError, TypeError):
             pass
     _POLICY_THRESHOLDS = {}
     return _POLICY_THRESHOLDS
@@ -556,7 +555,7 @@ def evaluate_risk(tool: str, command: str, path: str,
         }
     }
 
-    result, hit, latency_ms = _resolve(state, questions)
+    result, hit, latency_ms = _resolve(state, questions, timeout=timeout)
     payload = {
         "surface": "pre_tool_risk",
         "state": state,
@@ -623,7 +622,7 @@ def completion_check(objective: str, evidence: str, task_class: str = "",
         "questions": questions,
         "meta": {"pipeline": "completion_verification"},
     }
-    result, hit, latency_ms = _resolve(state, questions)
+    result, hit, latency_ms = _resolve(state, questions, timeout=timeout)
     _append_event(_event_record(payload, result, hit, latency_ms))
     if not result:
         return None
@@ -709,13 +708,13 @@ def ask_async(payload: dict) -> None:
             marker.unlink(missing_ok=True)
 
 
-def _resolve(state: dict, questions: dict) -> tuple:
+def _resolve(state: dict, questions: dict, timeout: float = ASK_TIMEOUT) -> tuple:
     """Cache-read, ask, cache-write. Returns (result, cache_hit, latency_ms)."""
     cached = _cache_read(state, questions)
     if cached is not None:
         return cached, True, 0
     started = time.monotonic()
-    result = ask(state, questions, timeout=ASK_TIMEOUT)
+    result = ask(state, questions, timeout=timeout)
     latency_ms = int((time.monotonic() - started) * 1000)
     if result is not None:
         _cache_write(state, questions, result)
