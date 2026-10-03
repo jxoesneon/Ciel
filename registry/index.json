@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "built": "2026-10-03T05:53:52.333889+00:00",
+ "built": "2026-10-03T06:20:33.219508+00:00",
  "skills_dir": "skills",
  "count": 197,
  "skills": {
@@ -4325,7 +4325,7 @@
    },
    "install_path": "skills/impeccable/",
    "state": "validated",
-   "checksum": "sha256:980ef18a57f479fd5a2d1e47d1677e3f7762b70b0c1703af7db7a6304f46c3a9",
+   "checksum": "sha256:fa9580793be7fa4d1e028305bd983c2c1d18b8314863fe7039c5b62c552c7bd4",
    "created": "2026-10-03T05:52:24.517912+00:00",
    "last_updated": "2026-10-03T05:52:24.517912+00:00",
    "runtimes": [
@@ -7035,7 +7035,7 @@
    },
    "install_path": "skills/ui-ux-pro-max/",
    "state": "validated",
-   "checksum": "sha256:115bfe47a82622fb3f3cd899450f46581cdd0163cc6dfa7cc40210268413d207",
+   "checksum": "sha256:3a5fec255aca90a473323c3b2b3a9b7e4466c89577f1c2cb20fddf7f49d3b7c1",
    "created": "2026-10-03T05:52:24.588781+00:00",
    "last_updated": "2026-10-03T05:52:24.588781+00:00",
    "runtimes": [

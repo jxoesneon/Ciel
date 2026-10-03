@@ -29,4 +29,18 @@ source:
   origin: https://github.com/pbakaus/impeccable
   author: Paul Bakaus
   license: Apache-2.0
-notes: 'Verbs route through scripts/impeccable launcher, which downloads a version-pinned upstream engine binary on first run (documented install path). Trust state: untrusted.'
+state: validated
+trust_evidence:
+  approved_by: master
+  approved_at: '2026-10-03'
+  scope: launcher + engine binary chain
+  checks:
+  - launcher reviewed end-to-end; fail-closed sha256 sidecar verification, probe handshake guards PATH/home candidates, recursion-safe
+  - engine 0.1.11 downloaded and verified: sha256 0221607e1f535af937ea267c347b1f90233b85dc2563cbd2eeefdf42e0e5c594 matches upstream sidecar
+  - engine-probe handshake answered impeccable-engine 0.1.11
+  - detect verb smoke-tested: correct anti-pattern detection (contrast, overused font, cream palette)
+  - external egress surface audited: GitHub releases, impeccable.style API, Google Fonts, opt-out telemetry (DO_NOT_TRACK / IMPECCABLE_NO_TELEMETRY honored); live-mode channel loopback-only
+  residual_risks:
+  - releases hash-verified, not signature-verified (no cosign); sha256 sidecar shares the release channel
+  - IMPECCABLE_DOWNLOAD_BASE and IMPECCABLE_BIN envs can redirect the binary source by design
+notes: 'Verbs route through scripts/impeccable launcher, which downloads a version-pinned upstream engine binary on first run (documented install path). Trust state: validated — launcher/engine approved by Master 2026-10-03.'
