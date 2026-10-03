@@ -75,3 +75,9 @@ htmlcov/
 
 # Local brag/video working dir (deliverables ship via ciel.skill/assets/media/)
 brag-output/
+
+# Machine-local Laya config (contains LAYA_API_KEY)
+ciel.skill/init/system1/env
+
+# Stray tesseract data — not a repo artifact
+eng.traineddata

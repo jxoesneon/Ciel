@@ -754,8 +754,10 @@ fn band(surface: &str, answers: &Value) -> &'static str {
                 }
             }
             if surface == "completion_check" && qname == "evidence_score" {
-                if let Some(score) = a.get("score").and_then(|s| s.as_i64()) {
-                    if score < 4 {
+                // score is a probability-weighted mean over rubric indices —
+                // a float (e.g. 2.85), not an integer.
+                if let Some(score) = a.get("score").and_then(|s| s.as_f64()) {
+                    if score < 4.0 {
                         worst = "uncertain";
                     }
                 }
@@ -962,7 +964,9 @@ pub struct CompletionVerdict {
     pub choice: String,
     pub confidence: f64,
     pub band: &'static str,
-    pub score: Option<i64>,
+    // score is the protocol's probability-weighted mean over rubric indices —
+    // keep it f64: the fraction indicates which way the probability mass leans.
+    pub score: Option<f64>,
 }
 
 /// Typed questions for the completion_check surface.
@@ -986,14 +990,17 @@ pub fn completion_questions_with_score(with_score: bool) -> Value {
     if with_score {
         q["evidence_score"] = json!({
             "type": "score",
-            "instructions": "Rate how well empirical evidence substantiates the completion claim (1=unverified/pure claim, 5=complete empirical proof).",
-            "rubric": {
-                "1": "no evidence or contradictory evidence (pure assertion/hallucination)",
-                "2": "partial evidence with major unverified claims or failing tests",
-                "3": "indirect or ambiguous evidence without target-state verification",
-                "4": "direct empirical evidence verifying primary claims",
-                "5": "exhaustive empirical verification of all claims and task-class artifacts"
-            }
+            "instructions": "Rate how well empirical evidence substantiates the completion claim on the ordered rubric (lowest level = unverified/pure claim, highest level = complete empirical proof).",
+            // /v1/systemone protocol: score questions take `criteria` as a
+            // list of level descriptions, index 0 first — a keyed rubric dict
+            // is rejected with a per-question schema error.
+            "criteria": [
+                "no evidence or contradictory evidence (pure assertion/hallucination)",
+                "partial evidence with major unverified claims or failing tests",
+                "indirect or ambiguous evidence without target-state verification",
+                "direct empirical evidence verifying primary claims",
+                "exhaustive empirical verification of all claims and task-class artifacts"
+            ]
         });
     }
     q
@@ -1057,7 +1064,7 @@ pub fn evaluate_completion(
         .get("answers")
         .and_then(|a| a.get("evidence_score"))
         .and_then(|s| s.get("score"))
-        .and_then(|s| s.as_i64());
+        .and_then(|s| s.as_f64());
 
     Some(CompletionVerdict {
         choice,
@@ -1311,20 +1318,20 @@ pub fn verify_completion_main(args: &[String]) -> i32 {
         }
         Some(v) => {
             let tau = surface_tau("completion_check");
-            let score_ok = v.score.map(|s| s >= 4).unwrap_or(true);
+            let score_ok = v.score.map(|s| s >= 4.0).unwrap_or(true);
             let conf_ok = v.confidence >= tau;
             let is_complete = v.choice == "complete" && v.band == "pass" && score_ok && conf_ok;
             let is_false_pass = !is_complete
                 || v.choice == "incomplete"
                 || v.band == "flag"
-                || v.score.map(|s| s < 4).unwrap_or(false);
+                || v.score.map(|s| s < 4.0).unwrap_or(false);
 
             let (decision, verified, reason, exit_code) = if is_false_pass {
                 let dec = if gate == "enforce" { "deny" } else { "allow" };
                 let r = format!(
                     "System-1 flagged completion as incomplete (confidence {:.2}, score {:?}/5)",
                     v.confidence,
-                    v.score.unwrap_or(0)
+                    v.score.unwrap_or(0.0)
                 );
                 let code = if gate == "enforce" { 2 } else { 0 };
                 (dec, false, r, code)
@@ -1332,7 +1339,7 @@ pub fn verify_completion_main(args: &[String]) -> i32 {
                 let r = format!(
                     "System-1 verified completion (confidence {:.2}, score {:?}/5)",
                     v.confidence,
-                    v.score.unwrap_or(0)
+                    v.score.unwrap_or(0.0)
                 );
                 ("allow", true, r, 0)
             };

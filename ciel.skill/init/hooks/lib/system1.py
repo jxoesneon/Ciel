@@ -170,15 +170,19 @@ COMPLETION_SCORE_QUESTIONS = {
         "type": "score",
         "instructions": (
             "Rate how well empirical evidence substantiates the completion claim "
-            "(1=unverified/pure claim, 5=complete empirical proof)."
+            "on the ordered rubric (lowest level = unverified/pure claim, "
+            "highest level = complete empirical proof)."
         ),
-        "rubric": {
-            "1": "no evidence or contradictory evidence (pure assertion/hallucination)",
-            "2": "partial evidence with major unverified claims or failing tests",
-            "3": "indirect or ambiguous evidence without target-state verification",
-            "4": "direct empirical evidence verifying primary claims",
-            "5": "exhaustive empirical verification of all claims and task-class artifacts",
-        },
+        # /v1/systemone protocol: score questions take `criteria` as a list of
+        # level descriptions, index 0 first (not a keyed rubric dict — the
+        # server rejects that with a per-question schema error).
+        "criteria": [
+            "no evidence or contradictory evidence (pure assertion/hallucination)",
+            "partial evidence with major unverified claims or failing tests",
+            "indirect or ambiguous evidence without target-state verification",
+            "direct empirical evidence verifying primary claims",
+            "exhaustive empirical verification of all claims and task-class artifacts",
+        ],
     }
 }
 
