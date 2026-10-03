@@ -126,15 +126,14 @@ def _run_arm(task: dict, runner: str, workspace: Path, timeout: int,
                 with_score=True,
                 timeout=float(os.environ.get("CIEL_SYSTEM1_TIMEOUT", "2.0")),
             )
-        except Exception:
+        except Exception:  # noqa: BLE001 - completion check is best-effort
             completion_info = None
 
-        if completion_info:
-            # False pass: verify passed deterministically, but System-1 flags incomplete
-            if verify_pass and completion_info.get("band") == "flag":
-                false_pass = True
-                if completion_gate == "enforce":
-                    arm_pass = False
+        # False pass: verify passed deterministically, but System-1 flags incomplete
+        if completion_info and verify_pass and completion_info.get("band") == "flag":
+            false_pass = True
+            if completion_gate == "enforce":
+                arm_pass = False
         # Fail-open: if completion_info is None, arm_pass remains verify_pass unchanged
 
     arm_result = {

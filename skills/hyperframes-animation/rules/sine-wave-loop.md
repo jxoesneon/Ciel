@@ -1,6 +1,6 @@
 ---
 name: sine-wave-loop
-description: Bounded sine-driven idle — subtle jitter or a single genuinely-needed bounded ambient breath on a held element. De-emphasized: circular breathing as "aliveness" is cheap; prefer sequential reveal timed to the VO, then subtle jitter, before reaching here.
+description: 'Bounded sine-driven idle — subtle jitter or a single genuinely-needed bounded ambient breath on a held element. De-emphasized: circular breathing as "aliveness" is cheap; prefer sequential reveal timed to the VO, then subtle jitter, before reaching here.'
 metadata:
   tags: idle, jitter, bounded-ambient, sine, trigonometry, low-amplitude, post-entry
 ---

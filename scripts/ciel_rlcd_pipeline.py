@@ -4,9 +4,9 @@ Evolution & Cognitive Architect: RLCD Pipeline
 Generates preference pairs from System-1 flags, Council signals, and Dockets.
 """
 
+import json
 import os
 import sys
-import json
 from pathlib import Path
 
 # Import secret scrubbing from existing export script
@@ -23,22 +23,23 @@ def process_events(events_file: Path) -> list:
     pairs = []
     if not events_file.is_file():
         return pairs
-    
-    with open(events_file, "r", encoding="utf-8") as f:
+
+    with open(events_file, encoding="utf-8") as f:
         for line in f:
-            if not line.strip(): continue
+            if not line.strip():
+                continue
             try:
                 rec = json.loads(line)
-            except Exception:
+            except ValueError:
                 continue
-            
+
             surface = rec.get("surface")
             meta = rec.get("meta", {})
             sys1 = rec.get("system1", {}) or {}
             answers = sys1.get("answers", {}) if isinstance(sys1, dict) else {}
             flag = rec.get("flag", "pass")
             state = scrub_secrets(rec.get("state", {}))
-            
+
             # 1. System-1 Flagged Command (Overriding explicit allow/pass)
             if flag in ("flag", "uncertain") and surface == "pre_tool_risk":
                 for qkey, ans in answers.items():
@@ -52,7 +53,7 @@ def process_events(events_file: Path) -> list:
                             "source": "system1_flag",
                             "model_confidence": ans.get("confidence")
                         })
-            
+
             # 2. Council Override / Prescreen
             if surface == "council_prescreen":
                 cons = meta.get("council_consensus")
@@ -78,25 +79,25 @@ def process_events(events_file: Path) -> list:
 
 def process_signals_and_dockets(dockets_dir: Path, signals_dir: Path) -> list:
     pairs = []
-    
+
     # Audit Signals
     if signals_dir.is_dir():
         for sig_file in signals_dir.glob("*.json"):
             try:
-                with open(sig_file, "r", encoding="utf-8") as f:
+                with open(sig_file, encoding="utf-8") as f:
                     data = json.load(f)
-            except Exception:
+            except (OSError, ValueError):
                 continue
-            
+
             if data.get("signal") == "council_verdict":
                 # Determine verdict from scores if present
                 scores = data.get("member_verdicts", {})
                 passed = True
-                
-                for member, stages in scores.items():
+
+                for stages in scores.values():
                     if isinstance(stages, dict) and stages.get("stage2", 10) <= 3:
                         passed = False
-                
+
                 # Check overall weighting (simple average approximation)
                 if passed and scores:
                     avg = sum(s.get("stage2", 0) for s in scores.values() if isinstance(s, dict)) / len(scores)
@@ -105,12 +106,12 @@ def process_signals_and_dockets(dockets_dir: Path, signals_dir: Path) -> list:
 
                 chosen = "routine" if passed else "escalate"
                 rejected = "escalate" if passed else "routine"
-                
+
                 pairs.append({
                     "surface": "council_audit",
                     "question_key": "audit_verdict",
                     "state": {
-                        "run_id": data.get("run_id"), 
+                        "run_id": data.get("run_id"),
                         "mode": data.get("mode"),
                         "member_verdicts": data.get("member_verdicts")
                     },
@@ -118,7 +119,7 @@ def process_signals_and_dockets(dockets_dir: Path, signals_dir: Path) -> list:
                     "rejected": [rejected],
                     "source": "council_signal_json"
                 })
-                
+
     # Dockets
     if dockets_dir.is_dir():
         for docket in dockets_dir.glob("*.md"):
@@ -141,7 +142,7 @@ def process_signals_and_dockets(dockets_dir: Path, signals_dir: Path) -> list:
                     "rejected": ["escalate"],
                     "source": "council_docket_md"
                 })
-                
+
     return pairs
 
 def main():
@@ -150,18 +151,17 @@ def main():
     dockets_dir = home / "council" / "dockets"
     signals_dir = home / "improvements" / "signals"
     out_file = home / "system1" / "rlcd_pairs.jsonl"
-    
+
     all_pairs = []
     all_pairs.extend(process_events(events_file))
     all_pairs.extend(process_signals_and_dockets(dockets_dir, signals_dir))
-    
+
     # Write Out
     out_file.parent.mkdir(parents=True, exist_ok=True)
     with open(out_file, "w", encoding="utf-8") as f:
-        for p in all_pairs:
-            f.write(json.dumps(p, ensure_ascii=False) + "\n")
-            
-    print(f"[RLCD Pipeline] Processed events, dockets, and signals.")
+        f.writelines(json.dumps(p, ensure_ascii=False) + "\n" for p in all_pairs)
+
+    print("[RLCD Pipeline] Processed events, dockets, and signals.")
     print(f"[RLCD Pipeline] Generated {len(all_pairs)} calibration pairs.")
     print(f"[RLCD Pipeline] Output saved to: {out_file}")
 

@@ -9,9 +9,10 @@ import os
 from pathlib import Path
 
 # Ensure paths
-sys.path.insert(0, "/data/data/com.termux/files/home/Ciel/ciel.skill/init/hooks/lib")
-import system1
-import risk_policy
+_LIB = Path(__file__).resolve().parent.parent / "ciel.skill" / "init" / "hooks" / "lib"
+sys.path.insert(0, str(_LIB))
+import system1      # noqa: E402
+import risk_policy  # noqa: E402
 
 # --- PROPOSED LAYA INTEGRATION LOGIC ---
 
@@ -41,7 +42,7 @@ def redact_telemetry(payload):
 
 class TestSystem1LayaProduction(unittest.TestCase):
 
-    @patch('system1.urllib.request.urlopen')
+    @patch.object(system1.urllib.request, 'urlopen')
     def test_1_laya_live_probe_classification(self, mock_urlopen):
         """Test 1: Laya server classification on benign vs destructive inputs."""
         mock_response = MagicMock()
@@ -89,7 +90,7 @@ class TestSystem1LayaProduction(unittest.TestCase):
         self.assertIn("[REDACTED:PASSWORD]", meta_note)
         self.assertNotIn("secret123", meta_note)
 
-    @patch('system1.ask')
+    @patch.object(system1, 'ask')
     def test_4_m3_m4_performance_and_caching(self, mock_ask):
         """Test 4: Performance & Caching (< 1ms cache hits)."""
         mock_ask.return_value = {"answers": {"risk": {"choice": "safe", "confidence": 0.9}}}

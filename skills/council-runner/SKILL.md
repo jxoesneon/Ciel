@@ -1,5 +1,5 @@
 ---
-name: council_runner
+name: council-runner
 description: Inline Council of Five deliberation runner. Load when a council-gated decision is needed — skill integration, self-modification, promotion, high-risk ops. Contains the five member personas (Coherence, Capability, Safety, Efficiency, Evolution), the Chairman synthesizer, scoring rubric, and veto conditions.
 license: MIT
 metadata:
@@ -7,7 +7,7 @@ metadata:
   ciel-extension: ciel.yaml
 ---
 
-# council_runner
+# council-runner
 
 Convenes the Council of Five inline. Referenced by project rules for
 council-gated decisions.

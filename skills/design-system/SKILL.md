@@ -1,13 +1,10 @@
 ---
-name: design-system-skill
-version: 1.0.0
+name: design-system
 description: Use when building UI in a frontend codebase on top of an existing design system or component library. Discovers tokens and components, reuses them correctly, and binds to semantic tokens instead of hardcoding. Works with ANY system (MUI, Chakra, shadcn, Radix, internal @org/ui, local components, or Figma).
-triggers: [build UI, design system, component library, frontend, ui implementation, tailwind, shadcn, Figma reference]
-tags: [frontend, design-system, ui, scope:local, runtime:any, risk:low]
-runtime_compatibility: { claude_code: true, gemini_cli: true, generic: true }
 license: MIT
-source: { tier: 1, origin: acquisition }
-dependencies: { skills: [filesystem/SKILL.md] }
+metadata:
+  ciel-version: 1.0.0
+  ciel-extension: ciel.yaml
 ---
 
 # Building on a Design System (frontend code)

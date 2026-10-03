@@ -17,7 +17,7 @@
 //! genuinely not worth a vendored stack here. `system1_embed.py` stays
 //! Python (sentence-transformers) and is spawned exactly as before.
 
-
+use regex::Regex;
 use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
 use std::collections::HashMap;
@@ -25,10 +25,9 @@ use std::io::{Read, Write};
 use std::net::{TcpStream, ToSocketAddrs};
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
+use std::sync::OnceLock;
 use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 use time::OffsetDateTime;
-use std::sync::OnceLock;
-use regex::Regex;
 
 struct Redactor {
     cat: &'static str,
@@ -55,7 +54,6 @@ fn redactors() -> &'static [Redactor] {
     })
 }
 
-
 use crate::paths;
 
 const EVENTS_LOG_MAX: u64 = 4 * 1024 * 1024;
@@ -78,7 +76,9 @@ fn load_policy_thresholds() -> HashMap<String, f64> {
     let mut map = HashMap::new();
     let candidates = [
         paths::ciel_home().join("risk").join("policy.json"),
-        paths::ciel_home().join("risk").join("system1_calibration.json"),
+        paths::ciel_home()
+            .join("risk")
+            .join("system1_calibration.json"),
     ];
     for p in &candidates {
         if let Ok(text) = std::fs::read_to_string(p) {
@@ -251,7 +251,9 @@ fn env_file_value(names: &[&str]) -> String {
     {
         if let Ok(lock) = ENV_CACHE.read() {
             if let Some(ref entry) = *lock {
-                if entry.path == env_file && now.duration_since(entry.last_check) < Duration::from_millis(1000) {
+                if entry.path == env_file
+                    && now.duration_since(entry.last_check) < Duration::from_millis(1000)
+                {
                     for name in names {
                         for (k, v) in &entry.pairs {
                             if k == *name {
@@ -446,11 +448,12 @@ fn http_post(url: &str, body: &[u8], auth: &str, timeout: Duration) -> Option<St
         format!("{authority}:80")
     };
     let addrs = addr.to_socket_addrs().ok()?;
-    let connect_timeout = if authority.starts_with("127.0.0.1") || authority.starts_with("localhost") {
-        Duration::from_millis(10).min(timeout)
-    } else {
-        Duration::from_millis(50).min(timeout)
-    };
+    let connect_timeout =
+        if authority.starts_with("127.0.0.1") || authority.starts_with("localhost") {
+            Duration::from_millis(10).min(timeout)
+        } else {
+            Duration::from_millis(50).min(timeout)
+        };
     let mut stream = None;
     for sock in addrs {
         if let Ok(s) = TcpStream::connect_timeout(&sock, connect_timeout) {
@@ -679,12 +682,12 @@ fn cache_write(state: &Value, questions: &Value, result: &Value) {
     let _ = std::fs::write(&path, crate::jsonfmt::dumps_raw(result));
 }
 
-
-
 fn redact_string(s: &str) -> String {
     let mut out = s.to_string();
     for r in redactors() {
-        out = r.re.replace_all(&out, format!("[REDACTED:{}]", r.cat).as_str()).into_owned();
+        out =
+            r.re.replace_all(&out, format!("[REDACTED:{}]", r.cat).as_str())
+                .into_owned();
     }
     out
 }
@@ -698,8 +701,7 @@ fn redact_value(val: &mut Value) {
     }
 }
 
-fn append_event
-(record: &Value) {
+fn append_event(record: &Value) {
     let mut record = record.clone();
     redact_value(&mut record);
     let log = paths::ciel_home().join("system1").join("events.jsonl");
@@ -1112,8 +1114,7 @@ pub fn route_choice(
         candidate_keys
     } else {
         let task_lower = task.to_ascii_lowercase();
-        let task_words: std::collections::HashSet<&str> =
-            task_lower.split_whitespace().collect();
+        let task_words: std::collections::HashSet<&str> = task_lower.split_whitespace().collect();
         let mut matched = Vec::new();
         for key in &candidate_keys {
             if task_words.contains(key.to_ascii_lowercase().as_str())
@@ -1235,10 +1236,7 @@ pub fn route_choice_main() -> i32 {
         .unwrap_or(0.9);
 
     let verdict = route_choice(task, options, k, timeout);
-    println!(
-        "{}",
-        crate::jsonfmt::dumps_raw(&verdict.to_json())
-    );
+    println!("{}", crate::jsonfmt::dumps_raw(&verdict.to_json()));
     0
 }
 
@@ -1782,5 +1780,3 @@ mod tests {
         assert_eq!(verdict.shortlist, vec!["docker", "git"]);
     }
 }
-
-

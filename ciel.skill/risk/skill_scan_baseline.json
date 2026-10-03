@@ -55,6 +55,12 @@
       "justification": "Documented one-liner downloads public Google Fonts metadata JSON to a file; the consuming script is fully disclosed inline in the same doc and only parses the JSON for font selection. Data fetch feeding a disclosed local parser \u2014 no remote code executed."
     },
     {
+      "skill": "council-runner",
+      "rule_id": "SECRET_ACCESS",
+      "path": "members/SAFETY.md",
+      "justification": "Example rationale string inside the Safety member's documented output contract; references .env as a review finding example, not a secret read."
+    },
+    {
       "skill": "hyperframes-cli",
       "rule_id": "SECRET_ACCESS",
       "path": "references/lambda.md",

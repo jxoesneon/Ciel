@@ -1456,8 +1456,8 @@
    },
    "runtimes": []
   },
-  "council_runner": {
-   "id": "council_runner",
+  "council-runner": {
+   "id": "council-runner",
    "version": "1.0.0",
    "description": "Inline Council of Five deliberation runner. Load when a council-gated decision is needed — skill integration, self-modification, promotion, high-risk ops. Contains the five member personas (Coherence, Capability, Safety, Efficiency, Evolution), the Chairman synthesizer, scoring rubric, and veto conditions.",
    "triggers": [],
@@ -1468,9 +1468,9 @@
     "origin": "ciel.skill/council",
     "license": "MIT"
    },
-   "install_path": "/Users/meilynlopezcubero/.ciel/skills/council_runner/",
+   "install_path": "/Users/meilynlopezcubero/.ciel/skills/council-runner/",
    "state": "validated",
-   "checksum": "sha256:9bffcba9db0cbe2657c2e094301e699c5f30d1a716001c4b318d1cc01d9d7b6b",
+   "checksum": "sha256:fca40af039805d3091fec1979f92283402c54c1882e57cf8f40d7476f4a621aa",
    "created": "2026-09-29T02:24:07.957575+00:00",
    "last_updated": "2026-09-29T02:24:07.957575+00:00",
    "dependencies": {
@@ -1593,7 +1593,7 @@
    },
    "install_path": "/Users/meilynlopezcubero/.ciel/skills/design-system/",
    "state": "validated",
-   "checksum": "sha256:bde298b526bf88096b365ef113bae299b477978541d5c435e58eff3f3db39cc1",
+   "checksum": "sha256:a6f18035bd0da3f1be50aba907420134595a704636e0113ad7fa0f8e236ec2f7",
    "created": "2026-09-29T01:22:06.216093+00:00",
    "last_updated": "2026-09-29T01:22:06.216093+00:00"
   },

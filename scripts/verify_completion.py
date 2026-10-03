@@ -74,12 +74,7 @@ def verify_completion(objective: str, evidence: str, task_class: str = "code_cha
     band = res.get("band", "pass")
     score = res.get("score")
     confidence = res.get("confidence", 0.0)
-    tau = system1.surface_tau("completion_check")
 
-    score_ok = (score is None or score >= 4)
-    conf_ok = (confidence >= tau)
-
-    is_complete = (choice == "complete" and band == "pass" and score_ok and conf_ok)
     is_false_pass = (choice == "incomplete" or band == "flag" or (score is not None and score < 4))
 
     if is_false_pass:
