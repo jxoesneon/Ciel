@@ -68,7 +68,12 @@ fi
 DEVIN_CFG_DIR="$HOME/.config/devin"
 if [ -d "$DEVIN_CFG_DIR" ] || need devin; then
   mkdir -p "$DEVIN_CFG_DIR"
-  if command -v python3 >/dev/null 2>&1; then
+  # Prefer the Rust twin (reinstall/upgrade path where the binary already
+  # exists); python3 stays as the first-install bootstrap fallback, and the
+  # session-start heal covers the rest either way.
+  if [ -x "$CIEL_HOME/bin/ciel" ] && "$CIEL_HOME/bin/ciel" config-heal >/dev/null 2>&1; then
+    say "Devin attribution disabled (attribution=false in config.json)."
+  elif command -v python3 >/dev/null 2>&1; then
     python3 - "$DEVIN_CFG_DIR/config.json" <<'PY' || warn "Could not set Devin attribution flag; set \"attribution\": false in ~/.config/devin/config.json manually."
 import json, os, sys
 p = sys.argv[1]
@@ -78,7 +83,7 @@ json.dump(d, open(p, "w"), indent=2)
 PY
     say "Devin attribution disabled (attribution=false in config.json)."
   else
-    warn "python3 not found; cannot enforce Devin attribution flag."
+    warn "Neither ciel binary nor python3 found; cannot enforce Devin attribution flag."
   fi
 fi
 

@@ -17,7 +17,8 @@ fn devin_cfg(home: &Path) -> PathBuf {
 
 /// Mirror of the session_start.sh attribution block: returns
 /// "ok" | "repaired" | "unreadable" | "config-absent".
-fn enforce_attribution(home: &Path) -> &'static str {
+/// Also exposed for `ciel config-heal` (install.sh's post-build step).
+pub fn enforce_attribution(home: &Path) -> &'static str {
     let cfg = devin_cfg(home);
     if !cfg.is_file() {
         return "config-absent";

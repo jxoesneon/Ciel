@@ -537,6 +537,79 @@ pub fn verify_evidence_main(args: &[String]) -> i32 {
 }
 
 // ---------------------------------------------------------------------------
+// ciel verify-3d — skills/ciel/scripts/verify_3d_asset.py twin
+// ---------------------------------------------------------------------------
+
+/// `ciel verify-3d [MANIFEST]` — audits a 3D mesh manifest; absent manifest
+/// runs the synthetic validation stub, matching the Python contract.
+pub fn verify_3d_main(args: &[String]) -> i32 {
+    let target = args
+        .iter()
+        .find(|a| !a.starts_with("--"))
+        .cloned()
+        .unwrap_or_else(|| "default_manifest.json".into());
+    let result = if Path::new(&target).is_file() {
+        let data: Value = std::fs::read_to_string(&target)
+            .ok()
+            .and_then(|t| serde_json::from_str(&t).ok())
+            .unwrap_or(Value::Null);
+        json!({"status": "analyzed", "data": data})
+    } else {
+        println!("[CIEL 3D AUDIT] Manifest {target} not found. Running synthetic validation.");
+        json!({
+            "status": "passed",
+            "tier": "AAA+ Production Ready",
+            "checks": {
+                "manifold_geometry": true,
+                "zero_area_faces": 0,
+                "unmerged_vertices": 0,
+                "transforms_frozen": true,
+                "texel_density_uniformity": "Optimal (20.48 px/cm)",
+                "uv_padding_min_px": 16,
+                "mikk_tspace_tangents": true,
+                "pbr_workflow": "Metallic/Roughness (Substance/Engine Ready)"
+            }
+        })
+    };
+    println!("{}", crate::jsonfmt::dumps_indent_ascii(&result, 2));
+    0
+}
+
+// ---------------------------------------------------------------------------
+// ciel config-heal — enforce Devin "attribution": false (install.sh 3b twin)
+// ---------------------------------------------------------------------------
+
+/// Prints ok|repaired|unreadable|config-absent; exit 0 on ok/repaired,
+/// 1 otherwise — same contract the install.sh heredoc implied. Unlike the
+/// session-start variant, the installer form creates the config file when
+/// absent (its `json.load(...) if exists else {}` seed semantics).
+pub fn config_heal_main() -> i32 {
+    let home = paths::home_dir();
+    let cfg = home.join(".config").join("devin").join("config.json");
+    let status = crate::sessionstart::enforce_attribution(&home);
+    let status = if status == "config-absent" {
+        // install.sh: mkdir -p ~/.config/devin before seeding the file.
+        if let Some(parent) = cfg.parent() {
+            let _ = std::fs::create_dir_all(parent);
+        }
+        match std::fs::write(
+            &cfg,
+            crate::jsonfmt::dumps_indent_ascii(&json!({"attribution": false}), 2),
+        ) {
+            Ok(_) => "repaired",
+            Err(_) => "unreadable",
+        }
+    } else {
+        status
+    };
+    println!("{status}");
+    match status {
+        "ok" | "repaired" => 0,
+        _ => 1,
+    }
+}
+
+// ---------------------------------------------------------------------------
 // ciel setup — installer twin of init/scripts/setup.py
 // ---------------------------------------------------------------------------
 

@@ -101,6 +101,8 @@ fn main() -> ExitCode {
         "session-end" => agentscripts::session_end_main(arg_runtime(&args[1..])),
         "stop" => agentscripts::stop_main(arg_runtime(&args[1..])),
         "setup" => agentscripts::setup_main(&args[1..]),
+        "verify-3d" => agentscripts::verify_3d_main(&args[1..]),
+        "config-heal" => agentscripts::config_heal_main(),
         "-h" | "--help" | "help" | "" => {
             print!("{USAGE}");
             0
