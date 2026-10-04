@@ -798,13 +798,20 @@ def _semantic_rank(text: str, options: dict, k: int) -> list:
     when the venv/model is unavailable — callers fall back to lexical."""
     if os.environ.get("CIEL_SYSTEM1_EMBED") == "0":
         return []
-    venv_py = (ciel_home() / "system1" / "venv" / "bin" / "python")
-    helper = Path(__file__).with_name("system1_embed.py")
-    if not (venv_py.is_file() and helper.is_file()):
-        return []
+    embed_bin = os.environ.get("CIEL_SYSTEM1_EMBED_BIN", "").strip()
+    if embed_bin and Path(embed_bin).is_file():
+        # Native embedder (e.g. ciel-dev embed) — same stdin/stdout
+        # contract as system1_embed.py. Rust semantic_rank() parity.
+        argv = [embed_bin, "embed"]
+    else:
+        venv_py = (ciel_home() / "system1" / "venv" / "bin" / "python")
+        helper = Path(__file__).with_name("system1_embed.py")
+        if not (venv_py.is_file() and helper.is_file()):
+            return []
+        argv = [str(venv_py), str(helper)]
     try:
         proc = subprocess.run(
-            [str(venv_py), str(helper)],
+            argv,
             input=json.dumps({"task": text,
                               "candidates": options, "k": k}),
             capture_output=True, text=True, timeout=60, check=False)
