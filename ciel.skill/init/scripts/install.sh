@@ -216,7 +216,45 @@ install_ciel_bin() {
 }
 install_ciel_bin || true
 
-# --- 9d. Completion gate -------------------------------------------------------
+# --- 9d. ciel-dev / ciel-domain tool binaries ----------------------------------
+# Optional native twins of the repo dev-tools and domain-skill scripts.
+# Every tool keeps its Python original as the soak-tier fallback, so a
+# missing cargo toolchain or a failed build never blocks the install.
+install_tool_bins() {
+  need cargo || return 0
+  mkdir -p "$CIEL_HOME/bin"
+  local dev_src domain_src
+  dev_src="$(cd "$(dirname "$0")/../ciel-dev" 2>/dev/null && pwd || true)"
+  domain_src="$(cd "$(dirname "$0")/../ciel-domain" 2>/dev/null && pwd || true)"
+  if [ -n "$dev_src" ]; then
+    say "Building ciel-dev (cargo build --release)…"
+    if cargo build --release --manifest-path "$dev_src/Cargo.toml" \
+      --quiet; then
+      cp "$dev_src/target/release/ciel-dev" "$CIEL_HOME/bin/ciel-dev"
+      chmod 755 "$CIEL_HOME/bin/ciel-dev"
+      say "ciel-dev installed to $CIEL_HOME/bin/ciel-dev"
+    else
+      warn "ciel-dev build failed; Python dev-tools remain available."
+    fi
+  fi
+  if [ -n "$domain_src" ]; then
+    say "Building ciel-domain (cargo build --release)…"
+    if cargo build --release --manifest-path "$domain_src/Cargo.toml" \
+      --quiet; then
+      local b
+      for b in ciel-studio ciel-audio ciel-uiux ciel-convo; do
+        cp "$domain_src/target/release/$b" "$CIEL_HOME/bin/$b"
+        chmod 755 "$CIEL_HOME/bin/$b"
+      done
+      say "ciel-domain binaries installed to $CIEL_HOME/bin/"
+    else
+      warn "ciel-domain build failed; Python domain tools remain available."
+    fi
+  fi
+}
+install_tool_bins || true
+
+# --- 9e. Completion gate -------------------------------------------------------
 # The System-1 completion gate ships in the bundle so verify_evidence.py and
 # System-1 workflows can reach it on installed hosts; `ciel verify-completion`
 # remains the binary fast path.

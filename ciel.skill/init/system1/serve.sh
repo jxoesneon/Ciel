@@ -38,6 +38,11 @@ LAYA_API_KEY=${rand_key}
 CIEL_SYSTEM1_MODE=active
 CIEL_SYSTEM1_MODEL=typed-decisions
 EOF
+    # Native MiniLM embedder when the ciel-dev binary is installed —
+    # replaces the venv python + system1_embed.py semantic leg.
+    if [[ -x "$SYSTEM1_DIR/../bin/ciel-dev" ]]; then
+      echo "CIEL_SYSTEM1_EMBED_BIN=$SYSTEM1_DIR/../bin/ciel-dev" >>"$ENV_FILE"
+    fi
     # Termux workaround: preload libpython for embedded torch runtimes —
     # only written when the library actually exists on this machine.
     local termux_py="/data/data/com.termux/files/usr/lib/libpython3.14.so"
