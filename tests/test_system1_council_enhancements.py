@@ -50,12 +50,13 @@ class TestCouncilEnhancements(unittest.TestCase):
 
     def test_01_surface_tau_resolution_hierarchy(self):
         """Surface tau adheres to the calibrated lattice, policy.json, and env overrides."""
-        # 1. Built-in lattice defaults
-        self.assertAlmostEqual(system1.surface_tau("pre_tool_risk"), 0.65, places=3)
-        self.assertAlmostEqual(system1.surface_tau("router"), 0.82, places=3)
-        self.assertAlmostEqual(system1.surface_tau("completion_check"), 0.75, places=3)
-        self.assertAlmostEqual(system1.surface_tau("council_prescreen"), 0.70, places=3)
-        self.assertAlmostEqual(system1.surface_tau("unmodeled_surface"), 0.20, places=3)
+        # 1. Built-in lattice defaults (calibrated for the compressed
+        # typed-decisions confidence range — see risk/SYSTEM1.md)
+        self.assertAlmostEqual(system1.surface_tau("pre_tool_risk"), 0.025, places=3)
+        self.assertAlmostEqual(system1.surface_tau("router"), 0.47, places=3)
+        self.assertAlmostEqual(system1.surface_tau("completion_check"), 0.10, places=3)
+        self.assertAlmostEqual(system1.surface_tau("council_prescreen"), 0.025, places=3)
+        self.assertAlmostEqual(system1.surface_tau("unmodeled_surface"), 0.05, places=3)
 
         # 2. Global override
         os.environ["CIEL_SYSTEM1_TAU"] = "0.55"
