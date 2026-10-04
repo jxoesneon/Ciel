@@ -31,6 +31,7 @@ import re
 import subprocess
 import sys
 import time
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -344,23 +345,25 @@ def _disabled() -> bool:
     return bool(os.environ.get("CIEL_SYSTEM1_DISABLED"))
 
 
-_ENV_FILE_CACHE: dict = {"mtime": None, "checked": 0.0, "pairs": {}}
+_ENV_FILE_CACHE: dict = {"path": None, "mtime": None, "checked": 0.0,
+                        "pairs": {}}
 
 
 def _env_file_pairs() -> dict:
     """Env file contents, cached by mtime with a 1s stat TTL — Rust's
-    ENV_CACHE mirror (the hot paths call this several times per ask)."""
+    ENV_CACHE mirror (the hot paths call this several times per ask).
+    Keyed by path so a CIEL_HOME change never serves stale pairs."""
     env_file = ciel_home() / "system1" / "env"
     now = time.monotonic()
     cache = _ENV_FILE_CACHE
-    if now - cache["checked"] < 1.0:
+    if now - cache["checked"] < 1.0 and cache["path"] == env_file:
         return cache["pairs"]
     try:
         mtime = env_file.stat().st_mtime
     except OSError:
         mtime = None
     cache["checked"] = now
-    if mtime == cache["mtime"] and cache["pairs"]:
+    if mtime == cache["mtime"] and cache["pairs"] and cache["path"] == env_file:
         return cache["pairs"]
     try:
         pairs = {}
@@ -369,9 +372,13 @@ def _env_file_pairs() -> dict:
                 continue
             k, _, v = line.partition("=")
             pairs[k.strip()] = v.strip().strip('"').strip("'")
-        cache["mtime"], cache["pairs"] = mtime, pairs
+        cache["path"], cache["mtime"], cache["pairs"] = env_file, mtime, pairs
     except OSError:
-        pass
+        # Unreadable after an mtime change — serve empty, never stale.
+        cache["path"], cache["mtime"], cache["pairs"] = env_file, mtime, {}
+    if cache["path"] != env_file:
+        # Never serve another file's pairs — reset to empty for this path.
+        cache["path"], cache["mtime"], cache["pairs"] = env_file, mtime, {}
     return cache["pairs"]
 
 
@@ -396,15 +403,8 @@ def _key() -> str:
 
 
 def _egress_allowed() -> bool:
-    """Remote asks must never send plaintext credentials or unredacted
-    state: hosted endpoints require https (a cleartext Bearer is a key
-    leak), and any non-loopback call fails closed when the secret
-    redactor is unavailable."""
-    if not _remote():
-        return True
-    if _hosted() and _scheme() != "https":
-        return False
-    return secret_scan is not None
+    """Egress gate for the *configured* URL (batch chunk path)."""
+    return _endpoint_egress_ok(_url())
 
 
 def _url() -> str:
@@ -430,29 +430,11 @@ _DEFAULT_HOSTED_MODEL = "jev-latest"
 
 
 def _host() -> str:
-    # Strict authority parse: the host ends at the first of / \ ? # —
-    # backslash is WHATWG-normalized to / by curl/urllib, and ? #
-    # terminate the authority before any later @. Only the LAST @ inside
-    # the bounded authority is the userinfo separator.
-    rest = _url().split("://", 1)[-1]
-    authority = re.split(r"[/\\?#]", rest, maxsplit=1)[0]
-    return authority.rsplit("@", 1)[-1].split(":", 1)[0].lower()
-
-
-def _scheme() -> str:
-    base = _url()
-    return base.split("://", 1)[0].lower() if "://" in base else ""
+    return _host_of(_url())
 
 
 def _endpoint() -> str:
-    base = _url()
-    if "/v1/systemone" in base:
-        return base
-    rest = base.split("://", 1)[-1]
-    _, _, path = rest.partition("/")
-    if _host() in _HOSTED_API_HOSTS and not path:
-        return f"{base}/api/v1/systemone"
-    return f"{base}/v1/systemone"
+    return _endpoint_of(_url())
 
 
 def _remote() -> bool:
@@ -464,47 +446,202 @@ def _hosted() -> bool:
 
 
 def _model() -> str:
-    if _hosted():
-        return (os.environ.get("CIEL_SYSTEM1_HOSTED_MODEL", "").strip()
-                or _env_file_value("CIEL_SYSTEM1_HOSTED_MODEL")
-                or _DEFAULT_HOSTED_MODEL)
+    """Local-checkpoint model for laya asks — the hosted leg resolves its
+    own Jev id via ``_hosted_model()`` so failover never sends a hosted
+    model id to laya or a checkpoint name to Jev."""
     return (os.environ.get("CIEL_SYSTEM1_MODEL", "").strip()
             or _env_file_value("CIEL_SYSTEM1_MODEL"))
 
 
-def ask(state: dict, questions: dict, timeout: float = 0.9) -> dict | None:
-    """POST state+questions to the endpoint; return the ``answers`` dict plus
-    model metadata, or None on any failure."""
-    if _disabled() or not _egress_allowed():
-        return None
-    # Never send secrets off-machine: the local events log is redacted, so the
-    # wire payload must be too whenever the endpoint is not loopback.
-    body = {"state": _redact(state) if _remote() else state,
+# --- Hosted failover (Jev primary, laya fallback) ---------------------------
+# When a hosted key is configured and CIEL_SYSTEM1_HOSTED is not "off",
+# hosted Jev is the primary engine for every ask; the local laya endpoint
+# picks up any slack (transport failure, auth/quota errors, timeouts) and
+# becomes primary again whenever hosted is down. A persisted circuit
+# breaker in hosted_state.json avoids re-paying the failure latency on
+# every call — 401/402/403 trip for 300s (key/balance), 429 for 60s,
+# transport/5xx for 30s.
+_HOSTED_URL_DEFAULT = "https://api.typesafe.ai"
+_HOSTED_TRIP_AUTH_S = 300.0
+_HOSTED_TRIP_RATE_S = 60.0
+_HOSTED_TRIP_ERR_S = 30.0
+
+
+def _hosted_url() -> str:
+    return (os.environ.get("CIEL_SYSTEM1_HOSTED_URL", "").strip()
+            or _env_file_value("CIEL_SYSTEM1_HOSTED_URL")
+            or _HOSTED_URL_DEFAULT).rstrip("/")
+
+
+def _hosted_key() -> str:
+    # Hosted credential chain: dedicated hosted key, then the Jev env
+    # convention, then the generic key. Process env beats the env file;
+    # LAYA_API_KEY is deliberately absent — a local credential must never
+    # be sent to a hosted endpoint.
+    for name in ("CIEL_SYSTEM1_HOSTED_KEY", "JEV_API_KEY", "CIEL_SYSTEM1_KEY"):
+        v = os.environ.get(name, "").strip()
+        if v:
+            return v
+    return (_env_file_value("CIEL_SYSTEM1_HOSTED_KEY")
+            or _env_file_value("JEV_API_KEY")
+            or _env_file_value("CIEL_SYSTEM1_KEY"))
+
+
+def _hosted_enabled() -> bool:
+    v = (os.environ.get("CIEL_SYSTEM1_HOSTED", "").strip().lower()
+         or _env_file_value("CIEL_SYSTEM1_HOSTED").lower())
+    return v not in ("off", "0", "false", "no")
+
+
+def _hosted_state_path():
+    return ciel_home() / "system1" / "hosted_state.json"
+
+
+def _hosted_down() -> bool:
+    try:
+        d = json.loads(_hosted_state_path().read_text(encoding="utf-8"))
+        return time.time() < float(d.get("down_until", 0))
+    except (OSError, ValueError, TypeError):
+        return False
+
+
+def _hosted_trip(status: int | None) -> None:
+    if status in (401, 402, 403):
+        backoff = _HOSTED_TRIP_AUTH_S
+    elif status == 429:
+        backoff = _HOSTED_TRIP_RATE_S
+    elif status is None or status >= 500:
+        backoff = _HOSTED_TRIP_ERR_S
+    else:
+        return  # 4xx request-shape errors don't trip — fall through, no penalty
+    try:
+        p = _hosted_state_path()
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(json.dumps(
+            {"down_until": time.time() + backoff, "status": status}))
+    except OSError:
+        pass
+
+
+def _hosted_active() -> bool:
+    """Hosted-primary mode: key configured, not disabled, https endpoint,
+    redactor available, circuit closed."""
+    u = _hosted_url()
+    # https for real hosted endpoints; loopback is exempt so self-hosted
+    # relays and test fixtures over http are legitimate targets.
+    scheme_ok = (u.split("://", 1)[0].lower() == "https"
+                 or _host_of(u) in {"127.0.0.1", "localhost", "::1", "[::1]"})
+    return (_hosted_enabled() and bool(_hosted_key()) and scheme_ok
+            and secret_scan is not None and not _hosted_down())
+
+
+def _hosted_model() -> str:
+    return (os.environ.get("CIEL_SYSTEM1_HOSTED_MODEL", "").strip()
+            or _env_file_value("CIEL_SYSTEM1_HOSTED_MODEL")
+            or _DEFAULT_HOSTED_MODEL)
+
+
+def _do_ask(endpoint: str, key: str, model: str, state: dict,
+            questions: dict, timeout: float,
+            redact: bool) -> tuple[dict | None, int | None]:
+    """One POST to a fully-resolved endpoint. Returns ({answers, model},
+    http_status) — status None on transport/parse failure."""
+    body = {"state": _redact(state) if redact else state,
             "questions": questions}
-    model = _model()
     if model:
         body["model"] = model
     req = urllib.request.Request(
-        _endpoint(),
+        endpoint,
         data=json.dumps(body).encode(),
         headers={
             "content-type": "application/json",
-            "authorization": f"Bearer {_key()}",
+            "authorization": f"Bearer {key}",
         },
         method="POST",
     )
     try:
         with urllib.request.urlopen(req, timeout=timeout) as resp:
             data = json.loads(resp.read())
+            status = resp.status
+    except urllib.error.HTTPError as e:
+        return None, e.code
     except (OSError, ValueError):
-        return None
+        return None, None
     answers = data.get("answers")
     if not isinstance(answers, dict):
-        return None
+        return None, status
     return {
         "answers": answers,
         "model": data.get("routing", {}).get("model") or data.get("model"),
-    }
+    }, status
+
+
+def _host_of(base: str) -> str:
+    rest = base.split("://", 1)[-1]
+    authority = re.split(r"[/\\?#]", rest, maxsplit=1)[0]
+    return authority.rsplit("@", 1)[-1].split(":", 1)[0].lower()
+
+
+def _endpoint_of(base: str) -> str:
+    if "/systemone" in base:
+        return base
+    path = base.split("://", 1)[-1].partition("/")[2]
+    if _host_of(base) in _HOSTED_API_HOSTS and not path:
+        return f"{base}/api/v1/systemone"
+    return f"{base}/v1/systemone"
+
+
+def _endpoint_egress_ok(base: str) -> bool:
+    """Per-target egress gate: hosted bases require https; any non-loopback
+    base requires the secret redactor."""
+    host = _host_of(base)
+    if host in {"127.0.0.1", "localhost", "::1", "[::1]"}:
+        return True
+    if host in _HOSTED_MODEL_HOSTS:
+        if base.split("://", 1)[0].lower() != "https":
+            return False
+    return secret_scan is not None
+
+
+def _local_base() -> str:
+    """The laya fallback base — the configured URL when it isn't hosted,
+    else the default loopback daemon."""
+    if _hosted():
+        return "http://127.0.0.1:8765"
+    return _url()
+
+
+def ask(state: dict, questions: dict, timeout: float = 0.9) -> dict | None:
+    """POST state+questions; return ``{answers, model}`` or None. Hosted
+    Jev is primary whenever a hosted key is configured (CIEL_SYSTEM1_HOSTED
+    unset or not "off"); the local laya endpoint picks up any failure and
+    becomes primary while the hosted circuit breaker is tripped."""
+    if _disabled():
+        return None
+    deadline = time.monotonic() + timeout
+    # Hosted primary — explicit hosted URL, or failover off a local URL.
+    hosted_base = None
+    if _hosted():
+        hosted_base = _url()
+    elif not _remote() and _hosted_active():
+        hosted_base = _hosted_url()
+    if (hosted_base is not None and not _hosted_down()
+            and _endpoint_egress_ok(hosted_base)):
+        result, status = _do_ask(
+            _endpoint_of(hosted_base), _hosted_key(), _hosted_model(),
+            state, questions, min(timeout * 0.5, 2.0), redact=True)
+        if result is not None:
+            return result
+        _hosted_trip(status)
+        timeout = max(0.05, deadline - time.monotonic())
+    # Local laya — slack path, or primary while hosted is down.
+    local = _local_base()
+    if not _endpoint_egress_ok(local):
+        return None
+    result, _ = _do_ask(
+        _endpoint_of(local), _key(), _model(), state, questions, timeout,
+        _host_of(local) not in {"127.0.0.1", "localhost", "::1", "[::1]"})
+    return result
 
 
 def ask_choice(state: dict, key: str, instructions: str,
@@ -581,10 +718,12 @@ def ask_batch(states: list, questions: dict,
     Hosted Jev has no ``/batch`` route (404 verified on api.typesafe.ai) —
     hosted calls serialize through ``ask()`` instead, sharing ``timeout``
     as one aggregate deadline (each state is a billed request; states
-    beyond the deadline resolve to None)."""
+    beyond the deadline resolve to None). In failover mode each ``ask()``
+    self-fails-over to local laya, and the circuit breaker means a dead
+    hosted endpoint costs one attempt, not N."""
     if _disabled() or not states:
         return None
-    if _hosted():
+    if _hosted() or (not _remote() and _hosted_active()):
         deadline = time.monotonic() + timeout
         out = []
         for s in states:

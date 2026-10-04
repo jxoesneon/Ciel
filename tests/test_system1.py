@@ -29,7 +29,7 @@ QUESTIONS = {
 }
 
 
-def _serve(payload, counter=None, bodies=None):
+def _serve(payload, counter=None, bodies=None, status=200):
     class H(http.server.BaseHTTPRequestHandler):
         def do_POST(self):
             if counter is not None:
@@ -37,7 +37,7 @@ def _serve(payload, counter=None, bodies=None):
             if bodies is not None:
                 n = int(self.headers.get("content-length", 0))
                 bodies.append(self.rfile.read(n).decode())
-            self.send_response(200)
+            self.send_response(status)
             self.send_header("content-type", "application/json")
             self.end_headers()
             self.wfile.write(json.dumps(payload).encode())
@@ -56,9 +56,18 @@ class System1TestCase(unittest.TestCase):
         self.addCleanup(self.tmp.cleanup)
         self._saved = {k: os.environ.get(k) for k in (
             "CIEL_HOME", "CIEL_SYSTEM1_DISABLED", "CIEL_SYSTEM1_URL",
-            "CIEL_SYSTEM1_KEY")}
+            "CIEL_SYSTEM1_KEY", "CIEL_SYSTEM1_MODEL",
+            "CIEL_SYSTEM1_HOSTED", "CIEL_SYSTEM1_HOSTED_URL",
+            "CIEL_SYSTEM1_HOSTED_KEY", "CIEL_SYSTEM1_HOSTED_MODEL",
+            "JEV_API_KEY")}
         os.environ["CIEL_HOME"] = self.tmp.name
-        os.environ.pop("CIEL_SYSTEM1_DISABLED", None)
+        for k in ("CIEL_SYSTEM1_DISABLED", "CIEL_SYSTEM1_HOSTED_URL",
+                  "CIEL_SYSTEM1_HOSTED_KEY", "CIEL_SYSTEM1_HOSTED_MODEL",
+                  "JEV_API_KEY"):
+            os.environ.pop(k, None)
+        # Hosted failover off by default — otherwise a bare
+        # CIEL_SYSTEM1_KEY in a test would promote to real egress.
+        os.environ["CIEL_SYSTEM1_HOSTED"] = "off"
 
     def tearDown(self):
         for k, v in self._saved.items():
@@ -189,11 +198,11 @@ class TestEndpointResolution(System1TestCase):
                 "CIEL_SYSTEM1_URL": "https://api.typesafe.ai",
                 "CIEL_SYSTEM1_MODEL": "typed-decisions"}):
             os.environ.pop("CIEL_SYSTEM1_HOSTED_MODEL", None)
-            self.assertEqual("jev-latest", system1._model())
+            self.assertEqual("jev-latest", system1._hosted_model())
         with unittest.mock.patch.dict(os.environ, {
                 "CIEL_SYSTEM1_URL": "https://api.typesafe.ai",
                 "CIEL_SYSTEM1_HOSTED_MODEL": "jev-preview"}):
-            self.assertEqual("jev-preview", system1._model())
+            self.assertEqual("jev-preview", system1._hosted_model())
         with unittest.mock.patch.dict(os.environ, {
                 "CIEL_SYSTEM1_URL": "http://127.0.0.1:8765",
                 "CIEL_SYSTEM1_MODEL": "typed-decisions"}):
@@ -233,8 +242,10 @@ class TestEndpointResolution(System1TestCase):
         os.environ["CIEL_SYSTEM1_URL"] = (
             f"http://127.0.0.1:{srv.server_port}")
         os.environ["CIEL_SYSTEM1_KEY"] = "k"
+        # Redaction keys off the wire target's host, so simulate a remote
+        # host for a loopback mock.
         with unittest.mock.patch.object(
-                system1, "_remote", return_value=True):
+                system1, "_host_of", return_value="example.com"):
             system1.ask({"command": "aws AKIAIOSFODNN7EXAMPLE"}, QUESTIONS)
         self.assertEqual(1, len(bodies))
         sent = json.loads(bodies[0])
@@ -741,6 +752,127 @@ class TestContextSurfaces(System1TestCase):
             {"tokens_used": 1}, timeout=0.2))
         self.assertIsNone(system1.mandate_canary(
             ["m"], "ctx", timeout=0.2))
+
+
+class TestHostedFailover(System1TestCase):
+    """Hosted Jev primary + laya fallback: per-call failover, the persisted
+    circuit breaker, and the hosted-off/no-key bypasses."""
+
+    LOCAL_PAYLOAD = {"answers": {"risk": {"choice": "safe",
+                                          "confidence": 0.9}},
+                     "model": "laya-local"}
+
+    def _pair(self, hosted_status, hosted_payload=None):
+        h_counter, l_counter = [], []
+        hosted = _serve(hosted_payload or {"error": "x"},
+                        counter=h_counter, status=hosted_status)
+        local = _serve(self.LOCAL_PAYLOAD, counter=l_counter)
+        self.addCleanup(hosted.shutdown)
+        self.addCleanup(local.shutdown)
+        os.environ["CIEL_SYSTEM1_URL"] = (
+            f"http://127.0.0.1:{local.server_port}")
+        os.environ["CIEL_SYSTEM1_HOSTED_URL"] = (
+            f"http://127.0.0.1:{hosted.server_port}")
+        os.environ["CIEL_SYSTEM1_HOSTED_KEY"] = "test-hosted-key"
+        os.environ["CIEL_SYSTEM1_HOSTED"] = "on"
+        return h_counter, l_counter
+
+    def test_hosted_primary_serves_and_skips_local(self):
+        h_counter, l_counter = self._pair(
+            200, {"answers": {"risk": {"choice": "dangerous",
+                                       "confidence": 0.99}},
+                  "model": "jev-1.13.0"})
+        v = system1.ask({"a": 1}, QUESTIONS)
+        self.assertEqual("jev-1.13.0", v["model"])
+        self.assertEqual("dangerous", v["answers"]["risk"]["choice"])
+        self.assertEqual(1, len(h_counter))
+        self.assertEqual(0, len(l_counter), "hosted success must not "
+                                            "touch the local daemon")
+
+    def test_hosted_401_falls_back_and_trips_breaker(self):
+        h_counter, l_counter = self._pair(401)
+        v = system1.ask({"a": 1}, QUESTIONS)
+        self.assertEqual("laya-local", v["model"])
+        self.assertTrue(system1._hosted_down(), "401 must trip the breaker")
+        # Breaker open: a second ask must not pay another hosted attempt.
+        v2 = system1.ask({"a": 2}, QUESTIONS)
+        self.assertEqual("laya-local", v2["model"])
+        self.assertEqual(1, len(h_counter))
+        self.assertEqual(2, len(l_counter))
+
+    def test_hosted_429_and_5xx_trip(self):
+        state = Path(self.tmp.name) / "system1" / "hosted_state.json"
+        for status in (429, 503):
+            state.unlink(missing_ok=True)  # reset the breaker per class
+            h_counter, l_counter = self._pair(status)
+            v = system1.ask({"a": 1}, QUESTIONS)
+            self.assertEqual("laya-local", v["model"], f"status {status}")
+            self.assertTrue(system1._hosted_down(), f"status {status}")
+            self.assertEqual(1, len(h_counter), f"status {status}")
+
+    def test_hosted_transport_failure_trips(self):
+        l_counter = []
+        local = _serve(self.LOCAL_PAYLOAD, counter=l_counter)
+        self.addCleanup(local.shutdown)
+        os.environ["CIEL_SYSTEM1_URL"] = (
+            f"http://127.0.0.1:{local.server_port}")
+        # Dead hosted port → connect refused → error-class trip.
+        os.environ["CIEL_SYSTEM1_HOSTED_URL"] = "http://127.0.0.1:9"
+        os.environ["CIEL_SYSTEM1_HOSTED_KEY"] = "test-hosted-key"
+        os.environ["CIEL_SYSTEM1_HOSTED"] = "on"
+        v = system1.ask({"a": 1}, QUESTIONS)
+        self.assertEqual("laya-local", v["model"])
+        self.assertTrue(system1._hosted_down())
+        self.assertEqual(1, len(l_counter))
+
+    def test_request_shape_4xx_does_not_trip(self):
+        h_counter, l_counter = self._pair(400)
+        v = system1.ask({"a": 1}, QUESTIONS)
+        self.assertEqual("laya-local", v["model"])
+        self.assertFalse(system1._hosted_down(),
+                         "a 400 is a request bug, not an outage")
+
+    def test_hosted_off_goes_straight_local(self):
+        h_counter, l_counter = self._pair(200, self.LOCAL_PAYLOAD)
+        os.environ["CIEL_SYSTEM1_HOSTED"] = "off"
+        v = system1.ask({"a": 1}, QUESTIONS)
+        self.assertEqual("laya-local", v["model"])
+        self.assertEqual(0, len(h_counter))
+        self.assertEqual(1, len(l_counter))
+
+    def test_no_hosted_key_goes_straight_local(self):
+        h_counter, l_counter = self._pair(200, self.LOCAL_PAYLOAD)
+        os.environ.pop("CIEL_SYSTEM1_HOSTED_KEY", None)
+        v = system1.ask({"a": 1}, QUESTIONS)
+        self.assertEqual("laya-local", v["model"])
+        self.assertEqual(0, len(h_counter))
+        self.assertEqual(1, len(l_counter))
+
+    def test_breaker_expires_and_retries_hosted(self):
+        h_counter, l_counter = self._pair(
+            200, {"answers": {"risk": {"choice": "safe",
+                                       "confidence": 0.5}},
+                  "model": "jev-x"})
+        state = Path(self.tmp.name) / "system1" / "hosted_state.json"
+        state.parent.mkdir(parents=True, exist_ok=True)
+        state.write_text(json.dumps(
+            {"down_until": time.time() - 1, "status": 401}))
+        v = system1.ask({"a": 1}, QUESTIONS)
+        self.assertEqual("jev-x", v["model"],
+                         "expired breaker must retry hosted")
+        self.assertEqual(1, len(h_counter))
+        self.assertEqual(0, len(l_counter))
+
+    def test_batch_serializes_with_per_state_failover(self):
+        h_counter, l_counter = self._pair(401)
+        out = system1.ask_batch([{"a": 1}, {"a": 2}], QUESTIONS, 3.0)
+        self.assertIsNotNone(out)
+        self.assertEqual(2, len(out))
+        for r in out:
+            self.assertEqual("laya-local", r["model"])
+        self.assertEqual(1, len(h_counter),
+                         "breaker must make hosted cost one attempt, not N")
+        self.assertEqual(2, len(l_counter))
 
 
 if __name__ == "__main__":

@@ -33,20 +33,33 @@ Operating modes via `CIEL_SYSTEM1_MODE`:
 | Backend | Config |
 | --- | --- |
 | Local laya-serve (default) | `CIEL_SYSTEM1_URL=http://127.0.0.1:8765` + `LAYA_API_KEY` |
-| Hosted Jev (official) | `CIEL_SYSTEM1_URL=https://api.typesafe.ai` + `JEV_API_KEY=<apikey_...>` |
-| Hosted Jev (unofficial proxy) | `CIEL_SYSTEM1_URL=https://jev-agent.com` + `CIEL_SYSTEM1_KEY=<jv_live_...>` |
+| Hosted Jev failover (primary when keyed) | `JEV_API_KEY=<apikey_...>` (+ optional `CIEL_SYSTEM1_HOSTED_URL`, default `https://api.typesafe.ai`) |
+| Hosted Jev (official, sole engine) | `CIEL_SYSTEM1_URL=https://api.typesafe.ai` + `JEV_API_KEY=<apikey_...>` |
+| Hosted Jev (unofficial proxy, sole engine) | `CIEL_SYSTEM1_URL=https://jev-agent.com` + `CIEL_SYSTEM1_KEY=<jv_live_...>` |
 | AutoJev | `CIEL_SYSTEM1_URL=https://autojev.ai` + `CIEL_SYSTEM1_KEY=<key>` |
+
+**Failover chain:** with a local `CIEL_SYSTEM1_URL` and a hosted key
+configured (`CIEL_SYSTEM1_HOSTED_KEY` → `JEV_API_KEY` → `CIEL_SYSTEM1_KEY`,
+process env or the env file), every ask tries hosted Jev first and falls
+back to local laya with whatever timeout remains. A persisted circuit
+breaker at `~/.ciel/system1/hosted_state.json` keeps laya primary until
+the backoff expires — 401/402/403 (key/balance) trip 300s, 429 trips 60s,
+transport/5xx trip 30s; request-shape 4xx fall through without tripping.
+`CIEL_SYSTEM1_HOSTED=off` disables hosted egress entirely; no hosted key
+means local-only. `LAYA_API_KEY` is never sent to a hosted endpoint, and
+the local leg never receives the Jev `model` id.
 
 `CIEL_SYSTEM1_URL` is a base URL: a bare jev-agent.com host resolves to
 `…/api/v1/systemone`; every other base (including `api.typesafe.ai`)
 resolves to `…/v1/systemone`, and a base that already contains the full
 path is used verbatim. When the resolved endpoint is not loopback, the
 outbound `state` payload is secret-redacted — the same redaction applied
-to the local `events.jsonl` log.
+to the local `events.jsonl` log — and hosted endpoints require `https`.
 
 `CIEL_SYSTEM1_KEY` overrides; otherwise the key is read from
-`~/.ciel/system1/env` — hosted endpoints prefer `JEV_API_KEY`, local
-`LAYA_API_KEY`. `CIEL_SYSTEM1_DISABLED=1` turns the tier off entirely.
+`~/.ciel/system1/env` — local endpoints use `CIEL_SYSTEM1_KEY`/
+`LAYA_API_KEY`, hosted legs use the chain above.
+`CIEL_SYSTEM1_DISABLED=1` turns the tier off entirely.
 `CIEL_SYSTEM1_MODEL` (env or the same env file) pins the request `model`
 for local laya checkpoints (`english`, `multilingual`, `typed-decisions`).
 Hosted endpoints ignore it — the Jev API 400s on unknown model ids and

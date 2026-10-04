@@ -122,3 +122,40 @@ through the convergent amendment package, all landed and verified
   landed; prefer cache-first/`ask_async` shadow over synchronous.
 - Deferred drift backlog: `url()` env-file/LAYA_HOST, `disabled()`/
   mode==off, `shortlist_options` semantic port.
+
+---
+
+## ADDENDUM — hosted-primary / laya-fallback failover (post-verdict)
+
+Operator direction superseded Option A's opt-in scope: hosted Jev is
+primary whenever a hosted key is configured; local laya is the standing
+fallback. Implemented in both engines.
+
+- `ask()` chain: hosted leg (≤2.0s cap) → local leg with the remaining
+  deadline. Hosted engages when `CIEL_SYSTEM1_URL` is hosted, or when
+  it is local and `hosted_active()` (key + `CIEL_SYSTEM1_HOSTED`≠off +
+  https-or-loopback + breaker closed).
+- Circuit breaker persisted at `~/.ciel/system1/hosted_state.json`:
+  401/402/403 → 300s, 429 → 60s, transport/5xx → 30s; other 4xx fall
+  through untripped. Breaker state survives restarts and makes a dead
+  hosted path cost one attempt per backoff window, not per ask.
+- Hosted batch serializes per-state under one aggregate deadline; each
+  state self-fails-over.
+- `model()` is local-only now — the hosted leg resolves `hosted_model()`
+  (`jev-latest` default); failover never sends a hosted id to laya.
+- Hosted key chain honors process env and env file:
+  `CIEL_SYSTEM1_HOSTED_KEY` → `JEV_API_KEY` → `CIEL_SYSTEM1_KEY`;
+  `LAYA_API_KEY` stays out of the hosted chain.
+- Rust transport is status-aware (`http_post_sc`/`curl_post_sc` return
+  (status, body)) so breaker classes distinguish auth/quota, rate-limit,
+  and transport failure. Connect timeouts scale by target class (10ms
+  loopback / ≤1s WAN, ≤3s curl cap) — the 50ms connect cap previously
+  made every WAN endpoint read as a transport failure.
+- Python `_env_file_pairs()` cache is now keyed by path as well as
+  mtime/TTL — a `CIEL_HOME` switch never serves another file's pairs
+  (cross-file key leakage, found by failover tests).
+- Warmup targets `local_base()` only — warming checkpoints on hosted
+  Jev is both pointless and billed.
+- Verified: 61 Python / 54 Rust / 55 parity; live hosted answer
+  (jev-1.13.0) and live transport-failure→local fallback both
+  exercised end-to-end on the deployed build.

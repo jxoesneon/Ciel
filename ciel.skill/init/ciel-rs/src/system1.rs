@@ -354,16 +354,12 @@ pub fn mode() -> String {
         })
 }
 
+/// The local/configured-laya credential — never sent to hosted Jev.
 fn key() -> String {
     if let Ok(k) = std::env::var("CIEL_SYSTEM1_KEY") {
         if !k.trim().is_empty() {
             return k;
         }
-    }
-    if hosted() {
-        // Hosted never receives the local laya credential — a LAYA_API_KEY
-        // fallback would transmit it to a third party for a guaranteed 401.
-        return env_file_value(&["CIEL_SYSTEM1_KEY", "JEV_API_KEY"]);
     }
     env_file_value(&["CIEL_SYSTEM1_KEY", "LAYA_API_KEY"])
 }
@@ -410,9 +406,8 @@ const DEFAULT_HOSTED_MODEL: &str = "jev-latest";
 /// backslash is WHATWG-normalized to / by curl/urllib, and ? # terminate
 /// the authority before any later @. Only the LAST @ inside the bounded
 /// authority is the userinfo separator.
-fn host() -> String {
-    let base = url();
-    let rest = base.split("://").nth(1).unwrap_or(base.as_str());
+fn host_of(base: &str) -> String {
+    let rest = base.split("://").nth(1).unwrap_or(base);
     let end = rest.find(['/', '\\', '?', '#']).unwrap_or(rest.len());
     rest[..end]
         .rsplit('@')
@@ -424,65 +419,196 @@ fn host() -> String {
         .to_ascii_lowercase()
 }
 
-fn scheme() -> String {
-    let base = url();
+fn host() -> String {
+    host_of(&url())
+}
+
+fn scheme_of(base: &str) -> String {
     match base.split_once("://") {
         Some((s, _)) => s.to_ascii_lowercase(),
         None => String::new(),
     }
 }
 
-/// Remote asks must never send plaintext credentials: hosted endpoints
-/// require https — a cleartext Bearer is a key leak. (The vendored
-/// redactors are static and cannot degrade, so no availability check is
-/// needed here unlike the Python engine.)
-fn egress_allowed() -> bool {
-    if !remote() {
+/// Per-target egress gate: loopback always ok; hosted bases require
+/// https (a cleartext Bearer is a key leak). The vendored redactors are
+/// static and cannot degrade, so no availability check is needed here
+/// unlike the Python engine.
+fn endpoint_egress_ok(base: &str) -> bool {
+    let h = host_of(base);
+    if matches!(h.as_str(), "127.0.0.1" | "localhost" | "::1" | "[::1]") {
         return true;
     }
-    if hosted() && scheme() != "https" {
+    if HOSTED_MODEL_HOSTS.contains(&h.as_str()) && scheme_of(base) != "https" {
         return false;
     }
     true
 }
 
+#[allow(dead_code)] // test-only wrapper after the per-target gate refactor
+fn egress_allowed() -> bool {
+    endpoint_egress_ok(&url())
+}
+
 /// Hosted Jev mounts the Jev API under /api/v1; local laya-serve and the OSS
 /// backends serve /v1 directly. CIEL_SYSTEM1_URL is a base URL — resolve the
 /// full endpoint once here so every caller posts to the right path.
-fn endpoint() -> String {
-    let base = url();
-    if base.contains("/v1/systemone") {
-        return base;
+fn endpoint_of(base: &str) -> String {
+    if base.contains("/systemone") {
+        return base.to_string();
     }
-    let rest = base.split("://").nth(1).unwrap_or(base.as_str());
+    let rest = base.split("://").nth(1).unwrap_or(base);
     let path = rest.split_once('/').map(|x| x.1).unwrap_or("");
-    if HOSTED_API_HOSTS.contains(&host().as_str()) && path.is_empty() {
+    if HOSTED_API_HOSTS.contains(&host_of(base).as_str()) && path.is_empty() {
         return format!("{base}/api/v1/systemone");
     }
     format!("{base}/v1/systemone")
 }
 
+fn endpoint() -> String {
+    endpoint_of(&url())
+}
+
+fn remote_of(base: &str) -> bool {
+    !matches!(
+        host_of(base).as_str(),
+        "127.0.0.1" | "localhost" | "::1" | "[::1]"
+    )
+}
+
 fn remote() -> bool {
-    !matches!(host().as_str(), "127.0.0.1" | "localhost" | "::1" | "[::1]")
+    remote_of(&url())
 }
 
 fn hosted() -> bool {
     HOSTED_MODEL_HOSTS.contains(&host().as_str())
 }
 
-fn model() -> String {
-    if hosted() {
-        if let Ok(m) = std::env::var("CIEL_SYSTEM1_HOSTED_MODEL") {
-            if !m.trim().is_empty() {
-                return m;
+// --- Hosted failover (Jev primary, laya fallback) --------------------------
+// When a hosted key is configured and CIEL_SYSTEM1_HOSTED is not "off",
+// hosted Jev is the primary engine for every ask; the local laya endpoint
+// picks up any failure and becomes primary while the hosted circuit
+// breaker is tripped. Breaker state persists in hosted_state.json so a
+// dead key/balance doesn't re-pay failure latency on every call.
+const HOSTED_URL_DEFAULT: &str = "https://api.typesafe.ai";
+const HOSTED_TRIP_AUTH_S: f64 = 300.0;
+const HOSTED_TRIP_RATE_S: f64 = 60.0;
+const HOSTED_TRIP_ERR_S: f64 = 30.0;
+
+fn hosted_url() -> String {
+    if let Ok(u) = std::env::var("CIEL_SYSTEM1_HOSTED_URL") {
+        if !u.trim().is_empty() {
+            return u.trim_end_matches('/').to_string();
+        }
+    }
+    let u = env_file_value(&["CIEL_SYSTEM1_HOSTED_URL"]);
+    if !u.is_empty() {
+        return u.trim_end_matches('/').to_string();
+    }
+    HOSTED_URL_DEFAULT.into()
+}
+
+fn hosted_key() -> String {
+    // Hosted credential chain: dedicated hosted key, then the Jev env
+    // convention, then the generic key. Process env beats the env file;
+    // LAYA_API_KEY is deliberately absent — a local credential must never
+    // be sent to a hosted endpoint.
+    for name in ["CIEL_SYSTEM1_HOSTED_KEY", "JEV_API_KEY", "CIEL_SYSTEM1_KEY"] {
+        if let Ok(k) = std::env::var(name) {
+            if !k.trim().is_empty() {
+                return k;
             }
         }
-        let m = env_file_value(&["CIEL_SYSTEM1_HOSTED_MODEL"]);
-        if !m.is_empty() {
+    }
+    env_file_value(&["CIEL_SYSTEM1_HOSTED_KEY", "JEV_API_KEY", "CIEL_SYSTEM1_KEY"])
+}
+
+fn hosted_enabled() -> bool {
+    let v = std::env::var("CIEL_SYSTEM1_HOSTED")
+        .ok()
+        .filter(|s| !s.trim().is_empty())
+        .unwrap_or_else(|| env_file_value(&["CIEL_SYSTEM1_HOSTED"]))
+        .to_ascii_lowercase();
+    !matches!(v.as_str(), "off" | "0" | "false" | "no")
+}
+
+fn hosted_state_path() -> PathBuf {
+    paths::ciel_home().join("system1").join("hosted_state.json")
+}
+
+fn hosted_down() -> bool {
+    let Ok(text) = std::fs::read_to_string(hosted_state_path()) else {
+        return false;
+    };
+    let Ok(d) = serde_json::from_str::<Value>(&text) else {
+        return false;
+    };
+    let until = d.get("down_until").and_then(|v| v.as_f64()).unwrap_or(0.0);
+    let now = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .map(|d| d.as_secs_f64())
+        .unwrap_or(0.0);
+    now < until
+}
+
+fn hosted_trip(status: Option<u16>) {
+    let backoff = match status {
+        Some(401) | Some(402) | Some(403) => HOSTED_TRIP_AUTH_S,
+        Some(429) => HOSTED_TRIP_RATE_S,
+        None => HOSTED_TRIP_ERR_S,
+        Some(s) if s >= 500 => HOSTED_TRIP_ERR_S,
+        _ => return, // 4xx request-shape errors don't trip
+    };
+    let now = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .map(|d| d.as_secs_f64())
+        .unwrap_or(0.0);
+    let rec = json!({"down_until": now + backoff, "status": status});
+    let path = hosted_state_path();
+    if let Some(parent) = path.parent() {
+        let _ = std::fs::create_dir_all(parent);
+    }
+    let _ = std::fs::write(&path, rec.to_string());
+}
+
+/// Hosted-primary mode: key configured, not disabled, https endpoint,
+/// circuit closed. (Redactor availability is a Python-side concern —
+/// the vendored regexes can't degrade.)
+fn hosted_active() -> bool {
+    let u = hosted_url();
+    // https for real hosted endpoints; loopback is exempt so self-hosted
+    // relays and test fixtures over http are legitimate targets.
+    let scheme_ok = scheme_of(&u) == "https"
+        || matches!(
+            host_of(&u).as_str(),
+            "127.0.0.1" | "localhost" | "::1" | "[::1]"
+        );
+    hosted_enabled() && !hosted_key().is_empty() && scheme_ok && !hosted_down()
+}
+
+fn hosted_model() -> String {
+    if let Ok(m) = std::env::var("CIEL_SYSTEM1_HOSTED_MODEL") {
+        if !m.trim().is_empty() {
             return m;
         }
-        return DEFAULT_HOSTED_MODEL.into();
     }
+    let m = env_file_value(&["CIEL_SYSTEM1_HOSTED_MODEL"]);
+    if !m.is_empty() {
+        return m;
+    }
+    DEFAULT_HOSTED_MODEL.into()
+}
+
+/// The laya fallback base — the configured URL when it isn't hosted,
+/// else the default loopback daemon.
+fn local_base() -> String {
+    if hosted() {
+        return "http://127.0.0.1:8765".into();
+    }
+    url()
+}
+
+fn model() -> String {
     let direct = std::env::var("CIEL_SYSTEM1_MODEL")
         .ok()
         .filter(|s| !s.trim().is_empty());
@@ -566,10 +692,28 @@ fn dechunk(raw: &str) -> String {
 /// read-to-end, chunked-decode when the server uses it. `https://` goes
 /// through curl (TLS without a vendored stack). Returns the body on 2xx.
 fn http_post(url: &str, body: &[u8], auth: &str, timeout: Duration) -> Option<String> {
-    if url.starts_with("https://") {
-        return curl_post(url, body, auth, timeout);
+    let (status, text) = http_post_sc(url, body, auth, timeout);
+    match status {
+        Some(s) if (200..300).contains(&s) => text,
+        _ => None,
     }
-    let rest = url.strip_prefix("http://")?;
+}
+
+/// Status-aware variant — returns (http_status, body); status None on
+/// transport failure. Callers needing failover distinguish auth/quota
+/// (401/402/403) and rate-limit (429) from plain request errors.
+fn http_post_sc(
+    url: &str,
+    body: &[u8],
+    auth: &str,
+    timeout: Duration,
+) -> (Option<u16>, Option<String>) {
+    if url.starts_with("https://") {
+        return curl_post_sc(url, body, auth, timeout);
+    }
+    let Some(rest) = url.strip_prefix("http://") else {
+        return (None, None);
+    };
     let (authority, path) = match rest.split_once('/') {
         Some((a, p)) => (a, format!("/{p}")),
         None => (rest, "/".to_string()),
@@ -579,12 +723,16 @@ fn http_post(url: &str, body: &[u8], auth: &str, timeout: Duration) -> Option<St
     } else {
         format!("{authority}:80")
     };
-    let addrs = addr.to_socket_addrs().ok()?;
+    let Ok(addrs) = addr.to_socket_addrs() else {
+        return (None, None);
+    };
     let connect_timeout =
         if authority.starts_with("127.0.0.1") || authority.starts_with("localhost") {
             Duration::from_millis(10).min(timeout)
         } else {
-            Duration::from_millis(50).min(timeout)
+            // WAN connect can need hundreds of ms — bound by the caller's
+            // budget, not a loopback-tuned constant.
+            Duration::from_secs(1).min(timeout)
         };
     let mut stream = None;
     for sock in addrs {
@@ -593,7 +741,9 @@ fn http_post(url: &str, body: &[u8], auth: &str, timeout: Duration) -> Option<St
             break;
         }
     }
-    let mut stream = stream?;
+    let Some(mut stream) = stream else {
+        return (None, None);
+    };
     let _ = stream.set_read_timeout(Some(timeout));
     let _ = stream.set_write_timeout(Some(timeout));
 
@@ -607,8 +757,9 @@ fn http_post(url: &str, body: &[u8], auth: &str, timeout: Duration) -> Option<St
         "POST {path} HTTP/1.1\r\nHost: {authority}\r\ncontent-type: application/json\r\n{auth_header}content-length: {}\r\nconnection: close\r\n\r\n",
         body.len()
     );
-    stream.write_all(req.as_bytes()).ok()?;
-    stream.write_all(body).ok()?;
+    if stream.write_all(req.as_bytes()).is_err() || stream.write_all(body).is_err() {
+        return (None, None);
+    }
 
     let mut resp = Vec::new();
     let mut buf = [0u8; 4096];
@@ -663,21 +814,19 @@ fn http_post(url: &str, body: &[u8], auth: &str, timeout: Duration) -> Option<St
     }
 
     if resp.is_empty() {
-        return None;
+        return (None, None);
     }
 
-    let (hend, bstart) = header_body_split.or_else(|| find_header_split(&resp))?;
+    let Some((hend, bstart)) = header_body_split.or_else(|| find_header_split(&resp)) else {
+        return (None, None);
+    };
     let head = String::from_utf8_lossy(&resp[..hend]);
 
-    let status_ok = head
+    let status = head
         .lines()
         .next()
         .and_then(|l| l.split_whitespace().nth(1))
-        .and_then(|c| c.parse::<u16>().ok())
-        .is_some_and(|c| (200..300).contains(&c));
-    if !status_ok {
-        return None;
-    }
+        .and_then(|c| c.parse::<u16>().ok());
 
     let chunked = is_chunked
         || head.lines().any(|l| {
@@ -689,31 +838,61 @@ fn http_post(url: &str, body: &[u8], auth: &str, timeout: Duration) -> Option<St
         let raw = String::from_utf8_lossy(&resp[bstart..]);
         let decoded = dechunk(&raw);
         if decoded.is_empty() && raw.trim() != "0" {
-            return None;
+            return (status, None);
         }
-        return Some(decoded);
+        return (status, Some(decoded));
     }
 
     let body_bytes = if let Some(clen) = content_len {
         if resp.len() < bstart + clen {
             // Premature EOF before full body received
-            return None;
+            return (status, None);
         }
         &resp[bstart..bstart + clen]
     } else {
         &resp[bstart..]
     };
 
-    Some(String::from_utf8_lossy(body_bytes).to_string())
+    (
+        status,
+        Some(String::from_utf8_lossy(body_bytes).to_string()),
+    )
 }
 
+#[allow(dead_code)] // kept for test parity with http_post's 2xx contract
 fn curl_post(url: &str, body: &[u8], auth: &str, timeout: Duration) -> Option<String> {
+    let (status, text) = curl_post_sc(url, body, auth, timeout);
+    match status {
+        Some(s) if (200..300).contains(&s) => text,
+        _ => None,
+    }
+}
+
+/// Status-aware curl POST — appends `\n%{http_code}` via -w and peels the
+/// trailer, so the body survives non-2xx and transport errors come back
+/// as (None, _).
+fn curl_post_sc(
+    url: &str,
+    body: &[u8],
+    auth: &str,
+    timeout: Duration,
+) -> (Option<u16>, Option<String>) {
+    // Loopback connects are ~instant; WAN TLS needs real headroom —
+    // a 50ms connect cap would make every hosted endpoint read as a
+    // transport failure and trip the breaker.
+    let connect_timeout = if matches!(
+        host_of(url).as_str(),
+        "127.0.0.1" | "localhost" | "::1" | "[::1]"
+    ) {
+        "0.05".to_string()
+    } else {
+        format!("{:.3}", timeout.as_secs_f64().min(3.0))
+    };
     let mut cmd = Command::new("curl");
     cmd.args([
         "-sS",
-        "--fail",
         "--connect-timeout",
-        "0.05",
+        &connect_timeout,
         "-X",
         "POST",
         "-H",
@@ -725,11 +904,13 @@ fn curl_post(url: &str, body: &[u8], auth: &str, timeout: Duration) -> Option<St
     cmd.args([
         "--max-time",
         &format!("{:.3}", timeout.as_secs_f64().max(0.05)),
+        "-w",
+        "\n%{http_code}",
         "--data-binary",
         "@-",
         url,
     ]);
-    let out = cmd
+    let out = match cmd
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())
         .stderr(Stdio::null())
@@ -739,43 +920,64 @@ fn curl_post(url: &str, body: &[u8], auth: &str, timeout: Duration) -> Option<St
                 let _ = stdin.write_all(body);
             }
             c.wait_with_output()
-        })
-        .ok()?;
+        }) {
+        Ok(o) => o,
+        Err(_) => return (None, None),
+    };
     if !out.status.success() {
-        return None;
+        return (None, None);
     }
-    String::from_utf8(out.stdout).ok()
+    let text = match String::from_utf8(out.stdout) {
+        Ok(t) => t,
+        Err(_) => return (None, None),
+    };
+    let Some((body_part, code_part)) = text.rsplit_once('\n') else {
+        return (None, Some(text));
+    };
+    (
+        code_part.trim().parse::<u16>().ok(),
+        Some(body_part.to_string()),
+    )
 }
 
 // --------------------------------------------------------------- ask layer
 
-/// Mirror of `ask` — POST state+questions, return {"answers","model"} or
-/// None on any failure.
-pub fn ask(state: &Value, questions: &Value, timeout_s: f64) -> Option<Value> {
-    if disabled() || !egress_allowed() {
-        return None;
-    }
-    // Never send secrets off-machine: the local events log is redacted, so the
-    // wire payload must be too whenever the endpoint is not loopback.
+/// One POST to a fully-resolved endpoint — returns (result, http_status).
+/// Status None on transport/parse failure.
+fn do_ask(
+    endpoint: &str,
+    key: &str,
+    model: &str,
+    state: &Value,
+    questions: &Value,
+    timeout_s: f64,
+    redact: bool,
+) -> (Option<Value>, Option<u16>) {
     let mut state_v = state.clone();
-    if remote() {
+    if redact {
         redact_value(&mut state_v);
     }
     let mut body = json!({"state": state_v, "questions": questions});
-    let m = model();
-    if !m.is_empty() {
-        body["model"] = json!(m);
+    if !model.is_empty() {
+        body["model"] = json!(model);
     }
-    let resp = http_post(
-        &endpoint(),
+    let (status, resp) = http_post_sc(
+        endpoint,
         body.to_string().as_bytes(),
-        &key(),
+        key,
         Duration::from_secs_f64(timeout_s.max(0.05)),
-    )?;
-    let data: Value = serde_json::from_str(&resp).ok()?;
-    let answers = data.get("answers")?.clone();
+    );
+    let Some(resp) = resp else {
+        return (None, status);
+    };
+    let Ok(data) = serde_json::from_str::<Value>(&resp) else {
+        return (None, status);
+    };
+    let Some(answers) = data.get("answers") else {
+        return (None, status);
+    };
     if !answers.is_object() {
-        return None;
+        return (None, status);
     }
     // python `or` semantics: any falsy routing.model falls through
     let routing_model = data
@@ -784,7 +986,65 @@ pub fn ask(state: &Value, questions: &Value, timeout_s: f64) -> Option<Value> {
         .cloned()
         .filter(|v| !(v.is_null() || v == &json!("") || v == &json!(false) || v == &json!(0)));
     let model = routing_model.or_else(|| data.get("model").cloned());
-    Some(json!({"answers": answers, "model": model.unwrap_or(Value::Null)}))
+    (
+        Some(json!({"answers": answers.clone(), "model": model.unwrap_or(Value::Null)})),
+        status,
+    )
+}
+
+/// Mirror of `ask` — POST state+questions, return {"answers","model"} or
+/// None on any failure. Hosted Jev is primary whenever a hosted key is
+/// configured (CIEL_SYSTEM1_HOSTED unset or not "off"); the local laya
+/// endpoint picks up any failure and becomes primary while the hosted
+/// circuit breaker is tripped.
+pub fn ask(state: &Value, questions: &Value, timeout_s: f64) -> Option<Value> {
+    if disabled() {
+        return None;
+    }
+    let deadline = Instant::now() + Duration::from_secs_f64(timeout_s.max(0.05));
+    // Hosted primary — explicit hosted URL, or failover off a local URL.
+    let mut hosted_base = None;
+    if hosted() {
+        hosted_base = Some(url());
+    } else if !remote() && hosted_active() {
+        hosted_base = Some(hosted_url());
+    }
+    if let Some(base) = hosted_base {
+        if !hosted_down() && endpoint_egress_ok(&base) {
+            let (result, status) = do_ask(
+                &endpoint_of(&base),
+                &hosted_key(),
+                &hosted_model(),
+                state,
+                questions,
+                (timeout_s * 0.5).min(2.0),
+                true, // hosted is always remote — always redact
+            );
+            if result.is_some() {
+                return result;
+            }
+            hosted_trip(status);
+        }
+    }
+    // Local laya — slack path, or primary while hosted is down.
+    let local = local_base();
+    if !endpoint_egress_ok(&local) {
+        return None;
+    }
+    let remaining = deadline
+        .saturating_duration_since(Instant::now())
+        .as_secs_f64()
+        .max(0.05);
+    do_ask(
+        &endpoint_of(&local),
+        &key(),
+        &model(),
+        state,
+        questions,
+        remaining,
+        remote_of(&local),
+    )
+    .0
 }
 
 /// Server-side cap on states per batch request (laya-serve 0.3.22+).
@@ -795,8 +1055,11 @@ const BATCH_CHUNK: usize = 64;
 /// item); None on any request failure. Fail-open like `ask()`.
 ///
 /// Hosted Jev has no `/batch` route (404 verified on api.typesafe.ai) —
-/// hosted calls serialize through `ask()` instead. Each state is one billed
-/// request, so hosted callers should keep candidate pools small.
+/// hosted calls serialize through `ask()` instead, sharing `timeout_s`
+/// as one aggregate deadline (each state is a billed request; states
+/// beyond the deadline resolve to None). In failover mode each `ask()`
+/// self-fails-over to local laya, and the circuit breaker means a dead
+/// hosted endpoint costs one attempt, not N.
 #[allow(dead_code)]
 pub fn ask_batch(
     states: &[Value],
@@ -806,9 +1069,7 @@ pub fn ask_batch(
     if disabled() || states.is_empty() {
         return None;
     }
-    if hosted() {
-        // One aggregate deadline across the serialized asks — each state is
-        // a billed request; states beyond the deadline resolve to None.
+    if hosted() || (!remote() && hosted_active()) {
         let deadline = Instant::now() + Duration::from_secs_f64(timeout_s.max(0.0));
         return Some(
             states
@@ -836,7 +1097,7 @@ fn ask_batch_chunk(
     questions: &Value,
     timeout_s: f64,
 ) -> Option<Vec<Option<Value>>> {
-    if !egress_allowed() {
+    if !endpoint_egress_ok(&url()) {
         return None;
     }
     let redact = remote();
@@ -1659,7 +1920,9 @@ fn warmup_main(wait_s: u64) -> i32 {
     if disabled() {
         return 0;
     }
-    let ep = endpoint();
+    // Warmup is a local-daemon concern — it pays the laya JIT cost, so it
+    // must never target hosted Jev even when failover has hosted primary.
+    let ep = endpoint_of(&local_base());
     let k = key();
     let deadline = Instant::now() + Duration::from_secs(wait_s.max(1));
     for m in warmup_models() {
@@ -1726,6 +1989,7 @@ mod tests {
 
     #[test]
     fn warmup_models_env_and_fallbacks() {
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
         std::env::set_var("LAYA_MODELS", " english , typed-decisions ");
         assert_eq!(warmup_models(), vec!["english", "typed-decisions"]);
         std::env::remove_var("LAYA_MODELS");
@@ -1737,6 +2001,7 @@ mod tests {
 
     #[test]
     fn warmup_disabled_exits_zero() {
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
         std::env::set_var("CIEL_SYSTEM1_DISABLED", "1");
         assert_eq!(0, warmup_main(1));
         std::env::remove_var("CIEL_SYSTEM1_DISABLED");
@@ -1744,6 +2009,7 @@ mod tests {
 
     #[test]
     fn ask_batch_mock_roundtrip_and_chunking() {
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
         let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
         let port = listener.local_addr().unwrap().port();
         // 70 states -> two chunks: 64 + 6. Serve both connections.
@@ -1796,11 +2062,15 @@ mod tests {
                 let _ = stream.write_all(resp.as_bytes());
             }
         });
+        // Hosted off — a local URL plus a configured hosted key would
+        // otherwise serialize through hosted Jev instead of /batch.
+        std::env::set_var("CIEL_SYSTEM1_HOSTED", "off");
         std::env::set_var("CIEL_SYSTEM1_URL", format!("http://127.0.0.1:{port}"));
         let states: Vec<Value> = (0..70).map(|i| json!({"i": i})).collect();
         let questions = json!({"a": {"type": "choice", "criteria": {"yes": "y", "no": "n"}}});
         let out = ask_batch(&states, &questions, 5.0).expect("batch result");
         std::env::remove_var("CIEL_SYSTEM1_URL");
+        std::env::remove_var("CIEL_SYSTEM1_HOSTED");
         handle.join().unwrap();
         assert_eq!(out.len(), 70);
         assert_eq!(
@@ -1812,10 +2082,202 @@ mod tests {
 
     #[test]
     fn ask_batch_empty_and_disabled() {
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
         assert!(ask_batch(&[], &json!({}), 1.0).is_none());
         std::env::set_var("CIEL_SYSTEM1_DISABLED", "1");
         assert!(ask_batch(&[json!({"i": 1})], &json!({}), 1.0).is_none());
         std::env::remove_var("CIEL_SYSTEM1_DISABLED");
+    }
+
+    /// Mock server: serves requests until `quiet` elapses with no new
+    /// connection (or `max_conns` is reached); join yields the request count.
+    fn mock_server(
+        responder: impl Fn(usize, &str) -> String + Send + 'static,
+        max_conns: usize,
+    ) -> (u16, std::thread::JoinHandle<usize>) {
+        let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        listener.set_nonblocking(true).unwrap();
+        let port = listener.local_addr().unwrap().port();
+        let handle = std::thread::spawn(move || {
+            let quiet = Duration::from_millis(800);
+            let cap = Instant::now() + Duration::from_secs(15);
+            let mut idle_since = Instant::now();
+            let mut seen = 0usize;
+            while seen < max_conns && Instant::now() < cap {
+                match listener.accept() {
+                    Ok((mut stream, _)) => {
+                        idle_since = Instant::now();
+                        let _ = stream.set_read_timeout(Some(Duration::from_secs(2)));
+                        let mut buf = [0u8; 8192];
+                        let mut raw: Vec<u8> = Vec::new();
+                        loop {
+                            match stream.read(&mut buf) {
+                                Ok(0) | Err(_) => break,
+                                Ok(n) => {
+                                    raw.extend_from_slice(&buf[..n]);
+                                    if let Some((hend, bstart)) = find_header_split(&raw) {
+                                        let headers = String::from_utf8_lossy(&raw[..hend]);
+                                        let clen: usize = headers
+                                            .lines()
+                                            .find_map(|l| {
+                                                l.to_ascii_lowercase()
+                                                    .strip_prefix("content-length:")
+                                                    .and_then(|v| v.trim().parse().ok())
+                                            })
+                                            .unwrap_or(0);
+                                        if raw.len() - bstart >= clen {
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        let req = String::from_utf8_lossy(&raw).to_string();
+                        seen += 1;
+                        let _ = stream.write_all(responder(seen, &req).as_bytes());
+                    }
+                    Err(ref e) if e.kind() == std::io::ErrorKind::WouldBlock => {
+                        if seen > 0 && idle_since.elapsed() > quiet {
+                            break;
+                        }
+                        if seen == 0 && idle_since.elapsed() > Duration::from_secs(10) {
+                            break;
+                        }
+                        std::thread::sleep(Duration::from_millis(5));
+                    }
+                    Err(_) => break,
+                }
+            }
+            seen
+        });
+        (port, handle)
+    }
+
+    fn http_response(status: u16, body: &str) -> String {
+        format!(
+            "HTTP/1.1 {status} X\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{body}",
+            body.len()
+        )
+    }
+
+    /// Serialize tests that mutate process env — CIEL_HOME/CIEL_SYSTEM1_*
+    /// are process-global, so failover tests must not interleave.
+    static ENV_LOCK: std::sync::Mutex<()> = std::sync::Mutex::new(());
+
+    /// Isolate CIEL_HOME so the real env file's hosted key and breaker
+    /// state cannot leak into the test, and vice versa. Caller must hold
+    /// ENV_LOCK.
+    fn failover_env() -> std::path::PathBuf {
+        let nanos = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .map(|d| d.as_nanos())
+            .unwrap_or(0);
+        let tmp =
+            std::env::temp_dir().join(format!("ciel-failover-{}-{nanos}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&tmp);
+        std::fs::create_dir_all(tmp.join("system1")).unwrap();
+        std::env::set_var("CIEL_HOME", &tmp);
+        tmp
+    }
+
+    #[test]
+    fn hosted_breaker_persists_and_expires() {
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+        let tmp = failover_env();
+        assert!(!hosted_down());
+        hosted_trip(Some(401));
+        assert!(hosted_down(), "401 must trip the breaker");
+        // A request-shape 4xx is a no-op but must not clear the trip.
+        hosted_trip(Some(400));
+        assert!(hosted_down());
+        // Expired state reads as up.
+        std::fs::write(
+            hosted_state_path(),
+            json!({"down_until": 1.0, "status": 401}).to_string(),
+        )
+        .unwrap();
+        assert!(!hosted_down(), "expired breaker must read as up");
+        std::env::remove_var("CIEL_HOME");
+        let _ = std::fs::remove_dir_all(&tmp);
+    }
+
+    #[test]
+    fn ask_failover_hosted_401_falls_back_and_trips() {
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+        let tmp = failover_env();
+        // hosted mock: always 401; local mock: a valid laya answer.
+        let (hport, hhandle) =
+            mock_server(|_, _| http_response(401, "{\"error\":\"unauthorized\"}"), 4);
+        let (lport, lhandle) = mock_server(
+            |_, _| {
+                http_response(
+                    200,
+                    "{\"answers\":{\"a\":{\"choice\":\"safe\",\"confidence\":0.9}},\
+                 \"model\":\"laya-local\"}",
+                )
+            },
+            4,
+        );
+        std::env::set_var("CIEL_SYSTEM1_URL", format!("http://127.0.0.1:{lport}"));
+        std::env::set_var(
+            "CIEL_SYSTEM1_HOSTED_URL",
+            format!("http://127.0.0.1:{hport}"),
+        );
+        std::env::set_var("CIEL_SYSTEM1_HOSTED_KEY", "test-hosted-key");
+        let q = json!({"a": {"type": "choice", "criteria": {"yes": "y", "no": "n"}}});
+
+        let out = ask(&json!({"i": 0}), &q, 3.0).expect("local fallback result");
+        assert_eq!(out["model"], json!("laya-local"));
+        assert!(hosted_down(), "401 must trip the hosted breaker");
+
+        // Breaker now open: a second ask must not touch hosted again.
+        let out2 = ask(&json!({"i": 1}), &q, 3.0).expect("still local");
+        assert_eq!(out2["model"], json!("laya-local"));
+
+        for v in [
+            "CIEL_SYSTEM1_URL",
+            "CIEL_SYSTEM1_HOSTED_URL",
+            "CIEL_SYSTEM1_HOSTED_KEY",
+            "CIEL_HOME",
+        ] {
+            std::env::remove_var(v);
+        }
+        let _ = std::fs::remove_dir_all(&tmp);
+        // Local served both asks; hosted served exactly one.
+        assert_eq!(2, lhandle.join().unwrap());
+        assert_eq!(1, hhandle.join().unwrap());
+    }
+
+    #[test]
+    fn ask_failover_disabled_goes_straight_local() {
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+        let tmp = failover_env();
+        let (lport, lhandle) = mock_server(
+            |_, _| {
+                http_response(
+                    200,
+                    "{\"answers\":{\"a\":{\"choice\":\"yes\",\"confidence\":0.9}},\
+                 \"model\":\"laya-local\"}",
+                )
+            },
+            2,
+        );
+        std::env::set_var("CIEL_SYSTEM1_URL", format!("http://127.0.0.1:{lport}"));
+        std::env::set_var("CIEL_SYSTEM1_HOSTED", "off");
+        std::env::set_var("CIEL_SYSTEM1_HOSTED_KEY", "test-hosted-key");
+        let q = json!({"a": {"type": "choice", "criteria": {"yes": "y", "no": "n"}}});
+        let out = ask(&json!({}), &q, 3.0).expect("local result");
+        assert_eq!(out["model"], json!("laya-local"));
+        for v in [
+            "CIEL_SYSTEM1_URL",
+            "CIEL_SYSTEM1_HOSTED",
+            "CIEL_SYSTEM1_HOSTED_KEY",
+            "CIEL_HOME",
+        ] {
+            std::env::remove_var(v);
+        }
+        let _ = std::fs::remove_dir_all(&tmp);
+        assert_eq!(1, lhandle.join().unwrap());
     }
 
     #[test]
@@ -1856,6 +2318,7 @@ mod tests {
 
     #[test]
     fn endpoint_normalizes_hosted_and_local() {
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
         // hosted Jev mounts the API under /api/v1 — a bare host base URL
         // must gain the /api prefix; local backends serve /v1 directly.
         for (base, want) in [
@@ -1914,15 +2377,19 @@ mod tests {
 
     #[test]
     fn hosted_model_resolution() {
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
         // Hosted Jev requires a valid Jev model id — never a local
         // checkpoint name. CIEL_SYSTEM1_HOSTED_MODEL overrides;
         // jev-latest is the default (verified via GET /v1/models).
+        // model() is local-only now: the hosted leg resolves via
+        // hosted_model(), so failover never sends a hosted id to laya.
         std::env::set_var("CIEL_SYSTEM1_URL", "https://api.typesafe.ai");
         std::env::set_var("CIEL_SYSTEM1_MODEL", "typed-decisions");
         std::env::remove_var("CIEL_SYSTEM1_HOSTED_MODEL");
-        assert_eq!("jev-latest", model());
+        assert_eq!("jev-latest", hosted_model());
+        assert_eq!("typed-decisions", model());
         std::env::set_var("CIEL_SYSTEM1_HOSTED_MODEL", "jev-preview");
-        assert_eq!("jev-preview", model());
+        assert_eq!("jev-preview", hosted_model());
         std::env::remove_var("CIEL_SYSTEM1_HOSTED_MODEL");
         std::env::remove_var("CIEL_SYSTEM1_URL");
         std::env::set_var("CIEL_SYSTEM1_URL", "http://127.0.0.1:8765");
@@ -1933,6 +2400,7 @@ mod tests {
 
     #[test]
     fn hosted_flag_matches_model_hosts() {
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
         for (base, want) in [
             ("https://api.typesafe.ai", true),
             ("https://jev-agent.com", true),
@@ -1954,6 +2422,7 @@ mod tests {
 
     #[test]
     fn hosted_requires_https() {
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
         // A cleartext Bearer is a credential leak — hosted asks over http
         // or schemeless URLs fail closed before any bytes leave.
         for (base, want) in [
@@ -2005,6 +2474,7 @@ mod tests {
 
     #[test]
     fn env_variable_handling() {
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
         // Test default url
         assert!(url().starts_with("http://"));
 
@@ -2044,6 +2514,7 @@ mod tests {
 
     #[test]
     fn completion_check_questions_and_fail_open() {
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
         let q = completion_questions();
         assert!(q.get("done").is_some());
         let criteria = q["done"].get("criteria").unwrap();
@@ -2204,6 +2675,10 @@ mod tests {
 
     #[test]
     fn evaluate_risk_offline_latency_under_5ms() {
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+        // Hosted off — a configured hosted key would route the offline ask
+        // through real egress and blow the latency bound.
+        std::env::set_var("CIEL_SYSTEM1_HOSTED", "off");
         std::env::set_var("CIEL_SYSTEM1_URL", "http://127.0.0.1:54321");
         let mut min_elapsed = Duration::from_secs(10);
         let mut res = None;
@@ -2225,6 +2700,7 @@ mod tests {
             }
         }
         std::env::remove_var("CIEL_SYSTEM1_URL");
+        std::env::remove_var("CIEL_SYSTEM1_HOSTED");
         println!("evaluate_risk offline min latency: {:?}", min_elapsed);
         assert!(res.is_none());
         assert!(
@@ -2265,6 +2741,11 @@ mod tests {
 
     #[test]
     fn route_choice_fail_open_offline() {
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+        // Pin offline — a configured hosted key would otherwise route this
+        // to live egress and return a real verdict instead of fail-open.
+        std::env::set_var("CIEL_SYSTEM1_HOSTED", "off");
+        std::env::set_var("CIEL_SYSTEM1_URL", "http://127.0.0.1:54321");
         let mut options = serde_json::Map::new();
         options.insert("git".into(), json!("git operations"));
         options.insert("docker".into(), json!("container operations"));
@@ -2272,5 +2753,7 @@ mod tests {
         assert_eq!(verdict.status, "fail_open");
         assert!(verdict.degraded);
         assert_eq!(verdict.shortlist, vec!["docker", "git"]);
+        std::env::remove_var("CIEL_SYSTEM1_URL");
+        std::env::remove_var("CIEL_SYSTEM1_HOSTED");
     }
 }
