@@ -29,11 +29,14 @@ QUESTIONS = {
 }
 
 
-def _serve(payload, counter=None):
+def _serve(payload, counter=None, bodies=None):
     class H(http.server.BaseHTTPRequestHandler):
         def do_POST(self):
             if counter is not None:
                 counter.append(1)
+            if bodies is not None:
+                n = int(self.headers.get("content-length", 0))
+                bodies.append(self.rfile.read(n).decode())
             self.send_response(200)
             self.send_header("content-type", "application/json")
             self.end_headers()
@@ -133,6 +136,45 @@ class TestEndpointResolution(System1TestCase):
             with unittest.mock.patch.dict(
                     os.environ, {"CIEL_SYSTEM1_URL": u}):
                 self.assertEqual(want, system1._endpoint(), u)
+
+    def test_schemeless_and_userinfo_authorities(self):
+        for u, want in (
+                ("jev-agent.com",
+                 "jev-agent.com/api/v1/systemone"),
+                ("https://jev-agent.com:443@evil.example",
+                 "https://jev-agent.com:443@evil.example/v1/systemone")):
+            with unittest.mock.patch.dict(
+                    os.environ, {"CIEL_SYSTEM1_URL": u}):
+                self.assertEqual(want, system1._endpoint(), u)
+
+    def test_remote_detection(self):
+        for u, want in (
+                ("https://jev-agent.com", True),
+                ("https://autojev.ai", True),
+                ("http://127.0.0.1:8765", False),
+                ("http://localhost:8765", False)):
+            with unittest.mock.patch.dict(
+                    os.environ, {"CIEL_SYSTEM1_URL": u}):
+                self.assertEqual(want, system1._remote(), u)
+
+    def test_remote_ask_redacts_state_on_the_wire(self):
+        bodies = []
+        srv = _serve({"answers": {"risk": {"choice": "safe",
+                                           "confidence": 0.7}},
+                      "model": "english"}, bodies=bodies)
+        self.addCleanup(srv.shutdown)
+        os.environ["CIEL_SYSTEM1_URL"] = (
+            f"http://127.0.0.1:{srv.server_port}")
+        os.environ["CIEL_SYSTEM1_KEY"] = "k"
+        with unittest.mock.patch.object(
+                system1, "_remote", return_value=True):
+            system1.ask({"command": "aws AKIAIOSFODNN7EXAMPLE"}, QUESTIONS)
+        self.assertEqual(1, len(bodies))
+        sent = json.loads(bodies[0])
+        self.assertIn("[REDACTED:aws_access_key]",
+                      sent["state"]["command"])
+        self.assertNotIn("AKIAIOSFODNN7EXAMPLE",
+                         sent["state"]["command"])
 
 
 class TestAskMain(System1TestCase):

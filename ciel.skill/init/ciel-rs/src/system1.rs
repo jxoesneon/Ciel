@@ -376,6 +376,8 @@ fn url() -> String {
     "http://127.0.0.1:8765".into()
 }
 
+const HOSTED_API_HOSTS: [&str; 2] = ["jev-agent.com", "www.jev-agent.com"];
+
 /// Hosted Jev mounts the Jev API under /api/v1; local laya-serve and the OSS
 /// backends serve /v1 directly. CIEL_SYSTEM1_URL is a base URL — resolve the
 /// full endpoint once here so every caller posts to the right path.
@@ -389,15 +391,35 @@ fn endpoint() -> String {
     let host = it
         .next()
         .unwrap_or("")
+        .rsplit('@')
+        .next()
+        .unwrap_or("")
         .split(':')
         .next()
         .unwrap_or("")
         .to_ascii_lowercase();
     let path = it.next().unwrap_or("");
-    if (host == "jev-agent.com" || host == "www.jev-agent.com") && path.is_empty() {
+    if HOSTED_API_HOSTS.contains(&host.as_str()) && path.is_empty() {
         return format!("{base}/api/v1/systemone");
     }
     format!("{base}/v1/systemone")
+}
+
+fn remote() -> bool {
+    let base = url();
+    let rest = base.split("://").nth(1).unwrap_or(base.as_str());
+    let host = rest
+        .split('/')
+        .next()
+        .unwrap_or("")
+        .rsplit('@')
+        .next()
+        .unwrap_or("")
+        .split(':')
+        .next()
+        .unwrap_or("")
+        .to_ascii_lowercase();
+    !matches!(host.as_str(), "127.0.0.1" | "localhost" | "::1" | "[::1]")
 }
 
 fn model() -> String {
@@ -647,7 +669,13 @@ pub fn ask(state: &Value, questions: &Value, timeout_s: f64) -> Option<Value> {
     if disabled() {
         return None;
     }
-    let mut body = json!({"state": state, "questions": questions});
+    // Never send secrets off-machine: the local events log is redacted, so the
+    // wire payload must be too whenever the endpoint is not loopback.
+    let mut state_v = state.clone();
+    if remote() {
+        redact_value(&mut state_v);
+    }
+    let mut body = json!({"state": state_v, "questions": questions});
     let m = model();
     if !m.is_empty() {
         body["model"] = json!(m);
@@ -1521,6 +1549,12 @@ mod tests {
                 "http://127.0.0.1:8765/v1/systemone",
             ),
             ("https://autojev.ai", "https://autojev.ai/v1/systemone"),
+            // schemeless bare host still matches; userinfo authority does not
+            ("jev-agent.com", "jev-agent.com/api/v1/systemone"),
+            (
+                "https://jev-agent.com:443@evil.example",
+                "https://jev-agent.com:443@evil.example/v1/systemone",
+            ),
             (
                 "http://127.0.0.1:49999/v1/systemone",
                 "http://127.0.0.1:49999/v1/systemone",

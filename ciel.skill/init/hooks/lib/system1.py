@@ -289,10 +289,16 @@ def _endpoint() -> str:
         return base
     rest = base.split("://", 1)[-1]
     host, _, path = rest.partition("/")
-    host = host.split(":", 1)[0].lower()
+    host = host.rsplit("@", 1)[-1].split(":", 1)[0].lower()
     if host in _HOSTED_API_HOSTS and not path:
         return f"{base}/api/v1/systemone"
     return f"{base}/v1/systemone"
+
+
+def _remote() -> bool:
+    rest = _url().split("://", 1)[-1]
+    host = rest.partition("/")[0].rsplit("@", 1)[-1].split(":", 1)[0].lower()
+    return host not in {"127.0.0.1", "localhost", "::1", "[::1]"}
 
 
 def _model() -> str:
@@ -305,7 +311,10 @@ def ask(state: dict, questions: dict, timeout: float = 0.9) -> dict | None:
     model metadata, or None on any failure."""
     if _disabled():
         return None
-    body = {"state": state, "questions": questions}
+    # Never send secrets off-machine: the local events log is redacted, so the
+    # wire payload must be too whenever the endpoint is not loopback.
+    body = {"state": _redact(state) if _remote() else state,
+            "questions": questions}
     model = _model()
     if model:
         body["model"] = model

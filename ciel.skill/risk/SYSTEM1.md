@@ -36,6 +36,12 @@ Operating modes via `CIEL_SYSTEM1_MODE`:
 | Hosted Jev | `CIEL_SYSTEM1_URL=https://jev-agent.com` + `CIEL_SYSTEM1_KEY=<jv_live_...>` |
 | AutoJev | `CIEL_SYSTEM1_URL=https://autojev.ai` + `CIEL_SYSTEM1_KEY=<key>` |
 
+`CIEL_SYSTEM1_URL` is a base URL: a bare hosted-Jev host resolves to
+`…/api/v1/systemone`; every other base resolves to `…/v1/systemone`, and a
+base that already contains the full path is used verbatim. When the resolved
+endpoint is not loopback, the outbound `state` payload is secret-redacted —
+the same redaction applied to the local `events.jsonl` log.
+
 `CIEL_SYSTEM1_KEY` overrides; otherwise the key is read from
 `~/.ciel/system1/env` (`LAYA_API_KEY=` line). `CIEL_SYSTEM1_DISABLED=1`
 turns the tier off entirely. `CIEL_SYSTEM1_MODEL` (env or the same env
