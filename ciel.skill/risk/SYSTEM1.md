@@ -109,9 +109,12 @@ echo '{
 
 Prints `{"answers": {...}, "model": "typed-decisions"}` or `null` when the
 endpoint is down (fail-open). Use `system1.route_choice(task, options)` for
-routing: it shortlists high-cardinality candidate sets lexically
-(`shortlist_options`, k=10) before the choice call — the documented
-coarse-to-fine pattern once options exceed ~20.
+routing: it shortlists high-cardinality candidate sets
+(`shortlist_options`, k=10 — semantic top-k via the embed helper when
+available, unioned with IDF-weighted lexical top-5 and exact name-token
+matches) before the choice call — the documented coarse-to-fine pattern
+once options exceed ~20. Set `CIEL_SYSTEM1_EMBED=0` to force lexical-only,
+or `CIEL_SYSTEM1_EMBED_BIN` to swap in a native embedder.
 
 ## CLI Governance Commands
 
