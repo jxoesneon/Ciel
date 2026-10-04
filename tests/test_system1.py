@@ -364,9 +364,10 @@ class TestBanding(System1TestCase):
         self.assertEqual("flag", band)
 
     def test_low_confidence_safe_is_uncertain(self):
+        # below the calibrated pre_tool_risk tau (0.025)
         band = system1._band("pre_tool_risk",
                              {"risk": {"choice": "safe",
-                                       "confidence": 0.05}})
+                                       "confidence": 0.01}})
         self.assertEqual("uncertain", band)
 
     def test_confident_safe_passes(self):
@@ -674,7 +675,8 @@ class TestContextSurfaces(System1TestCase):
         def ans(i):
             return {"relevant": {
                 "choice": "drop" if i < 2 else "keep",
-                "confidence": 0.9 if i == 0 else 0.4}}
+                # below/above the calibrated context_select tau (0.05)
+                "confidence": 0.9 if i == 0 else (0.01 if i == 1 else 0.4)}}
         srv = _serve_batch(ans)
         self.addCleanup(srv.shutdown)
         self._batch_url(srv)

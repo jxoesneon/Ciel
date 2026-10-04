@@ -1,12 +1,17 @@
 {
-  "generated": "2026-09-23T22:58:37Z",
+  "generated": "2026-10-04T21:27:13Z",
   "endpoint": "http://127.0.0.1:8765",
   "model": "typed-decisions",
   "threshold_lattice": {
-    "pre_tool_risk": 0.65,
-    "router": 0.82,
-    "completion_check": 0.75,
-    "council_prescreen": 0.70
+    "pre_tool_risk": 0.025,
+    "router": 0.47,
+    "router_selection": 0.33,
+    "completion_check": 0.1,
+    "council_prescreen": 0.025,
+    "context_select": 0.05,
+    "memory_salience": 0.05,
+    "context_compaction": 0.02,
+    "mandate_canary": 0.15
   },
   "surfaces": {
     "pre_tool_risk": {
@@ -987,5 +992,6 @@
       "accuracy": 0.3181818181818182,
       "shortlist_recall": 0.6818181818181818
     }
-  }
+  },
+  "calibration_note": "Lattice recalibrated 2026-10-04 for the compressed typed-decisions confidence range (~0.0001-0.16): floors sit above every observed wrong-direction confidence across the September per-case benchmark and the jev_alignment_corpus (16-case Jev/Laya comparison); sparse-data surfaces use modest floors so over-flag directions stay trusted while permissive answers degrade to 'uncertain'."
 }

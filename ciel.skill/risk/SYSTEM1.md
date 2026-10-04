@@ -176,14 +176,21 @@ threshold is resolved with **4-tier precedence** (highest wins):
 
 | Surface | Default τ | Purpose |
 |---------|-----------|---------|
-| `pre_tool_risk` | 0.65 | PreToolUse safety gate |
-| `router` | 0.82 | Skill routing confidence floor |
-| `completion_check` | 0.75 | Completion verification |
-| `council_prescreen` | 0.70 | Council event triage |
-| `context_select` | 0.60 | Batched keep/drop per context item |
-| `memory_salience` | 0.65 | Long-term-memory write-back gate |
-| `context_compaction` | 0.70 | Semantic compaction trigger |
-| `mandate_canary` | 0.75 | Operating-mandate drift check |
+| `pre_tool_risk` | 0.025 | PreToolUse safety gate |
+| `router` | 0.47 | Skill routing confidence floor |
+| `router_selection` | 0.33 | Shortlisted skill pick |
+| `completion_check` | 0.10 | Completion verification |
+| `council_prescreen` | 0.025 | Council event triage |
+| `context_select` | 0.05 | Batched keep/drop per context item |
+| `memory_salience` | 0.05 | Long-term-memory write-back gate |
+| `context_compaction` | 0.02 | Semantic compaction trigger |
+| `mandate_canary` | 0.15 | Operating-mandate drift check |
+
+These defaults are calibrated for the `typed-decisions` checkpoint's
+compressed confidence range (~0.0001–0.16) — each floor sits above every
+observed wrong-direction confidence in the alignment corpus, so permissive
+answers degrade to `uncertain` instead of silently passing. Recalibrate
+against the live checkpoint before trusting them on a different model.
 
 The `_band()` function in both Rust and Python calls `surface_tau(surface)` to
 resolve the threshold, then classifies the confidence into `high` / `moderate` /

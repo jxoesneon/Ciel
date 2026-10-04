@@ -53,18 +53,20 @@ ASK_TIMEOUT = 30.0
 # Advisory banding per surface: a flagged choice dominates; any other choice
 # with confidence below tau (CIEL_SYSTEM1_TAU, default DEFAULT_TAU from the
 # calibration sweep) is 'uncertain' — review-worthy, never a deny.
-# Calibrated confidence threshold lattice
-DEFAULT_TAU = 0.2
+# Calibrated confidence threshold lattice — floors sit above every
+# observed wrong-direction confidence on the compressed typed-decisions
+# range (see risk/system1_calibration.json).
+DEFAULT_TAU = 0.05
 DEFAULT_THRESHOLDS = {
-    "pre_tool_risk": 0.65,
-    "router": 0.82,
-    "router_selection": 0.82,
-    "completion_check": 0.75,
-    "council_prescreen": 0.70,
-    "context_select": 0.60,
-    "memory_salience": 0.65,
-    "context_compaction": 0.70,
-    "mandate_canary": 0.75,
+    "pre_tool_risk": 0.025,
+    "router": 0.47,
+    "router_selection": 0.33,
+    "completion_check": 0.10,
+    "council_prescreen": 0.025,
+    "context_select": 0.05,
+    "memory_salience": 0.05,
+    "context_compaction": 0.02,
+    "mandate_canary": 0.15,
 }
 
 _POLICY_THRESHOLDS = None

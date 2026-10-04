@@ -60,7 +60,7 @@ const EVENTS_LOG_MAX: u64 = 4 * 1024 * 1024;
 const MAX_INFLIGHT: usize = 2;
 const INFLIGHT_STALE_S: u64 = 120;
 const ASK_TIMEOUT_S: f64 = 30.0;
-const DEFAULT_TAU: f64 = 0.2;
+const DEFAULT_TAU: f64 = 0.05;
 
 static THRESHOLDS_CACHE: std::sync::RwLock<Option<HashMap<String, f64>>> =
     std::sync::RwLock::new(None);
@@ -125,16 +125,19 @@ pub fn surface_tau(surface: &str) -> f64 {
     if let Some(&val) = thresh.get(surface) {
         return val;
     }
-    // 4. Calibrated default lattice constants
+    // 4. Calibrated default lattice constants — floors sit above every
+    // observed wrong-direction confidence on the compressed typed-decisions
+    // range (see risk/system1_calibration.json).
     match surface {
-        "pre_tool_risk" => 0.65,
-        "router" | "router_selection" => 0.82,
-        "completion_check" => 0.75,
-        "council_prescreen" => 0.70,
-        "context_select" => 0.60,
-        "memory_salience" => 0.65,
-        "context_compaction" => 0.70,
-        "mandate_canary" => 0.75,
+        "pre_tool_risk" => 0.025,
+        "router" => 0.47,
+        "router_selection" => 0.33,
+        "completion_check" => 0.10,
+        "council_prescreen" => 0.025,
+        "context_select" => 0.05,
+        "memory_salience" => 0.05,
+        "context_compaction" => 0.02,
+        "mandate_canary" => 0.15,
         _ => DEFAULT_TAU,
     }
 }
@@ -2297,7 +2300,8 @@ mod tests {
     fn band_flag_and_uncertain() {
         let answers = json!({"a": {"choice": "dangerous", "confidence": 0.9}});
         assert_eq!("flag", band("pre_tool_risk", &answers));
-        let low = json!({"a": {"choice": "safe", "confidence": 0.1}});
+        // below the calibrated pre_tool_risk tau (0.025)
+        let low = json!({"a": {"choice": "safe", "confidence": 0.01}});
         assert_eq!("uncertain", band("pre_tool_risk", &low));
         let ok = json!({"a": {"choice": "safe", "confidence": 0.9}});
         assert_eq!("pass", band("pre_tool_risk", &ok));
@@ -2712,12 +2716,12 @@ mod tests {
 
     #[test]
     fn surface_tau_lattice_and_overrides() {
-        // Defaults from lattice
-        assert!((surface_tau("pre_tool_risk") - 0.65).abs() < 1e-4);
-        assert!((surface_tau("router") - 0.82).abs() < 1e-4);
-        assert!((surface_tau("completion_check") - 0.75).abs() < 1e-4);
-        assert!((surface_tau("council_prescreen") - 0.70).abs() < 1e-4);
-        assert!((surface_tau("unknown_surface") - 0.20).abs() < 1e-4);
+        // Calibrated lattice (compressed typed-decisions confidence range)
+        assert!((surface_tau("pre_tool_risk") - 0.025).abs() < 1e-4);
+        assert!((surface_tau("router") - 0.47).abs() < 1e-4);
+        assert!((surface_tau("completion_check") - 0.10).abs() < 1e-4);
+        assert!((surface_tau("council_prescreen") - 0.025).abs() < 1e-4);
+        assert!((surface_tau("unknown_surface") - 0.05).abs() < 1e-4);
 
         // Global override
         unsafe {

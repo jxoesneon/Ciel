@@ -11,11 +11,21 @@
 # tools: optional list of tool-name regexes (re.search, IGNORECASE); rule applies
 #        if any matches. Default: all tools.
 schema: 1
+# Calibrated against the typed-decisions checkpoint (compressed confidence
+# range ~0.0001-0.16): tau is the confidence floor above which an answer is
+# trusted instead of 'uncertain'. Floors sit above every observed wrong-
+# direction confidence in the Jev-alignment corpus and the September
+# benchmark per-case data. See risk/system1_calibration.json.
 system1_thresholds:
-  pre_tool_risk: 0.65
-  router: 0.82
-  completion_check: 0.75
-  council_prescreen: 0.70
+  pre_tool_risk: 0.025
+  router: 0.47
+  router_selection: 0.33
+  completion_check: 0.10
+  council_prescreen: 0.025
+  context_select: 0.05
+  memory_salience: 0.05
+  context_compaction: 0.02
+  mandate_canary: 0.15
 rules:
   - id: fork_bomb
     tier: hard
