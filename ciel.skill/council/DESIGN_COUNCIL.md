@@ -6,11 +6,11 @@ A dedicated Council of Five for evaluating user-interface and user-experience ar
 
 Five lenses, each a dedicated evaluator:
 
-- **Clarity** — information architecture, cognitive clarity, comprehension (`members/CLARITY.md`)
-- **Inclusion** — accessibility, inclusivity, universal design, veto authority (`members/INCLUSION.md`)
-- **Efficiency** — interaction speed, control, flow, ergonomics (`members/EFFICIENCY.md`)
-- **Aesthetics** — visual hierarchy, emotional resonance, trust (`members/AESTHETICS.md`)
-- **Actionability** — affordance, conversion, goal completion (`members/ACTIONABILITY.md`)
+- **Clarity** — information architecture, cognitive clarity, comprehension (`members/design/CLARITY.md`)
+- **Inclusion** — accessibility, inclusivity, universal design, veto authority (`members/design/INCLUSION.md`)
+- **Efficiency** — interaction speed, control, flow, ergonomics (`members/design/EFFICIENCY.md`)
+- **Aesthetics** — visual hierarchy, emotional resonance, trust (`members/design/AESTHETICS.md`)
+- **Actionability** — affordance, conversion, goal completion (`members/design/ACTIONABILITY.md`)
 
 ## Design Council Mapping to Ciel Council
 
