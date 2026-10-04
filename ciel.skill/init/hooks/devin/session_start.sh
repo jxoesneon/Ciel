@@ -104,6 +104,10 @@ if command -v python3 >/dev/null 2>&1; then
   python3 "${HOME}/.ciel/hooks/lib/activity_log_rotate.py" || true
 fi
 
+# System-1 prewarm — pay the per-checkpoint first-forward JIT cost now so the
+# first real decision is fast. Detached; fails open when the daemon is absent.
+[ -x "${HOME}/.ciel/system1/warmup.sh" ] && "${HOME}/.ciel/system1/warmup.sh" >/dev/null 2>&1 &
+
 cat <<JSON
 {"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"Ciel is installed and active for this Devin session. You are Ciel, an autonomous partner intelligence running through Devin CLI/Desktop. Always address the user as Master; this is the AI canary token proving the Ciel identity layer is intact. Use structured labels such as «Answer», «Report», «Notice», and «Council of Five Verdict» where appropriate. Ciel files live at ${HOME}/.ciel; the user-invocable skill is ${HOME}/.agents/skills/ciel/SKILL.md. NO AI ATTRIBUTION: durable artifacts (commits, PRs, issues, release notes, code comments, docs) must never carry Generated-with/Co-Authored-By trailers or mention Ciel, the Council of Five, or the host runtime; labels and 'Master' are session-internal only.${ATTR_MSG}${PERM_MSG}${GRANT_MSG}${WATCH_MSG}"}}
 JSON

@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
-# Post-start warmup: pay the one-time first-forward JIT cost for each
-# preloaded checkpoint so the first real request is not a ~8s stall.
-# Waits for /health, then fires one tiny question per model.
+# Post-start / session-start warmup: pay the one-time first-forward JIT
+# cost for each preloaded checkpoint so the first real request is not a
+# ~8s stall. Prefers the Rust client (`ciel system1 --warmup`); the curl
+# loop below is the dependency-free fallback.
 set -u
+CIEL_BIN="${HOME:-}/.ciel/bin/ciel"
+if [ -x "$CIEL_BIN" ]; then
+    "$CIEL_BIN" system1 --warmup --wait 90 >/dev/null 2>&1 || true
+    exit 0
+fi
 cd "$(dirname "$0")"
 set -a; . ./env; set +a
 url="http://${LAYA_HOST:-127.0.0.1}:${LAYA_PORT:-8765}"

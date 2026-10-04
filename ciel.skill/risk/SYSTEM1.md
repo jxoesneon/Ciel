@@ -228,9 +228,27 @@ CIEL_SYSTEM1_MODEL=typed-decisions    # pin the calibrated checkpoint for all as
 
 `~/.ciel/system1/serve.sh` sources `env` and execs `venv/bin/laya-serve`
 (template: `init/system1/serve.sh`, env template: `init/system1/env.example`).
-`init/system1/warmup.sh` + the unit's `ExecStartPost` pay the one-time
-first-forward JIT cost (~8s on low-core CPU) per preloaded checkpoint so the
-first real request is not a stall.
+
+**Prewarm.** The one-time first-forward JIT cost (~8s per checkpoint on
+low-core CPU) is paid at two triggers so the first real request is never a
+stall:
+
+- service restart — detached `ExecStartPost` runs `warmup.sh`
+- session start — `ciel session-start` spawns a detached
+  `ciel system1 --warmup`; the shell fallback hooks exec `warmup.sh`
+  instead. Both fail open and never block session start.
+
+`warmup.sh` prefers the Rust client (`ciel system1 --warmup`, which reads
+`LAYA_MODELS` and retries one tiny question per checkpoint until the
+deadline); a curl loop is the dependency-free fallback.
+
+**Device selection.** `LAYA_DEVICE` unset auto-detects cuda → mps → xpu →
+cpu with silent per-checkpoint GPU→CPU fallback — leave it unset unless
+pinning a box. The laya SDK ships `torch.compile`, ONNX, and TileLang+CUDA
+backends (`backend="compile"|"onnx"|"tilelang"`), but `laya-serve` does not
+expose them — it always instantiates the PyTorch `Router`. Using those
+backends would need a custom serve shim (a heavier trade: new runtime
+deps, exported artifacts, behavioral-parity burden).
 
 Two supply-chain layers, both recommended: `requirements-laya.txt`
 (`--require-hashes`, package level) and `LAYA_REVISION` +

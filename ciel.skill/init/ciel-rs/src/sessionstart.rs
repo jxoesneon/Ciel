@@ -56,6 +56,25 @@ fn grant_note(ciel: &Path) -> &'static str {
     }
 }
 
+/// Fire-and-forget `ciel system1 --warmup`: pays the per-checkpoint
+/// first-forward JIT cost so the first real System-1 decision in this
+/// session is not a multi-second stall. Detached, bounded internally, and
+/// skipped when System-1 is disabled — a missing daemon must never block
+/// or fail a session start.
+fn spawn_system1_warmup() {
+    if crate::system1::disabled() {
+        return;
+    }
+    if let Ok(exe) = std::env::current_exe() {
+        let _ = std::process::Command::new(exe)
+            .args(["system1", "--warmup"])
+            .stdin(std::process::Stdio::null())
+            .stdout(std::process::Stdio::null())
+            .stderr(std::process::Stdio::null())
+            .spawn();
+    }
+}
+
 fn watchdog_note(home: &Path, ciel: &Path) -> String {
     // The .sh wrapped the Python check in `timeout 4` — bound the in-process
     // call the same way: a pathological transcript sweep cannot stall the
@@ -98,6 +117,7 @@ pub fn main_(runtime: &str) -> i32 {
 
     if runtime == "antigravity" {
         let _ = rotate::rotate(&ciel, &time::OffsetDateTime::now_utc());
+        spawn_system1_warmup();
         let msg = AGY_CANARY.replace("{HOME}", &home.to_string_lossy());
         // The fallback is a compact shell heredoc with raw UTF-8 — match it
         // byte-for-byte via serde_json Display (compact, unescaped «»).
@@ -135,6 +155,7 @@ pub fn main_(runtime: &str) -> i32 {
     let grant_msg = grant_note(&ciel);
     let watch_msg = watchdog_note(&home, &ciel);
     let _ = rotate::rotate(&ciel, &time::OffsetDateTime::now_utc());
+    spawn_system1_warmup();
 
     let msg = DEVIN_CANARY.replace("{HOME}", &home.to_string_lossy());
     let _ = writeln!(

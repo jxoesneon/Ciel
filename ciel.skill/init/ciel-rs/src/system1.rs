@@ -438,6 +438,32 @@ fn model() -> String {
     env_file_value(&["CIEL_SYSTEM1_MODEL", "LAYA_MODEL"])
 }
 
+/// Checkpoints to prewarm — the serve preload list (LAYA_MODELS); falls
+/// back to the single routed model, then "english", so a bare install
+/// still warms its working checkpoint.
+fn warmup_models() -> Vec<String> {
+    let raw = std::env::var("LAYA_MODELS")
+        .ok()
+        .filter(|s| !s.trim().is_empty())
+        .unwrap_or_else(|| env_file_value(&["LAYA_MODELS"]));
+    let mut out: Vec<String> = raw
+        .split(',')
+        .map(str::trim)
+        .filter(|s| !s.is_empty())
+        .map(str::to_string)
+        .collect();
+    if out.is_empty() {
+        let m = model();
+        if !m.is_empty() {
+            out.push(m);
+        }
+    }
+    if out.is_empty() {
+        out.push("english".into());
+    }
+    out
+}
+
 // -------------------------------------------------------------- HTTP layer
 
 fn find_header_split(bytes: &[u8]) -> Option<(usize, usize)> {
@@ -705,6 +731,82 @@ pub fn ask(state: &Value, questions: &Value, timeout_s: f64) -> Option<Value> {
         .filter(|v| !(v.is_null() || v == &json!("") || v == &json!(false) || v == &json!(0)));
     let model = routing_model.or_else(|| data.get("model").cloned());
     Some(json!({"answers": answers, "model": model.unwrap_or(Value::Null)}))
+}
+
+/// Server-side cap on states per batch request (laya-serve 0.3.22+).
+const BATCH_CHUNK: usize = 64;
+
+/// Mirror of `ask_batch` — one round-trip per 64 states instead of one ask
+/// per state. Positional `{answers, model}` results (None per malformed
+/// item); None on any request failure. Fail-open like `ask()`.
+#[allow(dead_code)]
+pub fn ask_batch(
+    states: &[Value],
+    questions: &Value,
+    timeout_s: f64,
+) -> Option<Vec<Option<Value>>> {
+    if disabled() || states.is_empty() {
+        return None;
+    }
+    let mut out = Vec::with_capacity(states.len());
+    for chunk in states.chunks(BATCH_CHUNK) {
+        out.extend(ask_batch_chunk(chunk, questions, timeout_s)?);
+    }
+    Some(out)
+}
+
+fn ask_batch_chunk(
+    states: &[Value],
+    questions: &Value,
+    timeout_s: f64,
+) -> Option<Vec<Option<Value>>> {
+    let redact = remote();
+    let states_v: Vec<Value> = states
+        .iter()
+        .map(|s| {
+            let mut v = s.clone();
+            if redact {
+                redact_value(&mut v);
+            }
+            v
+        })
+        .collect();
+    let mut body = json!({"states": states_v, "questions": questions});
+    let m = model();
+    if !m.is_empty() {
+        body["model"] = json!(m);
+    }
+    let resp = http_post(
+        &format!("{}/batch", endpoint()),
+        body.to_string().as_bytes(),
+        &key(),
+        Duration::from_secs_f64(timeout_s.max(0.05)),
+    )?;
+    let data: Value = serde_json::from_str(&resp).ok()?;
+    let results = data.get("results")?.as_array()?;
+    Some(
+        results
+            .iter()
+            .map(|item| {
+                let answers = item.get("answers")?;
+                if !answers.is_object() {
+                    return None;
+                }
+                let routing_model = item
+                    .get("routing")
+                    .and_then(|r| r.get("model"))
+                    .cloned()
+                    .filter(|v| {
+                        !(v.is_null() || v == &json!("") || v == &json!(false) || v == &json!(0))
+                    });
+                let model = routing_model.or_else(|| item.get("model").cloned());
+                Some(json!({
+                    "answers": answers,
+                    "model": model.unwrap_or(Value::Null)
+                }))
+            })
+            .collect(),
+    )
 }
 
 // The library-only helper surfaces (`ask_choice`, `route_choice`,
@@ -1467,9 +1569,47 @@ fn decide_main(surface_override: Option<&str>) -> i32 {
     0
 }
 
-/// `ciel system1 [--surface <name>] --ask | --decide`.
+/// `ciel system1 --warmup [--wait SECS]` — pay the per-checkpoint
+/// first-forward JIT cost so the first real decision in a session is not a
+/// multi-second stall. The warmup POST doubles as the readiness probe:
+/// retry per checkpoint until the deadline (server preload can outlast any
+/// fixed wait). Always exits 0 — a missing daemon must never block a
+/// session start. Sequential by design: torch inference serialises on the
+/// GIL server-side, so parallel warm requests only queue.
+fn warmup_main(wait_s: u64) -> i32 {
+    if disabled() {
+        return 0;
+    }
+    let ep = endpoint();
+    let k = key();
+    let deadline = Instant::now() + Duration::from_secs(wait_s.max(1));
+    for m in warmup_models() {
+        let body = json!({
+            "state": {"warmup": "true"},
+            "questions": {"w": {"type": "choice", "instructions": "ok?",
+                                "criteria": {"yes": "y", "no": "n"}}},
+            "model": m,
+        });
+        let payload = body.to_string();
+        loop {
+            // Generous per-attempt ceiling — a cold checkpoint's first
+            // forward can take ~10s on CPU-only hosts.
+            if http_post(&ep, payload.as_bytes(), &k, Duration::from_secs(60)).is_some() {
+                break;
+            }
+            if Instant::now() >= deadline {
+                return 0;
+            }
+            std::thread::sleep(Duration::from_millis(750));
+        }
+    }
+    0
+}
+
+/// `ciel system1 [--surface <name>] --ask | --decide | --warmup [--wait N]`.
 pub fn main_(args: &[String]) -> i32 {
     let mut surface_override = None;
+    let mut wait_s = 60u64;
     let mut i = 0;
     while i < args.len() {
         if args[i] == "--surface" && i + 1 < args.len() {
@@ -1477,9 +1617,17 @@ pub fn main_(args: &[String]) -> i32 {
             i += 2;
             continue;
         }
+        if args[i] == "--wait" && i + 1 < args.len() {
+            wait_s = args[i + 1].parse().unwrap_or(60);
+            i += 2;
+            continue;
+        }
         i += 1;
     }
 
+    if args.iter().any(|a| a == "--warmup") {
+        return warmup_main(wait_s);
+    }
     if args.iter().any(|a| a == "--ask") {
         return ask_main(surface_override);
     }
@@ -1487,8 +1635,8 @@ pub fn main_(args: &[String]) -> i32 {
         return decide_main(surface_override);
     }
     eprintln!(
-        "usage: ciel system1 [--surface <name>] --ask | --decide  (reads JSON payload on stdin; \
-         --decide prints the verdict)"
+        "usage: ciel system1 [--surface <name>] --ask | --decide | --warmup [--wait N]  \
+         (reads JSON payload on stdin; --decide prints the verdict)"
     );
     2
 }
@@ -1496,6 +1644,100 @@ pub fn main_(args: &[String]) -> i32 {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn warmup_models_env_and_fallbacks() {
+        std::env::set_var("LAYA_MODELS", " english , typed-decisions ");
+        assert_eq!(warmup_models(), vec!["english", "typed-decisions"]);
+        std::env::remove_var("LAYA_MODELS");
+        // With LAYA_MODELS unset the chain falls through the env file, then
+        // CIEL_SYSTEM1_MODEL, then "english" — all sources are host-config
+        // dependent, so only non-emptiness is deterministic here.
+        assert!(!warmup_models().is_empty());
+    }
+
+    #[test]
+    fn warmup_disabled_exits_zero() {
+        std::env::set_var("CIEL_SYSTEM1_DISABLED", "1");
+        assert_eq!(0, warmup_main(1));
+        std::env::remove_var("CIEL_SYSTEM1_DISABLED");
+    }
+
+    #[test]
+    fn ask_batch_mock_roundtrip_and_chunking() {
+        let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        let port = listener.local_addr().unwrap().port();
+        // 70 states -> two chunks: 64 + 6. Serve both connections.
+        let handle = std::thread::spawn(move || {
+            for _ in 0..2 {
+                let (mut stream, _) = listener.accept().unwrap();
+                // Read the whole request — the body can arrive split across
+                // TCP segments, so a single read() is not enough.
+                let mut buf = [0u8; 8192];
+                let mut raw: Vec<u8> = Vec::new();
+                let want_len = loop {
+                    let n = stream.read(&mut buf).unwrap();
+                    raw.extend_from_slice(&buf[..n]);
+                    if let Some((hend, bstart)) = find_header_split(&raw) {
+                        let headers = String::from_utf8_lossy(&raw[..hend]);
+                        let clen: usize = headers
+                            .lines()
+                            .find_map(|l| {
+                                l.to_ascii_lowercase()
+                                    .strip_prefix("content-length:")
+                                    .and_then(|v| v.trim().parse().ok())
+                            })
+                            .unwrap_or(0);
+                        if raw.len() - bstart >= clen {
+                            break clen;
+                        }
+                    }
+                    if n == 0 {
+                        break 0;
+                    }
+                };
+                let _ = want_len;
+                let req = String::from_utf8_lossy(&raw).to_string();
+                assert!(req.contains("/v1/systemone/batch"));
+                let count = if req.contains("\"i\":63}") { 64 } else { 6 };
+                let items: Vec<String> = (0..count)
+                    .map(|i| {
+                        format!(
+                            "{{\"answers\":{{\"a\":{{\"choice\":\"yes\",\"confidence\":0.9}}}},\
+                             \"routing\":{{\"model\":\"m{i}\"}}}}"
+                        )
+                    })
+                    .collect();
+                let body = format!("{{\"results\":[{}]}}", items.join(","));
+                let resp = format!(
+                    "HTTP/1.1 200 OK\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{}",
+                    body.len(),
+                    body
+                );
+                let _ = stream.write_all(resp.as_bytes());
+            }
+        });
+        std::env::set_var("CIEL_SYSTEM1_URL", format!("http://127.0.0.1:{port}"));
+        let states: Vec<Value> = (0..70).map(|i| json!({"i": i})).collect();
+        let questions = json!({"a": {"type": "choice", "criteria": {"yes": "y", "no": "n"}}});
+        let out = ask_batch(&states, &questions, 5.0).expect("batch result");
+        std::env::remove_var("CIEL_SYSTEM1_URL");
+        handle.join().unwrap();
+        assert_eq!(out.len(), 70);
+        assert_eq!(
+            out[63].as_ref().unwrap()["model"],
+            json!("m63"),
+            "positional alignment across the chunk boundary"
+        );
+    }
+
+    #[test]
+    fn ask_batch_empty_and_disabled() {
+        assert!(ask_batch(&[], &json!({}), 1.0).is_none());
+        std::env::set_var("CIEL_SYSTEM1_DISABLED", "1");
+        assert!(ask_batch(&[json!({"i": 1})], &json!({}), 1.0).is_none());
+        std::env::remove_var("CIEL_SYSTEM1_DISABLED");
+    }
 
     #[test]
     fn canonical_dumps_matches_python() {
