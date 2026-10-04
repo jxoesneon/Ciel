@@ -355,10 +355,15 @@ pub fn mode() -> String {
 }
 
 fn key() -> String {
-    std::env::var("CIEL_SYSTEM1_KEY")
-        .ok()
-        .filter(|s| !s.trim().is_empty())
-        .unwrap_or_else(|| env_file_value(&["CIEL_SYSTEM1_KEY", "LAYA_API_KEY"]))
+    if let Ok(k) = std::env::var("CIEL_SYSTEM1_KEY") {
+        if !k.trim().is_empty() {
+            return k;
+        }
+    }
+    if hosted() {
+        return env_file_value(&["CIEL_SYSTEM1_KEY", "JEV_API_KEY", "LAYA_API_KEY"]);
+    }
+    env_file_value(&["CIEL_SYSTEM1_KEY", "LAYA_API_KEY"])
 }
 
 fn url() -> String {
@@ -384,6 +389,36 @@ fn url() -> String {
 
 const HOSTED_API_HOSTS: [&str; 2] = ["jev-agent.com", "www.jev-agent.com"];
 
+/// Hosted Jev API families — the official TypeSafe API (api.typesafe.ai) and
+/// the unofficial jev-agent.com proxy. These require a valid Jev model id
+/// and a Jev API key; local checkpoint names and LAYA_API_KEY are rejected.
+const HOSTED_MODEL_HOSTS: [&str; 5] = [
+    "jev-agent.com",
+    "www.jev-agent.com",
+    "api.typesafe.ai",
+    "typesafe.ai",
+    "www.typesafe.ai",
+];
+/// Verified against GET /v1/models on api.typesafe.ai — valid ids:
+/// jev-latest, jev-preview. The API 400s on unknown models and 422s when the
+/// field is absent, so a hosted ask must always send a Jev model id.
+const DEFAULT_HOSTED_MODEL: &str = "jev-latest";
+
+fn host() -> String {
+    let base = url();
+    let rest = base.split("://").nth(1).unwrap_or(base.as_str());
+    rest.split('/')
+        .next()
+        .unwrap_or("")
+        .rsplit('@')
+        .next()
+        .unwrap_or("")
+        .split(':')
+        .next()
+        .unwrap_or("")
+        .to_ascii_lowercase()
+}
+
 /// Hosted Jev mounts the Jev API under /api/v1; local laya-serve and the OSS
 /// backends serve /v1 directly. CIEL_SYSTEM1_URL is a base URL — resolve the
 /// full endpoint once here so every caller posts to the right path.
@@ -393,42 +428,34 @@ fn endpoint() -> String {
         return base;
     }
     let rest = base.split("://").nth(1).unwrap_or(base.as_str());
-    let mut it = rest.splitn(2, '/');
-    let host = it
-        .next()
-        .unwrap_or("")
-        .rsplit('@')
-        .next()
-        .unwrap_or("")
-        .split(':')
-        .next()
-        .unwrap_or("")
-        .to_ascii_lowercase();
-    let path = it.next().unwrap_or("");
-    if HOSTED_API_HOSTS.contains(&host.as_str()) && path.is_empty() {
+    let path = rest.split_once('/').map(|x| x.1).unwrap_or("");
+    if HOSTED_API_HOSTS.contains(&host().as_str()) && path.is_empty() {
         return format!("{base}/api/v1/systemone");
     }
     format!("{base}/v1/systemone")
 }
 
 fn remote() -> bool {
-    let base = url();
-    let rest = base.split("://").nth(1).unwrap_or(base.as_str());
-    let host = rest
-        .split('/')
-        .next()
-        .unwrap_or("")
-        .rsplit('@')
-        .next()
-        .unwrap_or("")
-        .split(':')
-        .next()
-        .unwrap_or("")
-        .to_ascii_lowercase();
-    !matches!(host.as_str(), "127.0.0.1" | "localhost" | "::1" | "[::1]")
+    !matches!(host().as_str(), "127.0.0.1" | "localhost" | "::1" | "[::1]")
+}
+
+fn hosted() -> bool {
+    HOSTED_MODEL_HOSTS.contains(&host().as_str())
 }
 
 fn model() -> String {
+    if hosted() {
+        if let Ok(m) = std::env::var("CIEL_SYSTEM1_HOSTED_MODEL") {
+            if !m.trim().is_empty() {
+                return m;
+            }
+        }
+        let m = env_file_value(&["CIEL_SYSTEM1_HOSTED_MODEL"]);
+        if !m.is_empty() {
+            return m;
+        }
+        return DEFAULT_HOSTED_MODEL.into();
+    }
     let direct = std::env::var("CIEL_SYSTEM1_MODEL")
         .ok()
         .filter(|s| !s.trim().is_empty());
@@ -739,6 +766,10 @@ const BATCH_CHUNK: usize = 64;
 /// Mirror of `ask_batch` — one round-trip per 64 states instead of one ask
 /// per state. Positional `{answers, model}` results (None per malformed
 /// item); None on any request failure. Fail-open like `ask()`.
+///
+/// Hosted Jev has no `/batch` route (404 verified on api.typesafe.ai) —
+/// hosted calls serialize through `ask()` instead. Each state is one billed
+/// request, so hosted callers should keep candidate pools small.
 #[allow(dead_code)]
 pub fn ask_batch(
     states: &[Value],
@@ -747,6 +778,14 @@ pub fn ask_batch(
 ) -> Option<Vec<Option<Value>>> {
     if disabled() || states.is_empty() {
         return None;
+    }
+    if hosted() {
+        return Some(
+            states
+                .iter()
+                .map(|s| ask(s, questions, timeout_s))
+                .collect(),
+        );
     }
     let mut out = Vec::with_capacity(states.len());
     for chunk in states.chunks(BATCH_CHUNK) {
@@ -1807,9 +1846,53 @@ mod tests {
                 "http://127.0.0.1:49999/v1/systemone",
                 "http://127.0.0.1:49999/v1/systemone",
             ),
+            // official TypeSafe API serves /v1 directly (verified live)
+            (
+                "https://api.typesafe.ai",
+                "https://api.typesafe.ai/v1/systemone",
+            ),
+            (
+                "https://api.typesafe.ai/v1/systemone",
+                "https://api.typesafe.ai/v1/systemone",
+            ),
         ] {
             std::env::set_var("CIEL_SYSTEM1_URL", base);
             assert_eq!(want, endpoint(), "{base}");
+        }
+        std::env::remove_var("CIEL_SYSTEM1_URL");
+    }
+
+    #[test]
+    fn hosted_model_resolution() {
+        // Hosted Jev requires a valid Jev model id — never a local
+        // checkpoint name. CIEL_SYSTEM1_HOSTED_MODEL overrides;
+        // jev-latest is the default (verified via GET /v1/models).
+        std::env::set_var("CIEL_SYSTEM1_URL", "https://api.typesafe.ai");
+        std::env::set_var("CIEL_SYSTEM1_MODEL", "typed-decisions");
+        std::env::remove_var("CIEL_SYSTEM1_HOSTED_MODEL");
+        assert_eq!("jev-latest", model());
+        std::env::set_var("CIEL_SYSTEM1_HOSTED_MODEL", "jev-preview");
+        assert_eq!("jev-preview", model());
+        std::env::remove_var("CIEL_SYSTEM1_HOSTED_MODEL");
+        std::env::remove_var("CIEL_SYSTEM1_URL");
+        std::env::set_var("CIEL_SYSTEM1_URL", "http://127.0.0.1:8765");
+        assert_eq!("typed-decisions", model());
+        std::env::remove_var("CIEL_SYSTEM1_URL");
+        std::env::remove_var("CIEL_SYSTEM1_MODEL");
+    }
+
+    #[test]
+    fn hosted_flag_matches_model_hosts() {
+        for (base, want) in [
+            ("https://api.typesafe.ai", true),
+            ("https://jev-agent.com", true),
+            ("https://typesafe.ai", true),
+            ("http://127.0.0.1:8765", false),
+            ("https://autojev.ai", false),
+            ("https://lan-laya.internal:8765", false),
+        ] {
+            std::env::set_var("CIEL_SYSTEM1_URL", base);
+            assert_eq!(want, hosted(), "{base}");
         }
         std::env::remove_var("CIEL_SYSTEM1_URL");
     }

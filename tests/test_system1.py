@@ -157,6 +157,42 @@ class TestEndpointResolution(System1TestCase):
                     os.environ, {"CIEL_SYSTEM1_URL": u}):
                 self.assertEqual(want, system1._remote(), u)
 
+    def test_official_typesafe_api_gets_v1(self):
+        for u in ("https://api.typesafe.ai", "https://typesafe.ai"):
+            with unittest.mock.patch.dict(
+                    os.environ, {"CIEL_SYSTEM1_URL": u}):
+                self.assertEqual(u + "/v1/systemone",
+                                 system1._endpoint(), u)
+
+    def test_hosted_detection(self):
+        for u, want in (
+                ("https://api.typesafe.ai", True),
+                ("https://jev-agent.com", True),
+                ("https://typesafe.ai", True),
+                ("https://autojev.ai", False),
+                ("http://127.0.0.1:8765", False),
+                ("https://lan-laya.internal:8765", False)):
+            with unittest.mock.patch.dict(
+                    os.environ, {"CIEL_SYSTEM1_URL": u}):
+                self.assertEqual(want, system1._hosted(), u)
+
+    def test_hosted_model_never_local_checkpoint(self):
+        # api.typesafe.ai 400s on unknown models and 422s when absent —
+        # a hosted ask must send a Jev model id, never "typed-decisions".
+        with unittest.mock.patch.dict(os.environ, {
+                "CIEL_SYSTEM1_URL": "https://api.typesafe.ai",
+                "CIEL_SYSTEM1_MODEL": "typed-decisions"}):
+            os.environ.pop("CIEL_SYSTEM1_HOSTED_MODEL", None)
+            self.assertEqual("jev-latest", system1._model())
+        with unittest.mock.patch.dict(os.environ, {
+                "CIEL_SYSTEM1_URL": "https://api.typesafe.ai",
+                "CIEL_SYSTEM1_HOSTED_MODEL": "jev-preview"}):
+            self.assertEqual("jev-preview", system1._model())
+        with unittest.mock.patch.dict(os.environ, {
+                "CIEL_SYSTEM1_URL": "http://127.0.0.1:8765",
+                "CIEL_SYSTEM1_MODEL": "typed-decisions"}):
+            self.assertEqual("typed-decisions", system1._model())
+
     def test_remote_ask_redacts_state_on_the_wire(self):
         bodies = []
         srv = _serve({"answers": {"risk": {"choice": "safe",

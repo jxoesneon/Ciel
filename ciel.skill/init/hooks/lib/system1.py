@@ -357,8 +357,14 @@ def _env_file_value(*names: str) -> str:
 
 
 def _key() -> str:
-    return (os.environ.get("CIEL_SYSTEM1_KEY")
-            or _env_file_value("CIEL_SYSTEM1_KEY", "LAYA_API_KEY"))
+    explicit = os.environ.get("CIEL_SYSTEM1_KEY", "").strip()
+    if explicit:
+        return explicit
+    if _hosted():
+        return (_env_file_value("CIEL_SYSTEM1_KEY")
+                or _env_file_value("JEV_API_KEY")
+                or _env_file_value("LAYA_API_KEY"))
+    return _env_file_value("CIEL_SYSTEM1_KEY", "LAYA_API_KEY")
 
 
 def _url() -> str:
@@ -370,26 +376,49 @@ def _url() -> str:
 # full endpoint once here so every caller posts to the right path.
 _HOSTED_API_HOSTS = frozenset({"jev-agent.com", "www.jev-agent.com"})
 
+# Hosted Jev API families — the official TypeSafe API (api.typesafe.ai) and
+# the unofficial jev-agent.com proxy. These require a valid Jev model id and
+# a Jev API key; local checkpoint names and LAYA_API_KEY are rejected.
+_HOSTED_MODEL_HOSTS = frozenset({
+    "jev-agent.com", "www.jev-agent.com",
+    "api.typesafe.ai", "typesafe.ai", "www.typesafe.ai",
+})
+# Verified against GET /v1/models on api.typesafe.ai — valid ids:
+# jev-latest, jev-preview. The API 400s on unknown models and 422s when the
+# field is absent, so a hosted ask must always send a Jev model id.
+_DEFAULT_HOSTED_MODEL = "jev-latest"
+
+
+def _host() -> str:
+    rest = _url().split("://", 1)[-1]
+    return (rest.partition("/")[0].rsplit("@", 1)[-1]
+            .split(":", 1)[0].lower())
+
 
 def _endpoint() -> str:
     base = _url()
     if "/v1/systemone" in base:
         return base
     rest = base.split("://", 1)[-1]
-    host, _, path = rest.partition("/")
-    host = host.rsplit("@", 1)[-1].split(":", 1)[0].lower()
-    if host in _HOSTED_API_HOSTS and not path:
+    _, _, path = rest.partition("/")
+    if _host() in _HOSTED_API_HOSTS and not path:
         return f"{base}/api/v1/systemone"
     return f"{base}/v1/systemone"
 
 
 def _remote() -> bool:
-    rest = _url().split("://", 1)[-1]
-    host = rest.partition("/")[0].rsplit("@", 1)[-1].split(":", 1)[0].lower()
-    return host not in {"127.0.0.1", "localhost", "::1", "[::1]"}
+    return _host() not in {"127.0.0.1", "localhost", "::1", "[::1]"}
+
+
+def _hosted() -> bool:
+    return _host() in _HOSTED_MODEL_HOSTS
 
 
 def _model() -> str:
+    if _hosted():
+        return (os.environ.get("CIEL_SYSTEM1_HOSTED_MODEL", "").strip()
+                or _env_file_value("CIEL_SYSTEM1_HOSTED_MODEL")
+                or _DEFAULT_HOSTED_MODEL)
     return (os.environ.get("CIEL_SYSTEM1_MODEL", "").strip()
             or _env_file_value("CIEL_SYSTEM1_MODEL"))
 
@@ -496,9 +525,15 @@ def ask_batch(states: list, questions: dict,
     one round-trip per 64 states (the server cap) instead of one ask per
     state. Returns a positional list of ``{answers, model}`` results (None
     per malformed item), or None on any request failure. Fail-open like
-    ``ask()`` — callers must treat None as "no verdict"."""
+    ``ask()`` — callers must treat None as "no verdict".
+
+    Hosted Jev has no ``/batch`` route (404 verified on api.typesafe.ai) —
+    hosted calls serialize through ``ask()`` instead. Each state is one
+    billed request, so hosted callers should keep candidate pools small."""
     if _disabled() or not states:
         return None
+    if _hosted():
+        return [ask(s, questions, timeout=timeout) for s in states]
     out = []
     for i in range(0, len(states), 64):
         part = _ask_batch_chunk(states[i:i + 64], questions, timeout)

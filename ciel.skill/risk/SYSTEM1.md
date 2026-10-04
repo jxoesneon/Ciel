@@ -32,22 +32,33 @@ Operating modes via `CIEL_SYSTEM1_MODE`:
 
 | Backend | Config |
 | --- | --- |
-| Local laya-serve (default) | `CIEL_SYSTEM1_URL=http://127.0.0.1:8765` |
-| Hosted Jev | `CIEL_SYSTEM1_URL=https://jev-agent.com` + `CIEL_SYSTEM1_KEY=<jv_live_...>` |
+| Local laya-serve (default) | `CIEL_SYSTEM1_URL=http://127.0.0.1:8765` + `LAYA_API_KEY` |
+| Hosted Jev (official) | `CIEL_SYSTEM1_URL=https://api.typesafe.ai` + `JEV_API_KEY=<apikey_...>` |
+| Hosted Jev (unofficial proxy) | `CIEL_SYSTEM1_URL=https://jev-agent.com` + `CIEL_SYSTEM1_KEY=<jv_live_...>` |
 | AutoJev | `CIEL_SYSTEM1_URL=https://autojev.ai` + `CIEL_SYSTEM1_KEY=<key>` |
 
-`CIEL_SYSTEM1_URL` is a base URL: a bare hosted-Jev host resolves to
-`…/api/v1/systemone`; every other base resolves to `…/v1/systemone`, and a
-base that already contains the full path is used verbatim. When the resolved
-endpoint is not loopback, the outbound `state` payload is secret-redacted —
-the same redaction applied to the local `events.jsonl` log.
+`CIEL_SYSTEM1_URL` is a base URL: a bare jev-agent.com host resolves to
+`…/api/v1/systemone`; every other base (including `api.typesafe.ai`)
+resolves to `…/v1/systemone`, and a base that already contains the full
+path is used verbatim. When the resolved endpoint is not loopback, the
+outbound `state` payload is secret-redacted — the same redaction applied
+to the local `events.jsonl` log.
 
 `CIEL_SYSTEM1_KEY` overrides; otherwise the key is read from
-`~/.ciel/system1/env` (`LAYA_API_KEY=` line). `CIEL_SYSTEM1_DISABLED=1`
-turns the tier off entirely. `CIEL_SYSTEM1_MODEL` (env or the same env
-file) pins the request `model` — a laya checkpoint name
-(`english`, `multilingual`, `typed-decisions`) or `jev-latest` on hosted
-Jev.
+`~/.ciel/system1/env` — hosted endpoints prefer `JEV_API_KEY`, local
+`LAYA_API_KEY`. `CIEL_SYSTEM1_DISABLED=1` turns the tier off entirely.
+`CIEL_SYSTEM1_MODEL` (env or the same env file) pins the request `model`
+for local laya checkpoints (`english`, `multilingual`, `typed-decisions`).
+Hosted endpoints ignore it — the Jev API 400s on unknown model ids and
+422s when `model` is absent — and always send `CIEL_SYSTEM1_HOSTED_MODEL`
+(default `jev-latest`; valid ids per `GET /v1/models`: `jev-latest`,
+`jev-preview`).
+
+Hosted Jev exposes no `/batch` route, so `ask_batch()` serializes through
+single asks when the endpoint is hosted — one billed request per state.
+Hosted answers carry a `usage` token block and omit `confidence` on noul
+answers (local laya reports `max(p, 1-p)` there); both shapes expose
+`answers` + `model` identically to callers.
 
 ## Completion Verification Pipeline
 
