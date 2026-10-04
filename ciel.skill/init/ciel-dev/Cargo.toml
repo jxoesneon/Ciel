@@ -1,0 +1,45 @@
+[package]
+name = "ciel-dev"
+version = "1.0.0"
+edition = "2021"
+rust-version = "1.75"
+description = "Ciel dev/maintenance tooling — Rust port of the scripts/*.py harnesses"
+license = "MIT"
+exclude = ["/target"]
+
+[[bin]]
+name = "ciel-dev"
+path = "src/main.rs"
+
+[features]
+default = ["embed"]
+# all-MiniLM-L6-v2 bi-encoder for `embed` and the router_registry shortlist.
+# Pure Rust (candle + tokenizers + safetensors); weights are read from a
+# local snapshot directory only — nothing is downloaded at build or runtime.
+embed = [
+    "dep:candle-core",
+    "dep:candle-nn",
+    "dep:candle-transformers",
+    "dep:tokenizers",
+]
+
+[dependencies]
+serde_json = { version = "1", features = ["preserve_order"] }
+serde_yaml = "0.9"
+regex = "1"
+sha2 = "0.11"
+time = { version = "0.3", features = ["parsing", "formatting", "macros"] }
+wait-timeout = "0.2"
+
+candle-core = { version = "0.11", optional = true }
+candle-nn = { version = "0.11", optional = true }
+candle-transformers = { version = "0.11", optional = true }
+tokenizers = { version = "0.21", optional = true, default-features = false, features = ["onig"] }
+
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"
+
+[profile.release]
+opt-level = 2
+lto = "thin"
+strip = true

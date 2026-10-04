@@ -7,6 +7,8 @@ dist/
 # Rust build output / convenience binaries (get via cargo build or release assets)
 bin/ciel
 ciel.skill/init/ciel-rs/target/
+ciel.skill/init/ciel-dev/target/
+ciel.skill/init/ciel-domain/target/
 
 # OS
 .DS_Store
