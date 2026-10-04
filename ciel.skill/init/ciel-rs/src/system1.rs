@@ -376,6 +376,30 @@ fn url() -> String {
     "http://127.0.0.1:8765".into()
 }
 
+/// Hosted Jev mounts the Jev API under /api/v1; local laya-serve and the OSS
+/// backends serve /v1 directly. CIEL_SYSTEM1_URL is a base URL — resolve the
+/// full endpoint once here so every caller posts to the right path.
+fn endpoint() -> String {
+    let base = url();
+    if base.contains("/v1/systemone") {
+        return base;
+    }
+    let rest = base.split("://").nth(1).unwrap_or(base.as_str());
+    let mut it = rest.splitn(2, '/');
+    let host = it
+        .next()
+        .unwrap_or("")
+        .split(':')
+        .next()
+        .unwrap_or("")
+        .to_ascii_lowercase();
+    let path = it.next().unwrap_or("");
+    if (host == "jev-agent.com" || host == "www.jev-agent.com") && path.is_empty() {
+        return format!("{base}/api/v1/systemone");
+    }
+    format!("{base}/v1/systemone")
+}
+
 fn model() -> String {
     let direct = std::env::var("CIEL_SYSTEM1_MODEL")
         .ok()
@@ -629,7 +653,7 @@ pub fn ask(state: &Value, questions: &Value, timeout_s: f64) -> Option<Value> {
         body["model"] = json!(m);
     }
     let resp = http_post(
-        &format!("{}/v1/systemone", url()),
+        &endpoint(),
         body.to_string().as_bytes(),
         &key(),
         Duration::from_secs_f64(timeout_s.max(0.05)),
@@ -1473,6 +1497,39 @@ mod tests {
         assert!(rec["system1"].is_null());
         let cached = event_record(&p, None, true, 0);
         assert!(cached.get("latency_ms").is_none());
+    }
+
+    #[test]
+    fn endpoint_normalizes_hosted_and_local() {
+        // hosted Jev mounts the API under /api/v1 — a bare host base URL
+        // must gain the /api prefix; local backends serve /v1 directly.
+        for (base, want) in [
+            (
+                "https://jev-agent.com",
+                "https://jev-agent.com/api/v1/systemone",
+            ),
+            (
+                "https://www.jev-agent.com",
+                "https://www.jev-agent.com/api/v1/systemone",
+            ),
+            (
+                "https://jev-agent.com/api",
+                "https://jev-agent.com/api/v1/systemone",
+            ),
+            (
+                "http://127.0.0.1:8765",
+                "http://127.0.0.1:8765/v1/systemone",
+            ),
+            ("https://autojev.ai", "https://autojev.ai/v1/systemone"),
+            (
+                "http://127.0.0.1:49999/v1/systemone",
+                "http://127.0.0.1:49999/v1/systemone",
+            ),
+        ] {
+            std::env::set_var("CIEL_SYSTEM1_URL", base);
+            assert_eq!(want, endpoint(), "{base}");
+        }
+        std::env::remove_var("CIEL_SYSTEM1_URL");
     }
 
     #[test]

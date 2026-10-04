@@ -98,6 +98,43 @@ class TestAsk(System1TestCase):
         self.assertIsNone(system1.ask({"a": 1}, QUESTIONS))
 
 
+class TestEndpointResolution(System1TestCase):
+    """CIEL_SYSTEM1_URL is a base URL — hosted Jev mounts under /api/v1,
+    local laya-serve under /v1, and a full endpoint passes through."""
+
+    def test_hosted_jev_gets_api_prefix(self):
+        for u, want in (
+                ("https://jev-agent.com",
+                 "https://jev-agent.com/api/v1/systemone"),
+                ("https://jev-agent.com/",
+                 "https://jev-agent.com/api/v1/systemone"),
+                ("https://www.jev-agent.com",
+                 "https://www.jev-agent.com/api/v1/systemone"),
+                ("https://jev-agent.com:443",
+                 "https://jev-agent.com:443/api/v1/systemone")):
+            with unittest.mock.patch.dict(
+                    os.environ, {"CIEL_SYSTEM1_URL": u}):
+                self.assertEqual(want, system1._endpoint(), u)
+
+    def test_local_and_oss_backends_get_v1(self):
+        for u in ("http://127.0.0.1:8765", "http://localhost:8765",
+                  "https://autojev.ai", "http://192.168.1.10:8765"):
+            with unittest.mock.patch.dict(
+                    os.environ, {"CIEL_SYSTEM1_URL": u}):
+                self.assertEqual(u.rstrip("/") + "/v1/systemone",
+                                 system1._endpoint(), u)
+
+    def test_full_endpoint_and_api_base_passthrough(self):
+        for u, want in (
+                ("https://jev-agent.com/api",
+                 "https://jev-agent.com/api/v1/systemone"),
+                ("http://127.0.0.1:8765/v1/systemone",
+                 "http://127.0.0.1:8765/v1/systemone")):
+            with unittest.mock.patch.dict(
+                    os.environ, {"CIEL_SYSTEM1_URL": u}):
+                self.assertEqual(want, system1._endpoint(), u)
+
+
 class TestAskMain(System1TestCase):
     """End-to-end --ask subprocess: cache, events log, marker cleanup."""
 

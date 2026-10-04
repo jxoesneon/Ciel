@@ -277,6 +277,24 @@ def _url() -> str:
     return os.environ.get("CIEL_SYSTEM1_URL", "http://127.0.0.1:8765").rstrip("/")
 
 
+# Hosted Jev mounts the Jev API under /api/v1; local laya-serve and the OSS
+# backends serve /v1 directly. CIEL_SYSTEM1_URL is a base URL — resolve the
+# full endpoint once here so every caller posts to the right path.
+_HOSTED_API_HOSTS = frozenset({"jev-agent.com", "www.jev-agent.com"})
+
+
+def _endpoint() -> str:
+    base = _url()
+    if "/v1/systemone" in base:
+        return base
+    rest = base.split("://", 1)[-1]
+    host, _, path = rest.partition("/")
+    host = host.split(":", 1)[0].lower()
+    if host in _HOSTED_API_HOSTS and not path:
+        return f"{base}/api/v1/systemone"
+    return f"{base}/v1/systemone"
+
+
 def _model() -> str:
     return (os.environ.get("CIEL_SYSTEM1_MODEL", "").strip()
             or _env_file_value("CIEL_SYSTEM1_MODEL"))
@@ -292,7 +310,7 @@ def ask(state: dict, questions: dict, timeout: float = 0.9) -> dict | None:
     if model:
         body["model"] = model
     req = urllib.request.Request(
-        _url() + "/v1/systemone",
+        _endpoint(),
         data=json.dumps(body).encode(),
         headers={
             "content-type": "application/json",
