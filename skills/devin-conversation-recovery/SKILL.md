@@ -25,11 +25,15 @@ NOT in Hermes's session DB — they live in two SQLite stores on disk:
 
 ## Quick path: use the helper script
 
+Prefer the Rust twin `~/.ciel/bin/ciel-convo` (same arguments); the Python
+`find_devin_convo.py` remains as fallback while the parity soak runs.
+
 ```text
-python ~/.ciel/skills/devin-conversation-recovery/scripts/find_devin_convo.py --list
-python .../find_devin_convo.py "blender-mcp"          # titles + first messages
-python .../find_devin_convo.py "search text" --deep   # grep ALL payloads (slow)
-python .../find_devin_convo.py --extract <uuid> -o /tmp/convo.txt
+ciel-convo --list
+ciel-convo "blender-mcp"          # titles + first messages
+ciel-convo "search text" --deep   # grep ALL payloads (slow)
+ciel-convo --extract <uuid> -o /tmp/convo.txt
+# fallback: python <skill-dir>/scripts/find_devin_convo.py <same args>
 ```
 
 The extract output is plain text (`=== [position] kind` sections): agent thoughts/

@@ -13,6 +13,12 @@ metadata:
 
 The skill provides live Blender MCP viewport bridging, deterministic headless execution harnesses, strict geometric QA gates, automated multi-angle visual inspection, mathematical UV and texel density optimization, 16/32-bit high-to-low baking, procedural geometry node construction, MaterialX/OpenPBR shader graphs, Substance SAT integration, QuadriFlow retopology, seamless Unreal Engine 5 / USD integration, and closed-loop self-repair loops.
 
+## Native Binaries (preferred invocation)
+
+Every orchestrator under `scripts/` has a Rust twin — prefer `~/.ciel/bin/ciel-studio <sub>`; the Python scripts remain as fallback while the parity soak runs. `blender_mcp_addon.py` stays Python (embedded `bpy`); Rust drives it via subprocess.
+
+`blender_mcp_server.py` → `ciel-studio blender-mcp` · `blender_pipeline_executor.py` → `pipeline-exec` · `unreal_engine_bridge.py` → `unreal-bridge` · `high_to_low_baker.py` → `bake` · `collision_hull_generator.py` → `collision` · `geometry_qa_validator.py` → `geometry-qa` · `facs_blendshape_mirror.py` → `facs-mirror` · `generative_3d_adapter.py` → `generative` · `procedural_kit_generator.py` → `kit` · `retopology_quadriflow.py` → `retopo` · `substance_sat_baker.py` → `sat-bake` · `turnaround_qa_renderer.py` → `turnaround` · `udim_pack_analyzer.py` → `udim` · `usd_materialx_bridge.py` → `usd-bridge` · `usd_variant_manager.py` → `usd-variant` · `uv_texel_analyzer.py` → `uv-texel` · `vertex_normal_transfer.py` → `vnt` · `distill_3d_instincts.py` → `distill` · `autonomous_refinement_loop.py` → `refine`
+
 ---
 
 ## 1. The 7-Stage AAA Production Pipeline

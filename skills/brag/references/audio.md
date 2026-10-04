@@ -251,16 +251,20 @@ Beat sync needs a cue source. Three are available — use the richest one the en
 <skill-dir>/assets/music/cues/<track-stem>.music-cues.json
 ```
 
-2. **Any track → extended analysis (richest for custom tracks; needs Python, any Hyperframes version).** For a custom track — or to refresh a bundled one — run `analyze_music_cues.py` on the audio file. It produces the same rich cue JSON/Markdown for any track. Run it via `uv`, which auto-provisions the deps (`librosa`, `numpy`, `scipy`, `soundfile`) from `<skill-dir>/scripts/pyproject.toml` — no manual `pip install` needed:
+2. **Any track → extended analysis (richest for custom tracks).** For a custom track — or to refresh a bundled one — run the cue analyzer on the audio file. It produces the same rich cue JSON/Markdown for any track. **Prefer the Rust twin** `~/.ciel/bin/ciel-audio cues` (no Python or deps needed); the Python `analyze_music_cues.py` remains as fallback — run it via `uv`, which auto-provisions the deps (`librosa`, `numpy`, `scipy`, `soundfile`) from `<skill-dir>/scripts/pyproject.toml` — no manual `pip install` needed:
 
 ```bash
+~/.ciel/bin/ciel-audio cues <track>.mp3 \
+  --output-json <output-dir>/composition/assets/music/cues/<stem>.music-cues.json \
+  --output-md  <output-dir>/composition/assets/music/cues/<stem>.music-cues.md
+# fallback:
 uv run --project <skill-dir>/scripts \
   python <skill-dir>/scripts/analyze_music_cues.py <track>.mp3 \
   --output-json <output-dir>/composition/assets/music/cues/<stem>.music-cues.json \
   --output-md  <output-dir>/composition/assets/music/cues/<stem>.music-cues.md
 ```
 
-This is the fallback when `hyperframes beats` (option 3) is unavailable — e.g. an older pinned Hyperframes. If neither `uv` nor the Python deps are available, use option 3 instead.
+This is the fallback when `hyperframes beats` (option 3) is unavailable — e.g. an older pinned Hyperframes. If neither `ciel-audio`, `uv`, nor the Python deps are available, use option 3 instead.
 
 3. **Any track → `hyperframes beats` (simple, no Python; needs Hyperframes ≥ 0.6.99).** After the music is wired into the composition, run:
 

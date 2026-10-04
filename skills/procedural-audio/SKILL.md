@@ -11,6 +11,12 @@ metadata:
 
 Synthesizes studio-grade sound effects, adaptive music, and spatial acoustic environments purely from code and mathematical DSP. Given a minimalist prompt like `"create the audio for this screen"`, autonomously extracts the scene's visual palette, node hierarchy, physics properties, and narrative context to emit production-ready, zero-dependency procedural audio. Writes audio files to disk (declared `fs` side effect).
 
+## Native Binaries (preferred invocation)
+
+Every tool under `scripts/` has a Rust twin — prefer `~/.ciel/bin/ciel-audio <sub>`; the Python scripts remain as fallback while the parity soak runs.
+
+`scripts/procedural_audio_generator.py` → `ciel-audio synth` · `aaa_audio_generator.py` → `ciel-audio aaa` · `advanced_humanizer.py` → `ciel-audio humanize` · `microtonal_pitch_engine.py` → `ciel-audio microtonal` · `indian_tala_engine.py` → `ciel-audio tala` · `lsystem_schenker_generator.py` → `ciel-audio lsystem` · `neo_riemannian_tonnetz.py` → `ciel-audio tonnetz` · `motif_dna_generator.py` → `ciel-audio motif` · `scene_context_analyzer.py` → `ciel-audio scene` · `audio_manifest_extractor.py` → `ciel-audio manifest` · `audiogram_generator.py` → `ciel-audio audiogram` · hook bodies → `ciel-audio hook-*` (`--help` lists all 18 subcommands)
+
 ## 4-Layer Sound Architecture
 
 - **Layer 1 — Ambient Soundscape**: Sub-bass fundamentals (35–110 Hz), continuous room tones/wind, multi-band colored noise.

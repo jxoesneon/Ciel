@@ -11,6 +11,10 @@ metadata:
 
 Searchable local UI/UX guidance: 79 searchable styles (50 active), 192 product palettes and exact reasoning profiles, 74 font pairings, 119 UX guidelines, 105 curated icons, 17 GSAP presets, 25 chart types, and 22 technology stacks.
 
+## Native Binaries (preferred invocation)
+
+`search.py` has a Rust twin — prefer `~/.ciel/bin/ciel-uiux` with the same arguments (`<query> --domain/-d --stack/-s --design-system --persist ...`); `python3 scripts/search.py` remains as fallback while the parity soak runs. `validate_data.py` → `ciel-uiux validate`.
+
 ## When to Apply
 
 Use this Skill when the task involves **UI structure, visual design decisions, interaction patterns, or user experience quality control**: designing new pages, creating/refactoring UI components, choosing color/typography/spacing/layout systems, reviewing UI for UX/accessibility/consistency, implementing navigation/animation/responsive behavior, or improving perceived quality and usability.
