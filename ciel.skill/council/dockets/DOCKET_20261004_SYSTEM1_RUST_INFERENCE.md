@@ -269,3 +269,38 @@ Authorized now: Phase 1 only — pinned export fetch, fp32 + INT8 artifacts
 for `typed-decisions` + `english`, calibration-state audit, parity-corpus
 scaffolding, and host-measured latency/RSS. Everything else awaits the
 Phase-2 gate evidence and a re-vote.
+
+## Phase-1 measurement record (2026-10-04, host = 2C/4T Haswell, no GPU)
+
+Executed per the phase-scoped verdict. Export tooling: upstream
+`scripts/export_onnx.py` pinned at commit `b09832bd`, file sha256
+`3dc6eac8971358ad5531c7124f2e631ddd4da6890a8df8a6237051e56b4594e2`;
+extras installed hash-pinned (`onnx 1.23.1`, `onnxruntime 1.30.0`,
+`onnxscript 0.7.2` + transitives; Master's revised supply-chain floor:
+≥24 h + no reported issues). Artifacts in `~/.ciel/system1/onnx/` with
+recorded sha256 digests (digests.txt).
+
+| Metric | laya-serve (torch eager, THREADS=2) | fp32 ONNX | INT8 ONNX |
+|---|---|---|---|
+| Warm single decision | ~0.85 s | 0.83 s (default threads); **0.52 s** @ OMP_NUM_THREADS=2 | ~0.42 s |
+| Batch, per state (6 states) | ~0.62 s | ~0.83 s | — |
+| Process RSS | 1.63 GB (2 ckpts resident) | ~1.97 GB (incl. torch import; pure ORT ~1.8 GB est.) | 1.25 GB |
+| Parity vs laya-serve | — | **6/6 identical choices, Δconfidence 0.0000** (choice/noul/score/multi-q) | **conf collapses to 0.0000 — fails parity outright** |
+| Load time | — | 15.6 s | — |
+
+Calibration audit: `rl_agent_config.json` carries `temperature` +
+`temperature_by_options` (choice:11+ clamped 0.1005→0.5 at load — same
+clamp both engines); no `binning_map` deployed, so confidence parity =
+temperature-scaled `answer_confidence` only.
+
+**Phase-2 gate verdict: FAILS.** fp32-ONNX meets ≥1.5× only on the
+single-call path (1.6×) while *regressing* on the batch path that drives
+the context surfaces (0.83 vs 0.62 s/state), and breaches the ≤1.5 GB RSS
+gate (~1.9 GB). INT8 fits RSS and is ~2× but collapses confidence — dead
+on arrival, exactly as the vendor warned. Per the Chairman's judgment the
+decision re-opens between Alt B and status quo: Alt B would buy ~0.33 s
+on single calls but regress batch, keep Python, and solve nothing
+structural — **status quo stands on this host**. The exported artifacts,
+parity evidence (the oracle works), and digest pins are banked for a
+future host where the gate re-evaluates (GPU/vNNI/AVX-512, or a RAM
+budget that admits fp32 residency).
