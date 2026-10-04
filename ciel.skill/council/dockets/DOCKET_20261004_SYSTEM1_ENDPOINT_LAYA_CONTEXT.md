@@ -89,3 +89,52 @@ Runtime-safety constraints (binding on any implementation):
 - Is a new lattice surface (`context_select`) preferred over extending the
   existing risk surfaces' question sets?
 - Coverage target for the new surfaces before publish (per the release gate)?
+
+## Verdict (RUN_20261004_SYSTEM1_LAYA_CONTEXT)
+
+**PASS — weighted 8.0** (self-modification thresholds: ≥7.5 weighted, Safety ≥7,
+≥4/5 at pass_score 6)
+
+| Lens | Stage 1 | Stage 2 | Delta |
+|---|---|---|---|
+| Coherence | 8 | 8 | 0 |
+| Capability | 8 | 8 | 0 |
+| Safety | 8 | 8 | 0 (veto: false) |
+| Efficiency | 8 | 8 | 0 |
+| Evolution | 8 | 8 | 0 |
+
+Pivotal lens: **safety** — its Stage-2 finding that `_redact()` covered only the
+local `events.jsonl` append, never the outbound wire body, produced the most
+consequential binding amendment (implemented in both engines before verdict
+recording).
+
+Stage-2 challenges adjudicated: Capability/Coherence→Efficiency refuted
+`duplicates:router_selection` on the code (a `choice` question yields one argmax
+winner; `context_select` is a batched per-candidate `noul` multi-selector — a
+shape `choice` cannot express). Efficiency→Safety was technically correct on
+specifics (a schemeless `jev-agent.com` does match; a userinfo authority does
+pass the host check) — the userinfo edge was hardened in both engines.
+Evolution→Capability corrected "salience gate is entirely new": `memory_salience`
+was already ratified in ADR_20260923 — the docket executes scheduled work.
+
+Binding amendments: `~/.ciel/council/RUN_20261004_SYSTEM1_LAYA_CONTEXT/final_verdict.json`.
+Headline items: outbound state is secret-redacted whenever the endpoint is
+non-loopback; Option C adopted (RLCD checkpoint deferred to a dedicated
+data-quality docket); a concrete ms latency ceiling is required before
+`context_select` lands on the pre-tool path; `context_select` is confirmed a
+new surface; a `batch_decide()` client with tests precedes any surface
+consumption; laya installs are to be hash-pinned.
+
+## Implementation status (post-verdict)
+
+- Endpoint normalization + `HOSTED_API_HOSTS` const parity, userinfo-authority
+  hardening, and `_remote()`/`remote()` egress redaction: implemented in both
+  engines; `SYSTEM1.md` documents base-URL resolution and remote redaction.
+- laya `0.3.10 → 0.3.26` verified live (`/health` ok; `/v1/systemone` and
+  `/v1/systemone/batch` answered). Exec-bit repair on `~/.ciel/system1` noted.
+- Tests: `tests/test_system1.py` 38/38 incl. wire-level redaction and
+  schemeless/userinfo cases; Rust System-1 suite green (one pre-existing
+  latency flake passes in isolation); fmt/clippy/release build clean.
+- Forward surfaces 1–4 approved for staged implementation under the binding
+  constraints; the `ciel-context` checkpoint is deferred to a dedicated
+  data-quality docket (Option C).
