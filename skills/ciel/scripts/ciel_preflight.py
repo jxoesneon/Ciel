@@ -72,10 +72,39 @@ def _pretool_payload(tool: str, command: str, path: str, runtime: str) -> dict:
                            "file_path": path, "path": path}}
 
 
+def _native_verdict(binary: str, tool: str, command: str, path: str,
+                    runtime: str) -> dict | None:
+    """Run `ciel preflight` — the native normalized-verdict subcommand.
+    Exit 0/2 both carry a verdict JSON on stdout; any other shape means an
+    older binary without the subcommand (unknown-command exit 2 + usage on
+    stderr), so fall through to the pretool path."""
+    try:
+        proc = subprocess.run(
+            [binary, "preflight", "--runtime", runtime],
+            input=json.dumps({"tool": tool, "command": command, "path": path}),
+            capture_output=True, text=True, timeout=30,
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+    if proc.returncode not in (0, 2):
+        return None
+    try:
+        resp = json.loads(proc.stdout.strip())
+    except json.JSONDecodeError:
+        return None
+    if isinstance(resp, dict) and resp.get("decision") in (
+            "allow", "deny", "allow_overridden"):
+        return resp
+    return None
+
+
 def _binary_verdict(binary: str, tool: str, command: str, path: str,
                     runtime: str) -> dict | None:
     """Run `ciel pretool` (the production hook body). Returns a normalized
     verdict or None when the binary path is unusable."""
+    native = _native_verdict(binary, tool, command, path, runtime)
+    if native is not None:
+        return native
     payload = _pretool_payload(tool, command, path, runtime)
     try:
         proc = subprocess.run(

@@ -180,7 +180,9 @@ class TestPreflightBinaryPath(_TmpHome):
         self.assertEqual(0, p.returncode, p.stderr)
         v = json.loads(p.stdout)
         self.assertEqual("allow", v["decision"])
-        self.assertEqual("ciel pretool", v["engine"])
+        # Newer binaries answer via the native `ciel preflight` subcommand
+        # ("ciel rust"); older ones go through `ciel pretool` normalization.
+        self.assertIn(v["engine"], ("ciel pretool", "ciel rust"))
 
     def test_binary_deny(self):
         env = dict(self.env, CIEL_PREFER_BINARY="1")

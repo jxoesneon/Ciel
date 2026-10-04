@@ -133,11 +133,11 @@ High-impact actions, promotions, and skill mutations are triaged across five len
 
 ## Operational Commands and Verification
 
-- **Integrity Verification**: Execute `verify_evidence.py` and `verify_3d_asset.py` to validate workspace status, test suites, and asset integrity.
+- **Integrity Verification**: Execute `ciel verify-evidence` (or `verify_evidence.py` fallback) and `verify_3d_asset.py` to validate workspace status, test suites, and asset integrity.
 
-- **Pre-Flight Check**: Run `ciel_preflight.py` prior to high-risk operations. Contract: stdin `{"tool","command","path"}` (identical to `ciel risk-eval`), stdout verdict JSON, exit `0` allow / `2` deny / `3` unavailable-or-malformed (fail-closed). Binary-first via `ciel pretool`; Python fallback applies `risk_policy.evaluate` + `system1_failsafe` — the same verdict the production hooks emit.
+- **Pre-Flight Check**: Run `ciel preflight` (or `ciel_preflight.py` fallback) prior to high-risk operations. Contract: stdin `{"tool","command","path"}` (identical to `ciel risk-eval`), stdout verdict JSON, exit `0` allow / `2` deny / `3` unavailable-or-malformed (fail-closed). The shim tries `ciel preflight`, then `ciel pretool`, then in-process `risk_policy.evaluate` + `system1_failsafe` — the same verdict the production hooks emit.
 
-- **Post-Run Audit**: Run `ciel_audit.py --event PostToolUse --tool <name> [--error ...]` after operations to record telemetry; emits the hooks' byte-compatible `activity.log` schema via the shared writer.
+- **Post-Run Audit**: Run `ciel audit --event PostToolUse --tool <name> [--error ...]` (or `ciel_audit.py` fallback) after operations to record telemetry; emits the hooks' byte-compatible `activity.log` schema via the shared writer.
 
 ## Platform-Agnostic Invariant
 

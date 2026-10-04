@@ -1,3 +1,4 @@
+mod agentscripts;
 mod attribution;
 mod compilepolicy;
 mod councilverify;
@@ -48,33 +49,33 @@ OPERATOR:\n\
     compile-policy [--check]   policy.yaml → policy.json (byte-exact twin)\n\
     council-verify <run|dir>   council run artifact verification\n\
     system1 --ask|--decide     detached shadow-ask / interactive verdict\n\
+    preflight        stdin {tool,command,path} → normalized verdict (agent gate)\n\
+    audit            activity.log writer — argv/stdin fields → {} (never fails)\n\
+    verify-evidence  completion-gate runner (banner + System-1 verdict)\n\
+    integrity [--home|--write|--json]  git-tracked file sweep vs INTEGRITY.json\n\
+    post-tool / post-invocation / permission-request / session-end / stop\n\
+                       hook bodies — stdin payload → activity.log (+ contract\n\
+                       output where the runtime expects it)\n\
+    setup [--src DIR]  bootstrap a CIEL_HOME (install.sh/setup.py twin)\n\
 \n\
 Fallback contract: on any error or unknown command the binary exits 2 and\n\
 the shell wrappers fall back to the Python implementations.\n";
+
+fn arg_runtime(args: &[String]) -> &str {
+    args.iter()
+        .position(|a| a == "--runtime")
+        .and_then(|i| args.get(i + 1))
+        .map(String::as_str)
+        .unwrap_or("devin")
+}
 
 fn main() -> ExitCode {
     let args: Vec<String> = env::args().skip(1).collect();
     let cmd = args.first().map(String::as_str).unwrap_or("");
     let code = match cmd {
-        "pretool" => {
-            let runtime = args
-                .iter()
-                .position(|a| a == "--runtime")
-                .and_then(|i| args.get(i + 1))
-                .map(String::as_str)
-                .unwrap_or("devin");
-            pretool::main_(runtime)
-        }
+        "pretool" => pretool::main_(arg_runtime(&args)),
         "prompt-submit" => promptsubmit::main_(),
-        "session-start" => {
-            let runtime = args
-                .iter()
-                .position(|a| a == "--runtime")
-                .and_then(|i| args.get(i + 1))
-                .map(String::as_str)
-                .unwrap_or("devin");
-            sessionstart::main_(runtime)
-        }
+        "session-start" => sessionstart::main_(arg_runtime(&args)),
         "watchdog" => watchdog::main_(&args[1..]),
         "store-perms" => perms::main_(),
         "ledger" => ledger::main_(&args[1..]),
@@ -90,6 +91,16 @@ fn main() -> ExitCode {
         "attribution-scan" => attribution::main_(),
         "route-choice" => system1::route_choice_main(),
         "verify-completion" => system1::verify_completion_main(&args[1..]),
+        "preflight" => agentscripts::preflight_main(&args[1..]),
+        "audit" => agentscripts::audit_main(&args[1..]),
+        "verify-evidence" => agentscripts::verify_evidence_main(&args[1..]),
+        "integrity" => agentscripts::integrity_main(&args[1..]),
+        "post-tool" => agentscripts::post_tool_main(arg_runtime(&args[1..])),
+        "post-invocation" => agentscripts::post_invocation_main(),
+        "permission-request" => agentscripts::permission_request_main(),
+        "session-end" => agentscripts::session_end_main(arg_runtime(&args[1..])),
+        "stop" => agentscripts::stop_main(arg_runtime(&args[1..])),
+        "setup" => agentscripts::setup_main(&args[1..]),
         "-h" | "--help" | "help" | "" => {
             print!("{USAGE}");
             0

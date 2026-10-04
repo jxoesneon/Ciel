@@ -2684,6 +2684,17 @@ mod tests {
         // through real egress and blow the latency bound.
         std::env::set_var("CIEL_SYSTEM1_HOSTED", "off");
         std::env::set_var("CIEL_SYSTEM1_URL", "http://127.0.0.1:54321");
+        // Hermetic home — a real ~/.ciel response cache would answer the
+        // ls -la ask and break the offline assumption.
+        let dir = std::env::temp_dir().join(format!(
+            "ciel-lat-{}",
+            std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap()
+                .as_nanos()
+        ));
+        std::fs::create_dir_all(&dir).unwrap();
+        std::env::set_var("CIEL_HOME", &dir);
         let mut min_elapsed = Duration::from_secs(10);
         let mut res = None;
         for _ in 0..5 {
@@ -2705,6 +2716,8 @@ mod tests {
         }
         std::env::remove_var("CIEL_SYSTEM1_URL");
         std::env::remove_var("CIEL_SYSTEM1_HOSTED");
+        std::env::remove_var("CIEL_HOME");
+        let _ = std::fs::remove_dir_all(&dir);
         println!("evaluate_risk offline min latency: {:?}", min_elapsed);
         assert!(res.is_none());
         assert!(

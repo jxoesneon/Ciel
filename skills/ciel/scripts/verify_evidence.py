@@ -87,8 +87,34 @@ def _log_unreachable(reason: str, runtime: str) -> None:
         pass
 
 
+def _native_verify_evidence(args: list[str]) -> int | None:
+    """Delegate to `ciel verify-evidence` when the binary has the
+    subcommand. Returns the mapped exit code, or None when the binary is
+    absent or too old to carry the runner (an old binary exits 2 with usage
+    on stderr — indistinguishable from a gate rejection — so the harness
+    banner on stdout is the discriminator)."""
+    binary = ciel_root.ciel_bin() if ciel_root else None
+    if not binary:
+        return None
+    try:
+        proc = subprocess.run(
+            [binary, "verify-evidence", *args],
+            stdin=subprocess.DEVNULL, capture_output=True, text=True,
+            timeout=150)
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+    if "CIEL VERIFICATION HARNESS" not in proc.stdout:
+        return None
+    sys.stdout.write(proc.stdout)
+    sys.stderr.write(proc.stderr)
+    return proc.returncode
+
+
 def main() -> int:
     args = sys.argv[1:]
+    native_rc = _native_verify_evidence(args)
+    if native_rc is not None:
+        return native_rc
     objective = _arg(args, "--objective",
                      os.environ.get("CIEL_TASK_OBJECTIVE",
                                     "General task deliverables"))

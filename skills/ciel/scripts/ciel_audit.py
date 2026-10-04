@@ -21,6 +21,7 @@ tool, ...}) through the shared ciel_root.append_log writer + rotation.
 
 import json
 import os
+import subprocess
 import sys
 from pathlib import Path
 
@@ -45,8 +46,29 @@ def _arg(args: list[str], name: str) -> str | None:
     return None
 
 
+def _native_audit(args: list[str]) -> bool:
+    """Delegate to `ciel audit` when the binary has the subcommand. The
+    native contract prints "{}" and exits 0; an older binary exits 2 with
+    usage on stderr, so treat non-zero or non-"{}" output as unsupported."""
+    binary = ciel_root.ciel_bin() if ciel_root else None
+    if not binary:
+        return False
+    try:
+        proc = subprocess.run(
+            [binary, "audit", *args],
+            stdin=subprocess.DEVNULL if sys.stdin.isatty() else sys.stdin,
+            capture_output=True, text=True, timeout=15)
+    except (OSError, subprocess.TimeoutExpired):
+        return False
+    return proc.returncode == 0 and proc.stdout.strip() == "{}"
+
+
 def main() -> int:
     args = sys.argv[1:]
+
+    if _native_audit(args):
+        print("{}")
+        return 0
 
     try:
         payload = {} if sys.stdin.isatty() else json.loads(sys.stdin.read() or "{}")

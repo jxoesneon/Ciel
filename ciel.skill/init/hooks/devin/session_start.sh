@@ -15,11 +15,16 @@ if [ -z "$CIEL_BIN" ]; then
     fi
   done
 fi
+_fb_reason="binary-absent"
 if [ -n "$CIEL_BIN" ] && [ -x "$CIEL_BIN" ]; then
+  _fb_reason="binary-failed"
   if "$CIEL_BIN" session-start --runtime devin; then
     exit 0
   fi
 fi
+# Parity-soak telemetry (DOCKET_20261004_RUST_MIGRATION_AUDIT): every descent
+# into the Python body is counted; 14 days silent + drill = twin deletion.
+(printf '%s\n' "{\"ts\":\"$(date -u +%FT%TZ)\",\"hook\":\"devin/session_start\",\"reason\":\"$_fb_reason\"}" >> "${CIEL_HOME:-$HOME/.ciel}/fallback_events.jsonl") 2>/dev/null || true
 
 # --- No-AI-attribution enforcement (verified each session start) -------------
 # The Devin harness injects "Generated with Devin" / "Co-Authored-By" trailers
