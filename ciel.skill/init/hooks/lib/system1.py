@@ -344,15 +344,42 @@ def _disabled() -> bool:
     return bool(os.environ.get("CIEL_SYSTEM1_DISABLED"))
 
 
-def _env_file_value(*names: str) -> str:
+_ENV_FILE_CACHE: dict = {"mtime": None, "checked": 0.0, "pairs": {}}
+
+
+def _env_file_pairs() -> dict:
+    """Env file contents, cached by mtime with a 1s stat TTL — Rust's
+    ENV_CACHE mirror (the hot paths call this several times per ask)."""
     env_file = ciel_home() / "system1" / "env"
+    now = time.monotonic()
+    cache = _ENV_FILE_CACHE
+    if now - cache["checked"] < 1.0:
+        return cache["pairs"]
     try:
+        mtime = env_file.stat().st_mtime
+    except OSError:
+        mtime = None
+    cache["checked"] = now
+    if mtime == cache["mtime"] and cache["pairs"]:
+        return cache["pairs"]
+    try:
+        pairs = {}
         for line in env_file.read_text(encoding="utf-8").splitlines():
-            for name in names:
-                if line.startswith(name + "="):
-                    return line.split("=", 1)[1].strip()
+            if line.startswith("#") or "=" not in line:
+                continue
+            k, _, v = line.partition("=")
+            pairs[k.strip()] = v.strip().strip('"').strip("'")
+        cache["mtime"], cache["pairs"] = mtime, pairs
     except OSError:
         pass
+    return cache["pairs"]
+
+
+def _env_file_value(*names: str) -> str:
+    pairs = _env_file_pairs()
+    for name in names:
+        if name in pairs:
+            return pairs[name]
     return ""
 
 
@@ -361,10 +388,23 @@ def _key() -> str:
     if explicit:
         return explicit
     if _hosted():
+        # Hosted never receives the local laya credential — a LAYA_API_KEY
+        # fallback would transmit it to a third party for a guaranteed 401.
         return (_env_file_value("CIEL_SYSTEM1_KEY")
-                or _env_file_value("JEV_API_KEY")
-                or _env_file_value("LAYA_API_KEY"))
+                or _env_file_value("JEV_API_KEY"))
     return _env_file_value("CIEL_SYSTEM1_KEY", "LAYA_API_KEY")
+
+
+def _egress_allowed() -> bool:
+    """Remote asks must never send plaintext credentials or unredacted
+    state: hosted endpoints require https (a cleartext Bearer is a key
+    leak), and any non-loopback call fails closed when the secret
+    redactor is unavailable."""
+    if not _remote():
+        return True
+    if _hosted() and _scheme() != "https":
+        return False
+    return secret_scan is not None
 
 
 def _url() -> str:
@@ -390,9 +430,18 @@ _DEFAULT_HOSTED_MODEL = "jev-latest"
 
 
 def _host() -> str:
+    # Strict authority parse: the host ends at the first of / \ ? # —
+    # backslash is WHATWG-normalized to / by curl/urllib, and ? #
+    # terminate the authority before any later @. Only the LAST @ inside
+    # the bounded authority is the userinfo separator.
     rest = _url().split("://", 1)[-1]
-    return (rest.partition("/")[0].rsplit("@", 1)[-1]
-            .split(":", 1)[0].lower())
+    authority = re.split(r"[/\\?#]", rest, maxsplit=1)[0]
+    return authority.rsplit("@", 1)[-1].split(":", 1)[0].lower()
+
+
+def _scheme() -> str:
+    base = _url()
+    return base.split("://", 1)[0].lower() if "://" in base else ""
 
 
 def _endpoint() -> str:
@@ -426,7 +475,7 @@ def _model() -> str:
 def ask(state: dict, questions: dict, timeout: float = 0.9) -> dict | None:
     """POST state+questions to the endpoint; return the ``answers`` dict plus
     model metadata, or None on any failure."""
-    if _disabled():
+    if _disabled() or not _egress_allowed():
         return None
     # Never send secrets off-machine: the local events log is redacted, so the
     # wire payload must be too whenever the endpoint is not loopback.
@@ -483,6 +532,8 @@ def ask_choice(state: dict, key: str, instructions: str,
 
 def _ask_batch_chunk(states: list, questions: dict,
                      timeout: float) -> list | None:
+    if not _egress_allowed():
+        return None
     body: dict = {
         "states": [_redact(s) if _remote() else s for s in states],
         "questions": questions,
@@ -528,12 +579,19 @@ def ask_batch(states: list, questions: dict,
     ``ask()`` — callers must treat None as "no verdict".
 
     Hosted Jev has no ``/batch`` route (404 verified on api.typesafe.ai) —
-    hosted calls serialize through ``ask()`` instead. Each state is one
-    billed request, so hosted callers should keep candidate pools small."""
+    hosted calls serialize through ``ask()`` instead, sharing ``timeout``
+    as one aggregate deadline (each state is a billed request; states
+    beyond the deadline resolve to None)."""
     if _disabled() or not states:
         return None
     if _hosted():
-        return [ask(s, questions, timeout=timeout) for s in states]
+        deadline = time.monotonic() + timeout
+        out = []
+        for s in states:
+            remaining = deadline - time.monotonic()
+            out.append(ask(s, questions, timeout=remaining)
+                       if remaining > 0.05 else None)
+        return out
     out = []
     for i in range(0, len(states), 64):
         part = _ask_batch_chunk(states[i:i + 64], questions, timeout)

@@ -361,7 +361,9 @@ fn key() -> String {
         }
     }
     if hosted() {
-        return env_file_value(&["CIEL_SYSTEM1_KEY", "JEV_API_KEY", "LAYA_API_KEY"]);
+        // Hosted never receives the local laya credential — a LAYA_API_KEY
+        // fallback would transmit it to a third party for a guaranteed 401.
+        return env_file_value(&["CIEL_SYSTEM1_KEY", "JEV_API_KEY"]);
     }
     env_file_value(&["CIEL_SYSTEM1_KEY", "LAYA_API_KEY"])
 }
@@ -404,12 +406,15 @@ const HOSTED_MODEL_HOSTS: [&str; 5] = [
 /// field is absent, so a hosted ask must always send a Jev model id.
 const DEFAULT_HOSTED_MODEL: &str = "jev-latest";
 
+/// Strict authority parse: the host ends at the first of / \ ? # —
+/// backslash is WHATWG-normalized to / by curl/urllib, and ? # terminate
+/// the authority before any later @. Only the LAST @ inside the bounded
+/// authority is the userinfo separator.
 fn host() -> String {
     let base = url();
     let rest = base.split("://").nth(1).unwrap_or(base.as_str());
-    rest.split('/')
-        .next()
-        .unwrap_or("")
+    let end = rest.find(['/', '\\', '?', '#']).unwrap_or(rest.len());
+    rest[..end]
         .rsplit('@')
         .next()
         .unwrap_or("")
@@ -417,6 +422,28 @@ fn host() -> String {
         .next()
         .unwrap_or("")
         .to_ascii_lowercase()
+}
+
+fn scheme() -> String {
+    let base = url();
+    match base.split_once("://") {
+        Some((s, _)) => s.to_ascii_lowercase(),
+        None => String::new(),
+    }
+}
+
+/// Remote asks must never send plaintext credentials: hosted endpoints
+/// require https — a cleartext Bearer is a key leak. (The vendored
+/// redactors are static and cannot degrade, so no availability check is
+/// needed here unlike the Python engine.)
+fn egress_allowed() -> bool {
+    if !remote() {
+        return true;
+    }
+    if hosted() && scheme() != "https" {
+        return false;
+    }
+    true
 }
 
 /// Hosted Jev mounts the Jev API under /api/v1; local laya-serve and the OSS
@@ -462,7 +489,7 @@ fn model() -> String {
     if let Some(m) = direct {
         return m;
     }
-    env_file_value(&["CIEL_SYSTEM1_MODEL", "LAYA_MODEL"])
+    env_file_value(&["CIEL_SYSTEM1_MODEL"])
 }
 
 /// Checkpoints to prewarm — the serve preload list (LAYA_MODELS); falls
@@ -725,7 +752,7 @@ fn curl_post(url: &str, body: &[u8], auth: &str, timeout: Duration) -> Option<St
 /// Mirror of `ask` — POST state+questions, return {"answers","model"} or
 /// None on any failure.
 pub fn ask(state: &Value, questions: &Value, timeout_s: f64) -> Option<Value> {
-    if disabled() {
+    if disabled() || !egress_allowed() {
         return None;
     }
     // Never send secrets off-machine: the local events log is redacted, so the
@@ -780,10 +807,20 @@ pub fn ask_batch(
         return None;
     }
     if hosted() {
+        // One aggregate deadline across the serialized asks — each state is
+        // a billed request; states beyond the deadline resolve to None.
+        let deadline = Instant::now() + Duration::from_secs_f64(timeout_s.max(0.0));
         return Some(
             states
                 .iter()
-                .map(|s| ask(s, questions, timeout_s))
+                .map(|s| {
+                    let remaining = deadline.saturating_duration_since(Instant::now());
+                    if remaining > Duration::from_millis(50) {
+                        ask(s, questions, remaining.as_secs_f64())
+                    } else {
+                        None
+                    }
+                })
                 .collect(),
         );
     }
@@ -799,6 +836,9 @@ fn ask_batch_chunk(
     questions: &Value,
     timeout_s: f64,
 ) -> Option<Vec<Option<Value>>> {
+    if !egress_allowed() {
+        return None;
+    }
     let redact = remote();
     let states_v: Vec<Value> = states
         .iter()
@@ -1842,6 +1882,16 @@ mod tests {
                 "https://jev-agent.com:443@evil.example",
                 "https://jev-agent.com:443@evil.example/v1/systemone",
             ),
+            // authority ends at ? # \ — a later @ is not userinfo, so the
+            // real connect-host is classified, never the spoofed suffix
+            (
+                "https://evil.example?x@jev-agent.com",
+                "https://evil.example?x@jev-agent.com/v1/systemone",
+            ),
+            (
+                "https://evil.example\\@jev-agent.com",
+                "https://evil.example\\@jev-agent.com/v1/systemone",
+            ),
             (
                 "http://127.0.0.1:49999/v1/systemone",
                 "http://127.0.0.1:49999/v1/systemone",
@@ -1890,9 +1940,31 @@ mod tests {
             ("http://127.0.0.1:8765", false),
             ("https://autojev.ai", false),
             ("https://lan-laya.internal:8765", false),
+            // authority terminates at ? # \ — spoofed suffixes are not hosted
+            ("https://evil.com\\@api.typesafe.ai", false),
+            ("https://evil.com?x@api.typesafe.ai", false),
+            ("https://evil.com#x@api.typesafe.ai", false),
+            ("https://api.typesafe.ai.evil.com", false),
         ] {
             std::env::set_var("CIEL_SYSTEM1_URL", base);
             assert_eq!(want, hosted(), "{base}");
+        }
+        std::env::remove_var("CIEL_SYSTEM1_URL");
+    }
+
+    #[test]
+    fn hosted_requires_https() {
+        // A cleartext Bearer is a credential leak — hosted asks over http
+        // or schemeless URLs fail closed before any bytes leave.
+        for (base, want) in [
+            ("https://api.typesafe.ai", true),
+            ("http://api.typesafe.ai", false),
+            ("api.typesafe.ai", false),
+            ("http://192.168.1.10:8765", true), // non-hosted remote: plain http ok
+            ("http://127.0.0.1:8765", true),
+        ] {
+            std::env::set_var("CIEL_SYSTEM1_URL", base);
+            assert_eq!(want, egress_allowed(), "{base}");
         }
         std::env::remove_var("CIEL_SYSTEM1_URL");
     }

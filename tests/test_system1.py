@@ -142,7 +142,13 @@ class TestEndpointResolution(System1TestCase):
                 ("jev-agent.com",
                  "jev-agent.com/api/v1/systemone"),
                 ("https://jev-agent.com:443@evil.example",
-                 "https://jev-agent.com:443@evil.example/v1/systemone")):
+                 "https://jev-agent.com:443@evil.example/v1/systemone"),
+                # authority ends at ? # \ — a later @ is not userinfo, so
+                # the real connect-host is classified, not the spoof
+                ("https://evil.example?x@jev-agent.com",
+                 "https://evil.example?x@jev-agent.com/v1/systemone"),
+                ("https://evil.example\\@jev-agent.com",
+                 "https://evil.example\\@jev-agent.com/v1/systemone")):
             with unittest.mock.patch.dict(
                     os.environ, {"CIEL_SYSTEM1_URL": u}):
                 self.assertEqual(want, system1._endpoint(), u)
@@ -192,6 +198,31 @@ class TestEndpointResolution(System1TestCase):
                 "CIEL_SYSTEM1_URL": "http://127.0.0.1:8765",
                 "CIEL_SYSTEM1_MODEL": "typed-decisions"}):
             self.assertEqual("typed-decisions", system1._model())
+
+    def test_hosted_spoof_shapes_not_hosted(self):
+        for u, want_host in (
+                ("https://evil.com\\@api.typesafe.ai", "evil.com"),
+                ("https://evil.com?x@api.typesafe.ai", "evil.com"),
+                ("https://evil.com#x@api.typesafe.ai", "evil.com"),
+                ("https://api.typesafe.ai.evil.com",
+                 "api.typesafe.ai.evil.com")):
+            with unittest.mock.patch.dict(
+                    os.environ, {"CIEL_SYSTEM1_URL": u}):
+                self.assertFalse(system1._hosted(), u)
+                self.assertEqual(want_host, system1._host(), u)
+
+    def test_hosted_requires_https_egress(self):
+        # A cleartext Bearer is a credential leak — hosted asks over http
+        # or schemeless URLs fail closed before any bytes leave.
+        for u, want in (
+                ("https://api.typesafe.ai", True),
+                ("http://api.typesafe.ai", False),
+                ("api.typesafe.ai", False),
+                ("http://192.168.1.10:8765", True),
+                ("http://127.0.0.1:8765", True)):
+            with unittest.mock.patch.dict(
+                    os.environ, {"CIEL_SYSTEM1_URL": u}):
+                self.assertEqual(want, system1._egress_allowed(), u)
 
     def test_remote_ask_redacts_state_on_the_wire(self):
         bodies = []
