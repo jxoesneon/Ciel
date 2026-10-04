@@ -1,0 +1,47 @@
+[package]
+name = "ciel-domain"
+version = "1.0.0"
+edition = "2021"
+rust-version = "1.75"
+description = "Ciel domain-skill tools — 3D studio, procedural audio, and UI/UX search engines"
+license = "MIT"
+exclude = ["/target"]
+
+[lib]
+name = "ciel_domain"
+path = "src/lib.rs"
+
+[[bin]]
+name = "ciel-studio"
+path = "src/bin/ciel-studio.rs"
+
+[[bin]]
+name = "ciel-audio"
+path = "src/bin/ciel-audio.rs"
+
+[[bin]]
+name = "ciel-uiux"
+path = "src/bin/ciel-uiux.rs"
+
+[[bin]]
+name = "ciel-convo"
+path = "src/bin/ciel-convo.rs"
+
+[dependencies]
+serde = "1"
+serde_json = { version = "1", features = ["preserve_order"] }
+sha2 = "0.10"
+regex = "1"
+rustfft = "6"
+png = "0.17"
+rusqlite = { version = "0.40", features = ["bundled"] }
+time = { version = "0.3", features = ["parsing", "formatting", "macros", "local-offset"] }
+
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"
+wait-timeout = "0.2"
+
+[profile.release]
+opt-level = 2
+lto = "thin"
+strip = true
