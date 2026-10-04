@@ -1,9 +1,10 @@
-# Ciel skill extension — fields beyond the Agent Skills spec. SKILL.md stays spec-pure.
 schema: 1
 version: 1.0.0
 format: skill/1.0
 runtimes:
+- antigravity
 - claude_code
+- devin
 - gemini_cli
 - windsurf
 - xcode
@@ -24,8 +25,10 @@ dependencies:
   skills: []
   mcp: []
   system:
-  - bash
+  - python3
   - git
+  optional_system:
+  - node
 side_effects:
 - system
 - filesystem

@@ -21,9 +21,11 @@ ROOT = Path(__file__).resolve().parent.parent
 LIB = ROOT / "ciel.skill" / "init" / "hooks" / "lib"
 RUST_BIN_DIR = ROOT / "ciel.skill" / "init" / "ciel-rs"
 SCRIPTS = ROOT / "scripts"
+INIT_SCRIPTS = ROOT / "ciel.skill" / "init" / "scripts"
 
 sys.path.insert(0, str(LIB))
 sys.path.insert(0, str(SCRIPTS))
+sys.path.insert(0, str(INIT_SCRIPTS))
 
 import risk_policy
 import secret_scan

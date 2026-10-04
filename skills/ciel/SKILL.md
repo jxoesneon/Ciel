@@ -133,11 +133,15 @@ High-impact actions, promotions, and skill mutations are triaged across five len
 
 ## Operational Commands and Verification
 
-- **Integrity Verification**: Execute `verify_evidence.sh` and `verify_3d_asset.py` to validate workspace status, test suites, and asset integrity.
+- **Integrity Verification**: Execute `verify_evidence.py` and `verify_3d_asset.py` to validate workspace status, test suites, and asset integrity.
 
-- **Pre-Flight Check**: Run `pre_tool_hook.sh` prior to high-risk operations.
+- **Pre-Flight Check**: Run `ciel_preflight.py` prior to high-risk operations. Contract: stdin `{"tool","command","path"}` (identical to `ciel risk-eval`), stdout verdict JSON, exit `0` allow / `2` deny / `3` unavailable-or-malformed (fail-closed). Binary-first via `ciel pretool`; Python fallback applies `risk_policy.evaluate` + `system1_failsafe` — the same verdict the production hooks emit.
 
-- **Post-Run Audit**: Run `post_tool_hook.sh` after operations to record telemetry.
+- **Post-Run Audit**: Run `ciel_audit.py --event PostToolUse --tool <name> [--error ...]` after operations to record telemetry; emits the hooks' byte-compatible `activity.log` schema via the shared writer.
+
+## Platform-Agnostic Invariant
+
+Agent-facing scripts in `skills/ciel/scripts/` are **single-source, cross-platform Python** (or node where already required). Per-OS shims (`*.sh`, `*.ps1`) are permitted only as thin dispatchers that forward arguments and exit codes unchanged to the shared core — they must never carry their own policy logic. Lifecycle/audit hooks use the `ciel_` prefix namespace (`ciel_preflight.py`, `ciel_audit.py`); verification/utility tooling stays unprefixed (`verify_evidence.py`, `verify_3d_asset.py`, `read_agy_conversation.js`). Rationale and roadmap: `ciel.skill/architecture/ADR_20261003_PLATFORM_AGNOSTIC_AGENT_SCRIPTS.md`.
 
 ## Antigravity (`agy`) Conversation Access
 

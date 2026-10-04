@@ -595,6 +595,69 @@
       "command": "python3 -c 'open(\"x\",\"w\")' ~/.ciel/allow_privileged",
       "override": false,
       "expect": "deny"
+    },
+    {
+      "id": "ps_rmdir_s",
+      "tool": "exec",
+      "command": "rmdir /s /q C:\\Users\\x\\build",
+      "override": false,
+      "expect": "deny"
+    },
+    {
+      "id": "ps_remove_item_recurse_drive",
+      "tool": "exec",
+      "command": "Remove-Item -Recurse -Force C:\\",
+      "override": false,
+      "expect": "deny"
+    },
+    {
+      "id": "ps_format_volume",
+      "tool": "exec",
+      "command": "Format-Volume -DriveLetter D -Force",
+      "override": false,
+      "expect": "deny"
+    },
+    {
+      "id": "ps_diskpart",
+      "tool": "exec",
+      "command": "diskpart",
+      "override": false,
+      "expect": "deny"
+    },
+    {
+      "id": "sql_drop_database",
+      "tool": "exec",
+      "command": "psql -c 'DROP DATABASE prod'",
+      "override": false,
+      "expect": "deny"
+    },
+    {
+      "id": "ps_ri_force_drive",
+      "tool": "exec",
+      "command": "ri -fo -r C:\\temp",
+      "override": false,
+      "expect": "deny"
+    },
+    {
+      "id": "ps_rm_alias_drive",
+      "tool": "exec",
+      "command": "rm -r C:\\Users\\x\\proj",
+      "override": false,
+      "expect": "deny"
+    },
+    {
+      "id": "benign_rmdir_posix",
+      "tool": "exec",
+      "command": "rmdir ./emptydir",
+      "override": false,
+      "expect": "allow"
+    },
+    {
+      "id": "benign_rm_r_posix_tmp",
+      "tool": "exec",
+      "command": "rm -r /tmp/scratch",
+      "override": false,
+      "expect": "allow"
     }
   ]
 }

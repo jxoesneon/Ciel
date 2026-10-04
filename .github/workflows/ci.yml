@@ -123,7 +123,7 @@ jobs:
       - name: Install deps
         run: pip install --quiet ruff==0.16.8 pyyaml
       - name: ruff check
-        run: ruff check scripts/ ciel.skill/init/scripts/ ciel.skill/init/hooks/lib/
+        run: ruff check scripts/ ciel.skill/init/scripts/ ciel.skill/init/hooks/lib/ skills/ciel/scripts/
       - name: Run Python unit tests
         run: python3 -m unittest discover tests
 
@@ -151,6 +151,24 @@ jobs:
         run: |
           python3 -m unittest tests.test_rust_parity -v
           python3 -m unittest tests.test_hooks_redteam.TestHookRedTeam.test_corpus_rust_fastpath -v
+          python3 -m unittest tests.test_agent_scripts -v
+
+  agent-scripts:
+    name: Agent scripts (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+      - name: Install test deps
+        run: pip install --quiet pyyaml
+      - name: Contract tests (preflight / audit / verify_evidence / shim guard)
+        run: python -m unittest tests.test_agent_scripts -v
 
   skill-scan:
     name: skillfrisk static scan

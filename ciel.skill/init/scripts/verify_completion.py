@@ -28,8 +28,10 @@ import os
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
-LIB = ROOT / "ciel.skill" / "init" / "hooks" / "lib"
+# hooks/lib sits one level up in every layout: repo (init/scripts ->
+# init/hooks/lib), bundle (init/scripts -> init/hooks/lib), and installed
+# (~/.ciel/scripts -> ~/.ciel/hooks/lib).
+LIB = Path(__file__).resolve().parent.parent / "hooks" / "lib"
 sys.path.insert(0, str(LIB))
 
 import system1

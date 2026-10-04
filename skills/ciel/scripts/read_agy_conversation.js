@@ -5,7 +5,7 @@
 // Usage:
 //   node read_agy_conversation.js <conversation-id-or-prefix> [--full] [--raw]
 //
-// Storage layout (Windows):
+// Storage layout (cross-platform — resolves via os.homedir()):
 //   ~/.gemini/antigravity-cli/conversations/<id>.db        SQLite conversation store
 //   ~/.gemini/antigravity-cli/brain/<id>/.system_generated/logs/transcript.jsonl      step digest (JSONL)
 //   ~/.gemini/antigravity-cli/brain/<id>/.system_generated/logs/transcript_full.jsonl full step content (JSONL)
@@ -38,7 +38,10 @@ if (!idArg) {
 
 function resolveId(prefix) {
   const convDir = path.join(ROOT, 'conversations');
-  const matches = fs.readdirSync(convDir).filter(f => f.startsWith(prefix));
+  // Only match the .db files — live conversations also carry .db-shm/.db-wal
+  // siblings which share the same id prefix and made every lookup ambiguous.
+  const matches = fs.readdirSync(convDir)
+    .filter(f => f.endsWith('.db') && f.startsWith(prefix));
   if (matches.length === 0) return null;
   if (matches.length > 1) { console.error('Ambiguous prefix, matches: ' + matches.join(', ')); process.exit(2); }
   return matches[0].replace(/\.db$/, '');
@@ -62,6 +65,7 @@ if (fs.existsSync(taskDir)) console.log(`task_logs=${fs.readdirSync(taskDir).joi
 console.log('---');
 
 if (RAW) {
+  if (!transcript) { console.error('No JSONL transcript found; nothing to dump.'); process.exit(1); }
   process.stdout.write(fs.readFileSync(transcript));
   process.exit(0);
 }

@@ -131,6 +131,47 @@ rules:
     pattern: '\bfind\b[^\n|;]*(?:(?:~|\$HOME|\$\{HOME\}|"\$HOME"|/home/[^\s/]+|/root)/\.(?:ssh|gnupg|aws|kube|docker)\b|(?:~|\$HOME|\$\{HOME\}|"\$HOME"|/home/[^\s/]+|/root)/\.ciel(?:/(?:hooks|risk)\b|/?(?:\s|$))|(?<![\w./~-])/(?:etc|usr|bin|sbin|boot|root)(?:/|\b))[^\n|;]*-delete\b'
     reason: find -delete against a credential store, agent hook/policy dir, or protected system path.
 
+  # Windows/PowerShell destructive shapes — regression-ported from the retired
+  # ciel_pre_tool.ps1 guard (which only returned "ask" and failed open).
+  # Drive-qualified or /s-flagged recursive deletes, volume/partition tools,
+  # and database drops deny here. POSIX `rm -rf /tmp/x` stays allowed by
+  # corpus contract — the alias rules key on drive paths, not bare recursion.
+  - id: win_volume_format
+    tier: hard
+    match: command
+    pattern: '\bFormat-Volume\b|\bformat\s+[a-z]:'
+    reason: Volume format.
+
+  - id: win_diskpart
+    tier: hard
+    match: command
+    pattern: '\bdiskpart\b'
+    reason: Disk partitioning utility.
+
+  - id: drop_database
+    tier: hard
+    match: command
+    pattern: '\bdrop\s+(database|schema)\b'
+    reason: Database/schema drop.
+
+  - id: win_remove_item_recurse_drive
+    tier: hard
+    match: command
+    pattern: '\bRemove-Item\b[^\n|;]*-Recurse[^\n|;]*[a-z]:[\\/]'
+    reason: Recursive delete of a drive path.
+
+  - id: win_rmdir_s
+    tier: soft
+    match: command
+    pattern: '\brmdir\b[^\n|;]*\s/s(\s|/|$)'
+    reason: Windows recursive directory delete (rmdir /s).
+
+  - id: ps_alias_recurse_drive
+    tier: soft
+    match: command
+    pattern: '\b(rm|ri|rmdir|del|erase)\b[^\n|;]*-[a-z]*(r|f)[a-z]*[^\n|;]*[a-z]:[\\/]'
+    reason: PowerShell-alias recursive/forced delete of a drive path.
+
   # Command-side counterpart to the path-match rules: copy/move/install/
   # redirect vectors embed the destination inside the command string, where
   # match:path rules cannot see it. Sources count too — cp FROM a credential

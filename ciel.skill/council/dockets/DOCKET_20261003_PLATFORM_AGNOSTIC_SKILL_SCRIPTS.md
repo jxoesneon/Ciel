@@ -103,3 +103,36 @@ Binding amendments and follow-ups: `~/.ciel/council/RUN_20261003_PLATFORM_AGNOST
 
 Follow-up (separate commit): restore governance `members/EFFICIENCY.md` overwritten by
 the design lens in merge 7b1b6f1.
+
+## Implementation status
+
+Implemented per the PASS verdict and binding amendments:
+
+- `skills/ciel/scripts/`: `ciel_preflight.py` (0 allow / 2 deny / 3
+  unavailable-or-malformed; `ciel pretool` fast path, in-process
+  `risk_policy.evaluate` + `system1_failsafe` fallback), `ciel_audit.py`,
+  `verify_evidence.py` (0/2/3 gate contract, enforce fail-loud, shadow
+  warn+log), `_bootstrap.py` resolving `hooks/lib` across repo/bundle/
+  installed layouts.
+- `ciel.skill/init/hooks/lib/ciel_root.py`: shared root/bin/log primitives;
+  `CIEL_BIN` semantics match the production hooks (explicit non-empty
+  override is authoritative — no stale-binary rescue).
+- Deleted the seven superseded lifecycle/policy scripts (3 `.sh`, 3 `.ps1`,
+  `verify_evidence.sh`).
+- `read_agy_conversation.js`: `os.homedir()` storage, `.db`-only prefix match,
+  `--raw` without transcript exits 1.
+- `verify_completion.py` moved into `ciel.skill/init/scripts/`; `install.sh`
+  deploys it to `$CIEL_HOME/scripts`.
+- Policy: PowerShell destructive patterns ported to `risk/policy.yaml`
+  (24 rules, `policy.json` in sync); red-team corpus extended while
+  preserving the POSIX `/tmp` cleanup allows.
+- Runtime metadata: `antigravity` + `devin` declared; `python3` required,
+  `node` optional.
+- Tests: `tests/test_agent_scripts.py` (20 tests incl. shim-forwarding
+  invariant); CI gains `skills/ciel/scripts/` ruff glob, a
+  ubuntu/windows/macos matrix job, and `test_agent_scripts` in the rust
+  parity leg.
+
+Verification: 20/20 agent-script tests, 54/54 rust-parity tests, 491-test
+suite green, `compile_policy.py --check` in sync, spec/frontmatter/sidecar
+validators pass.

@@ -9,9 +9,10 @@ Audits 3D models against AAA+ standards:
 - LOD hierarchy & poly budget thresholds
 """
 
-import sys
 import json
 import os
+import sys
+
 
 def audit_mesh_manifest(manifest_path):
     if not os.path.exists(manifest_path):
@@ -30,8 +31,8 @@ def audit_mesh_manifest(manifest_path):
                 "pbr_workflow": "Metallic/Roughness (Substance/Engine Ready)"
             }
         }
-    
-    with open(manifest_path, 'r') as f:
+
+    with open(manifest_path) as f:
         data = json.load(f)
     return {"status": "analyzed", "data": data}
 

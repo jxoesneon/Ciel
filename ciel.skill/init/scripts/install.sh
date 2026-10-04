@@ -211,6 +211,17 @@ install_ciel_bin() {
 }
 install_ciel_bin || true
 
+# --- 9d. Completion gate -------------------------------------------------------
+# The System-1 completion gate ships in the bundle so verify_evidence.py and
+# System-1 workflows can reach it on installed hosts; `ciel verify-completion`
+# remains the binary fast path.
+INIT_SCRIPTS="$(cd "$(dirname "$0")" 2>/dev/null && pwd || true)"
+if [ -n "$INIT_SCRIPTS" ] && [ -f "$INIT_SCRIPTS/verify_completion.py" ]; then
+  mkdir -p "$CIEL_HOME/scripts"
+  cp "$INIT_SCRIPTS/verify_completion.py" "$CIEL_HOME/scripts/"
+  say "Completion gate installed to $CIEL_HOME/scripts."
+fi
+
 # --- 10. Verify ---------------------------------------------------------------
 say "Running verification…"
 bash "$(dirname "$0")/verify.sh" || die "Verification failed; see $LOG"

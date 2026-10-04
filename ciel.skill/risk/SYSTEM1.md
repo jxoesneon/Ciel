@@ -18,7 +18,7 @@ System-1 is **fully integrated into the live execution pipeline**:
 3. **Completion Verification**: Powers `completion_check` surface to verify
    empirical evidence against deliverables. Intercepts false passes in
    `paired_eval.py` (`--completion-gate [shadow|enforce]`), post-task scripts
-   (`scripts/verify_completion.py`, `skills/ciel/scripts/verify_evidence.sh`),
+   (`ciel.skill/init/scripts/verify_completion.py`, `skills/ciel/scripts/verify_evidence.py`),
    and `system1.rs` (`evaluate_completion`) using typed choices and 1–5 rubric scores.
 4. **Council Prescreen**: Triage for council-scoped events.
 
@@ -54,7 +54,7 @@ System-1 evaluates objective deliverables vs. empirical evidence artifacts
 Invocation methods:
 - **Python Library**: `system1.completion_check(objective, evidence, task_class, with_score=True)`
 - **Rust Client**: `system1::evaluate_completion(objective, evidence, task_class, timeout_s)`
-- **CLI Gate**: `python3 scripts/verify_completion.py --objective "..." --evidence "..." --task-class code_change --gate enforce`
+- **CLI Gate**: `python3 ciel.skill/init/scripts/verify_completion.py --objective "..." --evidence "..." --task-class code_change --gate enforce` (deployed to `~/.ciel/scripts/` on install; binary fast path: `ciel verify-completion`)
 - **Eval Pipeline**: `python3 scripts/paired_eval.py --skill <dir> --completion-gate enforce`
 
 All verification points adhere strictly to **fail-open semantics**: if the System-1 endpoint is unreachable, offline, times out, or disabled, the gate passes through the deterministic test runner verdict without blocking.

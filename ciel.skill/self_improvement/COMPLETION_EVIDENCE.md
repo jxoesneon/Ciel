@@ -28,12 +28,12 @@ considered.
 3. Stop-hook reminders are capped at **2 per session** — enforcement must
    never loop (council Safety condition).
 4. System-1 `completion_check` (`system1.py`, `system1.rs::evaluate_completion`,
-   `scripts/verify_completion.py`) evaluates objective deliverables vs. empirical
+   `ciel.skill/init/scripts/verify_completion.py`) evaluates objective deliverables vs. empirical
    evidence using typed choice (`complete` / `incomplete`) and typed 1–5 rubric
    scores. While the ledger remains the deterministic record, System-1 actively
    validates that claimed resolutions match actual artifacts.
 5. In `scripts/paired_eval.py` (`--completion-gate [shadow|enforce]`) and post-task
-   verification scripts (`skills/ciel/scripts/verify_evidence.sh`), System-1 is
+   verification scripts (`skills/ciel/scripts/verify_evidence.py`), System-1 is
    actively invoked to detect false passes (e.g. exit code 0 without required
    test execution or live probes) or unverified assertions.
 6. **Fail-Open Semantics**: If System-1 is offline, unreachable, disabled

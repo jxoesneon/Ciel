@@ -15,7 +15,8 @@ Every contribution MUST align with the CIEL 1.0 architectural mandates:
 
 1. **Research**: Always perform a deep audit of the existing `skills/` and `agents/` to prevent redundancy.
 2. **Harmonization**: If adding a new capability, ensure it is harmonized into a dense framework rather than added as a narrow, disparate tool.
-3. **Verification**: Run the project's verification loops before submitting your proposal.
+3. **Platform-agnostic agent surface**: Agent-facing scripts are single-source cross-platform — no per-OS policy logic. Per-OS shims may exist only as thin dispatchers that forward arguments and exit codes unchanged to the shared core (see `ciel.skill/architecture/ADR_20261003_PLATFORM_AGNOSTIC_AGENT_SCRIPTS.md`).
+4. **Verification**: Run the project's verification loops before submitting your proposal.
 
 ## 🏛️ Council Review
 
