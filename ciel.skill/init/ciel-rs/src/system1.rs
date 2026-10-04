@@ -346,7 +346,8 @@ fn env_file_value(names: &[&str]) -> String {
 pub fn mode() -> String {
     std::env::var("CIEL_SYSTEM1_MODE")
         .ok()
-        .filter(|s| !s.trim().is_empty())
+        .map(|s| s.trim().to_string())
+        .filter(|s| !s.is_empty())
         .unwrap_or_else(|| {
             let m = env_file_value(&["CIEL_SYSTEM1_MODE"]);
             if m.is_empty() {
@@ -1604,35 +1605,330 @@ impl RouteVerdict {
     }
 }
 
+// --- option shortlisting (shortlist_options parity) -----------------------
+// Port of hooks/lib/system1.py's hybrid shortlister: semantic top-k (embed
+// helper subprocess) ∪ lexical top-5 (IDF-weighted overlap) ∪ exact
+// name-token matches, capped at k. CIEL_SYSTEM1_EMBED=0 forces lexical-only.
+
+fn is_stopword(tok: &str) -> bool {
+    matches!(
+        tok,
+        "in" | "my"
+            | "and"
+            | "the"
+            | "a"
+            | "an"
+            | "to"
+            | "for"
+            | "of"
+            | "on"
+            | "is"
+            | "it"
+            | "me"
+            | "we"
+            | "i"
+            | "or"
+            | "be"
+            | "this"
+            | "that"
+            | "with"
+            | "out"
+            | "up"
+            | "do"
+            | "how"
+            | "what"
+            | "which"
+            | "should"
+            | "can"
+            | "could"
+            | "would"
+            | "your"
+            | "our"
+            | "at"
+            | "by"
+            | "from"
+            | "as"
+            | "into"
+            | "about"
+            | "before"
+            | "after"
+            | "just"
+            | "need"
+            | "want"
+            | "help"
+            | "please"
+            | "use"
+            | "using"
+            | "make"
+            | "get"
+            | "set"
+            | "new"
+            | "all"
+            | "any"
+            | "some"
+            | "no"
+            | "not"
+            | "if"
+            | "when"
+            | "then"
+            | "so"
+            | "than"
+            | "too"
+            | "very"
+            | "will"
+            | "are"
+            | "was"
+            | "were"
+            | "been"
+            | "has"
+            | "have"
+            | "had"
+            | "does"
+            | "did"
+            | "over"
+            | "again"
+            | "once"
+            | "here"
+            | "there"
+            | "where"
+            | "why"
+            | "who"
+            | "these"
+            | "those"
+            | "each"
+            | "few"
+            | "more"
+            | "most"
+            | "other"
+            | "own"
+            | "same"
+            | "only"
+            | "also"
+            | "now"
+            | "like"
+            | "through"
+            | "between"
+            | "both"
+            | "per"
+            | "via"
+            | "whether"
+            | "while"
+            | "during"
+            | "without"
+            | "within"
+            | "across"
+            | "upon"
+            | "off"
+            | "down"
+            | "along"
+            | "around"
+            | "among"
+            | "against"
+            | "step"
+            | "run"
+            | "write"
+            | "create"
+            | "add"
+            | "check"
+            | "see"
+            | "look"
+            | "take"
+            | "give"
+            | "go"
+            | "put"
+            | "let"
+            | "keep"
+            | "work"
+            | "thing"
+            | "things"
+            | "something"
+            | "anything"
+            | "lot"
+            | "kind"
+            | "type"
+            | "part"
+            | "way"
+    )
+}
+
+fn token_re() -> &'static Regex {
+    static RE: OnceLock<Regex> = OnceLock::new();
+    RE.get_or_init(|| Regex::new(r"[a-z0-9]+").unwrap())
+}
+
+/// Python `_tokens()`: [a-z0-9]+ over the lowercased text, stopwords removed,
+/// with a singular-form expansion for trailing-s tokens (len>3, not "ss").
+fn content_tokens(text: &str) -> std::collections::HashSet<String> {
+    let lower = text.to_lowercase();
+    let mut out = std::collections::HashSet::new();
+    for m in token_re().find_iter(&lower) {
+        let tok = m.as_str();
+        if is_stopword(tok) {
+            continue;
+        }
+        out.insert(tok.to_string());
+        if tok.len() > 3 && tok.ends_with('s') && !tok.ends_with("ss") {
+            out.insert(tok[..tok.len() - 1].to_string());
+        }
+    }
+    out
+}
+
+/// Raw [a-z0-9]+ set with NO stopword filtering — the exact-name-match leg.
+fn raw_tokens(text: &str) -> std::collections::HashSet<String> {
+    let lower = text.to_lowercase();
+    token_re()
+        .find_iter(&lower)
+        .map(|m| m.as_str().to_string())
+        .collect()
+}
+
+/// Python `_lexical_rank()`: candidates ranked by IDF-weighted token overlap
+/// over `name + criterion`, sorted (-score, name).
+fn lexical_rank(text: &str, options: &serde_json::Map<String, Value>) -> Vec<(f64, String)> {
+    let query = content_tokens(text);
+    let docs: Vec<(String, std::collections::HashSet<String>)> = options
+        .iter()
+        .map(|(name, crit)| {
+            let crit_s = crit.as_str().unwrap_or("");
+            (name.clone(), content_tokens(&format!("{name} {crit_s}")))
+        })
+        .collect();
+    let mut df: HashMap<String, usize> = HashMap::new();
+    for (_, toks) in &docs {
+        for tok in toks {
+            *df.entry(tok.clone()).or_insert(0) += 1;
+        }
+    }
+    let n = docs.len().max(1) as f64;
+    let mut ranked: Vec<(f64, String)> = docs
+        .into_iter()
+        .map(|(name, toks)| {
+            let score: f64 = query
+                .intersection(&toks)
+                .map(|t| (n / (1 + df[t]) as f64).ln() + 1.0)
+                .sum();
+            (score, name)
+        })
+        .collect();
+    ranked.sort_by(|a, b| {
+        b.0.partial_cmp(&a.0)
+            .unwrap_or(std::cmp::Ordering::Equal)
+            .then_with(|| a.1.cmp(&b.1))
+    });
+    ranked
+}
+
+/// Python `_semantic_rank()`: bi-encoder shortlist via a helper subprocess
+/// speaking the `{"task","candidates","k"} → {"names":[...]}` contract.
+/// Backend order: `CIEL_SYSTEM1_EMBED_BIN` (a native embedder once one
+/// exists), else the laya venv python + system1_embed.py exactly as the
+/// Python engine resolves it. Empty on any failure — callers fall back to
+/// lexical.
+fn semantic_rank(text: &str, options: &serde_json::Map<String, Value>, k: usize) -> Vec<String> {
+    if std::env::var("CIEL_SYSTEM1_EMBED")
+        .map(|v| v == "0")
+        .unwrap_or(false)
+    {
+        return Vec::new();
+    }
+    let home = paths::ciel_home();
+    let embed_bin = std::env::var("CIEL_SYSTEM1_EMBED_BIN")
+        .ok()
+        .filter(|s| !s.trim().is_empty())
+        .map(PathBuf::from)
+        .filter(|p| p.is_file());
+    let venv_py = home.join("system1").join("venv").join("bin").join("python");
+    let helper = home.join("hooks").join("lib").join("system1_embed.py");
+    let mut cmd = if let Some(bin) = embed_bin {
+        let mut c = Command::new(bin);
+        c.arg("embed");
+        c
+    } else if venv_py.is_file() && helper.is_file() {
+        let mut c = Command::new(venv_py);
+        c.arg(helper);
+        c
+    } else {
+        return Vec::new();
+    };
+    let input = json!({"task": text, "candidates": options, "k": k}).to_string();
+    let mut child = match cmd
+        .stdin(Stdio::piped())
+        .stdout(Stdio::piped())
+        .stderr(Stdio::null())
+        .spawn()
+    {
+        Ok(c) => c,
+        Err(_) => return Vec::new(),
+    };
+    if let Some(mut si) = child.stdin.take() {
+        let _ = si.write_all(input.as_bytes());
+    }
+    let reader = child.stdout.take().map(|mut so| {
+        std::thread::spawn(move || {
+            let mut buf = Vec::new();
+            let _ = so.read_to_end(&mut buf);
+            buf
+        })
+    });
+    use wait_timeout::ChildExt;
+    let stdout = match child.wait_timeout(Duration::from_secs(60)) {
+        Ok(Some(_)) => reader.and_then(|r| r.join().ok()).unwrap_or_default(),
+        _ => {
+            let _ = child.kill();
+            let _ = child.wait();
+            return Vec::new();
+        }
+    };
+    serde_json::from_slice::<Value>(&stdout)
+        .ok()
+        .and_then(|v| v.get("names").and_then(|n| n.as_array()).cloned())
+        .map(|arr| {
+            arr.iter()
+                .filter_map(|v| v.as_str().map(String::from))
+                .collect()
+        })
+        .unwrap_or_default()
+}
+
+/// Python `shortlist_options()`: semantic top-k ∪ lexical top-5 ∪ exact
+/// name-token matches, insertion-ordered, capped at k.
+pub fn shortlist_options(
+    text: &str,
+    options: &serde_json::Map<String, Value>,
+    k: usize,
+) -> Vec<String> {
+    if options.len() <= k {
+        return options.keys().cloned().collect();
+    }
+    let mut keep: Vec<String> = Vec::new();
+    for name in semantic_rank(text, options, k) {
+        if options.contains_key(&name) && !keep.contains(&name) {
+            keep.push(name);
+        }
+    }
+    for (_, name) in lexical_rank(text, options).into_iter().take(5) {
+        if !keep.contains(&name) {
+            keep.push(name);
+        }
+    }
+    let task_raw = raw_tokens(text);
+    for name in options.keys() {
+        if !raw_tokens(name).is_disjoint(&task_raw) && !keep.contains(name) {
+            keep.push(name.clone());
+        }
+    }
+    keep.truncate(k);
+    keep
+}
+
 pub fn route_choice(
     task: &str,
     options: &serde_json::Map<String, Value>,
     k: usize,
     timeout_s: f64,
 ) -> RouteVerdict {
-    let mut candidate_keys: Vec<String> = options.keys().cloned().collect();
-    candidate_keys.sort();
-
-    let shortlist_keys: Vec<String> = if candidate_keys.len() <= k {
-        candidate_keys
-    } else {
-        let task_lower = task.to_ascii_lowercase();
-        let task_words: std::collections::HashSet<&str> = task_lower.split_whitespace().collect();
-        let mut matched = Vec::new();
-        for key in &candidate_keys {
-            if task_words.contains(key.to_ascii_lowercase().as_str())
-                || task_lower.contains(&key.to_ascii_lowercase())
-            {
-                matched.push(key.clone());
-            }
-        }
-        for key in &candidate_keys {
-            if !matched.contains(key) && matched.len() < k {
-                matched.push(key.clone());
-            }
-        }
-        matched
-    };
+    let shortlist_keys: Vec<String> = shortlist_options(task, options, k);
 
     let mut criteria_obj = serde_json::Map::new();
     for key in &shortlist_keys {
@@ -1649,9 +1945,11 @@ pub fn route_choice(
         }
     });
 
+    let mut sorted_candidates = shortlist_keys.clone();
+    sorted_candidates.sort();
     let state = json!({
         "task": task,
-        "candidates": shortlist_keys
+        "candidates": sorted_candidates
     });
 
     let payload = json!({
@@ -2769,8 +3067,77 @@ mod tests {
         let verdict = route_choice("commit my changes", &options, 10, 0.05);
         assert_eq!(verdict.status, "fail_open");
         assert!(verdict.degraded);
-        assert_eq!(verdict.shortlist, vec!["docker", "git"]);
+        // Insertion order preserved (serde_json preserve_order = dict parity).
+        assert_eq!(verdict.shortlist, vec!["git", "docker"]);
         std::env::remove_var("CIEL_SYSTEM1_URL");
         std::env::remove_var("CIEL_SYSTEM1_HOSTED");
+    }
+
+    #[test]
+    fn shortlist_options_lexical_fallback() {
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+        // Hermetic home → no embed helper → lexical ∪ exact-match legs only.
+        let dir = std::env::temp_dir().join(format!("ciel-shortlist-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        std::fs::create_dir_all(&dir).unwrap();
+        std::env::set_var("CIEL_HOME", &dir);
+        std::env::set_var("CIEL_SYSTEM1_EMBED", "0");
+        let mut options = serde_json::Map::new();
+        for i in 0..12 {
+            options.insert(format!("skill-{i}"), json!("unrelated skill"));
+        }
+        options.insert("git-commit".into(), json!("commit changes to git"));
+        let keep = shortlist_options("commit my changes to git", &options, 3);
+        assert!(keep.len() <= 3);
+        // The git-commit candidate must survive via the lexical/exact legs.
+        assert!(keep.contains(&"git-commit".to_string()));
+        std::env::remove_var("CIEL_HOME");
+        std::env::remove_var("CIEL_SYSTEM1_EMBED");
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn disabled_honors_env_file_mode_off() {
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+        let dir = std::env::temp_dir().join(format!("ciel-modeoff-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        std::fs::create_dir_all(dir.join("system1")).unwrap();
+        std::fs::write(dir.join("system1").join("env"), "CIEL_SYSTEM1_MODE=off\n").unwrap();
+        std::env::remove_var("CIEL_SYSTEM1_DISABLED");
+        std::env::remove_var("CIEL_SYSTEM1_MODE");
+        std::env::set_var("CIEL_HOME", &dir);
+        assert!(disabled());
+        std::env::remove_var("CIEL_HOME");
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn url_env_file_fallbacks() {
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+        let dir = std::env::temp_dir().join(format!("ciel-url-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        std::fs::create_dir_all(dir.join("system1")).unwrap();
+        std::env::remove_var("CIEL_SYSTEM1_URL");
+        std::env::set_var("CIEL_HOME", &dir);
+
+        std::fs::write(
+            dir.join("system1").join("env"),
+            "LAYA_HOST=10.0.0.9\nLAYA_PORT=9999\n",
+        )
+        .unwrap();
+        assert_eq!(url(), "http://10.0.0.9:9999");
+
+        // Past the 1s stat TTL and (on coarse-mtime filesystems) past the
+        // mtime granularity before rewriting the env file.
+        std::thread::sleep(Duration::from_millis(1100));
+        std::fs::write(
+            dir.join("system1").join("env"),
+            "CIEL_SYSTEM1_URL=http://laya.internal:9000/\n",
+        )
+        .unwrap();
+        assert_eq!(url(), "http://laya.internal:9000");
+
+        std::env::remove_var("CIEL_HOME");
+        let _ = std::fs::remove_dir_all(&dir);
     }
 }

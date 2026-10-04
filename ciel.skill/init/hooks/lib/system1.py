@@ -343,8 +343,14 @@ def ciel_home() -> Path:
     return Path(os.environ.get("CIEL_HOME") or Path.home() / ".ciel")
 
 
+def _mode() -> str:
+    return (os.environ.get("CIEL_SYSTEM1_MODE", "").strip()
+            or _env_file_value("CIEL_SYSTEM1_MODE") or "active")
+
+
 def _disabled() -> bool:
-    return bool(os.environ.get("CIEL_SYSTEM1_DISABLED"))
+    # Rust disabled() parity: env kill-switch OR mode == "off".
+    return bool(os.environ.get("CIEL_SYSTEM1_DISABLED")) or _mode() == "off"
 
 
 _ENV_FILE_CACHE: dict = {"path": None, "mtime": None, "checked": 0.0,
@@ -410,7 +416,19 @@ def _egress_allowed() -> bool:
 
 
 def _url() -> str:
-    return os.environ.get("CIEL_SYSTEM1_URL", "http://127.0.0.1:8765").rstrip("/")
+    # Rust url() parity: env → env-file CIEL_SYSTEM1_URL → LAYA_HOST/PORT
+    # pair → loopback default.
+    direct = os.environ.get("CIEL_SYSTEM1_URL", "").strip()
+    if direct:
+        return direct.rstrip("/")
+    file_url = _env_file_value("CIEL_SYSTEM1_URL")
+    if file_url:
+        return file_url.rstrip("/")
+    host = _env_file_value("LAYA_HOST")
+    port = _env_file_value("LAYA_PORT")
+    if host or port:
+        return f"http://{host or '127.0.0.1'}:{port or '8765'}"
+    return "http://127.0.0.1:8765"
 
 
 # Hosted Jev mounts the Jev API under /api/v1; local laya-serve and the OSS
@@ -1076,7 +1094,7 @@ def evaluate_risk(tool: str, command: str, path: str,
     Returns (choice, confidence, band) or None if disabled, offline, or timed out (fail-open)."""
     if _disabled():
         return None
-    m = os.environ.get("CIEL_SYSTEM1_MODE") or _env_file_value("CIEL_SYSTEM1_MODE") or "active"
+    m = _mode()
     if m in ("shadow", "off"):
         return None
 

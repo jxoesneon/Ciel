@@ -56,7 +56,7 @@ class System1TestCase(unittest.TestCase):
         self.addCleanup(self.tmp.cleanup)
         self._saved = {k: os.environ.get(k) for k in (
             "CIEL_HOME", "CIEL_SYSTEM1_DISABLED", "CIEL_SYSTEM1_URL",
-            "CIEL_SYSTEM1_KEY", "CIEL_SYSTEM1_MODEL",
+            "CIEL_SYSTEM1_KEY", "CIEL_SYSTEM1_MODEL", "CIEL_SYSTEM1_MODE",
             "CIEL_SYSTEM1_HOSTED", "CIEL_SYSTEM1_HOSTED_URL",
             "CIEL_SYSTEM1_HOSTED_KEY", "CIEL_SYSTEM1_HOSTED_MODEL",
             "JEV_API_KEY")}
@@ -107,6 +107,29 @@ class TestAsk(System1TestCase):
         srv = _serve({"answers": "oops"})
         self.addCleanup(srv.shutdown)
         os.environ["CIEL_SYSTEM1_URL"] = f"http://127.0.0.1:{srv.server_port}"
+        self.assertIsNone(system1.ask({"a": 1}, QUESTIONS))
+
+    def test_url_env_file_fallbacks(self):
+        # Rust url() parity: env → env-file URL → LAYA_HOST/PORT → default.
+        os.environ.pop("CIEL_SYSTEM1_URL", None)
+        env_file = Path(self.tmp.name) / "system1" / "env"
+        env_file.parent.mkdir(parents=True)
+        env_file.write_text("LAYA_HOST=10.0.0.9\nLAYA_PORT=9999\n")
+        system1._ENV_FILE_CACHE.update(
+            {"path": None, "mtime": None, "checked": 0.0, "pairs": {}})
+        self.assertEqual("http://10.0.0.9:9999", system1._url())
+        env_file.write_text("CIEL_SYSTEM1_URL=http://laya.internal:9000/\n")
+        system1._ENV_FILE_CACHE.update(
+            {"path": None, "mtime": None, "checked": 0.0, "pairs": {}})
+        self.assertEqual("http://laya.internal:9000", system1._url())
+
+    def test_mode_off_disables_ask(self):
+        os.environ.pop("CIEL_SYSTEM1_MODE", None)
+        env_file = Path(self.tmp.name) / "system1" / "env"
+        env_file.parent.mkdir(parents=True)
+        env_file.write_text("CIEL_SYSTEM1_MODE=off\n")
+        system1._ENV_FILE_CACHE.update(
+            {"path": None, "mtime": None, "checked": 0.0, "pairs": {}})
         self.assertIsNone(system1.ask({"a": 1}, QUESTIONS))
 
 
