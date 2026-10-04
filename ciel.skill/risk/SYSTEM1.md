@@ -208,21 +208,46 @@ rules in `risk.rs` are never affected by System-1 availability.
 ```bash
 python3 -m venv ~/.ciel/system1/venv
 ~/.ciel/system1/venv/bin/pip install torch --index-url https://download.pytorch.org/whl/cpu
-~/.ciel/system1/venv/bin/pip install "laya[serve]"
+# hash-pinned install — init/system1/requirements-laya.txt carries the full
+# resolved set for laya[serve]==0.3.26 with PyPI/pytorch-index sha256 digests:
+~/.ciel/system1/venv/bin/pip install --require-hashes -r init/system1/requirements-laya.txt
 
 # ~/.ciel/system1/env  (chmod 600 — contains the key; machine-local, never committed)
 LAYA_HOST=127.0.0.1
 LAYA_PORT=8765
 LAYA_PRELOAD=1
-LAYA_MODELS=typed-decisions         # single resident model (< 1.5 GB RSS; calibrated default)
-LAYA_MAX_LOADED=1                   # cap resident models to 1 under Termux memory limits
-LAYA_THREADS=4                      # torch intra-op CPU threads (2 or 4 for mobile cores)
+LAYA_MODELS=english,typed-decisions # keep resident what routing may choose
+LAYA_MAX_LOADED=2                   # < routing set ⇒ ~7s CPU reload per switch
+LAYA_THREADS=2                      # cap at PHYSICAL cores (oversubscription regresses)
+LAYA_AUTO_TASK=1                    # unpinned calls route to typed-decisions, not the 0.36-acc base
+LAYA_REVISION=<snapshot sha>        # supply-chain pin: freeze the Hub revision…
+LAYA_SHA256_DIGESTS='<per-checkpoint JSON>'  # …and verify every artifact's sha256 at load
 LAYA_API_KEY=<openssl rand -hex 24>
 CIEL_SYSTEM1_MODEL=typed-decisions    # pin the calibrated checkpoint for all asks
 ```
 
 `~/.ciel/system1/serve.sh` sources `env` and execs `venv/bin/laya-serve`
 (template: `init/system1/serve.sh`, env template: `init/system1/env.example`).
+`init/system1/warmup.sh` + the unit's `ExecStartPost` pay the one-time
+first-forward JIT cost (~8s on low-core CPU) per preloaded checkpoint so the
+first real request is not a stall.
+
+Two supply-chain layers, both recommended: `requirements-laya.txt`
+(`--require-hashes`, package level) and `LAYA_REVISION` +
+`LAYA_SHA256_DIGESTS` (model-artifact level — tampered weights refuse to
+load). Note that a pinned `laya-serve` can still make outbound HuggingFace
+pulls when adding or updating checkpoints (`HF_HUB_OFFLINE=1` disables that
+once the cache is warm).
+
+**Measured CPU latency** (2-core/4-thread x86, warm): ~0.7–1.0 s per
+decision, ~0.6 s per state in a `/batch` forward pass; first-forward JIT is
+~8 s once per checkpoint (eliminated by the warmup). Budget accordingly:
+the context surfaces fit async/context-build paths on modest CPU; keep
+`CONTEXT_SELECT_BUDGET_S` enforced and treat `None` as keep-all. Do not
+substitute `english` for `typed-decisions` to chase latency — the base
+checkpoint scores 0.362 on the typed-decisions benchmark vs 0.766
+fine-tuned.
+
 The tier is meant to be on by default, so the supervisor must keep it
 resident and self-healing — platform specifics:
 

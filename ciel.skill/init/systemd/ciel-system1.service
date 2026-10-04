@@ -4,6 +4,11 @@ After=network-online.target
 
 [Service]
 ExecStart=%h/.ciel/system1/serve.sh
+# Detached post-start warmup: pays the one-time first-forward JIT cost per
+# preloaded checkpoint so the first real request is not a multi-second stall.
+# Backgrounded on purpose — a synchronous ExecStartPost blocks unit start
+# past TimeoutStartSec while it waits for /health.
+ExecStartPost=/bin/sh -c '%h/.ciel/system1/warmup.sh &'
 Restart=always
 RestartSec=10
 
