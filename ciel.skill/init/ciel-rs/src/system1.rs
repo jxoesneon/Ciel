@@ -131,6 +131,10 @@ pub fn surface_tau(surface: &str) -> f64 {
         "router" | "router_selection" => 0.82,
         "completion_check" => 0.75,
         "council_prescreen" => 0.70,
+        "context_select" => 0.60,
+        "memory_salience" => 0.65,
+        "context_compaction" => 0.70,
+        "mandate_canary" => 0.75,
         _ => DEFAULT_TAU,
     }
 }
@@ -141,6 +145,8 @@ fn surface_flag(surface: &str) -> &'static [&'static str] {
         "pre_tool_risk" => &["dangerous"],
         "council_prescreen" => &["escalate"],
         "completion_check" => &["incomplete"],
+        "context_compaction" => &["compress", "drop_stale", "escalate"],
+        "mandate_canary" => &["drifted"],
         _ => &[],
     }
 }

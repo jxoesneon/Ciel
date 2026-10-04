@@ -156,10 +156,39 @@ threshold is resolved with **4-tier precedence** (highest wins):
 | `router` | 0.82 | Skill routing confidence floor |
 | `completion_check` | 0.75 | Completion verification |
 | `council_prescreen` | 0.70 | Council event triage |
+| `context_select` | 0.60 | Batched keep/drop per context item |
+| `memory_salience` | 0.65 | Long-term-memory write-back gate |
+| `context_compaction` | 0.70 | Semantic compaction trigger |
+| `mandate_canary` | 0.75 | Operating-mandate drift check |
 
 The `_band()` function in both Rust and Python calls `surface_tau(surface)` to
 resolve the threshold, then classifies the confidence into `high` / `moderate` /
 `low` bands relative to that per-surface τ.
+
+## Context surfaces
+
+Four advisory surfaces serve context management. All use two-option `choice`
+in place of `noul` per ADR_20260923 (the base checkpoint's noul head follows
+label wording, not state), and all are fail-open — `None` means "no verdict":
+`context_select` callers must treat None as *keep everything*, and a `drop`
+verdict only takes effect at or above τ.
+
+- `context_select(task, candidates, k, timeout)` — coarse `shortlist_options`
+  pre-filter, then one `POST …/batch` call giving each candidate its own
+  keep/drop verdict (a multi-selector; `route_choice` picks a single winner).
+  `CONTEXT_SELECT_BUDGET_S = 1.5` is the binding latency ceiling for
+  latency-sensitive callers.
+- `memory_salience(event)` — store/skip gate before a record enters long-term
+  memory.
+- `compaction_decision(stats)` — `{continue, compress, drop_stale, escalate}`
+  choice plus a 5-level pressure `score`; non-`continue` actions raise the
+  flag band.
+- `mandate_canary(mandates, context)` — operative/drifted check on operating
+  mandates in context; `drifted` raises the flag band.
+
+`ask_batch(states, questions, timeout)` is the shared batch client
+(`/v1/systemone/batch`, 64 states per request, chunked; positional
+`{answers, model}` results, None per malformed item or on failure).
 
 ## Fail-Open Network Hardening
 

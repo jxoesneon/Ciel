@@ -60,6 +60,10 @@ DEFAULT_THRESHOLDS = {
     "router_selection": 0.82,
     "completion_check": 0.75,
     "council_prescreen": 0.70,
+    "context_select": 0.60,
+    "memory_salience": 0.65,
+    "context_compaction": 0.70,
+    "mandate_canary": 0.75,
 }
 
 _POLICY_THRESHOLDS = None
@@ -126,6 +130,10 @@ SURFACE_FLAGS = {
     "router": {},
     "router_selection": {},
     "completion_check": {"flag": {"incomplete"}},
+    "context_select": {},
+    "memory_salience": {},
+    "context_compaction": {"flag": {"compress", "drop_stale", "escalate"}},
+    "mandate_canary": {"flag": {"drifted"}},
 }
 
 # Calibrated wording: an explicit "when in doubt, escalate" instruction lifts
@@ -182,6 +190,86 @@ COMPLETION_SCORE_QUESTIONS = {
             "direct empirical evidence verifying primary claims",
             "exhaustive empirical verification of all claims and task-class artifacts",
         ],
+    }
+}
+
+# Context surfaces — a two-option ``choice`` is used in place of ``noul``
+# throughout, per ADR_20260923: the base checkpoint's noul head follows
+# label wording rather than state.
+CONTEXT_SELECT_QUESTIONS = {
+    "relevant": {
+        "type": "choice",
+        "instructions": (
+            "Is this context item relevant to the current task? Keep it "
+            "only if it would materially help the agent act correctly now."
+        ),
+        "criteria": {
+            "keep": "directly useful or needed for the current task",
+            "drop": "unrelated, stale, or low-value for the current task",
+        },
+    }
+}
+
+SALIENCE_QUESTIONS = {
+    "salience": {
+        "type": "choice",
+        "instructions": (
+            "Should this event be written to long-term memory? Store only "
+            "durable signal — routine or redundant detail stays out."
+        ),
+        "criteria": {
+            "store": "durable fact, decision, preference, or state worth "
+                     "recalling in a later session",
+            "skip": "ephemeral, routine, redundant, or already-recorded "
+                    "detail",
+        },
+    }
+}
+
+COMPACTION_QUESTIONS = {
+    "action": {
+        "type": "choice",
+        "instructions": (
+            "Given the context-budget pressure, what should the context "
+            "manager do before the next turn?"
+        ),
+        "criteria": {
+            "continue": "pressure is low — keep going unchanged",
+            "compress": "summarize verbose or stale sections in place",
+            "drop_stale": "evict low-value items before admitting new ones",
+            "escalate": "budget is exhausted — hand off to the summarizer",
+        },
+    },
+    "pressure": {
+        "type": "score",
+        "instructions": (
+            "Rate semantic context pressure — how much of the budget is "
+            "carrying stale or low-value material (lowest = clean, "
+            "highest = saturated)."
+        ),
+        "criteria": [
+            "clean: nearly all context is current and relevant",
+            "mild: some stale items, plenty of headroom",
+            "moderate: noticeable staleness approaching the cap",
+            "high: mostly stale or redundant material",
+            "saturated: at or over budget; action required now",
+        ],
+    },
+}
+
+CANARY_QUESTIONS = {
+    "mandates": {
+        "type": "choice",
+        "instructions": (
+            "Are the session's operating mandates (identity, persona, "
+            "addressing rules, verification requirements) still operative "
+            "in the active context?"
+        ),
+        "criteria": {
+            "operative": "mandates are present and being followed",
+            "drifted": "mandates are missing, contradicted, or silently "
+                       "dropped from context",
+        },
     }
 }
 
@@ -364,6 +452,62 @@ def ask_choice(state: dict, key: str, instructions: str,
     }
 
 
+def _ask_batch_chunk(states: list, questions: dict,
+                     timeout: float) -> list | None:
+    body: dict = {
+        "states": [_redact(s) if _remote() else s for s in states],
+        "questions": questions,
+    }
+    model = _model()
+    if model:
+        body["model"] = model
+    req = urllib.request.Request(
+        f"{_endpoint()}/batch",
+        data=json.dumps(body).encode(),
+        headers={
+            "content-type": "application/json",
+            "authorization": f"Bearer {_key()}",
+        },
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            data = json.loads(resp.read())
+    except (OSError, ValueError):
+        return None
+    results = data.get("results")
+    if not isinstance(results, list):
+        return None
+    out = []
+    for item in results:
+        if not isinstance(item, dict) or not isinstance(item.get("answers"), dict):
+            out.append(None)
+            continue
+        out.append({
+            "answers": item["answers"],
+            "model": item.get("routing", {}).get("model") or item.get("model"),
+        })
+    return out
+
+
+def ask_batch(states: list, questions: dict,
+              timeout: float = ASK_TIMEOUT) -> list | None:
+    """POST a shared question set over many states to ``<endpoint>/batch`` —
+    one round-trip per 64 states (the server cap) instead of one ask per
+    state. Returns a positional list of ``{answers, model}`` results (None
+    per malformed item), or None on any request failure. Fail-open like
+    ``ask()`` — callers must treat None as "no verdict"."""
+    if _disabled() or not states:
+        return None
+    out = []
+    for i in range(0, len(states), 64):
+        part = _ask_batch_chunk(states[i:i + 64], questions, timeout)
+        if part is None:
+            return None
+        out.extend(part)
+    return out
+
+
 _STOPWORDS = frozenset(
     ["in", "my", "and", "the", "a", "an", "to", "for", "of", "on", "is", "it", "me", "we", "i", "or", "be", "this", "that", "with", "out", "up", "do", "how", "what", "which", "should", "can", "could", "would", "your", "our", "at", "by", "from", "as", "into", "about", "before", "after", "just", "need", "want", "help", "please", "use", "using", "make", "get", "set", "new", "all", "any", "some", "no", "not", "if", "when", "then", "so", "than", "too", "very", "will", "are", "was", "were", "been", "has", "have", "had", "does", "did", "over", "again", "once", "here", "there", "where", "why", "who", "these", "those", "each", "few", "more", "most", "other", "own", "same", "only", "also", "now", "like", "through", "between", "both", "per", "via", "whether", "while", "during", "without", "within", "across", "upon", "off", "down", "along", "around", "among", "against", "step", "run", "write", "create", "add", "check", "see", "look", "take", "give", "go", "put", "let", "keep", "work", "thing", "things", "something", "anything", "lot", "kind", "type", "part", "way"])
 
@@ -458,6 +602,145 @@ def route_choice(task: str, options: dict, k: int = 10,
         candidates,
         timeout=timeout,
     )
+
+
+# Binding latency ceiling for the context_select surface (Council
+# RUN_20261004 amendment): the whole surface — coarse shortlist plus one
+# batch call — must fit inside this budget when wired to latency-sensitive
+# paths.
+CONTEXT_SELECT_BUDGET_S = 1.5
+
+
+def context_select(task: str, candidates: dict, k: int = 10,
+                   timeout: float = CONTEXT_SELECT_BUDGET_S) -> dict | None:
+    """Batched relevance multi-selector over context items.
+
+    Unlike ``route_choice`` (one argmax winner), each candidate gets its own
+    keep/drop verdict — one ``/batch`` call over per-item states instead of
+    N serial asks. Fail-open: returns None on any failure — callers must
+    treat None as "keep everything"; a verdict of ``drop`` only takes
+    effect at or above the surface tau, so uncertain items are kept.
+
+    Returns ``{candidate_id: {"keep": bool, "confidence": float}}``."""
+    if _disabled():
+        return None
+    pool = (candidates if len(candidates) <= k
+            else shortlist_options(task, candidates, k))
+    if not pool:
+        return {}
+    states = [{"task": task,
+               "context_item": {"id": name, "description": desc}}
+              for name, desc in pool.items()]
+    started = time.monotonic()
+    results = ask_batch(states, CONTEXT_SELECT_QUESTIONS, timeout=timeout)
+    latency_ms = int((time.monotonic() - started) * 1000)
+    per_item = {
+        name: ((res or {}).get("answers") or {}).get("relevant")
+        for name, res in zip(pool, results or [])
+    }
+    _append_event(_event_record(
+        {"surface": "context_select",
+         "state": {"task": task, "candidates": sorted(pool)},
+         "questions": CONTEXT_SELECT_QUESTIONS,
+         "meta": {"pipeline": "context_select", "batch": len(states)}},
+        {"answers": per_item} if results is not None else None,
+        False, latency_ms))
+    if results is None:
+        return None
+    tau = surface_tau("context_select")
+    out = {}
+    for name, ans in per_item.items():
+        ans = ans or {}
+        conf = ans.get("confidence")
+        conf = conf if isinstance(conf, (int, float)) else 0.0
+        out[name] = {"keep": not (ans.get("choice") == "drop" and conf >= tau),
+                     "confidence": conf}
+    return out
+
+
+def memory_salience(event: dict, timeout: float = ASK_TIMEOUT) -> dict | None:
+    """Write-back gate on the ``memory_salience`` surface: should ``event``
+    enter long-term memory? Fail-open advisory — None means "no verdict";
+    the caller picks the default. Returns ``{choice, confidence, band,
+    model}``."""
+    if _disabled():
+        return None
+    state = {"event": event}
+    result, hit, latency_ms = _resolve(state, SALIENCE_QUESTIONS,
+                                       timeout=timeout)
+    _append_event(_event_record(
+        {"surface": "memory_salience", "state": state,
+         "questions": SALIENCE_QUESTIONS,
+         "meta": {"pipeline": "memory_salience"}},
+        result, hit, latency_ms))
+    if not result:
+        return None
+    ans = result["answers"].get("salience") or {}
+    return {
+        "choice": ans.get("choice"),
+        "confidence": ans.get("confidence", 0.0),
+        "band": _band("memory_salience", result["answers"]),
+        "model": result.get("model"),
+    }
+
+
+def compaction_decision(stats: dict,
+                        timeout: float = ASK_TIMEOUT) -> dict | None:
+    """Semantic compaction trigger on the ``context_compaction`` surface.
+
+    ``stats`` carries budget telemetry (tokens used/budget, item counts,
+    staleness hints — whatever the context manager already tracks). Returns
+    ``{action, confidence, pressure_score, band, model}`` or None — callers
+    fall back to their token-count heuristic on None."""
+    if _disabled():
+        return None
+    state = {"budget": stats}
+    result, hit, latency_ms = _resolve(state, COMPACTION_QUESTIONS,
+                                       timeout=timeout)
+    _append_event(_event_record(
+        {"surface": "context_compaction", "state": state,
+         "questions": COMPACTION_QUESTIONS,
+         "meta": {"pipeline": "context_compaction"}},
+        result, hit, latency_ms))
+    if not result:
+        return None
+    answers = result["answers"]
+    action_ans = answers.get("action") or {}
+    score_ans = answers.get("pressure") or {}
+    return {
+        "action": action_ans.get("choice"),
+        "confidence": action_ans.get("confidence", 0.0),
+        "pressure_score": score_ans.get("score"),
+        "band": _band("context_compaction", answers),
+        "model": result.get("model"),
+    }
+
+
+def mandate_canary(mandates: list, context: str,
+                   timeout: float = ASK_TIMEOUT) -> dict | None:
+    """Canary check on the ``mandate_canary`` surface: are the operating
+    mandates still operative in the active context? A "drifted" verdict
+    raises the flag band. Fail-open — None means "no verdict"."""
+    if _disabled():
+        return None
+    state = {"mandates": mandates, "context_excerpt": context[:2000]}
+    result, hit, latency_ms = _resolve(state, CANARY_QUESTIONS,
+                                       timeout=timeout)
+    _append_event(_event_record(
+        {"surface": "mandate_canary", "state": state,
+         "questions": CANARY_QUESTIONS,
+         "meta": {"pipeline": "mandate_canary"}},
+        result, hit, latency_ms))
+    if not result:
+        return None
+    answers = result["answers"]
+    ans = answers.get("mandates") or {}
+    return {
+        "choice": ans.get("choice"),
+        "confidence": ans.get("confidence", 0.0),
+        "band": _band("mandate_canary", answers),
+        "model": result.get("model"),
+    }
 
 
 def _cache_path(state: dict, questions: dict) -> Path:

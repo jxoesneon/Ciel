@@ -516,5 +516,165 @@ class TestCompletionCheck(System1TestCase):
         self.assertIsNone(res)
 
 
+def _serve_batch(per_state, calls=None):
+    """Stub /v1/systemone/batch — ``per_state`` maps a state index to the
+    answer block the server returns for it."""
+    class H(http.server.BaseHTTPRequestHandler):
+        def do_POST(self):
+            if calls is not None:
+                calls.append(1)
+            n = int(self.headers.get("content-length", 0))
+            body = json.loads(self.rfile.read(n).decode() or "{}")
+            results = []
+            for i, _ in enumerate(body.get("states") or []):
+                results.append({"answers": per_state(i),
+                                "model": "english"})
+            self.send_response(200)
+            self.send_header("content-type", "application/json")
+            self.end_headers()
+            self.wfile.write(json.dumps({"results": results}).encode())
+
+        def log_message(self, *a):
+            pass
+
+    srv = http.server.HTTPServer(("127.0.0.1", 0), H)
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    return srv
+
+
+class TestAskBatch(System1TestCase):
+    """/v1/systemone/batch client — shared question set over many states."""
+
+    def test_roundtrip_positional_results(self):
+        srv = _serve_batch(lambda i: {
+            "risk": {"choice": "safe" if i == 0 else "dangerous",
+                     "confidence": 0.8}})
+        self.addCleanup(srv.shutdown)
+        os.environ["CIEL_SYSTEM1_URL"] = (
+            f"http://127.0.0.1:{srv.server_port}")
+        os.environ["CIEL_SYSTEM1_KEY"] = "k"
+        out = system1.ask_batch(
+            [{"command": "ls"}, {"command": "rm -rf /"}], QUESTIONS)
+        self.assertEqual(2, len(out))
+        self.assertEqual("safe", out[0]["answers"]["risk"]["choice"])
+        self.assertEqual("dangerous", out[1]["answers"]["risk"]["choice"])
+
+    def test_chunks_at_server_cap(self):
+        calls = []
+        srv = _serve_batch(
+            lambda i: {"q": {"choice": "keep", "confidence": 0.9}},
+            calls=calls)
+        self.addCleanup(srv.shutdown)
+        os.environ["CIEL_SYSTEM1_URL"] = (
+            f"http://127.0.0.1:{srv.server_port}")
+        os.environ["CIEL_SYSTEM1_KEY"] = "k"
+        out = system1.ask_batch(
+            [{"i": i} for i in range(130)],
+            {"q": {"type": "choice", "instructions": "k?",
+                   "criteria": {"keep": "k", "drop": "d"}}})
+        self.assertEqual(3, len(calls))  # 64 + 64 + 2
+        self.assertEqual(130, len(out))
+
+    def test_offline_fail_open_and_empty(self):
+        os.environ["CIEL_SYSTEM1_URL"] = "http://127.0.0.1:9"
+        self.assertIsNone(system1.ask_batch(
+            [{"a": 1}], QUESTIONS, timeout=0.2))
+        self.assertIsNone(system1.ask_batch([], QUESTIONS, timeout=0.2))
+
+
+class TestContextSurfaces(System1TestCase):
+    """context_select / memory_salience / context_compaction /
+    mandate_canary surfaces."""
+
+    def _batch_url(self, srv):
+        os.environ["CIEL_SYSTEM1_URL"] = (
+            f"http://127.0.0.1:{srv.server_port}")
+        os.environ["CIEL_SYSTEM1_KEY"] = "k"
+
+    def test_context_select_keep_drop_tau(self):
+        # i=0 drops confidently, i=1 drops below tau, i=2 keeps
+        def ans(i):
+            return {"relevant": {
+                "choice": "drop" if i < 2 else "keep",
+                "confidence": 0.9 if i == 0 else 0.4}}
+        srv = _serve_batch(ans)
+        self.addCleanup(srv.shutdown)
+        self._batch_url(srv)
+        out = system1.context_select(
+            "fix the login bug",
+            {"a.md": "login notes", "b.md": "weather notes",
+             "c.md": "auth spec"}, k=10)
+        self.assertFalse(out["a.md"]["keep"])
+        self.assertTrue(out["b.md"]["keep"])   # uncertain drop -> kept
+        self.assertTrue(out["c.md"]["keep"])
+        log = Path(self.tmp.name) / "system1" / "events.jsonl"
+        events = [json.loads(l) for l in log.read_text().splitlines()]
+        self.assertEqual("context_select", events[-1]["surface"])
+        self.assertEqual(3, events[-1]["meta"]["batch"])
+
+    def test_context_select_fail_open_keeps_everything(self):
+        os.environ["CIEL_SYSTEM1_URL"] = "http://127.0.0.1:9"
+        out = system1.context_select("task", {"a": "d"},
+                                     timeout=0.2)
+        self.assertIsNone(out)  # caller treats None as keep-all
+        self.assertEqual({}, system1.context_select(
+            "task", {}, timeout=0.2))
+
+    def test_memory_salience_verdict_and_event(self):
+        srv = _serve({"answers": {"salience": {
+            "choice": "store", "confidence": 0.9}}, "model": "english"})
+        self.addCleanup(srv.shutdown)
+        os.environ["CIEL_SYSTEM1_URL"] = (
+            f"http://127.0.0.1:{srv.server_port}")
+        os.environ["CIEL_SYSTEM1_KEY"] = "k"
+        res = system1.memory_salience({"kind": "decision",
+                                     "text": "user prefers tabs"})
+        self.assertEqual("store", res["choice"])
+        self.assertEqual("pass", res["band"])
+        log = Path(self.tmp.name) / "system1" / "events.jsonl"
+        events = [json.loads(l) for l in log.read_text().splitlines()]
+        self.assertEqual("memory_salience", events[-1]["surface"])
+
+    def test_compaction_decision_flags_pressure(self):
+        srv = _serve({"answers": {
+            "action": {"choice": "escalate", "confidence": 0.91},
+            "pressure": {"score": 4.6, "confidence": 0.8}},
+            "model": "english"})
+        self.addCleanup(srv.shutdown)
+        os.environ["CIEL_SYSTEM1_URL"] = (
+            f"http://127.0.0.1:{srv.server_port}")
+        os.environ["CIEL_SYSTEM1_KEY"] = "k"
+        res = system1.compaction_decision(
+            {"tokens_used": 30000, "budget": 32000})
+        self.assertEqual("escalate", res["action"])
+        self.assertEqual("flag", res["band"])
+        self.assertEqual(4.6, res["pressure_score"])
+        log = Path(self.tmp.name) / "system1" / "events.jsonl"
+        events = [json.loads(l) for l in log.read_text().splitlines()]
+        self.assertEqual("flag", events[-1]["flag"])
+
+    def test_mandate_canary_drift_flags(self):
+        srv = _serve({"answers": {"mandates": {
+            "choice": "drifted", "confidence": 0.9}},
+            "model": "english"})
+        self.addCleanup(srv.shutdown)
+        os.environ["CIEL_SYSTEM1_URL"] = (
+            f"http://127.0.0.1:{srv.server_port}")
+        os.environ["CIEL_SYSTEM1_KEY"] = "k"
+        res = system1.mandate_canary(
+            ["address user as Master"], "context without mandates")
+        self.assertEqual("drifted", res["choice"])
+        self.assertEqual("flag", res["band"])
+
+    def test_surfaces_offline_fail_open(self):
+        os.environ["CIEL_SYSTEM1_URL"] = "http://127.0.0.1:9"
+        self.assertIsNone(system1.memory_salience(
+            {"kind": "x"}, timeout=0.2))
+        self.assertIsNone(system1.compaction_decision(
+            {"tokens_used": 1}, timeout=0.2))
+        self.assertIsNone(system1.mandate_canary(
+            ["m"], "ctx", timeout=0.2))
+
+
 if __name__ == "__main__":
     unittest.main()
