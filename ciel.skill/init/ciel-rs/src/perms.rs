@@ -173,8 +173,14 @@ pub fn sweep(home: &Path, ciel: &Path) -> usize {
     repaired.len()
 }
 
-/// `ciel store-perms` — sweep + `ok`/`repaired:N`.
+/// `ciel store-perms` — sweep + `ok`/`repaired:N`. On non-unix hosts the
+/// mode bits this sweep guards don't exist; report `unsupported` instead
+/// of a misleading `ok` so callers can tell "clean" from "can't check".
 pub fn main_() -> i32 {
+    if cfg!(not(unix)) {
+        println!("unsupported");
+        return 0;
+    }
     let n = sweep(&paths::home_dir(), &paths::ciel_home());
     if n == 0 {
         println!("ok");

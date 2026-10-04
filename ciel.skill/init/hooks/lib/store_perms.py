@@ -100,6 +100,11 @@ def _fix_dir(p: Path, repaired: list) -> None:
 
 
 def main() -> int:
+    if os.name != "posix":
+        # POSIX mode bits don't exist here — report "unsupported" rather
+        # than a misleading "ok" so callers can tell clean from uncheckable.
+        print("unsupported")
+        return 0
     repaired: list = []
     for d in DIR_TARGETS:
         _fix_dir(d, repaired)

@@ -88,9 +88,11 @@ def ciel_bin() -> str | None:
     if env_bin:
         return env_bin if os.access(env_bin, os.X_OK) else None
     home = ciel_home()
-    candidates = [home / "bin" / "ciel", Path.home() / ".cargo" / "bin" / "ciel"]
+    names = ("ciel", "ciel.exe") if os.name == "nt" else ("ciel",)
+    candidates = [home / "bin" / n for n in names]
+    candidates += [Path.home() / ".cargo" / "bin" / n for n in names]
     if _INIT_DIR is not None:
-        candidates.append(_INIT_DIR / "bin" / "ciel")
+        candidates += [_INIT_DIR / "bin" / n for n in names]
     for c in candidates:
         if c.is_file() and os.access(c, os.X_OK):
             return str(c)

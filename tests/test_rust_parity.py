@@ -555,6 +555,22 @@ class TestSessionOpsParity(unittest.TestCase):
         self.assertEqual(0o600, loose.stat().st_mode & 0o777)
         self.assertEqual(0o700, (self.ciel / "logs").stat().st_mode & 0o777)
 
+    def test_store_perms_unsupported_nonposix(self):
+        """Non-POSIX hosts must print 'unsupported', never a false 'ok'.
+        The Rust side is cfg-gated at compile time; here we pin the Python
+        contract both engines share."""
+        import contextlib
+        import io
+        from unittest import mock
+        sys.path.insert(0, str(LIB))
+        import store_perms
+        buf = io.StringIO()
+        with mock.patch.object(store_perms.os, "name", "nt"):
+            with contextlib.redirect_stdout(buf):
+                rc = store_perms.main()
+        self.assertEqual(0, rc)
+        self.assertEqual("unsupported", buf.getvalue().strip())
+
     def test_ledger_add_pending_done(self):
         # shared-ledger sequence: both engines see identical event flow
         _, rid_py = self._py(REQUIREMENTS, "add", "write tests", "--session", "s1")
