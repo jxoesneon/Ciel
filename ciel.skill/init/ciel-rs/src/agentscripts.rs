@@ -298,7 +298,7 @@ fn log_entry(entry: Value) {
     paths::activity_log(&entry);
 }
 
-/// `ciel post-tool --runtime {devin|antigravity}` — PostToolUse logger.
+/// `ciel post-tool --runtime {devin|antigravity|opencode}` — PostToolUse logger.
 /// devin: {tool_name,tool_response{success,error},session_id,prompt_id} →
 /// silent. antigravity: {toolCall{name},error,conversationId} → "{}".
 pub fn post_tool_main(runtime: &str) -> i32 {
@@ -326,7 +326,7 @@ pub fn post_tool_main(runtime: &str) -> i32 {
             .unwrap_or(json!({}));
         json!({
             "ts": paths::utc_now_iso(),
-            "runtime": "devin",
+            "runtime": runtime,
             "event": "PostToolUse",
             "tool": s_of(&p, &["tool_name", "toolName"]).unwrap_or("unknown"),
             "success": resp.get("success").cloned().unwrap_or(Value::Null),
@@ -387,7 +387,7 @@ pub fn session_end_main(runtime: &str) -> i32 {
     0
 }
 
-/// `ciel stop --runtime {devin|antigravity}` — Stop event logger; devin also
+/// `ciel stop --runtime {devin|antigravity|opencode}` — Stop event logger; devin also
 /// enforces the requirement-ledger completion nudge (≤2 nudges/session).
 pub fn stop_main(runtime: &str) -> i32 {
     let p = payload();

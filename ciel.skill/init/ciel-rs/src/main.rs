@@ -25,9 +25,9 @@ USAGE:\n\
     ciel <command> [args]\n\
 \n\
 HOOK BODIES (stdin JSON → stdout JSON):\n\
-    pretool --runtime {devin|antigravity}   PreToolUse gate body\n\
+    pretool --runtime {devin|antigravity|opencode}   PreToolUse gate body\n\
     prompt-submit                            UserPromptSubmit scan + canary\n\
-    session-start --runtime {devin|antigravity}  SessionStart body (one process)\n\
+    session-start --runtime {devin|antigravity|opencode}  SessionStart body (one process)\n\
 \n\
 PRIMITIVES (used by shell hooks and tests):\n\
     risk-eval        stdin {tool,command,path} → verdict JSON\n\
@@ -36,6 +36,10 @@ PRIMITIVES (used by shell hooks and tests):\n\
     secret-scan      stdin text → {hits, categories}\n\
     attribution-scan stdin command → {result, findings, mode}\n\
     route-choice     stdin {task, options} → verdict JSON\n\
+    context-select   stdin {task, options|context_items, k} → keep/drop map\n\
+    memory-salience  stdin {event} → write-back verdict JSON\n\
+    context-compaction stdin {stats|context|budget} → compaction verdict\n\
+    mandate-canary   stdin {mandates, context} → canary verdict JSON\n\
     verify-completion [--objective ..] [--evidence ..] → verification JSON\n\
 \n\
 SESSION OPERATIONS:\n\
@@ -90,6 +94,10 @@ fn main() -> ExitCode {
         "secret-scan" => secretscan::main_(),
         "attribution-scan" => attribution::main_(),
         "route-choice" => system1::route_choice_main(),
+        "context-select" => system1::context_select_main(),
+        "memory-salience" => system1::memory_salience_main(),
+        "context-compaction" => system1::context_compaction_main(),
+        "mandate-canary" => system1::mandate_canary_main(),
         "verify-completion" => system1::verify_completion_main(&args[1..]),
         "preflight" => agentscripts::preflight_main(&args[1..]),
         "audit" => agentscripts::audit_main(&args[1..]),

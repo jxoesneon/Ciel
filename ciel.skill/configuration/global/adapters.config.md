@@ -34,6 +34,14 @@ adapters:
       alert_on: 0.8
       hard_stop_on: 1.0
       fallback_confidence_bump: 0.05
+  opencode:
+    hooks:
+      preflight: true
+      postflight: true
+      session: true
+      permission: true
+    plan_mode: true
+    parallel_subagents: true
   generic:
     research_enabled: true
 
