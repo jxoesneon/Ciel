@@ -15,6 +15,16 @@ if [ -z "$CIEL_BIN" ]; then
   done
 fi
 _fb_reason="binary-absent"
+# System-1 context surfaces — detached shadow dispatch (Antigravity's
+# prompt-submit boundary is pre_invocation). Compaction pressure, mandate-
+# canary drift, and context_select are scored asynchronously; verdicts accrue
+# in ~/.ciel/system1/events.jsonl and never gate the invocation. The worker
+# drains the hook's stdin itself — this body never blocks on it.
+if command -v python3 >/dev/null 2>&1 && [ -f "$HOOK_DIR/../lib/system1.py" ]; then
+  ( CIEL_BIN="$CIEL_BIN" \
+      python3 "$HOOK_DIR/../lib/system1.py" --prompt-shadow "antigravity/pre_invocation" \
+      >/dev/null 2>&1 & )
+fi
 if [ -n "$CIEL_BIN" ] && [ -x "$CIEL_BIN" ]; then
   _fb_reason="binary-failed"
   if "$CIEL_BIN" session-start --runtime antigravity; then

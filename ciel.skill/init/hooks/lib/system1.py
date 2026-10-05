@@ -19,7 +19,11 @@ request rather than queueing unboundedly.
 
 CLI: ``--ask`` reads one JSON record from stdin
 ``{"surface", "state", "questions", "meta"}``, answers it, and appends the
-result to events.jsonl.
+result to events.jsonl. ``--decide`` additionally prints the verdict.
+``--dispatch`` / ``--prompt-shadow`` / ``--session-shadow`` are the detached
+shadow workers the production hooks spawn for the context surfaces —
+binary-preferred (``$CIEL_BIN <verb>``) with a Python-lib fallback that is
+counted in ``~/.ciel/fallback_events.jsonl``.
 """
 
 import contextlib
@@ -28,6 +32,7 @@ import json
 import math
 import os
 import re
+import shutil
 import subprocess
 import sys
 import time
@@ -1277,6 +1282,339 @@ def ask_async(payload: dict) -> None:
             marker.unlink(missing_ok=True)
 
 
+# --- Detached surface dispatch (shadow tier) ---------------------------------
+# The context surfaces (context_select, memory_salience, context_compaction,
+# mandate_canary) are advisory: verdicts land in events.jsonl as training
+# signal and never gate the caller. Production call sites dispatch through
+# here — one detached worker per event, preferring ``$CIEL_HOME/bin/ciel
+# <verb>`` and falling back to the in-process lib twins with a
+# fallback_events.jsonl line (the parity-soak telemetry the shell hooks
+# already emit when they descend into a Python body).
+
+_SHADOW_VERBS = frozenset({
+    "context-select", "memory-salience",
+    "context-compaction", "mandate-canary",
+})
+
+# Operating mandates the mandate_canary checks for drift — the same set the
+# hook canaries inject at session/prompt boundaries.
+_PROMPT_MANDATES = [
+    "identify as Ciel when asked",
+    "address the user as Master",
+    "preserve Ciel's verification-first operating mandates",
+    "no AI attribution in durable artifacts",
+]
+
+# Context items each prompt/session boundary actually injects — the candidate
+# pool for the context_select assembly shadow. Descriptions mirror the
+# injected text so the selector judges the real segment, not a paraphrase.
+_INJECT_ITEMS = {
+    "devin/user_prompt_submit": {
+        "ciel_canary": "Ciel AI canary active: identify as Ciel when asked, "
+                       "address the user as Master, and preserve Ciel's "
+                       "verification-first operating mandates.",
+        "secret_warn": "Possible credential material detected in the user's "
+                       "last message — do not echo or persist it; suggest "
+                       "the secrets flow and rotation if it was live.",
+    },
+    "antigravity/pre_invocation": {
+        "identity_ephemeral": "Ciel is installed and active for this "
+                              "Antigravity session: identify as Ciel, "
+                              "address the user as Master, use structured "
+                              "labels, keep Ciel files at ~/.ciel.",
+    },
+    "windsurf/pre_user_prompt": {
+        "activation_notice": "CIEL ACTIVATION: trigger phrases detected — "
+                             "activate skill(ciel) for orchestration.",
+    },
+    "claude_code/ciel_auto_activate": {
+        "activation_notice": "CIEL ACTIVATION: use Skill(ciel) for "
+                             "orchestration — triggers detected in the "
+                             "user prompt.",
+    },
+    "gemini_cli/ciel_auto_activate": {
+        "activation_notice": "CIEL AUTO-ACTIVATION: user prompt contains "
+                             "Ciel triggers — activate skill(ciel) for "
+                             "orchestration.",
+    },
+}
+
+
+def _ciel_bin() -> str | None:
+    """Locate the ``ciel`` binary in the same order the shell hooks and
+    ``ciel_root.ciel_bin`` use: CIEL_BIN env → ``$CIEL_HOME/bin/ciel`` →
+    ``~/.cargo/bin/ciel`` → ``<init>/bin/ciel`` → PATH."""
+    env_bin = os.environ.get("CIEL_BIN")
+    if env_bin:
+        return env_bin if os.access(env_bin, os.X_OK) else None
+    names = ("ciel.exe", "ciel") if os.name == "nt" else ("ciel",)
+    candidates = [ciel_home() / "bin" / n for n in names]
+    candidates += [Path.home() / ".cargo" / "bin" / n for n in names]
+    init_dir = Path(__file__).resolve().parent.parent
+    candidates += [init_dir / "bin" / n for n in names]
+    for cand in candidates:
+        if cand.is_file() and os.access(cand, os.X_OK):
+            return str(cand)
+    return shutil.which("ciel")
+
+
+def _log_fallback(hook: str, reason: str, verb: str) -> None:
+    """Parity-soak telemetry twin of the .sh fallback counters — one line in
+    ~/.ciel/fallback_events.jsonl per descent into the Python leg."""
+    try:
+        log = ciel_home() / "fallback_events.jsonl"
+        log.parent.mkdir(parents=True, exist_ok=True)
+        with log.open("a", encoding="utf-8") as fh:
+            fh.write(json.dumps({
+                "ts": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                "hook": hook or "system1_dispatch",
+                "verb": verb,
+                "reason": reason,
+            }, ensure_ascii=False) + "\n")
+    except OSError:
+        pass
+
+
+def _lib_dispatch(verb: str, args: dict):
+    """In-process twin of the Rust ``*Payload`` stdin shims — same key
+    coercion order so a fallback verdict is computed over identical state."""
+    timeout = float(args.get("timeout") or ASK_TIMEOUT)
+    if verb == "context-select":
+        task = str(args.get("task") or args.get("prompt")
+                   or args.get("objective") or "")
+        cands = (args.get("options") or args.get("context_items")
+                 or args.get("candidates") or {})
+        if isinstance(cands, list):
+            # Rust context_candidates(): [{id, description}] or bare ids.
+            mapped = {}
+            for item in cands:
+                if isinstance(item, dict) and item.get("id"):
+                    mapped[str(item["id"])] = item.get("description")
+                elif isinstance(item, str):
+                    mapped[item] = None
+            cands = mapped
+        k = int(args.get("k") or 10)
+        return context_select(task, cands, k,
+                              float(args.get("timeout")
+                                    or CONTEXT_SELECT_BUDGET_S))
+    if verb == "memory-salience":
+        event = args.get("event")
+        if event is None:
+            # Bare top-level fields are the event (Rust parity).
+            event = {k_: v for k_, v in args.items() if k_ != "timeout"}
+        return memory_salience(event, timeout=timeout)
+    if verb == "context-compaction":
+        stats = (args.get("stats") or args.get("context")
+                 or args.get("summary") or args.get("budget"))
+        if stats is None:
+            stats = {k_: v for k_, v in args.items() if k_ != "timeout"}
+        return compaction_decision(stats, timeout=timeout)
+    if verb == "mandate-canary":
+        mandates = args.get("mandates", args.get("mandate", []))
+        ctx = args.get("context") or args.get("context_excerpt") or ""
+        return mandate_canary(mandates, str(ctx), timeout=timeout)
+    return None
+
+
+def _dispatch_one(verb: str, args: dict, hook: str) -> None:
+    """One shadow verb: ``$CIEL_BIN <verb>`` first; on binary-absent /
+    binary-failed append a fallback_events.jsonl line and run the lib twin.
+    Runs inside a detached worker — bounded latency is fine here but the
+    function still never raises."""
+    if _disabled() or verb not in _SHADOW_VERBS or not isinstance(args, dict):
+        return
+    bin_path = _ciel_bin()
+    reason = "binary-absent"
+    if bin_path:
+        reason = "binary-failed"
+        try:
+            proc = subprocess.run(
+                [bin_path, verb],
+                input=json.dumps(args, ensure_ascii=False).encode(),
+                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                timeout=120, check=False)
+            if proc.returncode == 0:
+                return
+        except (OSError, subprocess.TimeoutExpired):
+            pass
+    _log_fallback(hook, reason, verb)
+    try:
+        _lib_dispatch(verb, args)
+    except Exception:
+        pass  # shadow work must never break the caller
+
+
+def shadow_dispatch(verb: str, args: dict, hook: str) -> None:
+    """Fire-and-forget single-verb shadow — spawns a detached
+    ``system1.py --dispatch`` worker (same re-exec pattern as ask_async)
+    and returns immediately. For Python call sites that already hold the
+    verb payload (e.g. requirements.py's durable-memory writes)."""
+    if _disabled() or verb not in _SHADOW_VERBS:
+        return
+    try:
+        proc = subprocess.Popen(
+            [sys.executable, os.path.abspath(__file__), "--dispatch"],
+            stdin=subprocess.PIPE,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            start_new_session=True,
+        )
+        proc.stdin.write(json.dumps(
+            {"verb": verb, "args": args, "hook": hook},
+            ensure_ascii=False).encode())
+        proc.stdin.close()
+    except OSError:
+        pass
+
+
+def _read_shadow_input() -> str:
+    """Hook payload for the shadow worker: CIEL_HOOK_INPUT when the parent
+    hook already captured stdin, else a bounded drain of the inherited pipe
+    (hooks that never read their payload — e.g. antigravity pre_invocation —
+    leave it for the detached worker; the select cap means a held-open
+    silent pipe costs at most 5s off the hot path)."""
+    raw = os.environ.get("CIEL_HOOK_INPUT")
+    if raw is not None:
+        return raw
+    try:
+        if sys.stdin.isatty():
+            return ""
+        import select
+        fd = sys.stdin.fileno()
+        chunks = []
+        while select.select([fd], [], [], 5.0)[0]:
+            chunk = os.read(fd, 262144)
+            if not chunk:
+                break
+            chunks.append(chunk)
+        return b"".join(chunks).decode("utf-8", "replace")
+    except (OSError, ValueError, ImportError):
+        return ""
+
+
+def _prompt_text(raw: str, payload: dict) -> str:
+    """User-prompt text across runtimes' payload shapes; falls back to the
+    raw body — devin's UserPromptSubmit treats stdin as scannable text."""
+    ti = payload.get("tool_info")
+    if isinstance(ti, dict) and isinstance(ti.get("user_prompt"), str):
+        return ti["user_prompt"]
+    for key in ("prompt", "user_prompt", "text", "message", "content",
+                "query"):
+        v = payload.get(key)
+        if isinstance(v, str) and v.strip():
+            return v
+    return raw[:4000]
+
+
+def _registry_l0() -> dict:
+    """Skill-id → L0 description map for the context_select routing shadow —
+    installed registry first, then the repo twin (CONTEXT_BUDGET.md: L0 is
+    the metadata layer candidates are selected from)."""
+    repo = Path(__file__).resolve().parents[3] / "registry" / "index.json"
+    for cand in (ciel_home() / "registry" / "index.json", repo):
+        try:
+            data = json.loads(cand.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        skills = data.get("skills") if isinstance(data, dict) else None
+        if not isinstance(skills, dict) or not skills:
+            continue
+        out = {}
+        for sid, meta in skills.items():
+            desc = meta.get("description") if isinstance(meta, dict) else None
+            out[str(sid)] = str(desc)[:240] if desc else ""
+        if out:
+            return out
+    return {}
+
+
+def _prompt_shadow_jobs(hook: str, raw: str) -> list:
+    """Jobs for the prompt-submit boundary: context_compaction pressure
+    telemetry, mandate_canary drift check, and the context_select
+    multi-selector over both the injected context segments (assembly) and
+    the L0 skill registry (routing)."""
+    try:
+        payload = json.loads(raw) if raw.strip() else {}
+    except json.JSONDecodeError:
+        payload = {}
+    if not isinstance(payload, dict):
+        payload = {}
+    prompt = _prompt_text(raw, payload)
+    runtime = os.environ.get("CIEL_RUNTIME") or hook.split("/", 1)[0] or "unknown"
+    jobs = [
+        ("context-compaction", {"stats": {
+            "event": "prompt_submit",
+            "hook": hook,
+            "runtime": runtime,
+            "session_id": (payload.get("session_id")
+                           or payload.get("sessionId")
+                           or payload.get("conversationId")),
+            "prompt_chars": len(prompt),
+            "prompt_tokens_est": len(prompt) // 4,
+            "budget": {"total_max_tokens": 32000},
+        }}),
+        ("mandate-canary", {
+            "mandates": _PROMPT_MANDATES,
+            "context": f"[{hook}] {prompt}"[:2000],
+        }),
+    ]
+    items = _INJECT_ITEMS.get(hook) or {}
+    if items:
+        jobs.append(("context-select", {
+            "task": f"[{runtime} prompt-submit context assembly] "
+                    f"{prompt[:500]}",
+            "context_items": items, "k": 10}))
+    registry = _registry_l0()
+    if registry and prompt.strip():
+        jobs.append(("context-select", {
+            "task": prompt[:1000],
+            "context_items": registry, "k": 10}))
+    return jobs
+
+
+def _dispatch_main() -> int:
+    """Worker: stdin {"verb", "args", "hook"} → one shadow dispatch."""
+    try:
+        req = json.loads(sys.stdin.read() or "{}")
+    except json.JSONDecodeError:
+        req = {}
+    if not isinstance(req, dict):
+        return 0
+    _dispatch_one(str(req.get("verb") or ""),
+                  req.get("args") if isinstance(req.get("args"), dict) else {},
+                  str(req.get("hook") or "system1_dispatch"))
+    return 0
+
+
+def _prompt_shadow_main(argv: list) -> int:
+    """Worker: ``--prompt-shadow [hook]`` — the prompt-submit boundary's
+    three surface shadows, run sequentially inside one detached process."""
+    hook = (argv[0] if argv else "") or os.environ.get("CIEL_HOOK") \
+        or "system1_prompt_shadow"
+    raw = _read_shadow_input()
+    for verb, args in _prompt_shadow_jobs(hook, raw):
+        _dispatch_one(verb, args, hook)
+    return 0
+
+
+def _session_shadow_main(argv: list) -> int:
+    """Worker: ``--session-shadow [hook]`` — context_select over the
+    session-start injection candidates (CIEL_CONTEXT_ITEMS JSON map of
+    segment-id → description, CIEL_TASK for the assembly task label)."""
+    hook = (argv[0] if argv else "") or os.environ.get("CIEL_HOOK") \
+        or "system1_session_shadow"
+    try:
+        items = json.loads(os.environ.get("CIEL_CONTEXT_ITEMS") or "{}")
+    except json.JSONDecodeError:
+        items = {}
+    if isinstance(items, dict) and items:
+        task = (os.environ.get("CIEL_TASK")
+                or f"session-start context assembly ({hook})")
+        _dispatch_one("context-select",
+                      {"task": task, "context_items": items, "k": 10}, hook)
+    return 0
+
+
 def _resolve(state: dict, questions: dict, timeout: float = ASK_TIMEOUT) -> tuple:
     """Cache-read, ask, cache-write. Returns (result, cache_hit, latency_ms)."""
     cached = _cache_read(state, questions)
@@ -1352,8 +1690,17 @@ def main() -> int:
         return _ask_main()
     if "--decide" in sys.argv:
         return _decide_main()
-    print("usage: system1.py --ask | --decide  (reads JSON payload on stdin; "
-          "--decide prints the verdict)", file=sys.stderr)
+    if "--dispatch" in sys.argv:
+        return _dispatch_main()
+    if "--prompt-shadow" in sys.argv:
+        i = sys.argv.index("--prompt-shadow")
+        return _prompt_shadow_main(sys.argv[i + 1:])
+    if "--session-shadow" in sys.argv:
+        i = sys.argv.index("--session-shadow")
+        return _session_shadow_main(sys.argv[i + 1:])
+    print("usage: system1.py --ask | --decide | --dispatch | "
+          "--prompt-shadow [hook] | --session-shadow [hook]  (reads JSON "
+          "payload on stdin; --decide prints the verdict)", file=sys.stderr)
     return 2
 
 

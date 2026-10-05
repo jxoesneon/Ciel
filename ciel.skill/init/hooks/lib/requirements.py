@@ -39,9 +39,27 @@ def _events() -> list[dict]:
         return []
 
 
+def _salience_shadow(event: dict) -> None:
+    """Detached memory_salience shadow on each durable ledger write —
+    advisory only: the verdict lands in ~/.ciel/system1/events.jsonl
+    (surface=memory_salience) and NEVER gates the write. Fire-and-forget;
+    any failure drops the shadow, not the ledger append."""
+    try:
+        lib = Path(__file__).resolve().parent
+        if str(lib) not in sys.path:
+            sys.path.insert(0, str(lib))
+        import system1
+        system1.shadow_dispatch(
+            "memory-salience", {"event": dict(event)},
+            "requirements/ledger")
+    except Exception:
+        pass
+
+
 def _append(event: dict) -> None:
     LEDGER.parent.mkdir(parents=True, exist_ok=True)
     event["ts"] = datetime.now(timezone.utc).isoformat()
+    _salience_shadow(event)
     with LEDGER.open("a", encoding="utf-8") as fh:
         fh.write(json.dumps(event, ensure_ascii=False) + "\n")
 

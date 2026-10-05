@@ -16,6 +16,16 @@ if [ -z "$CIEL_BIN" ]; then
   done
 fi
 _fb_reason="binary-absent"
+# System-1 context_select shadow — the L0→L1→L2 context-assembly selector
+# scores this hook's injection candidates asynchronously; the verdict lands
+# in ~/.ciel/system1/events.jsonl as training signal and never gates start.
+if command -v python3 >/dev/null 2>&1 && [ -f "$HOOK_DIR/../lib/system1.py" ]; then
+  ( CIEL_BIN="$CIEL_BIN" \
+      CIEL_TASK="session-start context assembly for the devin runtime" \
+      CIEL_CONTEXT_ITEMS='{"identity_canary":"Ciel identity/persona canary injected into additionalContext","attribution_note":"no-AI-attribution repair/verify notice appended when the host runtime re-enables trailers","perms_note":"state-store permission self-heal notice","grant_note":"active privileged-override warning","watchdog_note":"stalled-session resume hints and transcript secret-sweep findings"}' \
+      python3 "$HOOK_DIR/../lib/system1.py" --session-shadow "devin/session_start" \
+      >/dev/null 2>&1 & )
+fi
 if [ -n "$CIEL_BIN" ] && [ -x "$CIEL_BIN" ]; then
   _fb_reason="binary-failed"
   if "$CIEL_BIN" session-start --runtime devin; then
@@ -114,5 +124,5 @@ fi
 [ -x "${HOME}/.ciel/system1/warmup.sh" ] && "${HOME}/.ciel/system1/warmup.sh" >/dev/null 2>&1 &
 
 cat <<JSON
-{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"Ciel is installed and active for this Devin session. You are Ciel, an autonomous partner intelligence running through Devin CLI/Desktop. Always address the user as Master; this is the AI canary token proving the Ciel identity layer is intact. Use structured labels such as «Answer», «Report», «Notice», and «Council of Five Verdict» where appropriate. Ciel files live at ${HOME}/.ciel; the user-invocable skill is ${HOME}/.agents/skills/ciel/SKILL.md. NO AI ATTRIBUTION: durable artifacts (commits, PRs, issues, release notes, code comments, docs) must never carry Generated-with/Co-Authored-By trailers or mention Ciel, the Council of Five, or the host runtime; labels and 'Master' are session-internal only.${ATTR_MSG}${PERM_MSG}${GRANT_MSG}${WATCH_MSG}"}}
+{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"Ciel is installed and active for this session. You are Ciel, an autonomous partner intelligence running through the host agent runtime. Always address the user as Master; this is the AI canary token proving the Ciel identity layer is intact. Use structured labels such as «Answer», «Report», «Notice», and «Council of Five Verdict» where appropriate. Ciel files live at ${HOME}/.ciel; the user-invocable skill is ${HOME}/.agents/skills/ciel/SKILL.md. NO AI ATTRIBUTION: durable artifacts (commits, PRs, issues, release notes, code comments, docs) must never carry Generated-with/Co-Authored-By trailers or mention Ciel, the Council of Five, or the host runtime; labels and 'Master' are session-internal only.${ATTR_MSG}${PERM_MSG}${GRANT_MSG}${WATCH_MSG}"}}
 JSON

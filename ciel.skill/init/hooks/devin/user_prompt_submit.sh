@@ -17,6 +17,15 @@ if [ -z "$CIEL_BIN" ]; then
   done
 fi
 _fb_reason="binary-absent"
+# System-1 context surfaces — detached shadow dispatch. Compaction pressure,
+# mandate-canary drift, and the context_select multi-selector (injected
+# segments + L0 registry) are scored asynchronously; verdicts accrue in
+# ~/.ciel/system1/events.jsonl as training signal and never gate the prompt.
+if command -v python3 >/dev/null 2>&1 && [ -f "$HOOK_DIR/../lib/system1.py" ]; then
+  ( CIEL_HOOK_INPUT="$input" CIEL_BIN="$CIEL_BIN" \
+      python3 "$HOOK_DIR/../lib/system1.py" --prompt-shadow "devin/user_prompt_submit" \
+      >/dev/null 2>&1 & )
+fi
 if [ -n "$CIEL_BIN" ] && [ -x "$CIEL_BIN" ]; then
   _fb_reason="binary-failed"
   if printf '%s' "$input" | "$CIEL_BIN" prompt-submit; then
