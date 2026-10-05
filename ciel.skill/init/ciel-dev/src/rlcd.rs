@@ -11,8 +11,10 @@ fn obj_or_empty(v: Option<&Value>) -> Map<String, Value> {
     v.and_then(|v| v.as_object()).cloned().unwrap_or_default()
 }
 
-/// `process_events` — pairs from flagged/uncertain pre_tool_risk records
-/// and council_prescreen consensus signals.
+/// `process_events` — pairs from flagged/uncertain pre_tool_risk records,
+/// context-surface flag corrections (context_select, memory_salience,
+/// context_compaction, mandate_canary), and council_prescreen consensus
+/// signals.
 fn process_events(events_file: &Path) -> Vec<Value> {
     let mut pairs = Vec::new();
     let Ok(fh) = std::fs::File::open(events_file) else {
@@ -57,7 +59,87 @@ fn process_events(events_file: &Path) -> Vec<Value> {
             }
         }
 
-        // 2. Council Override / Prescreen
+        // 2. Context surfaces — a flagged/uncertain shadow verdict means the
+        // model's direction departs from the passive default: emit a pair
+        // preferring the verdict direction over the default, the same
+        // flag-overrides-pass convention as pre_tool_risk above.
+        if flag == json!("flag") || flag == json!("uncertain") {
+            match surface.as_str().unwrap_or("") {
+                // context_select keeps everything by default; a drop verdict
+                // at flag band is the correction.
+                "context_select" => {
+                    if let Some(ans) = answers.get("relevant").and_then(|a| a.as_object()) {
+                        if ans.get("choice") == Some(&json!("drop")) {
+                            pairs.push(json!({
+                                "surface": surface,
+                                "question_key": "relevant",
+                                "state": state,
+                                "chosen": "drop",
+                                "rejected": ["keep"],
+                                "source": "system1_flag",
+                                "model_confidence": ans.get("confidence").cloned().unwrap_or(Value::Null),
+                            }));
+                        }
+                    }
+                }
+                // memory_salience: the shadow fires on ledger writes (which
+                // always store); a "skip" verdict contradicts the write.
+                "memory_salience" => {
+                    if let Some(ans) = answers.get("salience").and_then(|a| a.as_object()) {
+                        if ans.get("choice") == Some(&json!("skip")) {
+                            pairs.push(json!({
+                                "surface": surface,
+                                "question_key": "salience",
+                                "state": state,
+                                "chosen": "skip",
+                                "rejected": ["store"],
+                                "source": "system1_flag",
+                                "model_confidence": ans.get("confidence").cloned().unwrap_or(Value::Null),
+                            }));
+                        }
+                    }
+                }
+                // context_compaction: "continue" is the default; any other
+                // action at flag band is the correction.
+                "context_compaction" => {
+                    if let Some(ans) = answers.get("action").and_then(|a| a.as_object()) {
+                        if let Some(ch) = ans.get("choice").and_then(|c| c.as_str()) {
+                            if ch != "continue" {
+                                pairs.push(json!({
+                                    "surface": surface,
+                                    "question_key": "action",
+                                    "state": state,
+                                    "chosen": ch,
+                                    "rejected": ["continue"],
+                                    "source": "system1_flag",
+                                    "model_confidence": ans.get("confidence").cloned().unwrap_or(Value::Null),
+                                }));
+                            }
+                        }
+                    }
+                }
+                // mandate_canary: operative is the default; a drifted flag
+                // is the correction.
+                "mandate_canary" => {
+                    if let Some(ans) = answers.get("mandates").and_then(|a| a.as_object()) {
+                        if ans.get("choice") == Some(&json!("drifted")) {
+                            pairs.push(json!({
+                                "surface": surface,
+                                "question_key": "mandates",
+                                "state": state,
+                                "chosen": "drifted",
+                                "rejected": ["operative"],
+                                "source": "system1_flag",
+                                "model_confidence": ans.get("confidence").cloned().unwrap_or(Value::Null),
+                            }));
+                        }
+                    }
+                }
+                _ => {}
+            }
+        }
+
+        // 3. Council Override / Prescreen
         if surface == json!("council_prescreen") {
             let cons = meta.get("council_consensus").and_then(|v| v.as_str());
             match cons {
@@ -140,6 +222,61 @@ fn process_signals_and_dockets(dockets_dir: &Path, signals_dir: &Path) -> Vec<Va
                     "chosen": chosen,
                     "rejected": [rejected],
                     "source": "council_signal_json",
+                }));
+            }
+        }
+    }
+
+    // Council verdict files (~/.ciel/council/*.verdict.json) — the
+    // Chairman-serialized shape: {"verdict": "pass"|"reject"|"deadlock"}.
+    let council_dir = if dockets_dir
+        .file_name()
+        .map(|n| n == "dockets")
+        .unwrap_or(false)
+    {
+        dockets_dir
+            .parent()
+            .map(|p| p.to_path_buf())
+            .unwrap_or_else(|| dockets_dir.to_path_buf())
+    } else {
+        dockets_dir.to_path_buf()
+    };
+    if council_dir.is_dir() {
+        if let Ok(rd) = std::fs::read_dir(&council_dir) {
+            for e in rd.flatten() {
+                let p = e.path();
+                let is_verdict = p
+                    .file_name()
+                    .and_then(|n| n.to_str())
+                    .map(|n| n.ends_with(".verdict.json"))
+                    .unwrap_or(false);
+                if !is_verdict {
+                    continue;
+                }
+                let data: Value = match std::fs::read_to_string(&p)
+                    .ok()
+                    .and_then(|t| serde_json::from_str(&t).ok())
+                {
+                    Some(d) => d,
+                    None => continue,
+                };
+                let verdict = data.get("verdict").and_then(|v| v.as_str()).unwrap_or("");
+                if !matches!(verdict, "pass" | "reject" | "deadlock") {
+                    continue;
+                }
+                let passed = verdict == "pass";
+                pairs.push(json!({
+                    "surface": "council_audit",
+                    "question_key": "audit_verdict",
+                    "state": {
+                        "run_id": data.get("run_id").cloned()
+                            .unwrap_or_else(|| json!(p.file_stem().map(|s| s.to_string_lossy().into_owned()).unwrap_or_default())),
+                        "weighted_score": data.get("weighted_score").cloned().unwrap_or(Value::Null),
+                        "votes": data.get("votes").cloned().unwrap_or(Value::Null),
+                    },
+                    "chosen": if passed { "routine" } else { "escalate" },
+                    "rejected": [if passed { "escalate" } else { "routine" }],
+                    "source": "council_verdict_json",
                 }));
             }
         }

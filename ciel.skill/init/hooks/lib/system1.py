@@ -1096,6 +1096,28 @@ def council_prescreen(subject: str, meta: dict | None = None) -> None:
     })
 
 
+def council_outcome(subject: str, consensus: str,
+                    run_id: str | None = None) -> None:
+    """Record a council verdict as a council_prescreen event carrying
+    ``meta.council_consensus`` — the RLCD pair generator's highest-quality
+    correction source. ``consensus`` is 'approve', 'reject', or 'escalate'.
+    Appends directly to events.jsonl; no model call is made."""
+    if consensus not in ("approve", "reject", "escalate"):
+        return
+    meta = {"pipeline": "council_outcome", "council_consensus": consensus}
+    if run_id:
+        meta["run_id"] = run_id
+    _append_event({
+        "ts": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "surface": "council_prescreen",
+        "state": {"event": subject},
+        "questions": PRESCREEN_QUESTIONS,
+        "meta": meta,
+        "system1": None,
+        "flag": "pass",
+    })
+
+
 def evaluate_risk(tool: str, command: str, path: str,
                   runtime: str = "antigravity",
                   ts: str | None = None,

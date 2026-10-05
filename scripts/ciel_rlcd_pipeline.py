@@ -54,7 +54,45 @@ def process_events(events_file: Path) -> list:
                             "model_confidence": ans.get("confidence")
                         })
 
-            # 2. Council Override / Prescreen
+            # 2. Context surfaces — a flagged/uncertain shadow verdict
+            # departs from the passive default; prefer the verdict
+            # direction, same convention as pre_tool_risk above.
+            if flag in ("flag", "uncertain"):
+                if surface == "context_select":
+                    ans = answers.get("relevant") or {}
+                    if ans.get("choice") == "drop":
+                        pairs.append({
+                            "surface": surface, "question_key": "relevant",
+                            "state": state, "chosen": "drop",
+                            "rejected": ["keep"], "source": "system1_flag",
+                            "model_confidence": ans.get("confidence")})
+                elif surface == "memory_salience":
+                    ans = answers.get("salience") or {}
+                    if ans.get("choice") == "skip":
+                        pairs.append({
+                            "surface": surface, "question_key": "salience",
+                            "state": state, "chosen": "skip",
+                            "rejected": ["store"], "source": "system1_flag",
+                            "model_confidence": ans.get("confidence")})
+                elif surface == "context_compaction":
+                    ans = answers.get("action") or {}
+                    ch = ans.get("choice")
+                    if ch and ch != "continue":
+                        pairs.append({
+                            "surface": surface, "question_key": "action",
+                            "state": state, "chosen": ch,
+                            "rejected": ["continue"], "source": "system1_flag",
+                            "model_confidence": ans.get("confidence")})
+                elif surface == "mandate_canary":
+                    ans = answers.get("mandates") or {}
+                    if ans.get("choice") == "drifted":
+                        pairs.append({
+                            "surface": surface, "question_key": "mandates",
+                            "state": state, "chosen": "drifted",
+                            "rejected": ["operative"], "source": "system1_flag",
+                            "model_confidence": ans.get("confidence")})
+
+            # 3. Council Override / Prescreen
             if surface == "council_prescreen":
                 cons = meta.get("council_consensus")
                 if cons in ("reject", "escalate"):
@@ -119,6 +157,34 @@ def process_signals_and_dockets(dockets_dir: Path, signals_dir: Path) -> list:
                     "rejected": [rejected],
                     "source": "council_signal_json"
                 })
+
+    # Council verdict files (~/.ciel/council/*.verdict.json) — the
+    # Chairman-serialized shape: {"verdict": "pass"|"reject"|...}.
+    council_dir = dockets_dir.parent if dockets_dir.name == "dockets" \
+        else dockets_dir
+    if council_dir.is_dir():
+        for vfile in council_dir.glob("*.verdict.json"):
+            try:
+                with open(vfile, encoding="utf-8") as f:
+                    data = json.load(f)
+            except (OSError, ValueError):
+                continue
+            verdict = data.get("verdict")
+            if verdict not in ("pass", "reject", "deadlock"):
+                continue
+            passed = verdict == "pass"
+            pairs.append({
+                "surface": "council_audit",
+                "question_key": "audit_verdict",
+                "state": {
+                    "run_id": data.get("run_id") or vfile.stem,
+                    "weighted_score": data.get("weighted_score"),
+                    "votes": data.get("votes"),
+                },
+                "chosen": "routine" if passed else "escalate",
+                "rejected": ["escalate" if passed else "routine"],
+                "source": "council_verdict_json",
+            })
 
     # Dockets
     if dockets_dir.is_dir():
