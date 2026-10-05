@@ -224,6 +224,21 @@ pub fn utc_now_iso() -> String {
     )
 }
 
+/// Append one JSON line to `~/.ciel/activity.log`; errors are swallowed the
+/// same way the Python hooks swallow OSError.
+pub fn activity_log(entry: &serde_json::Value) {
+    let path = ciel_home().join("activity.log");
+    if let Ok(mut f) = std::fs::OpenOptions::new()
+        .create(true)
+        .append(true)
+        .open(&path)
+    {
+        use std::io::Write;
+        // Python: json.dumps(entry, ensure_ascii=False) — spaced, raw UTF-8.
+        let _ = writeln!(f, "{}", crate::jsonfmt::dumps_raw(entry));
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -294,20 +309,5 @@ mod tests {
         let home = Path::new("/home/tester");
         assert_eq!(normalize_path("/home/tester/x", home), "~/x");
         assert_eq!(normalize_path("/home/tester", home), "~");
-    }
-}
-
-/// Append one JSON line to `~/.ciel/activity.log`; errors are swallowed the
-/// same way the Python hooks swallow OSError.
-pub fn activity_log(entry: &serde_json::Value) {
-    let path = ciel_home().join("activity.log");
-    if let Ok(mut f) = std::fs::OpenOptions::new()
-        .create(true)
-        .append(true)
-        .open(&path)
-    {
-        use std::io::Write;
-        // Python: json.dumps(entry, ensure_ascii=False) — spaced, raw UTF-8.
-        let _ = writeln!(f, "{}", crate::jsonfmt::dumps_raw(entry));
     }
 }

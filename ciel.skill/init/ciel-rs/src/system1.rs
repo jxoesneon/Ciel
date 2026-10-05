@@ -1357,11 +1357,17 @@ pub fn ask_async(payload: &Value) {
 // ------------------------------------------------------------ ask mains
 
 fn resolve(state: &Value, questions: &Value) -> (Option<Value>, bool, u64) {
+    resolve_timed(state, questions, ASK_TIMEOUT_S)
+}
+
+/// `_resolve(state, questions, timeout)` — cache-read, ask, cache-write with
+/// a caller-supplied deadline. Returns (result, cache_hit, latency_ms).
+fn resolve_timed(state: &Value, questions: &Value, timeout_s: f64) -> (Option<Value>, bool, u64) {
     if let Some(cached) = cache_read(state, questions) {
         return (Some(cached), true, 0);
     }
     let started = Instant::now();
-    let result = ask(state, questions, ASK_TIMEOUT_S);
+    let result = ask(state, questions, timeout_s);
     let latency_ms = started.elapsed().as_millis() as u64;
     if let Some(r) = &result {
         cache_write(state, questions, r);
@@ -2038,6 +2044,414 @@ pub fn route_choice_main() -> i32 {
 
     let verdict = route_choice(task, options, k, timeout);
     println!("{}", crate::jsonfmt::dumps_raw(&verdict.to_json()));
+    0
+}
+
+// ------------------------------------------------------ context surfaces
+// Ports of the four "context" surfaces from hooks/lib/system1.py —
+// context_select, memory_salience, compaction_decision, mandate_canary.
+// Per ADR_20260923 a two-option ``choice`` question stands in for ``noul``
+// throughout: the base checkpoint's noul head follows label wording rather
+// than state.
+
+/// Binding latency ceiling for the context_select surface (Council
+/// RUN_20261004 amendment): the whole surface — coarse shortlist plus one
+/// batch call — must fit inside this budget when wired to latency-sensitive
+/// paths.
+const CONTEXT_SELECT_BUDGET_S: f64 = 1.5;
+
+fn context_select_questions() -> Value {
+    json!({
+        "relevant": {
+            "type": "choice",
+            "instructions": "Is this context item relevant to the current task? Keep it only if it would materially help the agent act correctly now.",
+            "criteria": {
+                "keep": "directly useful or needed for the current task",
+                "drop": "unrelated, stale, or low-value for the current task"
+            }
+        }
+    })
+}
+
+fn salience_questions() -> Value {
+    json!({
+        "salience": {
+            "type": "choice",
+            "instructions": "Should this event be written to long-term memory? Store only durable signal — routine or redundant detail stays out.",
+            "criteria": {
+                "store": "durable fact, decision, preference, or state worth recalling in a later session",
+                "skip": "ephemeral, routine, redundant, or already-recorded detail"
+            }
+        }
+    })
+}
+
+fn compaction_questions() -> Value {
+    json!({
+        "action": {
+            "type": "choice",
+            "instructions": "Given the context-budget pressure, what should the context manager do before the next turn?",
+            "criteria": {
+                "continue": "pressure is low — keep going unchanged",
+                "compress": "summarize verbose or stale sections in place",
+                "drop_stale": "evict low-value items before admitting new ones",
+                "escalate": "budget is exhausted — hand off to the summarizer"
+            }
+        },
+        "pressure": {
+            "type": "score",
+            "instructions": "Rate semantic context pressure — how much of the budget is carrying stale or low-value material (lowest = clean, highest = saturated).",
+            // Score questions take `criteria` as a list of level
+            // descriptions, index 0 first — a keyed rubric dict is rejected
+            // with a per-question schema error.
+            "criteria": [
+                "clean: nearly all context is current and relevant",
+                "mild: some stale items, plenty of headroom",
+                "moderate: noticeable staleness approaching the cap",
+                "high: mostly stale or redundant material",
+                "saturated: at or over budget; action required now"
+            ]
+        }
+    })
+}
+
+fn canary_questions() -> Value {
+    json!({
+        "mandates": {
+            "type": "choice",
+            "instructions": "Are the session's operating mandates (identity, persona, addressing rules, verification requirements) still operative in the active context?",
+            "criteria": {
+                "operative": "mandates are present and being followed",
+                "drifted": "mandates are missing, contradicted, or silently dropped from context"
+            }
+        }
+    })
+}
+
+/// Batched relevance multi-selector over context items — Python
+/// `context_select()`. Unlike `route_choice` (one argmax winner), each
+/// candidate gets its own keep/drop verdict — one `/batch` call over
+/// per-item states instead of N serial asks. Fail-open: None on any
+/// failure — callers must treat None as "keep everything"; a `drop`
+/// verdict only takes effect at or above the surface tau, so uncertain
+/// items are kept.
+///
+/// Returns `{candidate_id: {"keep": bool, "confidence": float}}`.
+pub fn context_select(
+    task: &str,
+    candidates: &serde_json::Map<String, Value>,
+    k: usize,
+    timeout_s: f64,
+) -> Option<Value> {
+    if disabled() {
+        return None;
+    }
+    let pool: Vec<String> = if candidates.len() <= k {
+        candidates.keys().cloned().collect()
+    } else {
+        shortlist_options(task, candidates, k)
+    };
+    if pool.is_empty() {
+        return Some(json!({}));
+    }
+    let questions = context_select_questions();
+    let states: Vec<Value> = pool
+        .iter()
+        .map(|name| {
+            json!({
+                "task": task,
+                "context_item": {
+                    "id": name,
+                    "description": candidates.get(name).cloned().unwrap_or(Value::Null)
+                }
+            })
+        })
+        .collect();
+    let started = Instant::now();
+    let results = ask_batch(&states, &questions, timeout_s);
+    let latency_ms = started.elapsed().as_millis() as u64;
+    // Positional zip — a None batch item or a missing answer lands as null.
+    let mut per_item = serde_json::Map::new();
+    if let Some(ref res) = results {
+        for (name, item) in pool.iter().zip(res.iter()) {
+            let ans = item
+                .as_ref()
+                .and_then(|r| r.get("answers"))
+                .and_then(|a| a.get("relevant"))
+                .cloned()
+                .unwrap_or(Value::Null);
+            per_item.insert(name.clone(), ans);
+        }
+    }
+    let mut sorted_pool = pool.clone();
+    sorted_pool.sort();
+    let payload = json!({
+        "surface": "context_select",
+        "state": {"task": task, "candidates": sorted_pool},
+        "questions": questions,
+        "meta": {"pipeline": "context_select", "batch": states.len()},
+    });
+    let result = results
+        .as_ref()
+        .map(|_| json!({"answers": Value::Object(per_item.clone())}));
+    append_event(&event_record(&payload, result.as_ref(), false, latency_ms));
+    results?;
+
+    let tau = surface_tau("context_select");
+    let mut out = serde_json::Map::new();
+    for (name, ans) in &per_item {
+        let a = if ans.is_object() { ans } else { &Value::Null };
+        let conf = a.get("confidence").and_then(|c| c.as_f64()).unwrap_or(0.0);
+        let drop_at_tau = a.get("choice").and_then(|c| c.as_str()) == Some("drop") && conf >= tau;
+        out.insert(
+            name.clone(),
+            json!({"keep": !drop_at_tau, "confidence": conf}),
+        );
+    }
+    Some(Value::Object(out))
+}
+
+/// Write-back gate on the `memory_salience` surface — Python
+/// `memory_salience()`: should `event` enter long-term memory? Fail-open
+/// advisory — None means "no verdict"; the caller picks the default.
+/// Returns `{choice, confidence, band, model}`.
+pub fn memory_salience(event: &Value, timeout_s: f64) -> Option<Value> {
+    if disabled() {
+        return None;
+    }
+    let state = json!({"event": event});
+    let questions = salience_questions();
+    let (result, hit, latency_ms) = resolve_timed(&state, &questions, timeout_s);
+    let payload = json!({
+        "surface": "memory_salience",
+        "state": state,
+        "questions": questions,
+        "meta": {"pipeline": "memory_salience"},
+    });
+    append_event(&event_record(&payload, result.as_ref(), hit, latency_ms));
+    let r = result?;
+    let answers = r.get("answers")?;
+    let empty = json!({});
+    let ans = answers
+        .get("salience")
+        .filter(|v| v.is_object())
+        .unwrap_or(&empty);
+    Some(json!({
+        "choice": ans.get("choice").cloned().unwrap_or(Value::Null),
+        "confidence": ans.get("confidence").cloned().unwrap_or(json!(0.0)),
+        "band": band("memory_salience", answers),
+        "model": r.get("model").cloned().unwrap_or(Value::Null),
+    }))
+}
+
+/// Semantic compaction trigger on the `context_compaction` surface — Python
+/// `compaction_decision()`. `stats` carries budget telemetry (tokens
+/// used/budget, item counts, staleness hints). Returns `{action,
+/// confidence, pressure_score, band, model}` or None — callers fall back
+/// to their token-count heuristic on None.
+pub fn compaction_decision(stats: &Value, timeout_s: f64) -> Option<Value> {
+    if disabled() {
+        return None;
+    }
+    let state = json!({"budget": stats});
+    let questions = compaction_questions();
+    let (result, hit, latency_ms) = resolve_timed(&state, &questions, timeout_s);
+    let payload = json!({
+        "surface": "context_compaction",
+        "state": state,
+        "questions": questions,
+        "meta": {"pipeline": "context_compaction"},
+    });
+    append_event(&event_record(&payload, result.as_ref(), hit, latency_ms));
+    let r = result?;
+    let answers = r.get("answers")?;
+    let empty = json!({});
+    let action_ans = answers
+        .get("action")
+        .filter(|v| v.is_object())
+        .unwrap_or(&empty);
+    let score_ans = answers
+        .get("pressure")
+        .filter(|v| v.is_object())
+        .unwrap_or(&empty);
+    Some(json!({
+        "action": action_ans.get("choice").cloned().unwrap_or(Value::Null),
+        "confidence": action_ans.get("confidence").cloned().unwrap_or(json!(0.0)),
+        "pressure_score": score_ans.get("score").cloned().unwrap_or(Value::Null),
+        "band": band("context_compaction", answers),
+        "model": r.get("model").cloned().unwrap_or(Value::Null),
+    }))
+}
+
+/// Canary check on the `mandate_canary` surface — Python
+/// `mandate_canary()`: are the operating mandates still operative in the
+/// active context? A "drifted" verdict raises the flag band. Fail-open —
+/// None means "no verdict".
+pub fn mandate_canary(mandates: &Value, context: &str, timeout_s: f64) -> Option<Value> {
+    if disabled() {
+        return None;
+    }
+    // Python slices code points — context[:2000].
+    let excerpt: String = context.chars().take(2000).collect();
+    let state = json!({"mandates": mandates, "context_excerpt": excerpt});
+    let questions = canary_questions();
+    let (result, hit, latency_ms) = resolve_timed(&state, &questions, timeout_s);
+    let payload = json!({
+        "surface": "mandate_canary",
+        "state": state,
+        "questions": questions,
+        "meta": {"pipeline": "mandate_canary"},
+    });
+    append_event(&event_record(&payload, result.as_ref(), hit, latency_ms));
+    let r = result?;
+    let answers = r.get("answers")?;
+    let empty = json!({});
+    let ans = answers
+        .get("mandates")
+        .filter(|v| v.is_object())
+        .unwrap_or(&empty);
+    Some(json!({
+        "choice": ans.get("choice").cloned().unwrap_or(Value::Null),
+        "confidence": ans.get("confidence").cloned().unwrap_or(json!(0.0)),
+        "band": band("mandate_canary", answers),
+        "model": r.get("model").cloned().unwrap_or(Value::Null),
+    }))
+}
+
+// --------------------------------------------------- context-surface mains
+
+/// Candidate map accepted by `context-select`: an id→description object
+/// under `options`/`context_items`/`candidates`, or a list of `{id,
+/// description}` objects (or bare id strings) under the same keys.
+fn context_candidates(payload: &Value) -> serde_json::Map<String, Value> {
+    for key in ["options", "context_items", "candidates"] {
+        let Some(v) = payload.get(key) else { continue };
+        if let Some(obj) = v.as_object() {
+            return obj.clone();
+        }
+        if let Some(arr) = v.as_array() {
+            let mut m = serde_json::Map::new();
+            for item in arr {
+                if let Some(id) = item.get("id").and_then(|i| i.as_str()) {
+                    m.insert(
+                        id.to_string(),
+                        item.get("description").cloned().unwrap_or(Value::Null),
+                    );
+                } else if let Some(name) = item.as_str() {
+                    m.insert(name.to_string(), Value::Null);
+                }
+            }
+            return m;
+        }
+    }
+    serde_json::Map::new()
+}
+
+/// stdin {task, options|context_items, k, timeout} → per-item verdict map,
+/// or null fail-open (callers treat null as "keep everything").
+fn context_select_payload(payload: &Value) -> Value {
+    let task = payload
+        .get("task")
+        .or_else(|| payload.get("prompt"))
+        .or_else(|| payload.get("objective"))
+        .and_then(|v| v.as_str())
+        .unwrap_or("");
+    let candidates = context_candidates(payload);
+    let k = payload.get("k").and_then(|v| v.as_u64()).unwrap_or(10) as usize;
+    let timeout = payload
+        .get("timeout")
+        .and_then(|v| v.as_f64())
+        .unwrap_or(CONTEXT_SELECT_BUDGET_S);
+    context_select(task, &candidates, k, timeout).unwrap_or(Value::Null)
+}
+
+/// stdin {event, timeout} → {choice, confidence, band, model} or null.
+fn memory_salience_payload(payload: &Value) -> Value {
+    let timeout = payload
+        .get("timeout")
+        .and_then(|v| v.as_f64())
+        .unwrap_or(ASK_TIMEOUT_S);
+    // Bare top-level fields are the event when no `event` key is present.
+    let event = match payload.get("event") {
+        Some(e) => e.clone(),
+        None => {
+            let mut p = payload.clone();
+            if let Some(obj) = p.as_object_mut() {
+                obj.remove("timeout");
+            }
+            p
+        }
+    };
+    memory_salience(&event, timeout).unwrap_or(Value::Null)
+}
+
+/// stdin {stats|context|budget|...summary fields, timeout} → {action,
+/// confidence, pressure_score, band, model} or null.
+fn context_compaction_payload(payload: &Value) -> Value {
+    let timeout = payload
+        .get("timeout")
+        .and_then(|v| v.as_f64())
+        .unwrap_or(ASK_TIMEOUT_S);
+    let stats = payload
+        .get("stats")
+        .or_else(|| payload.get("context"))
+        .or_else(|| payload.get("summary"))
+        .or_else(|| payload.get("budget"))
+        .cloned()
+        .unwrap_or_else(|| {
+            // No dedicated key — the whole payload minus `timeout` is the
+            // budget-telemetry dict, matching a Python caller passing its
+            // stats dict straight through.
+            let mut p = payload.clone();
+            if let Some(obj) = p.as_object_mut() {
+                obj.remove("timeout");
+            }
+            p
+        });
+    compaction_decision(&stats, timeout).unwrap_or(Value::Null)
+}
+
+/// stdin {mandates|mandate, context|context_excerpt, timeout} → {choice,
+/// confidence, band, model} or null.
+fn mandate_canary_payload(payload: &Value) -> Value {
+    let timeout = payload
+        .get("timeout")
+        .and_then(|v| v.as_f64())
+        .unwrap_or(ASK_TIMEOUT_S);
+    let mandates = payload
+        .get("mandates")
+        .or_else(|| payload.get("mandate"))
+        .cloned()
+        .unwrap_or_else(|| json!([]));
+    let context = payload
+        .get("context")
+        .or_else(|| payload.get("context_excerpt"))
+        .and_then(|v| v.as_str())
+        .unwrap_or("");
+    mandate_canary(&mandates, context, timeout).unwrap_or(Value::Null)
+}
+
+pub fn context_select_main() -> i32 {
+    let out = context_select_payload(&read_stdin_payload());
+    println!("{}", crate::jsonfmt::dumps_raw(&out));
+    0
+}
+
+pub fn memory_salience_main() -> i32 {
+    let out = memory_salience_payload(&read_stdin_payload());
+    println!("{}", crate::jsonfmt::dumps_raw(&out));
+    0
+}
+
+pub fn context_compaction_main() -> i32 {
+    let out = context_compaction_payload(&read_stdin_payload());
+    println!("{}", crate::jsonfmt::dumps_raw(&out));
+    0
+}
+
+pub fn mandate_canary_main() -> i32 {
+    let out = mandate_canary_payload(&read_stdin_payload());
+    println!("{}", crate::jsonfmt::dumps_raw(&out));
     0
 }
 
@@ -3139,5 +3553,306 @@ mod tests {
 
         std::env::remove_var("CIEL_HOME");
         let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    // -------------------------------------------------- context surfaces
+
+    /// Hermetic offline pin for the context surfaces: isolated CIEL_HOME,
+    /// hosted egress off, dead local endpoint. Caller must hold ENV_LOCK.
+    fn offline_env() -> std::path::PathBuf {
+        let tmp = failover_env();
+        std::env::set_var("CIEL_SYSTEM1_HOSTED", "off");
+        std::env::set_var("CIEL_SYSTEM1_URL", "http://127.0.0.1:54321");
+        tmp
+    }
+
+    fn clear_offline_env(tmp: &std::path::Path) {
+        std::env::remove_var("CIEL_SYSTEM1_URL");
+        std::env::remove_var("CIEL_SYSTEM1_HOSTED");
+        std::env::remove_var("CIEL_HOME");
+        let _ = std::fs::remove_dir_all(tmp);
+    }
+
+    fn last_event(home: &std::path::Path) -> Value {
+        let log = home.join("system1").join("events.jsonl");
+        let text = std::fs::read_to_string(log).expect("events.jsonl written");
+        serde_json::from_str(text.lines().last().unwrap()).unwrap()
+    }
+
+    #[test]
+    fn context_select_keep_drop_tau() {
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+        let tmp = failover_env();
+        // Mirrors the Python corpus case: item 0 drops confidently, item 1
+        // drops below the calibrated tau (0.05) and is kept, item 2 keeps.
+        // options.len() <= k also exercises the passthrough path — one
+        // /batch call with exactly one state per candidate.
+        let (port, handle) = mock_server(
+            |_, req| {
+                assert!(req.contains("/v1/systemone/batch"));
+                assert_eq!(3, req.matches("\"context_item\"").count());
+                http_response(
+                    200,
+                    "{\"results\":[\
+                        {\"answers\":{\"relevant\":{\"choice\":\"drop\",\"confidence\":0.9}},\"model\":\"m\"},\
+                        {\"answers\":{\"relevant\":{\"choice\":\"drop\",\"confidence\":0.01}},\"model\":\"m\"},\
+                        {\"answers\":{\"relevant\":{\"choice\":\"keep\",\"confidence\":0.4}},\"model\":\"m\"}\
+                    ]}",
+                )
+            },
+            1,
+        );
+        std::env::set_var("CIEL_SYSTEM1_HOSTED", "off");
+        std::env::set_var("CIEL_SYSTEM1_URL", format!("http://127.0.0.1:{port}"));
+        // The CLI payload path — {task, context_items} is the stdin contract.
+        let out = context_select_payload(&json!({
+            "task": "fix the login bug",
+            "context_items": {
+                "a.md": "login notes",
+                "b.md": "weather notes",
+                "c.md": "auth spec"
+            },
+            "k": 10
+        }));
+        assert_eq!(out["a.md"]["keep"], json!(false));
+        assert_eq!(out["a.md"]["confidence"], json!(0.9));
+        // Uncertain drop (0.01 < tau) is kept.
+        assert_eq!(out["b.md"]["keep"], json!(true));
+        assert_eq!(out["b.md"]["confidence"], json!(0.01));
+        assert_eq!(out["c.md"]["keep"], json!(true));
+        let ev = last_event(&tmp);
+        assert_eq!("context_select", ev["surface"]);
+        assert_eq!("context_select", ev["meta"]["pipeline"]);
+        assert_eq!(3, ev["meta"]["batch"]);
+        assert_eq!(json!(["a.md", "b.md", "c.md"]), ev["state"]["candidates"]);
+        // Band over the per-item answers: the sub-tau drop is uncertain.
+        assert_eq!("uncertain", ev["flag"]);
+        clear_offline_env(&tmp);
+        assert_eq!(1, handle.join().unwrap());
+    }
+
+    #[test]
+    fn context_select_shortlists_above_k() {
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+        let tmp = failover_env();
+        // Lexical-only shortlist — hermetic home has no embed venv anyway.
+        std::env::set_var("CIEL_SYSTEM1_EMBED", "0");
+        let (port, handle) = mock_server(
+            |_, req| {
+                assert_eq!(2, req.matches("\"context_item\"").count());
+                http_response(
+                    200,
+                    "{\"results\":[\
+                        {\"answers\":{\"relevant\":{\"choice\":\"keep\",\"confidence\":0.9}},\"model\":\"m\"},\
+                        {\"answers\":{\"relevant\":{\"choice\":\"keep\",\"confidence\":0.9}},\"model\":\"m\"}\
+                    ]}",
+                )
+            },
+            1,
+        );
+        std::env::set_var("CIEL_SYSTEM1_HOSTED", "off");
+        std::env::set_var("CIEL_SYSTEM1_URL", format!("http://127.0.0.1:{port}"));
+        let mut candidates = serde_json::Map::new();
+        for i in 0..15 {
+            candidates.insert(format!("skill-{i}"), json!("unrelated"));
+        }
+        candidates.insert("git-commit".into(), json!("commit changes to git"));
+        let out =
+            context_select("commit my changes to git", &candidates, 2, 2.0).expect("verdict map");
+        assert_eq!(2, out.as_object().unwrap().len());
+        assert!(out
+            .as_object()
+            .unwrap()
+            .values()
+            .all(|v| v["keep"] == json!(true)));
+        let ev = last_event(&tmp);
+        assert_eq!(2, ev["meta"]["batch"]);
+        std::env::remove_var("CIEL_SYSTEM1_EMBED");
+        clear_offline_env(&tmp);
+        assert_eq!(1, handle.join().unwrap());
+    }
+
+    #[test]
+    fn context_surfaces_offline_fail_open() {
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+        let tmp = offline_env();
+        let mut c = serde_json::Map::new();
+        c.insert("a".into(), json!("d"));
+        assert!(context_select("task", &c, 10, 0.2).is_none());
+        // The fail-open event record is still appended, with null verdict.
+        let ev = last_event(&tmp);
+        assert_eq!("context_select", ev["surface"]);
+        assert!(ev["system1"].is_null());
+        assert!(memory_salience(&json!({"kind": "x"}), 0.2).is_none());
+        assert!(compaction_decision(&json!({"tokens_used": 1}), 0.2).is_none());
+        assert!(mandate_canary(&json!(["m"]), "ctx", 0.2).is_none());
+        assert_eq!("mandate_canary", last_event(&tmp)["surface"]);
+        // An empty pool short-circuits to {} without touching the endpoint.
+        let empty = serde_json::Map::new();
+        assert_eq!(Some(json!({})), context_select("task", &empty, 10, 0.2));
+        clear_offline_env(&tmp);
+    }
+
+    #[test]
+    fn context_surfaces_disabled_fail_open() {
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+        let tmp = failover_env();
+        std::env::set_var("CIEL_SYSTEM1_DISABLED", "1");
+        let mut c = serde_json::Map::new();
+        c.insert("a".into(), json!("d"));
+        assert!(context_select("task", &c, 10, 0.2).is_none());
+        assert!(memory_salience(&json!({"kind": "x"}), 0.2).is_none());
+        assert!(compaction_decision(&json!({"tokens_used": 1}), 0.2).is_none());
+        assert!(mandate_canary(&json!(["m"]), "ctx", 0.2).is_none());
+        std::env::remove_var("CIEL_SYSTEM1_DISABLED");
+        clear_offline_env(&tmp);
+    }
+
+    #[test]
+    fn memory_salience_verdict_and_event() {
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+        let tmp = failover_env();
+        let (port, handle) = mock_server(
+            |_, req| {
+                assert!(req.contains("/v1/systemone"));
+                assert!(req.contains("\"event\""));
+                http_response(
+                    200,
+                    "{\"answers\":{\"salience\":{\"choice\":\"store\",\"confidence\":0.9}},\
+                     \"model\":\"english\"}",
+                )
+            },
+            1,
+        );
+        std::env::set_var("CIEL_SYSTEM1_HOSTED", "off");
+        std::env::set_var("CIEL_SYSTEM1_URL", format!("http://127.0.0.1:{port}"));
+        let res = memory_salience(
+            &json!({"kind": "decision", "text": "user prefers tabs"}),
+            2.0,
+        )
+        .expect("verdict");
+        assert_eq!("store", res["choice"]);
+        assert_eq!("pass", res["band"]);
+        assert_eq!("english", res["model"]);
+        assert_eq!(json!(0.9), res["confidence"]);
+        let ev = last_event(&tmp);
+        assert_eq!("memory_salience", ev["surface"]);
+        assert_eq!("memory_salience", ev["meta"]["pipeline"]);
+        clear_offline_env(&tmp);
+        assert_eq!(1, handle.join().unwrap());
+    }
+
+    #[test]
+    fn compaction_decision_flags_pressure() {
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+        let tmp = failover_env();
+        let (port, handle) = mock_server(
+            |_, req| {
+                assert!(req.contains("\"budget\""));
+                http_response(
+                    200,
+                    "{\"answers\":{\
+                        \"action\":{\"choice\":\"escalate\",\"confidence\":0.91},\
+                        \"pressure\":{\"score\":4.6,\"confidence\":0.8}},\
+                     \"model\":\"english\"}",
+                )
+            },
+            1,
+        );
+        std::env::set_var("CIEL_SYSTEM1_HOSTED", "off");
+        std::env::set_var("CIEL_SYSTEM1_URL", format!("http://127.0.0.1:{port}"));
+        let res = compaction_decision(&json!({"tokens_used": 30000, "budget": 32000}), 2.0)
+            .expect("verdict");
+        assert_eq!("escalate", res["action"]);
+        assert_eq!("flag", res["band"]);
+        assert_eq!(json!(4.6), res["pressure_score"]);
+        assert_eq!(json!(0.91), res["confidence"]);
+        let ev = last_event(&tmp);
+        assert_eq!("context_compaction", ev["surface"]);
+        assert_eq!("flag", ev["flag"]);
+        clear_offline_env(&tmp);
+        assert_eq!(1, handle.join().unwrap());
+    }
+
+    #[test]
+    fn mandate_canary_drift_flags_and_truncates_context() {
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+        let tmp = failover_env();
+        let (port, handle) = mock_server(
+            |_, req| {
+                // context_excerpt is capped at 2000 chars (context[:2000]).
+                assert!(req.contains(&"x".repeat(2000)));
+                assert!(!req.contains(&"x".repeat(2001)));
+                http_response(
+                    200,
+                    "{\"answers\":{\"mandates\":{\"choice\":\"drifted\",\"confidence\":0.9}},\
+                     \"model\":\"english\"}",
+                )
+            },
+            1,
+        );
+        std::env::set_var("CIEL_SYSTEM1_HOSTED", "off");
+        std::env::set_var("CIEL_SYSTEM1_URL", format!("http://127.0.0.1:{port}"));
+        let res = mandate_canary(&json!(["address user as Master"]), &"x".repeat(3000), 2.0)
+            .expect("verdict");
+        assert_eq!("drifted", res["choice"]);
+        assert_eq!("flag", res["band"]);
+        assert_eq!("mandate_canary", last_event(&tmp)["surface"]);
+        clear_offline_env(&tmp);
+        assert_eq!(1, handle.join().unwrap());
+    }
+
+    #[test]
+    fn context_surface_bands_flag_unconditionally() {
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+        // Lattice semantics: a flag choice dominates at ANY confidence —
+        // tau gates pass/uncertain only, never the flag band.
+        let low_flag = json!({"action": {"choice": "compress", "confidence": 0.001}});
+        assert_eq!("flag", band("context_compaction", &low_flag));
+        let drifted = json!({"mandates": {"choice": "drifted", "confidence": 0.0}});
+        assert_eq!("flag", band("mandate_canary", &drifted));
+        let ok = json!({"action": {"choice": "continue", "confidence": 0.9}});
+        assert_eq!("pass", band("context_compaction", &ok));
+        let low = json!({"action": {"choice": "continue", "confidence": 0.001}});
+        assert_eq!("uncertain", band("context_compaction", &low));
+        // context_select / memory_salience carry no flag set.
+        let drop_ans = json!({"relevant": {"choice": "drop", "confidence": 0.9}});
+        assert_eq!("pass", band("context_select", &drop_ans));
+    }
+
+    #[test]
+    fn context_surface_payloads_contract() {
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+        let tmp = offline_env();
+        // stdin→stdout contract for the four verbs: offline resolves to the
+        // printed `null`, non-null payloads keep their field names.
+        assert!(context_select_payload(&json!({
+            "task": "t",
+            "options": {"a": "d"}
+        }))
+        .is_null());
+        assert!(memory_salience_payload(&json!({"event": {"k": 1}})).is_null());
+        assert!(context_compaction_payload(&json!({"tokens_used": 1})).is_null());
+        assert!(mandate_canary_payload(&json!({
+            "mandates": ["m"],
+            "context": "c"
+        }))
+        .is_null());
+        // Empty candidate set short-circuits to {} — printed as such.
+        assert_eq!(json!({}), context_select_payload(&json!({"task": "t"})));
+        // context_items accepts the list-of-{id,description} form too.
+        let mut want = serde_json::Map::new();
+        want.insert("x.md".to_string(), json!("desc"));
+        assert_eq!(
+            want,
+            context_candidates(&json!({
+                "context_items": [{"id": "x.md", "description": "desc"}]
+            }))
+        );
+        // Bare-string list entries map to a null description.
+        let mut want2 = serde_json::Map::new();
+        want2.insert("y.md".to_string(), Value::Null);
+        assert_eq!(want2, context_candidates(&json!({"options": ["y.md"]})));
+        clear_offline_env(&tmp);
     }
 }
