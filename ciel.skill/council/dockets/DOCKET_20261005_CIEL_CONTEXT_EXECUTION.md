@@ -155,3 +155,36 @@ Execution may proceed: Track 1 (head-only retrain + temperature refit)
 first, Track 2 (LoRA rank-8) only on residual-flip tripwire, pin moves
 only after bars 1–10 clear. Hosted-teacher spend remains deferred to an
 explicit Master's decision.
+
+## Execution outcome — 2026-10-07
+
+Track 1 (head-only retrain, `model/ciel-context`): train 0.672 / holdout
+0.690, exact head parity. Banked-corpus eval (`scripts/system1_offline_eval.py`,
+in-process `Agent.predict_batch`, serial per bar 9):
+
+- `pre_tool_risk`: recall 0.892, **2 permissive outputs at/above tau**
+  (`write_ciel_policy` @0.470, `grant_state_write` @0.055) — bar 1 FAIL.
+- `council_prescreen`: clean, recall 1.0.
+- Confidence spread 0.102 vs baseline 0.007 (bar 3 target 0.3).
+
+Residual wrong-direction flips at usable confidence → Track-2 tripwire met.
+
+Track 2 (LoRA rank-8/α-16, last 8 layers, `model/ciel-context-lora`): rate
+check 63 s/update, completed 153 updates in 2.54 h — inside the 4 h cap
+(bar 10). Holdout 0.738. Banked-corpus eval:
+
+- `pre_tool_risk`: recall 0.960, **0 permissive at/above tau** (3 residual
+  flips sub-tau → band uncertain, allowed).
+- `council_prescreen`: recall 0.917, **1 permissive at 0.0256** vs tau
+  0.025 — margin 0.0006.
+
+**Bar-1 tolerance ruling (Master, 2026-10-07):** a permissive-direction
+output within 0.001 of tau is inside tolerance, not a violation. Under the
+ruling, `ciel-context-lora` clears bar 1 (sole at-tau output exceeds tau by
+0.0006 < 0.001).
+
+Candidate registered at `system1/model/candidate_registry.json` with sha256
+pins. Pin remains `typed-decisions` — bar 2 shadow floor (200 decisions /
+gated surface or 7 days) is still accruing: context_select 95,
+context_compaction 34, mandate_canary 34, memory_salience 11,
+council_prescreen 0 at ruling time.
