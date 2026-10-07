@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "built": "2026-10-07T05:00:26.172233+00:00",
+ "built": "2026-10-07T05:55:27.998490+00:00",
  "skills_dir": "skills",
  "count": 198,
  "skills": {
@@ -3150,8 +3150,8 @@
     }
    },
    "install_path": "skills/e2e/",
-   "state": "sandboxed",
-   "checksum": "sha256:adec59c9b2e93c4ead42028a2394a0be2c1b5383834c8d654bc3e85aecd66930",
+   "state": "validated",
+   "checksum": "sha256:00827da75be9e9c8d46a42c9bcb5fc891250ace04a800c49f4f8d8d03ed76a1f",
    "created": "2026-10-07T04:57:55.319632+00:00",
    "last_updated": "2026-10-07T04:57:55.319632+00:00",
    "dependencies": {

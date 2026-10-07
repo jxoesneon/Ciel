@@ -113,7 +113,7 @@ hits: 0
 avg_confidence: 0.90
 avg_ms: 0
 success_rate: 1.00
-notes: "tester-army/e2e agentic e2e framework skill (Apache-2.0); Tier-3 acquisition, council pass 8.05 weighted; trust state untrusted pending paired eval"
+notes: "tester-army/e2e agentic e2e framework skill (Apache-2.0); Tier-3 acquisition, council pass 8.05 weighted; validated via paired eval 2026-10-07 (2/2 preserved-pass, 0 regressions)"
 ```
 
 Stored in MemPalace partition `ciel/route_registry/` keyed by `route_id`. Indexed by `target_skill` and by tag.

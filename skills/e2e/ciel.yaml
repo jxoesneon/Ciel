@@ -42,11 +42,11 @@ source:
     references/running.md: 617210647171e2ae2e633206351794aadff5db9df841fdd6f10923b81e970c9f
     references/setup.md: 30792bc8ada43e0f015d9e82979e560b56b2149aed753eecc216d58249db0c52
     references/writing-tests.md: c879b0ffde1aa4a2844e0bfde73c64c31600eff3d31a3a9a91968f103649c7fe
-state: sandboxed
+state: validated
 trust_evidence:
   approved_by: council
-  approved_at: '2026-10-06'
-  basis: Tier-3 acquisition; markdown-only bundle, injection scan clean, Apache-2.0, upstream provenance pinned (commit + sha256). Council weighted 8.05. Promote to validated on paired eval.
+  approved_at: '2026-10-07'
+  basis: Tier-3 acquisition; markdown-only bundle, injection scan clean, Apache-2.0, upstream provenance pinned (commit + sha256). Council weighted 8.05. Paired eval PASS 2026-10-07 (2/2 preserved-pass, 0 regressions).
 dependencies:
   skills: []
   mcp: []

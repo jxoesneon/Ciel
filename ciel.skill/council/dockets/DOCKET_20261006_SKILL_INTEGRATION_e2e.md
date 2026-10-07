@@ -66,3 +66,10 @@ Actions on pass:
 
 Flags: `trust_state: untrusted` pending paired eval (consistent with prior
 Tier-3 acquisitions: impeccable, ui-ux-pro-max, emil-design-eng).
+
+## Post-Integration — Paired Eval (2026-10-07)
+
+`paired_eval.py` against `skills/e2e`, tasks fix-off-by-one + slugify, devin
+runner: **PASS** — 2/2 preserved-pass, 0 regressions, 0 false-passes.
+Evidence: `acquisition/evidence/paired_eval_e2e.json`.
+State promoted `sandboxed` → `validated`.
