@@ -17,6 +17,8 @@ ENV_FILE="$SYSTEM1_DIR/env"
 PID_FILE="$SYSTEM1_DIR/laya.pid"
 MOCK_SCRIPT="$SYSTEM1_DIR/mock_server.py"
 VENV_LAYA="$SYSTEM1_DIR/venv/bin/laya-serve"
+VENV_PY="$SYSTEM1_DIR/venv/bin/python"
+OVERLAY_SERVE="$SYSTEM1_DIR/ciel_laya_serve.py"
 
 # Ensure ~/.ciel/system1/env exists with secure 600 permissions
 init_env() {
@@ -149,7 +151,11 @@ cmd_start() {
   local runner=""
   local runner_args=()
 
-  if ((force_mock == 0)) && [[ -x "$VENV_LAYA" ]]; then
+  if ((force_mock == 0)) && [[ -x "$VENV_PY" && -f "$OVERLAY_SERVE" ]]; then
+    echo "[serve.sh] Starting production Laya server via $OVERLAY_SERVE..."
+    runner="$VENV_PY"
+    runner_args=("$OVERLAY_SERVE")
+  elif ((force_mock == 0)) && [[ -x "$VENV_LAYA" ]]; then
     echo "[serve.sh] Starting production Laya server via $VENV_LAYA..."
     runner="$VENV_LAYA"
     runner_args=()
