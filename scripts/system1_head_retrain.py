@@ -382,6 +382,30 @@ def collate_head_batch(
     }
 
 
+def collate_raw_batch(batch: List[Dict[str, Any]]) -> Dict[str, torch.Tensor]:
+    """Pad raw token ids + marker metadata — the Track-2 path, where the
+    encoder runs inside the update so cached hidden states can't be used."""
+    n = len(batch)
+    L = max(len(it["ids"]) for it in batch)
+    kmax = max(len(it["markers"]) for it in batch)
+    ids = torch.zeros(n, L, dtype=torch.long)
+    att = torch.zeros(n, L, dtype=torch.long)
+    mpos = torch.zeros(n, kmax, dtype=torch.long)
+    mmask = torch.zeros(n, kmax, dtype=torch.bool)
+    qtype = torch.zeros(n, dtype=torch.long)
+    target = torch.zeros(n, kmax)
+    for i, it in enumerate(batch):
+        ids[i, : len(it["ids"])] = torch.tensor(it["ids"], dtype=torch.long)
+        att[i, : len(it["ids"])] = 1
+        k = len(it["markers"])
+        mpos[i, :k] = torch.tensor(it["markers"], dtype=torch.long)
+        mmask[i, :k] = True
+        qtype[i] = int(it["qtype"])
+        target[i, :k] = torch.tensor(it["target"], dtype=torch.float32)
+    return {"input_ids": ids, "attention_mask": att, "marker_pos": mpos,
+            "marker_mask": mmask, "qtype": qtype, "target": target}
+
+
 def head_forward(model, h_pad, attention_mask, marker_pos, marker_mask, qtype):
     """The head half of DecisionModel.forward, run on cached encoder outputs.
 
@@ -424,6 +448,61 @@ def soft_ce(logits: torch.Tensor, target: torch.Tensor, marker_mask: torch.Tenso
 
 
 # ----------------------------------------------------------------------------
+# Track-2: LoRA adapters on the encoder's fused attention projections
+# ----------------------------------------------------------------------------
+# ModernBERT layers: encoder.layers[i].attn.Wqkv (1024->3072) and .Wo (1024->
+# 1024). Adapters are zero-initialised so the wrapped model starts identical
+# to the served checkpoint. When --lora is on, encoder outputs can no longer
+# be cached — every update is a full forward+backward through the encoder.
+
+
+class LoRALinear(torch.nn.Module):
+    """Frozen base Linear + trainable rank-decomposed delta (B@A * alpha/r)."""
+
+    def __init__(self, base: torch.nn.Linear, rank: int, alpha: float):
+        super().__init__()
+        if not isinstance(base, torch.nn.Linear):
+            raise TypeError(f"LoRA can only wrap nn.Linear, got {type(base)}")
+        self.base = base
+        self.A = torch.nn.Linear(base.in_features, rank, bias=False)
+        self.B = torch.nn.Linear(rank, base.out_features, bias=False)
+        self.scale = alpha / rank
+        torch.nn.init.kaiming_uniform_(self.A.weight, a=5 ** 0.5)
+        torch.nn.init.zeros_(self.B.weight)  # identity at init
+        for p in self.base.parameters():
+            p.requires_grad_(False)
+
+    def forward(self, x):
+        return self.base(x) + self.B(self.A(x)) * self.scale
+
+
+def inject_lora(model, rank: int, alpha: float, last_n_layers: int) -> int:
+    """Wrap Wqkv/Wo of the LAST `last_n_layers` encoder layers in LoRALinear.
+    Returns the number of adapters installed. The base Linear's weights are
+    frozen; only A/B train (they're the only encoder-side requires_grad
+    params after this)."""
+    layers = model.encoder.layers
+    lo, hi = max(0, len(layers) - last_n_layers), len(layers)
+    n = 0
+    for i in range(lo, hi):
+        attn = layers[i].attn
+        attn.Wqkv = LoRALinear(attn.Wqkv, rank, alpha)
+        attn.Wo = LoRALinear(attn.Wo, rank, alpha)
+        n += 2
+    return n
+
+
+def full_forward(model, ids, attention_mask, marker_pos, marker_mask, qtype):
+    """Model() forward keeping autograd — same signature as head_forward but
+    runs the encoder too (for LoRA updates). Returns (logits, act_logits)."""
+    out = model(input_ids=ids, attention_mask=attention_mask,
+                marker_pos=marker_pos, marker_mask=marker_mask, qtype=qtype)
+    if isinstance(out, tuple):
+        return out[0], out[1]
+    return out.logits, getattr(out, "act_logits", None)
+
+
+# ----------------------------------------------------------------------------
 # Eval
 # ----------------------------------------------------------------------------
 
@@ -436,6 +515,7 @@ def evaluate(
     items: List[Dict[str, Any]],
     cache: Dict[tuple, torch.Tensor],
     batch_size: int,
+    lora: bool = False,
 ) -> Dict[str, Any]:
     """Argmax accuracy overall / per surface / per qtype, plus a confusion tally
     and mean |E[p] - label| for score rows (how `laya` decodes scores)."""
@@ -450,10 +530,17 @@ def evaluate(
     score_abs_err: List[float] = []
     for start in range(0, len(items), batch_size):
         part = items[start : start + batch_size]
-        b = collate_head_batch(part, cache)
-        logits, _act = head_forward(
-            model, b["h"], b["attention_mask"], b["marker_pos"], b["marker_mask"], b["qtype"]
-        )
+        with torch.no_grad():
+            if lora:
+                b = collate_raw_batch(part)
+                logits, _act = full_forward(
+                    model, b["input_ids"], b["attention_mask"], b["marker_pos"],
+                    b["marker_mask"], b["qtype"])
+            else:
+                b = collate_head_batch(part, cache)
+                logits, _act = head_forward(
+                    model, b["h"], b["attention_mask"], b["marker_pos"], b["marker_mask"], b["qtype"]
+                )
         for i, it in enumerate(part):
             k = len(it["markers"])
             z = logits[i, :k]
@@ -491,18 +578,24 @@ def set_head_training(model, training: bool) -> None:
             mod.train(training)
 
 
-def collect_records(model, items, cache, batch_size) -> List[Tuple[int, np.ndarray, np.ndarray, int]]:
+def collect_records(model, items, cache, batch_size, lora: bool = False) -> List[Tuple[int, np.ndarray, np.ndarray, int]]:
     """(qtype, logits[:k], target[:k], k) over the train split — the record shape
     `agent.fit_temperatures` consumes."""
     set_head_training(model, False)
     records = []
     for start in range(0, len(items), batch_size):
         part = items[start : start + batch_size]
-        b = collate_head_batch(part, cache)
         with torch.no_grad():
-            logits, _act = head_forward(
-                model, b["h"], b["attention_mask"], b["marker_pos"], b["marker_mask"], b["qtype"]
-            )
+            if lora:
+                b = collate_raw_batch(part)
+                logits, _act = full_forward(
+                    model, b["input_ids"], b["attention_mask"], b["marker_pos"],
+                    b["marker_mask"], b["qtype"])
+            else:
+                b = collate_head_batch(part, cache)
+                logits, _act = head_forward(
+                    model, b["h"], b["attention_mask"], b["marker_pos"], b["marker_mask"], b["qtype"]
+                )
         for i, it in enumerate(part):
             k = len(it["markers"])
             z = logits[i, :k].float().cpu().numpy()
@@ -514,6 +607,36 @@ def collect_records(model, items, cache, batch_size) -> List[Tuple[int, np.ndarr
 # ----------------------------------------------------------------------------
 # Checkpoint write
 # ----------------------------------------------------------------------------
+
+
+def merged_state_dict(model) -> Dict[str, torch.Tensor]:
+    """State dict with LoRA adapters folded back into their base Linears
+    (W' = W + (B @ A) * scale) — the emitted checkpoint keeps the stock
+    DecisionModel key layout so it loads without the adapter classes."""
+    merged = {}
+    sd = model.state_dict()
+    lora_bases = set()
+    for name in sd:
+        if ".A.weight" in name:
+            lora_bases.add(name.rsplit(".A.weight", 1)[0])
+    skip = {b + suffix for b in lora_bases
+            for suffix in (".A.weight", ".B.weight", ".base.weight", ".base.bias")}
+    for name, t in sd.items():
+        if name in skip:
+            continue
+        merged[name] = t
+    for base_name in lora_bases:
+        W = sd[base_name + ".base.weight"]
+        bias = sd.get(base_name + ".base.bias")
+        A = sd[base_name + ".A.weight"]
+        B = sd[base_name + ".B.weight"]
+        mod = model
+        for attr in base_name.split("."):
+            mod = mod[int(attr)] if attr.isdigit() else getattr(mod, attr)
+        merged[base_name + ".weight"] = W + (B @ A) * mod.scale
+        if bias is not None:
+            merged[base_name + ".bias"] = bias
+    return merged
 
 
 def write_sibling_checkpoint(
@@ -544,7 +667,7 @@ def write_sibling_checkpoint(
         if os.path.isfile(src) and name not in ("model.safetensors", "rl_agent_config.json"):
             shutil.copyfile(src, os.path.join(out_dir, name))
 
-    save_file(agent.model.state_dict(), os.path.join(out_dir, "model.safetensors"))
+    save_file(merged_state_dict(agent.model), os.path.join(out_dir, "model.safetensors"))
 
     cfg = dict(agent.cfg)
     cfg["temperature"] = [float(x) for x in temperatures["temperature"]]
@@ -584,6 +707,22 @@ def main() -> int:
         help="Gaussian width for ordinal score targets",
     )
     ap.add_argument("--model", default=None, help="override checkpoint dir (default: served)")
+    ap.add_argument("--lora-rank", type=int, default=0,
+                    help="Track 2: rank of LoRA adapters on encoder attn "
+                         "Wqkv/Wo of the last --lora-layers layers (0=off)")
+    ap.add_argument("--lora-alpha", type=float, default=16.0)
+    ap.add_argument("--lora-layers", type=int, default=8,
+                    help="number of trailing encoder layers to adapt")
+    ap.add_argument("--max-updates", type=int, default=0,
+                    help="bar-10 abort: cap total optimizer updates (0=epoch count)")
+    ap.add_argument("--budget-hours", type=float, default=4.0,
+                    help="bar-10 abort: after 100 updates, projected runtime "
+                         "beyond this aborts with exit 3")
+    ap.add_argument(
+        "--cache-file", default=None,
+        help="persist the encoder-output cache here (.pt); reload on re-runs "
+             "so the once-per-unique-sequence encoder pass is paid once",
+    )
     ap.add_argument(
         "--dry-run",
         action="store_true",
@@ -628,14 +767,22 @@ def main() -> int:
           f"max_len={agent.cfg.get('max_len')}, head_max_len={agent.cfg.get('head_max_len')})")
 
     model = agent.model
+    lora_mode = args.lora_rank > 0
+    if lora_mode:
+        n_adapters = inject_lora(model, args.lora_rank, args.lora_alpha,
+                                 args.lora_layers)
+        print(f"[lora] injected {n_adapters} rank-{args.lora_rank} adapters "
+              f"(alpha={args.lora_alpha}) on last {args.lora_layers} encoder layers")
     # Freeze EVERY encoder parameter; train everything else (type_emb, head,
-    # scorer, act_head — the typed head per named_children).
+    # scorer, act_head — the typed head per named_children). In LoRA mode the
+    # adapter A/B matrices are the only encoder-side trainables.
     n_frozen = n_train = 0
     head_param_names = []
     for name, p in model.named_parameters():
         if name.startswith("encoder."):
-            p.requires_grad_(False)
-            n_frozen += p.numel()
+            p.requires_grad_(name.endswith(".A.weight") or name.endswith(".B.weight"))
+            n_frozen += p.numel() if not p.requires_grad else 0
+            n_train += p.numel() if p.requires_grad else 0
         else:
             p.requires_grad_(True)
             n_train += p.numel()
@@ -663,7 +810,30 @@ def main() -> int:
 
     t0 = time.perf_counter()
     all_items = train_items + holdout_items
-    cache, surf_enc_time = cache_encoder_outputs(model, all_items, args.batch_size)
+    cache = {}
+    surf_enc_time = {}
+    if lora_mode:
+        # LoRA deltas change encoder outputs — no reuse possible.
+        print("[cache] lora mode: encoder cache disabled (full forward per update)")
+    else:
+        if args.cache_file and os.path.exists(args.cache_file):
+            cache = torch.load(args.cache_file, weights_only=False)
+            print(f"[cache] loaded {len(cache)} cached sequences from {args.cache_file}")
+        if not cache:
+            cache, surf_enc_time = cache_encoder_outputs(
+                model, all_items, args.batch_size)
+            if args.cache_file:
+                torch.save(cache, args.cache_file)
+                print(f"[cache] saved {len(cache)} sequences to {args.cache_file}")
+        else:
+            # any rows whose sequence isn't cached yet get encoded now
+            missing = [it for it in all_items if tuple(it["ids"]) not in cache]
+            if missing:
+                extra, _ = cache_encoder_outputs(model, missing, args.batch_size)
+                cache.update(extra)
+                if args.cache_file:
+                    torch.save(cache, args.cache_file)
+            surf_enc_time = {}
     enc_s = time.perf_counter() - t0
     cache_mb = sum(h.numel() * 4 for h in cache.values()) / 1e6
     print(
@@ -695,11 +865,18 @@ def main() -> int:
             part = order[pos : pos + args.batch_size]
             pos += args.batch_size
             batch = [train_items[i] for i in part]
-            b = collate_head_batch(batch, cache)
-            t0 = time.perf_counter()
-            logits, _act = head_forward(
-                model, b["h"], b["attention_mask"], b["marker_pos"], b["marker_mask"], b["qtype"]
-            )
+            if lora_mode:
+                b = collate_raw_batch(batch)
+                t0 = time.perf_counter()
+                logits, _act = full_forward(
+                    model, b["input_ids"], b["attention_mask"], b["marker_pos"],
+                    b["marker_mask"], b["qtype"])
+            else:
+                b = collate_head_batch(batch, cache)
+                t0 = time.perf_counter()
+                logits, _act = head_forward(
+                    model, b["h"], b["attention_mask"], b["marker_pos"],
+                    b["marker_mask"], b["qtype"])
             per_row = soft_ce(logits, b["target"], b["marker_mask"])
             loss = per_row.mean()
             opt.zero_grad()
@@ -710,33 +887,48 @@ def main() -> int:
             opt.step()
             times.append(time.perf_counter() - t0)
             upd += 1
+            # bar 10 — update-rate checkpoint after the first 100 updates:
+            # extrapolate and abort if the projected total exceeds the cap.
+            if lora_mode and upd == 100 and args.max_updates > 100:
+                rate = sum(times) / len(times)
+                projected_h = rate * args.max_updates / 3600
+                print(f"[bar10] update-rate after 100: {rate:.2f}s/update; "
+                      f"projected {projected_h:.1f}h vs {args.budget_hours}h cap")
+                if projected_h > args.budget_hours:
+                    print("[bar10] ABORT — projected runtime exceeds cap; "
+                          "escalating rather than running to exhaustion")
+                    raise SystemExit(3)
         return times
 
-    # -- Parity check: head_forward on cached h must equal the monolithic model().
-    parity_items = all_items[: args.batch_size]
-    b = collate_head_batch(parity_items, cache)
-    pad_id = agent.tok.pad_token_id
-    from laya.common import collate_items
+    # -- Parity check: head_forward on cached h must equal the monolithic
+    # model(). Skipped in LoRA mode — there is no split path; adapters are
+    # zero-initialised so the wrapped model IS the served model at init.
+    d_logits = d_act = 0.0
+    if not lora_mode:
+        parity_items = all_items[: args.batch_size]
+        b = collate_head_batch(parity_items, cache)
+        pad_id = agent.tok.pad_token_id
+        from laya.common import collate_items
 
-    mono = collate_items([[it] for it in parity_items], pad_id)
-    with torch.no_grad():
-        model.eval()
-        logits_mono, act_mono = model(
-            mono["input_ids"], mono["attention_mask"], mono["marker_pos"],
-            mono["marker_mask"], mono["qtype"],
-        )
-        logits_head, act_head_out = head_forward(
-            model, b["h"], b["attention_mask"], b["marker_pos"], b["marker_mask"], b["qtype"]
-        )
-    d_logits = float((logits_mono - logits_head).abs().max())
-    d_act = float((act_mono - act_head_out).abs().max())
-    print(f"[parity] head_forward vs model(): max|dlogits|={d_logits:.2e} "
-          f"max|dact|={d_act:.2e}")
-    if d_logits > 1e-3 or d_act > 1e-3:
-        raise SystemExit(
-            "head-forward parity check FAILED — the split does not reproduce "
-            "DecisionModel.forward; refusing to train on a mismatched head path"
-        )
+        mono = collate_items([[it] for it in parity_items], pad_id)
+        with torch.no_grad():
+            model.eval()
+            logits_mono, act_mono = model(
+                mono["input_ids"], mono["attention_mask"], mono["marker_pos"],
+                mono["marker_mask"], mono["qtype"],
+            )
+            logits_head, act_head_out = head_forward(
+                model, b["h"], b["attention_mask"], b["marker_pos"], b["marker_mask"], b["qtype"]
+            )
+        d_logits = float((logits_mono - logits_head).abs().max())
+        d_act = float((act_mono - act_head_out).abs().max())
+        print(f"[parity] head_forward vs model(): max|dlogits|={d_logits:.2e} "
+              f"max|dact|={d_act:.2e}")
+        if d_logits > 1e-3 or d_act > 1e-3:
+            raise SystemExit(
+                "head-forward parity check FAILED — the split does not reproduce "
+                "DecisionModel.forward; refusing to train on a mismatched head path"
+            )
     model.encoder.eval()  # model.eval() above reset it anyway; keep it explicit
     set_head_training(model, True)
 
@@ -772,18 +964,36 @@ def main() -> int:
 
     # ----------------------------- training ---------------------------------
     history = []
+    total_upd = 0
+    upd_times: List[float] = []
+    upd_budget = args.max_updates or 10**9
+    abort_done = False
+    stop_training = False
     for epoch in range(1, args.epochs + 1):
+        if stop_training:
+            break
         random.shuffle(train_idx)
         set_head_training(model, True)
         ep_loss = 0.0
         n_upd = 0
         t0 = time.perf_counter()
         for pos in range(0, len(train_idx), args.batch_size):
+            if total_upd >= upd_budget:
+                print(f"[cap] --max-updates {args.max_updates} reached; stopping")
+                stop_training = True
+                break
             batch = [train_items[i] for i in train_idx[pos : pos + args.batch_size]]
-            b = collate_head_batch(batch, cache)
-            logits, _act = head_forward(
-                model, b["h"], b["attention_mask"], b["marker_pos"], b["marker_mask"], b["qtype"]
-            )
+            t_upd = time.perf_counter()
+            if lora_mode:
+                b = collate_raw_batch(batch)
+                logits, _act = full_forward(
+                    model, b["input_ids"], b["attention_mask"], b["marker_pos"],
+                    b["marker_mask"], b["qtype"])
+            else:
+                b = collate_head_batch(batch, cache)
+                logits, _act = head_forward(
+                    model, b["h"], b["attention_mask"], b["marker_pos"], b["marker_mask"], b["qtype"]
+                )
             loss = soft_ce(logits, b["target"], b["marker_mask"]).mean()
             opt.zero_grad()
             loss.backward()
@@ -793,9 +1003,26 @@ def main() -> int:
             opt.step()
             ep_loss += float(loss.item())
             n_upd += 1
-        train_eval = evaluate(model, train_items, cache, args.batch_size)
+            total_upd += 1
+            upd_times.append(time.perf_counter() - t_upd)
+            # bar 10 — update-rate checkpoint after the first 100 updates:
+            # extrapolate and abort if the projected total exceeds the cap.
+            if (
+                lora_mode and not abort_done and total_upd >= 100
+                and args.max_updates > 100
+            ):
+                abort_done = True
+                rate = sum(upd_times) / len(upd_times)
+                projected_h = rate * upd_budget / 3600
+                print(f"[bar10] update-rate after {total_upd}: {rate:.2f}s/update; "
+                      f"projected {projected_h:.1f}h vs {args.budget_hours}h cap")
+                if projected_h > args.budget_hours:
+                    print("[bar10] ABORT — projected runtime exceeds cap; "
+                          "escalating rather than running to exhaustion")
+                    raise SystemExit(3)
+        train_eval = evaluate(model, train_items, cache, args.batch_size, lora=lora_mode)
         hold_eval = (
-            evaluate(model, holdout_items, cache, args.batch_size) if holdout_items else None
+            evaluate(model, holdout_items, cache, args.batch_size, lora=lora_mode) if holdout_items else None
         )
         history.append(
             {
@@ -814,15 +1041,15 @@ def main() -> int:
             f"({time.perf_counter() - t0:.1f}s)"
         )
 
-    final_train = evaluate(model, train_items, cache, args.batch_size)
-    final_hold = evaluate(model, holdout_items, cache, args.batch_size) if holdout_items else None
+    final_train = evaluate(model, train_items, cache, args.batch_size, lora=lora_mode)
+    final_hold = evaluate(model, holdout_items, cache, args.batch_size, lora=lora_mode) if holdout_items else None
 
     print("[eval] confusion summary (train):")
     for k, v in final_train["confusion"].items():
         print(f"[eval]   {k}: {v}")
 
     # --------------------- temperature refit (train split) ------------------
-    records = collect_records(model, train_items, cache, args.batch_size)
+    records = collect_records(model, train_items, cache, args.batch_size, lora=lora_mode)
     fit = agent.fit_temperatures(records, compute_ece=False, seed=args.seed)
     print(f"[calib] fitted temperatures: {fit['temperature']} "
           f"by_options={fit['temperature_by_options']} n_by_bucket={fit['n_by_bucket']}")
