@@ -48,6 +48,11 @@ triggers:
       confidence: 1.0
       type: exact_name
 
+    - pattern: "^(e2e|tester.?army|tester.?army.?e2e)$"
+      skill: e2e
+      confidence: 1.0
+      type: exact_name
+
   # Functional triggers - what the skill does
   functional:
     - pattern: "(audit|redesign|improve|enhance).*(frontend|ui|css|landing|portfolio)"
@@ -61,6 +66,12 @@ triggers:
       confidence: 0.9
       type: capability
       examples: ["route this to a skill", "orchestrate my agents"]
+
+    - pattern: "(write|scaffold|debug|run).*(agentic|natural.?language|plain.?english).*(e2e|end.?to.?end|browser).*(test|spec)|bug.?bash|e2e\.config|agent\.(act|assert|waitFor|extract)"
+      skill: e2e
+      confidence: 0.9
+      type: capability
+      examples: ["write agentic e2e tests", "bug bash this app", "debug a failing e2e run", "set up e2e.config.ts"]
 
   # Domain triggers - subject area
   domain:
@@ -86,6 +97,11 @@ triggers:
 
     - pattern: "(skill|capability|tool).*(find|search|discover|get|acquire)"
       skill: ciel
+      confidence: 0.85
+      type: intent
+
+    - pattern: "(agentic|ai.?driven).*(e2e|end.?to.?end|ui).*(test|qa)|replay.?cache|e2e.*(init|run|explore|mcp|report)"
+      skill: e2e
       confidence: 0.85
       type: intent
 

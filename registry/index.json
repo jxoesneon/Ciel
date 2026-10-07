@@ -1,8 +1,8 @@
 {
  "schema": 1,
- "built": "2026-10-03T06:21:01.311451+00:00",
+ "built": "2026-10-07T05:00:26.172233+00:00",
  "skills_dir": "skills",
- "count": 197,
+ "count": 198,
  "skills": {
   "agent-eval": {
    "id": "agent-eval",
@@ -465,8 +465,8 @@
    "install_path": "skills/animate/",
    "state": "validated",
    "checksum": "sha256:f8b4a536f5895783c0ba54f5183d35afb97366e6caf8730705ff5055f3a90f06",
-   "created": "2026-10-03T05:52:24.409192+00:00",
-   "last_updated": "2026-10-03T05:52:24.409192+00:00",
+   "created": "2026-10-04T05:26:25.547161+00:00",
+   "last_updated": "2026-10-04T05:26:25.547161+00:00",
    "runtimes": [
     "claude_code",
     "devin_for_terminal",
@@ -505,8 +505,8 @@
    "install_path": "skills/animate-expo/",
    "state": "sandboxed",
    "checksum": "sha256:490595a1a2264038704fded9acef9e5fb6c93f30d7dd339ef2869e6533e4f5fd",
-   "created": "2026-10-03T05:52:24.412190+00:00",
-   "last_updated": "2026-10-03T05:52:24.412190+00:00",
+   "created": "2026-10-04T05:26:25.547129+00:00",
+   "last_updated": "2026-10-04T05:26:25.547129+00:00",
    "runtimes": [
     "claude_code",
     "devin_for_terminal",
@@ -613,8 +613,8 @@
    "install_path": "skills/animation-vocabulary/",
    "state": "sandboxed",
    "checksum": "sha256:65c0bf476173def94f4da961099fcc6da19171b2df1ffba219657163fe7b097f",
-   "created": "2026-10-03T05:52:24.418681+00:00",
-   "last_updated": "2026-10-03T05:52:24.418681+00:00",
+   "created": "2026-10-04T05:26:25.547161+00:00",
+   "last_updated": "2026-10-04T05:26:25.547161+00:00",
    "runtimes": [
     "claude_code",
     "devin_for_terminal",
@@ -689,8 +689,8 @@
    "install_path": "skills/apple-design/",
    "state": "sandboxed",
    "checksum": "sha256:8557f7358db4a764ac56b1b7adf3ae927272dcbd03000bf6fbedbd3a668a94fc",
-   "created": "2026-10-03T05:52:24.423278+00:00",
-   "last_updated": "2026-10-03T05:52:24.423278+00:00",
+   "created": "2026-10-04T05:26:25.547821+00:00",
+   "last_updated": "2026-10-04T05:26:25.547821+00:00",
    "runtimes": [
     "claude_code",
     "devin_for_terminal",
@@ -797,8 +797,8 @@
    "install_path": "skills/ask-sonner/",
    "state": "sandboxed",
    "checksum": "sha256:2633e382833de9ae2e532f1579c9b7bc1c85124e8952bbd379812316b2b33f50",
-   "created": "2026-10-03T05:52:24.429152+00:00",
-   "last_updated": "2026-10-03T05:52:24.429152+00:00",
+   "created": "2026-10-04T05:26:25.548255+00:00",
+   "last_updated": "2026-10-04T05:26:25.548255+00:00",
    "runtimes": [
     "claude_code",
     "devin_for_terminal",
@@ -909,9 +909,9 @@
    },
    "install_path": "skills/autonomous-3d-studio/",
    "state": "validated",
-   "checksum": "sha256:39968c52c565b7ff9dd0f843c43390e819c3e1aea1f3fb792a29b90ae0100cb5",
-   "created": "2026-09-23T16:29:03.696601+00:00",
-   "last_updated": "2026-09-23T16:29:03.696601+00:00",
+   "checksum": "sha256:1f16236d6fc6f2c3a4ae412fe44b9310715145d5ae378b018b70479d7ae9eda7",
+   "created": "2026-10-04T23:56:54.330096+00:00",
+   "last_updated": "2026-10-04T23:56:54.330096+00:00",
    "dependencies": {
     "skills": [
      "ciel-quality-and-verification",
@@ -1256,7 +1256,7 @@
    },
    "install_path": "skills/brag/",
    "state": "validated",
-   "checksum": "sha256:c9d362b106edd2b20fe7efab2497e912c402d868b9191508acf21c01d7c9d658",
+   "checksum": "sha256:f7daf7dbf96c10f919ad7e6456a6b6816c2ea08e9558cda03eed0154ebd03d17",
    "created": "2026-10-03T04:00:25.650933+00:00",
    "last_updated": "2026-10-03T04:00:25.650933+00:00",
    "dependencies": {
@@ -1431,8 +1431,8 @@
    "install_path": "skills/break-ui/",
    "state": "sandboxed",
    "checksum": "sha256:7eeafd2338b34af3fec53fb5c6c3285de15fdc474d861ca873be5ba205a2009e",
-   "created": "2026-10-03T05:52:24.456105+00:00",
-   "last_updated": "2026-10-03T05:52:24.456105+00:00",
+   "created": "2026-10-04T05:26:25.548543+00:00",
+   "last_updated": "2026-10-04T05:26:25.548543+00:00",
    "runtimes": [
     "claude_code",
     "devin_for_terminal",
@@ -1460,15 +1460,18 @@
    },
    "install_path": "skills/ciel/",
    "state": "validated",
-   "checksum": "sha256:78bff1996ae794efcc5805f3d3d1bf95798a442eaca3f684d2e45889ce0ee71b",
-   "created": "2026-09-23T16:29:03.740154+00:00",
-   "last_updated": "2026-09-23T16:29:03.740154+00:00",
+   "checksum": "sha256:3bd29dfe150e6af195b695e81ba879ba684b234aff36ca509e4e169375305567",
+   "created": "2026-10-04T21:42:09.114959+00:00",
+   "last_updated": "2026-10-04T21:42:09.114959+00:00",
    "dependencies": {
     "skills": [],
     "mcp": [],
     "system": [
-     "bash",
+     "python3",
      "git"
+    ],
+    "optional_system": [
+     "node"
     ]
    },
    "side_effects": [
@@ -1476,7 +1479,9 @@
     "filesystem"
    ],
    "runtimes": [
+    "antigravity",
     "claude_code",
+    "devin",
     "gemini_cli",
     "windsurf",
     "xcode",
@@ -2563,8 +2568,8 @@
    "install_path": "skills/council-runner/",
    "state": "validated",
    "checksum": "sha256:fca40af039805d3091fec1979f92283402c54c1882e57cf8f40d7476f4a621aa",
-   "created": "2026-10-03T04:12:28.739402+00:00",
-   "last_updated": "2026-10-03T04:12:28.739402+00:00",
+   "created": "2026-10-04T05:26:25.531161+00:00",
+   "last_updated": "2026-10-04T05:26:25.531161+00:00",
    "dependencies": {
     "skills": [],
     "mcp": [],
@@ -2751,8 +2756,8 @@
    "install_path": "skills/design-system/",
    "state": "validated",
    "checksum": "sha256:54ceb739e412c51eb9b80a9da77546df72f064ec55d9008a3389e620136a33c1",
-   "created": "2026-10-03T04:12:26.054291+00:00",
-   "last_updated": "2026-10-03T04:12:26.054291+00:00",
+   "created": "2026-10-04T05:26:25.531161+00:00",
+   "last_updated": "2026-10-04T05:26:25.531161+00:00",
    "dependencies": {
     "skills": [
      "filesystem/SKILL.md"
@@ -2865,9 +2870,9 @@
    },
    "install_path": "skills/devin-conversation-recovery/",
    "state": "validated",
-   "checksum": "sha256:cc320a5f53b2b700cb6f070ebf8fab5d937aede923e9c11ead57692783ee6522",
-   "created": "2026-09-24T16:00:54.700178+00:00",
-   "last_updated": "2026-09-24T16:00:54.700178+00:00",
+   "checksum": "sha256:b9abc332f7894f04292e7910ad2482016da307c4e1dbcc5d20f9baeb7970eb4f",
+   "created": "2026-10-04T23:57:50.923621+00:00",
+   "last_updated": "2026-10-04T23:57:50.923621+00:00",
    "dependencies": {
     "skills": [],
     "mcp": [],
@@ -3104,6 +3109,67 @@
     "generic"
    ]
   },
+  "e2e": {
+   "id": "e2e",
+   "version": "1.0.0",
+   "description": "Agentic end-to-end tests with e2e, the e2e runner. Covers scaffolding e2e.config.ts, picking the Playwright browser engine or the agent-device mobile engine, starting the app under test from the config, driving flows with agent.act, judging with agent.assert, agent.waitFor, and agent.extract, pinning values with screen, app, browser, and expect, shaping the agent (context, system prompt, tools, personas), the replay cache, the e2e CLI, reading .e2e/report.json, and bug bashes (parallel explore runs proven with repro tests). Use when a project depends on e2e, when asked for end-to-end, browser, mobile, or agentic UI tests, to bug bash or hunt for bugs, or when an e2e run fails.",
+   "triggers": [
+    "tester.?army",
+    "e2e\\.config|agent\\.(act|assert|waitFor|extract)|\\.e2e\\.ts",
+    "(agentic|natural.?language|plain.?english).*(e2e|end.?to.?end|browser|ui).*(test|spec)",
+    "bug.?bash|hunt.*bugs|explore.*app.*(goal|bug)",
+    "e2e.*(init|run|explore|mcp|replay)"
+   ],
+   "tags": [
+    "ciel",
+    "acquired",
+    "domain:testing",
+    "domain:web",
+    "domain:mobile"
+   ],
+   "license": "Apache-2.0",
+   "source": {
+    "tier": 3,
+    "origin": "https://github.com/tester-army/e2e/tree/main/skills/e2e",
+    "upstream_commit": "b7ba0097abe950b6cd3da25c45e58087fc77b668",
+    "license": "Apache-2.0",
+    "fetched": "2026-10-06",
+    "installed_hashes": {
+     "SKILL.md": "3bd89712346cfc37258cbee1222e5f518943edf57510446c0a8f34487693dd5d"
+    },
+    "fetch_hashes": {
+     "SKILL.md": "999625810997af4aea101985b2992b987c810f7db520c6da35837a10faf800db",
+     "references/agent.md": "42b8fe5a373b7939340aa569d535e8239433d585275e4cd5fb1746465ad8eb25",
+     "references/bug-bash.md": "713b3cfd325f30431c9719ea2897cb85c3488d9fcdade0927990bb2e1a524d01",
+     "references/debugging.md": "06609f5979e8a46e5f74873d24fac39caa032dc1146df581c108acc64c4ea6d2",
+     "references/explore.md": "a120ca21585f623b683f5469e0f2326f0b206743d16e3e0f2b8f93929d3c1a27",
+     "references/mcp.md": "d56b2d6a5797cb20f272081062c4d1e8d1002485ddff5336ca07e5bbb2541ee0",
+     "references/running.md": "617210647171e2ae2e633206351794aadff5db9df841fdd6f10923b81e970c9f",
+     "references/setup.md": "30792bc8ada43e0f015d9e82979e560b56b2149aed753eecc216d58249db0c52",
+     "references/writing-tests.md": "c879b0ffde1aa4a2844e0bfde73c64c31600eff3d31a3a9a91968f103649c7fe"
+    }
+   },
+   "install_path": "skills/e2e/",
+   "state": "sandboxed",
+   "checksum": "sha256:adec59c9b2e93c4ead42028a2394a0be2c1b5383834c8d654bc3e85aecd66930",
+   "created": "2026-10-07T04:57:55.319632+00:00",
+   "last_updated": "2026-10-07T04:57:55.319632+00:00",
+   "dependencies": {
+    "skills": [],
+    "mcp": [],
+    "system": [
+     "node >= 20.19",
+     "npx e2e (npm package)",
+     "playwright chromium (web engine)"
+    ]
+   },
+   "runtimes": [
+    "claude_code",
+    "gemini_cli",
+    "windsurf",
+    "generic"
+   ]
+  },
   "e2e-and-visual-verification": {
    "id": "e2e-and-visual-verification",
    "version": "1.0.0",
@@ -3205,8 +3271,8 @@
    "install_path": "skills/emil-design-eng/",
    "state": "validated",
    "checksum": "sha256:ffca7cc6e78ac004eb12c5b8cafe39616ab7e13e70f4e8a533f3e97461a779b4",
-   "created": "2026-10-03T05:52:24.487308+00:00",
-   "last_updated": "2026-10-03T05:52:24.487308+00:00",
+   "created": "2026-10-04T05:26:25.548543+00:00",
+   "last_updated": "2026-10-04T05:26:25.548543+00:00",
    "runtimes": [
     "claude_code",
     "devin_for_terminal",
@@ -3384,8 +3450,8 @@
    "install_path": "skills/find-animation-opportunities/",
    "state": "sandboxed",
    "checksum": "sha256:a8c0291f4e43a15282319ae395450a104a80510b0330ef8770ada2d8944c8153",
-   "created": "2026-10-03T05:52:24.491195+00:00",
-   "last_updated": "2026-10-03T05:52:24.491195+00:00",
+   "created": "2026-10-04T05:26:25.548933+00:00",
+   "last_updated": "2026-10-04T05:26:25.548933+00:00",
    "runtimes": [
     "claude_code",
     "devin_for_terminal",
@@ -3530,8 +3596,8 @@
    "install_path": "skills/frontend-design/",
    "state": "validated",
    "checksum": "sha256:54c71c68490b60d69e0befce0e0794afaa65bbd5a87fb7fc7a58ced1e5258afd",
-   "created": "2026-10-03T05:52:24.494466+00:00",
-   "last_updated": "2026-10-03T05:52:24.494466+00:00",
+   "created": "2026-10-04T05:26:25.549483+00:00",
+   "last_updated": "2026-10-04T05:26:25.549483+00:00",
    "runtimes": [
     "claude_code",
     "devin_for_terminal",
@@ -4134,9 +4200,9 @@
    },
    "install_path": "skills/hyperframes-creative/",
    "state": "validated",
-   "checksum": "sha256:0ffa4608cc016102f872da3fa8c44f30083e28c11089abbad73778f3f1fe52c7",
-   "created": "2026-10-03T04:00:25.737171+00:00",
-   "last_updated": "2026-10-03T04:00:25.737171+00:00",
+   "checksum": "sha256:5f44660fa8b9a67285823c0b2e1ff40a50f11ccc0698829f8459f1c98ad0c758",
+   "created": "2026-10-04T23:57:50.861618+00:00",
+   "last_updated": "2026-10-04T23:57:50.861618+00:00",
    "dependencies": {
     "skills": [],
     "mcp": [],
@@ -4326,8 +4392,8 @@
    "install_path": "skills/impeccable/",
    "state": "validated",
    "checksum": "sha256:fa9580793be7fa4d1e028305bd983c2c1d18b8314863fe7039c5b62c552c7bd4",
-   "created": "2026-10-03T05:52:24.517912+00:00",
-   "last_updated": "2026-10-03T05:52:24.517912+00:00",
+   "created": "2026-10-04T05:26:25.549483+00:00",
+   "last_updated": "2026-10-04T05:26:25.549483+00:00",
    "runtimes": [
     "claude_code",
     "devin_for_terminal",
@@ -4363,8 +4429,8 @@
    "install_path": "skills/improve-animations/",
    "state": "sandboxed",
    "checksum": "sha256:2ceeff607517314c234000d87b97eac4e8dfc1193ed733e203991cba52bbea7d",
-   "created": "2026-10-03T05:52:24.521241+00:00",
-   "last_updated": "2026-10-03T05:52:24.521241+00:00",
+   "created": "2026-10-04T05:26:25.568552+00:00",
+   "last_updated": "2026-10-04T05:26:25.568552+00:00",
    "runtimes": [
     "claude_code",
     "devin_for_terminal",
@@ -4940,8 +5006,8 @@
    "install_path": "skills/mobile-native/",
    "state": "sandboxed",
    "checksum": "sha256:f760934957e3df65c8075c74f9b7343aac8d0705040fa0df8facb505e2f55c1a",
-   "created": "2026-10-03T05:52:24.535725+00:00",
-   "last_updated": "2026-10-03T05:52:24.535725+00:00",
+   "created": "2026-10-04T05:26:25.568552+00:00",
+   "last_updated": "2026-10-04T05:26:25.568552+00:00",
    "runtimes": [
     "claude_code",
     "devin_for_terminal",
@@ -5525,8 +5591,8 @@
    "install_path": "skills/pick-ui-library/",
    "state": "sandboxed",
    "checksum": "sha256:30b6928b459cb39edf037a0050a2214a7221a19bb9bef4cdcb2dbb50583de8aa",
-   "created": "2026-10-03T05:52:24.553489+00:00",
-   "last_updated": "2026-10-03T05:52:24.553489+00:00",
+   "created": "2026-10-04T05:26:25.568995+00:00",
+   "last_updated": "2026-10-04T05:26:25.568995+00:00",
    "runtimes": [
     "claude_code",
     "devin_for_terminal",
@@ -5638,9 +5704,9 @@
    },
    "install_path": "skills/procedural-audio/",
    "state": "validated",
-   "checksum": "sha256:ecc46365244189905c22cffcdf860f7565dcb2257e6f8e8a586a70f79fa82718",
-   "created": "2026-09-24T15:29:46.010964+00:00",
-   "last_updated": "2026-09-24T15:29:46.010964+00:00",
+   "checksum": "sha256:67de156cf8664081e2d647af3c2fbf8b744a8c7b7726ef11ef7db5c21d901b18",
+   "created": "2026-10-04T23:56:46.642753+00:00",
+   "last_updated": "2026-10-04T23:56:46.642753+00:00",
    "dependencies": {
     "skills": [],
     "mcp": [],
@@ -5826,8 +5892,8 @@
    "install_path": "skills/prototype/",
    "state": "sandboxed",
    "checksum": "sha256:e8168902e0e8eb5f3fbff15a308f5c8764cc4f49063b13cb7b6fed6f21062aa8",
-   "created": "2026-10-03T05:52:24.563663+00:00",
-   "last_updated": "2026-10-03T05:52:24.563663+00:00",
+   "created": "2026-10-04T05:26:25.569645+00:00",
+   "last_updated": "2026-10-04T05:26:25.569645+00:00",
    "runtimes": [
     "claude_code",
     "devin_for_terminal",
@@ -6110,8 +6176,8 @@
    "install_path": "skills/review-animations/",
    "state": "sandboxed",
    "checksum": "sha256:c379fb43d0db69809cae3557665dd3a44b03864e8711804104f0ad8bc99a0ff2",
-   "created": "2026-10-03T05:52:24.569578+00:00",
-   "last_updated": "2026-10-03T05:52:24.569578+00:00",
+   "created": "2026-10-04T05:26:25.569645+00:00",
+   "last_updated": "2026-10-04T05:26:25.569645+00:00",
    "runtimes": [
     "claude_code",
     "devin_for_terminal",
@@ -7035,9 +7101,9 @@
    },
    "install_path": "skills/ui-ux-pro-max/",
    "state": "validated",
-   "checksum": "sha256:df345c55797b0bb4771a5e477b2a27c12f6f2cccb92b8311ed467805c5aaab9d",
-   "created": "2026-10-03T05:52:24.588781+00:00",
-   "last_updated": "2026-10-03T05:52:24.588781+00:00",
+   "checksum": "sha256:49dda0f21db72ca191e61f994dbfa9895afcf3344be53875427ec474b06ec9fd",
+   "created": "2026-10-04T23:56:58.747293+00:00",
+   "last_updated": "2026-10-04T23:56:58.747293+00:00",
    "runtimes": [
     "claude_code",
     "devin_for_terminal",
@@ -7250,8 +7316,8 @@
    "install_path": "skills/write-swift/",
    "state": "sandboxed",
    "checksum": "sha256:d3c9e938473e8ed255fcab97bcffd378777b0d63f22aad430ee2dbab4d1e0f12",
-   "created": "2026-10-03T05:52:24.598694+00:00",
-   "last_updated": "2026-10-03T05:52:24.598694+00:00",
+   "created": "2026-10-04T05:26:25.596163+00:00",
+   "last_updated": "2026-10-04T05:26:25.596163+00:00",
    "runtimes": [
     "claude_code",
     "devin_for_terminal",

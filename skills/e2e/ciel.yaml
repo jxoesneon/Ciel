@@ -1,0 +1,56 @@
+# Ciel skill extension — fields beyond the Agent Skills spec. SKILL.md stays spec-pure.
+schema: 1
+version: 1.0.0
+format: skill/1.0
+runtimes:
+- claude_code
+- gemini_cli
+- windsurf
+- generic
+tags:
+- ciel
+- acquired
+- domain:testing
+- domain:web
+- domain:mobile
+triggers:
+- pattern: tester.?army
+  confidence: 1.0
+- pattern: e2e\.config|agent\.(act|assert|waitFor|extract)|\.e2e\.ts
+  confidence: 0.95
+- pattern: (agentic|natural.?language|plain.?english).*(e2e|end.?to.?end|browser|ui).*(test|spec)
+  confidence: 0.9
+- pattern: bug.?bash|hunt.*bugs|explore.*app.*(goal|bug)
+  confidence: 0.85
+- pattern: e2e.*(init|run|explore|mcp|replay)
+  confidence: 0.85
+source:
+  tier: 3
+  origin: https://github.com/tester-army/e2e/tree/main/skills/e2e
+  upstream_commit: b7ba0097abe950b6cd3da25c45e58087fc77b668
+  license: Apache-2.0
+  fetched: "2026-10-06"
+  installed_hashes:
+    SKILL.md: 3bd89712346cfc37258cbee1222e5f518943edf57510446c0a8f34487693dd5d
+  fetch_hashes:
+    SKILL.md: 999625810997af4aea101985b2992b987c810f7db520c6da35837a10faf800db
+    references/agent.md: 42b8fe5a373b7939340aa569d535e8239433d585275e4cd5fb1746465ad8eb25
+    references/bug-bash.md: 713b3cfd325f30431c9719ea2897cb85c3488d9fcdade0927990bb2e1a524d01
+    references/debugging.md: 06609f5979e8a46e5f74873d24fac39caa032dc1146df581c108acc64c4ea6d2
+    references/explore.md: a120ca21585f623b683f5469e0f2326f0b206743d16e3e0f2b8f93929d3c1a27
+    references/mcp.md: d56b2d6a5797cb20f272081062c4d1e8d1002485ddff5336ca07e5bbb2541ee0
+    references/running.md: 617210647171e2ae2e633206351794aadff5db9df841fdd6f10923b81e970c9f
+    references/setup.md: 30792bc8ada43e0f015d9e82979e560b56b2149aed753eecc216d58249db0c52
+    references/writing-tests.md: c879b0ffde1aa4a2844e0bfde73c64c31600eff3d31a3a9a91968f103649c7fe
+state: sandboxed
+trust_evidence:
+  approved_by: council
+  approved_at: '2026-10-06'
+  basis: Tier-3 acquisition; markdown-only bundle, injection scan clean, Apache-2.0, upstream provenance pinned (commit + sha256). Council weighted 8.05. Promote to validated on paired eval.
+dependencies:
+  skills: []
+  mcp: []
+  system:
+  - node >= 20.19
+  - npx e2e (npm package)
+  - playwright chromium (web engine)

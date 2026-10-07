@@ -99,6 +99,21 @@ avg_confidence: 0.90
 avg_ms: 0
 success_rate: 1.00
 notes: "Emil Kowalski motion/interaction family hub; sub-skills dispatch by name (animate, review-animations, improve-animations, find-animation-opportunities, animation-vocabulary, apple-design, animate-expo)"
+
+# Active Registered Route: e2e (tester-army agentic e2e runner)
+route_id: route_e2e_agentic_v1
+matcher:
+  triggers: ["e2e", "tester-army", "e2e.config", "agent.act", "agentic e2e", "natural language e2e", "bug bash", "e2e explore", "e2e mcp", "e2e replay"]
+  compiled_pattern: "^(e2e|tester.?army|tester.?army.?e2e)$"
+  tags: ["testing", "e2e", "agentic", "browser", "mobile", "bug-bash", "qa"]
+target_skill: e2e
+trigger_confidence: 0.90
+path_used: fast
+hits: 0
+avg_confidence: 0.90
+avg_ms: 0
+success_rate: 1.00
+notes: "tester-army/e2e agentic e2e framework skill (Apache-2.0); Tier-3 acquisition, council pass 8.05 weighted; trust state untrusted pending paired eval"
 ```
 
 Stored in MemPalace partition `ciel/route_registry/` keyed by `route_id`. Indexed by `target_skill` and by tag.
