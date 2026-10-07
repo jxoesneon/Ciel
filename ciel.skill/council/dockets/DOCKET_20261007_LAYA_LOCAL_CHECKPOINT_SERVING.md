@@ -100,3 +100,12 @@ Live verification 2026-10-07: server booted via the shim on :8766,
 `model=ciel-context-lora` routed to the local path and answered
 (`/etc/shadow` write → `dangerous` @ 0.90). Pin unchanged:
 `CIEL_SYSTEM1_MODEL=typed-decisions` until bar 2 clears.
+
+Upstream path update 2026-10-07 (m6): PR
+https://github.com/NandhaKishorM/laya/pull/1047 opened against laya main —
+native `LAYA_EXTRA_MODELS` support: `build_router()` parses the JSON
+object into `Router(models=...)`, both endpoints resolve `model` through
+the app's `Router.resolve`, and `LAYA_DEFAULT_MODEL` accepts a registered
+name. Gates: ruff/compileall clean; test_serve 256, test_router 779,
+test_hooks 258, test_hooks_api 544, audit_regressions 11 — all green.
+Status: open, mergeable; shim stays authoritative until it lands.
