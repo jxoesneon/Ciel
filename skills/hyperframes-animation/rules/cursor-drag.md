@@ -7,9 +7,9 @@ metadata:
 
 # Cursor Drag
 
-> Cursor look, sizing, off-screen entry, and tip-targeting defer to the **oversized-cursor house doctrine** — this rule owns the drag _mechanics_ only.
+> Cursor look, sizing, off-screen entry, and tip-targeting defer to the **oversized-cursor house doctrine** — this rule owns the drag *mechanics* only.
 
-THE held-journey verb: the cursor presses down on a payload, carries it, and releases it somewhere else. The load-bearing law is **lockstep**: the cursor tip and the payload's grip point move as one rigid object for the entire travel — a one-frame drift reads as the chip slipping out of the hand. Distinct from [cursor-click-ripple.md](cursor-click-ripple.md) (move → point event at a single location): a drag is a _sustained hold across space_, and the payload is the co-star. Reuse [physics-press-reaction.md](physics-press-reaction.md) for the grab's press dip (cursor + payload compress together); for N simultaneous actors see [multi-cursor-choreography.md](multi-cursor-choreography.md) — this rule is one protagonist performing a workflow beat.
+THE held-journey verb: the cursor presses down on a payload, carries it, and releases it somewhere else. The load-bearing law is **lockstep**: the cursor tip and the payload's grip point move as one rigid object for the entire travel — a one-frame drift reads as the chip slipping out of the hand. Distinct from [cursor-click-ripple.md](cursor-click-ripple.md) (move → point event at a single location): a drag is a *sustained hold across space*, and the payload is the co-star. Reuse [physics-press-reaction.md](physics-press-reaction.md) for the grab's press dip (cursor + payload compress together); for N simultaneous actors see [multi-cursor-choreography.md](multi-cursor-choreography.md) — this rule is one protagonist performing a workflow beat.
 
 ## How It Works
 
@@ -79,7 +79,7 @@ tl.fromTo(
 
 ## Variations
 
-- **Corner-handle proportional resize** — width/height tweens are forbidden, so the resize renders as uniform `scale` with `transform-origin` at the **opposite (anchor) corner**: the anchor stays put, the dragged corner travels. The corner's position is _linear in scale_ (`corner = anchor + scale × (corner₀ − anchor)`), so a cursor tween to the corner's end position with the **same duration and ease** stays glued to the handle exactly:
+- **Corner-handle proportional resize** — width/height tweens are forbidden, so the resize renders as uniform `scale` with `transform-origin` at the **opposite (anchor) corner**: the anchor stays put, the dragged corner travels. The corner's position is *linear in scale* (`corner = anchor + scale × (corner₀ − anchor)`), so a cursor tween to the corner's end position with the **same duration and ease** stays glued to the handle exactly:
 
   ```js
   tl.to(

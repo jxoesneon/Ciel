@@ -36,7 +36,7 @@ def _load_yaml(text: str) -> dict:
     except ImportError:
         pass
 
-    def parse_block(lines, i, indent):
+    def parse_block(lines, i, indent):  # noqa: PLR0912
         out = {}
         while i < len(lines):
             line = lines[i]

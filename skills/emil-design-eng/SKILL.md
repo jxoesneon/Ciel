@@ -53,7 +53,7 @@ When reviewing UI code, you MUST use a markdown table with Before/After columns.
 
 Wrong format (never do this):
 
-```
+```text
 Before: transition: all 300ms
 After: transition: transform 200ms ease-out
 ────────────────────────────
@@ -122,7 +122,7 @@ Is the element entering or exiting?
 --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 ```
 
-**Never use ease-in for UI animations.** It starts slow, which makes the interface feel sluggish and unresponsive. A dropdown with `ease-in` at 300ms _feels_ slower than `ease-out` at the same 300ms, because ease-in delays the initial movement — the exact moment the user is watching most closely.
+**Never use ease-in for UI animations.** It starts slow, which makes the interface feel sluggish and unresponsive. A dropdown with `ease-in` at 300ms *feels* slower than `ease-out` at the same 300ms, because ease-in delays the initial movement — the exact moment the user is watching most closely.
 
 **Easing curve resources:** Don't create curves from scratch. Use [easing.dev](https://easing.dev/) or [easings.co](https://easings.co/) to find stronger custom variants of standard easings.
 
@@ -146,7 +146,7 @@ Speed in animation is not just about feeling snappy — it directly affects how 
 - A **180ms select** animation feels more responsive than a **400ms** one
 - **Instant tooltips** after the first one is open (skip delay + skip animation) make the whole toolbar feel faster
 
-The perception of speed matters as much as actual speed. Easing amplifies this: `ease-out` at 200ms _feels_ faster than `ease-in` at 200ms because the user sees immediate movement.
+The perception of speed matters as much as actual speed. Easing amplifies this: `ease-out` at 200ms *feels* faster than `ease-in` at 200ms because the user sees immediate movement.
 
 ## Spring Animations
 
@@ -180,13 +180,13 @@ This works because the animation is **decorative** — it doesn't serve a functi
 
 ### Spring configuration
 
-**Apple's approach (recommended — easier to reason about):**
+#### Apple's approach (recommended — easier to reason about)
 
 ```js
 { type: "spring", duration: 0.5, bounce: 0.2 }
 ```
 
-**Traditional physics (more control):**
+##### Traditional physics (more control)
 
 ```js
 { type: "spring", mass: 1, stiffness: 100, damping: 10 }
@@ -668,7 +668,7 @@ When reviewing UI code, check for:
 | `transition: all`                          | Specify exact properties: `transition: transform 200ms ease-out` |
 | `scale(0)` entry animation                 | Start from `scale(0.95)` with `opacity: 0`                       |
 | `ease-in` on UI element                    | Switch to `ease-out` or custom curve                             |
-| `transform-origin: center` on popover      | Set to trigger location or use Base UI's `var(--transform-origin)` (modals are exempt — keep centered) |
+| `transform-origin: center` on popover      | Set to trigger location or Base UI's `var(--transform-origin)`   |
 | Animation on keyboard action               | Remove animation entirely                                        |
 | Duration > 300ms on UI element             | Reduce to 150-250ms                                              |
 | Hover animation without media query        | Add `@media (hover: hover) and (pointer: fine)`                  |
@@ -676,3 +676,5 @@ When reviewing UI code, check for:
 | Framer Motion `x`/`y` props under load     | Use `transform: "translateX()"` for hardware acceleration        |
 | Same enter/exit transition speed           | Make exit faster than enter (e.g., enter 2s, exit 200ms)         |
 | Elements all appear at once                | Add stagger delay (30-80ms between items)                        |
+
+Modals are exempt from the popover `transform-origin` rule — keep them centered.

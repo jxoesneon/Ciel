@@ -2,7 +2,7 @@
 
 Storytelling, documentaries, case studies, narrative content.
 
-```
+```text
 #264653 #2A9D8F #E9C46A #F4A261 #E76F51
 #335C67 #FFF3B0 #E09F3E #9E2A2B #540B0E
 #F4F1DE #E07A5F #3D405B #81B29A #F2CC8F

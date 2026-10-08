@@ -15,7 +15,7 @@ burn) and shader transitions are deferred to later phases.
 
 ## How the injector applies a transition
 
-At a `break` boundary between scene _i_ (`from`) and scene _i+1_ (`to`), the
+At a `break` boundary between scene *i* (`from`) and scene *i+1* (`to`), the
 injector:
 
 1. Extends `#el-<from>` wrapper `data-duration` by `duration_s` (holds its final
@@ -30,7 +30,7 @@ injector:
 
 Verified by prototype render (2026-05-31): the master-timeline wrapper tween is
 seeked and rendered (no double-seek with the sub-comp's own paused timeline —
-the runtime drives them independently), the extended wrapper holds scene _i_'s
+the runtime drives them independently), the extended wrapper holds scene *i*'s
 final frame, and the higher-track incoming wrapper composites over + blends with
 the outgoing one.
 
@@ -51,7 +51,7 @@ The injector substitutes these tokens in each `gsap_template` line:
 `filter` / `scaleX` / `transformOrigin` are lint-clean on the master timeline
 (verified: `core/src/lint/rules/gsap.ts` has no per-property whitelist and scopes
 its checks to `data-composition-id` ranges; the x/y/scale/rotation/opacity
-whitelist is a _scene-worker_ prompt rule only — it does not bind index.html).
+whitelist is a *scene-worker* prompt rule only — it does not bind index.html).
 
 ## Registry
 
@@ -157,7 +157,7 @@ types only** (the 5 in the registry above); the Tier-A `shared-element` morph is
 worker-authored bridge driven by narrative `intent: morph` — it is **exempt and
 does not count** toward the 2-3. Name the entering transition on each scene:
 
-```
+```text
 **Transition:** blur-crossfade
 **Transition:** push-slide LEFT
 **Transition:** zoom-through 0.3s

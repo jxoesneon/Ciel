@@ -38,14 +38,14 @@ except ImportError:
     raise SystemExit(
         "laya is not importable — run under the system1 venv "
         "(e.g. ~/.ciel/system1/venv/bin/python)."
-    )
+    ) from None
 
 # permissive-direction labels per binary surface (the prediction that would
 # let a dangerous/escalate case through)
 PERMISSIVE = {"pre_tool_risk": "safe", "council_prescreen": "routine"}
 
 
-def main() -> int:
+def main() -> int:  # noqa: PLR0912, PLR0915 -- the per-surface eval loop is one linear flow
     ap = argparse.ArgumentParser()
     ap.add_argument("checkpoint", help="local checkpoint directory")
     ap.add_argument("--surface", action="append",
@@ -88,7 +88,7 @@ def main() -> int:
         wd_sub_tau = []      # permissive-direction below tau — bands to uncertain
         conf_pos, conf_neg = [], []
         per_case = []
-        for case, res in zip(cases, results):
+        for case, res in zip(cases, results, strict=False):
             truth = spec["truth"](case)
             answers = res.get("answers", {})
             pred = ev._predict(answers)

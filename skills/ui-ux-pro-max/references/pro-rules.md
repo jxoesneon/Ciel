@@ -9,7 +9,7 @@ These are frequently overlooked issues that make UI look unprofessional.
 ## Icons & Visual Elements
 
 | Rule | Standard | Avoid | Why It Matters |
-|------|----------|--------|----------------|
+| ------ | ---------- | -------- | ---------------- |
 | **No Emoji as Structural Icons** | Use vector-based icons (e.g., Lucide, react-native-vector-icons, @expo/vector-icons). | Using emojis (🎨 🚀 ⚙️) for navigation, settings, or system controls. | Emojis are font-dependent, inconsistent across platforms, and cannot be controlled via design tokens. |
 | **Vector-Only Assets** | Use SVG or platform vector icons that scale cleanly and support theming. | Raster PNG icons that blur or pixelate. | Ensures scalability, crisp rendering, and dark/light mode adaptability. |
 | **Contextual Semantics** | Choose semantics from use, not glyph: hide decorative icons beside visible text from the accessibility tree; give meaningful standalone icons a text alternative; give icon controls an accessible name and expose selected/pressed/expanded state when applicable. | Treating one icon name as permanently decorative, meaningful, or interactive. | The same glyph can serve different purposes in different components. |
@@ -25,7 +25,7 @@ These are frequently overlooked issues that make UI look unprofessional.
 ## Interaction (App)
 
 | Rule | Do | Don't |
-|------|----|----- |
+| ------ | ---- | ----- |
 | **Tap feedback** | Provide clear pressed feedback (ripple/opacity/elevation) within 80-150ms | No visual response on tap |
 | **Animation timing** | Use shared tokens chosen for distance, complexity, platform, and user context | One duration/easing copied to every transition |
 | **Accessibility focus** | Ensure screen reader focus order matches visual order and labels are descriptive | Unlabeled controls or confusing focus traversal |
@@ -37,7 +37,7 @@ These are frequently overlooked issues that make UI look unprofessional.
 ## Light/Dark Mode Contrast
 
 | Rule | Do | Don't |
-|------|----|----- |
+| ------ | ---- | ----- |
 | **Surface readability (light)** | Keep cards/surfaces clearly separated from background with sufficient opacity/elevation | Overly transparent surfaces that blur hierarchy |
 | **Text contrast (light)** | Maintain body text contrast >=4.5:1 against light surfaces | Low-contrast gray body text |
 | **Text contrast (dark)** | Maintain normal text contrast >=4.5:1 on dark surfaces; 3:1 is only for large text or non-text UI | Muted normal text that falls below the text threshold |
@@ -49,7 +49,7 @@ These are frequently overlooked issues that make UI look unprofessional.
 ## Layout & Spacing
 
 | Rule | Do | Don't |
-|------|----|----- |
+| ------ | ---- | ----- |
 | **Safe-area compliance** | Respect top/bottom safe areas for all fixed headers, tab bars, and CTA bars | Placing fixed UI under notch, status bar, or gesture area |
 | **System bar clearance** | Add spacing for status/navigation bars and gesture home indicator | Let tappable content collide with OS chrome |
 | **Consistent content width** | Keep predictable content width per device class (phone/tablet) | Mixing arbitrary widths between screens |
@@ -66,6 +66,7 @@ These are frequently overlooked issues that make UI look unprofessional.
 Before delivering app UI code, verify every item below. Start with the process steps, then the per-area checkboxes.
 
 ### Process
+
 - [ ] Ran only searches relevant to the interface, such as `"keyboard focus modal" --domain ux` for modal keyboard behavior
 - [ ] Reviewed `quick-reference.md` §1–§3 (CRITICAL + HIGH) as a final pass
 - [ ] Tested on 375px (small phone) and in landscape orientation
@@ -74,6 +75,7 @@ Before delivering app UI code, verify every item below. Start with the process s
 - [ ] Confirmed all touch targets ≥44pt and no content hidden behind safe areas
 
 ### Visual Quality
+
 - [ ] No emojis used as icons (use SVG instead)
 - [ ] All icons come from a consistent icon family and style
 - [ ] Official brand assets are used with correct proportions and clear space
@@ -81,6 +83,7 @@ Before delivering app UI code, verify every item below. Start with the process s
 - [ ] Semantic theme tokens are used consistently (no ad-hoc per-screen hardcoded colors)
 
 ### Interaction
+
 - [ ] All tappable elements provide clear pressed feedback (ripple/opacity/elevation)
 - [ ] Touch targets meet minimum size (>=44x44pt iOS, >=48x48dp Android)
 - [ ] Micro-interaction timing uses shared, platform-appropriate tokens and remains responsive in context
@@ -89,6 +92,7 @@ Before delivering app UI code, verify every item below. Start with the process s
 - [ ] Gesture regions avoid nested/conflicting interactions (tap/drag/back-swipe conflicts)
 
 ### Light/Dark Mode
+
 - [ ] Primary text contrast >=4.5:1 in both light and dark mode
 - [ ] Normal primary and secondary text contrast >=4.5:1 in both light and dark mode
 - [ ] Dividers/borders and interaction states are distinguishable in both modes
@@ -96,6 +100,7 @@ Before delivering app UI code, verify every item below. Start with the process s
 - [ ] Both themes are tested before delivery (not inferred from a single theme)
 
 ### Layout
+
 - [ ] Safe areas are respected for headers, tab bars, and bottom CTA bars
 - [ ] Scroll content is not hidden behind fixed/sticky bars
 - [ ] Verified on small phone, large phone, and tablet (portrait + landscape)
@@ -104,6 +109,7 @@ Before delivering app UI code, verify every item below. Start with the process s
 - [ ] Long-form text measure remains readable on larger devices (no edge-to-edge paragraphs)
 
 ### Accessibility
+
 - [ ] Decorative icons beside visible text are hidden from the accessibility tree (`aria-hidden="true"` on web or the native equivalent)
 - [ ] Meaningful images/icons without equivalent visible text have a text alternative
 - [ ] Icon controls have an accessible name and announce applicable selected/pressed/expanded state

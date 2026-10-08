@@ -2,7 +2,7 @@
 
 Named visual identities for HyperFrames videos. Each style is grounded in a real graphic design tradition and expressed as a DESIGN.md-compatible token block. Use them as starters — copy the YAML into your project's `design.md` front matter, then customize.
 
-**How to pick:** Match mood first, content second. Ask: _"What should the viewer FEEL?"_
+**How to pick:** Match mood first, content second. Ask: *"What should the viewer FEEL?"*
 
 **How to use:** Copy the style's YAML token block into `design.md` front matter. Add `## Overview`, `## Colors`, `## Typography`, `## Elevation`, `## Components`, `## Do's and Don'ts` prose sections to complete the file.
 

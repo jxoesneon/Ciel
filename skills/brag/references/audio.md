@@ -11,19 +11,22 @@ Bias toward a smooth, professional result: one tasteful music bed plus a small n
 When music is present, prefer a subtle audio-reactive treatment unless the tone asks for stillness or deadpan restraint. This does not mean beat detection. It means Hyperframes can pre-extract per-frame audio data and use RMS/frequency-band energy to modulate existing visual elements.
 
 Good uses:
+
 - Hero glow or sky warmth breathes slightly with RMS
 - Product card, phone, or metric panel gains subtle presence on bass
 - Title, quote, or logo gets a soft treble glow on stronger musical moments
 - Background depth, vignette, or light layer gently swells with the bed
 
 Avoid:
+
 - Waveform displays, equalizer bars, musical notes, or generic visualizer graphics
 - Strobing, heavy pulsing, or text scaling that hurts readability
 - Treating audio-reactivity as a substitute for good scene timing
 - Claiming exact beat/BPM sync unless a real beat detector is available
 
 Suggested plan notation:
-```
+
+```text
 Audio-reactive treatment: subtle; use music RMS/bass to make the hero glow and product card presence breathe. No waveform/equalizer visuals.
 ```
 
@@ -67,7 +70,8 @@ cp <skill-dir>/assets/music/happy-beats-business-moves-vol-1-by-ende-dot-app.mp3
 ```
 
 Then in the composition HTML, paths are **relative to the `composition/` directory**:
-```
+
+```text
 assets/sfx/interface/bong_001.ogg
 assets/sfx/impact/impactBell_heavy_000.ogg
 assets/music/happy-beats-business-moves-vol-1-by-ende-dot-app.mp3
@@ -92,7 +96,7 @@ Read `sfx-analysis.md` before choosing files — it lists safer picks by use cas
 ### `interface/` — UI sounds
 
 | Files | Character | Use for |
-|---|---|---|
+| --- | --- | --- |
 | `click_001–005.ogg` | Sharp, precise | Button tap, CTA, any tap action |
 | `glitch_002.ogg`, `glitch_004.ogg` | Digital distortion | Tech/AI moment, chaotic accent |
 | `error_005–006.ogg` | Negative buzz | Comedic fail, wrong answer |
@@ -106,7 +110,7 @@ Read `sfx-analysis.md` before choosing files — it lists safer picks by use cas
 More physical and cinematic. Excellent for big moments and transitions.
 
 | Files | Character | Use for |
-|---|---|---|
+| --- | --- | --- |
 | `impactSoft_medium_000–004.ogg` | Medium soft thud | Major reveal, hard transition — safest family |
 | `impactSoft_heavy_000–004.ogg` | Heavy soft thud | Comedic bonk, weight, silly moment |
 | `impactBell_heavy_000.ogg`, `_003.ogg`, `_004.ogg` | Deep resonant bell | Cinematic reveal, logo slam, dramatic moment |
@@ -134,7 +138,7 @@ More physical and cinematic. Excellent for big moments and transitions.
 Specific but great for swipe/deal/stack moments.
 
 | Files | Character | Use for |
-|---|---|---|
+| --- | --- | --- |
 | `card-slide-1–8.ogg` | Card sliding | Swipe action, content sliding in |
 | `card-place-1–4.ogg` | Card placement | Item landing, card appearing |
 | `card-fan-1–2.ogg` | Cards fanning | Multiple items appearing in sequence |
@@ -153,7 +157,7 @@ Specific but great for swipe/deal/stack moments.
 ### `ui/` — Clicks and switches
 
 | Files | Character | Use for |
-|---|---|---|
+| --- | --- | --- |
 | `click1–5.ogg` | Various click tones | Button tap, cleaner than interface clicks |
 | `mouseclick1.ogg` | Mouse click | Simulated cursor interaction |
 | `rollover1–2.ogg`, `rollover4–5.ogg` | Hover/rollover | Subtle hover feedback, very soft accent |
@@ -164,7 +168,7 @@ Specific but great for swipe/deal/stack moments.
 ## Tone → SFX energy
 
 | Tone | Energy | Approach |
-|---|---|---|
+| --- | --- | --- |
 | `default` | Moderate | 3-5 SFX at key moments. `interface/click` or `interface/drop_*` for pop-ins, `impactBell_heavy_000` for success, `impactSoft_medium` for reveals. |
 | `polished` | Minimal but present | 2-3 very subtle SFX. `interface/bong_001` for a soft accent. `interface/drop_001` for a gentle reveal. Nothing aggressive. |
 | `yc-parody` | Sparse but present | 2-3 restrained cues. One dry reveal hit (`impactSoft_medium`), one UI/card accent, one logo payoff if it fits. |
@@ -180,7 +184,7 @@ Specific but great for swipe/deal/stack moments.
 Use these as examples for Hyperframes, not a fixed recipe. Sound should reinforce the edit, not call attention to itself.
 
 | Moment type | Good sound families | Notes |
-|---|---|---|
+| --- | --- | --- |
 | Sequential cards/items opening | `casino/card-slide-*`, `casino/card-place-*`, `casino/card-fan-*`, `interface/drop_*` | Match the gesture. A card stack uses card sounds; a soft product grid can use drop sounds. For dense sequences, accent the first, last, or rhythmically important items only. |
 | Big reveal / payoff | `impact/impactBell_heavy_000`, `_003`, or `_004`, `impact/impactSoft_medium_*`, `interface/bong_001` | One short announcement-style cue when the reveal lands. Keep it brief. |
 | Text popping / typed copy | `keyboard/keypress-*.wav` (randomized), `interface/drop_*` | For per-character typing animations, pick a random file from `keyboard/` for each character. For soft label pop-ins, use `drop_001` or `drop_002`. Thin out or skip when copy is dense. |
@@ -203,7 +207,8 @@ These rules apply when Hyperframes is implementing the composition and the motio
 - For staggered elements: usually accent the first, final, or strongest beat; only score every item when that rhythm is intentional and still feels clean
 
 Composition notation:
-```
+
+```text
 Scene 2 — Reveal — 3s
   "Horse Tinder" scales in at 0.3s  →  SFX: impact/impactSoft_medium_001 at 0.2s
   Tagline fades up at 0.8s          →  (no SFX, let the reveal carry)
@@ -219,7 +224,7 @@ Scene 2 — Reveal — 3s
 All tracks are "Happy Beats / Business Moves" by ende.app. Upbeat, clean, corporate-adjacent. Good across multiple tones.
 
 | Filename | Duration | Character | Best for |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `happy-beats-business-moves-vol-1-by-ende-dot-app.mp3` | 2:44 | Full upbeat track, most energetic | `default`, `app-store` |
 | `happy-beats-business-moves-vol-9-by-ende-dot-app.mp3` | 1:54 | Mid-energy, slightly more laid-back | `default`, `yc-parody` |
 | `happy-beats-business-moves-vol-10-by-ende-dot-app.mp3` | 1:00 | Compact loop, punchy | `default`, `chaotic` |
@@ -251,7 +256,7 @@ Beat sync needs a cue source. Three are available — use the richest one the en
 <skill-dir>/assets/music/cues/<track-stem>.music-cues.json
 ```
 
-2. **Any track → extended analysis (richest for custom tracks).** For a custom track — or to refresh a bundled one — run the cue analyzer on the audio file. It produces the same rich cue JSON/Markdown for any track. **Prefer the Rust twin** `~/.ciel/bin/ciel-audio cues` (no Python or deps needed); the Python `analyze_music_cues.py` remains as fallback — run it via `uv`, which auto-provisions the deps (`librosa`, `numpy`, `scipy`, `soundfile`) from `<skill-dir>/scripts/pyproject.toml` — no manual `pip install` needed:
+1. **Any track → extended analysis (richest for custom tracks).** For a custom track — or to refresh a bundled one — run the cue analyzer on the audio file. It produces the same rich cue JSON/Markdown for any track. **Prefer the Rust twin** `~/.ciel/bin/ciel-audio cues` (no Python or deps needed); the Python `analyze_music_cues.py` remains as fallback — run it via `uv`, which auto-provisions the deps (`librosa`, `numpy`, `scipy`, `soundfile`) from `<skill-dir>/scripts/pyproject.toml` — no manual `pip install` needed:
 
 ```bash
 ~/.ciel/bin/ciel-audio cues <track>.mp3 \
@@ -266,7 +271,7 @@ uv run --project <skill-dir>/scripts \
 
 This is the fallback when `hyperframes beats` (option 3) is unavailable — e.g. an older pinned Hyperframes. If neither `ciel-audio`, `uv`, nor the Python deps are available, use option 3 instead.
 
-3. **Any track → `hyperframes beats` (simple, no Python; needs Hyperframes ≥ 0.6.99).** After the music is wired into the composition, run:
+1. **Any track → `hyperframes beats` (simple, no Python; needs Hyperframes ≥ 0.6.99).** After the music is wired into the composition, run:
 
 ```bash
 npx hyperframes beats <output-dir>/composition

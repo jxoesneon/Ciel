@@ -216,7 +216,7 @@ source denser, not cleaner.
 **Time** (`delay`, `reverb`, `chorus`, `phaser`) puts a track in a space or gives
 it width. These are the ones that most easily wreck a mix, because a tail or a
 detuned copy occupies the same room a voice needs. Use them on the thing that
-should sit _behind_ something else, and keep the wet amount lower than sounds
+should sit *behind* something else, and keep the wet amount lower than sounds
 right in isolation.
 
 The chain is serial: each effect processes what the one before it produced. So
@@ -232,7 +232,7 @@ not need the whole spectrum. It needs the few bands it actually occupies. Carve
 takes only those, and the bed keeps its low end and its top, so it is still music
 while the voice is still intelligible.
 
-**It is a relationship, not an effect.** The settings live on the _bed_ — the
+**It is a relationship, not an effect.** The settings live on the *bed* — the
 track that gets processed — and they name the voices to listen to, exactly as a
 sidechain compressor does: you select the track that gets quieter and pick what
 makes it quieter. **Never put a carve on a voice track.** A voice carved against
@@ -267,7 +267,7 @@ by the `audio_carve_ungrouped_sources` lint rule — it still works, but it is t
 version that silently rots when a clip is added.
 
 **Keep the carve group a voice group: no bed, no SFX, no music.** A group id in
-`sources` resolves to every _current_ member on _every_ analysis, so the group
+`sources` resolves to every *current* member on *every* analysis, so the group
 you name is the group you get later — not the tracks that were measured when it
 was written. Two ways that bites:
 
@@ -408,7 +408,7 @@ node <SKILL_DIR>/scripts/carve.mjs --comp index.html
 That is the whole command. It finds the voice and the bed itself, carves
 dynamically at the default strength, and prints what it decided:
 
-```
+```text
 bed    music-bed (name looks like music)
 voice  narration (only track left)
 carve  strength 0.8 dynamic

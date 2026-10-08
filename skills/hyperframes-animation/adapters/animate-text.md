@@ -15,13 +15,13 @@ npx skills add pixel-point/animate-text
 
 Or in a skill-aware agent runtime, the skill is invoked by name:
 
-```
+```text
 /animate-text
 ```
 
 Once installed, the specs live at:
 
-```
+```text
 .agents/skills/animate-text/assets/effects/<id>.json   # per-library implementation recipe
 .agents/skills/animate-text/assets/specs/<id>.json     # portable motion contract
 ```

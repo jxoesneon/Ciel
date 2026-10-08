@@ -12,7 +12,7 @@ Whatever the tone, it should feel like a modern, slick, polished launch video: n
 Usage: `/brag-slim [input] [options]`. Options (flags or plain language):
 
 | Option | Default |
-|---|---|
+| --- | --- |
 | `--tone <preset or freeform>` | inferred; `default` if nothing clearly fits |
 | `--format landscape\|vertical\|square` | landscape (1920×1080; vertical 1080×1920, square 1080×1080), 30fps |
 | `--duration <s>` | about 20s |
@@ -24,7 +24,7 @@ Write the deliverables to `brag-output/` in the current directory (timestamped `
 First decide what the input is, then gather material from it. Only the source changes; everything from the questions below onward is the same for every input.
 
 | Input | How to recognize it | Where the material comes from |
-|---|---|---|
+| --- | --- | --- |
 | Project | No input given, and the current directory is a project | The code |
 | Website | An `http(s)://` URL, or a bare domain like `example.com` | The live site |
 
@@ -75,7 +75,7 @@ If the user points at one part — a new version, a new feature, one angle — m
 Presets are defaults; freeform direction ("fake Series A launch from 2016") refines or overrides them.
 
 | Tone | Feel | Pacing / transitions |
-|---|---|---|
+| --- | --- | --- |
 | `default` | Punchy, playful, clean | 4–5 scenes; soft transitions |
 | `polished` | Serious, elegant, restrained | 3–4 scenes, long holds; soft fades |
 | `yc-parody` | Deadpan startup launch, played straight | 4–5 scenes, one claim each; hard cuts |

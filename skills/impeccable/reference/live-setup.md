@@ -21,7 +21,7 @@ Create the file at the `path` the boot reported (default `.impeccable/live/confi
 **Glob syntax:** `**` matches any number of segments (including zero), `*` matches within a segment, `?` matches one character. Paths are project-root-relative with forward slashes.
 
 | Framework | `files` | `insertBefore` | `commentSyntax` |
-|-----------|---------|----------------|-----------------|
+| ----------- | --------- | ---------------- | ----------------- |
 | SPA with single shell (Vite / React / Plain HTML) | `["index.html"]` | `</body>` | `html` |
 | Next.js (App Router) | `["app/layout.tsx"]` | `</body>` | `jsx` |
 | Next.js (Pages) | `["pages/_document.tsx"]` | `</body>` | `jsx` |

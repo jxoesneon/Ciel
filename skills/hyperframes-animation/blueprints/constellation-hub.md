@@ -2,7 +2,7 @@
 
 **intent**: Labeled/iconned nodes spring into a ring/cluster around a center, then the shot resolves on the core — either by pushing the camera INTO the center (depth-of-field collapsing onto it) or by holding a hub mark while the satellites ORBIT it; the "everything connects to / sits around one center" beat.
 
-**roles served**
+## roles served
 
 - Hook (from `hook-cluster-push-in`): a constellation of tool/app nodes springs into a wide ring, then a sustained camera push-in with depth-of-field resolves on the inner core — "it connects everything / one hub for all your tools."
 - Social_Proof (from `social-proof-orbit-ecosystem`): the product brand mark lands as the center hub and partner logos spring onto a ring and revolve around it — "plugs into / sits at the center of your stack."
@@ -16,7 +16,7 @@ icons]` pop in scattered frame-wide in a quick stagger, then keep drifting very 
 **duration**: 5–8s (Hook 5–6s · Social_Proof 5–8s · CTA orbit-collapse ~6s · Social_Proof
 scatter-drift end card ~2.5s as a closing beat)
 
-**shot structure**
+### shot structure
 
 Consolidated template — nodes ring a center, then one of two finishers resolves on the core.
 

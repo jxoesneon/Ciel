@@ -98,7 +98,7 @@ Broadside at frame scale is a **protest-poster system where type is so large it 
 text and becomes graphic primitive.** Barlow `display` at 13cqw puts a single lowercase word
 nearly across the frame. The system runs in **two registers**: a dark ink-black ground with cream
 text for documentation, and a fire-orange ground with dark ink for declaration. Fire-orange is the
-_only_ color — accent on dark, environment on orange. The plane is flat; hierarchy is weight, size,
+*only* color — accent on dark, environment on orange. The plane is flat; hierarchy is weight, size,
 and 1px hairlines.
 
 **Barlow** carries every text role from display to body — expressive range from weight (400–900)

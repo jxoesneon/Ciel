@@ -17,7 +17,7 @@ If no design spec (`frame.md` or `design.md`) exists yet, run Step 1 (Design sys
 
 ## Why always run it
 
-**The expansion is never pass-through.** Every user prompt — no matter how detailed — is a _seed_. The expansion's job is to enrich it into a fully-realized per-scene production spec that the scene subagents can build from directly.
+**The expansion is never pass-through.** Every user prompt — no matter how detailed — is a *seed*. The expansion's job is to enrich it into a fully-realized per-scene production spec that the scene subagents can build from directly.
 
 Even a detailed 7-scene brief lacks things only the expansion adds:
 

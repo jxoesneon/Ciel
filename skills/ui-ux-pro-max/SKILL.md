@@ -26,7 +26,7 @@ Skip it for pure backend logic, API/database design, non-visual performance work
 *Follow priority 1→10 to decide which category to focus on first; use `--domain <Domain>` to query full details. The full rule text for every category lives in `references/quick-reference.md` — read it on demand rather than loading it every time.*
 
 | Priority | Category | Impact | Domain | Key Checks (Must Have) | Anti-Patterns (Avoid) |
-|----------|----------|--------|--------|------------------------|------------------------|
+| ---------- | ---------- | -------- | -------- | ------------------------ | ------------------------ |
 | 1 | Accessibility | CRITICAL | `ux` | Contrast 4.5:1, Alt text, Keyboard nav, Aria-labels | Removing focus rings, Icon-only buttons without labels |
 | 2 | Touch & Interaction | CRITICAL | `ux` | Min size 44×44px, 8px+ spacing, Loading feedback | Reliance on hover only, Instant state changes (0ms) |
 | 3 | Performance | HIGH | `ux` | WebP/AVIF, Lazy loading, Reserve space (CLS &lt; 0.1) | Layout thrashing, Cumulative Layout Shift |
@@ -73,6 +73,7 @@ This skill handles UI/UX design intelligence and implementation guidance. It doe
 ### Step 1: Analyze User Requirements
 
 Extract from the user request:
+
 - **Product type**: SaaS, e-commerce, portfolio, dashboard, entertainment, tool, productivity, or hybrid
 - **Target audience & context**: age group, usage context (commute, leisure, work)
 - **Style keywords**: playful, vibrant, minimal, dark mode, content-first, immersive, etc.
@@ -89,6 +90,7 @@ python "${CLAUDE_PLUGIN_ROOT}/.claude/skills/ui-ux-pro-max/scripts/search.py" "<
 This aggregates product/style/color/landing/typography matches, applies reasoning rules from `ui-reasoning.csv`, and returns pattern, style, colors, typography, effects, and anti-patterns to avoid.
 
 **Example:**
+
 ```bash
 python "${CLAUDE_PLUGIN_ROOT}/.claude/skills/ui-ux-pro-max/scripts/search.py" "beauty spa wellness service" --design-system -p "Serenity Spa"
 ```
@@ -102,6 +104,7 @@ python "${CLAUDE_PLUGIN_ROOT}/.claude/skills/ui-ux-pro-max/scripts/search.py" "<
 ```
 
 This creates:
+
 - `design-system/<project-slug>/MASTER.md` — Global Source of Truth
 - `design-system/<project-slug>/pages/` — Folder for page-specific overrides
 
@@ -112,6 +115,7 @@ If `design-system/<project-slug>/MASTER.md` already exists, `--persist` **skips 
 Read an existing `MASTER.md` before deciding whether `--force` is justified. Never use `--force` without explicit user authorization.
 
 **Retrieval when building a specific page:**
+
 1. Read `design-system/<project-slug>/MASTER.md`
 2. Check if `design-system/<project-slug>/pages/<page-name>.md` exists — if so, its rules override Master
 3. Otherwise use Master rules exclusively
@@ -125,7 +129,7 @@ python "${CLAUDE_PLUGIN_ROOT}/.claude/skills/ui-ux-pro-max/scripts/search.py" "<
 ```
 
 | Dial | Low (1-3) | Mid (4-7) | High (8-10) |
-|------|-----------|-----------|-------------|
+| ------ | ----------- | ----------- | ------------- |
 | `--variance` | Centered / minimal (biases toward Minimalism-style categories) | Balanced / modern | Bold / asymmetric (biases toward Brutalism, Bento Grids) |
 | `--motion` | Subtle micro-interactions | Standard scroll/stagger motion | Complex choreography (pin, Flip, SplitText) |
 | `--density` | Spacious (24-96px spacing scale) | Standard (16-64px, current default) | Dense/dashboard (8-32px spacing scale) |
@@ -135,6 +139,7 @@ python "${CLAUDE_PLUGIN_ROOT}/.claude/skills/ui-ux-pro-max/scripts/search.py" "<
 - Leaving a dial unset keeps that part of the output exactly as it was before (no behavior change).
 
 **Example:**
+
 ```bash
 python "${CLAUDE_PLUGIN_ROOT}/.claude/skills/ui-ux-pro-max/scripts/search.py" "internal analytics dashboard" --design-system --variance 8 --motion 7 --density 8 -p "Ops Console"
 ```
@@ -146,7 +151,7 @@ python "${CLAUDE_PLUGIN_ROOT}/.claude/skills/ui-ux-pro-max/scripts/search.py" "<
 ```
 
 | Need | Domain | Example |
-|------|--------|---------|
+| ------ | -------- | --------- |
 | Product type patterns | `product` | `"entertainment social" --domain product` |
 | More style options | `style` | `"glassmorphism dark" --domain style` |
 | Color palettes | `color` | `"entertainment vibrant" --domain color` |
@@ -175,6 +180,7 @@ python "${CLAUDE_PLUGIN_ROOT}/.claude/skills/ui-ux-pro-max/scripts/search.py" "<
 ## If a search returns 0 results
 
 Do not fabricate output. Instead:
+
 1. Retry once with a narrower query or an explicit domain/stack.
 2. If still empty, fall back to the priority table above and say explicitly to the user that this recommendation came from the built-in defaults, not a database match (e.g. "no palette match for X, using general SaaS defaults").
 3. Never present a 0-result search as if it returned data.
@@ -208,7 +214,7 @@ Then synthesize the design system + detailed searches and implement.
 - Pass the detected stack explicitly for implementation-specific guidance
 
 | Problem | What to Do |
-|---------|------------|
+| --------- | ------------ |
 | Can't decide on style/color | Re-run `--design-system` with different keywords |
 | Dark mode contrast issues | `references/quick-reference.md` §6: `color-dark-mode` + `color-accessible-pairs` |
 | Animations feel unnatural | `references/quick-reference.md` §7: `spring-physics` + `easing` + `exit-faster-than-enter` |

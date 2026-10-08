@@ -5,7 +5,7 @@ description: GSAP animation API reference for HyperFrames. Use when writing seek
 
 # HyperFrames GSAP
 
-GSAP usage scoped to HyperFrames' seek-driven render model. This skill is the GSAP reference _as constrained by HyperFrames_ — for the framework's broader composition contract see `hyperframes-core`.
+GSAP usage scoped to HyperFrames' seek-driven render model. This skill is the GSAP reference *as constrained by HyperFrames* — for the framework's broader composition contract see `hyperframes-core`.
 
 ## HyperFrames Contract
 
@@ -101,5 +101,5 @@ HyperFrames is stricter than vanilla GSAP. Animate only:
 ## Credits And References
 
 - HyperFrames adapter source: `packages/core/src/runtime/adapters/gsap.ts`.
-- GSAP documentation: https://gsap.com/docs/v3/
-- GSAP timeline pause and seek behavior: https://gsap.com/docs/v3/GSAP/Timeline/pause%28%29/
+- GSAP documentation: <https://gsap.com/docs/v3/>
+- GSAP timeline pause and seek behavior: <https://gsap.com/docs/v3/GSAP/Timeline/pause%28%29/>

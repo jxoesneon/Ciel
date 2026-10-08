@@ -62,7 +62,7 @@ Shared law for every narrative frame, each load-bearing; your workflow's delta a
 
 ## Self-check before finishing (you do NOT run the CLI)
 
-You **can't** meaningfully run `hyperframes lint` / `check` here: they operate on the **assembled project** (the `index.html` graph / bundle), and your frame isn't wired in yet — so they report on _other_ files, not yours (a false green). The **orchestrator** runs them after assembly (the correct unit), and **re-dispatches you with the finding** if your frame fails (see **Retry** above). So get it right on write: re-read your file against this checklist before finishing — the codes in parens are `hyperframes lint`'s and what the orchestrator may cite back:
+You **can't** meaningfully run `hyperframes lint` / `check` here: they operate on the **assembled project** (the `index.html` graph / bundle), and your frame isn't wired in yet — so they report on *other* files, not yours (a false green). The **orchestrator** runs them after assembly (the correct unit), and **re-dispatches you with the finding** if your frame fails (see **Retry** above). So get it right on write: re-read your file against this checklist before finishing — the codes in parens are `hyperframes lint`'s and what the orchestrator may cite back:
 
 - `missing_template_wrapper` / `missing_composition_id` — the entire file is exactly one bare `<template>…</template>` fragment (no DOCTYPE / full document); root carries `data-composition-id="<frame_id>"`.
 - **Template transport** — every `<style>` and `<script>` block, including the GSAP load, lives inside `<template>`.

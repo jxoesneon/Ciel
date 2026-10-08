@@ -12,10 +12,10 @@ SOURCE=$(echo "$INPUT" | jq -r '.source // empty')
 S1_LIB="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." 2>/dev/null && pwd)/lib/system1.py"
 [ -f "$S1_LIB" ] || S1_LIB="${CIEL_HOME:-$HOME/.ciel}/hooks/lib/system1.py"
 if command -v python3 >/dev/null 2>&1 && [ -f "$S1_LIB" ]; then
-  ( CIEL_TASK="session-start context assembly for the gemini_cli runtime" \
-      CIEL_CONTEXT_ITEMS='{"identity_canary":"Ciel orchestration-intelligence identity statement injected into additionalContext","trigger_notice":"available-trigger list and /ciel command hint in additionalContext/systemMessage"}' \
-      python3 "$S1_LIB" --session-shadow "gemini_cli/ciel_session_start" \
-      >/dev/null 2>&1 & )
+  (CIEL_TASK="session-start context assembly for the gemini_cli runtime" \
+    CIEL_CONTEXT_ITEMS='{"identity_canary":"Ciel orchestration-intelligence identity statement injected into additionalContext","trigger_notice":"available-trigger list and /ciel command hint in additionalContext/systemMessage"}' \
+    python3 "$S1_LIB" --session-shadow "gemini_cli/ciel_session_start" \
+    >/dev/null 2>&1 &)
 fi
 
 echo '{

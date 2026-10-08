@@ -8,6 +8,7 @@ No text generation.
 ## Integration: Active Pipeline Tier
 
 System-1 is **fully integrated into the live execution pipeline**:
+
 1. **PreToolUse Safety Gate**: Synchronously evaluates semantic risk in the
    hot path. If deterministic regex policy allows an operation but System-1
    detects destructive, privilege-escalating, or sensitive-path danger
@@ -23,6 +24,7 @@ System-1 is **fully integrated into the live execution pipeline**:
 4. **Council Prescreen**: Triage for council-scoped events.
 
 Operating modes via `CIEL_SYSTEM1_MODE`:
+
 - `active` (default): Synchronous active evaluation in the pipeline with
   fail-open protection when offline.
 - `shadow`: Detached background logging only (`events.jsonl`).
@@ -82,6 +84,7 @@ System-1 evaluates objective deliverables vs. empirical evidence artifacts
 2. **Typed Score (`evidence_score`)**: 1–5 quality rubric ranging from `1` (pure assertion/contradictory) to `5` (complete reproducible empirical verification of all task-class artifacts).
 
 Invocation methods:
+
 - **Python Library**: `system1.completion_check(objective, evidence, task_class, with_score=True)`
 - **Rust Client**: `system1::evaluate_completion(objective, evidence, task_class, timeout_s)`
 - **CLI Gate**: `python3 ciel.skill/init/scripts/verify_completion.py --objective "..." --evidence "..." --task-class code_change --gate enforce` (deployed to `~/.ciel/scripts/` on install; binary fast path: `ciel verify-completion`)
@@ -178,7 +181,7 @@ threshold is resolved with **4-tier precedence** (highest wins):
 4. **Built-in defaults**:
 
 | Surface | Default τ | Purpose |
-|---------|-----------|---------|
+| --------- | ----------- | --------- |
 | `pre_tool_risk` | 0.025 | PreToolUse safety gate |
 | `router` | 0.47 | Skill routing confidence floor |
 | `router_selection` | 0.33 | Shortlisted skill pick |

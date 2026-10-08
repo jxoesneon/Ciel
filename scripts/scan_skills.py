@@ -89,7 +89,7 @@ def _severity_rank(findings: list) -> int:
     return rank
 
 
-def main() -> int:
+def main() -> int:  # noqa: PLR0912, PLR0915
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("paths", nargs="*", type=Path, help="skill dirs to scan")
     parser.add_argument("--all", action="store_true",

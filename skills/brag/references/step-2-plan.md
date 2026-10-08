@@ -95,14 +95,15 @@ Transition mood: [mood] → Scene 3
 ## Planning the scenes
 
 The default pattern is:
-```
+
+```text
 Hook → Reveal → 2-3 highlights → Punchline/outro
 ```
 
 But adapt it. These are the right scene counts for each tone:
 
 | Tone | Scenes | Pacing |
-|---|---|---|
+| --- | --- | --- |
 | `default` | 4-5 | Comfortable. Room for each moment to breathe. |
 | `polished` | 3-4 | Fewer scenes, longer holds. Confidence through restraint. |
 | `yc-parody` | 4-5 | Structured. The joke is how seriously it's delivered. |
@@ -149,11 +150,13 @@ Never fill scenes with abstract patterns, color washes, or generic motion graphi
 If Step 1 question 9 identified a real user flow, the **centerpiece scenes must show that flow** — not just landing-page recreations.
 
 Good (working-app scenes):
+
 - "Upload screen — cursor drops a video file. Filename appears. Progress bar fills 0→100% in 1.2s."
 - "Three result thumbnails pop in: 0:15, 0:23, 0:31. Each shows a vertical clip frame with a real-looking caption."
 - "Inbox row appears, gets a green 'resolved' badge, slides off the top of the list."
 
 Avoid (marketing-only scenes when a flow exists):
+
 - "16:9 → 9:16 transform diagram" — that's a *diagram of what the product does*, not the product doing it.
 - "Three stat cards: 10x faster / 0 cuts / 3 clips" — that's the landing page's social-proof row, not the product.
 
@@ -171,6 +174,7 @@ These are among the most effective moments in a brag video — they make the pro
 - **Simulated interaction** — if the product involves swiping, clicking, typing, selecting, or toggling, show it. A cursor clicking a button, a swipe gesture on a card, or text being typed into a field turns a static mockup into a demonstration. Sound matches the action automatically when the gesture is in the storyboard.
 
 If a scene has either of these, commit to it explicitly in the scene description:
+
 - Good: "3 horse profiles slide in one by one, each with a card sound"
 - Good: "Simulate a right-swipe on Thunder's profile card"
 - Good: "The hook line types out character by character with keyboard sounds"
@@ -223,7 +227,7 @@ If SFX are enabled, note likely sound opportunities but leave exact filenames to
 Match transitions to tone:
 
 | Tone | Preferred transitions |
-|---|---|
+| --- | --- |
 | `default` | Crossfade, clean wipe |
 | `polished` | Soft crossfade, slide |
 | `yc-parody` | Hard cut, minimal |
@@ -231,4 +235,3 @@ Match transitions to tone:
 | `deadpan` | Slow crossfade, long hold |
 | `cinematic` | Dramatic wipe, crossfade |
 | `app-store` | Slide, smooth wipe |
-

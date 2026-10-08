@@ -4,7 +4,7 @@ Guide the user from idea to merged PR for a new registry block or component.
 
 ## Workflow
 
-```
+```text
 1. Clarify → 2. Scaffold → 3. Build → 4. Validate → 5. Preview → 6. Ship
 ```
 
@@ -25,23 +25,23 @@ Then ask:
 
 Create the registry structure:
 
-**For blocks:**
+#### For blocks
 
-```
+```text
 registry/blocks/{block-name}/
   {block-name}.html
   registry-item.json
 ```
 
-**For components:**
+##### For components
 
-```
+```text
 registry/components/{component-name}/
   {component-name}.html
   registry-item.json
 ```
 
-**Naming convention:**
+###### Naming convention
 
 | Item name        | ID prefix | Example IDs            |
 | ---------------- | --------- | ---------------------- |
@@ -59,7 +59,7 @@ Apply the correct template based on type. See [templates.md](templates.md) for c
 
 #### Caption blocks
 
-**Non-negotiable caption rules:**
+##### Non-negotiable caption rules
 
 - Font: **96px minimum** for proportional fonts. **64-72px acceptable for monospace** (wider characters need less size).
 - Readability: `-webkit-text-stroke: 2-3px` OR multi-layer `text-shadow`
@@ -74,7 +74,7 @@ Apply the correct template based on type. See [templates.md](templates.md) for c
 - Stagger via `tl.set` at computed intervals from word timestamps
 - Cursors/decorative elements: use `tl.set` at intervals — NOT CSS animation (not seekable)
 
-**Positioning variants:**
+###### Positioning variants
 
 - Centered: `display: flex; align-items: center; justify-content: center;`
 - Lower-third: `position: absolute; bottom: 100px; left: 0; width: 100%; text-align: center;`
@@ -131,7 +131,7 @@ npx hyperframes publish
 
 ### Step 6: Ship
 
-**All steps are required. Missing any one produces a broken catalog entry.**
+#### All steps are required. Missing any one produces a broken catalog entry
 
 `{kind}` is `blocks` or `components` depending on what you built in Step 1.
 
@@ -166,7 +166,7 @@ git push origin feat/registry-{name}
 gh pr create --title "feat(registry): {name}" --body "preview: {hyperframes.dev-url}"
 ```
 
-**If you don't have a GitHub account:** you need one to open a PR. Sign up at https://github.com/signup, then run `gh auth login`.
+**If you don't have a GitHub account:** you need one to open a PR. Sign up at <https://github.com/signup>, then run `gh auth login`.
 
 ## Quality Gate
 

@@ -21,9 +21,9 @@ _fb_reason="binary-absent"
 # in ~/.ciel/system1/events.jsonl and never gate the invocation. The worker
 # drains the hook's stdin itself — this body never blocks on it.
 if command -v python3 >/dev/null 2>&1 && [ -f "$HOOK_DIR/../lib/system1.py" ]; then
-  ( CIEL_BIN="$CIEL_BIN" \
-      python3 "$HOOK_DIR/../lib/system1.py" --prompt-shadow "antigravity/pre_invocation" \
-      >/dev/null 2>&1 & )
+  (CIEL_BIN="$CIEL_BIN" \
+    python3 "$HOOK_DIR/../lib/system1.py" --prompt-shadow "antigravity/pre_invocation" \
+    >/dev/null 2>&1 &)
 fi
 if [ -n "$CIEL_BIN" ] && [ -x "$CIEL_BIN" ]; then
   _fb_reason="binary-failed"
@@ -33,7 +33,7 @@ if [ -n "$CIEL_BIN" ] && [ -x "$CIEL_BIN" ]; then
 fi
 # Parity-soak telemetry (DOCKET_20261004_RUST_MIGRATION_AUDIT): every descent
 # into the Python body is counted; 14 days silent + drill = twin deletion.
-(printf '%s\n' "{\"ts\":\"$(date -u +%FT%TZ)\",\"hook\":\"antigravity/pre_invocation\",\"reason\":\"$_fb_reason\"}" >> "${CIEL_HOME:-$HOME/.ciel}/fallback_events.jsonl") 2>/dev/null || true
+(printf '%s\n' "{\"ts\":\"$(date -u +%FT%TZ)\",\"hook\":\"antigravity/pre_invocation\",\"reason\":\"$_fb_reason\"}" >>"${CIEL_HOME:-$HOME/.ciel}/fallback_events.jsonl") 2>/dev/null || true
 
 # --- Activity log rotation (once per session) --------------------------------
 # Bounds ~/.ciel/activity.log; see lib/activity_log_rotate.py.

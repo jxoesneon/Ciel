@@ -44,7 +44,7 @@ Ideas (mix and match, 2-5 per scene):
 
 All decoratives should have slow ambient GSAP animation — breathing, drift, pulse. Static decoratives feel dead.
 
-**Decorative count vs motion count.** The "2-5 per scene" count refers to decorative _elements_. If a project's design spec says "single ambient motion per scene", it means one looping motion applied to these decoratives (a shared breath/drift/pulse) — not one element total. A scene with 4 decoratives sharing one breathing motion is correct; a scene with 1 decorative is under-dressed.
+**Decorative count vs motion count.** The "2-5 per scene" count refers to decorative *elements*. If a project's design spec says "single ambient motion per scene", it means one looping motion applied to these decoratives (a shared breath/drift/pulse) — not one element total. A scene with 4 decoratives sharing one breathing motion is correct; a scene with 1 decorative is under-dressed.
 
 ## Motion
 

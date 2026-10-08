@@ -2,7 +2,7 @@
 
 **intent**: A resting brand mark condenses at the same screen center into a smaller, brighter CTA, then a cursor arrives from off-stage and lands a human-aimed click on it. The viewer's eye is walked from "this is who we are" to "and this is what you do." The morph and the click are the two headline beats.
 
-**roles served**
+## roles served
 
 - CTA (from `cta-morph-press`): when the close moves from brand identity to a single user action, two elements share the same center sequentially (a morph, not a cut), and the payoff is a simulated click with physical feedback. Reach for it for a focused "click here" sign-off — no spatial set, no multi-step UI (that's `cursor-ui-demo`).
 - Hook (ROLE-WIDENED, from `widget-morph-on-blank-field`): the same
@@ -40,7 +40,7 @@ chip-to-card spring morph with overshoot settle; placeholder / user-text typewri
 caret (may cut mid-word); control color-state flip muted → vibrant; background color snap under a
 persistent foreground card; checkmark pop; widget vanish to blank frame; typed closing title.
 
-**rule mapping**
+### rule mapping
 
 - hero → CTA condense at one center → `scale-swap-transition` (shared `transform-origin: 50% 50%` is what sells the morph; CTA `position: absolute` so it doesn't shove the hero during the brief overlap)
 - resting-hero aliveness (rotation only, scoped to the mark so the Phase-2 scale doesn't fight it) → `sine-wave-loop` (low-amplitude rotation register — subtle jitter, not a scale breath)

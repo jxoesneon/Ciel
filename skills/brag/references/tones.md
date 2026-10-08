@@ -15,18 +15,21 @@ Seven tones. Each changes scripting energy, pacing, typography personality, and 
 **Pacing:** 4-5 scenes. Each scene 3-5 seconds. Comfortable rhythm.
 
 **Hook style:** A simple question or observation that sets up the reveal.
-```
+
+```text
 Dating apps were built for humans.
 Obvious mistake.
 ```
 
 **Highlight style:** Short punchy phrases. One idea per scene.
-```
+
+```text
 Swipe through eligible horses near your pasture.
 ```
 
 **Outro style:** The product name, then a tagline. Light punchline.
-```
+
+```text
 Horse Tinder.
 Find your perfect stablemate.
 ```
@@ -50,7 +53,8 @@ Find your perfect stablemate.
 **Hook style:** A single strong image or the product name at full scale.
 
 **Highlight style:** One feature per scene. No bullets. No lists.
-```
+
+```text
 Wing certification
 upon completion.
 ```
@@ -74,19 +78,22 @@ upon completion.
 **Pacing:** 4-5 scenes. Structured. Each scene makes one claim.
 
 **Hook style:** The problem, stated completely seriously.
-```
+
+```text
 Every day, taxis carry us.
 But who carries the taxis?
 ```
 
 **Highlight style:** Feature or metric stated as fact.
-```
+
+```text
 Available in 12 metros.
 99.1% fleet uptime.
 ```
 
 **Outro style:** Product name. The tagline. A URL that implies legitimacy.
-```
+
+```text
 Taxi for Taxis
 The ride-hailing app for ride-hailing assets.
 taxifortaxis.com
@@ -109,19 +116,22 @@ taxifortaxis.com
 **Pacing:** 6-8 scenes. Some scenes under 2 seconds. Never more than 4 seconds per scene.
 
 **Hook style:** Something that shouldn't exist, stated at full volume.
-```
+
+```text
 TRANSPORTATION WAS TOO CALM.
 ```
 
 **Highlight style:** Rapid-fire. One word or one number per beat.
-```
+
+```text
 8,400 BOARS
 3 MINUTE ETA
 TUSKS-FIRST PICKUP
 ```
 
 **Outro style:** The name slams in. Tagline hits. Cut to black.
-```
+
+```text
 UBER FOR WILD BOARS
 On-demand chaos, now with routing.
 ```
@@ -143,17 +153,20 @@ On-demand chaos, now with routing.
 **Pacing:** 3-4 scenes. Long holds. 4-7 seconds per scene. The pace is the joke.
 
 **Hook style:** A quiet observation. No setup. No punchline yet.
-```
+
+```text
 I used to fear the sky.
 ```
 
 **Highlight style:** One sentence per scene. No bullets. No excitement.
-```
+
+```text
 Now I fear birds, weather, and gravity.
 ```
 
 **Outro style:** The product name. Nothing else. Maybe a very small tagline. Long hold on empty space.
-```
+
+```text
 Fish Flight School.
 ```
 
@@ -174,20 +187,23 @@ Fish Flight School.
 **Pacing:** 4-5 scenes. 3-5 seconds each. Dramatic reveals, not quick cuts.
 
 **Hook style:** A sweeping statement about the world, stated seriously.
-```
+
+```text
 For too long,
 fish were told to stay underwater.
 ```
 
 **Highlight style:** The product's capabilities stated like superpowers.
-```
+
+```text
 Thermal identification.
 Cloud navigation.
 Emergency splash landing protocols.
 ```
 
 **Outro style:** Product name slams in full-screen. Tagline. Music swell implied.
-```
+
+```text
 FISH FLIGHT SCHOOL
 The sky was never the limit.
 ```
@@ -209,19 +225,22 @@ The sky was never the limit.
 **Pacing:** 4-6 scenes. Each scene: product name or feature name, then 1-2 supporting details.
 
 **Hook style:** Product name + tagline, clean.
-```
+
+```text
 Psychologists for Chatbots.
 Because even helpful assistants need help.
 ```
 
 **Highlight style:** Feature card structure. Name + brief description.
-```
+
+```text
 Prompt Trauma Processing
 Identify and resolve harmful conversation patterns.
 ```
 
 **Outro style:** CTA-style. Call to action or download prompt.
-```
+
+```text
 Available now.
 All chatbot models welcome.
 ```

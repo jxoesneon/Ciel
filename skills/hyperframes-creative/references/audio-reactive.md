@@ -32,7 +32,7 @@ Audio provides **timing and intensity**. The visual vocabulary comes from the na
 
 **Never add:** equalizer bars, spectrum analyzers, waveform displays, musical notes clip art, generic particle systems, rainbow color cycling, strobing white on beats, abstract pulsing orbs.
 
-**Instead:** Let content guide the visual and audio drive its behavior. Bass makes warmth _swell_. Treble sharpens _contrast_. The visual choice comes from "what does this piece feel like?"
+**Instead:** Let content guide the visual and audio drive its behavior. Bass makes warmth *swell*. Treble sharpens *contrast*. The visual choice comes from "what does this piece feel like?"
 
 ## Sampling Pattern
 

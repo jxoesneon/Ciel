@@ -79,7 +79,7 @@ the **full** enumerated contract, verified against `laya.serve` 0.3.26:
   `loaded`, `revisions`, `device`, `device_is_preference`,
   `checkpoint_devices`, `cpu_fallbacks`
 - model routing + `LAYA_MAX_LOADED` residency + `LAYA_IDLE_UNLOAD_SECONDS`
-  + `LAYA_AUTO_TASK` task-detection
+  - `LAYA_AUTO_TASK` task-detection
 - redaction, key auth, `CIEL_SYSTEM1_*` contract — the clients already
   speak this wire protocol, so a conformant server is a drop-in.
 
@@ -202,7 +202,7 @@ separate explicit docket — no permanent silent dual-install.
   ~0.3–0.5 s/decision warm — still short of the 1.5 s
   CONTEXT_SELECT_BUDGET only at small k; honest budgeting required).
 - No publish/tag without the release gate: ~complete coverage of new code
-  + Council sign-off on the release diff.
+  - Council sign-off on the release diff.
 
 ## Rollback
 
@@ -281,7 +281,7 @@ extras installed hash-pinned (`onnx 1.23.1`, `onnxruntime 1.30.0`,
 recorded sha256 digests (digests.txt).
 
 | Metric | laya-serve (torch eager, THREADS=2) | fp32 ONNX | INT8 ONNX |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Warm single decision | ~0.85 s | 0.83 s (default threads); **0.52 s** @ OMP_NUM_THREADS=2 | ~0.42 s |
 | Batch, per state (6 states) | ~0.62 s | ~0.83 s | — |
 | Process RSS | 1.63 GB (2 ckpts resident) | ~1.97 GB (incl. torch import; pure ORT ~1.8 GB est.) | 1.25 GB |

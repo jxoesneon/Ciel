@@ -22,7 +22,7 @@ Pick `.out` for entrances, `.in` for exits, `.inOut` for symmetric moves and con
 
 ## Easing Vocabulary (character & mood)
 
-Easings are tone of voice: a video that only whispers is boring; one that varies between whisper, normal, and punch is engaging. A composition should draw on ~3 easing characters across its beats — but vary **within the smooth families by energy** (`sine` / `power1` calm → `power3` standard → `power4` / `expo` punch); don't reach for overshoot to add variety. Overshoot is a _register_ (explicitly playful), not a spice. One ease everywhere reads flat; bounce everywhere reads cheap — the second failure is worse.
+Easings are tone of voice: a video that only whispers is boring; one that varies between whisper, normal, and punch is engaging. A composition should draw on ~3 easing characters across its beats — but vary **within the smooth families by energy** (`sine` / `power1` calm → `power3` standard → `power4` / `expo` punch); don't reach for overshoot to add variety. Overshoot is a *register* (explicitly playful), not a spice. One ease everywhere reads flat; bounce everywhere reads cheap — the second failure is worse.
 
 The full palette by character (each family has `.in`, `.out`, `.inOut` variants):
 
@@ -58,7 +58,7 @@ Setting defaults at timeline scope is preferred — it documents the motion lang
 
 ## Spring Eases (baked physics, seek-safe)
 
-The "iOS feel" is a **damped spring's velocity curve**, not a bounce: a fast launch into a long asymptotic settle. Well-made system animations are critically damped or close to it — they barely overshoot, or don't at all. `power3.out` / `expo.out` approximate that curve; when you want the exact one — or a _physical_ overshoot for the rare playful register — bake the spring's closed-form solution into a function ease.
+The "iOS feel" is a **damped spring's velocity curve**, not a bounce: a fast launch into a long asymptotic settle. Well-made system animations are critically damped or close to it — they barely overshoot, or don't at all. `power3.out` / `expo.out` approximate that curve; when you want the exact one — or a *physical* overshoot for the rare playful register — bake the spring's closed-form solution into a function ease.
 
 Why not a real-time spring library: an interactive spring is a stateful integrator (velocity accumulates frame to frame), which cannot be seeked deterministically — you'd have to simulate frames 0…N−1 to render frame N. The closed form below is a **pure function of progress** — no state, nothing to desync, seek-safe by construction. This is also why interaction-lib spring solvers are banned in compositions.
 

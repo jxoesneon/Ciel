@@ -94,7 +94,7 @@ components:
 ## Overview
 
 Cobalt Grid at frame scale is a **two-color risograph trend-report** — warm cream paper, electric
-cobalt ink, and a **permanent graph-paper grid** behind every frame. Cobalt is the _only_ ink:
+cobalt ink, and a **permanent graph-paper grid** behind every frame. Cobalt is the *only* ink:
 headlines, body, rules, the grid, the pixel-glitch decoration, the QR patches. There is no accent
 color and no second surface.
 

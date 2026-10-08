@@ -15,7 +15,7 @@ Camera intent → world transform. Camera **pans right** → world `translateX(-
 
 **Single-element composite transform (this rule's form).** Both scale and translate live on ONE wrapper as `translate(x, y) scale(S)`. CSS applies scale FIRST, then translate (right-to-left matrix composition), so a point at world offset `(ox, oy)` lands on screen at `(S × ox + x, S × oy + y)`. To map the target to viewport center, solve `S × offset + T = 0`:
 
-```
+```text
 T = -offset × S
 ```
 

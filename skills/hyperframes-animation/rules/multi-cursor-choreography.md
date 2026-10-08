@@ -9,7 +9,7 @@ metadata:
 
 > **The camera never chases anyone.** No real camera — any "pan" is the canvas group translating inside a static frame. And per the motion doctrine's idle-motion ban, every cursor must **perform**: travel to a target, act, then rest still. Scheduled rest is stillness; aimless wander loops are wobble.
 
-THE ensemble primitive: **two to four labeled cursor actors** — each an arrow plus a name-tag pill in its own color — work one shared canvas at the same time. No single interaction is the subject; the **simultaneous liveness is** ("a team is in here, working"), usually as ambience under a headline building over the top. Distinct from [cursor-click-ripple.md](cursor-click-ripple.md) and [cursor-drag.md](cursor-drag.md): those are **one protagonist** the viewer follows click-by-click; here the actors are chorus, not lead — each action smaller and quieter than a solo cursor's, the value in the interleaving. Also distinct from [camera-cursor-tracking.md](camera-cursor-tracking.md): that locks the _viewport_ to one focal cursor; this rule forbids exactly that — the frame is static and the eye roams freely.
+THE ensemble primitive: **two to four labeled cursor actors** — each an arrow plus a name-tag pill in its own color — work one shared canvas at the same time. No single interaction is the subject; the **simultaneous liveness is** ("a team is in here, working"), usually as ambience under a headline building over the top. Distinct from [cursor-click-ripple.md](cursor-click-ripple.md) and [cursor-drag.md](cursor-drag.md): those are **one protagonist** the viewer follows click-by-click; here the actors are chorus, not lead — each action smaller and quieter than a solo cursor's, the value in the interleaving. Also distinct from [camera-cursor-tracking.md](camera-cursor-tracking.md): that locks the *viewport* to one focal cursor; this rule forbids exactly that — the frame is static and the eye roams freely.
 
 ## How It Works
 
@@ -99,7 +99,7 @@ tl.fromTo("#canvas-group", { x: 0 }, { x: PAN_DX, duration: 6.0, ease: "none" },
 ## Variations
 
 - **Ambient collaborative canvas (the Hook register)** — the default: actors mid-canvas at t=0, canvas slowly panning, a headline building over the top ([waterfall-entry.md](waterfall-entry.md)). The demo is set-dressing for the words; keep every action small and the beat grid loose.
-- **One labeled editor (N = 1, still ensemble-styled)** — a single labeled teammate cursor performs one visible edit (deletes and retypes a headline word via [discrete-text-sequence.md](discrete-text-sequence.md), or drops one component). The name tag is the point: _a person_ did this.
+- **One labeled editor (N = 1, still ensemble-styled)** — a single labeled teammate cursor performs one visible edit (deletes and retypes a headline word via [discrete-text-sequence.md](discrete-text-sequence.md), or drops one component). The name tag is the point: *a person* did this.
 - **Featured beat inside the ensemble** — one actor briefly becomes the lead: full [cursor-drag.md](cursor-drag.md) grab-carry-drop with chrome while the others explicitly REST for that window. Freeze the chorus; two things moving with intent at once splits the eye.
 - **Staggered entrances** — cursors enter from off-frame at `ENTER_AT + i * ENTER_STAGGER`, each gliding to its zone ("the team assembles"); entry vectors from different edges, per the house cursor entry law.
 
@@ -120,7 +120,7 @@ tl.fromTo("#canvas-group", { x: 0 }, { x: PAN_DX, duration: 6.0, ease: "none" },
 
 - **The table is the choreography** — all waypoints, times, and actions are literal data. If you can't verify non-collision by reading the `at` columns, the schedule is too clever.
 - **Every leg is an explicit `fromTo`** with the previous waypoint as the from-state, `immediateRender: false` on all but each actor's initial placement — chained `.to()`s on shared properties capture stale starts under seek.
-- **Interleave, never chord** — at most one action landing at any moment; simultaneous travel is fine (that's the liveness), simultaneous _payoffs_ compete.
+- **Interleave, never chord** — at most one action landing at any moment; simultaneous travel is fine (that's the liveness), simultaneous *payoffs* compete.
 - **Chorus intensity** — every action is a quieter version of its solo rule: smaller dips, subtler snaps, no ripple bursts; save full treatment for a featured beat.
 - **Rest is stillness** — between legs a cursor holds exactly where it landed: no idle drift, no yoyo wander on any actor.
 - **Payload lockstep** — a carried chip's tween matches its actor's leg exactly (position, duration, ease), per the cursor-drag law.

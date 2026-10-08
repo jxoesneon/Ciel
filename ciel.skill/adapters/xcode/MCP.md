@@ -27,4 +27,3 @@ Xcode Coding Assistant exposes project-aware functionality through MCP tools. Ci
 ## Security
 
 All non-read MCP calls pass through the Xcode hook-equivalent preflight in `HOOKS.md`. Arguments that may contain secrets are summarized rather than logged verbatim.
-

@@ -7,7 +7,7 @@ metadata:
 
 # Coordinate Target Zoom
 
-A simple `scale > 1` on a wrapper pushes off-center content OFF the visible canvas. To zoom _into_ a specific non-centered element, apply scale AND an inverse translation in lockstep so the target lands at viewport center.
+A simple `scale > 1` on a wrapper pushes off-center content OFF the visible canvas. To zoom *into* a specific non-centered element, apply scale AND an inverse translation in lockstep so the target lands at viewport center.
 
 ## How It Works
 
@@ -18,7 +18,7 @@ Two nested wrappers, separated concerns — never scale and translate on the SAM
 
 The counter-translate is the **negation** of the target's offset from viewport center:
 
-```
+```text
 T = -offset
 ```
 
@@ -43,14 +43,14 @@ const TARGET_OFFSET_Y = r.top + r.height / 2 - H / 2;
 
 Measure **once at setup** and bake — never per-frame in `onUpdate`. Because the measurement is async (`fonts.ready`), build and register the timeline inside the same `async` setup so the baked offset is ready before `window.__timelines[id]` is published.
 
-**Shortcut — symmetric equal-width row ONLY:**
+### Shortcut — symmetric equal-width row ONLY
 
 ```js
 const index_offset = targetIndex - (N - 1) / 2;
 const TARGET_OFFSET_X = index_offset * (CARD_WIDTH + CARD_GAP);
 ```
 
-⚠️ This assumes every sibling is the **same width**. The moment the row is asymmetric, it gives the wrong answer — often the wrong **sign**: the heavier side shifts the centered target the _opposite_ way you'd guess (e.g. `companion(220) + gap + wordmark + gap + chip(110)` puts the wordmark ~55px **right** of center, but "chip − companion" intuition says left). For anything but equal cards, **measure**.
+⚠️ This assumes every sibling is the **same width**. The moment the row is asymmetric, it gives the wrong answer — often the wrong **sign**: the heavier side shifts the centered target the *opposite* way you'd guess (e.g. `companion(220) + gap + wordmark + gap + chip(110)` puts the wordmark ~55px **right** of center, but "chip − companion" intuition says left). For anything but equal cards, **measure**.
 
 **Headroom budget — cap the scale from the measured size.** A zoom multiplies any centering error; keep the target ≤ ~88% of the canvas at peak:
 

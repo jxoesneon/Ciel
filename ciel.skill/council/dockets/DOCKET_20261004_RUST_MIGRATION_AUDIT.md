@@ -19,7 +19,7 @@ Per ADR_20261003 the binary is primary and the shell hooks fall back to the
 `.py` bodies when `ciel` is absent or exits nonzero:
 
 | Python | Rust twin |
-|---|---|
+| --- | --- |
 | `system1.py` (1336) | `system1.rs` + `system1 --ask/--decide`, `route-choice` |
 | `risk_policy.py` | `risk-eval` / `grant-state` / `risk-check` |
 | `secret_scan.py` | `secret-scan` |
@@ -38,6 +38,7 @@ Per ADR_20261003 the binary is primary and the shell hooks fall back to the
 ### Tier B — portable, not yet ported (this session's work queue)
 
 Core runtime:
+
 - `integrity.py` (164) — hash sweep + `git ls-files` classification
 - `setup.py` (185) — installer; provisioning the laya venv is Python-ecosystem
   work, but the orchestrator itself ports (spawn `pip`/`uv`)

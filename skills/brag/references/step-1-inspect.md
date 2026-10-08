@@ -31,7 +31,7 @@ Read these in priority order:
 
 After reading, answer all nine. Write these down before moving to Step 2.
 
-```
+```text
 1. What is the app?
    One sentence. What does it actually do (or claim to do)?
 
@@ -99,6 +99,7 @@ When reading CSS, look for custom properties like:
 If no custom properties exist, scan for the most-used colors in background, color, and border rules.
 
 Write down:
+
 - Background color (exact value)
 - Primary text color
 - Accent/brand color
@@ -109,6 +110,7 @@ These colors are recorded in `composition-brief.md` and carry into the design sp
 ## Font extraction
 
 Look for:
+
 - `font-family` declarations in `:root` or `body`
 - Google Fonts `<link>` in `<head>` (the font families are in the URL query string)
 - `@import` statements
@@ -118,6 +120,7 @@ Write down the display font (used for headings) and the body font separately.
 ## What to skip
 
 Don't read:
+
 - Generated build artifacts (`dist/`, `.next/`, `build/`)
 - Lock files (`package-lock.json`, `yarn.lock`)
 - Test files
@@ -130,4 +133,3 @@ Don't read:
 ## Rule: nothing secret leaves this step
 
 Everything read in this step can end up on screen in a video the user posts publicly. Never carry secrets, API keys, tokens, internal hostnames or URLs, real customer or user names, email addresses, or any personal data into `brag-plan.md`, `composition-brief.md`, the composition, the rendered video, or share copy. If the product's real UI contains such data, substitute plausible fictional stand-ins and say so in the plan.
-

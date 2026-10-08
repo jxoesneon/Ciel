@@ -22,9 +22,9 @@ _fb_reason="binary-absent"
 # segments + L0 registry) are scored asynchronously; verdicts accrue in
 # ~/.ciel/system1/events.jsonl as training signal and never gate the prompt.
 if command -v python3 >/dev/null 2>&1 && [ -f "$HOOK_DIR/../lib/system1.py" ]; then
-  ( CIEL_HOOK_INPUT="$input" CIEL_BIN="$CIEL_BIN" \
-      python3 "$HOOK_DIR/../lib/system1.py" --prompt-shadow "devin/user_prompt_submit" \
-      >/dev/null 2>&1 & )
+  (CIEL_HOOK_INPUT="$input" CIEL_BIN="$CIEL_BIN" \
+    python3 "$HOOK_DIR/../lib/system1.py" --prompt-shadow "devin/user_prompt_submit" \
+    >/dev/null 2>&1 &)
 fi
 if [ -n "$CIEL_BIN" ] && [ -x "$CIEL_BIN" ]; then
   _fb_reason="binary-failed"
@@ -34,7 +34,7 @@ if [ -n "$CIEL_BIN" ] && [ -x "$CIEL_BIN" ]; then
 fi
 # Parity-soak telemetry (DOCKET_20261004_RUST_MIGRATION_AUDIT): every descent
 # into the Python body is counted; 14 days silent + drill = twin deletion.
-(printf '%s\n' "{\"ts\":\"$(date -u +%FT%TZ)\",\"hook\":\"devin/user_prompt_submit\",\"reason\":\"$_fb_reason\"}" >> "${CIEL_HOME:-$HOME/.ciel}/fallback_events.jsonl") 2>/dev/null || true
+(printf '%s\n' "{\"ts\":\"$(date -u +%FT%TZ)\",\"hook\":\"devin/user_prompt_submit\",\"reason\":\"$_fb_reason\"}" >>"${CIEL_HOME:-$HOME/.ciel}/fallback_events.jsonl") 2>/dev/null || true
 
 SCAN=""
 SCAN="$(

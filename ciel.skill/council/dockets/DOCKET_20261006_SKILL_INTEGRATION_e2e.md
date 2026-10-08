@@ -7,7 +7,7 @@ Candidate: `e2e` — agentic end-to-end testing skill bundle
 ## Provenance
 
 - Source tier: 3 (web/git, uncurated source)
-- Origin: https://github.com/tester-army/e2e/tree/main/skills/e2e
+- Origin: <https://github.com/tester-army/e2e/tree/main/skills/e2e>
 - Upstream commit: b7ba0097abe950b6cd3da25c45e58087fc77b668 (2026-10-06)
 - License: Apache-2.0
 - Artifacts: SKILL.md + 8 reference docs (~125 KB, markdown only)

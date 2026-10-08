@@ -79,7 +79,7 @@ def _prepare_workspace(task: dict, dest: Path, skill: Path | None) -> None:
         shutil.copytree(skill, target)
 
 
-def _run_arm(task: dict, runner: str, workspace: Path, timeout: int,
+def _run_arm(task: dict, runner: str, workspace: Path, timeout: int,  # noqa: PLR0917
              skill: Path | None, completion_gate: str = "off") -> dict:
     _prepare_workspace(task, workspace, skill)
     env = dict(os.environ)

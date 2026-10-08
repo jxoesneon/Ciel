@@ -2,7 +2,7 @@
 
 Gaming, tech, nightlife, Gen Z content.
 
-```
+```text
 #F72585 #B5179E #7209B7 #560BAD #3A0CA3
 #70D6FF #FF70A6 #FF9770 #FFD670 #E9FF70
 #7400B8 #6930C3 #5E60CE #5390D9 #48BFE3

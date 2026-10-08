@@ -89,14 +89,14 @@ components:
 
 Bold Poster at frame scale is a **populist editorial poster** — vintage Italian sports-magazine
 display, classical serif body, one saturated tomato red, grids ruled in ink. Every frame should
-feel _printed_: heavy display type at poster scale, locked to one red accent, on a white/off-white
+feel *printed*: heavy display type at poster scale, locked to one red accent, on a white/off-white
 sheet (or a full red/dark statement panel), with decoration kept to a strict minimum.
 
 The voice is a three-face stack: **Shrikhand** (heavy slab-script, weight 400 only, routinely
 tilted −6°..+2°) carries every hero title, section header, stat, and card title; **Libre
 Baskerville** (literary serif) carries every body paragraph — it's what makes the system feel
 printed; **Space Grotesk** (uppercase, 2–3px tracked) is chrome only — labels, eyebrows, counters,
-bullet bodies. The plane is flat; the _only_ shadow is the stacked text-shadow on red display.
+bullet bodies. The plane is flat; the *only* shadow is the stacked text-shadow on red display.
 
 **Key characteristics at frame scale:**
 

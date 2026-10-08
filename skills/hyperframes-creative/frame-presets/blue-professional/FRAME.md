@@ -180,7 +180,7 @@ Soft and tinted — never offset. Depth from:
 - **Border-left accent** — the 4px cobalt rule on split-highlight blocks pulls a callout forward.
 - **Rounded corners** — the 10–14px radius is part of the softness; square corners break it.
 
-**Ceiling:** zero box-shadow on content (the only shadow is a soft cobalt CTA _hover_); no opaque cobalt borders; no harsh outlines.
+**Ceiling:** zero box-shadow on content (the only shadow is a soft cobalt CTA *hover*); no opaque cobalt borders; no harsh outlines.
 
 ## Shapes
 

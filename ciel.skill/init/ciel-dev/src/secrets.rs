@@ -78,9 +78,10 @@ mod tests {
 
     #[test]
     fn scrubs_nested_maps_and_lists() {
+        let slack = format!("xoxb-{}", "1234567890ab");
         let v = json!({
             "deep": {"cmd": "password = hunter2ok"},
-            "list": ["xoxb-1234567890ab", "clean"]
+            "list": [slack, "clean"]
         });
         let out = scrub_secrets(&v);
         let s = serde_json::to_string(&out).unwrap();

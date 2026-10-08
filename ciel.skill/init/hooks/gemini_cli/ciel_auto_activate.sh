@@ -12,9 +12,9 @@ PROMPT=$(echo "$INPUT" | jq -r '.user_prompt // empty')
 S1_LIB="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." 2>/dev/null && pwd)/lib/system1.py"
 [ -f "$S1_LIB" ] || S1_LIB="${CIEL_HOME:-$HOME/.ciel}/hooks/lib/system1.py"
 if command -v python3 >/dev/null 2>&1 && [ -f "$S1_LIB" ]; then
-  ( CIEL_HOOK_INPUT="$INPUT" \
-      python3 "$S1_LIB" --prompt-shadow "gemini_cli/ciel_auto_activate" \
-      >/dev/null 2>&1 & )
+  (CIEL_HOOK_INPUT="$INPUT" \
+    python3 "$S1_LIB" --prompt-shadow "gemini_cli/ciel_auto_activate" \
+    >/dev/null 2>&1 &)
 fi
 
 # Trigger patterns

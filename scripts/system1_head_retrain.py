@@ -43,6 +43,7 @@ CPU-only, batch <= 8, no gradient checkpointing, num_workers 0.
 from __future__ import annotations
 
 import argparse
+import contextlib
 import json
 import os
 import random
@@ -50,11 +51,10 @@ import shutil
 import sys
 import time
 from collections import Counter, defaultdict
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any
 
 import numpy as np
 import torch
-import torch.nn.functional as F
 
 # ----------------------------------------------------------------------------
 # Checkpoint location
@@ -67,9 +67,9 @@ HUB_SNAPSHOTS = os.path.expanduser(
 )
 
 
-def _read_env_file(path: str = ENV_FILE) -> Dict[str, str]:
+def _read_env_file(path: str = ENV_FILE) -> dict[str, str]:
     """Parse the KEY=VALUE lines of ~/.ciel/system1/env (no shell sourcing)."""
-    env: Dict[str, str] = {}
+    env: dict[str, str] = {}
     try:
         with open(path) as f:
             for line in f:
@@ -84,7 +84,7 @@ def _read_env_file(path: str = ENV_FILE) -> Dict[str, str]:
     return env
 
 
-def resolve_served_dir(model_arg: Optional[str]) -> str:
+def resolve_served_dir(model_arg: str | None) -> str:
     """Directory the live laya-serve actually loads for CIEL_SYSTEM1_MODEL.
 
     Resolution order: explicit --model path; then the revision pinned in
@@ -103,7 +103,7 @@ def resolve_served_dir(model_arg: Optional[str]) -> str:
     )
     revision = env.get("LAYA_REVISION") or os.environ.get("LAYA_REVISION", "")
 
-    candidates: List[str] = []
+    candidates: list[str] = []
     if revision:
         candidates.append(os.path.join(HUB_SNAPSHOTS, revision, model_name))
     if os.path.isdir(HUB_SNAPSHOTS):
@@ -158,7 +158,7 @@ def check_out_dir(out: str, served_dir: str) -> str:
 # ----------------------------------------------------------------------------
 
 
-def load_rows(path: str) -> List[Dict[str, Any]]:
+def load_rows(path: str) -> list[dict[str, Any]]:
     rows = []
     with open(path) as f:
         for lineno, line in enumerate(f, 1):
@@ -168,7 +168,7 @@ def load_rows(path: str) -> List[Dict[str, Any]]:
             try:
                 row = json.loads(line)
             except json.JSONDecodeError as e:
-                raise SystemExit(f"{path}:{lineno}: invalid JSON: {e}")
+                raise SystemExit(f"{path}:{lineno}: invalid JSON: {e}") from e
             if not isinstance(row, dict) or "state" not in row or "questions" not in row:
                 raise SystemExit(
                     f"{path}:{lineno}: row must have 'state' and 'questions' keys"
@@ -190,8 +190,8 @@ def _score_target(n: int, k: int, sigma: float) -> np.ndarray:
 
 
 def _label_to_target(
-    qid: str, qdef: Dict[str, Any], raw: Any, score_sigma: float, source: str
-) -> Tuple[int, np.ndarray]:
+    qid: str, qdef: dict[str, Any], raw: Any, score_sigma: float, source: str
+) -> tuple[int, np.ndarray]:
     """Map one label entry to (target_index_in_slot_order, target_vector over k slots)."""
     t = qdef["t"]
     crit = qdef.get("crit")
@@ -211,7 +211,7 @@ def _label_to_target(
         except (TypeError, ValueError):
             raise SystemExit(
                 f"{source}: question {qid!r}: score label must be an integer level, got {raw!r}"
-            )
+            ) from None
         k = len(crit)
         if not 0 <= n < k:
             raise SystemExit(
@@ -260,21 +260,21 @@ def _label_to_target(
 
 
 def encode_dataset(
-    agent, rows: List[Dict[str, Any]], score_sigma: float
-) -> Tuple[List[Dict[str, Any]], List[str]]:
+    agent, rows: list[dict[str, Any]], score_sigma: float
+) -> tuple[list[dict[str, Any]], list[str]]:
     """Turn labeled rows into per-question items via the agent's own encoder path.
 
     Each item is one full sequence ([CLS] head [SEP] state [SEP]); a state with
     N questions yields N items. Returns (items, skip-notes).
     """
-    items: List[Dict[str, Any]] = []
-    notes: List[str] = []
+    items: list[dict[str, Any]] = []
+    notes: list[str] = []
     for row in rows:
         state, questions = row["state"], row["questions"]
         labels = row.get("label") or {}
         surface = row.get("surface") or (row.get("meta") or {}).get("surface") or "unspecified"
-        ids = [qid for qid in questions.keys() if qid in labels]
-        skipped = [qid for qid in questions.keys() if qid not in labels]
+        ids = [qid for qid in questions if qid in labels]
+        skipped = [qid for qid in questions if qid not in labels]
         if skipped:
             notes.append(
                 f"{row['_source']}: no label for {skipped}; those questions are skipped"
@@ -312,21 +312,21 @@ def encode_dataset(
 
 @torch.no_grad()
 def cache_encoder_outputs(
-    model, items: List[Dict[str, Any]], batch_size: int
-) -> Tuple[Dict[tuple, torch.Tensor], Dict[str, float]]:
+    model, items: list[dict[str, Any]], batch_size: int
+) -> tuple[dict[tuple, torch.Tensor], dict[str, float]]:
     """Run the frozen encoder once per unique sequence; return {ids: h[L,d]} and
     per-surface encode seconds (amortised per item)."""
     model.encoder.eval()
-    unique: Dict[tuple, int] = {}
+    unique: dict[tuple, int] = {}
     for it in items:
         key = tuple(it["ids"])
         if key not in unique:
             unique[key] = len(unique)
     keys = list(unique.keys())
-    cache: Dict[tuple, torch.Tensor] = {}
-    surf_time: Dict[str, float] = defaultdict(float)
+    cache: dict[tuple, torch.Tensor] = {}
+    surf_time: dict[str, float] = defaultdict(float)
     # amortise batch wall time over the items each sequence serves
-    seq_surfaces: Dict[tuple, List[str]] = defaultdict(list)
+    seq_surfaces: dict[tuple, list[str]] = defaultdict(list)
     for it in items:
         seq_surfaces[tuple(it["ids"])].append(it["surface"])
 
@@ -350,8 +350,8 @@ def cache_encoder_outputs(
 
 
 def collate_head_batch(
-    batch: List[Dict[str, Any]], cache: Dict[tuple, torch.Tensor]
-) -> Dict[str, torch.Tensor]:
+    batch: list[dict[str, Any]], cache: dict[tuple, torch.Tensor]
+) -> dict[str, torch.Tensor]:
     """Pad cached encoder outputs and marker metadata for one update/eval batch."""
     n = len(batch)
     hs = [cache[tuple(it["ids"])] for it in batch]
@@ -364,7 +364,7 @@ def collate_head_batch(
     mmask = torch.zeros(n, kmax, dtype=torch.bool)
     qtype = torch.zeros(n, dtype=torch.long)
     target = torch.zeros(n, kmax)
-    for i, (it, h) in enumerate(zip(batch, hs)):
+    for i, (it, h) in enumerate(zip(batch, hs, strict=True)):
         h_pad[i, : h.shape[0]] = h
         att[i, : h.shape[0]] = 1
         k = len(it["markers"])
@@ -382,7 +382,7 @@ def collate_head_batch(
     }
 
 
-def collate_raw_batch(batch: List[Dict[str, Any]]) -> Dict[str, torch.Tensor]:
+def collate_raw_batch(batch: list[dict[str, Any]]) -> dict[str, torch.Tensor]:
     """Pad raw token ids + marker metadata — the Track-2 path, where the
     encoder runs inside the update so cached hidden states can't be used."""
     n = len(batch)
@@ -406,7 +406,7 @@ def collate_raw_batch(batch: List[Dict[str, Any]]) -> Dict[str, torch.Tensor]:
             "marker_mask": mmask, "qtype": qtype, "target": target}
 
 
-def head_forward(model, h_pad, attention_mask, marker_pos, marker_mask, qtype):
+def head_forward(model, h_pad, attention_mask, marker_pos, marker_mask, qtype):  # noqa: PLR0917
     """The head half of DecisionModel.forward, run on cached encoder outputs.
 
     Mirrors laya/common.py DecisionModel.forward line for line from the
@@ -492,7 +492,7 @@ def inject_lora(model, rank: int, alpha: float, last_n_layers: int) -> int:
     return n
 
 
-def full_forward(model, ids, attention_mask, marker_pos, marker_mask, qtype):
+def full_forward(model, ids, attention_mask, marker_pos, marker_mask, qtype):  # noqa: PLR0917
     """Model() forward keeping autograd — same signature as head_forward but
     runs the encoder too (for LoRA updates). Returns (logits, act_logits)."""
     out = model(input_ids=ids, attention_mask=attention_mask,
@@ -512,11 +512,11 @@ QTYPE_NAMES = {0: "choice", 1: "score", 2: "noul"}
 @torch.no_grad()
 def evaluate(
     model,
-    items: List[Dict[str, Any]],
-    cache: Dict[tuple, torch.Tensor],
+    items: list[dict[str, Any]],
+    cache: dict[tuple, torch.Tensor],
     batch_size: int,
     lora: bool = False,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Argmax accuracy overall / per surface / per qtype, plus a confusion tally
     and mean |E[p] - label| for score rows (how `laya` decodes scores)."""
     model.head.eval()
@@ -524,10 +524,10 @@ def evaluate(
     model.act_head.eval()
     model.type_emb.eval()
     correct = 0
-    per_surface: Dict[str, List[int]] = defaultdict(lambda: [0, 0])
-    per_qtype: Dict[str, List[int]] = defaultdict(lambda: [0, 0])
+    per_surface: dict[str, list[int]] = defaultdict(lambda: [0, 0])
+    per_qtype: dict[str, list[int]] = defaultdict(lambda: [0, 0])
     confusion: Counter = Counter()
-    score_abs_err: List[float] = []
+    score_abs_err: list[float] = []
     for start in range(0, len(items), batch_size):
         part = items[start : start + batch_size]
         with torch.no_grad():
@@ -578,7 +578,7 @@ def set_head_training(model, training: bool) -> None:
             mod.train(training)
 
 
-def collect_records(model, items, cache, batch_size, lora: bool = False) -> List[Tuple[int, np.ndarray, np.ndarray, int]]:
+def collect_records(model, items, cache, batch_size, lora: bool = False) -> list[tuple[int, np.ndarray, np.ndarray, int]]:
     """(qtype, logits[:k], target[:k], k) over the train split — the record shape
     `agent.fit_temperatures` consumes."""
     set_head_training(model, False)
@@ -609,7 +609,7 @@ def collect_records(model, items, cache, batch_size, lora: bool = False) -> List
 # ----------------------------------------------------------------------------
 
 
-def merged_state_dict(model) -> Dict[str, torch.Tensor]:
+def merged_state_dict(model) -> dict[str, torch.Tensor]:
     """State dict with LoRA adapters folded back into their base Linears
     (W' = W + (B @ A) * scale) — the emitted checkpoint keeps the stock
     DecisionModel key layout so it loads without the adapter classes."""
@@ -640,7 +640,7 @@ def merged_state_dict(model) -> Dict[str, torch.Tensor]:
 
 
 def write_sibling_checkpoint(
-    out_dir: str, served_dir: str, agent, temperatures: Dict[str, Any], meta: Dict[str, Any]
+    out_dir: str, served_dir: str, agent, temperatures: dict[str, Any], meta: dict[str, Any]
 ) -> None:
     """Emit <out>/ with the served layout: model.safetensors (full state dict —
     encoder values untouched, head retrained), encoder/, tokenizer/, and an
@@ -653,7 +653,7 @@ def write_sibling_checkpoint(
     """
     from safetensors.torch import save_file
 
-    os.makedirs(out_dir, exist_ok=False if not os.path.isdir(out_dir) else True)
+    os.makedirs(out_dir, exist_ok=os.path.isdir(out_dir))
     for sub in ("encoder", "tokenizer"):
         src = os.path.join(served_dir, sub)
         dst = os.path.join(out_dir, sub)
@@ -688,7 +688,7 @@ def write_sibling_checkpoint(
 # ----------------------------------------------------------------------------
 
 
-def main() -> int:
+def main() -> int:  # noqa: PLR0912, PLR0915 -- the train loop is one linear flow; splitting it would scatter the budget/abort checks
     ap = argparse.ArgumentParser(
         description="Track-1 head-only retrain for the Laya typed-decisions checkpoint."
     )
@@ -738,10 +738,8 @@ def main() -> int:
     env = _read_env_file()
     threads = env.get("LAYA_THREADS")
     if threads:
-        try:
+        with contextlib.suppress(ValueError):
             torch.set_num_threads(int(threads))
-        except ValueError:
-            pass
 
     random.seed(args.seed)
     np.random.seed(args.seed)
@@ -780,7 +778,7 @@ def main() -> int:
     head_param_names = []
     for name, p in model.named_parameters():
         if name.startswith("encoder."):
-            p.requires_grad_(name.endswith(".A.weight") or name.endswith(".B.weight"))
+            p.requires_grad_(name.endswith((".A.weight", ".B.weight")))
             n_frozen += p.numel() if not p.requires_grad else 0
             n_train += p.numel() if p.requires_grad else 0
         else:
@@ -851,7 +849,7 @@ def main() -> int:
         weight_decay=args.weight_decay,
     )
 
-    def run_updates(indices: List[int], n_updates: int) -> List[float]:
+    def run_updates(indices: list[int], n_updates: int) -> list[float]:
         """Run up to n_updates optimiser steps over indices; returns per-update seconds."""
         set_head_training(model, True)
         times = []
@@ -889,7 +887,9 @@ def main() -> int:
             upd += 1
             # bar 10 — update-rate checkpoint after the first 100 updates:
             # extrapolate and abort if the projected total exceeds the cap.
-            if lora_mode and upd == 100 and args.max_updates > 100:
+            if (  # pragma: no cover — probe runs ≤10 updates; the live
+                lora_mode and upd == 100 and args.max_updates > 100   # bar-10 check is the main loop's below
+            ):
                 rate = sum(times) / len(times)
                 projected_h = rate * args.max_updates / 3600
                 print(f"[bar10] update-rate after 100: {rate:.2f}s/update; "
@@ -941,7 +941,6 @@ def main() -> int:
         rate = len(times) / sum(times)
         print(f"[dry-run] {len(times)} updates of batch<= {args.batch_size}: "
               f"{rate:.2f} updates/s ({1000 * sum(times) / len(times):.0f} ms/update avg)")
-        per_surf: Dict[str, List[float]] = defaultdict(list)
         report = {
             "mode": "dry-run",
             "updates": len(times),
@@ -965,7 +964,7 @@ def main() -> int:
     # ----------------------------- training ---------------------------------
     history = []
     total_upd = 0
-    upd_times: List[float] = []
+    upd_times: list[float] = []
     upd_budget = args.max_updates or 10**9
     abort_done = False
     stop_training = False

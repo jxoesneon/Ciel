@@ -2,7 +2,7 @@
 
 Sustainability, outdoor, organic, wellness content.
 
-```
+```text
 #606C38 #283618 #FEFAE0 #DDA15E #BC6C25
 #DAD7CD #A3B18A #588157 #3A5A40 #344E41
 #386641 #6A994E #A7C957 #F2E8CF #BC4749

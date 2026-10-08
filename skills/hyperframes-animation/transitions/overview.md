@@ -19,7 +19,7 @@ A transition tells the viewer how two scenes relate. A crossfade says "this cont
 These are non-negotiable for every multi-scene composition:
 
 1. **Every composition uses transitions.** No exceptions. Scenes without transitions feel like jump cuts.
-2. **Every scene uses entrance animations.** Elements animate IN — opacity, position, scale, etc. No scene should pop fully-formed onto screen. Use `gsap.fromTo()` (not `gsap.from()`) so the start state is explicit: `from()` animates _to_ current CSS, so pairing it with CSS `opacity: 0` is a 0→0 noop and the element never appears (see `/hyperframes-core` → sub-compositions).
+2. **Every scene uses entrance animations.** Elements animate IN — opacity, position, scale, etc. No scene should pop fully-formed onto screen. Use `gsap.fromTo()` (not `gsap.from()`) so the start state is explicit: `from()` animates *to* current CSS, so pairing it with CSS `opacity: 0` is a 0→0 noop and the element never appears (see `/hyperframes-core` → sub-compositions).
 3. **Exit animations are BANNED** except on the final scene. Do NOT use `gsap.to()` to animate elements out before a transition fires. The transition IS the exit. Outgoing scene content must be fully visible when the transition starts — the transition handles the visual handoff.
 4. **Final scene exception:** The last scene MAY fade elements out (e.g., fade to black at the end of the composition). This is the only scene where exit animations are allowed.
 
@@ -35,7 +35,7 @@ tl.to("#s1", { yPercent: -100, filter: "blur(8px)", duration: 0.5, ease: "power3
 tl.fromTo("#s2", { yPercent: 100 }, { yPercent: 0, duration: 0.5, ease: "power3.out" }, T);
 ```
 
-> **You are NOT done after this file.** This overview gives you _which_ transition and _when_. Before writing any transition you MUST open **`catalog.md`** in this directory for the GSAP code and the hard rule every transition follows — _position new scene → animate outgoing → swap → animate incoming → clean up overlays_ — plus the per-category `css-*.md` files for specifics. Authoring transitions from this overview alone is how you end up shipping the ❌ pattern above.
+> **You are NOT done after this file.** This overview gives you *which* transition and *when*. Before writing any transition you MUST open **`catalog.md`** in this directory for the GSAP code and the hard rule every transition follows — *position new scene → animate outgoing → swap → animate incoming → clean up overlays* — plus the per-category `css-*.md` files for specifics. Authoring transitions from this overview alone is how you end up shipping the ❌ pattern above.
 
 ## Energy → Primary Transition
 
@@ -49,7 +49,7 @@ Pick ONE primary (60-70% of scene changes) + 1-2 accents. Never use a different 
 
 ## Mood → Transition Type
 
-Think about what the transition _communicates_, not just what it looks like.
+Think about what the transition *communicates*, not just what it looks like.
 
 | Mood                     | Transitions                                                                                                                          | Why it works                                                                                |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |

@@ -62,9 +62,9 @@ evidence; a fatal verdict without it does not count.
 item is named and described for. Not "renders badly", but "the thing is absent from the file".
 `ecosystem-constellation`, `hero-device-assemble` and `terminal-to-browser-deploy` are the same
 file holding empty card divs with different headings.
-_Check:_ read the markup, then swap the name for any other item's name. If nothing in the file
+*Check:* read the markup, then swap the name for any other item's name. If nothing in the file
 would have to change, the name is a label on a generic shell.
-_Evidence:_ the named subject has no element (no nodes in a constellation, no terminal in a
+*Evidence:* the named subject has no element (no nodes in a constellation, no terminal in a
 terminal deploy).
 
 **F2. Redundant duplicate.** Same **motion fingerprint** and same **markup skeleton** as another
@@ -72,11 +72,11 @@ item that survives. Fingerprint is the gsap call list with selectors neutralised
 durations and eases; skeleton is the tag sequence with classes and text stripped. One wipe
 currently ships eight times with the same properties, durations and easings; one word-stagger
 ships seven times.
-_Evidence:_ both hashes match a sibling, and the sibling wins the tie-break below.
+*Evidence:* both hashes match a sibling, and the sibling wins the tie-break below.
 
 **F3. Renders nothing.** Frames are blank, or the named subject never appears, with the item
 mounted correctly on its own ground and its recipe applied.
-_Evidence:_ four blank frames plus the cause, in the item rather than the harness: a missing
+*Evidence:* four blank frames plus the cause, in the item rather than the harness: a missing
 sibling asset, a `ReferenceError` in the console, a subject that never enters the viewport. A
 frame-capture artifact that renders correctly live is a false alarm, so confirm on a real page
 before recording it.
@@ -88,7 +88,7 @@ wipe that never reveals its second panel, a chart that draws no series. Not a wo
 bounded replay, and making it seekable would make it a different effect. Rare. Most accumulators
 have a trivial rewrite, so reach for this only after establishing there is none; a seeded,
 index-derived replacement for `Math.random()` is X7, not F5.
-_Evidence:_ two snapshots of the same timestamp reached by different seek paths differ.
+*Evidence:* two snapshots of the same timestamp reached by different seek paths differ.
 
 ## Fixable, keep and repair
 
@@ -98,13 +98,14 @@ bounded. Log the specific fix, never "needs polish".
 **X1. No timeline of its own.** No `__timelines` registration, so the installed artifact renders a
 still frame while the catalog page looks fine, because the generator transplants the demo's
 timeline into the preview. 97 of the 213 new components are in this state.
-_Repair:_ fold the trailing `Timeline integration:` recipe into a real `<script>` that builds a
+*Repair:* fold the trailing `Timeline integration:` recipe into a real `<script>` that builds a
 paused timeline and registers it. Roughly 10 to 15 minutes for a single-element item.
-_Escalates to fatal_ only when there is no motion anywhere to fold in, which usually means F1 too.
+*Escalates to fatal* only when there is no motion anywhere to fold in, which usually means F1 too.
 
 **X2. Name claims a technique the code lacks.** Grep the code region, never the doc header: the
 header's prose is full of the exact words you are looking for, and will report a match on an item
 that has none.
+
 | Name pattern | Must contain |
 | -------------------------------- | -------------------------------------------------- |
 | `spring-*` | `elastic`, `back.`, `bounce` or a custom spring ease |
@@ -112,31 +113,32 @@ that has none.
 | `frosted*`, `*glass*` | `backdrop-filter` |
 | `*3d*`, `*depth*`, `*orbit*`, `*camera*` | `perspective`, `rotateX`, `rotateY`, `translateZ` |
 | `*-draw`, `*-trace`, `*stroke*` | `stroke-dash` or `pathLength` |
-_Repair:_ add the technique, or rename the item. Renaming is often the honest fix.
+
+*Repair:* add the technique, or rename the item. Renaming is often the honest fix.
 
 **X3. Illegible.** At 1920x1080 on its own ground: text under 4.5:1, or a subject whose smallest
 meaningful feature is under about 24px.
-_Repair:_ one value step, per `placeholder-material.md`. Text never sits below L1.
+*Repair:* one value step, per `placeholder-material.md`. Text never sits below L1.
 
 **X4. Placeholder gradients.** The purple and blue palette standing in for content.
-_Repair:_ the monochrome ramp. Already done across the catalog, so a new instance is a regression,
+*Repair:* the monochrome ramp. Already done across the catalog, so a new instance is a regression,
 not a legacy defect.
 
 **X5. Hardcoded ink, no theme token.** A literal colour on the item's own text or subject with no
 `var(--...)` fallback chain, so it disappears when an author drops it on the opposite theme.
-_Repair:_ route it through the theme token with the literal as fallback.
+*Repair:* route it through the theme token with the literal as fallback.
 
 **X6. No markup of its own.** The file is a `<style>` and a `<script>` and nothing else, so
 mounting it renders an empty box.
-_Repair:_ ship sample markup, or declare it an attachment snippet in `registry-item.json` and give
+*Repair:* ship sample markup, or declare it an attachment snippet in `registry-item.json` and give
 the demo a host element.
 
 **X7. Unseeded randomness.** Scatter derived from `Math.random()` rather than the element index.
-_Repair:_ derive from the index.
+*Repair:* derive from the index.
 
 **X8. Declared bounds it cannot honour.** A number variable with no `min`/`max`, so the control
 offers values the item cannot express, or a default it can never return to.
-_Repair:_ declare real bounds, or use a numeric field instead of a slider.
+*Repair:* declare real bounds, or use a numeric field instead of a slider.
 
 ## Duplicates, which one survives
 

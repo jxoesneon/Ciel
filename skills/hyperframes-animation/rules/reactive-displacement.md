@@ -7,7 +7,7 @@ metadata:
 
 # Reactive Displacement
 
-Exit animation of element A is mathematically DERIVED from the entry spring of element B — a causal link: "A moves _because_ B hit it." Distinct from [scale-swap-transition.md](scale-swap-transition.md) (which overlaps but isn't causal) and [card-morph-anchor.md](card-morph-anchor.md) (one container morphing).
+Exit animation of element A is mathematically DERIVED from the entry spring of element B — a causal link: "A moves *because* B hit it." Distinct from [scale-swap-transition.md](scale-swap-transition.md) (which overlaps but isn't causal) and [card-morph-anchor.md](card-morph-anchor.md) (one container morphing).
 
 A single 0→1 driver tween (the "entry spring") feeds three concurrent derived motions in one `onUpdate`:
 

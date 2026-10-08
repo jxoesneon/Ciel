@@ -2,7 +2,7 @@
 
 Explainers, tutorials, presentations, professional content.
 
-```
+```text
 #FFFCF2 #CCC5B9 #403D39 #252422 #EB5E28
 #22223B #4A4E69 #9A8C98 #C9ADA7 #F2E9E4
 #3D5A80 #98C1D9 #E0FBFC #EE6C4D #293241

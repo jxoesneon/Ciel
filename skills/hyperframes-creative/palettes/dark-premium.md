@@ -2,7 +2,7 @@
 
 Tech, finance, luxury, cinematic content.
 
-```
+```text
 #000000 #14213D #FCA311 #E5E5E5 #FFFFFF
 #000814 #001D3D #003566 #FFC300 #FFD60A
 #0D1B2A #1B263B #415A77 #778DA9 #E0E1DD

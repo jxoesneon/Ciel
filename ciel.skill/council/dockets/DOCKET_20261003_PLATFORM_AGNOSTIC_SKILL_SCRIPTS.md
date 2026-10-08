@@ -16,7 +16,7 @@ not a defect per se.
 ## Evidence (verified by grep, 27 files)
 
 | Script | Invoker | References |
-|---|---|---|
+| --- | --- | --- |
 | `skills/ciel/scripts/pre_tool_hook.sh` | agent | only `skills/ciel/SKILL.md:138` |
 | `skills/ciel/scripts/post_tool_hook.sh` | agent | only `SKILL.md:140` |
 | `skills/ciel/scripts/post_failure_hook.sh` | none | unreferenced |
@@ -83,7 +83,7 @@ non-unix.
 **PASS — weighted 8.0** (self-modification thresholds: ≥7.5 weighted, Safety ≥7, ≥4/5 at pass_score 6)
 
 | Lens | Stage 1 | Stage 2 | Delta |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Coherence | 8 | 8 | 0 |
 | Capability | 8 | 8 | 0 |
 | Safety | 8 | 8 | 0 (veto: false) |

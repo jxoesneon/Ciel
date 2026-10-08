@@ -97,7 +97,7 @@ escaping.
 - A lane holds its first value backwards to the start of its clip and its last
   value forward to the end. So a bed that begins before the voice needs an
   explicit "no cut" point at `t: 0`, or it starts out already ducked.
-- `curve` (-1..1) bends the segment _leaving_ a point: positive holds low then
+- `curve` (-1..1) bends the segment *leaving* a point: positive holds low then
   rises late. `viaX`/`viaY` name an interior point the segment passes through
   (progress 0..1, value travelled 0..1) and supersede `curve` when both are
   present — that is what the timeline writes when a bend is dragged.

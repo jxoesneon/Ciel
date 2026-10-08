@@ -19,7 +19,7 @@ mean **read the stored conversation**, not resume it.
 Base dir: `~/.gemini/antigravity-cli/`
 
 | Path | Contents |
-|---|---|
+| --- | --- |
 | `conversations/<id>.db` | SQLite conversation store (authoritative state) |
 | `brain/<id>/.system_generated/logs/transcript.jsonl` | One JSON object per step (digest) |
 | `brain/<id>/.system_generated/logs/transcript_full.jsonl` | Same steps, full content — **preferred read source** |
@@ -33,7 +33,7 @@ Base dir: `~/.gemini/antigravity-cli/`
 
 ## Transcript schema (JSONL, one object per line)
 
-```
+```text
 {"step_index":N,"source":"USER_EXPLICIT|MODEL|SYSTEM|SYSTEM_SDK",
  "type":"USER_INPUT|PLANNER_RESPONSE|GENERIC|EPHEMERAL_MESSAGE|SYSTEM_MESSAGE",
  "status":"DONE","created_at":"ISO8601",

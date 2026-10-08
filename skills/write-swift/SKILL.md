@@ -43,7 +43,7 @@ Value types are the default in Swift, not a special case.
 - **Default to `struct` and `enum`. Use `class` only for identity, shared mutable state, inheritance, or resource lifetime.** A window, a database connection, an entity stored in a rendering engine — those have identity. A `Point`, a `Drink`, a `Material` does not.
 - **`let` by default; `var` only when you mutate.** This is the same discipline as `some` before `any` and value before reference: start narrow, widen with cause.
 - **A struct with a mutable reference-type property is neither a value nor a reference.** Copies share the object; mutations leak across copies. Either keep the referenced type immutable, expose only computed properties that forward to it, or make it a `private` stored property behind copy-on-write.
-- **Copy-on-write is how you get out-of-line storage _and_ value semantics.** Wrap a final class in a struct and check `isKnownUniquelyReferenced(&storage)` before mutating; copy first if it isn't. This is exactly how `Array`, `String`, and `Dictionary` work.
+- **Copy-on-write is how you get out-of-line storage *and* value semantics.** Wrap a final class in a struct and check `isKnownUniquelyReferenced(&storage)` before mutating; copy first if it isn't. This is exactly how `Array`, `String`, and `Dictionary` work.
 - **Enums are the tool for "a fixed set of things" and for mutually exclusive state.** Replacing a pile of optional stored properties (`isSharing`, `selectedRows`, `shareTarget`) with one `enum State` makes invalid combinations unrepresentable and makes state change atomic instead of a sequence of property writes you can forget to finish.
 - **Composing values yields a value.** A struct whose stored properties are all value types has value semantics for free — which is what makes undo, diffing, and state restoration a single code path instead of one per property.
 
@@ -88,16 +88,16 @@ Start every app entirely on the main thread. Single-threaded code goes a long wa
 
 1. **Single-threaded on the main actor.** No concurrency at all. Fine for most apps.
 2. **`async`/`await`** to hide latency (network, disk). Still no concurrency of your own — SDK APIs like `URLSession.data(from:)` offload on your behalf.
-3. **`@concurrent`** to move _your_ expensive work off the main thread — only after Instruments shows a hang.
-4. **`actor`** to move _state_ off the main actor — only when too much main-actor state is forcing tasks to hop back constantly.
+3. **`@concurrent`** to move *your* expensive work off the main thread — only after Instruments shows a hang.
+4. **`actor`** to move *state* off the main actor — only when too much main-actor state is forcing tasks to hop back constantly.
 
 **Turn on the right build settings first.** Enable **Approachable Concurrency** in every project. For app modules and UI-facing modules, also set **Default Actor Isolation** to **MainActor** — it's the default for new app projects in Xcode 26, and it deletes most of your `@MainActor` annotations. In a package: `swiftSettings: [.defaultIsolation(MainActor.self)]`. **Do not set main-actor-by-default for a general-purpose library** — libraries should ship `nonisolated` APIs and let clients decide where work runs.
 
 ### The rule that changed
 
-**In Swift 6.2, marking a function `async` does _not_ move it off the current actor.** It runs where it was called from. This is what makes "the most natural code to write" data-race free by default.
+**In Swift 6.2, marking a function `async` does *not* move it off the current actor.** It runs where it was called from. This is what makes "the most natural code to write" data-race free by default.
 
-- **`@concurrent`** — always switches to the concurrent thread pool. Use it on _your_ CPU-heavy work.
+- **`@concurrent`** — always switches to the concurrent thread pool. Use it on *your* CPU-heavy work.
 - **`nonisolated`** — runs wherever it's called from. **This is the right default for library APIs**, because the caller decides. `nonisolated` on a type makes all its members nonisolated (Swift 6.1+).
 - Neither one — stays on the caller's actor.
 
@@ -114,7 +114,7 @@ nonisolated struct PhotoProcessor {          // decoupled from the main actor
 
 - **Profile before you offload.** Use Instruments (Time Profiler, hangs). If the code can be made faster without concurrency, always do that first. Concurrency has real cost — task allocation, scheduling, and reasoning.
 - **Don't spawn a task for trivial work.** A child task to read a `UserDefaults` value costs more than it saves.
-- **One task per end-to-end operation.** Work that must happen in order goes in _one_ task; independent operations get separate tasks so the runtime can interleave them.
+- **One task per end-to-end operation.** Work that must happen in order goes in *one* task; independent operations get separate tasks so the runtime can interleave them.
 - **`await` is a suspension point, and it breaks atomicity.** State can change while you're suspended, and you may resume on a different thread. Re-check assumptions after every `await`. Never hold a lock across one. Never rely on thread-local storage across one.
 
 ### Actor reentrancy
@@ -135,7 +135,7 @@ Actors guarantee mutual exclusion, not transactions. Between two `await`s on the
 - **Value types are `Sendable` when their storage is** — inferred automatically for non-public types. **Public types never get inferred sendability**: marking a public type `Sendable` is a promise to your clients, so Swift makes you write it.
 - **Actors and `@MainActor` classes are implicitly `Sendable`**, because their state is isolated.
 - **Most model classes should be neither `@MainActor` nor `Sendable`.** Keep them non-`Sendable` on purpose — it prevents half the model being mutated on the main thread while the other half is mutated in the background. If they need to leave the main actor, make them `nonisolated`, not `Sendable`.
-- **You can still _send_ a non-`Sendable` object between domains** as long as the sender stops using it. Make all your mutations _before_ handing it off; touching it afterward is the error.
+- **You can still *send* a non-`Sendable` object between domains** as long as the sender stops using it. Make all your mutations *before* handing it off; touching it afterward is the error.
 - Closures capture state too. Only mark a function type `@Sendable` if it genuinely crosses domains.
 - **`@unchecked Sendable` is a promise the compiler can't check.** Reserve it for types with real internal synchronization (a `Mutex`, a lock). Same for `nonisolated(unsafe)` on a global — last resort, not a warning silencer.
 
@@ -146,7 +146,7 @@ Actors guarantee mutual exclusion, not transactions. Between two `await`s on the
 3. **Isolate it to an actor** — the main actor, or your own.
 4. Only then reach for `Mutex`/`Atomic` from the `Synchronization` module (store them in `let` properties), or `@unchecked Sendable`.
 
-**Global and static variables are the most common source of errors.** In order of preference: make it a `let`; put it on `@MainActor`; wrap it in a `Mutex`; `nonisolated(unsafe)`. Note globals in Swift are initialized lazily _and_ atomically — unlike C.
+**Global and static variables are the most common source of errors.** In order of preference: make it a `let`; put it on `@MainActor`; wrap it in a `Mutex`; `nonisolated(unsafe)`. Note globals in Swift are initialized lazily *and* atomically — unlike C.
 
 **Bridging old callback APIs:** annotate delegate protocols with `@MainActor` if you own them. If you don't, mark the method `nonisolated` and use `MainActor.assumeIsolated { }` — it asserts rather than hopping, so it traps loudly instead of racing silently. `@preconcurrency` on the conformance is the shorthand for the same thing. Use `@preconcurrency import` to temporarily silence sendability warnings from a module that hasn't migrated; the warnings come back — correctly — once it does.
 
@@ -161,7 +161,7 @@ Structured tasks (`async let`, task groups) are scoped like local variables: the
 - **`async let`** for a fixed, statically known number of concurrent children.
 - **`withTaskGroup`** when the number is dynamic. Task groups conform to `AsyncSequence` — iterate results as they land. Use **`withDiscardingTaskGroup`** when children return nothing: it frees each child's resources immediately and cancels siblings on the first error.
 - **`Task { }`** only when the work's lifetime doesn't fit a scope — reacting to a delegate callback, a button tap, a view appearing. It inherits actor isolation and priority; you must manage cancellation yourself.
-- **`Task.detached`** almost never. It inherits nothing — not isolation, not priority, not task-locals. If you need a detached root, put a task group _inside_ it rather than detaching repeatedly.
+- **`Task.detached`** almost never. It inherits nothing — not isolation, not priority, not task-locals. If you need a detached root, put a task group *inside* it rather than detaching repeatedly.
 
 **Cancellation is cooperative.** Cancelling sets a flag; it stops nothing. Check `Task.isCancelled` or `try Task.checkCancellation()` **before starting expensive work**, and in synchronous helpers too. For work that's suspended rather than running (an `AsyncSequence`'s `next()`), use `withTaskCancellationHandler` — and remember the handler runs immediately and concurrently with the body, so the state it touches needs real synchronization (an atomic or a lock, not an actor — you can't guarantee ordering on an actor).
 
@@ -199,7 +199,7 @@ The workflow: **write concrete types → notice repeated code across them → fa
 
 - **A protocol with no per-type customization is a wasted protocol.** If every conformance would use the same default implementation, write a constrained extension on an existing protocol instead. Elaborate protocol hierarchies ("type zoology") cost compile time and binary size and buy nothing.
 - **Prefer has-a to is-a.** If only some of a protocol's operations make sense for your type, don't refine it — wrap it in a generic struct and expose exactly the API you mean. (`GeometricVector<Storage: SIMD>` rather than `GeometricVector: SIMD`.)
-- **A protocol requirement is a customization point** — it's dynamically dispatched, and a conforming type's implementation wins everywhere. **A method only in an extension is statically dispatched**, so a conformer's version _shadows_ rather than overrides it, and code that only knows `any P` calls the extension's. If a type should be able to customize something, make it a requirement.
+- **A protocol requirement is a customization point** — it's dynamically dispatched, and a conforming type's implementation wins everywhere. **A method only in an extension is statically dispatched**, so a conformer's version *shadows* rather than overrides it, and code that only knows `any P` calls the extension's. If a type should be able to customize something, make it a requirement.
 - **Composition over inheritance.** Class inheritance is monolithic (one superclass), intrusive (you inherit stored properties and initializer complexity), and leaves unwritten contracts about what may be overridden and when to call super. Compose small values instead.
 - **A forced downcast is a code smell** — it usually means a type relationship was lost to a class hierarchy or an existential.
 
@@ -222,7 +222,7 @@ Clarity at the point of use is the goal that outranks every other one here.
 - **Drop leading `get`** from async alternatives and from anything that returns its result directly. `persistentPosts`, not `getPersistentPosts`.
 - **Access control is documentation.** `private` (file), `internal` (module, and the default), `package`, `public`. Being explicit at the boundary is what forces the sendability and API-evolution decisions above.
 - **Design the model so illegal states can't be spelled.** Private setters plus a validating mutating method; enums for closed sets; a strongly typed `UUID` instead of a `String`.
-- **Property wrappers** factor out an _access policy_ (`@Argument`, `@Published`, defensive copying, lazy, thread-local) so the declaration site states the policy in one word. Combine with `@dynamicMemberLookup` on a key path to project through a wrapper (that's how `$binding.title` works).
+- **Property wrappers** factor out an *access policy* (`@Argument`, `@Published`, defensive copying, lazy, thread-local) so the declaration site states the policy in one word. Combine with `@dynamicMemberLookup` on a key path to project through a wrapper (that's how `$binding.title` works).
 - **Result builders** for declarative DSLs. **Macros** when the boilerplate is code the compiler could have written (§12).
 
 ---
@@ -240,12 +240,12 @@ Low-level Swift performance is dominated by four costs. Know which one you're pa
 
 - **Know the complexity of what you call.** `Array.remove(at:)` is O(n); calling it in a loop is O(n²). `removeAll(where:)` is O(n) total. Building a `Data` by re-slicing per byte is O(n²); `popFirst()` is O(1). Both of these were 100×+ regressions hiding behind clean-looking code.
 - **Chained `map`/`flatMap`/`filter` allocate an array per stage.** Elegant ≠ fast. If a pipeline runs per-pixel or per-element in a hot loop, size the output once and write into it.
-- **Then profile.** Instruments' Time Profiler and Allocations, run against a _test_ (secondary-click the test's run button → Profile) so you're measuring exactly the code you care about. `platform_memmove` dominating a flame graph means accidental copying; a million transient allocations means intermediate arrays; `swift_beginAccess` means runtime exclusivity checks; `swift_retain`/`swift_release` means reference-counting traffic.
+- **Then profile.** Instruments' Time Profiler and Allocations, run against a *test* (secondary-click the test's run button → Profile) so you're measuring exactly the code you care about. `platform_memmove` dominating a flame graph means accidental copying; a million transient allocations means intermediate arrays; `swift_beginAccess` means runtime exclusivity checks; `swift_retain`/`swift_release` means reference-counting traffic.
 
 **Concrete levers, roughly in order of what they buy:**
 
 - **`final` on classes you don't intend to subclass** turns dynamic dispatch static and unlocks inlining. Whole-module optimization lets the compiler prove this for you in many cases — and enables generic specialization, which is where generics stop costing anything.
-- **Struct storage is inline; class storage is out-of-line.** Small structs are free; a large struct with three reference-typed fields costs three retains _per copy_, versus one for a class. If you copy it a lot, use copy-on-write.
+- **Struct storage is inline; class storage is out-of-line.** Small structs are free; a large struct with three reference-typed fields costs three retains *per copy*, versus one for a class. If you copy it a lot, use copy-on-write.
 - **An `any P` existential has a 3-word inline buffer.** Values that fit live inline; larger ones get heap-allocated per copy. Same technique applies: give the large type indirect storage with copy-on-write and it fits in the buffer again.
 - **Homogeneous `[MyModel]` beats `[any Model]`** — densely packed, type info passed once, specializable. `[any Model]` is the flexible-but-opaque option; take it when you need it.
 - **Constraining a generic parameter to a class** (`T: AnyObject`) gives the compiler a known representation even without specialization.
@@ -257,14 +257,14 @@ Low-level Swift performance is dominated by four costs. Know which one you're pa
 
 **Async functions** keep their state on a per-task slab allocator rather than the C stack, and split into partial functions at each suspension point. The cost profile is similar to sync functions with slightly higher call overhead — which is another reason not to make something `async` that has nothing to await.
 
-**Hops to and from the main actor cost a real context switch.** Batch: push the loop _into_ `loadArticles`/`updateUI` so they take arrays, rather than hopping twice per iteration.
+**Hops to and from the main actor cost a real context switch.** Batch: push the loop *into* `loadArticles`/`updateUI` so they take arrays, rather than hopping twice per iteration.
 
 ---
 
 ## 10. ARC and object lifetime
 
-- **An object's guaranteed lifetime ends at its last use, not at the closing brace.** Observed lifetimes are an emergent property of the optimizer and _will_ change. Code that depends on when a `deinit` runs is a latent bug.
-- **`weak`/`unowned` are for breaking reference cycles — nothing else.** Reading a `weak` reference after the strong owner's last use may legitimately give `nil`. Optional binding there is _worse_ than force-unwrap: it turns a loud crash into a silent wrong answer.
+- **An object's guaranteed lifetime ends at its last use, not at the closing brace.** Observed lifetimes are an emergent property of the optimizer and *will* change. Code that depends on when a `deinit` runs is a latent bug.
+- **`weak`/`unowned` are for breaking reference cycles — nothing else.** Reading a `weak` reference after the strong owner's last use may legitimately give `nil`. Optional binding there is *worse* than force-unwrap: it turns a loud crash into a silent wrong answer.
 - **Better than `weak`: don't build the cycle.** Factor the shared data into a third type both sides reference, turning the cycle into a tree.
 - **Next best: redesign the API** so the object is only reachable through a strong reference. `withExtendedLifetime` works but shifts correctness onto you and spreads through a codebase — treat it as a patch, not a design.
 - **Keep `deinit` side effects local.** Publishing metrics or firing a global effect from `deinit` sequences against optimizer decisions. Use `defer` at the call site instead, and leave `deinit` for verification.
@@ -315,7 +315,7 @@ Reach for a macro when you're writing code the compiler could derive — and onl
 
 ## 14. Unsafe code and interop
 
-- **"Unsafe" means the API cannot fully validate its input, so violating its preconditions is undefined behavior** — not that it crashes. Safe APIs _do_ trap deliberately; a clean fatal error is the safe outcome.
+- **"Unsafe" means the API cannot fully validate its input, so violating its preconditions is undefined behavior** — not that it crashes. Safe APIs *do* trap deliberately; a clean fatal error is the safe outcome.
 - **Prefer `Span` over `Unsafe*Pointer`.** Since Swift 6.2 there is a safe, non-escaping, equally fast way to get at contiguous storage. Reserve raw pointers for C interop.
 - If you must use pointers: keep the unsafe region as small as possible, use **buffer** pointers (address + count) rather than bare pointers so bounds are tracked, never let a pointer escape the closure that vends it, and run the **Address Sanitizer**.
 - Enable **strict memory safety** in security-critical modules — it forces every unsafe use to be acknowledged in source, which is what makes an audit possible. Swift 6.4's `@diagnose` attribute (unreleased) lets you turn it on for individual functions.
@@ -364,7 +364,7 @@ The order matters, and mixing steps is how migrations stall.
 5. **Move to the next target and repeat.**
 6. **Refactor afterwards, separately.** Never combine a significant refactor with enabling data-race safety — you'll have to back out both.
 
-You can turn strict checking back off and ship; every fix you made is a genuine improvement that survives. Enable **Approachable Concurrency** and, for app modules, main-actor-by-default _before_ you start — both dramatically reduce the number of errors you'll see, and Xcode ships migration tooling that applies many of the changes for you (swift.org/migration).
+You can turn strict checking back off and ship; every fix you made is a genuine improvement that survives. Enable **Approachable Concurrency** and, for app modules, main-actor-by-default *before* you start — both dramatically reduce the number of errors you'll see, and Xcode ships migration tooling that applies many of the changes for you (swift.org/migration).
 
 ---
 
@@ -397,4 +397,3 @@ You can turn strict checking back off and ship; every fix you made is a genuine 
 | A temporarily broken test          | `withKnownIssue`                | `.disabled`, or commenting it out         |
 | Diagnostics in shipping code       | `Logger` + a correlation ID     | `print`                                   |
 | Deciding to optimize               | Instruments on a profiled test  | intuition                                 |
-

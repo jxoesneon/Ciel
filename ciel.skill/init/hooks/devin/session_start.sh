@@ -20,11 +20,11 @@ _fb_reason="binary-absent"
 # scores this hook's injection candidates asynchronously; the verdict lands
 # in ~/.ciel/system1/events.jsonl as training signal and never gates start.
 if command -v python3 >/dev/null 2>&1 && [ -f "$HOOK_DIR/../lib/system1.py" ]; then
-  ( CIEL_BIN="$CIEL_BIN" \
-      CIEL_TASK="session-start context assembly for the devin runtime" \
-      CIEL_CONTEXT_ITEMS='{"identity_canary":"Ciel identity/persona canary injected into additionalContext","attribution_note":"no-AI-attribution repair/verify notice appended when the host runtime re-enables trailers","perms_note":"state-store permission self-heal notice","grant_note":"active privileged-override warning","watchdog_note":"stalled-session resume hints and transcript secret-sweep findings"}' \
-      python3 "$HOOK_DIR/../lib/system1.py" --session-shadow "devin/session_start" \
-      >/dev/null 2>&1 & )
+  (CIEL_BIN="$CIEL_BIN" \
+    CIEL_TASK="session-start context assembly for the devin runtime" \
+    CIEL_CONTEXT_ITEMS='{"identity_canary":"Ciel identity/persona canary injected into additionalContext","attribution_note":"no-AI-attribution repair/verify notice appended when the host runtime re-enables trailers","perms_note":"state-store permission self-heal notice","grant_note":"active privileged-override warning","watchdog_note":"stalled-session resume hints and transcript secret-sweep findings"}' \
+    python3 "$HOOK_DIR/../lib/system1.py" --session-shadow "devin/session_start" \
+    >/dev/null 2>&1 &)
 fi
 if [ -n "$CIEL_BIN" ] && [ -x "$CIEL_BIN" ]; then
   _fb_reason="binary-failed"
@@ -34,7 +34,7 @@ if [ -n "$CIEL_BIN" ] && [ -x "$CIEL_BIN" ]; then
 fi
 # Parity-soak telemetry (DOCKET_20261004_RUST_MIGRATION_AUDIT): every descent
 # into the Python body is counted; 14 days silent + drill = twin deletion.
-(printf '%s\n' "{\"ts\":\"$(date -u +%FT%TZ)\",\"hook\":\"devin/session_start\",\"reason\":\"$_fb_reason\"}" >> "${CIEL_HOME:-$HOME/.ciel}/fallback_events.jsonl") 2>/dev/null || true
+(printf '%s\n' "{\"ts\":\"$(date -u +%FT%TZ)\",\"hook\":\"devin/session_start\",\"reason\":\"$_fb_reason\"}" >>"${CIEL_HOME:-$HOME/.ciel}/fallback_events.jsonl") 2>/dev/null || true
 
 # --- No-AI-attribution enforcement (verified each session start) -------------
 # The Devin harness injects "Generated with Devin" / "Co-Authored-By" trailers

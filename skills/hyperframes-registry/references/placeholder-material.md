@@ -69,7 +69,7 @@ coloured glow; a glow is an accent wearing a shadow's clothes.
 
 ## Reading each kind in black and white
 
-A gray rectangle has to still say _screen_ and not _image_. Shape, aspect, glyph and texture
+A gray rectangle has to still say *screen* and not *image*. Shape, aspect, glyph and texture
 carry the meaning that hue was carrying badly.
 
 | Kind            | Signature                                                                                                                                |
@@ -87,7 +87,7 @@ Circle means person, rounded square means app or brand. Keeping those two shapes
 what lets both live at the same value step without ambiguity.
 
 Why no gradient inside a chart bar: a vertical light-to-dark fill makes every bar lighter at
-its top, so the tallest bar reads _palest_ exactly where the eye lands to compare heights. The
+its top, so the tallest bar reads *palest* exactly where the eye lands to compare heights. The
 decoration contradicts the data. Flat fills are both plainer and more honest.
 
 ## Accent
@@ -96,7 +96,7 @@ The accent enum stays. `green` rides `--brand`, `blue` rides `--accent`, `violet
 `--accent-2`, exactly as before, and every declared `accent` or `tone` variable keeps working
 unchanged. What changes is where accent is allowed to land:
 
-> Accent marks at most **one** element per composition, and only where the accent _is_ the
+> Accent marks at most **one** element per composition, and only where the accent *is* the
 > meaning: the selected tier, the current step, the figure a count-up lands on, the ink of a
 > stroke being drawn. Placeholder content is never accent-coloured.
 

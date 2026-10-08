@@ -126,5 +126,5 @@ npx hyperframes validate
 ## Credits And References
 
 - HyperFrames adapter source: `packages/core/src/runtime/adapters/animejs.ts`.
-- Anime.js v4 docs: https://animejs.com/documentation/
-- v3 → v4 migration (not on animejs.com): https://github.com/juliangarnier/anime/wiki/Migrating-from-v3-to-v4
+- Anime.js v4 docs: <https://animejs.com/documentation/>
+- v3 → v4 migration (not on animejs.com): <https://github.com/juliangarnier/anime/wiki/Migrating-from-v3-to-v4>

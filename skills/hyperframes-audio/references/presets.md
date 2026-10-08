@@ -51,7 +51,7 @@ Diagnose in this order, because each step changes what the next one hears:
 
 1. **Subtract before you add.** Cut rumble and mud first. A voice that sounds
    dull often has too much low-mid, not too little top — lifting the top of a
-   muddy voice makes it muddy _and_ harsh.
+   muddy voice makes it muddy *and* harsh.
 2. **Level after you filter.** A compressor reacts to whatever is loudest, and
    a rumble it can no longer see is a rumble it stops chasing.
 3. **Relationships after level.** Carve a bed against a voice once the voice
@@ -105,7 +105,7 @@ a log sweep, no two sit closer than the signal itself. Do not stack two.
 than nowhere), `hall` (far back and big), `slap-echo` (one quick repeat),
 `dub-throw` (repeats trailing well behind).
 
-Use these on whatever should sit _behind_ something else, and keep the wet amount
+Use these on whatever should sit *behind* something else, and keep the wet amount
 lower than sounds right in isolation — a tail occupies the room a voice needs.
 
 ### The whole preset as one control
@@ -142,7 +142,7 @@ shows the author three identical rows, which is the exact problem jobs exist to
 dissolve.
 
 **Every job also ships inside a preset, at identical settings** — that is where
-the five came from. `boom-tame` _is_ Tame Boominess; `harsh-tame` _is_ Soften
+the five came from. `boom-tame` *is* Tame Boominess; `harsh-tame` *is* Soften
 Harshness; `voice-clean` contains Reduce Mud and Add Clarity; `voice-broadcast`
 contains Reduce Boxiness. So check what a preset already contains before adding
 a job on top of it, or the cut lands twice — `voice-clean` plus a Reduce Mud job
@@ -168,7 +168,7 @@ control instead, 0..1, which sets several parameters together.
 **Evenness, Warmth and Space are level-matched** — the make-up gain, the output
 trim and the dry leg move with the drive, so turning the knob up does not also
 turn the track up or down. Those figures were solved by measurement, not chosen:
-the compressor originally left a track 2.5 dB _quieter_ at full evenness, and
+the compressor originally left a track 2.5 dB *quieter* at full evenness, and
 saturation's trim ran the wrong way entirely.
 
 Tightness and Crush are not level-matched, because neither has a trim to move —
@@ -205,11 +205,11 @@ true and handed nothing. Say what it is, say what it costs, apply it.
 
 - **De-essing.** `harsh-tame` is a broad always-on cut centred a band too low,
   not a de-esser. A real one needs a detector faster than the analysis hop
-  available here. _Fallback:_ a narrow `peaking` cut in the Edge band — sweep
+  available here. *Fallback:* a narrow `peaking` cut in the Edge band — sweep
   5–9 kHz to find where this voice actually spits, Q 3–4, −3 to −5 dB. It is
   always on, so it costs a little air on every word; that trade is usually worth
   it and is the author's to reject.
-- **Tone matching** one track to another. _Fallback:_ the Tone EQ by hand, which
+- **Tone matching** one track to another. *Fallback:* the Tone EQ by hand, which
   is predictable in a way a match curve derived from two takes would not be.
 - **Noise removal.** `room-gate` closes the gaps; the noise under speech is
   untouched. There is no fallback for hiss beneath the words — a source with

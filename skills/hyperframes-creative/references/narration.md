@@ -62,7 +62,7 @@ If the opening is generic ("Welcome to Stripe" / "Introducing our product"), sta
 
 From a 62-second product launch video (team reference):
 
-```
+```text
 Your AI agent already knows how to make videos.
 It just needs the right format.
 

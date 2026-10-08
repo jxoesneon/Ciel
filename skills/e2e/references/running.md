@@ -57,7 +57,7 @@ CI=1 npx e2e run            # the CI defaults, locally
 `--tag`, `--tag-mode`, `--exclude-tag`, `--grep`, `--grep-invert`,
 `--last-failed`, `--shard`, `--pass-with-no-tests`), prints one line per
 test-target pair, `file › title [target] #tag`, skipped pairs ending in
-` (skipped: <reason>)`, and starts no app, engine, or worker.
+`(skipped: <reason>)`, and starts no app, engine, or worker.
 `--reporter json` prints `{ "pairs": [...] }`.
 
 ```bash

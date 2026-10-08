@@ -71,7 +71,7 @@ residual wrong-direction flips at usable confidence.
 ## Data plan
 
 | Source | Use | Count |
-|---|---|---|
+| --- | --- | --- |
 | `jev_alignment_corpus_{prod,probe}.json` | **holdout oracle** — never trained on | 16 cases |
 | `events.jsonl` flags + uncertain | wrong-direction corrections — **labels must come from policy.yaml rules or Jev teacher labels, never the model's own direction** (flag direction = self-distillation of possibly-wrong outputs; Safety amendment) | ~29 rows |
 | `events.jsonl` pass band (sampled) | replay anchors against catastrophic forgetting on the common path | ~200 rows |

@@ -104,7 +104,7 @@ RISK_QUESTIONS = {
     }
 }
 
-# dangerous (policy-clear)
+# dangerous cases, policy-clear
 for cmd, path, why in [
     ("rm -rf /", "", "root wipe"),
     ("rm -rf ~", "", "home wipe"),
@@ -131,7 +131,7 @@ for cmd in [
         reversibility="destructive"),
         {"risk": "dangerous"}, "holdout")
 
-# safe (policy-clear)
+# safe cases, policy-clear
 for tool, cmd, path in [
     ("exec", "ls -la", ""), ("exec", "cargo test", ""),
     ("exec", "git status", ""), ("read", "", "/home/user/src/main.rs"),

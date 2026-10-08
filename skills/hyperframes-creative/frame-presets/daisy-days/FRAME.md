@@ -28,11 +28,9 @@ borders: { primary: "3px solid text-dark", thin: "2px solid text-dark" }
 shadows: { default: "6px 6px 0 text-dark", small: "4px 4px 0 text-dark", text-headline: "3px 3px 0 text-dark", text-headline-soft: "3px 3px 0 rgba(0,0,0,0.2)" }
 
 typography:
-  # — reading ramp (Quicksand) —
   body:    { fontFamily: "Quicksand", cqw: 0.95, weight: 500, lineHeight: 1.6 }
   body-strong:{ fontFamily: "Quicksand", cqw: 0.95, weight: 600, lineHeight: 1.5 }
   meta:    { fontFamily: "Quicksand", cqw: 0.78, weight: 600, lineHeight: 1.45 }
-  # — display ramp (Fredoka One / Fredoka 600 — single weight, never italic) —
   badge:   { fontFamily: "Fredoka One", cqw: 0.9, tracking: "0.02em" }
   label-display:{ fontFamily: "Fredoka One", cqw: 1.3, lineHeight: 1.3, tracking: "0.02em" }
   subtitle:{ fontFamily: "Fredoka One", cqw: 1.8, lineHeight: 1.2, tracking: "0.02em" }
@@ -96,6 +94,10 @@ components:
     appliesTo: "Fredoka headlines on saturated surfaces (cream headlines sit flat)"
     description: "Makes the headline read 'outlined' like the shapes."
 ---
+
+<!-- markdownlint-disable MD025 -->
+<!-- the typography block above carries a `title:` key, which MD025's front_matter_title
+     matching counts as the document title; the H1 below is the real one -->
 
 # Daisy Days — Frame (video / frame layer)
 
@@ -268,7 +270,7 @@ counter is decorative chrome.
 ## Known Gaps
 
 - **Motion intentionally out of scope.** frame.md specifies composition only; the source uses scroll-snap nav, no transition spec.
-- **Fonts:** the source names _Fredoka One_; Google now serves the **Fredoka** variable family — request `Fredoka:wght@500;600;700` and set display weight 600 (visually equal to Fredoka One), with `Fredoka One` kept first in the stack for environments that still serve it. Quicksand loads normally. CJK: ZCOOL XiaoWei (display) / Yozai (body).
+- **Fonts:** the source names *Fredoka One*; Google now serves the **Fredoka** variable family — request `Fredoka:wght@500;600;700` and set display weight 600 (visually equal to Fredoka One), with `Fredoka One` kept first in the stack for environments that still serve it. Quicksand loads normally. CJK: ZCOOL XiaoWei (display) / Yozai (body).
 - **9:16 / 1:1 are guidance**; keep ornament count high so corners stay filled per ratio.
 - Ornaments (daisy/star/sun/cloud/rainbow), markers, and framed headers are CSS/SVG-only; recoloring SVG ornaments requires editing their stroke values.
 - **Contrast:** keep `{colors.text-muted}` off pastel surfaces (cream/white cards only); small text on saturated grounds should be charcoal or white.

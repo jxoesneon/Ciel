@@ -34,9 +34,9 @@ When adding a clip to an existing composition, set its `data-start`/`data-durati
 
 ## Clip Time Inside the Composition
 
-`data-start` is in seconds, measured from the start of the _composition_. For sub-compositions, the sub-composition's internal timeline (its own `data-duration` and child clips) runs from `data-start` to `data-start + data-duration` of the host.
+`data-start` is in seconds, measured from the start of the *composition*. For sub-compositions, the sub-composition's internal timeline (its own `data-duration` and child clips) runs from `data-start` to `data-start + data-duration` of the host.
 
-`data-media-start` (on `<video>`/`<audio>`) is an offset _into the source media_. Use it to skip the first few seconds of a media file without trimming the file itself.
+`data-media-start` (on `<video>`/`<audio>`) is an offset *into the source media*. Use it to skip the first few seconds of a media file without trimming the file itself.
 
 ## Cut one source into multiple ranges
 

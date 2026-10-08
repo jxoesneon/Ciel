@@ -66,7 +66,7 @@ child.to(".a", { x: 100 }).to(".b", { y: 50 });
 master.add(child, 0);
 ```
 
-In HyperFrames, **do not** nest sub-composition timelines into the host. Sub-compositions loaded via `data-composition-src` are seeked independently by HyperFrames from their own `data-start`. Nesting is only for grouping pieces of the _same_ composition's timeline.
+In HyperFrames, **do not** nest sub-composition timelines into the host. Sub-compositions loaded via `data-composition-src` are seeked independently by HyperFrames from their own `data-start`. Nesting is only for grouping pieces of the *same* composition's timeline.
 
 ## Inside Sub-Compositions: prefer `fromTo` over `from`
 

@@ -10,7 +10,7 @@
 ## Identity
 
 - **Name**: `ciel`
-- **Version**: `1.2.0`
+- **Version**: `1.3.0`
 - **Domain**: orchestration / meta-skill
 - **Chairman**: self (`council/CHAIRMAN.md`)
 

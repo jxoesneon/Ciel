@@ -19,7 +19,7 @@ except ImportError:
 def _home() -> Path:
     return Path(os.environ.get("CIEL_HOME") or Path.home() / ".ciel")
 
-def process_events(events_file: Path) -> list:
+def process_events(events_file: Path) -> list:  # noqa: PLR0912
     pairs = []
     if not events_file.is_file():
         return pairs
@@ -115,7 +115,7 @@ def process_events(events_file: Path) -> list:
                     })
     return pairs
 
-def process_signals_and_dockets(dockets_dir: Path, signals_dir: Path) -> list:
+def process_signals_and_dockets(dockets_dir: Path, signals_dir: Path) -> list:  # noqa: PLR0912
     pairs = []
 
     # Audit Signals

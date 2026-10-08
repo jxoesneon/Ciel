@@ -2,7 +2,7 @@
 
 **intent**: Convey overwhelm by accumulation. Recognizable subjects assemble, density markers scatter in to amplify "look how much," then the central subject morphs into the viewer's own avatar and elements close in from ALL sides — the frame feels surrounded, not zoomed-into. The emotional arc is recognition → claustrophobia.
 
-**roles served**
+## roles served
 
 - Problem (from `problem-mockup-overwhelm`): when the problem beat must first show "too many tools / too much surface area" and then put **the viewer inside it** — a literal swap of subject (product → person) followed by a closing-in that feels invasive. Reach for it when the pain is "you're buried," not "this metric is bad" (that's `dataviz-countup`).
 - Problem (from `desktop-clutter-accumulation`): when the overwhelm is a **workspace**, not a tool
@@ -34,7 +34,7 @@ shoved to frame edges opening center negative space; continuous live typing / lo
 windows as ambient density; toast-stack slide-in; word-by-word serif build with in-place line swap;
 cursor glide-to-rest; very slow forward creep + hold.
 
-**rule mapping**
+### rule mapping
 
 - staggered mockup + icon entries (smooth settle onto their resting scale) → `spring-pop-entrance` (smooth-settle register) backed by `gsap-effects`
 - platform icons as density markers (positions pre-baked, scale/opacity only — NOT internal-parts animation) → `svg-icon-enrichment` (its DOM contract only)

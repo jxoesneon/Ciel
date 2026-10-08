@@ -85,24 +85,24 @@ tl.to(state, {
 
 ## Source Links
 
-- GSAP keyframes: https://gsap.com/resources/keyframes/
-- GSAP timeline: https://gsap.com/docs/v3/GSAP/Timeline/
-- GSAP MotionPathPlugin: https://gsap.com/docs/v3/Plugins/MotionPathPlugin/
-- GSAP Flip: https://gsap.com/docs/v3/Plugins/Flip/
-- GSAP DrawSVGPlugin: https://gsap.com/docs/v3/Plugins/DrawSVGPlugin/
-- GSAP MorphSVGPlugin: https://gsap.com/docs/v3/Plugins/MorphSVGPlugin/
-- GSAP SplitText: https://gsap.com/docs/v3/Plugins/SplitText/
-- GSAP CSSPlugin: https://gsap.com/docs/v3/GSAP/CorePlugins/CSS/
-- Anime.js documentation: https://animejs.com/documentation/
-- Anime.js stagger grid: https://animejs.com/documentation/utilities/stagger/stagger-parameters/stagger-grid/
-- Anime.js timeline: https://animejs.com/documentation/timeline/
-- Anime.js SVG helpers: https://animejs.com/documentation/svg/createmotionpath/
-- MDN CSS animations: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animations/Using_CSS_animations
-- MDN `@keyframes`: https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes
-- MDN `clip-path`: https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path
-- MDN CSS masking: https://developer.mozilla.org/en-US/docs/Web/CSS/mask
-- MDN perspective: https://developer.mozilla.org/en-US/docs/Web/CSS/perspective
-- MDN transform-style: https://developer.mozilla.org/en-US/docs/Web/CSS/transform-style
-- Three.js AnimationMixer: https://threejs.org/docs/#api/en/animation/AnimationMixer
-- Three.js ShaderMaterial: https://threejs.org/docs/#api/en/materials/ShaderMaterial
-- Three.js InstancedMesh: https://threejs.org/docs/#api/en/objects/InstancedMesh
+- GSAP keyframes: <https://gsap.com/resources/keyframes/>
+- GSAP timeline: <https://gsap.com/docs/v3/GSAP/Timeline/>
+- GSAP MotionPathPlugin: <https://gsap.com/docs/v3/Plugins/MotionPathPlugin/>
+- GSAP Flip: <https://gsap.com/docs/v3/Plugins/Flip/>
+- GSAP DrawSVGPlugin: <https://gsap.com/docs/v3/Plugins/DrawSVGPlugin/>
+- GSAP MorphSVGPlugin: <https://gsap.com/docs/v3/Plugins/MorphSVGPlugin/>
+- GSAP SplitText: <https://gsap.com/docs/v3/Plugins/SplitText/>
+- GSAP CSSPlugin: <https://gsap.com/docs/v3/GSAP/CorePlugins/CSS/>
+- Anime.js documentation: <https://animejs.com/documentation/>
+- Anime.js stagger grid: <https://animejs.com/documentation/utilities/stagger/stagger-parameters/stagger-grid/>
+- Anime.js timeline: <https://animejs.com/documentation/timeline/>
+- Anime.js SVG helpers: <https://animejs.com/documentation/svg/createmotionpath/>
+- MDN CSS animations: <https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animations/Using_CSS_animations>
+- MDN `@keyframes`: <https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes>
+- MDN `clip-path`: <https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path>
+- MDN CSS masking: <https://developer.mozilla.org/en-US/docs/Web/CSS/mask>
+- MDN perspective: <https://developer.mozilla.org/en-US/docs/Web/CSS/perspective>
+- MDN transform-style: <https://developer.mozilla.org/en-US/docs/Web/CSS/transform-style>
+- Three.js AnimationMixer: <https://threejs.org/docs/#api/en/animation/AnimationMixer>
+- Three.js ShaderMaterial: <https://threejs.org/docs/#api/en/materials/ShaderMaterial>
+- Three.js InstancedMesh: <https://threejs.org/docs/#api/en/objects/InstancedMesh>

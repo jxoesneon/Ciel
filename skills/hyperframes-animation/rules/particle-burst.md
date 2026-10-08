@@ -27,7 +27,7 @@ The whole event is **one driver tween and one formula**:
 
 2. **Ballistic formula** — a proxy tween advances `T: 0 → 1` over `FLIGHT_DUR` with `ease: "none"`; `onUpdate` positions every particle as a **pure function of T**:
 
-   ```
+   ```text
    x(T) = vx · T·FLIGHT_DUR
    y(T) = vy · T·FLIGHT_DUR + ½ · G · (T·FLIGHT_DUR)²
    rot(T) = spin · T·FLIGHT_DUR
@@ -131,7 +131,7 @@ tl.fromTo(
 | G                     | 900–1600 px/s² confetti; 0–200 dots/dissolve | natural fall vs drift                                                           |
 | SPEED_MIN / SPEED_MAX | 250–700 px/s                                 | per-particle via `prand`, never uniform                                         |
 | CONE                  | 0.35–0.8 rad (~20–45°)                       | wider = splash, narrower = fountain                                             |
-| FLIGHT_DUR            | 0.7–1.4s                                     | arc should peak ~35–45% of flight: check `                                      | vy  | / G ≈ 0.4 × FLIGHT_DUR` |
+| FLIGHT_DUR            | 0.7–1.4s                                     | arc should peak ~35–45% of flight: check `| vy  | / G ≈ 0.4 × FLIGHT_DUR` |
 | SIZE_MIN / SIZE_MAX   | 5–14px chips; 4–8px dots                     | on a 1080p frame                                                                |
 | SPIN_MAX              | 180–720 deg/s confetti; 0 dots               | tumble                                                                          |
 | FADE_FRAC             | 0.2–0.35                                     | near 0 when using instant-shrink                                                |

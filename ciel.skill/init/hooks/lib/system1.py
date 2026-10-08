@@ -389,7 +389,7 @@ def _env_file_pairs() -> dict:
     except OSError:
         # Unreadable after an mtime change — serve empty, never stale.
         cache["path"], cache["mtime"], cache["pairs"] = env_file, mtime, {}
-    if cache["path"] != env_file:
+    if cache["path"] != env_file:  # pragma: no cover — defensive: both branches above already assigned env_file
         # Never serve another file's pairs — reset to empty for this path.
         cache["path"], cache["mtime"], cache["pairs"] = env_file, mtime, {}
     return cache["pairs"]
@@ -566,7 +566,7 @@ def _hosted_model() -> str:
             or _DEFAULT_HOSTED_MODEL)
 
 
-def _do_ask(endpoint: str, key: str, model: str, state: dict,
+def _do_ask(endpoint: str, key: str, model: str, state: dict,  # noqa: PLR0917
             questions: dict, timeout: float,
             redact: bool) -> tuple[dict | None, int | None]:
     """One POST to a fully-resolved endpoint. Returns ({answers, model},
@@ -622,9 +622,8 @@ def _endpoint_egress_ok(base: str) -> bool:
     host = _host_of(base)
     if host in {"127.0.0.1", "localhost", "::1", "[::1]"}:
         return True
-    if host in _HOSTED_MODEL_HOSTS:
-        if base.split("://", 1)[0].lower() != "https":
-            return False
+    if host in _HOSTED_MODEL_HOSTS and base.split("://", 1)[0].lower() != "https":
+        return False
     return secret_scan is not None
 
 
@@ -900,7 +899,7 @@ def context_select(task: str, candidates: dict, k: int = 10,
     latency_ms = int((time.monotonic() - started) * 1000)
     per_item = {
         name: ((res or {}).get("answers") or {}).get("relevant")
-        for name, res in zip(pool, results or [])
+        for name, res in zip(pool, results or [], strict=False)
     }
     _append_event(_event_record(
         {"surface": "context_select",
@@ -1118,7 +1117,7 @@ def council_outcome(subject: str, consensus: str,
     })
 
 
-def evaluate_risk(tool: str, command: str, path: str,
+def evaluate_risk(tool: str, command: str, path: str,  # noqa: PLR0917
                   runtime: str = "antigravity",
                   ts: str | None = None,
                   regex_decision: str = "allow",
@@ -1460,10 +1459,9 @@ def _dispatch_one(verb: str, args: dict, hook: str) -> None:
         except (OSError, subprocess.TimeoutExpired):
             pass
     _log_fallback(hook, reason, verb)
-    try:
+    # shadow work must never break the caller
+    with contextlib.suppress(Exception):
         _lib_dispatch(verb, args)
-    except Exception:
-        pass  # shadow work must never break the caller
 
 
 def shadow_dispatch(verb: str, args: dict, hook: str) -> None:

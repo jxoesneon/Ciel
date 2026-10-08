@@ -27,4 +27,3 @@ blocking_gate: inline_preflight
 - Destructive filesystem operations.
 - Broad rewrites that affect project behavior.
 - Sandbox escape or elevated shell execution.
-

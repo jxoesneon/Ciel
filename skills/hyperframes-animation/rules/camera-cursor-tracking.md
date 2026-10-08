@@ -18,7 +18,7 @@ Separate **World Space** (the full target element with all content) from **Scree
 
 The offset math is **mathematically continuous** at the phase boundary — at the instant tracking starts, the world position equals what the static phase had, so the transition is seamless. The piecewise form:
 
-```
+```text
 finalWorldX = Math.min(INITIAL_OFFSET, trackingOffset)
 ```
 

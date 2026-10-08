@@ -55,7 +55,7 @@ Decoration without a relationship to hierarchy, state, content, or the visual wo
 Verify computed foreground/background pairs:
 
 | Content | WCAG AA minimum |
-|---|---|
+| --- | --- |
 | body text | 4.5:1 |
 | large text | 3:1 |
 | controls, icons, focus indicators | 3:1 |

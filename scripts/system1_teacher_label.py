@@ -18,7 +18,6 @@ Every call is one billable hosted ask — --limit caps total spend.
 
 import argparse
 import json
-import os
 import sys
 from pathlib import Path
 
@@ -60,7 +59,7 @@ def main():
                     help="validate rows and egress gates; zero hosted calls")
     args = ap.parse_args()
 
-    rows = [json.loads(l) for l in open(args.src) if l.strip()]
+    rows = [json.loads(line) for line in open(args.src) if line.strip()]
     calls = 0
     n_ok = n_declined = 0
     with open(args.dst, "w") as out:

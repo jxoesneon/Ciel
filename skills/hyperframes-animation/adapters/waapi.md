@@ -97,5 +97,5 @@ npx hyperframes check
 
 - HyperFrames adapter source: `packages/core/src/runtime/adapters/waapi.ts`.
 - Duration auto-inference: `packages/core/src/runtime/init.ts` (`resolveAdapterDurationFloorSeconds`), `getInferredDurationSeconds` in the adapter above.
-- MDN Web Animations API guide: https://developer.mozilla.org/docs/Web/API/Web_Animations_API/Using_the_Web_Animations_API
-- MDN `Animation.currentTime`: https://developer.mozilla.org/en-US/docs/Web/API/Animation/currentTime
+- MDN Web Animations API guide: <https://developer.mozilla.org/docs/Web/API/Web_Animations_API/Using_the_Web_Animations_API>
+- MDN `Animation.currentTime`: <https://developer.mozilla.org/en-US/docs/Web/API/Animation/currentTime>

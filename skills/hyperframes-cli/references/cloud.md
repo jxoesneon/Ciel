@@ -111,7 +111,7 @@ npx hyperframes cloud render --variables-file ./vars.json
 npx hyperframes cloud render --variables '{"title":"Q4 Recap"}' --strict-variables
 ```
 
-For a **local project** the CLI validates `--variables` against the declared schema _before_ uploading. For `--asset-id`/`--url` the schema lives server-side, so mismatches surface as a `hyperframes_project_invalid` API error.
+For a **local project** the CLI validates `--variables` against the declared schema *before* uploading. For `--asset-id`/`--url` the schema lives server-side, so mismatches surface as a `hyperframes_project_invalid` API error.
 
 **Upload once, re-render many** is the idiomatic template loop: render a local project to get its `asset_id`, then re-submit against that asset with new values (no re-zip, no re-upload).
 

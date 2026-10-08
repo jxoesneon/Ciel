@@ -141,5 +141,5 @@ npx hyperframes check
 
 - HyperFrames adapter source: `packages/core/src/runtime/adapters/three.ts`.
 - Why `data-duration` is required here specifically (no auto-inference for this adapter): `packages/core/src/runtime/init.ts` (`resolveAdapterDurationFloorSeconds`) and the CSS/WAAPI/Lottie adapters' `getInferredDurationSeconds`, which the `three` adapter deliberately does not implement.
-- Three.js `WebGLRenderer` docs: https://threejs.org/docs/pages/WebGLRenderer.html
-- Three.js `AnimationMixer.setTime()` docs: https://threejs.org/docs/pages/AnimationMixer.html
+- Three.js `WebGLRenderer` docs: <https://threejs.org/docs/pages/WebGLRenderer.html>
+- Three.js `AnimationMixer.setTime()` docs: <https://threejs.org/docs/pages/AnimationMixer.html>

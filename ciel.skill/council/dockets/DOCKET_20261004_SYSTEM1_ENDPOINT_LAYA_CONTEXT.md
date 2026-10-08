@@ -21,7 +21,7 @@ Two defects/gaps found during the Jev/Laya context-management research pass:
 ## Evidence (verified)
 
 | Check | Result |
-|---|---|
+| --- | --- |
 | `endpoint()` normalization, Python + Rust | identical semantics in both engines |
 | `https://jev-agent.com{,/,/:443,/api}` | → `…/api/v1/systemone` (no double `/api`, port preserved) |
 | `http://127.0.0.1:8765` → `/v1/systemone` | local/OSS bases unchanged |
@@ -96,7 +96,7 @@ Runtime-safety constraints (binding on any implementation):
 ≥4/5 at pass_score 6)
 
 | Lens | Stage 1 | Stage 2 | Delta |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Coherence | 8 | 8 | 0 |
 | Capability | 8 | 8 | 0 |
 | Safety | 8 | 8 | 0 (veto: false) |

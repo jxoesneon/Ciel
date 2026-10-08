@@ -2,7 +2,7 @@
 
 Product launches, social media, announcements, high-energy content.
 
-```
+```text
 #FFBE0B #FB5607 #FF006E #8338EC #3A86FF
 #F72585 #7209B7 #3A0CA3 #4361EE #4CC9F0
 #EF476F #FFD166 #06D6A0 #118AB2 #073B4C

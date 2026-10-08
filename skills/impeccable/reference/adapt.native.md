@@ -27,7 +27,7 @@ Adapt an existing **native** design (`ios` / `android` / `adaptive`) to a differ
 Translate idioms; never transplant them:
 
 | iOS | Android |
-|---|---|
+| --- | --- |
 | Tab bar | Navigation bar / rail / drawer |
 | Edge-swipe back, back chevron | Predictive Back gesture / button |
 | Switch, segmented control, system pickers | Material switch, chips, Material pickers |
@@ -51,6 +51,7 @@ Reconform, don't reflow. Replace web navigation with the platform's model, HTML-
 When the adaptation feels native to each context, hand off to `$impeccable polish` for the final pass.
 
 **NEVER**:
+
 - Ship a stretched phone layout on a tablet
 - Port one platform's controls or navigation onto the other
 - Hide core functionality on smaller devices (if it matters, make it work)

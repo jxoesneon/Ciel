@@ -2,7 +2,7 @@
 
 Fashion, beauty, lifestyle, wellness content.
 
-```
+```text
 #CDB4DB #FFC8DD #FFAFCC #BDE0FE #A2D2FF
 #CCD5AE #E9EDC9 #FEFAE0 #FAEDCD #D4A373
 #FFD6FF #E7C6FF #C8B6FF #B8C0FF #BBD0FF

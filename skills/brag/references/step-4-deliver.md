@@ -34,11 +34,13 @@ npx hyperframes render --output ../brag.mp4
 This outputs to `<output-dir>/brag.mp4` (one level up from the composition directory).
 
 For a faster iteration render:
+
 ```bash
 npx hyperframes render --quality draft --output ../brag.mp4
 ```
 
 For final delivery:
+
 ```bash
 npx hyperframes render --quality high --output ../brag.mp4
 ```
@@ -77,6 +79,7 @@ The poster (`brag.jpg`) matches the video's dimensions because it was pulled fro
 Write `<output-dir>/share-copy.txt`.
 
 The share copy should be:
+
 - One to three sentences max
 - Postable as-is to Twitter/X, LinkedIn, or Discord
 - Specific to the project — no generic "excited to share" language
@@ -92,52 +95,59 @@ If variants are useful, write them to a separate optional file:
 
 ### Share copy by tone
 
-**`default`:**
-```
+#### `default`
+
+```text
 Made [App Name]. It's [what it does, in the project's own absurd terms].
 [The best line from the product.]
 ```
 
-**`polished`:**
-```
+##### `polished`
+
+```text
 Introducing [App Name]: [clean one-liner from the site].
 Built with [stack if notable].
 ```
 
-**`yc-parody`:**
-```
+###### `yc-parody`
+
+```text
 We built [App Name] to solve [problem stated completely seriously].
 [Deadpan feature or stat.]
 ```
 
-**`chaotic`:**
-```
+###### `chaotic`
+
+```text
 [ALL CAPS CLAIM].
 [App Name] is [wildly overstated description].
 Link below.
 ```
 
-**`deadpan`:**
-```
+###### `deadpan`
+
+```text
 I made [App Name].
 It [what it does].
 ```
 
-**`cinematic`:**
-```
+###### `cinematic`
+
+```text
 [App Name].
 [Tagline from the site, verbatim or lightly adapted.]
 ```
 
-**`app-store`:**
-```
+###### `app-store`
+
+```text
 [App Name] is now live.
 [Feature 1], [Feature 2], and [Feature 3] — all in one place.
 ```
 
 ### Example: Taxi for Taxis
 
-```
+```text
 Every day, taxis carry us. But who carries the taxis?
 Taxi for Taxis: the ride-hailing app for ride-hailing assets.
 Available in 12 metros.
@@ -147,7 +157,7 @@ Available in 12 metros.
 
 After this step, `<output-dir>/` should contain:
 
-```
+```text
 <output-dir>/
   brag.mp4                — the rendered video
   brag.jpg                — the poster (best frame, for <video poster>)
@@ -162,6 +172,7 @@ After this step, `<output-dir>/` should contain:
 ## Telling the user
 
 After everything is done, tell the user:
+
 - Where the video is (`<output-dir>/brag.mp4`)
 - Where the share copy is
 - One sentence on what the video does creatively

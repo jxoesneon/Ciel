@@ -4,11 +4,41 @@
 
 All notable changes to Ciel are tracked here. Ciel appends an entry on every self-mutation commit. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) with SemVer.
 
-## [Unreleased]
+## [1.3.0] — 2026-10-07
 
 ### Added
 
 - **System-1 platform packaging** (`init/system1/`, `init/launchd/`, `init/systemd/`): the laya-serve tier now ships its install assets — `init/system1/serve.sh` (env-sourcing launcher), `init/system1/env.example` (all `LAYA_*` vars + `CIEL_SYSTEM1_MODEL=typed-decisions` pin), `init/launchd/com.ciel.system1.plist` (macOS agent with `RunAtLoad` + `KeepAlive` + `ThrottleInterval=10` — on by default, respawns on exit, `__HOME__` token substitution) and `init/systemd/ciel-system1.service` (Linux user unit, `Restart=always`). `risk/SYSTEM1.md` documents the platform table, the verified `launchctl bootstrap` install flow, MPS auto-device selection on Apple Silicon, and the `HF_TOKEN` rate-limit escape hatch.
+- **System-1 as an active decision tier** (`init/hooks/lib/system1.py`, `init/hooks/devin/`, router integration): laya-serve now participates in PreToolUse risk evaluation and router decisions behind a fail-open boundary — offline or saturated System-1 degrades to the advisory path rather than blocking tool calls. Council-mandated mitigations M1–M5 are in: hook-boundary failsafe scoping, deny-attribution honoring, eval timeouts, egress redaction, and authority hardening.
+- **Multi-surface calibrated tau lattice**: `context_select`, `memory_salience`, `context_compaction`, and `mandate_canary` surfaces joined `pre_tool_risk` and `council_prescreen` with per-surface calibrated thresholds, verified fail-open behavior, and an RLCD pair pipeline (`scripts/ciel_rlcd_pipeline.py` + the `rlcd.rs` port) emitting pairs for all six surfaces; `council_outcome()` stamps `meta.council_consensus` on prescreen events.
+- **Hosted-Jev primary with laya failover** (`feat(system1)`): a hosted TypeSafe Jev endpoint is the primary System-1 backend with a persisted circuit breaker and automatic failover to local laya-serve; egress is redacted per council amendments. The tau lattice was recalibrated for compressed typed-decisions confidence, and `system1_embed` honors `CIEL_SYSTEM1_EMBED_BIN` embed-backend overrides.
+- **`ciel-dev` Rust crate** (`init/ciel-dev/`): 12 repo dev-tools subcommands plus a bundled MiniLM embedder, wired into `install.sh` so the toolchain builds it when cargo is present.
+- **`ciel-domain` Rust crate** (`init/ciel-domain/`): native port of the domain-skill Python helpers (4 binaries); domain skills document native-binary invocation with Python fallback.
+- **`ciel-rs` growth**: `verify-3d` and `config-heal` subcommands; the remaining hook bodies and agent-facing shims moved behind subcommands; `install.sh` prefers the binary.
+- **`system1.rs` context-surface port**: all four context surfaces ported to Rust and wired to production call sites, with URL/disabled parity, `shortlist_options`, a batch client, a warmup client, and session-start prewarm.
+- **System-1 retraining toolchain** (`scripts/`): `system1_corpus_build.py`, `system1_teacher_label.py`, `system1_head_retrain.py` (Track-1 head-only and Track-2 LoRA injection with raw-batch collation and merged save), `system1_eval.py`, and `system1_offline_eval.py` — an in-process harness for evaluating sibling checkpoints against the banked corpus without a second server.
+- **Registry-overlay checkpoint serving** (`init/system1/ciel_laya_serve.py`): a fail-closed entrypoint that reads a digest-pinned `models.local.json` overlay, registers local sibling checkpoints into `laya.router.DEFAULT_MODELS` before `build_router()`, and serves via laya's own path — reachable only by explicit `model=`, never auto-routed. `serve.sh` prefers the shim and falls back to `laya-serve`, then mock. Upstream `laya` PR with native `LAYA_EXTRA_MODELS` support is open (laya#1047); the shim remains authoritative until it lands.
+- **Memory backend** (`feat(memory)`): adapted Obsidian-vault memory backend with ingress sanitization and hybrid (lexical + embedding) search.
+- **Runtime adapters**: Xcode Coding Assistant adapter; `opencode` generalized alongside `devin` and `antigravity`; PowerShell lifecycle-hook adapters for Windows; `skills/ciel` reads Antigravity conversations from disk without spawning the CLI.
+- **Acquired skills** (council-approved, paired-eval gated): `e2e` agentic testing (validated — 2/2 preserved-pass, 0 regressions), `brag`/`brag-slim`, the `hyperframes` family, `taste`, the design-system stack (`impeccable`, `frontend-design`, `ui-ux-pro-max`, `emil` motion family), `blender-hard-surface`, `blender-organic`, `design-system`, and `devin-conversation-recovery`. Registry index rebuilt to 198 skills with trust states.
+
+### Fixed
+
+- **`risk_policy` M1 failsafe scoping**: the failsafe now applies at the hook boundary only, honors deny attribution, and respects the eval timeout.
+- **Protocol-valid score questions**: System-1 emits protocol-valid score questions and parses float scores correctly.
+- **Windows build**: `cfg`-gated unix-only calls in `ciel-rs`; `install.ps1` and store-perms cross-platform gaps closed.
+- **CI environment tests**: `Path.stat` OSError tolerance, `~/.ciel` script fallback, stubbed `PATH` to skip real cargo installs in hermetic jobs.
+- **CI hygiene**: ruff pinned to 0.16.8 for deterministic lint; default-ruleset debt cleared (exec bits, `check=False`, targeted suppressions); spec/lint/format/skill-scan gates green again on main.
+
+### Changed
+
+- **Tau lattice**: thresholds recalibrated for compressed `typed-decisions` confidence; test expectations updated to the calibrated floors.
+- **Efficiency lens**: governance `members/EFFICIENCY.md` restored (the design variant lives under `members/design/`).
+
+### Notes
+
+- The System-1 candidate checkpoint (`ciel-context-lora`) is registered and servable via the overlay, but the production pin remains `CIEL_SYSTEM1_MODEL=typed-decisions`: the shadow-accrual acceptance bar (200 decisions per gated surface) has not yet cleared. Release ships the capability, not the pin move.
+- Upstream `laya` PR #1047 (`LAYA_EXTRA_MODELS`) is open and pending review; the local overlay shim is authoritative until native support lands.
 
 ## [1.2.0] — 2026-09-24
 

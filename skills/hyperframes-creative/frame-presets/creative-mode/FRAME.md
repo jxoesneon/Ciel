@@ -327,7 +327,7 @@ grid and ledger especially carry placeholders, not fabricated values.
 
 ## Known Gaps
 
-- **Motion intentionally out of scope.** frame.md specifies composition only; timing and transitions are a later stage. The closing green is described as a _plate_, not a transition.
+- **Motion intentionally out of scope.** frame.md specifies composition only; timing and transitions are a later stage. The closing green is described as a *plate*, not a transition.
 - **Archivo Black requires Google Fonts**; fallback is `sans-serif`. CJK pairing (Noto Serif SC 900 / NSC 400) carries over from the source's CJK section.
 - **9:16 / 1:1 are guidance**, not pixel-locked; verify the legibility floor per ratio.
 - Decorative geometry (circle, stamp, stacked blocks) is CSS-only; no external imagery is required.

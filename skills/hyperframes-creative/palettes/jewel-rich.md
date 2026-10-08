@@ -2,7 +2,7 @@
 
 Luxury, events, sophisticated, high-end content.
 
-```
+```text
 #5F0F40 #9A031E #FB8B24 #E36414 #0F4C5C
 #780000 #C1121F #FDF0D5 #003049 #669BBC
 #10002B #240046 #3C096C #5A189A #7B2CBF

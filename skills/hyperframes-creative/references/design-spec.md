@@ -1,6 +1,6 @@
 # Design Spec — `frame.md` / `design.md`
 
-The single source of truth for **what a design spec is, how to find it, and how to read it.** Other references defer here for resolution + format; the _consumption_ contract ("brand, not layout") lives in `video-composition.md`.
+The single source of truth for **what a design spec is, how to find it, and how to read it.** Other references defer here for resolution + format; the *consumption* contract ("brand, not layout") lives in `video-composition.md`.
 
 ## What `frame.md` is
 
@@ -15,7 +15,7 @@ A spec is **YAML frontmatter + a markdown body**, and the two layers are not equ
 
 Precedence — read the **first that exists**, ignore the rest:
 
-```
+```text
 frame.md  →  design.md  →  DESIGN.md
 ```
 
@@ -24,7 +24,7 @@ SPEC=$(ls frame.md design.md DESIGN.md 2>/dev/null | head -1)
 ```
 
 - `frame.md` is the preferred spec for video / hyperframes projects and wins when more than one exists.
-- `frame.md` is **always lowercase** — there is no `FRAME.md` variant. (`design.md` and `DESIGN.md` are genuinely different files on Linux; a frame-preset ships an uppercase `FRAME.md` _template_, adopted as lowercase `frame.md` — see "Starting from a preset" below.)
+- `frame.md` is **always lowercase** — there is no `FRAME.md` variant. (`design.md` and `DESIGN.md` are genuinely different files on Linux; a frame-preset ships an uppercase `FRAME.md` *template*, adopted as lowercase `frame.md` — see "Starting from a preset" below.)
 
 Load the spec **once, in Step 1**; every later step (expansion, authoring, adherence) consumes the already-loaded spec rather than re-resolving it.
 
@@ -48,7 +48,7 @@ Optionally seed `frame.md` from a ready-made **frame-preset** in `[../frame-pres
 | `[daisy-days](../frame-presets/daisy-days/FRAME.md)`               | Cheerful picture-book — 3px charcoal outlines, 6/4px hard offset shadows (no blur), nine sunny-garden pastels (cream + turquoise/soft-pink/butter/mint/lavender/peach/sky + coral accent), Fredoka One + Quicksand, generous radii (20–50px), hand-drawn SVG ornament layer (daisies/stars/suns/clouds/rainbows)         | playful / childlike / sticker-sheet kawaii; a product that wants warmth and whimsy                                               |
 | `[editorial-forest](../frame-presets/editorial-forest/FRAME.md)`   | Serif-led literary-editorial — green / pink / cream editorial triad, Source Serif 4 weight 500 (opsz) for display + JetBrains Mono 500 uppercase chrome, flat paper depth (no shadows), 2px hairline rules, 6/8px card radii, monogram circle stamp                                                                      | spacious / restrained / editorial; a product that wants quiet confidence and literary tone                                       |
 
-Each preset folder also ships a `frame-showcase.html` — a preview contact sheet of its frame treatments; open it to _see_ the look, never include it in a project.
+Each preset folder also ships a `frame-showcase.html` — a preview contact sheet of its frame treatments; open it to *see* the look, never include it in a project.
 
 ## Consuming it
 

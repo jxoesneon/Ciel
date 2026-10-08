@@ -57,7 +57,7 @@ crude downsample, which is where the lo-fi character comes from.
 | `chorus` | `delay` 1–100 ms (7) **AUTO** · `depth` 0–10 ms (2) **AUTO** · `speed` 0.01–10 Hz (1) **AUTO** · `mix` 0–1 (0.5) **AUTO**                                           |
 | `phaser` | `in_gain` 0–1 (0.4) **AUTO** · `out_gain` 0–2 (0.74) **AUTO** · `delay` 0.1–5 ms (3) · `decay` 0–0.99 (0.4) · `speed` 0.1–2 Hz (0.5) **AUTO** · `type` `0`\|`1` (0) |
 
-Reverb convolves a _generated_ impulse, and both preview and render generate the
+Reverb convolves a *generated* impulse, and both preview and render generate the
 same one — so a room is reproducible without shipping an impulse file. Higher
 `damping` rolls the top off the tail faster, which is what makes a large room
 sound like a soft one. `feedback` near the top of its range is a very long tail;

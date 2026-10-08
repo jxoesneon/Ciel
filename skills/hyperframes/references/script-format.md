@@ -1,6 +1,6 @@
 # `SCRIPT.md` — locked narration (optional)
 
-The **locked narration** for a project: the final spoken lines + voice + delivery. It is an _optional_ plan-layer file — a video with no narration (bgm-only, silent overlay) has none. The storyboard's per-frame `voiceover` is the lighter, editable _guide_; `SCRIPT.md` is the _commit_. (Storyboard format → `references/storyboard-format.md`.)
+The **locked narration** for a project: the final spoken lines + voice + delivery. It is an *optional* plan-layer file — a video with no narration (bgm-only, silent overlay) has none. The storyboard's per-frame `voiceover` is the lighter, editable *guide*; `SCRIPT.md` is the *commit*. (Storyboard format → `references/storyboard-format.md`.)
 
 This file defines the SCRIPT.md **shape** only. Synthesizing the spoken lines into audio is a capability owned by `media-use` → `../../media-use/audio/references/tts.md`.
 
@@ -14,7 +14,7 @@ A header block, then one section per spoken line.
 | ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
 | Header                          | `**Voice:**` (provider + voice), `**Voice settings:**` (e.g. stability / similarity / style), `**Voice direction:**` (overall delivery) |
 | `## Line N — <label> (Frame N)` | one spoken line, tied to its storyboard frame                                                                                           |
-| `**Time:**`                     | the frame's rough window — a _guide_, not authoritative (real timing comes from TTS word timestamps)                                    |
+| `**Time:**`                     | the frame's rough window — a *guide*, not authoritative (real timing comes from TTS word timestamps)                                    |
 | `**Delivery:**`                 | per-line delivery note                                                                                                                  |
 | indented block                  | the **spoken text** — the only part fed to TTS                                                                                          |
 

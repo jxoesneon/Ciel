@@ -8,7 +8,7 @@ model-call budget, no shared transcript. No agent step, no model calls.
 
 Put an AI SDK model under `agents.default`. You can use all AI SDK providers
 that support tool calls and the language model specification v2 or later
-(https://ai-sdk.dev/providers). Examples: `@ai-sdk/openai`,
+(<https://ai-sdk.dev/providers>). Examples: `@ai-sdk/openai`,
 `@ai-sdk/anthropic`, `@ai-sdk/google`, `@ai-sdk/amazon-bedrock`,
 `@openrouter/ai-sdk-provider`, `ollama-ai-provider-v2`. For a server with
 `/v1/chat/completions`, use `@ai-sdk/openai-compatible`. Vercel AI Gateway
@@ -322,7 +322,7 @@ make no model calls.
   `executor`; the runner still owns observations, actions, budgets, and the
   report, and `system` or `tools` beside `executor` is `INVALID_CONFIG`.
 
-Reference: https://e2e.tester.army/docs/agents
+Reference: <https://e2e.tester.army/docs/agents>
 
 ## In CI
 

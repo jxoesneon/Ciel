@@ -1,6 +1,6 @@
 # Storyboard format — `STORYBOARD.md` + parsed manifest
 
-Defines the storyboard's **base data format** only: the `STORYBOARD.md` file shape and the `StoryboardManifest` it parses into. How a workflow _generates_ a storyboard lives in that workflow; the optional narration/TTS file (`SCRIPT.md`) is a separate concern owned by the TTS step, not here.
+Defines the storyboard's **base data format** only: the `STORYBOARD.md` file shape and the `StoryboardManifest` it parses into. How a workflow *generates* a storyboard lives in that workflow; the optional narration/TTS file (`SCRIPT.md`) is a separate concern owned by the TTS step, not here.
 
 A storyboard is the **plan layer** for a video — an ordered set of **frames** (key moments) in one markdown file. Parser: `@hyperframes/core/storyboard` → `StoryboardManifest`.
 
@@ -30,15 +30,15 @@ One `## Frame N — Title` heading per frame (`Frame` / `Beat` / `Scene` accepte
 | `duration`      | e.g. `4s`                                                                                                     |
 | `transition_in` | `crossfade` / `cut` / `wipe` … (alias `transition`)                                                           |
 | `scene`         | one-line contact-sheet caption (aliases `description` / `summary` / `caption`)                                |
-| `voiceover`     | the frame's narration _guide_ (aliases `vo` / `voice_over` / `narration`)                                     |
+| `voiceover`     | the frame's narration *guide* (aliases `vo` / `voice_over` / `narration`)                                     |
 | `poster`        | seconds to seek for the tile poster (past the intro animation)                                                |
-| _any other key_ | kept verbatim under the frame's `extra` — a workflow carries its own per-frame data (effects, assets, …) here |
+| *any other key* | kept verbatim under the frame's `extra` — a workflow carries its own per-frame data (effects, assets, …) here |
 
 ## Parsed manifest
 
 The parser is **lenient**: it never throws and records anything surprising as a `warning`.
 
-```
+```text
 StoryboardManifest {
   globals: { format?, message?, arc?, audience?, extra: {…} }
   frames: Array<{

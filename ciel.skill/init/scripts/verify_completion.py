@@ -34,7 +34,7 @@ from pathlib import Path
 LIB = Path(__file__).resolve().parent.parent / "hooks" / "lib"
 sys.path.insert(0, str(LIB))
 
-import system1
+import system1  # noqa: E402
 
 TASK_CLASSES = {
     "code_change": "Fresh full-suite test output post-change (not a prior run)",

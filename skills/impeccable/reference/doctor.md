@@ -12,7 +12,7 @@ Three kinds of drift travel under "out of date". Keep them apart:
 
 ## Step 1: Run the pass
 
-```
+```text
 .agents/skills/impeccable/scripts/impeccable doctor --json
 ```
 

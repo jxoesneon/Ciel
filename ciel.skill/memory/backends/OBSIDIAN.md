@@ -7,6 +7,7 @@ Plain-text Markdown key-value store optimized for Obsidian. Stored inside an Obs
 - Vault Path: Configured via `memory.obsidian.vault_path` (default: `~/.ciel/vaults/default`).
 - Brain Subfolder: `.ciel-brain/`
 - Directory Structure:
+
   ```text
   <vault_path>/.ciel-brain/
   ├── registry/
@@ -62,5 +63,6 @@ When `obsidian-hybrid-search` service is present, search utilizes vector embeddi
 ## Performance Optimization
 
 To minimize overhead on mobile and FUSE filesystems:
+
 - In-memory frontmatter metadata cache avoids redundant disk I/O on repetitive `query`/`list` operations.
 - File system watchers update the metadata index incrementally.

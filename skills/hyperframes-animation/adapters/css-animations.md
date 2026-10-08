@@ -139,5 +139,5 @@ npx hyperframes check
 
 - HyperFrames adapter source: `packages/core/src/runtime/adapters/css.ts`.
 - Duration auto-inference: `packages/core/src/runtime/init.ts` (`resolveAdapterDurationFloorSeconds`), `getInferredDurationSeconds` in the adapter above.
-- MDN CSS animation documentation: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/animation
-- MDN `animation-fill-mode`: https://developer.mozilla.org/en-US/docs/Web/CSS/animation-fill-mode
+- MDN CSS animation documentation: <https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/animation>
+- MDN `animation-fill-mode`: <https://developer.mozilla.org/en-US/docs/Web/CSS/animation-fill-mode>

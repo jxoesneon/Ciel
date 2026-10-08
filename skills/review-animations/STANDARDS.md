@@ -18,6 +18,7 @@ Valid purposes for motion: spatial consistency, state indication, explanation, f
 ## Easing
 
 Decision order:
+
 - Entering or exiting → **`ease-out`** (starts fast, feels responsive)
 - Moving / morphing on screen → **`ease-in-out`**
 - Hover / color change → **`ease`**
@@ -52,9 +53,11 @@ Find curves at [easing.dev](https://easing.dev/) or [easings.co](https://easings
 
 - **Never `scale(0)`.** Start from `scale(0.9–0.97)` + `opacity: 0`. Nothing in the real world appears from nothing.
 - **Origin-aware popovers.** Scale from the trigger, not center:
+
   ```css
   .popover { transform-origin: var(--transform-origin); } /* Base UI */
   ```
+
   **Modals are exempt** — they appear centered in the viewport, keep `transform-origin: center`.
 - **Button press feedback.** `transform: scale(0.97)` on `:active`, `transition: transform 160ms ease-out`. Subtle (0.95–0.98). Applies to any pressable element.
 
@@ -111,17 +114,22 @@ Slow where the user is deciding, fast where the system responds.
 
 - **Only animate `transform` and `opacity`** — they skip layout/paint and run on the GPU. `padding`/`margin`/`height`/`width`/`top`/`left` trigger all three rendering steps.
 - **Don't drive child transforms via a CSS variable on the parent** — it recalcs styles for all children. Set `transform` directly on the element.
+
   ```js
   element.style.setProperty('--swipe-amount', `${d}px`); // bad: recalc on all children
   element.style.transform = `translateY(${d}px)`;        // good: only this element
   ```
+
 - **Framer Motion shorthands are NOT hardware-accelerated.** `x`/`y`/`scale` run on the main thread via rAF and drop frames under load. Use the full transform string:
+
   ```jsx
   <motion.div animate={{ x: 100 }} />                          // drops frames under load
   <motion.div animate={{ transform: "translateX(100px)" }} />  // hardware accelerated
   ```
+
 - **CSS animations beat JS under load** — they run off the main thread; rAF-based animations stutter while the browser loads/scripts/paints. Use CSS for predetermined motion, JS for dynamic/interruptible.
 - **WAAPI** gives JS control with CSS performance (hardware-accelerated, interruptible, no library):
+
   ```js
   element.animate([{ clipPath: 'inset(0 0 100% 0)' }, { clipPath: 'inset(0 0 0 0)' }],
     { duration: 1000, fill: 'forwards', easing: 'cubic-bezier(0.77, 0, 0.175, 1)' });

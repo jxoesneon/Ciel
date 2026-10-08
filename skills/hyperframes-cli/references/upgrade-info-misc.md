@@ -36,7 +36,7 @@ Reach for `timeline` instead of opening `index.html` and each `data-composition-
 
 Text output is `timeline <N>s`, then one block per track kind (`video`, `graphics`, `captions`, `audio`) with one row per clip of that kind, ordered by absolute start:
 
-```
+```text
 graphics (2: 1 top-level, 1 nested)
   |██████                                  | sec-connector 0-6.7s src=compositions/connector-morph.html
   |██████████████                          | box 15.67-17.99s (local 0-2.32s) nested in sec-connector compositions/connector-morph.html

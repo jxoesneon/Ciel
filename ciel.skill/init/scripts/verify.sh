@@ -80,11 +80,10 @@ done
 DEVIN_CFG="$HOME/.config/devin/config.json"
 if [ -f "$DEVIN_CFG" ]; then
   if command -v python3 >/dev/null 2>&1; then
-    if python3 - "$DEVIN_CFG" <<'PY'
+    if python3 - "$DEVIN_CFG" <<'PY'; then
 import json, sys
 sys.exit(0 if json.load(open(sys.argv[1])).get("attribution") is False else 1)
 PY
-    then
       say "devin attribution=false ok"
     else
       fail "devin config.json present but attribution != false"

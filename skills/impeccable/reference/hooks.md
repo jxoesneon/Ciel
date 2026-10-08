@@ -25,7 +25,7 @@ Gemini installs session and completion hooks in `.gemini/settings.json`, merged 
 The first argument is the action. Defaults to `status`.
 
 | Action | What it does |
-|---|---|
+| --- | --- |
 | `status` | Print current state, shared/local config paths, ignored rules / files / values, env override. |
 | `on` | Set `enabled: true` in `.impeccable/config.json`, record local hook consent as accepted, and install/repair provider hook manifests when the skill is installed. |
 | `off` | Set `enabled: false` in `.impeccable/config.json`. |

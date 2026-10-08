@@ -24,7 +24,7 @@ not only the offline harness.
 ## Options considered
 
 | Option | Verdict |
-|---|---|
+| --- | --- |
 | A. Edit laya in site-packages | Rejected — dies on venv rebuild; unaudited drift between installs. |
 | B. Vendor/fork laya | Rejected — perpetual divergence maintenance to gain one registry row. |
 | C. Publish checkpoint to Hub | Insufficient alone — `normalise_name` validates names, not repos; still needs a registry mechanism. Also an egress/publishing surface for a checkpoint that should stay local. |
@@ -102,7 +102,7 @@ Live verification 2026-10-07: server booted via the shim on :8766,
 `CIEL_SYSTEM1_MODEL=typed-decisions` until bar 2 clears.
 
 Upstream path update 2026-10-07 (m6): PR
-https://github.com/NandhaKishorM/laya/pull/1047 opened against laya main —
+<https://github.com/NandhaKishorM/laya/pull/1047> opened against laya main —
 native `LAYA_EXTRA_MODELS` support: `build_router()` parses the JSON
 object into `Router(models=...)`, both endpoints resolve `model` through
 the app's `Router.resolve`, and `LAYA_DEFAULT_MODEL` accepts a registered

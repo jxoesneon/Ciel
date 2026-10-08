@@ -19,7 +19,7 @@ not merely a fallback that bands everything `uncertain`.
 ## Evidence base (banked)
 
 | Artifact | Contents |
-|---|---|
+| --- | --- |
 | `~/.ciel/system1/evals/jev_alignment_corpus_prod.json` | 16 production-phrasing cases, Jev vs local decisions |
 | `~/.ciel/system1/evals/jev_alignment_corpus_probe.json` | 8 terse-criterion probes |
 | `~/.ciel/system1/events.jsonl` | live-traffic confidence distribution (52 pre_tool_risk, 23 council_prescreen, 22 router…) |

@@ -102,7 +102,7 @@ A **SOFT** menu: story truth comes first. Story-design reaches in **when the pro
 
 Roles here map 1:1 to the storyboard frame `type` enum: **Hook**=`hook` · **Problem**=`pain_point` · **Product_Intro**=`product_intro` · **Key_Feature**=`feature_showcase` · **Benefits**=`benefit_highlight` · **Social_Proof**=`social_proof` · **CTA**=`cta` · **Brand_Outro**=`branding`.
 
-**Hook**
+### Hook
 
 - `kinetic-type-beats` — a punchy rhetorical line / "you keep doing X" callout where the in-place word-swap is the joke, an escalating multi-beat statement landing a spring-pop payoff, word beats resolving into a logo reveal, or a centered beat triptych (a beat may be a non-text element).
 - `typewriter-reveal` — type a relatable line, collapse it, pop the brand (logo or product-UI) — "here's the everyday pain, now here's us."
@@ -116,14 +116,14 @@ Roles here map 1:1 to the storyboard frame `type` enum: **Hook**=`hook` · **Pro
 - `dataviz-countup` — a cold-open counter burst: icons puncture in clustered at center, one dramatic statistic explodes upward in size as the icons fling outward to their marks, closed by a slow lean-in.
 - `zoom-out-workspace-reveal` — a full-bleed graphic mystery (blob / blossom / macro) resolved by one unbroken decelerating pull-back through nesting levels into the design-tool workspace that made it; canvas keeps animating after the lock.
 
-**Problem**
+#### Problem
 
 - `kinetic-type-beats` — 3–5 short pain statements each landing alone on a bare canvas, or a question/hook phrase relay scale-popping through center (optionally resolving on a product surface as an element move).
 - `spatial-pan-stations` — pan a connected web of pain "stations" ending in a tangled knot.
 - `dataviz-countup` — a count-up ring / chart / stat grid pushed-through to dramatize a worsening or large problem.
 - `overwhelm-surround` — recognizable tools that morph into the viewer, then task bubbles close in from all sides ("you're buried").
 
-**Product_Intro**
+##### Product_Intro
 
 - `kinetic-type-beats` — "Introducing…" hard-cut name-drop resolving on the brand name/logo; also a fixed headline with one swapping word-slot, a word-by-word run with per-hero-word effect payoffs, or an anchored wordmark that transforms out.
 - `logo-assemble-lockup` — a wordless premium brand sting (elements pulse/orbit and assemble around the mark).
@@ -135,7 +135,7 @@ Roles here map 1:1 to the storyboard frame `type` enum: **Hook**=`hook` · **Pro
 - `device-surface-showcase` — a cursorless end-to-end flow (setup/auth → action → success) completed inside the held surface, bookended by title cards.
 - `titlecard-reveal` — a three-beat dark title prelude (logo pop → name+version append → tagline card) chained by blur-snap handoffs before any product UI.
 
-**Key_Feature**
+###### Key_Feature
 
 - `grid-card-assemble` — a labeled feature tile/pill grid that self-assembles (or glass cards revealed by a camera zoom-out; or a live-populating data board — skeleton fills, tethered cards, post-assembly status flips).
 - `cursor-ui-demo` — a specific multi-step workflow demonstrated end-to-end, landing on the action button/result.
@@ -149,7 +149,7 @@ Roles here map 1:1 to the storyboard frame `type` enum: **Hook**=`hook` · **Pro
 - `camera-journey` — a cursorless cinematic 3D flight over the product surface — motion blur, depth-of-field, tilt-to-flatten — landing violently on the CTA / hero card (sub-shape B).
 - `transcript-scroll-artifact-reveal` — a long transcript/feed/document traversed vertically as evidence of generated work, then one interaction pivots into the artifact ("it did all this → here's the deliverable").
 
-**Benefits**
+###### Benefits
 
 - `kinetic-type-beats` — a rapid-fire staccato montage of 8–12 short value phrases, or a slow 2–4-statement relay each held ~1.5s+.
 - `grid-card-assemble` — a vertical benefit list that accumulates, steps, or streams past a focal slot, optionally clearing to a payoff line.
@@ -159,7 +159,7 @@ Roles here map 1:1 to the storyboard frame `type` enum: **Hook**=`hook` · **Pro
 - `fixed-anchor-cycle` — one product surface pinned dead-center while its whole theme re-skins per beat ("the same prompt, in every tool").
 - `cursor-ui-demo` — the demo|text|demo sandwich: two static-stage demo beats bridged through a full-screen kinetic/title interlude and back.
 
-**Social_Proof**
+###### Social_Proof
 
 - `constellation-hub` — product mark as the hub, partner logos orbiting it ("works with your stack").
 - `grid-card-assemble` — a logo wall that builds then pulls back to reveal a vast ecosystem.
@@ -167,7 +167,7 @@ Roles here map 1:1 to the storyboard frame `type` enum: **Hook**=`hook` · **Pro
 - `constellation-hub` — scatter-drift end card: ~20 app icons pop in frame-wide around a serif headline and drift outward under a static frame ("connects to thousands of apps").
 - `dataviz-countup` — one radial-gauge count-up instrument embedded as a single beat inside a kinetic-type relay.
 
-**CTA**
+###### CTA
 
 - `kinetic-type-beats` — a punchy closing line (or short value stack) snapping beat-by-beat onto the logo/URL, or a 3–5-beat chain where each beat carries its own kinetic gag before the logo forms.
 - `logo-assemble-lockup` — a logo build → camera push-through into the final URL/CTA verb.
@@ -176,7 +176,7 @@ Roles here map 1:1 to the storyboard frame `type` enum: **Hook**=`hook` · **Pro
 - `constellation-hub` — orbit-collapse: category icons drift around an empty central CTA, a cursor click implodes the orbit toward the click point, and the product demo springs OUT of the collapse.
 - `prompt-type-submit-generate` — the install-command end card: headline demotes, a terminal pill springs in, the command types and holds with a blinking cursor.
 
-**Brand_Outro**
+###### Brand_Outro
 
 - `kinetic-type-beats` — a rapid verb barrage resolving on the brand's one defining word, or a relaxed full-frame beat relay terminating in a long-held URL end card.
 - `typewriter-reveal` — a persistent brand mark with a typed/swapping CTA rail beneath it.
@@ -190,7 +190,7 @@ Roles here map 1:1 to the storyboard frame `type` enum: **Hook**=`hook` · **Pro
 
 1. Find the frame's **role** in the menu above; pick the blueprint whose **shape fits this beat** (story may already have named a candidate id — confirm or override). If two fit, prefer the one whose motions are closer to your plan.
 2. Open `blueprints/<id>.md` — read its time-coded template, `[slots]`, and named **signature move**.
-3. Choose a posture — **Reproduce** (slots map cleanly), **Adapt** (structure fits, content/surface differs; keep the signature move), or **Compose** (nothing fits → build from the motion vocabulary). The _how_ of writing each — what to keep/change, the per-frame fields — is `visual-design.md`'s job; defer to it.
+3. Choose a posture — **Reproduce** (slots map cleanly), **Adapt** (structure fits, content/surface differs; keep the signature move), or **Compose** (nothing fits → build from the motion vocabulary). The *how* of writing each — what to keep/change, the per-frame fields — is `visual-design.md`'s job; defer to it.
 4. If nothing in the menu fits the beat, **compose** from the motion vocabulary in `motion-language.md` — still pace the reveals to the VO across the shot. Don't force a wrong blueprint.
 
 ## Motion coverage

@@ -7,7 +7,7 @@ metadata:
 
 # Theme Crossfade Morph
 
-The whole world re-skins while one thing holds still. A composer box cycles through four IDE themes; a checkout widget flips through brand skins — background, typography, corner radii, toolbar icons, footer logos all change **at once**, in place, in ~0.3s, N times — and through every flip one anchor element (the prompt string, the widget layout, the wordmark) **never moves**. The anchor's stillness is the rhetorical claim: _everything changes, this doesn't._
+The whole world re-skins while one thing holds still. A composer box cycles through four IDE themes; a checkout widget flips through brand skins — background, typography, corner radii, toolbar icons, footer logos all change **at once**, in place, in ~0.3s, N times — and through every flip one anchor element (the prompt string, the widget layout, the wordmark) **never moves**. The anchor's stillness is the rhetorical claim: *everything changes, this doesn't.*
 
 Boundary: [card-morph-anchor.md](card-morph-anchor.md) morphs **one container** between two shots — its dimensions, radius, and surface tween continuously. This rule re-skins an **entire scene** through **N discrete states**: nothing tweens property-by-property (fonts, icons, and logos can't interpolate); the "morph" is a fast simultaneous crossfade of complete pre-styled layers. ([scale-swap-transition.md](scale-swap-transition.md) swaps an element at center; here the surroundings swap and the element holds.)
 
@@ -119,7 +119,7 @@ skins.forEach((skin, k) => {
 - **Outgoing and incoming tweens share one timeline position** — a staggered blend flashes the stage background between skins.
 - **Adjacent windows only** — skin k crossfades with k+1, never k+2; at no frame are three skins partially visible.
 - **Camera static — always.** A push-in on top of a theme cycle destroys the stillness that makes the anchor read.
-- **Hard cuts are the cheaper sibling** — if the states should _snap_, that's `discrete-text-sequence` territory; the ~0.3s blend is specifically the "morph" read.
+- **Hard cuts are the cheaper sibling** — if the states should *snap*, that's `discrete-text-sequence` territory; the ~0.3s blend is specifically the "morph" read.
 
 ## See also
 

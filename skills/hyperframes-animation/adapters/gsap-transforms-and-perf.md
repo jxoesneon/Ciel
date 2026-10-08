@@ -73,14 +73,14 @@ Unlike positional props, reflow props snap during browser **layout** — upstrea
 
 #### Fixing a flagged animation — preserve the intent
 
-The lint rule tells you a property will stutter; it does **not** tell you the fix, and a fix that merely passes lint can silently change the look. Swapping a `letterSpacing` tighten for a uniform `scale` lints clean but animates a _different thing_ (it resizes the glyphs instead of closing the gaps). Two rules:
+The lint rule tells you a property will stutter; it does **not** tell you the fix, and a fix that merely passes lint can silently change the look. Swapping a `letterSpacing` tighten for a uniform `scale` lints clean but animates a *different thing* (it resizes the glyphs instead of closing the gaps). Two rules:
 
 1. **Reproduce the same visual** — same start/end state, same trajectory, only sub-pixel-smooth. Use the faithful equivalent (per-glyph `x` for spacing, `scale` for `fontSize`, `x`/`y` for position), not whichever transform is the least code.
-2. **Verify against the original, not against the linter.** Render the original and the fixed version and compare the motion at its key moments — the fix should differ only by the removed stutter, not by _where things end up_. Lint-clean-and-smooth is not the bar; faithful-and-smooth is.
+2. **Verify against the original, not against the linter.** Render the original and the fixed version and compare the motion at its key moments — the fix should differ only by the removed stutter, not by *where things end up*. Lint-clean-and-smooth is not the bar; faithful-and-smooth is.
 
 If the faithful fix is non-trivial (a per-glyph split, a measured offset), build it or surface the tradeoff — never downgrade to a cheaper, different effect just to satisfy the linter.
 
-**Convert a position animation to a transform** by leaving the element at its resting `left`/`top` in CSS and animating the _offset_ with `x`/`y`:
+**Convert a position animation to a transform** by leaving the element at its resting `left`/`top` in CSS and animating the *offset* with `x`/`y`:
 
 ```javascript
 // CSS: #card { left: 1340px; top: 540px }   ← resting position stays in CSS
@@ -102,7 +102,7 @@ The `gsap_non_transform_motion` lint rule is the backstop, not the teacher — r
 }
 ```
 
-Only on elements that _actually_ animate. Applied everywhere it becomes useless and burns memory.
+Only on elements that *actually* animate. Applied everywhere it becomes useless and burns memory.
 
 ### gsap.quickTo for frequent updates (preview-only)
 
