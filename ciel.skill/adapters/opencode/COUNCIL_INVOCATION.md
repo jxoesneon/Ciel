@@ -1,7 +1,7 @@
 # COUNCIL_INVOCATION — opencode
 
-Devin supports up to 5 concurrent background subagents via `task tool subagent`.
-Council of Five therefore runs as **five parallel `task tool subagent` dispatches**
+OpenCode supports up to 5 concurrent background subagents via the **task tool**.
+Council of Five therefore runs as **five parallel `task` tool dispatches**
 per stage, with the Chairman in the root session.
 
 ## Topology
@@ -9,11 +9,11 @@ per stage, with the Chairman in the root session.
 ```text
 root session (Ciel = Chairman)
   │
-  ├── task tool subagent: Council/Coherence   (stage 1, then stage 2)
-  ├── task tool subagent: Council/Capability
-  ├── task tool subagent: Council/Safety
-  ├── task tool subagent: Council/Efficiency
-  └── task tool subagent: Council/Evolution
+  ├── task tool: Council/Coherence   (stage 1, then stage 2)
+  ├── task tool: Council/Capability
+  ├── task tool: Council/Safety
+  ├── task tool: Council/Efficiency
+  └── task tool: Council/Evolution
 ```
 
 Each member is an **individual subagent** — never inline deliberation, never
@@ -23,15 +23,15 @@ not adopt a subset.
 ## Stage Flow
 
 1. **Dispatch**: Chairman writes the evidence pack to a readable path, then
-   issues five parallel `task tool subagent` calls — each scoped to its member
+   issues five parallel `task` tool calls — each scoped to its member
    persona (`council/members/<NAME>.md`), rubrics
    (`council/rubrics/SCORING.md`, `VETO_CONDITIONS.md`), and the evidence
-   pack. Read-only (`subagent_explore`) unless write access is required.
+   pack. Read-only (`explore` agent) unless write access is required.
 2. **Stage 1**: each member returns strict JSON `{member, stage:1, score,
    rationale, mechanism_verdicts?, flags, requests}`.
 3. **Cross-review**: Chairman anonymizes Stage 1 outputs (peers labelled
    A–D, identities withheld) and dispatches a second parallel batch via
-   `task tool subagent` (fresh subagents or `resume`).
+   `task` tool (fresh subagents or resumed child sessions).
 4. **Stage 3**: Chairman synthesizes in the root session per
    `prompts/council/chairman_synthesis.md` and writes the docket.
 
@@ -47,7 +47,7 @@ Member-as-subagent is a **mechanism, not prose**. Every run must produce:
 └── verdict.json          # chairman docket
 ```
 
-- `spawn_receipts.json` records the subagent `agent_id`s per member per
+- `spawn_receipts.json` records the child session/agent `id`s per member per
   stage — the receipt proving individual dispatch.
 - `mode: "inline"` is permitted as a degraded fallback but **must** be
   declared; verification reports it as `unverified_member_isolation` —
@@ -63,5 +63,5 @@ Member-as-subagent is a **mechanism, not prose**. Every run must produce:
 - Parallel batch waits on all 5 subagents; a timeout = member abstention.
 - Safety abstention → re-dispatch once; second abstention escalates to the
   user before any pass verdict.
-- `task tool subagent` concurrency limit is 5 — the Council fits exactly; queue
+- `task` tool concurrency limit is 5 — the Council fits exactly; queue
   any additional dispatch until a slot frees.

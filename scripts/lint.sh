@@ -33,6 +33,7 @@ SHELL_FILES=(
   scripts/lint.sh
   ciel.skill/init/hooks/devin/*.sh
   ciel.skill/init/hooks/antigravity/*.sh
+  ciel.skill/init/hooks/opencode/*.sh
 )
 
 RUFF_PATHS=(scripts/ ciel.skill/init/scripts/ ciel.skill/init/hooks/lib/)

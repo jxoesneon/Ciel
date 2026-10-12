@@ -406,7 +406,7 @@ pub fn stop_main(runtime: &str) -> i32 {
     let session_id = p.get("session_id").and_then(|v| v.as_str());
     log_entry(json!({
         "ts": paths::utc_now_iso(),
-        "runtime": "devin",
+        "runtime": runtime,
         "event": "Stop",
         "session_id": session_id,
         "prompt_id": p.get("prompt_id").cloned().unwrap_or(Value::Null),

@@ -66,7 +66,8 @@ jobs:
             scripts/validate-frontmatter.sh \
             scripts/lint.sh \
             ciel.skill/init/hooks/devin/*.sh \
-            ciel.skill/init/hooks/antigravity/*.sh
+            ciel.skill/init/hooks/antigravity/*.sh \
+            ciel.skill/init/hooks/opencode/*.sh
 
   markdownlint:
     name: markdownlint

@@ -26,7 +26,7 @@ USAGE:\n\
 \n\
 HOOK BODIES (stdin JSON → stdout JSON):\n\
     pretool --runtime {devin|antigravity|opencode}   PreToolUse gate body\n\
-    prompt-submit                            UserPromptSubmit scan + canary\n\
+    prompt-submit --runtime {devin|antigravity|opencode}  UserPromptSubmit scan + canary\n\
     session-start --runtime {devin|antigravity|opencode}  SessionStart body (one process)\n\
 \n\
 PRIMITIVES (used by shell hooks and tests):\n\
@@ -62,6 +62,8 @@ OPERATOR:\n\
                        output where the runtime expects it)\n\
     setup [--src DIR]  bootstrap a CIEL_HOME (install.sh/setup.py twin)\n\
 \n\
+All hook bodies accept --runtime {devin|antigravity|opencode} (default: devin).\n\
+\n\
 Fallback contract: on any error or unknown command the binary exits 2 and\n\
 the shell wrappers fall back to the Python implementations.\n";
 
@@ -78,7 +80,7 @@ fn main() -> ExitCode {
     let cmd = args.first().map(String::as_str).unwrap_or("");
     let code = match cmd {
         "pretool" => pretool::main_(arg_runtime(&args)),
-        "prompt-submit" => promptsubmit::main_(),
+        "prompt-submit" => promptsubmit::main_(arg_runtime(&args)),
         "session-start" => sessionstart::main_(arg_runtime(&args)),
         "watchdog" => watchdog::main_(&args[1..]),
         "store-perms" => perms::main_(),

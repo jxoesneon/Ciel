@@ -265,6 +265,19 @@ if [ -n "$INIT_SCRIPTS" ] && [ -f "$INIT_SCRIPTS/verify_completion.py" ]; then
   say "Completion gate installed to $CIEL_HOME/scripts."
 fi
 
+# --- 9f. Runtime adapters (opencode plugin bridge) -----------------------------
+# OpenCode V2 hooks are in-process plugins, not shell scripts. Deploy the Ciel
+# hooks bridge + identity context + workflow commands for every opencode install
+# present on the host. Never blocks the install if opencode is absent.
+OPENCODE_HOOKS="$CIEL_HOME/hooks/opencode"
+if [ -x "$OPENCODE_HOOKS/install.sh" ]; then
+  if command -v opencode >/dev/null 2>&1 || [ -d "$HOME/.config/opencode" ]; then
+    bash "$OPENCODE_HOOKS/install.sh" || warn "opencode adapter deploy failed; continuing."
+  else
+    say "opencode not detected; adapter staged at $OPENCODE_HOOKS (run install.sh later)."
+  fi
+fi
+
 # --- 10. Verify ---------------------------------------------------------------
 say "Running verification…"
 bash "$(dirname "$0")/verify.sh" || die "Verification failed; see $LOG"

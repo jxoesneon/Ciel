@@ -38,10 +38,15 @@ enhanced:
 
 ## Installation Footprint
 
-1. `~/.config/opencode/AGENTS.md` — Ciel identity block.
-2. `~/.config/opencode/plugins/ciel.ts` — hooks bridge (session-start, prompt-submit, pretool, post-tool).
-3. `opencode.jsonc` `plugin` entry registers `./plugins/ciel.ts`.
-4. MCP servers registered under `mcp:` (github, martensite, ultranix).
+Deployed by `init/hooks/opencode/install.sh`:
+
+1. `~/.config/opencode/plugins/ciel.ts` — hooks bridge (`session-start`,
+   `prompt-submit`, `pretool` gate, `post-tool`, `session-end`). Auto-discovered;
+   **no** `plugins` entry in `opencode.jsonc` is required.
+2. `~/.config/opencode/AGENTS.md` — Ciel identity anchor block.
+3. `~/.config/opencode/commands/ciel*.md` — workflow commands (see `WORKFLOWS.md`).
+4. Skills auto-discovered from `~/.agents/skills/ciel*` (global compatibility source).
+5. MCP servers registered under `mcp:` in `opencode.jsonc` (see `MCP.md`).
 
 ## Contract Implementation
 
@@ -53,21 +58,26 @@ enhanced:
 | `shell(cmd, cwd, env, timeout)` | `bash` tool | Persistent session per process spawn |
 | `fs_read/write/edit` | `read` / `write` / `edit` tools | Permission-gated |
 | `context_inject(scope, content)` | `AGENTS.md` + plugin chat.message transform | Global AGENTS.md read at startup |
-| `hook_register(event, handler)` | plugin hooks (`event`, `chat.message`, `tool.execute.before/after`, `experimental.chat.messages.transform`) | See `HOOKS.md` |
+| `hook_register(event, handler)` | V2 domain hooks: `ctx.session.hook("prompt"\|"context")`, `ctx.tool.hook("execute.before"\|"execute.after")`, `ctx.permission.hook("evaluate")`, `ctx.event.subscribe` | See `HOOKS.md` |
 | `plan_mode(enabled)` | plan agent (`permission.edit: deny *`) | toggled per-agent |
 
 ## Hook Support
 
-Hooks live in the opencode plugin (`plugins/ciel.ts`) — NOT shell scripts in `~/.ciel/hooks/opencode/`. Mapping:
+Hooks live in the opencode plugin (`plugins/ciel.ts`) — **not** shell scripts in
+`~/.ciel/hooks/opencode/`. The `ciel` binary supports `--runtime opencode`
+natively for every shared hook body — `pretool`, `prompt-submit`,
+`session-start`, `post-tool`, `session-end`, and `stop`. Mapping:
 
-| Ciel hook | opencode plugin hook | Payload |
+| Ciel hook | opencode V2 hook | Payload / effect |
 | --- | --- | --- |
-| session_start | `event` → `session.created` | runs `ciel session-start --runtime devin`, injects additionalContext on first transform |
-| user_prompt_submit | `chat.message` | `ciel prompt-submit` scans raw text, appends warning on secret hits |
-| pre_tool_use | `tool.execute.before` | `ciel pretool --runtime devin` with `{tool_name, tool_input}`; `decision: block` aborts |
-| post_tool_use | `tool.execute.after` | `ciel post-tool --runtime devin` with `{tool_name, tool_response}` |
+| session_start | `setup(ctx)` (once) | `ciel session-start --runtime opencode` → **AI canary** captured |
+| context inject | `ctx.session.hook("context")` | canary prepended to `event.system[]` on every model request |
+| user_prompt_submit | `ctx.session.hook("prompt")` | `ciel prompt-submit --runtime opencode`; appends secret-scan warning to `event.prompt.text` |
+| pre_tool_use | `ctx.tool.hook("execute.before")` | `ciel pretool --runtime opencode` → throws on `decision: block` |
+| post_tool_use | `ctx.tool.hook("execute.after")` | `ciel post-tool --runtime opencode` |
+| session_end | `ctx.event.subscribe(...)` | `ciel session-end --runtime opencode` |
 
-`--runtime devin` is used because the ciel binary does not yet have an opencode runtime table; opencode hook JSON shape is compatible. Upstream task: add `opencode` to ciel-rs runtime match arms.
+Full detail, payload shapes, and the fallback contract: `HOOKS.md`.
 
 ## MCP Support
 
@@ -101,6 +111,22 @@ Parallel-top-level via concurrent `task` tool dispatches for each Council member
 
 ## Known Gaps / Upstream Tasks
 
-1. ciel-rs `--runtime` table lacks `opencode` → plugin passes `devin` payloads (compatible shapes).
-2. opencode plugin API is not stable across versions — pin `$schema` and test on upgrade.
-3. `experimental.chat.messages.transform` is experimental — canary injection may need moving to `chat.params`/`chat.headers` hooks on API drift.
+1. The `ciel-rs` `opencode` runtime reuses the Devin field extraction (no
+   opencode-specific arm). Field names are compatible, so this is harmless; the
+   shared hook bodies now honor `--runtime` for audit labeling (`prompt-submit`,
+   `stop`). A runtime-tailored canary string remains a future nicety.
+2. The gate uses `ctx.tool.hook("execute.before")` (throw aborts). The
+   documented `ctx.permission.hook("evaluate")` deny path is an equivalent
+   alternative but double-writes the activity log, so it is not used.
+3. The V2 plugin API is not frozen — re-run `init/hooks/opencode/install.sh` and
+   smoke-test after an OpenCode upgrade.
+
+## Related
+
+- `HOOKS.md` — hook mapping + payload shapes + verification
+- `CONTEXT_FILES.md` — global `AGENTS.md` identity anchor
+- `SUBAGENTS.md` — task-tool delegation and guilds
+- `SLASH_COMMANDS.md` — `/ciel*` commands
+- `WORKFLOWS.md` — acquire / council / improve surfaces
+- `MCP.md` — MCP servers and discovery
+- `COUNCIL_INVOCATION.md` — Council of Five topology

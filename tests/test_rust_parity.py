@@ -45,6 +45,13 @@ def run_rust(*args: str, stdin: str = "", env: dict | None = None):
     return proc.returncode, proc.stdout
 
 
+def last_log_entry(log_text: str, needle: str):
+    """The last JSON entry in an activity log whose line contains `needle`."""
+    return json.loads(
+        [ln for ln in log_text.splitlines() if needle in ln][-1]
+    )
+
+
 @unittest.skipUnless(
     Path(CIEL_BIN).exists(), f"ciel binary not built at {CIEL_BIN}"
 )
@@ -334,6 +341,107 @@ class TestPromptSubmitParity(unittest.TestCase):
         log = (self.tmp / ".ciel" / "activity.log").read_text()
         self.assertIn("secret_ingress", log)
         self.assertIn("github_token", log)
+        entry = last_log_entry(log, "secret_ingress")
+        # Default runtime stays `devin` (the .sh twin calls us flagless).
+        self.assertEqual("devin", entry["runtime"])
+
+    def test_runtime_flag_is_honored(self):
+        """`--runtime opencode` must label the ingress event accordingly."""
+        rc, out = run_rust(
+            "prompt-submit",
+            "--runtime",
+            "opencode",
+            stdin=json.dumps(
+                {"prompt": "here is ghp_abcdefghij0123456789ABCD ok"}
+            ),
+            env=self.env,
+        )
+        self.assertEqual(0, rc)
+        # The canary payload is runtime-independent.
+        self.assertIn("credential material", self._shape(out))
+        log = (self.tmp / ".ciel" / "activity.log").read_text()
+        entry = last_log_entry(log, "secret_ingress")
+        self.assertEqual("opencode", entry["runtime"])
+        self.assertEqual(1, entry["count"])
+        self.assertEqual(["github_token"], entry["categories"])
+
+    def test_clean_prompt_logs_nothing(self):
+        rc, _ = run_rust(
+            "prompt-submit",
+            "--runtime",
+            "opencode",
+            stdin=json.dumps({"prompt": "just a normal request"}),
+            env=self.env,
+        )
+        self.assertEqual(0, rc)
+        self.assertFalse((self.tmp / ".ciel" / "activity.log").exists())
+
+
+@unittest.skipUnless(
+    Path(CIEL_BIN).exists(), f"ciel binary not built at {CIEL_BIN}"
+)
+class TestStopRuntimeParity(unittest.TestCase):
+    """`ciel stop --runtime` — the Stop event must carry the runtime label.
+    Regression: the non-antigravity branch once hardcoded `devin`."""
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp(prefix="ciel-stop-"))
+        (self.tmp / ".ciel").mkdir(parents=True)
+        self.env = dict(
+            os.environ, HOME=str(self.tmp), CIEL_HOME=str(self.tmp / ".ciel")
+        )
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp, ignore_errors=True)
+
+    def _stop_entry(self):
+        return last_log_entry(
+            (self.tmp / ".ciel" / "activity.log").read_text(), '"Stop"'
+        )
+
+    def test_opencode_runtime_is_honored(self):
+        rc, _ = run_rust(
+            "stop",
+            "--runtime",
+            "opencode",
+            stdin=json.dumps({"session_id": "ses_x", "prompt_id": "p1"}),
+            env=self.env,
+        )
+        self.assertEqual(0, rc)
+        entry = self._stop_entry()
+        self.assertEqual("opencode", entry["runtime"])
+        self.assertEqual("Stop", entry["event"])
+        self.assertEqual("ses_x", entry["session_id"])
+        self.assertEqual("p1", entry["prompt_id"])
+
+    def test_default_runtime_stays_devin(self):
+        rc, _ = run_rust(
+            "stop",
+            stdin=json.dumps({"session_id": "ses_y"}),
+            env=self.env,
+        )
+        self.assertEqual(0, rc)
+        entry = self._stop_entry()
+        # devin/stop.sh calls `stop --runtime devin`; the flagless default
+        # must stay `devin` for that hook to remain correct.
+        self.assertEqual("devin", entry["runtime"])
+        self.assertIsNone(entry["prompt_id"])
+
+    def test_antigravity_branch_contract(self):
+        rc, out = run_rust(
+            "stop",
+            "--runtime",
+            "antigravity",
+            stdin=json.dumps(
+                {"terminationReason": "user_stop", "conversationId": "c1"}
+            ),
+            env=self.env,
+        )
+        self.assertEqual(0, rc)
+        self.assertEqual({"decision": "allow"}, json.loads(out))
+        entry = self._stop_entry()
+        self.assertEqual("antigravity", entry["runtime"])
+        self.assertEqual("user_stop", entry["terminationReason"])
 
 
 @unittest.skipUnless(
