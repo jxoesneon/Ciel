@@ -22,7 +22,7 @@ regex = "1"
 time = { version = "0.3", features = ["parsing", "formatting", "macros"] }
 fancy-regex = "0.19"
 flate2 = "1"
-rusqlite = { version = "0.40", features = ["bundled"] }
+rusqlite = { version = "0.41", features = ["bundled"] }
 sha2 = "0.11"
 wait-timeout = "0.2"
 
